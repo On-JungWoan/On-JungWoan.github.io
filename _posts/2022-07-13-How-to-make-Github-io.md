@@ -13,10 +13,15 @@ toc_sticky: true
 date: 2022-07-13
 last_modified_at: 2022-07-13
 ---
+<br>
+<br>
+<br>
 
 # Repository 생성
 
-![image](https://user-images.githubusercontent.com/84084372/178898730-4e84d11b-8975-423e-a5ec-ecf0069401d0.png)
+<br>
+
+![image](https://user-images.githubusercontent.com/84084372/178898730-4e84d11b-8975-423e-a5ec-ecf0069401d0.png) <br>
 <br>우선, username.github.io의 형식으로 Repository를 생성해준다.<br>
 이 때, username이 다르면 사이트가 제대로 생성되지 않는다.<br>
 
@@ -51,4 +56,7 @@ https://livlikwav.github.io/etc/blog-revision-1/ <br>
 <br>
 
 # 최종
+
+<br>
+
 ![image](https://user-images.githubusercontent.com/84084372/178899861-8cceb0bc-208b-4dec-888d-d8b7aa7d8b7e.png)
