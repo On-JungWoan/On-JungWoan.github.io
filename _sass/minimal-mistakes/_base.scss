@@ -126,7 +126,7 @@ blockquote {
 /* links */
 
 a {
-   text-decoration: none;  // 추가된 코드
+  text-decoration: none;  // 추가된 코드
    
   &:focus {
     @extend %tab-focus;
