@@ -105,14 +105,14 @@ analytics:
 # Site Author
 author:
   name             : "온정완"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profile_image.jpg"
   bio              : "데이터 분석을 좋아하는 성장형 개발자 온정완입니다."
   location         : "전남대학교 학부 재학 중"
   email            : "slalfpdl16@naver.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:slalfpdl16@naver.com"
+      #url: "mailto:slalfpdl16@naver.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://on-jungwoan.github.io"
