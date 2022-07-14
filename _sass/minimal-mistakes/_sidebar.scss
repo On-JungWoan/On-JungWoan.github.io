@@ -134,12 +134,14 @@
   }
 
   img {
-    max-width: 110px;
-    border-radius: 50%;
+    max-width: 150px;
+    border-radius: 30%; // 50%인 경우 원이 된고 0%인 경우 사각형이 된다
 
     @include breakpoint($large) {
-      padding: 5px;
-      border: 1px solid $border-color;
+      // padding: 5px;
+      // border: 1px solid $border-color;
+      padding: 3px;                     // border 와의 거리 
+      border: 2px solid $border-color;  // border 속성       
     }
   }
 }
