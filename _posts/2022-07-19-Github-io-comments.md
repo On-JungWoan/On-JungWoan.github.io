@@ -1,5 +1,5 @@
 ---
-title:  "[Github.io]댓글 기능, Google 노출"
+title:  "[Github_io]댓글 기능, Google 노출"
 excerpt: "Github io의 댓글 기능을 추가하고 Google에 노출 시키기"
 
 categories:
