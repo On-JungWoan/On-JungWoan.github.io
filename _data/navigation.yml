@@ -9,6 +9,26 @@ main:
   - title: "Posts"
     url: /year-archive/
 
+docs:
+  - title: AI
+    children:
+      - title: "머신러닝"
+        url: ML/
+        category: "ML"
+      - title: "딥러닝"
+        url: DL/
+        category: "DL"
+  - title: 대외활동
+    children:
+      - title: "인턴"
+        url: Internship/
+        category: "Internship"
+  - title: Etc
+    children:
+      - title: "Blog dev"
+        url: Blog/
+        category: "Blog"
+
 #main:
 #  - title: "Quick-Start Guide"
 #    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
