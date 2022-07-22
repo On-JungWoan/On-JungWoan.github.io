@@ -3,7 +3,7 @@ title:  "[인턴]ICT 인턴십 도전기 #3"
 excerpt: "학부 3학년 학생의 ICT 인턴십 도전기"
 
 categories:
-  - 취업준비
+  - Internship
 tags:
   - [인턴, ICT인턴십]
 
