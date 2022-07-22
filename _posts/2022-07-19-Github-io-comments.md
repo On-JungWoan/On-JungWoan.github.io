@@ -1,11 +1,11 @@
 ---
-title:  "[Github_io]댓글 기능, Google 노출"
-excerpt: "Github io의 댓글 기능을 추가하고 Google에 노출 시키기"
+title:  "[Github_Io]댓글 기능 추가"
+excerpt: "Github io의 댓글 기능을 추가"
 
 categories:
-  - TIL
+  - Blog
 tags:
-  - [TIL, jekyll, Github, Githubio]
+  - [jekyll, Github, Githubio]
 
 toc: true
 toc_sticky: true
