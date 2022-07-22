@@ -1,11 +1,11 @@
 ---
-title:  "[Jekyll]Github io 생성"
+title:  "[Github Io]Jekyll을 사용한 개발 블로그 생성"
 excerpt: "Jekyll을 이용한 Github io 생성방법"
 
 categories:
-  - TIL
+  - Blog
 tags:
-  - [TIL, jekyll, Github, Githubio]
+  - [jekyll, Github, Githubio]
 
 toc: true
 toc_sticky: true
