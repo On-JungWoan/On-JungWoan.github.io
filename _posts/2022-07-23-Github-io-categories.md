@@ -55,7 +55,8 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   <Strong>[Blog.md]</Strong>
 </div>  
   
-```
+```markdown:Blog.md
+
 ---
 title: "Blog dev"
 layout: archive
@@ -82,6 +83,7 @@ sidebar_main: true
 </div>  
 
 ```
+
 <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
 
 {% assign sum = site.posts | size %}
@@ -150,7 +152,8 @@ sidebar_main: true
   <Strong>[sidebar.html]</Strong>
 </div>  
 
-```
+```html:sidebar.html
+
 {% if page.author_profile or layout.author_profile or page.sidebar %}
   <div class="sidebar sticky">
   {% if page.author_profile or layout.author_profile %}{% include author-profile.html %}{% endif %}
@@ -175,14 +178,17 @@ sidebar_main: true
 
   </div>
 {% endif %}
+
 ```
 
 div가 끝나기 전에 다음과 같은 script를 추가한 것이다.
 
 ```
+
   {% if page.sidebar_main %}
     {% include nav_list_main %}
   {% endif %}
+  
 ```  
 
 ## 4. _config.yml / index.html 수정
@@ -194,6 +200,7 @@ div가 끝나기 전에 다음과 같은 script를 추가한 것이다.
 </div>  
 
 ```
+
 # Defaults
 defaults:
   # _posts
@@ -209,6 +216,7 @@ defaults:
       related: true
       mathjax: true
       sidebar_main: true     # 요거 추가
+      
 ```
 
 <div align="center">  
@@ -216,9 +224,11 @@ defaults:
 </div>  
 
 ```
+
 layout: home
 sidebar_main: true    # 요거 추가
 author_profile: true
+
 ```
 
 ## 5. 최종 결과물
