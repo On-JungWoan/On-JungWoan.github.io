@@ -52,21 +52,18 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 이때, md파일은 모든 카테고리에 대하여 생성해준다. 
 
 
+
   
 ```
-
----
-title: "Blog dev"
-layout: archive
-permalink: categories/Blog
-author_profile: true
-sidebar_main: true
----
-
-
-{% assign posts = site.categories.Blog %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
-  
+  ---
+  title: "Blog dev"
+  layout: archive
+  permalink: categories/Blog
+  author_profile: true
+  sidebar_main: true
+  ---
+  {% assign posts = site.categories.Blog %}
+  {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
 ```  
 
 ## 2. 사이드바에 띄우기
