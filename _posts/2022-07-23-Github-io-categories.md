@@ -51,70 +51,67 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 <br>
   
+   
+<image src="https://user-images.githubusercontent.com/84084372/180594971-72bd6b5a-7294-4f34-82e8-1cf32e5d0551.png">
+
 <div align="center">  
   <Strong>[Blog.md]</Strong>
-</div>  
-  
-<image src="https://user-images.githubusercontent.com/84084372/180594971-72bd6b5a-7294-4f34-82e8-1cf32e5d0551.png">
+</div> 
 
 <br>
 
 ## 2. 사이드바에 띄우기
+
 /_include/ 경로 밑에 nav_list_main 문서를 새롭게 작성한다. 
 이 때, 파일명은 꼭 nav_list_main이 아니어도 된다. 
 0번에서 정의한 구조에 맞게 스크립트를 작성하여준다.
 
 <br>
 
+<image src="https://user-images.githubusercontent.com/84084372/180594853-d60a5f19-01fe-4dcd-b84d-68424d907c82.png">
+
 <div align="center">  
   <Strong>[nav_list_main]</Strong>
 </div>  
 
-
-
-<image src="https://user-images.githubusercontent.com/84084372/180594853-d60a5f19-01fe-4dcd-b84d-68424d907c82.png">
-
 <br>
 
 ## 3. sidebar.html 수정
+
 /_includes/sidebar.html의 내용을 다음과 같이 수정한다.
 
 <br>
+
+<image src="https://user-images.githubusercontent.com/84084372/180595073-1299310b-eb2f-4eab-b186-c820966938fa.png">
 
 <div align="center">  
   <Strong>[sidebar.html]</Strong>
 </div>  
 
-
-
-<image src="https://user-images.githubusercontent.com/84084372/180595073-1299310b-eb2f-4eab-b186-c820966938fa.png">
-
+<br>
 
 div가 끝나기 전에 다음과 같은 script를 추가한 것이다.
-
-
 
 <image src="https://user-images.githubusercontent.com/84084372/180595120-413529c7-88ed-4a14-a2ea-8314b1f6c21b.png">
   
 <br>
 
 ## 4. _config.yml / index.html 수정
+
 최상단 경로에 있는 /_config.yml과 /index.html을 수정한다. 
 다음 스크립트와 같이 sidebar_main: true를 추가하여 사이드바가 활성화되게끔 해주면 된다.
+
+<image src="https://user-images.githubusercontent.com/84084372/180595200-a67057dd-4c09-45e6-83cc-05422a3ded38.png">
 
 <div align="center">  
   <Strong>[_config.yml]</Strong>
 </div>  
 
-<image src="https://user-images.githubusercontent.com/84084372/180595200-a67057dd-4c09-45e6-83cc-05422a3ded38.png">
-
+<image src="https://user-images.githubusercontent.com/84084372/180595270-a914dd7a-10b4-40f3-9efb-97afd4ae05b1.png">
 
 <div align="center">  
   <Strong>[index.html]</Strong>
-</div>  
-
-
-<image src="https://user-images.githubusercontent.com/84084372/180595270-a914dd7a-10b4-40f3-9efb-97afd4ae05b1.png">
+</div>
 
 <br>
 
