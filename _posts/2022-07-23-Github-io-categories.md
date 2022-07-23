@@ -43,6 +43,13 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 <br>
 
+<span style='backgrond-color:#ffdce0'>주의! 아래 나와있는 모든 스크립트들은 그대로 복사 붙여넣기 하면 동작하지 않습니다.</span>
+
+<br>
+
+<span style='backgrond-color:#ffdce0'>아래 나와있는 모든 스크립트의 '{'와 '}'는 모두 '{%'와 '%}'로 바꾸어주어야 제대로 동작합니다.</span>
+  
+<br>
 
 
 ## 1. 페이지 생성
@@ -54,7 +61,7 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 
   
-```html
+```
   ---
   title: "Blog dev"
   layout: archive
@@ -63,9 +70,8 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   sidebar_main: true
   ---
   
-  <!-- 실제 사용시에는 아래 주석을 모두 제거하여 사용 -->
-  <!-- {% assign posts = site.categories.Blog %} -->
-  <!-- {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %} -->
+  {% assign posts = site.categories.Blog %}
+  {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
 ```
 
 ## 2. 사이드바에 띄우기
