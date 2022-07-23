@@ -136,42 +136,42 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   <Strong>[sidebar.html]</Strong>
 </div>  
 
-```
+```html
 
-{% if page.author_profile or layout.author_profile or page.sidebar %}
+{ if page.author_profile or layout.author_profile or page.sidebar }
   <div class="sidebar sticky">
-  {% if page.author_profile or layout.author_profile %}{% include author-profile.html %}{% endif %}
-  {% if page.sidebar %}
-    {% for s in page.sidebar %}
-      {% if s.image %}
+  { if page.author_profile or layout.author_profile }{ include author-profile.html }{ endif }
+  { if page.sidebar }
+    { for s in page.sidebar }
+      { if s.image }
         <img src="{{ s.image | relative_url }}"
-             alt="{% if s.image_alt %}{{ s.image_alt }}{% endif %}">
-      {% endif %}
-      {% if s.title %}<h3>{{ s.title }}</h3>{% endif %}
-      {% if s.text %}{{ s.text | markdownify }}{% endif %}
-      {% if s.nav %}{% include nav_list nav=s.nav %}{% endif %}
-    {% endfor %}
-    {% if page.sidebar.nav %}
-      {% include nav_list nav=page.sidebar.nav %}
-    {% endif %}
-  {% endif %}
+             alt="{ if s.image_alt }{{ s.image_alt }}{ endif }">
+      { endif }
+      { if s.title }<h3>{{ s.title }}</h3>{ endif }
+      { if s.text }{{ s.text | markdownify }}{ endif }
+      { if s.nav }{ include nav_list nav=s.nav }{ endif }
+    { endfor }
+    { if page.sidebar.nav }
+      { include nav_list nav=page.sidebar.nav }
+    { endif }
+  { endif }
 
-  {% if page.sidebar_main %}
-    {% include nav_list_main %}
-  {% endif %}
+  { if page.sidebar_main }
+    { include nav_list_main }
+  { endif }
 
   </div>
-{% endif %}
+{ endif }
 
 ```
 
 div가 끝나기 전에 다음과 같은 script를 추가한 것이다.
 
-```
+```html
 
-  {% if page.sidebar_main %}
-    {% include nav_list_main %}
-  {% endif %}
+  { if page.sidebar_main }
+    { include nav_list_main }
+  { endif }
   
 ```  
 
@@ -207,7 +207,7 @@ defaults:
   <Strong>[index.html]</Strong>
 </div>  
 
-```
+```html
 
 layout: home
 sidebar_main: true    # 요거 추가
