@@ -60,7 +60,8 @@ URL 접두어에 본인의 개발 블로그 주소릅 입력합니다.
 <br>
 
 ## 3. sitemap.xml 생성
-`cofig.yml`이 위치한 경로에 다음과 같은 `sitemap.xml`을 생성하여줍니다.
+`cofig.yml`이 위치한 경로에 다음과 같은 `sitemap.xml`을 생성하여줍니다.<br>
+> 아래 스크립트에서, `<%`, `%>`의 `<`, `>`는 `{`, `}`로 바꾸어서 사용하여줍니다.
 
 <br>
 
@@ -73,29 +74,29 @@ layout: null
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {% for post in site.posts %}
+    <% for post in site.posts %>
     <url>
         <loc>{{ site.url }}{{ post.url }}</loc>
-        {% if post.lastmod == null %}
+        <% if post.lastmod == null %>
         <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-        {% else %}
+        <% else %>
         <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
-        {% endif %}
+        <% endif %>
 
-        {% if post.sitemap.changefreq == null %}
+        <% if post.sitemap.changefreq == null %>
         <changefreq>weekly</changefreq>
-        {% else %}
+        <% else %>
         <changefreq>{{ post.sitemap.changefreq }}</changefreq>
-        {% endif %}
+        <% endif %>
 
-        {% if post.sitemap.priority == null %}
+        <% if post.sitemap.priority == null %>
         <priority>0.5</priority>
-        {% else %}
+        <% else %>
         <priority>{{ post.sitemap.priority }}</priority>
-        {% endif %}
+        <% endif %>
 
     </url>
-    {% endfor %}
+    <% endfor %>
 </urlset>
 ```
 <br>
