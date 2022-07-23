@@ -16,6 +16,11 @@ date: 2022-07-23
 last_modified_at: 2022-07-23
 ---
 
+```
+print("hello")
+
+```
+
 <br>
 
 해당 포스팅은 "공부하는 식빵맘"님의 포스트를 참조하여 만들었습니다.<br>
@@ -41,6 +46,11 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 <br>
 
+```
+print("hello")
+
+```
+
 ## 1. 페이지 생성
 
 /\_pages에, 위에서 생각해둔 카테고리에 대한 page를 생성하여준다.
@@ -54,20 +64,10 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 <div align="center">  
   <Strong>[Blog.md]</Strong>
 </div>  
+  
+```
+print("hello")
 
-```python
-  print("hello")
-```  
-  
-```
-  
-  print(hello)
-  
-```
-  
-```  
-  ㄴㅇㄹㄴㅇㄹㅇㄴㄹ
-  
 ```  
   
 ```
