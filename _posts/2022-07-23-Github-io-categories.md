@@ -68,8 +68,8 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   sidebar_main: true
   ---
   
-  {% assign posts = site.categories.Blog %}
-  {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
+  { assign posts = site.categories.Blog }
+  { for post in posts } { include archive-single.html type=page.entries_layout } { endfor }
 ```
 
 ## 2. 사이드바에 띄우기
@@ -84,8 +84,7 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 </div>  
 
 ```html
-  <!-- 실제 사용시에는 주석처리 된 부분을 전부 주석 제거하여 사용한다. -->
-  <!-- {% assign sum = site.posts | size %} 주석 제거-->
+  { assign sum = site.posts | size }
   <nav class="nav__list">
     <input id="ac-toc" name="accordion-toc" type="checkbox" />
     <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
@@ -96,34 +95,34 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
         <li>
           <span class="nav__sub-title">AI</span>
               <ul>
-                  <!-- {% for category in site.categories %}
-                      {% if category[0] == "ML" %}
+                  { for category in site.categories }
+                      { if category[0] == "ML" }
                           <li><a href="/categories/ML" class="">머신러닝 ({{category[1].size}})</a></li>
-                      {% endif %}
-                  {% endfor %}    주석 제거-->
+                      { endif }
+                  { endfor }
               </ul>
               <ul>
-                  {% for category in site.categories %}
-                      {% if category[0] == "DL" %}
+                  { for category in site.categories }
+                      { if category[0] == "DL" }
                           <li><a href="/categories/DL" class="">딥러닝 ({{category[1].size}})</a></li>
-                      {% endif %}
-                  {% endfor %}
+                      { endif }
+                  { endfor }
               </ul>
           <span class="nav__sub-title">대외활동</span>
               <ul>
-                  {% for category in site.categories %}
-                      {% if category[0] == "Internship" %}
+                  { for category in site.categories }
+                      { if category[0] == "Internship" }
                           <li><a href="/categories/Internship" class="">인턴 ({{category[1].size}})</a></li>
-                      {% endif %}
-                  {% endfor %}
+                      { endif }
+                  { endfor }
               </ul>
           <span class="nav__sub-title">etc</span>
               <ul>
-                  {% for category in site.categories %}
-                      {% if category[0] == "Blog" %}
+                  { for category in site.categories }
+                      { if category[0] == "Blog" }
                           <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
-                      {% endif %}
-                  {% endfor %}
+                      { endif }
+                  { endfor }
               </ul>            
         </li>
     </ul>
