@@ -24,7 +24,7 @@ name                     : "온정완"
 description              : "정완이의 개발 일기장"
 url                      : "https://on-jungwoan.github.io"
 baseurl                  : ""
-repository               : "On-JungWoan/On-JungWoan.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "on-jungwoan/on-jungwoan.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/image/profile_image.jpg" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
