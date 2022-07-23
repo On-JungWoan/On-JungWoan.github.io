@@ -95,6 +95,7 @@ div가 끝나기 전에 다음과 같은 script를 추가한 것이다.
 <image src="https://user-images.githubusercontent.com/84084372/180595120-413529c7-88ed-4a14-a2ea-8314b1f6c21b.png">
   
 <br>
+<br>
 
 ## 4. _config.yml / index.html 수정
 
