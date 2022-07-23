@@ -43,7 +43,9 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 <br>
 
+<span style="color:red">주의! 아래 나와있는 모든 스크립트들은 그대로 복사 붙여넣기 하면 동작하지 않습니다.</span>
 
+<span style="color:red">아래 나와있는 모든 스크립트의 '{'와 '}'는 모두 '{%'와 '%}'로 바꾸어주어야 제대로 동작합니다.</span>
   
 <br>
 
@@ -223,6 +225,6 @@ author_profile: true
 
 ## 5. 최종 결과물
 
-<p align="center"><image src="https://user-images.githubusercontent.com/84084372/180473732-1f6864ec-cba5-4223-a3a9-8d02119de4bc.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/180473732-1f6864ec-cba5-4223-a3a9-8d02119de4bc.png"></p>
 
   
