@@ -54,6 +54,21 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 <div align="center">  
   <Strong>[Blog.md]</Strong>
 </div>  
+
+```python
+  print("hello")
+```  
+  
+```
+  
+  print(hello)
+  
+```
+  
+```  
+  ㄴㅇㄹㄴㅇㄹㅇㄴㄹ
+  
+```  
   
 ```
 
