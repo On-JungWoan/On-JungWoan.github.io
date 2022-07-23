@@ -16,10 +16,7 @@ date: 2022-07-23
 last_modified_at: 2022-07-23
 ---
 
-```
-print("hello")
 
-```
 
 <br>
 
@@ -46,10 +43,7 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 <br>
 
-```
-print("hello")
 
-```
 
 ## 1. 페이지 생성
 
@@ -57,18 +51,13 @@ print("hello")
 편의를 위해 /\_pages 밑에 categories/ 디렉토리를 추가하고, 최종적으로 /\_pages/categories/에 md파일을 생성해주었다. 
 이때, md파일은 모든 카테고리에 대하여 생성해준다. 
 
-<p align="center"><image src="https://user-images.githubusercontent.com/84084372/180470639-79db7a0d-2d5d-4b05-995a-f5d07687c9c9.png">
+<p align="center"><image src="https://user-images.githubusercontent.com/84084372/180470639-79db7a0d-2d5d-4b05-995a-f5d07687c9c9.png"></p>
 
 <br>
   
 <div align="center">  
   <Strong>[Blog.md]</Strong>
 </div>  
-  
-```
-print("hello")
-
-```  
   
 ```
 
@@ -248,6 +237,6 @@ author_profile: true
 
 ## 5. 최종 결과물
 
-<p align="center"><image src="https://user-images.githubusercontent.com/84084372/180473732-1f6864ec-cba5-4223-a3a9-8d02119de4bc.png">
+<p align="center"><image src="https://user-images.githubusercontent.com/84084372/180473732-1f6864ec-cba5-4223-a3a9-8d02119de4bc.png"></p>
 
   
