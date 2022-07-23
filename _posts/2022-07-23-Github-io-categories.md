@@ -43,9 +43,15 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 <br>
 
-<span style='background-color:#ffdce0'>주의! 아래 나와있는 모든 스크립트들은 그대로 복사 붙여넣기 하면 동작하지 않습니다. </span>
+<span style='background-color:#ffdce0'><strong>주의!</strong></span>
 
-<span style='background-color:#ffdce0'>아래 나와있는 모든 스크립트의 '{'와 '}'는 모두 '{ %'와 '% }'로 바꾸어주어야 제대로 동작합니다.(공백 없이) </span>
+<span style='background-color:#ffdce0'>
+  <strong>
+    아래 나와있는 모든 스크립트들은 그대로 복사 붙여넣기 하면 동작하지 않습니다. 
+    스크립트를 그대로 푸시하면 페이지 빌드가 제대로 되지 않는 이슈가 있어서 부득이하게 코드를 변형하여 올렸습니다. 
+    '{'와 '}'를 모두 '{ %'와 '% }'로 바꾸어주어야 제대로 동작합니다.(공백 없이)
+  </strong>
+</span>
 
 <br>
 
