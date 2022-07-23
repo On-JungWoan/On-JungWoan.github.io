@@ -54,7 +54,7 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 
   
-```
+```html
   ---
   title: "Blog dev"
   layout: archive
@@ -63,9 +63,9 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   sidebar_main: true
   ---
   
-  # 실제 사용시에는 아래 주석을 모두 제거하여 사용
-  # {% assign posts = site.categories.Blog %}
-  # {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
+  <!-- 실제 사용시에는 아래 주석을 모두 제거하여 사용 -->
+  <!-- {% assign posts = site.categories.Blog %} -->
+  <!-- {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %} -->
 ```
 
 ## 2. 사이드바에 띄우기
@@ -80,28 +80,23 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 </div>  
 
 ```html
-<!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
-  # {% assign sum = site.posts | size %}
+  <!-- 실제 사용시에는 주석처리 된 부분을 전부 주석 제거하여 사용한다. -->
+  <!-- {% assign sum = site.posts | size %} 주석 제거-->
   <nav class="nav__list">
     <input id="ac-toc" name="accordion-toc" type="checkbox" />
     <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
     <ul class="nav__items" id="category_tag_menu">
-        <!--전체 글 수-->
         <li>
               📂 <span style="">전체 글 수</style> <span style="">{{sum}}</style> <span style="">개</style> 
         </li>
         <li>
-          <!--span 태그로 카테고리들을 크게 분류-->
           <span class="nav__sub-title">AI</span>
-              <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
               <ul>
-                  <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
-                  <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
-                  {% for category in site.categories %}
+                  <!-- {% for category in site.categories %}
                       {% if category[0] == "ML" %}
                           <li><a href="/categories/ML" class="">머신러닝 ({{category[1].size}})</a></li>
                       {% endif %}
-                  {% endfor %}
+                  {% endfor %}    주석 제거-->
               </ul>
               <ul>
                   {% for category in site.categories %}
