@@ -1,6 +1,6 @@
 ---
-title:  "[Github_Io]댓글 기능 추가"
-excerpt: "Github io의 댓글 기능을 추가"
+title:  "[Github_Io]utterances 댓글 추가 안될 때 해결법"
+excerpt: "utterances를 사용한 댓글 기능 추가"
 
 categories:
   - Blog
@@ -16,34 +16,40 @@ last_modified_at: 2022-07-19
 
 <br>
 
-내 개발 블로그를 구글에 검색해봤는데 아무것도 나오지 않았따. 
-그래서 개발 블로그를 구글에 노출시키고 댓글 기능도 좀 추가해보려고 한다.
+개발 블로그에 댓글 기능을 추가해보려고 한다.<br>
+utterances를 사용하여 댓글 기능을 추가하려고 하는데, 인터넷에 나와있는 방법으로는 제대로 작동을 안해서 내가 삽질해서 얻은 노하우를 공유하고자 한다.<br>
+해당 내용은 minimal-mistakes 사용자 기준으로 작성되었습니다.
 
 <br>
 
-## utterances를 사용한 댓글 기능 추가
+## 0. utterances 설치
 ![image](https://user-images.githubusercontent.com/84084372/179539589-1b54e5a6-3441-4535-bf95-55389139ff76.png)
 
 <br>
 
-댓글 플랫폼 중 **utterances**가 괜찮다고 하길래 해당 댓글 플랫폼을 사용하기로 했다. 
+댓글 플랫폼 중 **utterances**가 가볍고 괜찮다고 하길래 해당 댓글 플랫폼을 사용하기로 했다. 
 댓글을 달기 위해서는 깃허브 계정이 필요하다고 한다. 
-그래도 명색이 개발 블로그인만큼 방문자분들은 개인 github 계정을 가지고 계실 것으로 예상된다. 
-댓글에 마크다운도 사용 가능하다고 한다.
+방문자분들은 개인 github 계정을 가지고 계실 것으로 예상되기 때문에 무리없이 사용해도 될 것 같다. 
+댓글에 마크다운도 사용 가능하다고 한다. 
+아래 링크를 클릭해서 먼저 utterances를 설치한다. <br>
+> [utterances설치](github.com/apps/utterances)
 
 <br>
 
-### - **1. 댓글 이슈가 올라올 Repository 생성** <br>
+![image](https://user-images.githubusercontent.com/84084372/180615155-36699e51-ae94-4980-87ba-50dd1febf33d.png)
+
+<br>
+
+## 1. 댓글 이슈가 올라올 Repository 생성 <br>
 나는 그냥 github.io Repository를 사용하였다. 
 댓글이 달리면 해당 Repository에 issue로 올라온다고 한다. 
 혹시 댓글 전용 Repository를 만들고 싶으면, 미리 생성하도록 하자. <br>
-https://github.com/On-JungWoan/On-JungWoan.github.io/new/main/_posts
+> [Repository링크](https://github.com/On-JungWoan/On-JungWoan.github.io/)
 
 <br>
 
-
-### - **2-1. minimal-mistakes를 사용하는 경우** <br>
-minimal-mistakes를 사용한다면, 별도의 과정 없이 그냥 config.yml 파일을 수정해주면 된다. 
+## 2. config.yml 수정 <br>
+minimal-mistakes를 사용한다면, install에서 설정한 값대로  `config.yml` 파일을 수정해주면 된다.
 수정해야 할 것들은 다음과 같다. <br>
 
 ![image](https://user-images.githubusercontent.com/84084372/179542095-812671f7-5280-461a-9a7f-a34a51ba60a9.png) <br>
@@ -59,19 +65,42 @@ minimal-mistakes를 사용한다면, 별도의 과정 없이 그냥 config.yml �
 
 <br>
 
-### - **2-1. minimal-mistakes를 사용하지 않는 경우** <br>
-https://github.com/apps/utterances
-해당 링크를 통해 설치한다.
+<span style='background-color:#ffdce0'><strong>중요!</strong></span>
 
-- repo
-  - 위에서 댓글 Issue 가 올라올 곳으로 선택한 그 저장소의 permalink 를 써준다. (github아이디/저장소이름)
+<span style='background-color:#ffdce0'>
+  <strong>
+    만약 defaults의 comments가 true로 되어있지 않다면, 꼭 true로 바꾸어준다. 
+    그렇지 않으면 댓글이 표시되지 않으니 꼭 true로 바꾸어준다.
+  </strong>
+</span>
 
-- Blog Post - Issue Mapping
-  - 댓글 이슈를 댓글 달린 블로그 페이지의 어떤 부분과 매핑을 시킬지 Key를 결정한다.
-  - 매핑시키는 것이니만큼 Key 가 달라지면 Value 는 사라질 것이다. 고유하고 수정을 제일 안할 것 같은 pathname을 선택하는 것이 좋을 것 같다.
+![image](https://user-images.githubusercontent.com/84084372/180615354-abf5ffd1-75c5-461b-953f-da2b2a1690bb.png)
 
-- Theme
-  - utterances 의 테마를 정한다. 난 gruvbox-dark 테마를 선택했다.
+<br>
 
-- Enable utterances
-  - 댓글 구현을 담당하는 html 파일에 이 코드를 그대로 복사하여 원하는 위치에 붙여넣어주면 될 것 같다.
+## 3. 그래도 안 될 경우
+위에서 설정한 세팅대로 `_includes/comments-providers/utterances.html`을 수정한다.
+
+```html
+  <script>
+    'use strict';
+
+    (function() {
+      var commentContainer = document.querySelector('#utterances-comments');
+
+      if (!commentContainer) {
+        return;
+      }
+
+      var script = document.createElement('script');
+      script.setAttribute('src', 'https://utteranc.es/client.js');
+      script.setAttribute('repo', 'On-JungWoan/On-JungWoan.github.io'); # 본인 Repository를 정확하게 적어준다.
+      script.setAttribute('issue-term', 'pathname');
+      script.setAttribute('theme', 'github-light');
+      script.setAttribute('label', 'blog-comment')
+      script.setAttribute('crossorigin', 'anonymous');
+
+      commentContainer.appendChild(script);
+    })();
+  </script>
+```
