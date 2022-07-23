@@ -1,6 +1,6 @@
 ---
 title:  "[Github_Io]사이드바 카테고리 기능 추가"
-excerpt: "Github io의 댓글 기능을 추가"
+excerpt: "Github io의 사이드바 카테고리 기능 추가"
 
 categories:
   - Blog
