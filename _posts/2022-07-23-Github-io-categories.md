@@ -47,8 +47,8 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 ## 1. 페이지 생성
 
-/\_pages에, 위에서 생각해둔 카테고리에 대한 page를 생성하여준다.
-편의를 위해 /\_pages 밑에 categories/ 디렉토리를 추가하고, 최종적으로 /\_pages/categories/에 md파일을 생성해주었다. 
+`/_pages`에, 위에서 생각해둔 카테고리에 대한 page를 생성하여준다.
+편의를 위해 `/_pages` 밑에 `categories/` 디렉토리를 추가하고, 최종적으로 `/_pages/categories/`에 md파일을 생성해주었다. 
 이때, md파일은 모든 카테고리에 대하여 생성해준다. 
 
 
@@ -62,12 +62,14 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   author_profile: true
   sidebar_main: true
   ---
-  {% assign posts = site.categories.Blog %}
-  {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
-```  
+  
+  # 실제 사용시에는 아래 주석을 모두 제거하여 사용
+  # {% assign posts = site.categories.Blog %}
+  # {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
+```
 
 ## 2. 사이드바에 띄우기
-/\_include/ 경로 밑에 nav_list_main 문서를 새롭게 작성한다. 
+`/_include/` 경로 밑에 `nav_list_main` 문서를 새롭게 작성한다. 
 이 때, 파일명은 꼭 nav_list_main이 아니어도 된다. 
 0번에서 정의한 구조에 맞게 스크립트를 작성하여준다.
 
@@ -77,65 +79,56 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
   <Strong>[nav_list_main]</Strong>
 </div>  
 
-```
-
+```html
 <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
-
-{% assign sum = site.posts | size %}
-
-<nav class="nav__list">
-  <input id="ac-toc" name="accordion-toc" type="checkbox" />
-  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
-  <ul class="nav__items" id="category_tag_menu">
-      <!--전체 글 수-->
-      <li>
-      
-            📂 <span style="">전체 글 수</style> <span style="">{{sum}}</style> <span style="">개</style> 
-      </li>
-      <li>
-      
-        <!--span 태그로 카테고리들을 크게 분류-->
-        <span class="nav__sub-title">AI</span>
-            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
-            <ul>
-                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
-                {% for category in site.categories %}
-                    {% if category[0] == "ML" %}
-                        <li><a href="/categories/ML" class="">머신러닝 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "DL" %}
-                        <li><a href="/categories/DL" class="">딥러닝 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            
-        <span class="nav__sub-title">대외활동</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "Internship" %}
-                        <li><a href="/categories/Internship" class="">인턴 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            
-        <span class="nav__sub-title">etc</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "Blog" %}
-                        <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>            
-            
-      </li>
-  </ul>
-</nav>
-
+  # {% assign sum = site.posts | size %}
+  <nav class="nav__list">
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
+    <ul class="nav__items" id="category_tag_menu">
+        <!--전체 글 수-->
+        <li>
+              📂 <span style="">전체 글 수</style> <span style="">{{sum}}</style> <span style="">개</style> 
+        </li>
+        <li>
+          <!--span 태그로 카테고리들을 크게 분류-->
+          <span class="nav__sub-title">AI</span>
+              <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+              <ul>
+                  <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                  <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                  {% for category in site.categories %}
+                      {% if category[0] == "ML" %}
+                          <li><a href="/categories/ML" class="">머신러닝 ({{category[1].size}})</a></li>
+                      {% endif %}
+                  {% endfor %}
+              </ul>
+              <ul>
+                  {% for category in site.categories %}
+                      {% if category[0] == "DL" %}
+                          <li><a href="/categories/DL" class="">딥러닝 ({{category[1].size}})</a></li>
+                      {% endif %}
+                  {% endfor %}
+              </ul>
+          <span class="nav__sub-title">대외활동</span>
+              <ul>
+                  {% for category in site.categories %}
+                      {% if category[0] == "Internship" %}
+                          <li><a href="/categories/Internship" class="">인턴 ({{category[1].size}})</a></li>
+                      {% endif %}
+                  {% endfor %}
+              </ul>
+          <span class="nav__sub-title">etc</span>
+              <ul>
+                  {% for category in site.categories %}
+                      {% if category[0] == "Blog" %}
+                          <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
+                      {% endif %}
+                  {% endfor %}
+              </ul>            
+        </li>
+    </ul>
+  </nav>
 ```
 
 ## 3. sidebar.html 수정
