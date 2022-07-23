@@ -43,79 +43,196 @@ AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog 
 
 ## 1. 페이지 생성
 
-/_pages에, 위에서 생각해둔 카테고리에 대한 page를 생성하여준다.
-편의를 위해 /_pages 밑에 categories/ 디렉토리를 추가하고, 최종적으로 /_pages/categories/에 md파일을 생성해주었다. 
+/\_pages에, 위에서 생각해둔 카테고리에 대한 page를 생성하여준다.
+편의를 위해 /\_pages 밑에 categories/ 디렉토리를 추가하고, 최종적으로 /\_pages/categories/에 md파일을 생성해주었다. 
 이때, md파일은 모든 카테고리에 대하여 생성해준다. 
 
 <p align="center"><image src="https://user-images.githubusercontent.com/84084372/180470639-79db7a0d-2d5d-4b05-995a-f5d07687c9c9.png">
 
 <br>
   
-   
-<image src="https://user-images.githubusercontent.com/84084372/180594971-72bd6b5a-7294-4f34-82e8-1cf32e5d0551.png">
-
 <div align="center">  
   <Strong>[Blog.md]</Strong>
-</div> 
+</div>  
+  
+```
 
-<br>
+---
+title: "Blog dev"
+layout: archive
+permalink: categories/Blog
+author_profile: true
+sidebar_main: true
+---
+
+
+{% assign posts = site.categories.Blog %}
+{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
+  
+```  
 
 ## 2. 사이드바에 띄우기
-
-/_include/ 경로 밑에 nav_list_main 문서를 새롭게 작성한다. 
+/\_include/ 경로 밑에 nav_list_main 문서를 새롭게 작성한다. 
 이 때, 파일명은 꼭 nav_list_main이 아니어도 된다. 
 0번에서 정의한 구조에 맞게 스크립트를 작성하여준다.
 
 <br>
 
-<image src="https://user-images.githubusercontent.com/84084372/180594853-d60a5f19-01fe-4dcd-b84d-68424d907c82.png">
-
 <div align="center">  
   <Strong>[nav_list_main]</Strong>
 </div>  
 
-<br>
+```
+
+<!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+{% assign sum = site.posts | size %}
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+      
+            📂 <span style="">전체 글 수</style> <span style="">{{sum}}</style> <span style="">개</style> 
+      </li>
+      <li>
+      
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                {% for category in site.categories %}
+                    {% if category[0] == "ML" %}
+                        <li><a href="/categories/ML" class="">머신러닝 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "DL" %}
+                        <li><a href="/categories/DL" class="">딥러닝 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Internship" %}
+                        <li><a href="/categories/Internship" class="">인턴 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            
+        <span class="nav__sub-title">etc</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Blog" %}
+                        <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>            
+            
+      </li>
+  </ul>
+</nav>
+
+```
 
 ## 3. sidebar.html 수정
-
-/_includes/sidebar.html의 내용을 다음과 같이 수정한다.
+/\_includes/sidebar.html의 내용을 다음과 같이 수정한다.
 
 <br>
-
-<image src="https://user-images.githubusercontent.com/84084372/180595073-1299310b-eb2f-4eab-b186-c820966938fa.png">
 
 <div align="center">  
   <Strong>[sidebar.html]</Strong>
 </div>  
 
-<br>
+```
+
+{% if page.author_profile or layout.author_profile or page.sidebar %}
+  <div class="sidebar sticky">
+  {% if page.author_profile or layout.author_profile %}{% include author-profile.html %}{% endif %}
+  {% if page.sidebar %}
+    {% for s in page.sidebar %}
+      {% if s.image %}
+        <img src="{{ s.image | relative_url }}"
+             alt="{% if s.image_alt %}{{ s.image_alt }}{% endif %}">
+      {% endif %}
+      {% if s.title %}<h3>{{ s.title }}</h3>{% endif %}
+      {% if s.text %}{{ s.text | markdownify }}{% endif %}
+      {% if s.nav %}{% include nav_list nav=s.nav %}{% endif %}
+    {% endfor %}
+    {% if page.sidebar.nav %}
+      {% include nav_list nav=page.sidebar.nav %}
+    {% endif %}
+  {% endif %}
+
+  {% if page.sidebar_main %}
+    {% include nav_list_main %}
+  {% endif %}
+
+  </div>
+{% endif %}
+
+```
 
 div가 끝나기 전에 다음과 같은 script를 추가한 것이다.
 
-<image src="https://user-images.githubusercontent.com/84084372/180595120-413529c7-88ed-4a14-a2ea-8314b1f6c21b.png">
+```
+
+  {% if page.sidebar_main %}
+    {% include nav_list_main %}
+  {% endif %}
   
-<br>
-<br>
+```  
 
-## 4. _config.yml / index.html 수정
-
-최상단 경로에 있는 /_config.yml과 /index.html을 수정한다. 
+## 4. \_config.yml / index.html 수정
+최상단 경로에 있는 /\_config.yml과 /index.html을 수정한다. 
 다음 스크립트와 같이 sidebar_main: true를 추가하여 사이드바가 활성화되게끔 해주면 된다.
-
-<image src="https://user-images.githubusercontent.com/84084372/180595200-a67057dd-4c09-45e6-83cc-05422a3ded38.png">
 
 <div align="center">  
   <Strong>[_config.yml]</Strong>
 </div>  
 
-<image src="https://user-images.githubusercontent.com/84084372/180595270-a914dd7a-10b4-40f3-9efb-97afd4ae05b1.png">
+```
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      mathjax: true
+      sidebar_main: true     # 요거 추가
+      
+```
 
 <div align="center">  
   <Strong>[index.html]</Strong>
-</div>
+</div>  
 
-<br>
+```
+
+layout: home
+sidebar_main: true    # 요거 추가
+author_profile: true
+
+```
 
 ## 5. 최종 결과물
 
 <p align="center"><image src="https://user-images.githubusercontent.com/84084372/180473732-1f6864ec-cba5-4223-a3a9-8d02119de4bc.png">
+
+  
