@@ -36,7 +36,9 @@ last_modified_at: 2022-07-24
 
 <div align="center">
     <img src="https://user-images.githubusercontent.com/84084372/180629232-841f953c-141f-48b8-b69b-1a046e9cf017.png">
+</div>
 
+<div align="center">
     출처:http://scott.fortmann-roe.com
 </div>
 
@@ -53,7 +55,9 @@ last_modified_at: 2022-07-24
 
 <div align="center">
     <img src="https://user-images.githubusercontent.com/84084372/180629483-dcdb838b-1ed6-4ffc-84bb-3ed7e91a3f7e.png">
+</div>
 
+<div align="center">
     출처:https://velog.io/@jiselectric/Ensemble-Learning-Voting-and-Bagging-at6219ae
 </div>
 
@@ -65,7 +69,9 @@ last_modified_at: 2022-07-24
 
 <div align="center">
     <img src="https://user-images.githubusercontent.com/84084372/180629511-c1dda79a-c8f5-4ac8-afd3-e9ae4d10d35b.png">
+</div>
 
+<div align="center">
     출처:https://velog.io/@jiselectric/Ensemble-Learning-Voting-and-Bagging-at6219ae
 </div>
 
