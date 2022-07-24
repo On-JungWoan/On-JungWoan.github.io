@@ -34,6 +34,12 @@ last_modified_at: 2022-07-24
 
 <br>
 
+머신러닝 알고리즘에는 Bias-Variance Tradeoff이 존재하기 때문에, Bias와 Variance는 반비례관계이다. 
+배깅 계열 알고리즘은 Bias가 높은 대신 Variance가 낮고, 부스팅 알고리즘은 Variance가 높은 대신 Bias가 낮다. 
+따라서 부스팅 계열 알고리즘은 오버피팅을 조심해야한다.
+
+<br>
+
 <div align="center">
     <img src="https://user-images.githubusercontent.com/84084372/180629232-841f953c-141f-48b8-b69b-1a046e9cf017.png">
 </div>
