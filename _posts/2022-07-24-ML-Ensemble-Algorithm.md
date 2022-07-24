@@ -3,9 +3,9 @@ title:  "[ML 이론]앙상블(Ensemble) 알고리즘"
 excerpt: "배깅(Bagging)과 부스팅(Boosting)을 중심적으로"
 
 categories:
-  - Blog
+  - ML
 tags:
-  - [jekyll, Github, Githubio]
+  - [ML, ML_이론, 앙상블_알고리즘]
 
 published: true
 
