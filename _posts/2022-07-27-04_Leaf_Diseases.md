@@ -12,8 +12,8 @@ published: true
 toc: true
 toc_sticky: true
  
-date: 2022-07-26
-last_modified_at: 2022-07-26
+date: 2022-07-27
+last_modified_at: 2022-07-27
 ---
 
 ## 0. CUDA, cuDNN 설치
