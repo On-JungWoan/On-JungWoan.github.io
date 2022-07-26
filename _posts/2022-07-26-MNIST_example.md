@@ -18,11 +18,13 @@ last_modified_at: 2022-07-26
 
 <br>
 
-딥러닝
+사용교재 : 한 줄씩 따라 해보는 파이토치 딥러닝 프로젝트 모음집
+예제 : MNIST를 사용한 손글씨 숫자 이미지 분류 문제
 
 <br>
 
 ## 0. Library
+이 예제는 PyTorch를 사용하여 학습을 진행한다. Colab을 사용했기 때문에 drive 마운트 과정이 포함되어 있다.
 
 ```python
 # model
@@ -43,6 +45,7 @@ drive.mount('/content/drive')
 <br>
 
 ## 1. 분석 환경 설정
+Colab에서 제공하는 GPU를 사용한다. GPU의 병렬 처리를 위해 device에 cuda를 지정해준다.
 
 ```python
 is_cuda = torch.cuda.is_available()
@@ -63,7 +66,31 @@ learning_rate = 0.0001
 
 <br>
 
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/180927694-a0ade14d-20b8-4039-a4fb-8d116dce976f.png"></p>
+<p align="center">[출처] https://www.slideshare.net/w0ong/ss-82372826</p>
+
+<br>
+
 ## 3. 데이터 불러오기
+### 3.1 데이터 설명
+MNIST 데이터는 이미지와 레이블로 구성되어 있다. 
+이미지는 [1, 28, 28]의 3차원 행렬이며 각각 [Channel, Width, Height]를 나타냄(Channel이 1이면 흑백, 3이면 RGB 채널) 
+레이블은 One-Hot Encoding 방식으로 길이가 10인 벡터로 이루어져 있음. 
+이미지 데이터는 0에서 1까지의 값을 갖는 고정 크기의 28x28행렬이다. 
+각 행렬의 원소는 픽셀의 밝기 정보를 나타냄. 
+1에 가까울수록 흰색, 0에 가까울수록 검은색 픽셀이다. 
+
+<br>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/180925688-7a6c24e4-83a0-4444-a4f8-6bde5e777afa.png"></p>
+<p align="center">[출처] http://ai4school.org/?page_id=4389</p>
+
+<br>
+
+### 3.2 데이터 불러오기
+해당 데이터가 로컬 폴더 안에 있지 않은 경우, download 옵션을 True로 지정하고, 해당 파일의 경로를 지정해주어야 한다. 
+또한, Pytorch는 입력 데이터로 Tensor를 사용하므로 이미지를 Tensor로 변환하는 전처리인 torchvision의 transforms.ToTenser()를 사용한다. 
+Train 데이터는 6만개, Test 데이터는 1만개의 관측값으로 이루어져 있다.
 
 ```python
 train_data = datasets.MNIST(root = '/content/drive/MyDrive/MNIST', train = True, download = False, transform = transforms.ToTensor())
@@ -71,7 +98,16 @@ test_data = datasets.MNIST(root = '/content/drive/MyDrive/MNIST', train = False,
 
 print(len(train_data), len(test_data))
 ```
+```
+60000 10000
+```
+
 <br>
+
+MNIST 데이터는 앞서 말했듯이, 이미지와 라벨 데이터로 이루어져 있고, 
+이미지 데이터는 단일 채널의 [1, 28, 28] 3차원 텐서이다. 
+이를 Matplotlib을 사용하여 그려주기 위해, squeeze() 함수를 사용한다. 
+이 때, squeeze() 함수는 크기가 1인 차원을 없애는 함수로, 이미지를 [28,28]의 2차원 Tensor로 만들어준다.
 
 ```python
 image, label = train_data[0]
@@ -85,6 +121,9 @@ plt.show()
 <br>
 
 ## 4. 미니 배치 구성
+사이즈가 50인 미니배치를 생성한다. 
+Train 데이터셋 크기가 6만개이므로 6만/50 = 1200개의 train 미니배치가 생성된다. 
+이 때, 시계열 데이터가 아닌 경우 딥러닝이 데이터의 순서에 대해서는 학습하지 못하도록 필수적으로 shuffle 해준다.
 
 ```python
 train_loader = torch.utils.data.DataLoader(dataset = train_data, 
@@ -110,6 +149,12 @@ first_batch[1]  | <class 'torch.Tensor'>    | torch.Size([50])
 
 <br>
 
+각 미니 배치는 [1,28,28]의 이미지가 50개 쌓여있는 형태와, 레이블로 구성되어 있다.
+각 배치의 0번 원소는 [50,1,28,28] 형태의 4차원 Tensor이며, Train 배치에는 이 것이 1200개 존재한다.
+또한, 각 배치의 1번 원소는 이에 해당하는 레이블이 50개 존재한다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/180929620-2f0e3216-31f1-412e-bf37-cdbe0cc36557.png"></p>
+
 ```python
 print('{:23s} |    {}'.format('first_batch[0][0]', first_batch[0][0].shape))
 print('{:23s} |    {}'.format('first_batch[0][0][0]', first_batch[0][0][0].shape))
@@ -132,7 +177,37 @@ plt.show()
 <br>
 
 ## 5. CNN 구조 설계
+### 5.1 CNN 구조 정의
+이번 CNN은 다음 그림과 같이 2개의 Convolutional Layer와 2개의 Fully-Connected Layer로 설계. 
+데이터의 형태를 나타낼때는 대괄호 '[]', 가중치인 Filter 형태를 나타낼 때는 소괄호'()'를 사용, @는 filter의 개수를 나타냄. 
+padding(0)과 stride(1)는 기본값으로 설정. 
 
+- Tensor의 채널
+  - filter의 개수를 따름
+
+<br>
+
+- Tensor의 가로와 세로의 크기
+$$O = \frac{I + 2P - F}{S} + 1 = \frac{28 + 2 \times 0 - 3}{1} + 1 = 26$$
+
+<br>
+
+- MaxPooling
+  - Tensor의 가로 세로에만 영향을 주므로, 채널은 동일하고 가로 세로 길이만 반감
+
+<br>
+
+- Flatten
+  - Fully-connected Layer 연산을 위해 고차원 Tensor를 1차원으로 줄임
+  - MNIST는 0부터 9까지 10개의 클래스이기 때문에 최종적으로 10개의 길이로 구성
+  - (64x12x12, 1) -> (128, 1) -> (10, 1)
+
+<br>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/180930637-9f0deacc-88b8-46e6-aac8-d3678aa6ec00.png"></p>
+<p align="center">[출처] 한 줄씩 따라해보는 파이토처 딥러닝 프로젝트 모음집</p>
+
+### 5.2 CNN 구조 설계
 ```python
 class CNN(nn.Module):
   def __init__(self):
