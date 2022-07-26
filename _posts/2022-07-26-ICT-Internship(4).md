@@ -22,6 +22,12 @@ last_modified_at: 2022-07-26
 <br>
 
 ## 합격 기업
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/84084372/180999979-8a7b6bdb-e1e9-4164-8970-2d7196ddfc20.png", width="450px" height="500px">
+</p>
+
+
 세 곳의 기업에 지원을 해서 두 곳의 기업에 서류 합격을 했고, 면접을 보았다. 
 A 기업은 면접 본 바로 다음날 합격 통보를 받았고, B 기업의 결과만 남은 상황이었다. 
 B 기업은 정말 가고 싶은 기업이었지만, 최대 2명까지만 뽑는 기업이었고, 총 8명이 지원했다고 했다. 
