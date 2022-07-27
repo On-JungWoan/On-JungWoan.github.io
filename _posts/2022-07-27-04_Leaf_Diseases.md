@@ -237,3 +237,5 @@ val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shu
 >   - 시계열 데이터가 아닐 경우, 딥러닝이 시간 정보는 학습하지 못하게 shuffle 옵션을 꼭 True로 해준다.
 >   - num_workers는 데이터 프로세싱에 CPU 코어를 얼마나 할당할지에 대한 옵션으로, 적당한 값을 지정해줘야 모든 프로세스에서 최적의 성능을 보인다.
 >   - 일반적으로 코어 개수의 절반정도 수치가 가장 무난한 것으로 알려져 있기 때문에, num_workers 값으로 4를 지정해줬다.
+
+$$O = \frac{I + 2P - F}{S} + 1$$
