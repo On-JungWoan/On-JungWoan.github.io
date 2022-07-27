@@ -24,7 +24,7 @@ last_modified_at: 2022-07-26
 ## 합격 기업
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/84084372/180999979-8a7b6bdb-e1e9-4164-8970-2d7196ddfc20.png", width="450px" height="500px">
+  <img src="https://user-images.githubusercontent.com/84084372/180999979-8a7b6bdb-e1e9-4164-8970-2d7196ddfc20.png" width="450px" height="500px">
 </p>
 
 
