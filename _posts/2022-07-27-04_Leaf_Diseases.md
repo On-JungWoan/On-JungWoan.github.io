@@ -306,8 +306,7 @@ print("첫 번째 batch의 label (중간생략) :",first_batch[1][:10])
 
 <br>
 
-## 3. 베이스라인 모델 설계
-### 3-1. CNN 구조 정의
+### 2-3. CNN 구조 정의
 - 입력 데이터
 
 <p align="center">[3, 64, 64]</p>
@@ -336,7 +335,7 @@ print("첫 번째 batch의 label (중간생략) :",first_batch[1][:10])
 
 <br>
 
-### 3-2. CNN 구조 설계
+### 2-4. CNN 구조 설계
 ```python
 import torch.nn as nn
 import torch.nn.functional as F
