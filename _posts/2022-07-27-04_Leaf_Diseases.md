@@ -238,4 +238,74 @@ val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shu
 >   - num_workers는 데이터 프로세싱에 CPU 코어를 얼마나 할당할지에 대한 옵션으로, 적당한 값을 지정해줘야 모든 프로세스에서 최적의 성능을 보인다.
 >   - 일반적으로 코어 개수의 절반정도 수치가 가장 무난한 것으로 알려져 있기 때문에, num_workers 값으로 4를 지정해줬다.
 
-$$O = \frac{I + 2P - F}{S} + 1$$
+<br>
+
+### 2-2. 데이터 확인
+Train 데이터는 약 2만4천개, Validation 데이터는 약 8천개 정도의 관측값이 존재한다.
+```python
+print(len(train_dataset), len(val_dataset))
+```
+```
+23989 7989
+```
+
+<br>
+
+각각의 관측치는 이미지와 레이블로 구성되어 있다. 
+이미지는 [3,64,64]의 RGB 3채널 컬러 이미지이며, Label은 classes_list(클래스명 리스트)의 인덱스 번호로 저장되어있다.
+```python
+print("0번 데이터의 0번 원소 : ",train_dataset[0][0].shape)
+print("0번 데이터의 1번 원소 : ", train_dataset[0][1])
+print("0번 데이터의 Label : ", classes_list[ train_dataset[0][1] ])
+```
+```
+0번 데이터의 0번 원소 :  torch.Size([3, 64, 64])
+0번 데이터의 1번 원소 :  0
+0번 데이터의 Label :  Apple___Apple_scab
+```
+
+<br>
+
+다음은 이미지를 시각화 한 것이다. 
+matplotlib에서 RGB 이미지를 표현하기 위해서는 [width, height, channel]의 shape를 가지고 있어야 하는데, 
+현재 torch 데이터의 shape는 [channel, width, height]이므로, permute()를 사용해 reshape 해준다. 
+premute(1,2,0)의 의미는, [3,64,64]에서 1번 원소(64), 2번 원소(64), 3번 원소(3)의 순으로 shape를 재배치 하라는 것이다.
+```python
+import matplotlib.pyplot as plt
+
+image = train_dataset[0][0].permute(1,2,0)
+label = classes_list[ train_dataset[0][1] ]
+
+plt.figure(figsize=(8,8))
+plt.axis('off')
+
+plt.imshow(image)
+plt.title(label)
+
+plt.show()
+```
+![image](https://user-images.githubusercontent.com/84084372/181293873-5f7909ae-798f-4f63-b3bc-829ee9896ee2.png)
+
+<br>
+
+이미지 256개가 하나의 batch이고, 총 94개의 batch가 존재한다.
+```python
+first_batch = train_loader.__iter__().__next__()
+
+print("총 batch의 수 :",len(train_loader), end="\n\n")
+print("첫 번째 batch의 shape :", first_batch[0].shape, end="\n\n")
+print("첫 번째 batch의 label (중간생략) :",first_batch[1][:10])
+```
+```
+총 batch의 수 : 94
+
+첫 번째 batch의 shape : torch.Size([256, 3, 64, 64])
+
+첫 번째 batch의 label (중간생략) : tensor([30, 12,  3,  0,  8, 30,  4, 32, 25, 11])
+```
+
+
+<br>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/181292290-ffe1bbe3-25be-4957-982c-bb770688b5e8.png"></p>
+
