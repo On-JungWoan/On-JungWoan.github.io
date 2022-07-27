@@ -110,10 +110,6 @@ for cls in classes_list:
 
 ![image](https://user-images.githubusercontent.com/84084372/181021496-1b81094d-f5e5-4fda-8df7-6c1bbc1c449a.png)
 
-train, test, validation 데이터가 각 클래스에 맞게 생성된 모습.
-
-![image](https://user-images.githubusercontent.com/84084372/181021548-b375c6af-0634-4f49-8915-8339c4fe6fd2.png)
-
 <br>
 
 ### 1-3. 데이터 분할과 클래스별 데이터 수 확인
@@ -174,6 +170,10 @@ Validation size( Cherry___healthy ):  170
 (생략)
 ```
 
+![image](https://user-images.githubusercontent.com/84084372/181021548-b375c6af-0634-4f49-8915-8339c4fe6fd2.png)
+
+train, test, validation 데이터가 각 클래스에 맞게 생성된 모습.
+
 ## 2. 베이스라인 모델 학습
 ### 2-1. 베이스라인 모델 학습을 위한 준비
 
@@ -192,24 +192,6 @@ BATCH_SIZE = 256
 EPOCH = 30 
 ```
 
-<br>
-
-데이터셋을 불러오는 방법은 다음과 같다
-- torchvision.datasets
-  - torch에 저장되어있는 데이터셋을 불러올 때
-- torchvision.datasets.ImageFolder
-  - 본인이 직접 만들거나 다운로드받은 데이터셋을 불러올 때
-  - 단, 일정한 구조를 만족해야 함 (하나의 폴더가 하나의 클래스에 대응)
-  - MNIST를 예를 들면 0~9의 폴더가 존재하고 각각 폴더 안에 해당 숫자에 대응하는 이미지가 존재 (폴더 이름이 레이블이 됨)
-
-<br>
-
-- torchvision.transforms
-  - 데이터 불러올 때, transform 옵션에 넣어줌.
-- transform 옵션에 넣는 방법
-  - transforms.ToTensor()와 같이 직접 넣어주는 방법
-  - 아래와 같이 transforms.Compose()에 원하는 내용 넣어서 한꺼번에 묶어서 넣는 방법
-
 ```python
 import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder 
@@ -218,3 +200,40 @@ transform_base = transforms.Compose([transforms.Resize((64,64)), transforms.ToTe
 train_dataset = ImageFolder(root='C:/Users/user/Downloads/splitted/train', transform=transform_base) 
 val_dataset = ImageFolder(root='C:/Users/user/Downloads/splitted/val', transform=transform_base)
 ```
+
+```python
+from torch.utils.data import DataLoader
+
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+```
+
+<br>
+
+**cf) 전처리 과정에 대한 정리**
+
+**1. transforms 정의** 
+> - torchvision.transforms
+>   - 데이터 불러올 때, transform 옵션에 넣어줌.
+> - transform 옵션에 넣는 방법
+>   - transforms.ToTensor()와 같이 직접 넣어주는 방법
+>   - transforms.Compose()에 원하는 내용 넣어서 한꺼번에 묶어서 넣는 방법
+
+<br>
+
+**2. 데이터셋 불러오기**
+> - torchvision.datasets
+>   - torch에 저장되어있는 데이터셋을 불러올 때
+> - torchvision.datasets.ImageFolder
+>   - 본인이 직접 만들거나 다운로드받은 데이터셋을 불러올 때
+>   - 단, 일정한 구조를 만족해야 함 (하나의 폴더가 하나의 클래스에 대응)
+>   - MNIST를 예를 들면 0~9의 폴더가 존재하고 각각 폴더 안에 해당 숫자에 대응하는 이미지가 존재 (폴더 이름이 레이블이 됨)
+
+<br>
+
+**3. 미니 배치 구성**
+> - torch.utils.data.DataLoader
+>   - 원하는 데이터와 batch_size를 넣어준다.
+>   - 시계열 데이터가 아닐 경우, 딥러닝이 시간 정보는 학습하지 못하게 shuffle 옵션을 꼭 True로 해준다.
+>   - num_workers는 데이터 프로세싱에 CPU 코어를 얼마나 할당할지에 대한 옵션으로, 적당한 값을 지정해줘야 모든 프로세스에서 최적의 성능을 보인다.
+>   - 일반적으로 코어 개수의 절반정도 수치가 가장 무난한 것으로 알려져 있기 때문에, num_workers 값으로 4를 지정해줬다.
