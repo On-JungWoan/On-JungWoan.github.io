@@ -173,3 +173,48 @@ Validation size( Cherry___healthy ):  170
 .
 (생략)
 ```
+
+## 2. 베이스라인 모델 학습
+### 2-1. 베이스라인 모델 학습을 위한 준비
+
+미리 사용할 디바이스를 입력시킨다. 
+현재 내가 사용중인 로컬 pc는 gpu를 지원하지 않으므로, device에는 cpu가 입력된다. 
+batch 사이즈와 epoch 수는 각각 256과 30으로 지정하였다. 
+
+```python
+import torch
+import os
+ 
+USE_CUDA = torch.cuda.is_available()
+DEVICE = torch.device("cuda" if USE_CUDA else "cpu")
+
+BATCH_SIZE = 256 
+EPOCH = 30 
+```
+
+<br>
+
+데이터셋을 불러오는 방법은 다음과 같다
+- torchvision.datasets
+  - torch에 저장되어있는 데이터셋을 불러올 때
+- torchvision.datasets.ImageFolder
+  - 본인이 직접 만들거나 다운로드받은 데이터셋을 불러올 때
+  - 단, 일정한 구조를 만족해야 함 (하나의 폴더가 하나의 클래스에 대응)
+  - MNIST를 예를 들면 0~9의 폴더가 존재하고 각각 폴더 안에 해당 숫자에 대응하는 이미지가 존재 (폴더 이름이 레이블이 됨)
+
+<br>
+
+- torchvision.transforms
+  - 데이터 불러올 때, transform 옵션에 넣어줌.
+- transform 옵션에 넣는 방법
+  - transforms.ToTensor()와 같이 직접 넣어주는 방법
+  - 아래와 같이 transforms.Compose()에 원하는 내용 넣어서 한꺼번에 묶어서 넣는 방법
+
+```python
+import torchvision.transforms as transforms
+from torchvision.datasets import ImageFolder 
+ 
+transform_base = transforms.Compose([transforms.Resize((64,64)), transforms.ToTensor()]) 
+train_dataset = ImageFolder(root='C:/Users/user/Downloads/splitted/train', transform=transform_base) 
+val_dataset = ImageFolder(root='C:/Users/user/Downloads/splitted/val', transform=transform_base)
+```
