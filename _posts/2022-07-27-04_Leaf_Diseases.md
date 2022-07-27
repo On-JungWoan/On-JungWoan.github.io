@@ -16,10 +16,34 @@ date: 2022-07-27
 last_modified_at: 2022-07-27
 ---
 
-## 0. CUDA, cuDNN 설치
-데이터 셋의 크기가 큰 관계로, colab에서 작업시 리소스 부족의 우려가 있다. 
-따라서 로컬 환경에서 GPU를 사용하여 개발을 진행하여준다. 
+<br>
+
+해당 데이터 셋의 크기가 큰 관계로, colab에서 작업시 리소스 부족의 우려가 있다. 
+따라서 로컬 환경에서 개발을 진행하여준다. 
+데이터셋 특성상, 학습 시간이 매우 느리므로 병렬 연산이 가능한 GPU를 사용하는 것이 좋다.
 로컬 환경에서 GPU를 사용하기 위해 필요한 것이 CUDA와 cuDNN이다. 
+
+<br>
+
+## 0. CUDA, cuDNN 설치
+### 0-0. GPU 사용 가능 여부 확인
+
+다음 두 줄의 코드를 입력하여 본다.
+
+```python
+from tensorflow.python.client import device_lib
+device_lib.list_local_devices()
+```
+```
+[name: "/device:CPU:0"
+ device_type: "CPU"
+ memory_limit: 268435456
+ locality {
+ }
+ incarnation: 12364090281161528455
+ xla_global_id: -1]
+ ```
+나는 CPU에 관한 정보만 나왔으나, GPU에 관한 정보까지 나왔다면, GPU를 사용할 수 있다는 것이니, 아래 절차에 따라 GPU를 사용한다.
 
 <br>
 
@@ -60,7 +84,7 @@ CUDA 11.3 -> cuDNN 8.2 -> pytorch 설치 순으로 진행하였다. <br>
 <br>
 
 
-### 1-1 데이터 분할을 위한 폴더 생성
+### 1-2. 데이터 분할을 위한 폴더 생성
 ```python
 import os
 import shutil
@@ -92,7 +116,7 @@ train, test, validation 데이터가 각 클래스에 맞게 생성된 모습.
 
 <br>
 
-### 1-2 데이터 분할과 클래스별 데이터 수 확인
+### 1-3. 데이터 분할과 클래스별 데이터 수 확인
 ```python
 import math
  
