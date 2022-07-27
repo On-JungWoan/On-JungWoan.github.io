@@ -191,7 +191,9 @@ padding(0)과 stride(1)는 기본값으로 설정.
 
 - Tensor의 가로와 세로의 크기
 
-$$O = \frac{I + 2P - F}{S} + 1 = \frac{28 + 2 \times 0 - 3}{1} + 1 = 26$$
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/181274722-80ee282a-2b8a-4517-9978-3b050a19c9f6.png"></p>
+
 
 <br>
 
