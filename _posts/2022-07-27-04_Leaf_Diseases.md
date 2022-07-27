@@ -304,8 +304,83 @@ print("첫 번째 batch의 label (중간생략) :",first_batch[1][:10])
 첫 번째 batch의 label (중간생략) : tensor([30, 12,  3,  0,  8, 30,  4, 32, 25, 11])
 ```
 
+<br>
+
+## 3. 베이스라인 모델 설계
+### 3-1. CNN 구조 정의
+- 입력 데이터
+
+<p align="center">[3, 64, 64]</p>
 
 <br>
 
+- Tensor의 가로와 세로의 크기
+
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/181292290-ffe1bbe3-25be-4957-982c-bb770688b5e8.png"></p>
 
+<br>
+
+- 최종 출력 클래스
+
+<p align="center">[33]</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/181302583-632957e3-a12f-4623-ac9a-68f7c2541ec9.png"></p>
+
+<br>
+
+![image](https://user-images.githubusercontent.com/84084372/181301539-a1bc9526-a3ba-4b1b-a6e2-025b79173be5.png)
+
+![image](https://user-images.githubusercontent.com/84084372/181301565-73543f28-cce6-43b7-8ddb-93f898bfe584.png)
+
+![image](https://user-images.githubusercontent.com/84084372/181301586-dac76d89-1d87-45c8-8dfd-f2dbc2036507.png)
+
+<br>
+
+### 3-2. CNN 구조 설계
+```python
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+ 
+class Net(nn.Module): 
+  
+    def __init__(self): 
+    
+        super(Net, self).__init__() 
+
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=1) 
+        self.pool = nn.MaxPool2d(2,2)  
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)  
+        self.conv3 = nn.Conv2d(64, 64, 3, padding=1)  
+
+        self.fc1 = nn.Linear(4096, 512) 
+        self.fc2 = nn.Linear(512, 33) 
+    
+    def forward(self, x):  
+    
+        x = self.conv1(x)
+        x = F.relu(x)  
+        x = self.pool(x) 
+        x = F.dropout(x, p=0.25, training=self.training) 
+
+        x = self.conv2(x)
+        x = F.relu(x) 
+        x = self.pool(x) 
+        x = F.dropout(x, p=0.25, training=self.training)
+
+        x = self.conv3(x) 
+        x = F.relu(x) 
+        x = self.pool(x) 
+        x = F.dropout(x, p=0.25, training=self.training)
+
+        x = x.view(-1, 4096)  
+        x = self.fc1(x) 
+        x = F.relu(x) 
+        x = F.dropout(x, p=0.5, training=self.training)
+        x = self.fc2(x) 
+
+        return F.log_softmax(x, dim=1)  
+
+model_base = Net().to(DEVICE)  
+optimizer = optim.Adam(model_base.parameters(), lr=0.001) 
+```
