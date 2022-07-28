@@ -1,5 +1,5 @@
 ---
-title:  "[딥러닝] 작물 잎 사진으로 질병 분류하기 예제 풀이"
+title:  "[딥러닝] 작물 잎 사진으로 질병 분류하기 예제 풀이 #1"
 excerpt: "교재 : 파이토치 딥러닝 프로젝트 문제집"
 
 categories:
@@ -336,6 +336,8 @@ print("첫 번째 batch의 label (중간생략) :",first_batch[1][:10])
 <br>
 
 ### 2-4. CNN 구조 설계
+앞서 정의한 CNN 구조를 바탕으로 베이스라인 모델을 설계한다. 
+
 ```python
 import torch.nn as nn
 import torch.nn.functional as F
@@ -382,4 +384,140 @@ class Net(nn.Module):
 
 model_base = Net().to(DEVICE)  
 optimizer = optim.Adam(model_base.parameters(), lr=0.001) 
+```
+
+<br>
+
+### 2-5. 모델 학습을 위한 함수
+```python
+def train(model, train_loader, optimizer):
+    model.train()  
+    for batch_idx, (data, target) in enumerate(train_loader):
+        data, target = data.to(DEVICE), target.to(DEVICE) 
+        optimizer.zero_grad() 
+        output = model(data)  
+        loss = F.cross_entropy(output, target) 
+        loss.backward()  
+        optimizer.step()  
+```
+
+<br>
+
+### 2-6. 모델 평가를 위한 함수
+```python
+def evaluate(model, test_loader):
+    model.eval()  
+    test_loss = 0 
+    correct = 0   
+    
+    with torch.no_grad(): 
+        for data, target in test_loader:  
+            data, target = data.to(DEVICE), target.to(DEVICE)  
+            output = model(data) 
+            
+            test_loss += F.cross_entropy(output,target, reduction='sum').item() 
+ 
+            
+            pred = output.max(1, keepdim=True)[1]
+            correct += pred.eq(target.view_as(pred)).sum().item() 
+   
+    test_loss /= len(test_loader.dataset) 
+    test_accuracy = 100. * correct / len(test_loader.dataset) 
+    return test_loss, test_accuracy  
+```
+
+<br>
+
+### 2-7. 모델 학습
+CPU를 사용하여 학습을 진행했기 때문에, 총 학습시간은 2시간 반정도가 걸렸습니다.
+```python
+import time
+import copy
+ 
+def train_baseline(model ,train_loader, val_loader, optimizer, num_epochs = 30):
+    best_acc = 0.0  
+    best_model_wts = copy.deepcopy(model.state_dict()) 
+ 
+    for epoch in range(1, num_epochs + 1):
+        since = time.time()  
+        train(model, train_loader, optimizer)
+        train_loss, train_acc = evaluate(model, train_loader) 
+        val_loss, val_acc = evaluate(model, val_loader)
+        
+        if val_acc > best_acc: 
+            best_acc = val_acc 
+            best_model_wts = copy.deepcopy(model.state_dict())
+        
+        time_elapsed = time.time() - since 
+        print('-------------- epoch {} ----------------'.format(epoch))
+        print('train Loss: {:.4f}, Accuracy: {:.2f}%'.format(train_loss, train_acc))   
+        print('val Loss: {:.4f}, Accuracy: {:.2f}%'.format(val_loss, val_acc))
+        print('Completed in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60)) 
+    model.load_state_dict(best_model_wts)  
+    return model
+ 
+
+base = train_baseline(model_base, train_loader, val_loader, optimizer, EPOCH)  	 #(16)
+torch.save(base,'baseline.pt')
+```
+```
+-------------- epoch 1 ----------------
+train Loss: 1.6946, Accuracy: 53.35%
+val Loss: 1.7151, Accuracy: 52.90%
+Completed in 5m 59s
+-------------- epoch 2 ----------------
+train Loss: 1.0632, Accuracy: 68.19%
+val Loss: 1.1031, Accuracy: 67.37%
+Completed in 5m 18s
+
+...
+(중략)
+...
+
+-------------- epoch 29 ----------------
+train Loss: 0.0645, Accuracy: 98.43%
+val Loss: 0.2199, Accuracy: 93.08%
+Completed in 5m 57s
+-------------- epoch 30 ----------------
+train Loss: 0.0845, Accuracy: 97.58%
+val Loss: 0.2538, Accuracy: 91.95%
+Completed in 5m 53s
+```
+
+## 정리
+### 1. Net(nn.Module)
+CNN의 구조를 정의 해주었다. 
+정의한 CNN 모델 Net()의 새로운 객체를 생성하여 현재 사용중인 장비에 할당하였다. 
+해당 모델은 model_base에 저장하였다. 
+또한, optimizer는 Adam으로 설정하고, 학습률은 0.001로 설정하였다.
+```python
+model_base = Net().to(DEVICE)  
+optimizer = optim.Adam(model_base.parameters(), lr=0.001) 
+```
+<br>
+
+### 2. train(model, batch, optimizer)
+모델 학습을 위한 일련의 과정을 담고 있다.
+model을 학습 모드로 설정하며, data와 target을 사용중인 장비에 할당하여 손실함수를 구한다. 
+분류 문제이므로 손실함수는 Cross Entropy Loss를 사용한다. 
+손실함수를 바탕으로 Gradient를 구하여, 손실함수를 최소로 하도록 Parameter를 업데이트 해주는 함수이다. 
+
+<br>
+
+### 3. evaluate(model, batch)
+모델 평가를 위한 일련의 과정을 담고있다. 
+model를 평가 모드로 설정하며, data와 target을 사용중인 장비에 해당하여 총 loss 값과 총 정답 수를 구한다. 
+해당 값을 전체 batch 수로 나누어 loss와 정확도의 평균을 구하여, 이를 반환해주는 함수이다.
+
+<br>
+
+### 4. Train(model, batch1, batch2, optimizer, num_epoch)
+정확도가 가장 높은 모델과 그 수치를 저장하는 변수 best_model_wts, best_acc를 각각 초기화 한다. 
+이후, Train Batch로 모델을 학습하고, Train Batch와 Val Batch의 정확도와 loss를 구한다. 
+best_acc보다 val batch의 정확도가 더 높으면 best_acc와 best_model_wts를 업데이트한다. 
+해당 과정을 epoch 수만큼 반복하여 최적의 모델을 학습하고, 학습이 완료된 모델을 저장한다.
+
+```python
+base = train_baseline(model_base, train_loader, val_loader, optimizer, EPOCH)  	 #(16)
+torch.save(base,'baseline.pt')
 ```
