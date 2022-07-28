@@ -16,7 +16,43 @@ date: 2022-07-28
 last_modified_at: 2022-07-28
 ---
 
-## 전이학습
+<br>
+
+학습 데이터 셋의 크기가 큰 관계로, CPU를 사용하여 학습 시 학습 시간이 너무 오래걸렸다. 
+따라서 colab에서 작업을 해주어야 했는데, 데이터셋의 크기가 너무 커서 드라이브에 올리는 데 7시간이나 걸린다는 것이다. 
+따라서 colab에서 원본 데이터셋 zip파일의 링크를 걸어 다운로드 받은 뒤, colab 환경 내에서 압축 해제를 진행하였다. 
+드라이브에서 작업을 할때는 속도 제한이 걸리지만, colab에서 작업할 떄는 속도 제한이 걸리지 않아 3분 남짓의 시간 안에 성공적으로 드라이브에 업로드 하였다. 
+colab에서 사용하기 위해 코드를 조금 바꾸어주었다. 
+
+```python
+# colab에서 사용시
+
+from google.colab import drive
+drive.mount('/content/drive')
+```
+```python
+# 데이터 다운로드
+!gdown https://drive.google.com/uc?id=1uBY-JbXcPd-tikzFJcbwSR9_zEjYHHor
+!mv /content/dataset.zip /content/drive/MyDrive/04_작물_잎_질병/dataset
+
+# 압축 풀기
+%cd /content/drive/MyDrive/04_작물_잎_질병/dataset
+!unzip -qq "/content/drive/MyDrive/04_작물_잎_질병/dataset/dataset.zip"
+```
+```python
+# laptop에서 작업 시
+# working_dir = "D:/python_projects/deep-learning-with-projects/datasets/04_작물_잎_사진_질병_분류/"
+
+# jnu pc에서 작업 시
+# working_dir = "C:/Users/user/Downloads/"
+
+# colab에서 작업 시
+working_dir = "/content/drive/MyDrive/04_작물_잎_질병/"
+```
+
+<br>
+
+## 0. 전이학습이란?
 ImageNet 훈련 데이터를 이용하여 Pre-Trained된 Model을 사용한다. 
 해당 파라미터 값 일부를 우리가 가진 데이터셋의 특성에 맞게 조정하며, 이를 Fine-Tuning 이라고 한다. 
 여기서 유의해야 할 점은, 모든 파라미터를 업데이트 하진 않는다는 것이다. 
@@ -42,3 +78,4 @@ ImageNet 훈련 데이터를 이용하여 Pre-Trained된 Model을 사용한다.
 - 데이터 수가 적고, 이용된 데이터와의 유사도 적음 (Quadrant3)
     - 일부 Layer를 freeze하고, 나머지는 전부 학습한다.
     - 모든 Layer를 전부 Unfreeze하기에는, 데이터 크기가 작기 때문에 오버피팅의 위험이 있다.
+
