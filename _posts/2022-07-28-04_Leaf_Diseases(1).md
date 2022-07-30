@@ -79,6 +79,8 @@ ImageNet 훈련 데이터를 이용하여 Pre-Trained된 Model을 사용한다.
     - 일부 Layer를 freeze하고, 나머지는 전부 학습한다.
     - 모든 Layer를 전부 Unfreeze하기에는, 데이터 크기가 작기 때문에 오버피팅의 위험이 있다.
 
+<br>
+
 ## 3. Pre-Trained Model Fine Tuning
 ### 3-1. Transfer Learning을 위한 준비
 ```python
@@ -324,6 +326,11 @@ test_loader_resNet = torch.utils.data.DataLoader(test_resNet, batch_size=BATCH_S
 <br>
 
 ### 4-3. 베이스 라인 모델 평가
+베이스라인 모델은 cpu 환경에서 학습했기 때문에, device로 cuda를 사용하면 type 에러가 발생한다. 
+따라서 학습했을 당시의 device로 맞추어주어야 한다.
+```python
+DEVICE = torch.device("cpu")
+```
 ```python
 baseline = torch.load(working_dir + 'model/baseline.pt') 
 baseline.eval()  
@@ -331,14 +338,23 @@ test_loss, test_accuracy = evaluate(baseline, test_loader_base)
 
 print('baseline test acc:  ', test_accuracy)
 ```
+```
+baseline test acc:   96.52237354085604
+```
 
 <br>
 
 ### 4-4. Transfer Learning 모델 평가
+```python
+DEVICE = torch.device("cuda")
+```
 ```python
 resnet50=torch.load(working_dir + 'model/resnet50.pt') 
 resnet50.eval()  
 test_loss, test_accuracy = evaluate(resnet50, test_loader_resNet)
 
 print('ResNet test acc:  ', test_accuracy)
+```
+```
+ResNet test acc:   98.88132295719845
 ```
