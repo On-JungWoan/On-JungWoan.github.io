@@ -148,6 +148,10 @@
     border: 1px solid mix(#000, $border-color, 25%);
     border-radius: $border-radius;   
      
+    .prev_next {
+      color:#ffd861;
+    }     
+     
     &:hover {
       @include yiq-contrasted($muted-text-color);
     }
