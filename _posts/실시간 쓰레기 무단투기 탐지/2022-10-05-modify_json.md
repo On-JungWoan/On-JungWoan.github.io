@@ -5,7 +5,7 @@ excerpt: "쓰레기 무단투기 탐지 프로젝트"
 categories:
   - cctv
 tags:
-  - [딥러닝, computer_vision, ICT인턴십]
+  - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
 
 published: true
 
