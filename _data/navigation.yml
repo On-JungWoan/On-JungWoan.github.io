@@ -1,0 +1,72 @@
+# main links
+main:
+  - title: "AI"
+    sublinks:
+      - title: "Deep Learning"
+        url: /categories/DL
+      - title: "Machine Learning"
+        url: /categories/ML
+      - title: "Python"
+        url: /categories/python
+        
+  - title: "PROJECTS"
+    sublinks:
+      - title: "실시간 쓰레기 무단투기 탐지"
+        url: /categories/cctv
+      - title: "Press It!"
+        url: /categories/pressit
+      - title: "Bbeojung.kr"
+        url: /categories/bbeojung
+        
+  - title: "대외활동"
+    sublinks:
+      - title: "2022 하반기 ICT 인턴십"
+        url: /categories/internship
+        
+  - title: "ETC"  
+    sublinks:
+      - title: "Blog Dev"
+        url: /categories/blog
+      - title: "github"
+        url: /categories/github
+      - title: "SQL"
+        url: /categories/sql
+      - title: "화성학"
+        url: /categories/harmonics
+      - title: "etc"
+        url: /categories/dalle
+
+  - title: "TIL"    
+    url: /TIL/
+    
+# docs:
+#   - title: AI
+#     children:
+#       - title: "머신러닝"
+#         url: ML/
+#         category: "ML"
+#       - title: "딥러닝"
+#         url: DL/
+#         category: "DL"
+#   - title: 대외활동
+#     children:
+#       - title: "인턴"
+#         url: Internship/
+#         category: "Internship"
+#   - title: Etc
+#     children:
+#       - title: "Blog dev"
+#         url: Blog/
+#         category: "Blog"
+
+#main:
+#  - title: "Quick-Start Guide"
+#    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+  # - title: "About"
+  #   url: https://mmistakes.github.io/minimal-mistakes/about/
+  # - title: "Sample Posts"
+  #   url: /year-archive/
+  # - title: "Sample Collections"
+  #   url: /collection-archive/
+  # - title: "Sitemap"
+  #   url: /sitemap/
