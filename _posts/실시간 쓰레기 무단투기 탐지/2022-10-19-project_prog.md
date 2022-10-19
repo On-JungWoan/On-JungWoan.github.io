@@ -1,0 +1,32 @@
+---
+title:  "프로젝트 진행상황"
+excerpt: "쓰레기 무단투기 탐지 프로젝트"
+
+categories:
+  - cctv
+tags:
+  - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
+
+published: true
+
+toc: true
+toc_sticky: true
+ 
+date: 2022-10-19
+last_modified_at: 2022-10-19
+---
+
+프로젝트가 마무리 단계에 들어섰다. 
+지금까지 찍었던 테스트셋 동영상에서 사람이 검출된 프레임을 추출하고, 해당 프레임을 투기행위 감지 모델에 넣었다. 
+그렇게 해서 나온 투기행위 사진 중, 오분류되거나 흐릿하게 나온 프레임은 제거해주었다. 
+또한, 프레임 차이가 얼마 나지 않아서 겹치는 모션등은 제거해주었다. 
+결과적으로 dumping 이미지 240장, 일반 이미지 60장해서 총 300장의 테스트셋 준비를 완료하였다. 
+
+<br>
+<br>
+
+<div align='center'>
+  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1019">
+    본문으로 돌아가기
+  </a>
+</div>
