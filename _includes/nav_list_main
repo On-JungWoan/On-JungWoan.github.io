@@ -40,7 +40,23 @@
                         <li><a href="/categories/python" class="">Python 개념 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>            
+            </ul>         
+            
+        <span class="nav__sub-title">Back-End</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "sql" %}
+                        <li><a href="/categories/sql" class="">DB ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>                      
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "docker" %}
+                        <li><a href="/categories/docker" class="">Docker ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>              
 
         <span class="nav__sub-title">Projects</span>
             <ul>
