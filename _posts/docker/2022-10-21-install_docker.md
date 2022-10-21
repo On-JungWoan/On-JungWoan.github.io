@@ -38,7 +38,9 @@ Docker Desktop for Windows를 클릭하여 installer 설치 후, install하면 �
 
 ![image](https://user-images.githubusercontent.com/84084372/197149147-08304f83-c94a-452c-8581-bed63533ee4c.png)
 
-- **docker 실행 시 에러**
+<br>
+
+### 2-2) docker 실행 시 에러
 
 Docker 실행시에 다음과 같은 에러가 뜬다면 화면에 보이는 사이트에 접속해서 업데이트 패키지를 다운받아주면 된다.
 
@@ -48,7 +50,7 @@ Docker 실행시에 다음과 같은 에러가 뜬다면 화면에 보이는 사
 
 <br>
 
-### 2-2) 설치 완료
+### 2-3) 설치 완료
 
 cmd에 `docker -v`를 입력했을 때, docker 버전이 표시되면 설치 완료이다.
 
