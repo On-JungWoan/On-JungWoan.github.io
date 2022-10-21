@@ -61,6 +61,13 @@
         <span class="nav__sub-title">Projects</span>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "canvas" %}
+                        <li><a href="/categories/canvas" class="">canvas 개발 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>          
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "cctv" %}
                         <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 ({{category[1].size}})</a></li>
                     {% endif %}

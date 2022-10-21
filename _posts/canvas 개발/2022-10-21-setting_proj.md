@@ -1,11 +1,11 @@
 ---
-title:  "[ICT 인턴십]2022년 10월 TIL"
-excerpt: "회사에서 배운 내용들 정리"
+title:  "프로젝트 개요 정리"
+excerpt: "canvas 개발"
 
 categories:
-  - docker
+  - canvas
 tags:
-  - [postgreSQL, Docker, DataGrip]
+  - [postgreSQL, Docker, DataGrip, 유클리드소프트]
 
 ---
 
