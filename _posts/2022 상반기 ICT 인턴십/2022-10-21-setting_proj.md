@@ -3,7 +3,7 @@ title:  "[ICT 인턴십]2022년 10월 TIL"
 excerpt: "회사에서 배운 내용들 정리"
 
 categories:
-  - Internship
+  - docker
 tags:
   - [postgreSQL, Docker, DataGrip]
 
