@@ -1,0 +1,1913 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>투기행위 인식률 향상(2) - 정완이의 개발 일기장</title>
+<meta name="description" content="쓰레기 무단투기 탐지 프로젝트">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="투기행위 인식률 향상(2)">
+<meta property="og:url" content="http://localhost:4000/cctv/cctv_test2/">
+
+
+  <meta property="og:description" content="쓰레기 무단투기 탐지 프로젝트">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-10-07T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-10-07T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cctv/cctv_test2/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정완이의 개발 일기장
+          
+        </a>
+
+        <ul class="visible-links">
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AI  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대외활동  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+       </ul>
+        
+        
+<!--         <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="">AI</a>
+            </li><li class="masthead__menu-item">
+              <a href="">PROJECTS</a>
+            </li><li class="masthead__menu-item">
+              <a href="">대외활동</a>
+            </li><li class="masthead__menu-item">
+              <a href="">ETC</a>
+            </li><li class="masthead__menu-item">
+              <a href="/TIL/">TIL</a>
+            </li></ul> -->
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/image/profile_image.jpg" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>데이터 분석을 좋아하는 성장형 개발자 온정완입니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">66</style> <span style="">개</style> 
+      </li>
+      <li>
+      
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL" class="">Computer Vision (9)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>         
+            
+        <span class="nav__sub-title">Back-End</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/sql" class="">DB (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/docker" class="">Docker (1)</a></li>
+                    
+                
+            </ul>              
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (1)</a></li>
+                    
+                
+                    
+                
+            </ul>          
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/pressit" class="">Press It! (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (2)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            
+        <span class="nav__sub-title">etc</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/sql" class="">SQL (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>           
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Blog Dev (9)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>          
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/github" class="">Github (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                  
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/dalle" class="">DALL-E (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>           
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (2)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>              
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="투기행위 인식률 향상(2)">
+    <meta itemprop="description" content="쓰레기 무단투기 탐지 프로젝트">
+    <meta itemprop="datePublished" content="2022-10-07T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-10-07T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/cctv/cctv_test2/" class="u-url" itemprop="url">투기행위 인식률 향상(2)
+</a>
+          </h1>
+          <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+          
+            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-10-07T00:00:00+09:00">October 07, 2022</time></p>
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#투기행위-검출률-저조">투기행위 검출률 저조</a></li><li><a href="#해결책">해결책</a><ul><li><a href="#threshold-재조정">Threshold 재조정</a></li><li><a href="#모델별-최적의-화각-찾기">모델별 최적의 화각 찾기</a></li></ul></li><li><a href="#테스트셋-생성">테스트셋 생성</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="투기행위-검출률-저조">투기행위 검출률 저조</h2>
+<p>기존 1, 4번 모델 블렌딩을 통해 객체 검출에 대한 평가 기준은 맞추었지만, 투기 행위에 대한 평가 기준은 여전히 맞추지 못하고 있는 상황이다. 우선, 투기행위를 인식하지 못하는 경우는 다음과 같이 크게 2가지로 나누어 진다.</p>
+
+<ol>
+  <li>모델이 predict한 confidence값이 Threshold를 모두 넘지 못해서 검출 x</li>
+  <li>애초에 객체 자체를 탐지  x</li>
+</ol>
+
+<p>CUDA에서 연산 된 output값 중, Threshold를 넘는 값이 하나도 없으면 투기행위를 인식하지 못한다. 또한, 애초에 객체가 탐지되지 않아서 CUDA에 input값으로 아무것도 넘어가지 않아, 투기 행위에 대한 연산 자체가 이루어 지지 않는 경우도 있다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="해결책">해결책</h2>
+<h3 id="threshold-재조정">Threshold 재조정</h3>
+<p>따라서 일단 기존에 설정되어 있던 투기 행위 및 객체 검출에 대한 Threshold를 모두 제거해주고, 각각에 대한 confidence가 사진에 찍히도록 하였다. 그 후, 옥상에서 찍은 테스트셋에 대해서 확실하게 투기행위로 판단되는 프레임만 따로 정제하여주고, 이 프레임에 대해서만 모델에 넣고 돌려보는 것이다. 이를 통해 confidence의 평균값이 어느정도인지 확인하여 Threshold를 재조정하기로 하였다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+
+<span class="n">CONF_THRESH</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Dumping에 대한 Threshold
+</span>
+<span class="p">...</span>
+
+<span class="n">ENGINE_FILE_PATH</span> <span class="o">=</span> <span class="s">"model_1.engine"</span> <span class="c1">#model1 ~ model5까지 있음
+</span>
+<span class="p">...</span>
+
+<span class="n">OBJ_THRESH1</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 객체 검출 1차 threshold
+</span><span class="n">OBJ_THRESH2</span> <span class="o">=</span> <span class="mf">0.35</span> <span class="c1"># 객체 검출 최종 threshold
+</span>
+<span class="p">...</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text</span> <span class="o">=</span> <span class="s">'{}: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">'obj_conf'</span><span class="p">,</span> <span class="n">confidences</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+<span class="n">text_size</span><span class="p">,</span> <span class="n">baseline</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">getTextSize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">cv2</span><span class="p">.</span><span class="n">putText</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">,</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="o">+</span><span class="n">text_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">baseline</span><span class="o">//</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">cv2</span><span class="p">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">2</span>
+<span class="p">)</span> 
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/194745483-3ac99121-a5f5-469e-9508-60edac4a97e2.png" alt="image" /></p>
+
+<p><br /></p>
+
+<h3 id="모델별-최적의-화각-찾기">모델별 최적의 화각 찾기</h3>
+<p>또한 우리의 목표는, 가장 좋은 시나리오를 찾아 그 시나리오를 테스트 기관에 넘겨주는 것이라고 하셨다. 가장 좋은 시나리오란, 각 모델별 최적의 화각을 찾아서 그에 맞는 테스트셋을 만들어내는 것이다. 따라서 각 모델별로 어떤 화각에 대해서 최적의 결과를 도출해내는지 찾아내야한다. 각 모델별로 여러 각에서 찍은 사진을 넣어보고, 각각 어떤 화각에서 가장 confidence가 출력되는지 판단하여 최적의 화각을 찾기로 하였다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="테스트셋-생성">테스트셋 생성</h2>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/194745836-892d6abf-5166-4519-9119-dad8a42d858d.png" /></p>
+
+<p>다음주부터 일주일간은 위 조건을 만족하는 테스트셋을 계속 생성할 것 같다. 실제 현장에 설치되어 있는 cctv의 화각과 맞추기 위해서 카메라를 위 사진처럼 높은 곳에 올려두고 동영상을 촬영하고 있다. 촬영된 동영상은 OpenCV를 사용하여 프레임으로 변환해주고, 적당히 정제작업을 거쳐서 모델에 넣어주고 있다. 테스트셋은 적어도 5000셋 이상이 필요하다고 하셨다. 한 세트 당 5프레임씩만 찍는다고 해도 총 25000프레임 정도를 찍어야 할 것 같다.</p>
+
+<p><br />
+<br /></p>
+
+<div align="center">
+  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1007">
+    본문으로 돌아가기
+  </a>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%94%A5%EB%9F%AC%EB%8B%9D" class="page__taxonomy-item p-category" rel="tag">딥러닝</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%9C%A0%ED%81%B4%EB%A6%AC%EB%93%9C%EC%86%8C%ED%94%84%ED%8A%B8" class="page__taxonomy-item p-category" rel="tag">유클리드소프트</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cctv" class="page__taxonomy-item p-category" rel="tag">cctv</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-07">October 7, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%ED%88%AC%EA%B8%B0%ED%96%89%EC%9C%84+%EC%9D%B8%EC%8B%9D%EB%A5%A0+%ED%96%A5%EC%83%81%282%29%20http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_test2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_test2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_test2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/cctv/cctv_test/" class="pagination--pager" title="투기행위 인식률 향상(1)
+">이전</a>
+    
+    
+      <a href="/dl/tensorrt/" class="pagination--pager" title="Pytorch To TensorRT Engine
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/cctv/cctv_test/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>투기행위 인식률 향상(1)</a>
+    
+    
+      <a href="/cctv/cctv_test3/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>투기행위 인식률 향상(3)</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/debug_jekyll/" rel="permalink">[Github_Io]Jekyll 로컬에서 디버그 하는 법
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 22 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">개발 블로그 로컬에서 디버깅
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cctv/md_speed/" rel="permalink">1차 파인튜닝 모델 분석
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 21 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">기존 TensorRT 모델과의 추론 성능 비교
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/docker/install_docker/" rel="permalink">Window Docker 설치방법
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 21 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">windows for docker
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/canvas/setting_proj/" rel="permalink">프로젝트 개요 정리
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 21 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">canvas 개발
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+
+  </body>
+</html>

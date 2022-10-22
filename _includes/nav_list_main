@@ -92,7 +92,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Internship" %}
-                        <li><a href="/categories/Internship" class="">2022 상반기 ICT 인턴십 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

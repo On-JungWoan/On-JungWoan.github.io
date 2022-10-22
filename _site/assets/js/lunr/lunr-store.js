@@ -1,0 +1,397 @@
+var store = [{
+        "title": "[Github Io]Jekyll을 사용한 개발 블로그 생성",
+        "excerpt":"Repository 생성 우선, username.github.io의 형식으로 Repository를 생성해준다. 이 때, username이 다르면 사이트가 제대로 생성되지 않는다. Jekyll 테마 사용 - 원하는 Jekyll 테마 고르기 원하는 Jekyll 테마를 고른다. 본인은 사람들이 가장 많이 사용하는 minimal-mistakes를 선택했다. 처음엔 fork를 하여 사용하였는데 fork하여 commit시, 잔디가 심어지지 않는다는 아주 큰 문제가 있었다!! 그래서 fork Repository를...","categories": ["Blog"],
+        "tags": ["jekyll","Github","Githubio"],
+        "url": "/blog/How-to-make-Github-io/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]인턴 서류 및 면접 준비 #1",
+        "excerpt":"종강 전에 학교 홈페이지 공지사항을 둘러보던 중, “ICT 인턴십”이라는 좋은 프로그램을 발견하였다. 회사 인턴을 하면서 학점까지 받을 수 있는 프로그램이었는데, 현장 업무를 배우면서 학점까지 챙길 수 있는 좋은 프로그램인 것 같아 바로 준비를 하게 되었다. 사전 준비 과정 - 필요한 정보들 찾아보기 사실 주변에 해당 인턴을 해본 사람이 없어서 관련...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/ICT-Internship/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]인턴 서류 및 면접 준비 #2",
+        "excerpt":"ICT 인턴십 도전기 1편에 이은 내용이다. 현재 상황 - 서류 전형 결과 오늘 내가 지원한 세 곳의 서류 전형 결과가 모두 나왔다. 코딩 테스트를 실시하는 기업 2곳과, 실시하지 않는 기업 1 곳을 지원하였는데, 아이러니하게도 코딩테스트를 실시하는 기업의 서류 전형은 모두 합격하고 실시하지 않는 기업은 서류 탈락했다. 코딩 테스트를 실시하는 기업은...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/ICT-Internship(1)/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]인턴 서류 및 면접 준비 #3",
+        "excerpt":"내가 지원한 세 곳의 회사중 두 곳의 회사의 서류 전형을 합격하고 면접준비를 하고 있었다. 근데 회사 한 곳의 면접 날짜 공지가 계속 안되고 있었다. 당장 오늘부터 면접 기간인데 어제 밤까지 공지가 없어서 메일을 보내보았다. 면접 탈락? - 기업으로부터 받은 메일 정말 말 그대로 멘붕이 왔다. 면접일정 조율 관련 안내가 문자...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/ICT-Internship(2)/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]utterances 댓글 추가 안될 때 해결법",
+        "excerpt":"개발 블로그에 댓글 기능을 추가해보려고 한다. utterances를 사용하여 댓글 기능을 추가하려고 하는데, 인터넷에 나와있는 방법으로는 제대로 작동을 안해서 내가 삽질해서 얻은 노하우를 공유하고자 한다. 해당 내용은 minimal-mistakes 사용자 기준으로 작성되었습니다. 0. utterances 설치 댓글 플랫폼 중 utterances가 가볍고 괜찮다고 하길래 해당 댓글 플랫폼을 사용하기로 했다. 댓글을 달기 위해서는 깃허브 계정이...","categories": ["Blog"],
+        "tags": ["jekyll","Github","Githubio"],
+        "url": "/blog/Github-io-comments/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]인턴 서류 및 면접 준비 #4",
+        "excerpt":"두 곳의 회사 면접을 모두 보았다. A기업은 어제 직접 회사에 내방하여 먼접을 보고 왔고, B기업은 오늘 비대면으로 면접을 진행하였다. 면접 이렇게 힘든거였어??ㅠㅠ 전국에 있는 모든 취준생들 파이팅.. A기업 면접 면접을 보는 두 기업 모두 10~15분정도 발표를 준비해야해서 발표 자료를 만들어야하는데, 최대한 자기 PR을 하면서 두괄식도 지키고… 이것저것 신경써야 할 것이...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/ICT-Internship(3)/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]사이드바 카테고리 기능 추가",
+        "excerpt":"해당 포스팅은 “공부하는 식빵맘”님의 포스트를 참조하여 만들었습니다. [출처] : https://ansohxxn.github.io/blog/category/ 0. 만들고자 하는 카테고리 정의 우선 만들고자 하는 카테고리를 정의하여준다. 나는 다음과 같은 구조를 가지는 카테고리를 만들고자 하였다. AI ML DL 대외활동 인턴 etc Blog Dev AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog Dev가 카테고리이다. 해당 카테고리가...","categories": ["Blog"],
+        "tags": ["jekyll","Github","Githubio"],
+        "url": "/blog/Github-io-categories/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]개발 블로그 Google에 노출시키기",
+        "excerpt":"개발 블로그에 작성한 글들을 다양한 사람들과 공유하기 위해서 Google에 노출시키고자 한다. 다음 일련의 과정은 해당 내용을 담고있다. 1. Google Search Console google에 해당 기술 블로그를 노출시키기 위해서 google search console을 사용합니다. google search console은 google에서 검색시, 나의 개발 블로그가 보여질 수 있도록 등록하는 google 서비스입니다. 화면의 시작하기 버튼을 눌러서 시작합니다....","categories": ["Blog"],
+        "tags": ["jekyll","Github","Githubio"],
+        "url": "/blog/Github-io-google/",
+        "teaser": null
+      },{
+        "title": "[ML]앙상블(Ensemble) 알고리즘",
+        "excerpt":"머신러닝 앙상블이란 여러개의 머신러닝 모델을 이용해 최적의 답을 찾아내는 기법. 정형 데이터 분류 및 예측 시 뛰어난 성능을 나타내는 기법이다. 앙상블 기법의 종류는 다음과 같다. 보팅(Voting) 여러 알고리즘 모델을 조합하여 투표를 통해 결과 도출 배깅(Bagging) Low Variance, High Bias 하나의 알고리즘 내에서 샘플 중복 생성을 통해 결과 도출 부스팅(Boosting) High...","categories": ["ML"],
+        "tags": ["ML","Ensemble"],
+        "url": "/ml/ML-Ensemble-Algorithm/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]인턴 서류 및 면접 준비 #5",
+        "excerpt":"오늘은 ICT 인턴십 최종 확정을 하는 날이다. 약 한달동안의 준비한 인턴십 과정의 최종 결과를 기록하였다. 합격 기업 세 곳의 기업에 지원을 해서 두 곳의 기업에 서류 합격을 했고, 면접을 보았다. A 기업은 면접 본 바로 다음날 합격 통보를 받았고, B 기업의 결과만 남은 상황이었다. B 기업은 정말 가고 싶은 기업이었지만,...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/ICT-Internship(4)/",
+        "teaser": null
+      },{
+        "title": "[Computer Vision] MNIST 예제 풀이",
+        "excerpt":"사용교재 : 한 줄씩 따라 해보는 파이토치 딥러닝 프로젝트 모음집 예제 : MNIST를 사용한 손글씨 숫자 이미지 분류 문제 0. Library 이 예제는 PyTorch를 사용하여 학습을 진행한다. Colab을 사용했기 때문에 drive 마운트 과정이 포함되어 있다. # model import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as...","categories": ["DL"],
+        "tags": ["딥러닝","computer_vision","pytorch","CNN"],
+        "url": "/dl/MNIST_example/",
+        "teaser": null
+      },{
+        "title": "[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #1",
+        "excerpt":"해당 데이터 셋의 크기가 큰 관계로, colab에서 작업시 리소스 부족의 우려가 있다. 따라서 로컬 환경에서 개발을 진행하여준다. 데이터셋 특성상, 학습 시간이 매우 느리므로 병렬 연산이 가능한 GPU를 사용하는 것이 좋다. 로컬 환경에서 GPU를 사용하기 위해 필요한 것이 CUDA와 cuDNN이다. 0. CUDA, cuDNN 설치 0-0. GPU 사용 가능 여부 확인 다음...","categories": ["DL"],
+        "tags": ["딥러닝","computer_vision","pytorch","CNN","전이학습"],
+        "url": "/dl/04_Leaf_Diseases/",
+        "teaser": null
+      },{
+        "title": "[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #2",
+        "excerpt":"학습 데이터 셋의 크기가 큰 관계로, CPU를 사용하여 학습 시 학습 시간이 너무 오래걸렸다. 따라서 colab에서 작업을 해주어야 했는데, 데이터셋의 크기가 너무 커서 드라이브에 올리는 데 7시간이나 걸린다는 것이다. 따라서 colab에서 원본 데이터셋 zip파일의 링크를 걸어 다운로드 받은 뒤, colab 환경 내에서 압축 해제를 진행하였다. 드라이브에서 작업을 할때는 속도 제한이...","categories": ["DL"],
+        "tags": ["딥러닝","computer_vision","pytorch","CNN","전이학습"],
+        "url": "/dl/04_Leaf_Diseases(1)/",
+        "teaser": null
+      },{
+        "title": "[DALL-E 2] DALL-E_2 체험기",
+        "excerpt":"DALL-E 2 최근, openAI의 DALL-E 기반의 프로젝트를 기획하고 있었다. 그러던 중 DALL-E 2가 새롭게 출시된다는 소식을 듣고, 사전 체험 신청을 해두었었는데 오늘 초대 메일이 도착했다. 체험 후기 DALL-E mini만 사용하다가 영상으로만 보던 DALL-E를 직접 사용한다니.. 기분이 이상했다. 아래 사진들은 내가 직접 DALL-E 2에 넣어본 text들이다. output1 : A person running...","categories": ["dalle"],
+        "tags": ["dalle2"],
+        "url": "/dalle/dall_e-2/",
+        "teaser": null
+      },{
+        "title": "[Press It!] TLDRThis, PapagoAPI 키 발급 및 기초 작업",
+        "excerpt":"본 프로젝트에서는, TLDRThisAPI로 요약문을 추출한 뒤, Naver의 PapagoAPI를 사용하여 자동 번역해주는 모델을 만들고, 이를 제공하는 플랫폼을 구축하여 서비스하고자 한다. 하지만, TLDRThisAPI와 PapagoAPI는 무료 버전기준 한 달 최대 사용량이 제한되어있다. 따라서 개개인이 각각 개별적인 API 키를 갖도록하고, 로그인 시스템을 구현하여 개개인의 API 키를 보존함으로써 위 문제를 해결하고자 한다. Reperence 이제현, 유시현,...","categories": ["pressit"],
+        "tags": ["OpenAPI","rapidAPI","PapagoAPI","TLDRThis"],
+        "url": "/pressit/pressit/",
+        "teaser": null
+      },{
+        "title": "[Press It!] 함수 최종 정의 및 로고 제작",
+        "excerpt":"본래 프로젝트의 방햗은, 특정 논문의 pdf파일 링크를 input값으로 받으면 해당 문서를 요약하는 것이었으나, 제약사항이 많을 것으로 판단하여 프로젝트 방향을 바꾸었다. pdf파일이 아닌, text파일의 링크를 input값으로 받게끔하였고, 요약의 범위도 논문에서 문서로 확장하였다. 우선 기본적인 기능들을 구현해놓은 뒤, 세부적인 사항은 차차 추가해나가는 쪽으로 방향성을 잡았다. 1. 최종 함수 정의 기존에 정의했던 함수와...","categories": ["pressit"],
+        "tags": ["OpenAPI","rapidAPI","PapagoAPI","TLDRThis"],
+        "url": "/pressit/pressit(1)/",
+        "teaser": null
+      },{
+        "title": "[뻐정] 프로젝트 소개",
+        "excerpt":"   광주광역시 버스 정보 제공 시스템 : 뻐정입니다.  ","categories": ["bbeojung"],
+        "tags": ["bbeojung"],
+        "url": "/bbeojung/test/",
+        "teaser": null
+      },{
+        "title": "[Press It!] 백앤드 구조 정의 및 프론트앤드 템플릿 선택",
+        "excerpt":"1. 백앤드 구조 정의 우선, 웹을 크게 메인화면과 상세 조회화면으로 나누어주기 위해서 Main, Detail 앱을 생성해주었다. 이후 URL을 분리하여 주었다. config에서 main/으로 넘어가는 url은 Main에서, detail/로 넘어가는 url은 Detail에서 처리하도록 하였다. 각각의 urls.py에서 view함수를 호출하면 그에 맞는 html을 출력하는 구조로 설계하였다. 차후, 이 구조는 변경될 수 있다. 2. 프론트앤드 템플릿...","categories": ["pressit"],
+        "tags": ["Django","Web","Bootstrap"],
+        "url": "/pressit/pressit(2)/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]사이드바 간격조정",
+        "excerpt":"1. 기존 사이드바의 모습 기존 사이드바는 다른 영역과 경계가 모호하고, 각 주제간의 분리도 잘 되어있지 않은 느낌이었다. 따라서 처음보는 입장에서는 상당히 가독성이 떨어질 것 같았다. 사이드바 영역과 그 위 설명 영역이 제대로 분리가 되어있지 않아, 이를 제대로 분리시켜주고 카테고리 묶음 제목의 폰트 크기를 더 키우도록 해보자 2. 내부 코드 수정...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/edit-blog/",
+        "teaser": null
+      },{
+        "title": "[Press It!]메인 페이지 Front-End Developing",
+        "excerpt":"0. 메인 페이지 구성 메인 페이지는 크게 ‘URL 입력’, ‘원문 정보’, ‘요약문’, ‘contact me’의 4가지 섹션으로 구성하였다. 상단 네이게이션 바 및 scroll 아이콘을 통해 각 섹션간 이동을 할 수 있게 하였으며, 애니메이션을 사용하여 부드럽게 전환되도록 하였다. 섹션명은 기존 템플릿을 따라갔으며, url입력=’hero’, 원문정보=’about’, 요약문=’resume’, contactme=’contact’이다. 1. URL 입력 섹션 1-1. Web...","categories": ["pressit"],
+        "tags": ["Bootstrap","Django","Web","FrontEnd"],
+        "url": "/pressit/pressit-front-end/",
+        "teaser": null
+      },{
+        "title": "[Github]Read Me 수정하기",
+        "excerpt":"기존 리드미 기존 리드미의 큰 컨셉은 미니멀리즘으로 가고자하였다. 면접관들은 나 말고도 다른 수 백명의 리드미를 읽을 것이고, 나라는 사람에게 많은 시간을 투자하지 않을 것이다. 따라서 필요한 정보들만 한 눈에 들어올 수 있게 하고자 하였고, 부족한 정보는 포트폴리오와 자세히 설명하고자 하였다. 또한, 섹션을 [자기소개, 기술 스택, 통계] 3가지로 나누어 주제별로 정보를...","categories": ["github"],
+        "tags": ["github","readme","markdown"],
+        "url": "/github/edit-readme/",
+        "teaser": null
+      },{
+        "title": "self join",
+        "excerpt":"동일 테이블 내의 특정 컬럼을 기준으로 테이블 이어 붙여주며, 조건 컬럼 설정해주면 동일한 값끼리 조인 된다. 단, self join시에는 테이블 이름 꼭 지정해줘야 함.   SELECT T1.조회컬럼 FROM 테이블명 T1 JOIN 테이블명 T2 ON T1.조건컬럼 = T2.조건컬럼               본문으로 돌아가기     ","categories": ["sql"],
+        "tags": ["인턴","ICT인턴십","sql"],
+        "url": "/sql/TIL_0905/",
+        "teaser": null
+      },{
+        "title": "SQL 실행순서",
+        "excerpt":"SQL문은 다음 실행 순서에 맞춰 실행된다.   FROM &gt; ON &gt; JOIN &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT &gt; ORDER BY               본문으로 돌아가기     ","categories": ["sql"],
+        "tags": ["인턴","ICT인턴십","sql"],
+        "url": "/sql/TIL_0905_1/",
+        "teaser": null
+      },{
+        "title": "서브쿼리",
+        "excerpt":"Q1) [ORDER] 테이블의 [mem_no] 컬럼별 [sales_amt] 컬럼의 합계를 구하시오. 이 때, sum(sales_amt)의 열 이름은 tot_amt로 한다. SELECT mem_no, sum(sales_amt) tot_amt FROM [ORDER] GROUP BY mem_no Q2) 1번 문제에서 짠 쿼리를 서브쿼리로 하여, [MEMBER] 테이블을 LEFT JOIN 하라. SELECT * FROM (SELECT mem_no, sum(sales_amt) tot_amt FROM [ORDER] GROUP BY mem_no) T1...","categories": ["sql"],
+        "tags": ["인턴","ICT인턴십","sql"],
+        "url": "/sql/TIL_0906/",
+        "teaser": null
+      },{
+        "title": "ORDER BY 용어정리",
+        "excerpt":"               본문으로 돌아가기     ","categories": ["sql"],
+        "tags": ["인턴","ICT인턴십","sql"],
+        "url": "/sql/TIL_0913/",
+        "teaser": null
+      },{
+        "title": "MariaDB 기반 SQLGate를 사용한 테이블 join",
+        "excerpt":"MariaDB 기반 SQLGate를 사용하여 최상 난이도 쿼리와 자연어를 매칭하는 작업을 하였다. [ manage_physical_table ]에는 NL2SQL 프로젝트에서 사용하는 모든 테이블에 대한 정보가 저장되어 있었으며, [ manage_physical_column ]에는 컬럼에 대한 정보가 들어 있었다. [ manage_physical_table ] 의 join_table_id는 어떤 테이블에 join이 되어있는지를 나타내고 있었으며, join_table_column_id는 join의 기준 컬럼 id에 대한 내용이 담겨있었다....","categories": ["sql"],
+        "tags": ["인턴","ICT인턴십","sql"],
+        "url": "/sql/TIL_0914/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]블로그 테마 변경 및 커스텀",
+        "excerpt":"테마 변경 테마를 기존 “dirt” 테마에서 “contrast” 테마로 변경하였는데, 마음에 들지 않는 부분이 있었다. 링크 텍스트 색이 파랗게 되어있는 것과, 선택 영역이 빨간색인 것들을 수정해주었다. css 수정 [경로] On-JungWoan.github.io/_sass/minimal-mistakes/skins/_contrast.scss [변경 전] $primary-color: #ff0000 !default; $link-color: #0000ff !default; [변경 후] $primary-color: #000000 !default; $link-color: #340000 !default; base.scss 수정 링크에 밑줄이 없으니...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/change_theme/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]블로그 개선",
+        "excerpt":"1. 상단 네비게이션 바 목록 수정 상단 네비게이션 바에 불필요한 카테고리가 많이 있는 관계로 조금 제거해주기로 하였다. /_data/navigation.yml의 내용을 다음과 같이 수정하여주었다. [수정 전] main: - title: \"Home\" # 보여지는 이름 url: https://on-jungwoan.github.io/ # 이동하는 url - title: \"Category\" url: /categories/ - title: \"Tag\" url: /tags/ - title: \"Posts\" url:...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/edit_navigation/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]상단 네비게이션바 수정",
+        "excerpt":"1. 홈 외의 다른 page에 사이드바 추가 홈 외의 다른 page에서 사이드바가 나오지 않는 문제점을 발견하여 해결하였다. [변경전] On-JungWoan.github.io/_pages/category-archive-grid.md의 일부이다. sidebar_main 옵션을 true로 주었다. --- title: \"Posts by Category (grid view)\" layout: categories permalink: /categories-grid/ entries_layout: grid author_profile: true sidebar_main: true --- [변경후] 2. TIL 페이지 생성 개발 블로그에 매일...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/change_navigation/",
+        "teaser": null
+      },{
+        "title": "[ML]치과 데이터 상관분석",
+        "excerpt":"주변 지인이 논문에 사용할 상관분석을 부탁해서 해드렸다. 분석하고자 하는 내용은 다음과 같다. 유착치의 위치에 따른 유병률 유착치와 치아 결손간의 상관관계 1. Import Libarary &amp; Load DataSet 작업환경은 colab이고 필요한 파일은 구글 드라이브에 업로드하여 사용하였다. 한글 인코딩 값은 cp949를 사용하였으며, 데이터셋은 개인정보 문제로 따로 소개하지 않겠다. # data handling import pandas...","categories": ["ML"],
+        "tags": ["ML","상관분석"],
+        "url": "/ml/corr_analysis/",
+        "teaser": null
+      },{
+        "title": "프로젝트 설명 / 실시간 영상 프레임 향상 최적화 기법",
+        "excerpt":"프로젝트 설명 cctv를 통해 쓰레기 무단 투기 행위를 실시간으로 감지하고 경고 음성을 재생하는 프로젝트이며, 현재 시범적으로 6군데에 설치되어 있었다. cctv가 설치되어있는 컨트롤 박스에는 gpu와 우분투 기반 시스템이 설치되어 있었고, 터미널에서 미리 작성해둔 스크립트를 실행하여 동작하는 방식인 것 같았다. 사람의 모션을 디텍션해서 일정 임계치 값을 넘어서면 투기 행위로 감지하는 시스템이라고 하셨다....","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv/",
+        "teaser": null
+      },{
+        "title": "[다이아토닉]다이아 토닉의 구성음",
+        "excerpt":"1. 다이아토닉의 정의 스케일의 구성음들로만 이루어진 코드들의 모음이다. 가령 C major 스케일의 다이아토닉 구성음은 C D E F G A B C가 되며, 순서대로 1도(I), 2도(II)… 7도(VII), 8도(옥타브)이다. 웬만한 90% 정도의 대중 가요는 거의 다이아토닉 코드로 이루어져있기 때문에 코드카피할 때 매우 유용하다. 2. Major 스케일에서의 다이아토닉 2-1) Major Diatonic triad...","categories": ["harmonics"],
+        "tags": ["화성학"],
+        "url": "/harmonics/diatonic/",
+        "teaser": null
+      },{
+        "title": "Tensorflow로 XOR문제 해결",
+        "excerpt":"XOR 문제? 과거 딥러닝 모델은 하나의 퍼셉트론만을 사용한 단층 퍼셉트론 모델이었다. 하지만 이러한 하나의 퍼셉트론만으로는 XOR 문제를 해결하는 것은 불가능하다. 다음과 같은 여러개의 결정 경계가 필요한데, 그러기 위해서는 3개의 퍼셉트론을 사용한 다층 퍼셉트론 모델을 사용해야한다. 다층 퍼셉트론 다음과 같은 가중치와 bias를 갖는 3개의 퍼셉트론을 사용하면 XOR문제를 해결할 수 있다. 수식으로...","categories": ["DL"],
+        "tags": ["DL","Tensorflow","ICT인턴십","모두를 위한 딥러닝 강좌 시즌 1"],
+        "url": "/dl/Tensorflow_XOR/",
+        "teaser": null
+      },{
+        "title": "Tensorflow 개념 및 메소드 정리",
+        "excerpt":"1. 기본 개념 정리 1-1) About Tensorflow Tensorflow는, 그래프의 node와 같은 역할을 하는 Tensor를 여러개 만들어, flow 그래프를 쉽게 빌드할 수 있도록 도와주는 라이브러리이다. Tensor는 array로 구현되며, Tensor들을 생성하여 그래프를 빌드하고 세션을 만들어 실행하면 ouput값이 리턴되는 방식으로 동작한다. # Default Graph에 Tensor 생성 hello = tf.constant(\"Hello, TensorFlow!\") # 세션 생성...","categories": ["DL"],
+        "tags": ["DL","Tensorflow","ICT인턴십","모두를 위한 딥러닝 강좌 시즌 1"],
+        "url": "/dl/about_tf/",
+        "teaser": null
+      },{
+        "title": "머신러닝의 개념과 종류",
+        "excerpt":"1. 머신러닝의 개념 머신러닝 이전에는 개발자가 컴퓨터에게 일일이 모든 case에 대한 행동 양식을 지정해주었다. 따라서 개발자가 지정하지 않은 case나 복잡한 상황에서는 컴퓨터를 제어하기가 어렵다는 한계가 있었다. 이러한 한계를 극복하고자 등장한 것이 머신러닝이다. 머신러닝은 컴퓨터가 데이터나 상황을 학습하여 스스로 의사결정할 수 있도록 하는 기법이다. 머신러닝의 등장으로 일일이 case에 대해 행동 양식을...","categories": ["ML"],
+        "tags": ["ML","ICT인턴십","모두를 위한 딥러닝 강좌 시즌 1"],
+        "url": "/ml/about_ml/",
+        "teaser": null
+      },{
+        "title": "알고리즘 흐름 / CUDA Streams",
+        "excerpt":"1. 객체/행위 탐지 알고리즘 흐름 jpg 이미지를 받으면 해당 이미지를 tensor로 변환하고, trt_model에 해당 tensor를 삽입한다. 다양한 사람이 이미지를 관찰하듯이 여러 case에서 해당 이미지의 객체를 인식하고, confidence가 가장 높은 바운딩 박스를 채택한다. 그 뒤, 해당 바운딩 박스보다 약간 더 크게 이미지를 crop하고(인식률 개선), key point를 추출한다. 마지막으로, 여러 조건식을 통해...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_bounding/",
+        "teaser": null
+      },{
+        "title": "__init__과 __call__의 차이 / 예외처리 pass Keyword",
+        "excerpt":"1. init / __call__의 차이 __init__은 인스턴스 초기화 할 때 불러와지고, __call__은 인스턴스가 호출됐을 때 실행된다. 1-1) __init__ class test: def __init__(self, data): print(data) T = test('hi') hi 1-2) __call__ class test: def __call__(self, data): print(data) test('hi') hi 2. 예외처리 pass 예외처리 시에 아무것도 하고싶지 않으면 pass를 입력하면 된다. try:...","categories": ["python"],
+        "tags": ["ML","ICT인턴십","Python"],
+        "url": "/python/init_call/",
+        "teaser": null
+      },{
+        "title": "객체/행위인식 모델 코드수정 및 자동화",
+        "excerpt":"코드 수정 투기 행위가 감지되지 않더라도 BBOX, Skeleton 그려지게 변경 투기 행위 감지 알고리즘은, GPU에서 연산 된 여러개의 바운딩 박스 중 일정 confidence 이하의 BBOX를 1차적으로 걸러낸 뒤, 그 중 가장 높은 confidence를 가진 BBOX를 뽑아 threshold와 비교하여 투기행위로 분류하는 알고리즘이다. 1차적으로 걸러낸 뒤 뽑힌 BBOX의 confidence들은 result_scores에 저장되며, 최대...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_bbox/",
+        "teaser": null
+      },{
+        "title": "if `__name__` == '`__main__`'을 쓰는 이유",
+        "excerpt":"Python의 __name__ python에서 어떠한 파일을 실행하는 방법은 2가지가 있는데, 하나는 모듈로 불러오는 방법이고, 하나는 직접 터미널에서 실행하는 방법이다. 다음 예시와 같이 직접 터미널에서 실행할 경우 최상위 함수는 main이 되고, 모듈로 불러오는 경우는 자기 자신이 된다. ## test.py ## print(__name__) case 1 import test test test case 2 &gt;&gt;&gt; python3 test.py...","categories": ["python"],
+        "tags": ["ML","ICT인턴십","Python"],
+        "url": "/python/name_main/",
+        "teaser": null
+      },{
+        "title": "검출정보 json에 저장 / BBOX 이미지 분리",
+        "excerpt":"1. Test에 필요한 정보 json에 저장 PyQT에서 사용하기 쉽도록 필요한 정보를 json에 담아 서버에 저장하는 작업을 하였다. 1-1) Bounding Box 개수 세기 해당 모델은 “단일 심층 신경망을 사용하여 이미지에서 물체를 감지하는 방법“을 설명하는 SSD: Single Shot MultiBox Detector 논문을 기반으로 작성되었다. [ 출처 : 파이토치 공식 문서 ] 위 문서에도...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_json/",
+        "teaser": null
+      },{
+        "title": "[다이아토닉]코드의 기능 / 도미넌트 모션",
+        "excerpt":"0. 다이어토닉의 기능 다음은 Major 키 기준에서의 다이어토닉의 기능이다. 각 기능 내에서는 코드 교환이 가능하며 이를 대리 코드라고 한다. 이러한 대리 코드를 사용하여 IM7대신 IIIm7을 사용하면 코드 진행이 부드러워진다. Tonic(T) : IM7, IIIm7, VIm7 Sub-Dominant(SD) : IVM7, IIm7 Dominant(D) : V7, VIIm7b5 1. Tonic 1-1) 특징 토닉은 그 Key의 기본이...","categories": ["harmonics"],
+        "tags": ["화성학"],
+        "url": "/harmonics/diatonic_dominant/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]2022년 09월 TIL",
+        "excerpt":"✍ 학습내용 정리 DL 실시간 영상 프레임 향상 최적화 기법 Tensorflow 개념 및 메소드 정리 Tensorflow로 XOR 문제 해결 알고리즘 흐름 / CUDA Streams 객체/행위인식 모델 코드수정 및 자동화 검출정보 json에 저장 / BBOX 이미지 분리 투기 행위 인식률 개선 ML 치과 데이터 상관분석 머신러닝의 개념과 종류 Web 개발블로그 css...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십","TIL"],
+        "url": "/internship/Itern-TIL/",
+        "teaser": null
+      },{
+        "title": "투기행위 인식률 개선",
+        "excerpt":"투기 행위 검출이 잘 안됨 객체 검출은 잘 되는데 투기 행위 인식률이 매우 떨어지는 issue가 발생하였다. 며칠 전 옥상에서 찍은 테스트셋을 모델에 넣어보았는데, 명백히 투기행위로 인식되는 이미지조차 투기 행위로 인식하지 못하고 있었다. 현장에서 사용하는 모델과 다르고, 아직 파인튜닝이 완전히 끝난 모델이 아니긴 했지만, 1500장 당 1~2건밖에 인식을 못할정도로 성능이 너무...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_detect/",
+        "teaser": null
+      },{
+        "title": "Activation Function, Optimizer",
+        "excerpt":"1. 신경망 층 신경망의 층은 다음과 같이 입력층, 은닉층, 출력층으로 나누어진다. 1) 입력층 (Input Layer) 데이터를 입력받는 층이며, 어떠한 연산도 일어나지 않는다. 노드의 수는 입력 변수의 수와 같으며, 신경망의 깊으를 셀 때 입력층은 포함하지 않는다. 2) 은닉층 (Hidden Layer) 입력층과 출력층을 제외한 모든 층을 말한다. 사용자는 입력층과 출력층만 볼 수...","categories": ["DL"],
+        "tags": ["딥러닝","ICT인턴십"],
+        "url": "/dl/activation_opt/",
+        "teaser": null
+      },{
+        "title": "PyQT에 넘겨줄 json 수정",
+        "excerpt":"1. 기존 객체검출 Confusion Matrix 문제점 기존 방식은, 사진에 사람이 2명 있는데 Bounding Box는 1개밖에 그려지지 않았다면 오분류 한 것으로 판단하였다. 그렇다면 이러한 경우 객체 검출률에 대한 Confusion Matrix는 어떻게 그려야 할까? FP일까 FN일까? Confusion Matrix를 그리기가 상당히 애매해진다. 따라서 각 개체마다의 라벨링 데이터와 모델에서 예측한 box와 간의 유사도가 50%이상이면...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/modify_json/",
+        "teaser": null
+      },{
+        "title": "투기행위 인식률 향상(1)",
+        "excerpt":"투기 행위에 대한 인식률이 너무 낮아 대대적인 코드 수정에 들어가기로 하였다. 앞으로 투기 행위 인식률을 높이기 위해 이런 저런 시도들을 해볼 예정이다. Blending Model 현재 투기행위 감지에 사용되는 y_model은 각기 다른 화각에 대해서 학습된 5개의 모델을 Blending한 모델이다. 따라서 다양한 화각에 대해서 유도리있게 투기행위를 검출할 수 있긴 하지만, 전체적으로 confidence는...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_test/",
+        "teaser": null
+      },{
+        "title": "투기행위 인식률 향상(2)",
+        "excerpt":"투기행위 검출률 저조 기존 1, 4번 모델 블렌딩을 통해 객체 검출에 대한 평가 기준은 맞추었지만, 투기 행위에 대한 평가 기준은 여전히 맞추지 못하고 있는 상황이다. 우선, 투기행위를 인식하지 못하는 경우는 다음과 같이 크게 2가지로 나누어 진다. 모델이 predict한 confidence값이 Threshold를 모두 넘지 못해서 검출 x 애초에 객체 자체를 탐지 x...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_test2/",
+        "teaser": null
+      },{
+        "title": "Pytorch To TensorRT Engine",
+        "excerpt":"TensorRT란? TensorRT는 학습된 딥러닝 모델을 최적화하여, NVIDIA GPU 상에서의 추론 속도를 수배 ~ 수십배까지 향싱시켜 딥러닝 서비스를 개선하는데 도움을 줄 수 있는 모델 최적화 엔진이다. 실시간으로 그래픽 연산을 수행해야 하거나, 빠른 연산속도를 요구하는 분야에 많이 사용되는 것 같다. 본 포스팅에서는 Pytorch 모델을 Onnx로 변환 후 TensorRT Engine을 생성하는 방법과, torch2trt...","categories": ["DL"],
+        "tags": ["DL","TensorRT","pytorch","ICT인턴십"],
+        "url": "/dl/tensorrt/",
+        "teaser": null
+      },{
+        "title": "투기행위 인식률 향상(3)",
+        "excerpt":"모델 Fine tuning 지금까지 했던 방법들로 어느정도 인식률을 향상시킬 수 있었으나, 근본적으로 모델 자체의 정확도가 떨어지는 상황이었다. 따라서 현장에서 수집된 사람들의 이미지를 바탕으로 기존 모델을 파인튜닝하였다. 파인튜닝 결과 모델 성능이 눈에 띄게 향상되는 것을 볼 수 있었으며, 성능이 좋지 않게 나왔던건 결국 모델의 언더피팅 문제였던 것으로 밝혀졌다. 다음 사진에서 볼...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_test3/",
+        "teaser": null
+      },{
+        "title": "[뻐정] 프로젝트 목표 개선사항",
+        "excerpt":"뻐정 개선사항 1. 버스 내부 혼잡도 계산 현재 뻐정은 사용자가 특정 버스를 선택하면 해당 버스의 예상 탑승인원만을 예측하고 있다. 물론 예상 탑승 인원으로도 유의미한 결과(탑승시 혼잡도)를 도출할 수 있지만, 사용자에게 더 중요한 정보는 버스의 내부 혼잡도일 것이다. 따라서 사용자에게 버스 내부 혼잡도를 보여주는 기능을 추가하는 것이 좋을 것 같다. 위...","categories": ["bbeojung"],
+        "tags": ["bbeojung","ICT인턴십"],
+        "url": "/bbeojung/bj_update/",
+        "teaser": null
+      },{
+        "title": "테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출",
+        "excerpt":"촬영 및 가공과정 모델이 마무리되고, 이제 테스트셋을 구축하는 데 집중했다. 배경이나 화각을 달리 하기 위해 테스트셋 촬영 장소를 회사 밖으로 옮겼다. 현장 cctv와 화각을 비슷하게 하기 위해서 벤치 위에 올라가거나 계단 위에 올라가서 촬영을 진행하였고, 다양한 case 확보를 위해 여러 각도에서 촬영을 진행하였다. 자연스럽게 걸어가거나 쓰레기를 투기하는 행위를 동영상으로 찍고,...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/cctv_auto/",
+        "teaser": null
+      },{
+        "title": "argparse 사용법",
+        "excerpt":"ArgParse 터미널에서 파일 실행할 때 인자 설정해주는 표준 라이브러리이다. 기본 사용법 import argparse -&gt; Make parser -&gt; Add argument -&gt; Parse argument ## test.py ## import argparse parser = argparse.ArgumentParser(description='프로그램 설명') parser.add_argument('arg1', help='이 인수의 설명(그 외 기타등등 아무거나)') parser.add_argument('arg2', help='foooo', default='hi') parser.add_argument('--arg3', type=int, default=5) parser.add_argument('-a', '--arg4', action='store_true') parser.add_argument('--arg5', required=True) args...","categories": ["python"],
+        "tags": ["ICT인턴십","Python"],
+        "url": "/python/argparse/",
+        "teaser": null
+      },{
+        "title": "Pytorch to TensorRT by torch2trt",
+        "excerpt":"1. 작업 현황 어제 찍은 27개의 테스트 동영상에 대해서 사람이 검출되는 프레임만 추출하는 작업은 모두 끝이 났다. 어제 돌려놓고 퇴근했더니 오늘 출근하니까 다 돌아져 있었다. 이제 이렇게 추출된 이미지를 투기행위 탐지 모델에 돌리는 작업을 해주어야 한다. 2. 문제상황 새롭게 받은 모델은 그냥 일반 pytorch 모델인 관계로 연산 속도가 매우 느렸다....","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/torch2trt/",
+        "teaser": null
+      },{
+        "title": "TensorRT 모델에서 engine 모듈 추출하기",
+        "excerpt":"1. Make Engine File pytorch 모델이 onnx를 거치지 않고, torch2trt를 사용해 바로 TensorRT로 변환되면 확장자가 pth가 된다. ~_trt.pth의 TensorRT 모델에서 engine파일을 추출하는 과정이 잘 안되어서 삽질하다가 얻은 결과이다. 방법은 총 2가지가 있다. 방법1 : state_dict에서 추출 TorchRT 모델의 state_dict에서 engine을 추출하는 방법이다. 추출된 engine 파일을 serialize해서 이진파일로 저장하고, 다시 불러올...","categories": ["DL"],
+        "tags": ["DL","TensorRT","pytorch","ICT인턴십"],
+        "url": "/dl/tensorrtengine/",
+        "teaser": null
+      },{
+        "title": "TensorRT Engine 성능 비교",
+        "excerpt":"1. Make TensorRT Engine 기존 TensorRT 모델에서 engine 모듈을 분리하는데 성공하였다. 자세한 개념은 아래에 정리해두었다. Ref. TensorRT 모델에서 engine 모듈 추출하기 2. 성능 비교 다음은 Pytorch 모델과 TorchRT 모델, TorchRT Engine 파일의 성능 및 결과를 비교해본 결과이다. 성능은 1초당 연산한 횟수를 기준으로 하였으며 tqdm을 사용하였다. 해당 모델은 4개의 모델을 Blending...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/tensorrt_engine/",
+        "teaser": null
+      },{
+        "title": "[toy_project] 아파트 실거래가 예측 (1)",
+        "excerpt":"1. Make Train/Test Data 1-1) 데이터 수집 원시 데이터는 국토교통부 실거래가 공개시스템에서 받아주었다. 기간은 2019년 9월 30일부터 2022년 09월 30일까지 3개년 데이터를 사용하였다. 15개의 컬럼과, 약 7만개의 관측치로 이루어져있는 데이터이다. 1-2) Import Library &amp; Load Dataset 전처리 작업을 위해 원시 데이터를 불러와주었다. 한글 인코딩은 cp949를 사용하였다. # Data Handling import...","categories": ["ML"],
+        "tags": ["ML","ICT인턴십","orange3"],
+        "url": "/ml/apartpred/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십] 업무 지시내용",
+        "excerpt":"9월 1주차 09/01 * 팀즈로 소통하기 때문에 인턴분들 메시지 확인하면 확인표시 (👍) 누르기 * [NL2SQL_난이도_중_ver.1.2.3.220901.pdf](NL2SQL_%EB%82%9C%EC%9D%B4%EB%8F%84_%EC%A4%91_ver.1.2.3.220901.pdf) 본문으로 돌아가기 09/02 * IS NOT NULL 안됨 * AND도 COMP1에 추가 * 컬럼명 같아도 others에 카운팅 됨 * GROUP BY는 집계함수 사용할 때만 * DISTINCT 사용 가능 * GROUP BY 기준 여러개일 때, 기준...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/notice/",
+        "teaser": null
+      },{
+        "title": "TensorRT Engine Output 가공 / CUDA STREAM 수정",
+        "excerpt":"1. 진행상황 x86과 ARM 아키텍쳐에서 사용하는 모델 변환 작업을 해주었다. 기존 y_model을 새롭게 변환한 TensorRT 모델로 갈아끼우는 작업을 완료하였다. 2. TensorRT Engine Output Post-Treatment TensorRT에서 추출한 engine 파일을 사용하기 위해서 Output값 후처리 작업을 이것저것 해보았다. TensorRT에서 engine 모듈을 추출하는 방법은 다음 포스팅을 참조하면 된다. Ref. TensorRT 모델에서 engine 모듈 추출하기...","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/engine_output/",
+        "teaser": null
+      },{
+        "title": "Pytorch vs TensorRT vs TensorRT Engine 성능 비교",
+        "excerpt":"0. 측정 기준 세 모델 모두 x86환경에서 측정된 결과이며 연산 속도는 time의 process_time을 사용하였다. 연산속도 측정 기준은 다음과 같다. 모델 측정기준 Pytorch image -&gt; model -&gt; output TensorRT image -&gt; model -&gt; output TensorRT Engine image -&gt; Stream(GPU) -&gt; output Pytorch와 TensorRT는 model에 이미지를 넣어 output이 나오는 시간을, TensorRT Engine은...","categories": ["DL"],
+        "tags": ["DL","TensorRT","pytorch","ICT인턴십","유클리드소프트"],
+        "url": "/dl/trt_speed/",
+        "teaser": null
+      },{
+        "title": "[toy_project] 아파트 실거래가 예측 (2)",
+        "excerpt":"기존 코드에 잘못 된 부분이 있어서 전체적으로 코드 수정을 해주었다. 1. Run_Preprocess.py 모델 학습을 위한 전처리 과정이 담겨있는 코드이다. 1-1) Import Library &amp; Set wd 필요한 라이브러리와 상수를 선언해주는 파트이다. # Data Handling import pandas as pd import os import pickle # Model Selection from sklearn.model_selection import train_test_split from sklearn.preprocessing...","categories": ["ML"],
+        "tags": ["ML","ICT인턴십","orange3"],
+        "url": "/ml/apartpred2/",
+        "teaser": null
+      },{
+        "title": "프로젝트 진행상황",
+        "excerpt":"프로젝트가 마무리 단계에 들어섰다. 지금까지 찍었던 테스트셋 동영상에서 사람이 검출된 프레임을 추출하고, 해당 프레임을 투기행위 감지 모델에 넣었다. 그렇게 해서 나온 투기행위 사진 중, 오분류되거나 흐릿하게 나온 프레임은 제거해주었다. 또한, 프레임 차이가 얼마 나지 않아서 겹치는 모션등은 제거해주었다. 결과적으로 dumping 이미지 240장, 일반 이미지 60장해서 총 300장의 테스트셋 준비를 완료하였다....","categories": ["cctv"],
+        "tags": ["딥러닝","computer_vision","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/project_prog/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]2022년 10월 TIL",
+        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 내가 할 수 있는 일을 스스로 찾아서 이것저것 개선시켜 보려고 하고 있다. 아직은 많이 어렵지만 계속 하다보면 언젠간 좋은 결과가 있지 않을까 생각한다. 투기 행위 감지 모델의 성능이 좋지 않아서, 이번주는 모델 성능을 개선시키기 위해 다양한 시도들을 해보았다. 아직까지 모델에는...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십","TIL"],
+        "url": "/internship/Itern-TIL-10/",
+        "teaser": null
+      },{
+        "title": "프로젝트 개요 정리",
+        "excerpt":"프로젝트 개요 회사 내부 학습관리시스템(LMS)의 로그인 창이다. 현재 회사 내부 LMS 기술은 INSTRUCTURE라는 곳에서 가져왔다고 한다. 거의 기술 이전이 완료된 상태이지만, 아직 로그인 창은 제대로 구현이 되어있지 않은 상태라고 한다. 따라서 일단 Django 템플릿으로 로그인 canvas를 개발하는 것이 주 목표라고 하셨다. Django 템플릿으로 회원가입 폼을 만들어서 회원 정보를 DB로 보내주면...","categories": ["canvas"],
+        "tags": ["postgreSQL","Docker","DataGrip","유클리드소프트"],
+        "url": "/canvas/setting_proj/",
+        "teaser": null
+      },{
+        "title": "Window Docker 설치방법",
+        "excerpt":"1. 환경설정 1-1) 가상화 사용설정 작업관리자 -&gt; 성능 -&gt; CPU의 가상화가 사용으로 되어있는지 확인한다. 만약 사용으로 되어 있지 않으면, BIOS에서 사용함으로 설정해야한다. 1-2) Hyper-V 켜기 window + s -&gt; 프로그램 추가/제거 -&gt; 선택적 기능 -&gt; 기타 Windows 기능 -&gt; Hyper-V 체크하기 2. Docker 설치 2-1) Docker installer 설치  - https://hub.docker.com/editions/community/docker-ce-desktop-windows/...","categories": ["docker"],
+        "tags": ["Docker"],
+        "url": "/docker/install_docker/",
+        "teaser": null
+      },{
+        "title": "1차 파인튜닝 모델 분석",
+        "excerpt":"기존에 사용하던 투기 감지 모델에, 신규로 이미지 600장을 더 학습시켜 파인튜닝한 모델에 대한 성능 비교이다. 파인튜닝 모델은 Pytorch 모델이며 TensorRT와 TensorRT Engine으로 변환하여 성능을 측정하였다. 변수명 모델 Origin Model 이전 TensorRT 모델 Pytorch Model 파인튜닝 Pytorch 모델 TensorRT Model 파인튜닝 TensorRT 모델 Engine File 파인튜닝 Engine 파일 0. 측정 기준...","categories": ["cctv"],
+        "tags": ["DL","TensorRT","pytorch","ICT인턴십","유클리드소프트"],
+        "url": "/cctv/md_speed/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]Jekyll 로컬에서 디버그 하는 법",
+        "excerpt":"1. Git Clone 프로젝트 파일을 원하는 로컬 환경에 clone 해준다. &gt;&gt;&gt; git clone repo경로 2. Edit Gemfile Gemfile을 수정해준다. 나는 minimal-mistakes를 사용하고 있어서 공식 문서를 참고하였다. Link : Remote theme methodPermalink source \"https://rubygems.org\" gem \"github-pages\", group: :jekyll_plugins gem \"jekyll-include-cache\", group: :jekyll_plugins gem \"webrick\", \"~&gt; 1.7\" 3. Ruby 설치 아래 링크에서...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/debug_jekyll/",
+        "teaser": null
+      }]

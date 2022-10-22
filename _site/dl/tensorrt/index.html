@@ -1,0 +1,1996 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Pytorch To TensorRT Engine - 정완이의 개발 일기장</title>
+<meta name="description" content="TensorRT를 사용하여 연산속도 향상">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="Pytorch To TensorRT Engine">
+<meta property="og:url" content="http://localhost:4000/dl/tensorrt/">
+
+
+  <meta property="og:description" content="TensorRT를 사용하여 연산속도 향상">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-10-11T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-10-11T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl/tensorrt/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정완이의 개발 일기장
+          
+        </a>
+
+        <ul class="visible-links">
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AI  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대외활동  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="dropdown ">
+                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                       <ul class="dropdown-content" >
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                                  
+                         
+                               
+                           
+                       </ul>
+                   </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+       </ul>
+        
+        
+<!--         <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="">AI</a>
+            </li><li class="masthead__menu-item">
+              <a href="">PROJECTS</a>
+            </li><li class="masthead__menu-item">
+              <a href="">대외활동</a>
+            </li><li class="masthead__menu-item">
+              <a href="">ETC</a>
+            </li><li class="masthead__menu-item">
+              <a href="/TIL/">TIL</a>
+            </li></ul> -->
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/image/profile_image.jpg" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>데이터 분석을 좋아하는 성장형 개발자 온정완입니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">66</style> <span style="">개</style> 
+      </li>
+      <li>
+      
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL" class="">Computer Vision (9)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>         
+            
+        <span class="nav__sub-title">Back-End</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/sql" class="">DB (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/docker" class="">Docker (1)</a></li>
+                    
+                
+            </ul>              
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (1)</a></li>
+                    
+                
+                    
+                
+            </ul>          
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/pressit" class="">Press It! (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (2)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            
+        <span class="nav__sub-title">etc</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/sql" class="">SQL (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>           
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Blog Dev (9)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>          
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/github" class="">Github (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                  
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/dalle" class="">DALL-E (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>           
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (2)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>              
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Pytorch To TensorRT Engine">
+    <meta itemprop="description" content="TensorRT를 사용하여 연산속도 향상">
+    <meta itemprop="datePublished" content="2022-10-11T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-10-11T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/dl/tensorrt/" class="u-url" itemprop="url">Pytorch To TensorRT Engine
+</a>
+          </h1>
+          <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+          
+            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-10-11T00:00:00+09:00">October 11, 2022</time></p>
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#tensorrt란">TensorRT란?</a></li><li><a href="#pytorch-to-onnx-to-tensorrt-engine">Pytorch to Onnx to TensorRT Engine</a><ul><li><a href="#about-onnx">About Onnx</a></li><li><a href="#create-onnx">Create Onnx</a></li><li><a href="#create-tensorrt-engine-by-onnx">Create TensorRT Engine by Onnx</a></li></ul></li><li><a href="#pytorch-to-tensorrt">Pytorch to TensorRT</a><ul><li><a href="#convert">Convert</a></li><li><a href="#save--load">Save &amp; Load</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="tensorrt란">TensorRT란?</h2>
+<p>TensorRT는 학습된 딥러닝 모델을 최적화하여, NVIDIA GPU 상에서의 추론 속도를 수배 ~ 수십배까지 향싱시켜 딥러닝 서비스를 개선하는데 도움을 줄 수 있는 모델 최적화 엔진이다. 실시간으로 그래픽 연산을 수행해야 하거나, 빠른 연산속도를 요구하는 분야에 많이 사용되는 것 같다. 본 포스팅에서는 Pytorch 모델을 Onnx로 변환 후 TensorRT Engine을 생성하는 방법과, torch2trt 라이브러리를 사용하여 바로 TensorRT Engine으로 변환하는 방법을 소개한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/195040619-96924eb3-fad5-40b1-b191-6f5558245deb.png" alt="image" /></p>
+
+<p><br />
+<br /></p>
+
+<h2 id="pytorch-to-onnx-to-tensorrt-engine">Pytorch to Onnx to TensorRT Engine</h2>
+<h3 id="about-onnx">About Onnx</h3>
+<p>Onnx란 Open Neural Network eXchange의 줄임말로서, Facebook과 MS가 개발한 신경망 모델의 호환 포맷이다. Onnx는 특정 프레임워크에서 작성한 모델을 다른 프레임 워크에서 사용할 수 있게하는 도구이며, pytorch, caffe, CNTK, MXNet등을 지원한다. 예를 들어 Pytorch 작성 -&gt; Onnx 변환 -&gt; Caffe에서 Imfort와 같은 작업이 가능해진다.</p>
+
+<p><br /></p>
+
+<h3 id="create-onnx">Create Onnx</h3>
+
+<p>Onnx 모델을 생성할 때는 Pytorch 모델에 입력되는 input shape 과 동일해야한다. shape 만 맞춰준다면 어떠한 랜덤 값이 들어가도 무방하다. torch.onnx.export 시 중요한 것은 파이토치 모델, 입력 값 만 있으면 Onnx 모델을 만들 수 있다. torch.onnx.export 함수는 기본적으로 scripting 이 아닌 tracing 을 사용하기 때문에 example input 을 넣어주어야 한다. 
+때에 따라 필요한 옵션을 추가하여 Onnx 모델을 생성 할 수 있다. 이 때 verbose=False 라는 옵션을 추가하면, 어떤 노드들이 Onnx 모델을 위해 인식되었는지 로그를 띄울 수 있다. </p>
+
+<p>Onnx 모델 생성시에는 입력 데이터와 크기가 동일한 더미 데이터를 사용해야한다. 이 때, 더미 데이터에는 어떠한 값이 들어가도 상관 없으며 shape만 맞추어주면 된다. torch.randn을 사용하여도 되고, torch.empty를 사용해주어도 된다. 예를 들어 입력데이터가 (3,224,224)의 이미지라면, 배치 차원도 포함해서 (1, 3, 224, 224)의 더미 데이터를 만들어서 넣어주면 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">npq</span>
+
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.utils.model_zoo</span> <span class="k">as</span> <span class="n">model_zoo</span>
+<span class="kn">import</span> <span class="nn">torch.onnx</span>
+
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.init</span> <span class="k">as</span> <span class="n">init</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">model</span><span class="p">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">PATH</span><span class="p">))</span>
+<span class="n">torch_model</span><span class="p">.</span><span class="nb">eval</span><span class="p">()</span>
+
+<span class="n">dummy_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># 가장 기본 형태
+</span><span class="n">torch</span><span class="p">.</span><span class="n">onnx</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">torch_model</span><span class="p">,</span> <span class="n">dummy_data</span><span class="p">,</span> <span class="s">'super_resulotion.onnx'</span><span class="p">)</span>
+
+<span class="c1"># 모든 options
+</span><span class="n">torch</span><span class="p">.</span><span class="n">onnx</span><span class="p">.</span><span class="n">export</span><span class="p">(</span><span class="n">torch_model</span><span class="p">,</span>               <span class="c1"># 실행될 모델
+</span>                  <span class="n">dummy_data</span><span class="p">,</span>                <span class="c1"># 모델 입력값 (튜플 또는 여러 입력값들도 가능)
+</span>                  <span class="s">"super_resolution.onnx"</span><span class="p">,</span>   <span class="c1"># 모델 저장 경로 (파일 또는 파일과 유사한 객체 모두 가능)
+</span>                  <span class="n">export_params</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>        <span class="c1"># 모델 파일 안에 학습된 모델 가중치를 저장할지의 여부
+</span>                  <span class="n">opset_version</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>          <span class="c1"># 모델을 변환할 때 사용할 ONNX 버전
+</span>                  <span class="n">do_constant_folding</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="c1"># 최적하시 상수폴딩을 사용할지의 여부
+</span>                  <span class="n">input_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'input'</span><span class="p">],</span>   <span class="c1"># 모델의 입력값을 가리키는 이름
+</span>                  <span class="n">output_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'output'</span><span class="p">],</span> <span class="c1"># 모델의 출력값을 가리키는 이름
+</span>                  <span class="n">dynamic_axes</span><span class="o">=</span><span class="p">{</span><span class="s">'input'</span> <span class="p">:</span> <span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s">'batch_size'</span><span class="p">},</span>    <span class="c1"># 가변적인 길이를 가진 차원
+</span>                                <span class="s">'output'</span> <span class="p">:</span> <span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s">'batch_size'</span><span class="p">}},</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span>                <span class="c1"># 어떤 노드들이 Onnx 모델을 위해 인식되었는지 로그를 띄울 수 있다. 
+</span>                <span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="create-tensorrt-engine-by-onnx">Create TensorRT Engine by Onnx</h3>
+
+<p>onnx_file_path와 engine_file_path를 인자로 받는 get_engine 함수이다. 만약 TensorRT Engine 파일이 존재한다면 engine_file_path에 경로를 넣어주어서 확인이 가능한 것 같다. 그렇지 않으면 Onnx를 TensorRT Engine파일로 변환하여 return하는 방식이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_engine</span><span class="p">(</span><span class="n">onnx_file_path</span><span class="p">,</span> <span class="n">engine_file_path</span><span class="o">=</span><span class="s">""</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">build_engine</span><span class="p">():</span>
+        <span class="k">with</span> <span class="n">trt</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">TRT_LOGGER</span><span class="p">)</span> <span class="k">as</span> <span class="n">builder</span><span class="p">,</span> <span class="n">builder</span><span class="p">.</span><span class="n">create_network</span><span class="p">()</span> <span class="k">as</span> <span class="n">network</span><span class="p">,</span> <span class="n">trt</span><span class="p">.</span><span class="n">OnnxParser</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">TRT_LOGGER</span><span class="p">)</span> <span class="k">as</span> <span class="n">parser</span><span class="p">:</span>
+            <span class="n">builder</span><span class="p">.</span><span class="n">max_workspace_size</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span> <span class="c1"># 1GB
+</span>            <span class="n">builder</span><span class="p">.</span><span class="n">max_batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">onnx_file_path</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">'ONNX file {} not found, please run yolov3_to_onnx.py first to generate it.'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">onnx_file_path</span><span class="p">))</span>
+                <span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Loading ONNX file from path {}...'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">onnx_file_path</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">onnx_file_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">'Beginning ONNX file parsing'</span><span class="p">)</span>
+                <span class="n">parser</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Completed parsing of ONNX file'</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Building an engine from file {}; this may take a while...'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">onnx_file_path</span><span class="p">))</span>
+            <span class="n">engine</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">build_cuda_engine</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Completed creating Engine"</span><span class="p">)</span>
+            
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">engine_file_path</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">engine</span><span class="p">.</span><span class="n">serialize</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">engine</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">engine_file_path</span><span class="p">):</span>
+        <span class="c1"># If a serialized engine exists, use it instead of building an engine.
+</span>        <span class="k">print</span><span class="p">(</span><span class="s">"Reading engine from file {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">engine_file_path</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">engine_file_path</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">,</span> <span class="n">trt</span><span class="p">.</span><span class="n">Runtime</span><span class="p">(</span><span class="n">TRT_LOGGER</span><span class="p">)</span> <span class="k">as</span> <span class="n">runtime</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">runtime</span><span class="p">.</span><span class="n">deserialize_cuda_engine</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">build_engine</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="pytorch-to-tensorrt">Pytorch to TensorRT</h2>
+<h3 id="convert">Convert</h3>
+
+<p>위에서 했던 과정들과 동일하지만 코드는 훨씬 간결해졌다. 생성된 TensorRT 엔진은 일반 Pytorch 모델처럼 x값을 넣어서 predict값을 얻을 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch2trt</span> <span class="kn">import</span> <span class="n">torch2trt</span>
+<span class="kn">from</span> <span class="nn">torchvision.models.alexnet</span> <span class="kn">import</span> <span class="n">alexnet</span>
+
+<span class="c1"># create some regular pytorch model...
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">alexnet</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="nb">eval</span><span class="p">().</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="c1"># create example data
+</span><span class="n">dummy_data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)).</span><span class="n">cuda</span><span class="p">()</span>
+
+<span class="c1"># convert to TensorRT feeding sample data as input
+</span><span class="n">model_trt</span> <span class="o">=</span> <span class="n">torch2trt</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">dummy_data</span><span class="p">])</span>
+
+<span class="c1"># 일반 pytorch 모델처럼 사용할 수 있다.
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)).</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">y_trt</span> <span class="o">=</span> <span class="n">model_trt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="save--load">Save &amp; Load</h3>
+
+<p>모델의 가중치 dict를 TensorRT Engine에 불러오는 것도 가능하다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">torch</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_trt</span><span class="p">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s">'alexnet_trt.pth'</span><span class="p">)</span>
+
+
+<span class="c1"># TensorRT Engine에 가중치 불러오기
+</span><span class="kn">from</span> <span class="nn">torch2trt</span> <span class="kn">import</span> <span class="n">TRTModule</span>
+<span class="n">model_trt</span> <span class="o">=</span> <span class="n">TRTModule</span><span class="p">()</span>
+<span class="n">model_trt</span><span class="p">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="s">'alexnet_trt.pth'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>관련 프로젝트 글</strong></p>
+
+    <p><a href="https://on-jungwoan.github.io/cctv/torch2trt/">Pytorch to TensorRT by torch2trt</a></p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<div align="center">
+  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1011">
+    본문으로 돌아가기
+  </a>
+</div>
+
+<p><br />
+<br /></p>
+
+<p><strong>Reference</strong></p>
+
+<p><a href="https://eehoeskrap.tistory.com/414">NVIDIA TensorRT 개념, 설치방법, 사용하기</a></p>
+
+<p><a href="https://gaussian37.github.io/dl-pytorch-deploy/">pytorch 모델 저장과 ONNX 사용</a></p>
+
+<p><a href="https://github.com/NVIDIA-AI-IOT/torch2trt">github/NVIDIA-AI-IOT/torch2trt</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a><span class="sep">, </span>
+    
+      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a><span class="sep">, </span>
+    
+      <a href="/tags/#pytorch" class="page__taxonomy-item p-category" rel="tag">pytorch</a><span class="sep">, </span>
+    
+      <a href="/tags/#tensorrt" class="page__taxonomy-item p-category" rel="tag">TensorRT</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-11">October 11, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Pytorch+To+TensorRT+Engine%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Ftensorrt%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Ftensorrt%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Ftensorrt%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/cctv/cctv_test2/" class="pagination--pager" title="투기행위 인식률 향상(2)
+">이전</a>
+    
+    
+      <a href="/cctv/cctv_test3/" class="pagination--pager" title="투기행위 인식률 향상(3)
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/dl/activation_opt/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>Activation Function, Optimizer</a>
+    
+    
+      <a href="/dl/tensorrtengine/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>TensorRT 모델에서 engine 모듈 추출하기</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/debug_jekyll/" rel="permalink">[Github_Io]Jekyll 로컬에서 디버그 하는 법
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 22 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">개발 블로그 로컬에서 디버깅
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/cctv/md_speed/" rel="permalink">1차 파인튜닝 모델 분석
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 21 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">기존 TensorRT 모델과의 추론 성능 비교
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/docker/install_docker/" rel="permalink">Window Docker 설치방법
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 21 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">windows for docker
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/canvas/setting_proj/" rel="permalink">프로젝트 개요 정리
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 21 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">canvas 개발
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+
+  </body>
+</html>

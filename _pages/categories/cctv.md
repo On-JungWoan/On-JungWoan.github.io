@@ -1,6 +1,6 @@
 ---
 title: "실시간 쓰레기 무단투기 탐지 프로젝트"
-layout: archive
+layout: category
 permalink: categories/cctv
 author_profile: true
 sidebar_main: true
