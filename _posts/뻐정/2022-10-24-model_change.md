@@ -1,0 +1,66 @@
+## DataSet관련 변경사항
+### 기존 시스템 문제점
+
+1. 기존에 사용하던 주기성 데이터가 갑자기 모두 삭제되는 바람에 raw 데이터를 새롭게 얻을 수가 없어졌다.
+
+2. 데이터의 수가 많아(약 700만) 연산속도가 매우 느리다.
+
+
+
+### 개선 사항
+
+1. raw 데이터 변경
+
+  광주광역시 빅데이터 플랫폼에서 새로운 데이터를 받아주었다. 2022년 3월부터 10월 12일까지의 데이터를 train 데이터로 사용하였으며, 최종적으로 약 400만개의 데이터를 학습에 사용하였다. 데이터는 Selenium으로 받아와주었다.
+
+![image](https://user-images.githubusercontent.com/84084372/197403103-72346032-b291-4980-ba44-f999d18bf25d.png)
+
+2. csv to parquet(파케이)
+
+  데이터 저장형식을 csv에서 parquet로 변환해주었다. parquet는 하둡 생태계에서 주로 사용되는 파일 포맷인데, 빅데이터 처리에 특화되어있다. 따라서 연산 속도 향상을 위하여 csv 파일을 parquet로 변환해주었다. 
+
+## Model관련 변경사항
+### 기존 시스템 문제점
+
+1. 기존 모델은 2시간 간격(n시 00분 ~ n+1시 59분)의 승차인원을 target으로 하는 모델을 시간별로 총 9개를 만들었다. target을 세분화하지 않으면 모델이 언더피팅되는 바람에 제대로 된 추론을 하지 못해서 해준 조치인데, 이번에 언더피팅 문제를 해결하였다. 따라서 target을 세분화해 줄 필요가 없어졌다. 유지보수도 힘들고 predict 하기도 번거로운 관계로 하나의 모델로 합쳐주었다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/197402277-18c1fb1e-89d1-48ad-a9be-7a85d4175e96.png"></p>  
+
+
+2. 기존 모델은 pycaret이라는 AutoML 라이브러리에 종속되어있었다. 하지만 해당 pycaret은 다른 라이브러리와 의존성 문제가 너무 심했고, 각종 이슈가 많이 일어났다.
+
+```python
+from pycaret.regression import create_model
+
+lgbm = create_model('light_gbm')
+(...)
+pred = predict_model(lgbm, x_data)
+```
+
+
+### 개선 사항
+
+1. 모델의
+
+2.
+
+
+
+### 개선사항
+1. ****
+
+## Page관련 변경사항
+
+기존 뻐정은, Main 화면에서 사용자가 특정 정류장과 버스를 선택하면, Detail 화면에서 예상 승차 인원과 다양한 추론 결과를 서비스하는 시스템이다. Detail 화면에 쓸데없는 정보가 너무 많고, Main 화면에는 기능이 많이 부족하여 허전하다.
+
+- **기존 Main 화면**
+
+  Main화면 상단 네비게이션 바에 버스 배차간격 및 도착시간을 확인할 수 있는 페이지를 추가할 예정
+
+  <p align="center"><img src="https://user-images.githubusercontent.com/84084372/197402166-73a1f616-b4cb-4b1f-a832-1cacc873efe3.png"></p>
+
+- **기존 Detail 화면**
+
+  Detail 화면에 있는 레이더 차트를 삭제하고, 그 자리에 더 유용한 정보를 넣기로 하였다. coco 데이터를 학습한 ssd 모델로 실시간 객체 탐지를 하여, 현재 해당 정류장에 사람이 얼마나 있는지 보여주는 기능을 추가하고자 한다.
+
+  <p align="center"><img src="https://user-images.githubusercontent.com/84084372/197402207-5aaeba87-a606-478b-8438-7788c724e2aa.png"></p>
