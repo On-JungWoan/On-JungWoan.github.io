@@ -45,6 +45,13 @@
         <span class="nav__sub-title">Back-End</span>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "django" %}
+                        <li><a href="/categories/django" class="">Django ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>           
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "sql" %}
                         <li><a href="/categories/sql" class="">DB ({{category[1].size}})</a></li>
                     {% endif %}
