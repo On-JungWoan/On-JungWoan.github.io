@@ -160,7 +160,7 @@ cudart.cudaStreamSynchronize(stream)
 <br>
 
 <div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1031">
+  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-11/#1031">
     본문으로 돌아가기
   </a>
 </div>  
