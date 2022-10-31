@@ -74,7 +74,7 @@ NON-NULL Stream은 연산 결과를 한번에 보내는게 아니라, 각각의 
 
 ### 2-4) 결론
 
-이렇게 작업을 분할하여 여러 스트림에 분할함으로써, 연산 시간을 크게 줄일 수 있다. GPU 사용시, 데이터 보내는 작업이 상당히 큰 오버해드인데, NON-NULL Stream을 사용하면 이를 숨기면서 GPU가 계속 돌 수 있게 할 수 있다.
+이렇게 작업을 분할하여 여러 스트림에 나눠줌으로써, 연산 시간을 크게 줄일 수 있다. GPU 사용시, 데이터 보내는 작업이 상당히 큰 오버해드인데, NON-NULL Stream을 사용하면 이를 숨기면서 GPU가 계속 돌 수 있게 할 수 있다.
 
 <br>
 <br>
@@ -160,7 +160,7 @@ cudart.cudaStreamSynchronize(stream)
 <br>
 
 <div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1026">
+  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1031">
     본문으로 돌아가기
   </a>
 </div>  
