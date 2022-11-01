@@ -1,5 +1,5 @@
 ---
-title:  "[최적화 기법] CUDA Stream"
+title:  "CUDA Stream"
 excerpt: "Null Stream / Non-Null Stream"
 
 categories:

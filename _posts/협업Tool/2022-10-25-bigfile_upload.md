@@ -1,5 +1,5 @@
 ---
-title:  "Git 대용량 파일 push 방법 총정리"
+title:  "[Git]대용량 파일 push 방법 총정리"
 excerpt: "과정 및 관련 에러 정리"
 
 categories:

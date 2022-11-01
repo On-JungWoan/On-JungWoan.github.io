@@ -78,21 +78,21 @@ var store = [{
         "teaser": null
       },{
         "title": "[DALL-E 2] DALL-E_2 체험기",
-        "excerpt":"DALL-E 2 최근, openAI의 DALL-E 기반의 프로젝트를 기획하고 있었다. 그러던 중 DALL-E 2가 새롭게 출시된다는 소식을 듣고, 사전 체험 신청을 해두었었는데 오늘 초대 메일이 도착했다. 체험 후기 DALL-E mini만 사용하다가 영상으로만 보던 DALL-E를 직접 사용한다니.. 기분이 이상했다. 아래 사진들은 내가 직접 DALL-E 2에 넣어본 text들이다. output1 : A person running...","categories": ["dalle"],
+        "excerpt":"DALL-E 2 최근, openAI의 DALL-E 기반의 프로젝트를 기획하고 있었다. 그러던 중 DALL-E 2가 새롭게 출시된다는 소식을 듣고, 사전 체험 신청을 해두었었는데 오늘 초대 메일이 도착했다. 체험 후기 DALL-E mini만 사용하다가 영상으로만 보던 DALL-E를 직접 사용한다니.. 기분이 이상했다. 아래 사진들은 내가 직접 DALL-E 2에 넣어본 text들이다. output1 : A person running...","categories": ["etc"],
         "tags": ["dalle2"],
-        "url": "/dalle/dall_e-2/",
+        "url": "/etc/dall_e-2/",
         "teaser": null
       },{
         "title": "[Press It!] TLDRThis, PapagoAPI 키 발급 및 기초 작업",
-        "excerpt":"본 프로젝트에서는, TLDRThisAPI로 요약문을 추출한 뒤, Naver의 PapagoAPI를 사용하여 자동 번역해주는 모델을 만들고, 이를 제공하는 플랫폼을 구축하여 서비스하고자 한다. 하지만, TLDRThisAPI와 PapagoAPI는 무료 버전기준 한 달 최대 사용량이 제한되어있다. 따라서 개개인이 각각 개별적인 API 키를 갖도록하고, 로그인 시스템을 구현하여 개개인의 API 키를 보존함으로써 위 문제를 해결하고자 한다. Reperence 이제현, 유시현,...","categories": ["pressit"],
+        "excerpt":"본 프로젝트에서는, TLDRThisAPI로 요약문을 추출한 뒤, Naver의 PapagoAPI를 사용하여 자동 번역해주는 모델을 만들고, 이를 제공하는 플랫폼을 구축하여 서비스하고자 한다. 하지만, TLDRThisAPI와 PapagoAPI는 무료 버전기준 한 달 최대 사용량이 제한되어있다. 따라서 개개인이 각각 개별적인 API 키를 갖도록하고, 로그인 시스템을 구현하여 개개인의 API 키를 보존함으로써 위 문제를 해결하고자 한다. Reperence 이제현, 유시현,...","categories": ["toy_project"],
         "tags": ["OpenAPI","rapidAPI","PapagoAPI","TLDRThis"],
-        "url": "/pressit/pressit/",
+        "url": "/toy_project/pressit/",
         "teaser": null
       },{
         "title": "[Press It!] 함수 최종 정의 및 로고 제작",
-        "excerpt":"본래 프로젝트의 방햗은, 특정 논문의 pdf파일 링크를 input값으로 받으면 해당 문서를 요약하는 것이었으나, 제약사항이 많을 것으로 판단하여 프로젝트 방향을 바꾸었다. pdf파일이 아닌, text파일의 링크를 input값으로 받게끔하였고, 요약의 범위도 논문에서 문서로 확장하였다. 우선 기본적인 기능들을 구현해놓은 뒤, 세부적인 사항은 차차 추가해나가는 쪽으로 방향성을 잡았다. 1. 최종 함수 정의 기존에 정의했던 함수와...","categories": ["pressit"],
+        "excerpt":"본래 프로젝트의 방햗은, 특정 논문의 pdf파일 링크를 input값으로 받으면 해당 문서를 요약하는 것이었으나, 제약사항이 많을 것으로 판단하여 프로젝트 방향을 바꾸었다. pdf파일이 아닌, text파일의 링크를 input값으로 받게끔하였고, 요약의 범위도 논문에서 문서로 확장하였다. 우선 기본적인 기능들을 구현해놓은 뒤, 세부적인 사항은 차차 추가해나가는 쪽으로 방향성을 잡았다. 1. 최종 함수 정의 기존에 정의했던 함수와...","categories": ["toy_project"],
         "tags": ["OpenAPI","rapidAPI","PapagoAPI","TLDRThis"],
-        "url": "/pressit/pressit(1)/",
+        "url": "/toy_project/pressit(1)/",
         "teaser": null
       },{
         "title": "[뻐정] 프로젝트 소개",
@@ -102,9 +102,9 @@ var store = [{
         "teaser": null
       },{
         "title": "[Press It!] 백앤드 구조 정의 및 프론트앤드 템플릿 선택",
-        "excerpt":"1. 백앤드 구조 정의 우선, 웹을 크게 메인화면과 상세 조회화면으로 나누어주기 위해서 Main, Detail 앱을 생성해주었다. 이후 URL을 분리하여 주었다. config에서 main/으로 넘어가는 url은 Main에서, detail/로 넘어가는 url은 Detail에서 처리하도록 하였다. 각각의 urls.py에서 view함수를 호출하면 그에 맞는 html을 출력하는 구조로 설계하였다. 차후, 이 구조는 변경될 수 있다. 2. 프론트앤드 템플릿...","categories": ["pressit"],
+        "excerpt":"1. 백앤드 구조 정의 우선, 웹을 크게 메인화면과 상세 조회화면으로 나누어주기 위해서 Main, Detail 앱을 생성해주었다. 이후 URL을 분리하여 주었다. config에서 main/으로 넘어가는 url은 Main에서, detail/로 넘어가는 url은 Detail에서 처리하도록 하였다. 각각의 urls.py에서 view함수를 호출하면 그에 맞는 html을 출력하는 구조로 설계하였다. 차후, 이 구조는 변경될 수 있다. 2. 프론트앤드 템플릿...","categories": ["toy_project"],
         "tags": ["Django","Web","Bootstrap"],
-        "url": "/pressit/pressit(2)/",
+        "url": "/toy_project/pressit(2)/",
         "teaser": null
       },{
         "title": "[Github_Io]사이드바 간격조정",
@@ -114,45 +114,45 @@ var store = [{
         "teaser": null
       },{
         "title": "[Press It!]메인 페이지 Front-End Developing",
-        "excerpt":"0. 메인 페이지 구성 메인 페이지는 크게 ‘URL 입력’, ‘원문 정보’, ‘요약문’, ‘contact me’의 4가지 섹션으로 구성하였다. 상단 네이게이션 바 및 scroll 아이콘을 통해 각 섹션간 이동을 할 수 있게 하였으며, 애니메이션을 사용하여 부드럽게 전환되도록 하였다. 섹션명은 기존 템플릿을 따라갔으며, url입력=’hero’, 원문정보=’about’, 요약문=’resume’, contactme=’contact’이다. 1. URL 입력 섹션 1-1. Web...","categories": ["pressit"],
+        "excerpt":"0. 메인 페이지 구성 메인 페이지는 크게 ‘URL 입력’, ‘원문 정보’, ‘요약문’, ‘contact me’의 4가지 섹션으로 구성하였다. 상단 네이게이션 바 및 scroll 아이콘을 통해 각 섹션간 이동을 할 수 있게 하였으며, 애니메이션을 사용하여 부드럽게 전환되도록 하였다. 섹션명은 기존 템플릿을 따라갔으며, url입력=’hero’, 원문정보=’about’, 요약문=’resume’, contactme=’contact’이다. 1. URL 입력 섹션 1-1. Web...","categories": ["toy_project"],
         "tags": ["Bootstrap","Django","Web","FrontEnd"],
-        "url": "/pressit/pressit-front-end/",
+        "url": "/toy_project/pressit-front-end/",
         "teaser": null
       },{
         "title": "[Github]Read Me 수정하기",
-        "excerpt":"기존 리드미 기존 리드미의 큰 컨셉은 미니멀리즘으로 가고자하였다. 면접관들은 나 말고도 다른 수 백명의 리드미를 읽을 것이고, 나라는 사람에게 많은 시간을 투자하지 않을 것이다. 따라서 필요한 정보들만 한 눈에 들어올 수 있게 하고자 하였고, 부족한 정보는 포트폴리오와 자세히 설명하고자 하였다. 또한, 섹션을 [자기소개, 기술 스택, 통계] 3가지로 나누어 주제별로 정보를...","categories": ["github"],
+        "excerpt":"기존 리드미 기존 리드미의 큰 컨셉은 미니멀리즘으로 가고자하였다. 면접관들은 나 말고도 다른 수 백명의 리드미를 읽을 것이고, 나라는 사람에게 많은 시간을 투자하지 않을 것이다. 따라서 필요한 정보들만 한 눈에 들어올 수 있게 하고자 하였고, 부족한 정보는 포트폴리오와 자세히 설명하고자 하였다. 또한, 섹션을 [자기소개, 기술 스택, 통계] 3가지로 나누어 주제별로 정보를...","categories": ["tools"],
         "tags": ["github","readme","markdown"],
-        "url": "/github/edit-readme/",
+        "url": "/tools/edit-readme/",
         "teaser": null
       },{
-        "title": "self join",
-        "excerpt":"동일 테이블 내의 특정 컬럼을 기준으로 테이블 이어 붙여주며, 조건 컬럼 설정해주면 동일한 값끼리 조인 된다. 단, self join시에는 테이블 이름 꼭 지정해줘야 함.   SELECT T1.조회컬럼 FROM 테이블명 T1 JOIN 테이블명 T2 ON T1.조건컬럼 = T2.조건컬럼               본문으로 돌아가기     ","categories": ["sql"],
+        "title": "[SQL기초] self join",
+        "excerpt":"동일 테이블 내의 특정 컬럼을 기준으로 테이블 이어 붙여주며, 조건 컬럼 설정해주면 동일한 값끼리 조인 된다. 단, self join시에는 테이블 이름 꼭 지정해줘야 함.   SELECT T1.조회컬럼 FROM 테이블명 T1 JOIN 테이블명 T2 ON T1.조건컬럼 = T2.조건컬럼               본문으로 돌아가기     ","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
-        "url": "/sql/TIL_0905/",
+        "url": "/etc/TIL_0905/",
         "teaser": null
       },{
-        "title": "SQL 실행순서",
-        "excerpt":"SQL문은 다음 실행 순서에 맞춰 실행된다.   FROM &gt; ON &gt; JOIN &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT &gt; ORDER BY               본문으로 돌아가기     ","categories": ["sql"],
+        "title": "[SQL기초] SQL 실행순서",
+        "excerpt":"SQL문은 다음 실행 순서에 맞춰 실행된다.   FROM &gt; ON &gt; JOIN &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT &gt; ORDER BY               본문으로 돌아가기     ","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
-        "url": "/sql/TIL_0905_1/",
+        "url": "/etc/TIL_0905_1/",
         "teaser": null
       },{
-        "title": "서브쿼리",
-        "excerpt":"Q1) [ORDER] 테이블의 [mem_no] 컬럼별 [sales_amt] 컬럼의 합계를 구하시오. 이 때, sum(sales_amt)의 열 이름은 tot_amt로 한다. SELECT mem_no, sum(sales_amt) tot_amt FROM [ORDER] GROUP BY mem_no Q2) 1번 문제에서 짠 쿼리를 서브쿼리로 하여, [MEMBER] 테이블을 LEFT JOIN 하라. SELECT * FROM (SELECT mem_no, sum(sales_amt) tot_amt FROM [ORDER] GROUP BY mem_no) T1...","categories": ["sql"],
+        "title": "[SQL기초] 서브쿼리",
+        "excerpt":"Q1) [ORDER] 테이블의 [mem_no] 컬럼별 [sales_amt] 컬럼의 합계를 구하시오. 이 때, sum(sales_amt)의 열 이름은 tot_amt로 한다. SELECT mem_no, sum(sales_amt) tot_amt FROM [ORDER] GROUP BY mem_no Q2) 1번 문제에서 짠 쿼리를 서브쿼리로 하여, [MEMBER] 테이블을 LEFT JOIN 하라. SELECT * FROM (SELECT mem_no, sum(sales_amt) tot_amt FROM [ORDER] GROUP BY mem_no) T1...","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
-        "url": "/sql/TIL_0906/",
+        "url": "/etc/TIL_0906/",
         "teaser": null
       },{
-        "title": "ORDER BY 용어정리",
-        "excerpt":"               본문으로 돌아가기     ","categories": ["sql"],
+        "title": "[SQL기초] ORDER BY 용어정리",
+        "excerpt":"               본문으로 돌아가기     ","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
-        "url": "/sql/TIL_0913/",
+        "url": "/etc/TIL_0913/",
         "teaser": null
       },{
-        "title": "MariaDB 기반 SQLGate를 사용한 테이블 join",
-        "excerpt":"MariaDB 기반 SQLGate를 사용하여 최상 난이도 쿼리와 자연어를 매칭하는 작업을 하였다. [ manage_physical_table ]에는 NL2SQL 프로젝트에서 사용하는 모든 테이블에 대한 정보가 저장되어 있었으며, [ manage_physical_column ]에는 컬럼에 대한 정보가 들어 있었다. [ manage_physical_table ] 의 join_table_id는 어떤 테이블에 join이 되어있는지를 나타내고 있었으며, join_table_column_id는 join의 기준 컬럼 id에 대한 내용이 담겨있었다....","categories": ["sql"],
+        "title": "[SQL기초] MariaDB 기반 SQLGate를 사용한 테이블 join",
+        "excerpt":"MariaDB 기반 SQLGate를 사용하여 최상 난이도 쿼리와 자연어를 매칭하는 작업을 하였다. [ manage_physical_table ]에는 NL2SQL 프로젝트에서 사용하는 모든 테이블에 대한 정보가 저장되어 있었으며, [ manage_physical_column ]에는 컬럼에 대한 정보가 들어 있었다. [ manage_physical_table ] 의 join_table_id는 어떤 테이블에 join이 되어있는지를 나타내고 있었으며, join_table_column_id는 join의 기준 컬럼 id에 대한 내용이 담겨있었다....","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
-        "url": "/sql/TIL_0914/",
+        "url": "/etc/TIL_0914/",
         "teaser": null
       },{
         "title": "[Github_Io]블로그 테마 변경 및 커스텀",
@@ -329,16 +329,10 @@ var store = [{
         "url": "/cctv/tensorrt_engine/",
         "teaser": null
       },{
-        "title": "[toy_project] 아파트 실거래가 예측 (1)",
-        "excerpt":"1. Make Train/Test Data 1-1) 데이터 수집 원시 데이터는 국토교통부 실거래가 공개시스템에서 받아주었다. 기간은 2019년 9월 30일부터 2022년 09월 30일까지 3개년 데이터를 사용하였다. 15개의 컬럼과, 약 7만개의 관측치로 이루어져있는 데이터이다. 1-2) Import Library &amp; Load Dataset 전처리 작업을 위해 원시 데이터를 불러와주었다. 한글 인코딩은 cp949를 사용하였다. # Data Handling import...","categories": ["ML"],
+        "title": "[ML] 아파트 실거래가 예측 (1)",
+        "excerpt":"1. Make Train/Test Data 1-1) 데이터 수집 원시 데이터는 국토교통부 실거래가 공개시스템에서 받아주었다. 기간은 2019년 9월 30일부터 2022년 09월 30일까지 3개년 데이터를 사용하였다. 15개의 컬럼과, 약 7만개의 관측치로 이루어져있는 데이터이다. 1-2) Import Library &amp; Load Dataset 전처리 작업을 위해 원시 데이터를 불러와주었다. 한글 인코딩은 cp949를 사용하였다. # Data Handling import...","categories": ["toy_project"],
         "tags": ["ML","ICT인턴십","orange3"],
-        "url": "/ml/apartpred/",
-        "teaser": null
-      },{
-        "title": "[ICT 인턴십] 업무 지시내용",
-        "excerpt":"9월 1주차 09/01 * 팀즈로 소통하기 때문에 인턴분들 메시지 확인하면 확인표시 (👍) 누르기 * [NL2SQL_난이도_중_ver.1.2.3.220901.pdf](NL2SQL_%EB%82%9C%EC%9D%B4%EB%8F%84_%EC%A4%91_ver.1.2.3.220901.pdf) 본문으로 돌아가기 09/02 * IS NOT NULL 안됨 * AND도 COMP1에 추가 * 컬럼명 같아도 others에 카운팅 됨 * GROUP BY는 집계함수 사용할 때만 * DISTINCT 사용 가능 * GROUP BY 기준 여러개일 때, 기준...","categories": ["Internship"],
-        "tags": ["인턴","ICT인턴십"],
-        "url": "/internship/notice/",
+        "url": "/toy_project/apartpred/",
         "teaser": null
       },{
         "title": "TensorRT Engine Output 가공 / CUDA STREAM 수정",
@@ -353,10 +347,10 @@ var store = [{
         "url": "/dl/trt_speed/",
         "teaser": null
       },{
-        "title": "[toy_project] 아파트 실거래가 예측 (2)",
-        "excerpt":"기존 코드에 잘못 된 부분이 있어서 전체적으로 코드 수정을 해주었다. 1. Run_Preprocess.py 모델 학습을 위한 전처리 과정이 담겨있는 코드이다. 1-1) Import Library &amp; Set wd 필요한 라이브러리와 상수를 선언해주는 파트이다. # Data Handling import pandas as pd import os import pickle # Model Selection from sklearn.model_selection import train_test_split from sklearn.preprocessing...","categories": ["ML"],
+        "title": "[ML] 아파트 실거래가 예측 (2)",
+        "excerpt":"기존 코드에 잘못 된 부분이 있어서 전체적으로 코드 수정을 해주었다. 1. Run_Preprocess.py 모델 학습을 위한 전처리 과정이 담겨있는 코드이다. 1-1) Import Library &amp; Set wd 필요한 라이브러리와 상수를 선언해주는 파트이다. # Data Handling import pandas as pd import os import pickle # Model Selection from sklearn.model_selection import train_test_split from sklearn.preprocessing...","categories": ["toy_project"],
         "tags": ["ML","ICT인턴십","orange3"],
-        "url": "/ml/apartpred2/",
+        "url": "/toy_project/apartpred2/",
         "teaser": null
       },{
         "title": "프로젝트 진행상황",
@@ -365,22 +359,10 @@ var store = [{
         "url": "/cctv/project_prog/",
         "teaser": null
       },{
-        "title": "[ICT 인턴십]2022년 10월 TIL",
-        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 내가 할 수 있는 일을 스스로 찾아서 이것저것 개선시켜 보려고 하고 있다. 아직은 많이 어렵지만 계속 하다보면 언젠간 좋은 결과가 있지 않을까 생각한다. 투기 행위 감지 모델의 성능이 좋지 않아서, 이번주는 모델 성능을 개선시키기 위해 다양한 시도들을 해보았다. 아직까지 모델에는...","categories": ["Internship"],
-        "tags": ["인턴","ICT인턴십","TIL"],
-        "url": "/internship/Itern-TIL-10/",
-        "teaser": null
-      },{
         "title": "프로젝트 개요 정리",
         "excerpt":"프로젝트 개요 회사 내부 학습관리시스템(LMS)의 로그인 창이다. 현재 회사 내부 LMS 기술은 INSTRUCTURE라는 곳에서 가져왔다고 한다. 거의 기술 이전이 완료된 상태이지만, 아직 로그인 창은 제대로 구현이 되어있지 않은 상태라고 한다. 따라서 일단 Django 템플릿으로 로그인 canvas를 개발하는 것이 주 목표라고 하셨다. Django 템플릿으로 회원가입 폼을 만들어서 회원 정보를 DB로 보내주면...","categories": ["canvas"],
         "tags": ["postgreSQL","Docker","DataGrip","유클리드소프트"],
         "url": "/canvas/setting_proj/",
-        "teaser": null
-      },{
-        "title": "Window Docker 설치방법",
-        "excerpt":"1. 환경설정 1-1) 가상화 사용설정 작업관리자 -&gt; 성능 -&gt; CPU의 가상화가 사용으로 되어있는지 확인한다. 만약 사용으로 되어 있지 않으면, BIOS에서 사용함으로 설정해야한다. 1-2) Hyper-V 켜기 window + s -&gt; 프로그램 추가/제거 -&gt; 선택적 기능 -&gt; 기타 Windows 기능 -&gt; Hyper-V 체크하기 2. Docker 설치 2-1) Docker installer 설치  - https://hub.docker.com/editions/community/docker-ce-desktop-windows/...","categories": ["docker"],
-        "tags": ["Docker"],
-        "url": "/docker/install_docker/",
         "teaser": null
       },{
         "title": "1차 파인튜닝 모델 분석",
@@ -389,9 +371,69 @@ var store = [{
         "url": "/cctv/md_speed/",
         "teaser": null
       },{
+        "title": "[Docker]Window Docker 설치방법",
+        "excerpt":"1. 환경설정 1-1) 가상화 사용설정 작업관리자 -&gt; 성능 -&gt; CPU의 가상화가 사용으로 되어있는지 확인한다. 만약 사용으로 되어 있지 않으면, BIOS에서 사용함으로 설정해야한다. 1-2) Hyper-V 켜기 window + s -&gt; 프로그램 추가/제거 -&gt; 선택적 기능 -&gt; 기타 Windows 기능 -&gt; Hyper-V 체크하기 2. Docker 설치 2-1) Docker installer 설치  - https://hub.docker.com/editions/community/docker-ce-desktop-windows/...","categories": ["tools"],
+        "tags": ["Docker"],
+        "url": "/tools/install_docker/",
+        "teaser": null
+      },{
         "title": "[Github_Io]Jekyll 로컬에서 디버그 하는 법",
         "excerpt":"1. Git Clone 프로젝트 파일을 원하는 로컬 환경에 clone 해준다. &gt;&gt;&gt; git clone repo경로 2. Edit Gemfile Gemfile을 수정해준다. 나는 minimal-mistakes를 사용하고 있어서 공식 문서를 참고하였다. Link : Remote theme methodPermalink source \"https://rubygems.org\" gem \"github-pages\", group: :jekyll_plugins gem \"jekyll-include-cache\", group: :jekyll_plugins gem \"webrick\", \"~&gt; 1.7\" 3. Ruby 설치 아래 링크에서...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/debug_jekyll/",
+        "teaser": null
+      },{
+        "title": "[뻐정] 프로젝트 개선사항",
+        "excerpt":"1. Model관련 변경사항 1-1) 기존 시스템 문제점 문제1) 분할된 모델 기존 모델은 2시간동안(n시 00분 ~ n+1시 59분)의 승차인원을 target으로 하는 모델을 시간별로 총 9개를 만들었다. target을 세분화하지 않으면 모델이 언더피팅되는 바람에 제대로 된 추론을 하지 못해서 해준 조치인데, 이번에 언더피팅 문제를 해결하였다. 따라서 target을 세분화 해줄 필요가 없어졌다. 유지보수도 힘들고...","categories": ["bbeojung"],
+        "tags": ["bbeojung","ICT인턴십"],
+        "url": "/bbeojung/change/",
+        "teaser": null
+      },{
+        "title": "[Git]대용량 파일 push 방법 총정리",
+        "excerpt":"1. 문제상황 100MB를 넘는 파일을 push하려고 하면, 다음과 같은 에러가 발생한다. remote: error: this exceeds GitHub's file size limit of 100.00 MB remote: error: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com. 이를 해결하기 위해서는 유료 github 계정을 구입해야하는데, 그렇지 않고 해결할 수...","categories": ["tools"],
+        "tags": ["git"],
+        "url": "/tools/bigfile_upload/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십] 업무 지시내용",
+        "excerpt":"9월 1주차 09/01 * 팀즈로 소통하기 때문에 인턴분들 메시지 확인하면 확인표시 (👍) 누르기 * [NL2SQL_난이도_중_ver.1.2.3.220901.pdf](NL2SQL_%EB%82%9C%EC%9D%B4%EB%8F%84_%EC%A4%91_ver.1.2.3.220901.pdf) 본문으로 돌아가기 09/02 * IS NOT NULL 안됨 * AND도 COMP1에 추가 * 컬럼명 같아도 others에 카운팅 됨 * GROUP BY는 집계함수 사용할 때만 * DISTINCT 사용 가능 * GROUP BY 기준 여러개일 때, 기준...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십"],
+        "url": "/internship/notice/",
+        "teaser": null
+      },{
+        "title": "AI 개발 가이드 및 조언내용 정리",
+        "excerpt":"1. AI 최신 트랜드 초거대 AI를 만드는 회사의 등장 요즘 AI 분야의 메이저 흐름은 메타버스, 멀티모달, 고수준 End-to-End TASK이다. 2. 문제해결 노하우 2-1) 보행자 이상검출 문제 기존 방식은, 사람의 keypoint를 일일이 따서 이상 징후에 대한 keypoint를 학습시키고 분류한다. 이 방식의 문제점은 사람이 많아지면 keypoint가 너무 많아져서 실제 서비스가 불가하다는 것이다....","categories": ["DL"],
+        "tags": ["DL","ICT인턴십"],
+        "url": "/dl/summary/",
+        "teaser": null
+      },{
+        "title": "Django 템플릿에서 src, href에 변수 불러오는 법",
+        "excerpt":"문제상황 카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에...","categories": ["django"],
+        "tags": ["django","web","backend"],
+        "url": "/django/get_var/",
+        "teaser": null
+      },{
+        "title": "user정보 DB 구조파악",
+        "excerpt":"우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다. 사이트 주소 WWW SQL Designer 아래는 해당 사이트에서 직접 그려본 실제 DB 스키마의 일부이다. 테이블 설명 users 회원을 생성할 수...","categories": ["canvas"],
+        "tags": ["postgreSQL","DataGrip","유클리드소프트"],
+        "url": "/canvas/table_structure/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]2022년 10월 TIL",
+        "excerpt":"✍ 학습내용 정리 Computer Vision Activation Function, Optimizer Pytorch To TensorRT Engine TensorRT 모델에서 engine 모듈 추출하기 TensorRT vs TensorRT Engine vs Pytorch 연산속도 비교 Pytorch to TensorRT by torch2trt TensorRT Engine 성능 비교 PyQT에 넘겨줄 json 수정 테스트셋에 대해서 투기 검출률 높이기(1) 테스트셋에 대해서 투기 검출률 높이기(2) 테스트셋에 대해서...","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십","TIL"],
+        "url": "/internship/Itern-TIL-10/",
+        "teaser": null
+      },{
+        "title": "[ICT 인턴십]2022년 11월 TIL",
+        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시            학습내용      ","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십","TIL"],
+        "url": "/internship/Intern-TIL-11/",
+        "teaser": null
+      },{
+        "title": "CUDA Stream",
+        "excerpt":"1. Stream 1-0) Stream이란? host에서 device로 명령을 보내는 통로이다. host에서 stream으로 명령을 넣어주면 device는 그걸 꺼내서 사용한다. 1-1) NULL Stream 사용할 stream을 명시하지 않으면 NULL stream이 사용된다. NULL Stream 또는, 하나의 NON-NULL stream에 들어온 명령은 순서대로(동기적) device에 의해 처리된다. 1-2) NON-NULL Stream 명시적으로 생성 및 사용한 stream을 말한다. 서로 다른...","categories": ["DL"],
+        "tags": ["DL","ICT인턴십"],
+        "url": "/dl/cuda_stream/",
         "teaser": null
       }]

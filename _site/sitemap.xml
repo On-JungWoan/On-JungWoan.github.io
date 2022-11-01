@@ -4,6 +4,150 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>http://localhost:4000/dl/cuda_stream/</loc>
+        
+        <lastmod>2022-10-31T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/internship/Intern-TIL-11/</loc>
+        
+        <lastmod>2022-10-31T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/internship/Itern-TIL-10/</loc>
+        
+        <lastmod>2022-10-30T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/canvas/table_structure/</loc>
+        
+        <lastmod>2022-10-28T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/django/get_var/</loc>
+        
+        <lastmod>2022-10-28T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/dl/summary/</loc>
+        
+        <lastmod>2022-10-26T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/internship/notice/</loc>
+        
+        <lastmod>2022-10-26T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/tools/bigfile_upload/</loc>
+        
+        <lastmod>2022-10-25T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>http://localhost:4000/bbeojung/change/</loc>
+        
+        <lastmod>2022-10-24T00:00:00+09:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>http://localhost:4000/blog/debug_jekyll/</loc>
         
         <lastmod>2022-10-22T00:00:00+09:00</lastmod>
@@ -20,7 +164,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/cctv/md_speed/</loc>
+        <loc>http://localhost:4000/tools/install_docker/</loc>
         
         <lastmod>2022-10-21T00:00:00+09:00</lastmod>
         
@@ -36,7 +180,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/docker/install_docker/</loc>
+        <loc>http://localhost:4000/cctv/md_speed/</loc>
         
         <lastmod>2022-10-21T00:00:00+09:00</lastmod>
         
@@ -68,22 +212,6 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/internship/Itern-TIL-10/</loc>
-        
-        <lastmod>2022-10-21T00:00:00+09:00</lastmod>
-        
-
-        
-        <changefreq>weekly</changefreq>
-        
-
-        
-        <priority>0.5</priority>
-        
-
-    </url>
-    
-    <url>
         <loc>http://localhost:4000/cctv/project_prog/</loc>
         
         <lastmod>2022-10-19T00:00:00+09:00</lastmod>
@@ -100,7 +228,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/ml/apartpred2/</loc>
+        <loc>http://localhost:4000/toy_project/apartpred2/</loc>
         
         <lastmod>2022-10-19T00:00:00+09:00</lastmod>
         
@@ -148,23 +276,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/internship/notice/</loc>
-        
-        <lastmod>2022-10-17T00:00:00+09:00</lastmod>
-        
-
-        
-        <changefreq>weekly</changefreq>
-        
-
-        
-        <priority>0.5</priority>
-        
-
-    </url>
-    
-    <url>
-        <loc>http://localhost:4000/ml/apartpred/</loc>
+        <loc>http://localhost:4000/toy_project/apartpred/</loc>
         
         <lastmod>2022-10-15T00:00:00+09:00</lastmod>
         
@@ -644,7 +756,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/sql/TIL_0914/</loc>
+        <loc>http://localhost:4000/etc/TIL_0914/</loc>
         
         <lastmod>2022-09-14T00:00:00+09:00</lastmod>
         
@@ -660,7 +772,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/sql/TIL_0913/</loc>
+        <loc>http://localhost:4000/etc/TIL_0913/</loc>
         
         <lastmod>2022-09-13T00:00:00+09:00</lastmod>
         
@@ -676,7 +788,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/sql/TIL_0906/</loc>
+        <loc>http://localhost:4000/etc/TIL_0906/</loc>
         
         <lastmod>2022-09-06T00:00:00+09:00</lastmod>
         
@@ -692,7 +804,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/sql/TIL_0905_1/</loc>
+        <loc>http://localhost:4000/etc/TIL_0905_1/</loc>
         
         <lastmod>2022-09-05T00:00:00+09:00</lastmod>
         
@@ -708,7 +820,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/sql/TIL_0905/</loc>
+        <loc>http://localhost:4000/etc/TIL_0905/</loc>
         
         <lastmod>2022-09-05T00:00:00+09:00</lastmod>
         
@@ -724,7 +836,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/github/edit-readme/</loc>
+        <loc>http://localhost:4000/tools/edit-readme/</loc>
         
         <lastmod>2022-08-22T00:00:00+09:00</lastmod>
         
@@ -740,7 +852,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/pressit/pressit-front-end/</loc>
+        <loc>http://localhost:4000/toy_project/pressit-front-end/</loc>
         
         <lastmod>2022-08-21T00:00:00+09:00</lastmod>
         
@@ -772,7 +884,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/pressit/pressit(2)/</loc>
+        <loc>http://localhost:4000/toy_project/pressit(2)/</loc>
         
         <lastmod>2022-08-18T00:00:00+09:00</lastmod>
         
@@ -804,7 +916,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/pressit/pressit(1)/</loc>
+        <loc>http://localhost:4000/toy_project/pressit(1)/</loc>
         
         <lastmod>2022-08-12T00:00:00+09:00</lastmod>
         
@@ -820,7 +932,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/pressit/pressit/</loc>
+        <loc>http://localhost:4000/toy_project/pressit/</loc>
         
         <lastmod>2022-08-12T00:00:00+09:00</lastmod>
         
@@ -836,7 +948,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/dalle/dall_e-2/</loc>
+        <loc>http://localhost:4000/etc/dall_e-2/</loc>
         
         <lastmod>2022-08-02T00:00:00+09:00</lastmod>
         

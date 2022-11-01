@@ -1,5 +1,5 @@
 ---
-title: "딥러닝"
+title: "Computer Vision"
 layout: archive
 permalink: categories/DL
 author_profile: true

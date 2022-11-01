@@ -1,5 +1,5 @@
 ---
-title: "뻐정 : 광주광역시 버스 정보 제공 시스템"
+title: "뻐정 : 광주광역시 버스정보 통합 플랫폼"
 layout: archive
 permalink: categories/bbeojung
 author_profile: true

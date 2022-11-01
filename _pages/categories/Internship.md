@@ -1,5 +1,5 @@
 ---
-title: "인턴"
+title: "2022 하반기 ICT 인턴십 개요"
 layout: archive
 permalink: categories/Internship
 author_profile: true
