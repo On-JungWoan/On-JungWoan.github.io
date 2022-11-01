@@ -3,7 +3,7 @@ title:  "Window Docker 설치방법"
 excerpt: "windows for docker"
 
 categories:
-  - docker
+  - tools
 tags:
   - [Docker]
 

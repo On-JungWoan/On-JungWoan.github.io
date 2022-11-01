@@ -3,7 +3,7 @@ title:  "[Github]Read Me 수정하기"
 excerpt: "Edit Read Me"
 
 categories:
-  - github
+  - tools
 tags:
   - [github, readme, markdown]
 
