@@ -295,7 +295,7 @@ var store = [{
       },{
         "title": "[뻐정] 프로젝트 목표 개선사항",
         "excerpt":"뻐정 개선사항 1. 버스 내부 혼잡도 계산 현재 뻐정은 사용자가 특정 버스를 선택하면 해당 버스의 예상 탑승인원만을 예측하고 있다. 물론 예상 탑승 인원으로도 유의미한 결과(탑승시 혼잡도)를 도출할 수 있지만, 사용자에게 더 중요한 정보는 버스의 내부 혼잡도일 것이다. 따라서 사용자에게 버스 내부 혼잡도를 보여주는 기능을 추가하는 것이 좋을 것 같다. 위...","categories": ["bbeojung"],
-        "tags": ["bbeojung","ICT인턴십"],
+        "tags": ["bbeojung"],
         "url": "/bbeojung/bj_update/",
         "teaser": null
       },{
@@ -385,7 +385,7 @@ var store = [{
       },{
         "title": "[뻐정] 프로젝트 개선사항",
         "excerpt":"1. Model관련 변경사항 1-1) 기존 시스템 문제점 문제1) 분할된 모델 기존 모델은 2시간동안(n시 00분 ~ n+1시 59분)의 승차인원을 target으로 하는 모델을 시간별로 총 9개를 만들었다. target을 세분화하지 않으면 모델이 언더피팅되는 바람에 제대로 된 추론을 하지 못해서 해준 조치인데, 이번에 언더피팅 문제를 해결하였다. 따라서 target을 세분화 해줄 필요가 없어졌다. 유지보수도 힘들고...","categories": ["bbeojung"],
-        "tags": ["bbeojung","ICT인턴십"],
+        "tags": ["bbeojung"],
         "url": "/bbeojung/change/",
         "teaser": null
       },{
@@ -426,7 +426,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 11월 TIL",
-        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시            학습내용      ","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 개선사항(수정중)       11/02           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약      ","categories": ["Internship"],
         "tags": ["인턴","ICT인턴십","TIL"],
         "url": "/internship/Intern-TIL-11/",
         "teaser": null
@@ -435,5 +435,17 @@ var store = [{
         "excerpt":"1. Stream 1-0) Stream이란? host에서 device로 명령을 보내는 통로이다. host에서 stream으로 명령을 넣어주면 device는 그걸 꺼내서 사용한다. 1-1) NULL Stream 사용할 stream을 명시하지 않으면 NULL stream이 사용된다. NULL Stream 또는, 하나의 NON-NULL stream에 들어온 명령은 순서대로(동기적) device에 의해 처리된다. 1-2) NON-NULL Stream 명시적으로 생성 및 사용한 stream을 말한다. 서로 다른...","categories": ["DL"],
         "tags": ["DL","ICT인턴십"],
         "url": "/dl/cuda_stream/",
+        "teaser": null
+      },{
+        "title": "[뻐정] 프로젝트 개선사항(수정중)",
+        "excerpt":"1. Main 화면 기존에는 사용자가 소재지와 정류장명을 select box에서 입력히면(노선명은 생략 가능), 해당 정류장의 정보를 POST-GET 방식으로 넘겨주어 detail 페이지를 띄웠다. 하지만, 해당 정류장의 소재지를 모르는 경우가 있을 수 있고, 지도에서 직접 선택하는 것이 사용자 편의적인 측면에서 더 좋을 것이라고 생각했다. [기존화면] 따라서 main 화면을 다음과 같이 변경하였다. 기존의 셀렉트...","categories": ["bbeojung"],
+        "tags": ["bbeojung"],
+        "url": "/bbeojung/bj_update2/",
+        "teaser": null
+      },{
+        "title": "뻐정 프로젝트 최종 요약",
+        "excerpt":"0. Contents 프로젝트명 뻐정(Bbeojung.kr) 참여인원 개발 : 온정완 기획/ppt/발표 : 진유승 개발 기간 1차 프로토타입 (Jun. 2022 ~ Jul.2022) 2차 개선버전 (Oct. 2022 ~ Nov. 2022) 1. 배경 1-1) 시장의 중요성 광주광역시 빅데이터 통합 플랫폼에 따르면, 2022년 8월 기준 약 89.7%가 버스를 이용하는 것으로 나타났습니다. 또한, 광주광역시의 버스 분담률은 근...","categories": ["bbeojung"],
+        "tags": ["bbeojung"],
+        "url": "/bbeojung/bbeojung/",
         "teaser": null
       }]
