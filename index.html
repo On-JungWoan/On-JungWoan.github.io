@@ -114,7 +114,7 @@ sidebar_main: true
 <div class="container">
 	<h2 class="editable" style="text-align:center;">✍🏼 Recent Posts </h2>
 		<div class="posts">
-			{% for post in paginator.posts limit:4 %}
+			{% for post in paginator.posts limit:8 %}
 				{% include recent-posts.html type="grid" %}
 			{% endfor %}
 		</div>

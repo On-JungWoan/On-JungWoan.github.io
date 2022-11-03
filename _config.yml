@@ -220,7 +220,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 7 # amount of posts to show
+paginate: 8 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
@@ -281,46 +281,17 @@ compress_html:
 
 # Defaults
 defaults:
-  # # sidebar
-  # - scope:
-  #     path: ""
-  #     type: docs
-  #   values:
-  #     sidebar:
-  #       title: "Categories"
-  #       nav: "docs"
-
   # _posts
   - scope:
       path: ""
       type: posts
     values:
-      # sidebar:
-      #   title: "Categories"
-      #   nav: "docs"
-      layout: single
-      author_profile: false
-      read_time: true
-      comments: true
-      share: false
-      related: true
-      toc_ads: false
-      toc_sticky: false
-
-  # _pages
-  - scope:
-      path: ""
-      type: pages
-    values:
-      # sidebar:
-      #   title: "Categories"
-        # nav: "docs"
       layout: single
       author_profile: true
       read_time: true
       comments: true
-      share: false
-      related: false
-
+      share: true
+      related: true
+      sidebar_main: true
 
 github: [metadata]
