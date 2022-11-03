@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[뻐정] 프로젝트 개선사항(수정중) - 정완이의 개발 일기장</title>
-<meta name="description" content="뻐정 : 광주광역시 버스 정보 제공 시스템">
+<!-- begin _includes/seo.html --><title>[Github_Io]상단 네비게이션 바 - 정완이의 개발 일기장</title>
+<meta name="description" content="개발 블로그 로컬에서 디버깅">
 
 
   <meta name="author" content="온정완">
@@ -22,32 +22,32 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="[뻐정] 프로젝트 개선사항(수정중)">
-<meta property="og:url" content="http://localhost:4000/bbeojung/bj_update2/">
+<meta property="og:title" content="[Github_Io]상단 네비게이션 바">
+<meta property="og:url" content="http://localhost:4000/blog/make_home/">
 
 
-  <meta property="og:description" content="뻐정 : 광주광역시 버스 정보 제공 시스템">
-
-
-
+  <meta property="og:description" content="개발 블로그 로컬에서 디버깅">
 
 
 
 
-  <meta property="article:published_time" content="2022-11-01T00:00:00+09:00">
 
 
 
-  <meta property="article:modified_time" content="2022-11-01T00:00:00+09:00">
+  <meta property="article:published_time" content="2022-11-04T00:00:00+09:00">
 
 
 
-  
+  <meta property="article:modified_time" content="2022-11-04T00:00:00+09:00">
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/bbeojung/bj_update2/">
+
+<link rel="canonical" href="http://localhost:4000/blog/make_home/">
 
 
 
@@ -879,246 +879,19 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[뻐정] 프로젝트 개선사항(수정중)">
-    <meta itemprop="description" content="뻐정 : 광주광역시 버스 정보 제공 시스템">
-    <meta itemprop="datePublished" content="2022-11-01T00:00:00+09:00">
-    <meta itemprop="dateModified" content="2022-11-01T00:00:00+09:00">
+    <meta itemprop="headline" content="[Github_Io]상단 네비게이션 바">
+    <meta itemprop="description" content="개발 블로그 로컬에서 디버깅">
+    <meta itemprop="datePublished" content="2022-11-04T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-11-04T00:00:00+09:00">
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/bbeojung/bj_update2/" class="u-url" itemprop="url">[뻐정] 프로젝트 개선사항(수정중)
+            <a href="http://localhost:4000/blog/make_home/" class="u-url" itemprop="url">[Github_Io]상단 네비게이션 바
 </a>
           </h1>
           <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-          
-            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-11-01T00:00:00+09:00">November 01, 2022</time></p>
-          
-        </header>
-      
-
-      <section class="page__content e-content" itemprop="text">
-        
-          <aside class="sidebar__right sticky">
-            <nav class="toc">
-              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#1-main-화면">1. Main 화면</a><ul><li><a href="#1-1-지도-검색">1-1) 지도 검색</a><ul><li><a href="#사용-기술">사용 기술</a></li></ul></li><li><a href="#1-2-직접-검색">1-2) 직접 검색</a><ul><li><a href="#사용-기술-1">사용 기술</a></li></ul></li></ul></li></ul>
-
-            </nav>
-          </aside>
-        
-        <h2 id="1-main-화면">1. Main 화면</h2>
-
-<p>기존에는 사용자가 소재지와 정류장명을 select box에서 입력히면(노선명은 생략 가능), 해당 정류장의 정보를 POST-GET 방식으로 넘겨주어 detail 페이지를 띄웠다. 하지만, 해당 정류장의 소재지를 모르는 경우가 있을 수 있고, 지도에서 직접 선택하는 것이 사용자 편의적인 측면에서 더 좋을 것이라고 생각했다.</p>
-
-<div align="center"><strong>[기존화면]</strong></div>
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/174231183-6f34ce39-f180-480c-a075-0678677bf190.jpg" /></p>
-
-<p>따라서 main 화면을 다음과 같이 변경하였다. 기존의 셀렉트 박스로 검색하는 기능은 ‘직접 검색’ 섹션을 따로 빼서 분리해주었으며, 기본적으로 지도에서 사용자가 직접 정류장을 선택할 수 있게 하였다.</p>
-
-<div align="center"><strong>[변경화면]</strong></div>
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199156723-452cba03-f45e-4fcb-b7db-d22b7bc543d5.png" /></p>
-
-<h3 id="1-1-지도-검색">1-1) 지도 검색</h3>
-
-<p>조회하고자 하는 버스를 검색하면, 해당 버스가 지나는 정류장을 마커로 표시한다. 또한, 검색결과를 좌측 상단에 리스트로 표현하였으며, 클릭 이벤트를 줘서 detail 페이지로 넘어갈 수 있게 하였다.</p>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199157173-eb90e574-416e-47f0-8bc5-826d5d508703.png" /></p>
-
-<h4 id="사용-기술">사용 기술</h4>
-
-<p>KakaoMaps API를 메인 기술로 사용하였으며, 아래 Reference를 참고하였다.</p>
-
-<ul>
-  <li>
-    <p><strong>Link</strong></p>
-
-    <p><a href="https://apis.map.kakao.com/">https://apis.map.kakao.com/</a></p>
-  </li>
-  <li>
-    <p><strong>Reference</strong></p>
-
-    <p><a href="https://apis.map.kakao.com/web/sample/addMapCustomControl/">지도에 사용자 컨트롤 올리기</a></p>
-
-    <p><a href="https://apis.map.kakao.com/web/sample/multipleMarkerImage/">여러개 마커 표시하기</a></p>
-
-    <p><a href="https://apis.map.kakao.com/web/sample/multipleMarkerControl/">여러개 마커 제어하기</a></p>
-
-    <p><a href="https://apis.map.kakao.com/web/sample/multipleMarkerEvent/">여러개 마커에 이벤트 등록하기1</a></p>
-
-    <p><a href="https://apis.map.kakao.com/web/sample/multipleMarkerEvent2/">여러개 마커에 이벤트 등록하기2</a></p>
-
-    <p><a href="https://apis.map.kakao.com/web/sample/keywordBasic/">키워드로 장소 검색</a></p>
-  </li>
-</ul>
-
-<p>위 Reference들을 참고하여 <code class="language-plaintext highlighter-rouge">kakaomap.css</code>와 <code class="language-plaintext highlighter-rouge">kakaomap.js</code>를 만들어 main html에 불러와서 사용하였다.</p>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199158380-1d7eead8-33d6-47fe-b958-fe027b0b7c76.png" /></p>
-
-<p><br /></p>
-
-<h3 id="1-2-직접-검색">1-2) 직접 검색</h3>
-
-<p>직접 검색 섹션에서는, 사용자가 직접 정류장명을 입력하거나, 셀렉트 박스에서 정류장을 고를 수 있게 하였다.</p>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199157503-ec045b54-0e1a-4624-b062-abf004a6c27c.png" /></p>
-
-<h4 id="사용-기술-1">사용 기술</h4>
-
-<p>3번 텍스트 상자의 값을 받아와서, 만약 값이 비어있지 않으면 1,2번 셀렉트 박스의 display를 false로 바꾸고 그렇지 않으면 true로 바꾸어주는 js 함수를 작성하였다. 3번 텍스트 상자 onchage 옵션에 해당 js 함수를 넣어주어, 값이 바뀔 때마다 동작하도록 하였다. js 문법은 아직 익숙하지가 않아서, 쉬운 기능인데도 한참 헤맸던 기억이 난다.</p>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199158752-ef22a487-38e4-413e-8bb6-3caeb4ff628b.png" /></p>
-
-<p><br />
-<br /></p>
-
-<div align="center">
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-11/#1101">
-    본문으로 돌아가기
-  </a>
-</div>
-
-        
-      </section>
-
-      <footer class="page__meta">
-        
-        
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/tags/#bbeojung" class="page__taxonomy-item p-category" rel="tag">bbeojung</a>
-    
-    </span>
-  </p>
-
-
-
-
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/categories/#bbeojung" class="page__taxonomy-item p-category" rel="tag">bbeojung</a>
-    
-    </span>
-  </p>
-
-
-        
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-01">November 1, 2022</time></p>
-
-      </footer>
-
-      <section class="page__share">
-  
-    <h4 class="page__share-title">공유하기</h4>
-  
-
-  <a href="https://twitter.com/intent/tweet?text=%5B%EB%BB%90%EC%A0%95%5D+%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8+%EA%B0%9C%EC%84%A0%EC%82%AC%ED%95%AD%28%EC%88%98%EC%A0%95%EC%A4%91%29%20http%3A%2F%2Flocalhost%3A4000%2Fbbeojung%2Fbj_update2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
-
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fbbeojung%2Fbj_update2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
-
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fbbeojung%2Fbj_update2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
-</section>
-
-
-      <!-- 
-  <nav class="pagination">
-    
-      <a href="/dl/cuda_stream/" class="pagination--pager" title="CUDA Stream
-">이전</a>
-    
-    
-      <a href="/bbeojung/bbeojung/" class="pagination--pager" title="뻐정 프로젝트 최종 요약
-">다음</a>
-    
-  </nav>
- -->
-
-
-
-
-  
-
-  
-  	
-  	
-  	
-  	
-  	
-
-
-  <nav class="pagination">
-    
-      <a href="/bbeojung/change/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[뻐정] 프로젝트 개선사항</a>
-    
-    
-      <a href="/bbeojung/bbeojung/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>뻐정 프로젝트 최종 요약</a>
-    
-  </nav>
-
-
-
-    </div>
-
-    
-  </article>
-
-  
-  
-    <div class="page__related">
-      <h2 class="page__related-title">참고</h2>
-      <div class="grid__wrapper">
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/make_home/" rel="permalink">[Github_Io]상단 네비게이션 바
-</a>
-            
-    </h2>
-    <!--
 
   <p class="page__meta">
     
@@ -1139,14 +912,380 @@
   </p>
 
 -->
+          
+            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-11-04T00:00:00+09:00">November 04, 2022</time></p>
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#navigationyaml-수정">navigation.yaml 수정</a></li><li><a href="#mastheadhtml-수정">masthead.html 수정</a></li><li><a href="#navigationscss-수정">navigation.scss 수정</a></li><li><a href="#dropdown-아이콘이-안불러와지는-경우">Dropdown 아이콘이 안불러와지는 경우</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="navigationyaml-수정">navigation.yaml 수정</h2>
+
+<p>나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png" /></p>
+
+<div align="center"><strong>[navigation.yaml]</strong></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">main</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PROJECTS"</span>
+    <span class="na">sublinks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">뻐정</span><span class="nv"> </span><span class="s">:</span><span class="nv"> </span><span class="s">버스정보종합시스템"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/bbeojung</span>    
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">실시간</span><span class="nv"> </span><span class="s">쓰레기</span><span class="nv"> </span><span class="s">무단투기</span><span class="nv"> </span><span class="s">탐지"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/cctv</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">canvas</span><span class="nv"> </span><span class="s">개발"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/canvas</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Toy</span><span class="nv"> </span><span class="s">Project"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/toy_project</span>
+
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">STUDY</span><span class="nv"> </span><span class="s">NOTE"</span>
+    <span class="na">sublinks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title </span><span class="pi">:</span> <span class="s1">'</span><span class="s">AI'</span>
+        <span class="na">sublinks</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Computer</span><span class="nv"> </span><span class="s">Vision"</span>
+            <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/DL</span>
+          <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Machine</span><span class="nv"> </span><span class="s">Learning"</span>
+            <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/ML</span>
+      <span class="pi">-</span> <span class="na">title </span><span class="pi">:</span> <span class="s1">'</span><span class="s">PLATFORM</span><span class="nv"> </span><span class="s">DEV.'</span>
+        <span class="na">sublinks</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Blog</span><span class="nv"> </span><span class="s">Dev"</span>
+            <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/Blog</span>
+          <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Web"</span>
+            <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/web</span>
+          <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Tools"</span>
+            <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/tools</span>
+        
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">대외활동"</span>
+    <span class="na">sublinks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2022</span><span class="nv"> </span><span class="s">하반기</span><span class="nv"> </span><span class="s">ICT</span><span class="nv"> </span><span class="s">인턴십"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/internship</span>
+        
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">ETC"</span>  
+    <span class="na">sublinks</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Python</span><span class="nv"> </span><span class="s">개념"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/python</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">화성학"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/harmonics</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">etc"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/categories/etc</span>
+
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">TIL"</span>    
+    <span class="na">url</span><span class="pi">:</span> <span class="s">/TIL/</span>
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 04 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">개발 블로그 로컬에서 디버깅
-</p>
-  </article>
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="mastheadhtml-수정">masthead.html 수정</h2>
+
+<p>masthead에 navigation 정보를 불러오는 코드를 넣어준다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/199758613-c1d0d41d-73ef-48a7-a0b5-b8c6623f11d2.png" alt="image" /></p>
+
+<p>이 때, 하위 sublink가 있으면 for문을 한 번 더 돌게 하였고 그렇지 않으면 바로 sublink 정보를 가져오도록 하였다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/199758848-0c930ff9-3ed4-462a-a419-1819e1766f24.png" alt="image" /></p>
+
+<p><br />
+<br /></p>
+
+<h2 id="navigationscss-수정">navigation.scss 수정</h2>
+<p>.greedy-nav{}안에 다음 style을 넣어주면 된다.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">//</span> <span class="nt">to</span> <span class="nt">be</span> <span class="nt">shared</span> <span class="nt">by</span> <span class="nt">both</span> <span class="nt">hidden</span> <span class="nt">link</span> <span class="nt">and</span> <span class="nt">visible</span> <span class="nt">link</span>
+  <span class="nc">.dropdown</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+    <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.dropdown-content</span> <span class="p">{</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+    <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="n">darken</span><span class="p">(</span><span class="err">$</span><span class="n">background-color</span><span class="p">,</span> <span class="m">3%</span><span class="p">);</span>
+    <span class="err">//</span> <span class="nl">min-width</span><span class="p">:</span> <span class="m">160px</span><span class="p">;</span>
+    <span class="nl">box-shadow</span><span class="p">:</span> <span class="err">$</span><span class="n">box-shadow</span><span class="p">;</span>
+    <span class="nl">z-index</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+    <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.dropdown</span><span class="nd">:hover</span> <span class="nc">.dropdown-content</span> <span class="p">{</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+    <span class="err">//</span> <span class="nl">font-size</span><span class="p">:</span> <span class="m">17px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.dropdown-item</span> <span class="p">{</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+
+  <span class="nc">.visible-links</span> <span class="p">{</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="n">-webkit-box</span><span class="p">;</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="n">-ms-flexbox</span><span class="p">;</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+    <span class="nl">-webkit-box-pack</span><span class="p">:</span> <span class="n">end</span><span class="p">;</span>
+    <span class="nl">-ms-flex-pack</span><span class="p">:</span> <span class="n">end</span><span class="p">;</span>
+    <span class="nl">justify-content</span><span class="p">:</span> <span class="n">flex-end</span><span class="p">;</span>
+    <span class="nl">-webkit-box-flex</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+    <span class="nl">-ms-flex</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+    <span class="nl">flex</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+    <span class="nl">overflow</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span>
+
+    <span class="err">li</span> <span class="err">{</span>
+      <span class="nl">-webkit-box-flex</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+      <span class="nl">-ms-flex</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+      <span class="nl">flex</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nb">list-item</span><span class="p">;</span>
+      <span class="nl">text-align</span><span class="p">:</span> <span class="n">-webkit-match-parent</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">a</span> <span class="p">{</span>
+      <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+
+      <span class="err">&amp;:before</span> <span class="err">{</span>
+        <span class="nl">content</span><span class="p">:</span> <span class="s1">""</span><span class="p">;</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+        <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">bottom</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">4px</span><span class="p">;</span>
+        <span class="nl">background</span><span class="p">:</span> <span class="err">$</span><span class="n">primary-color</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">-webkit-transition</span><span class="p">:</span> <span class="err">$</span><span class="n">global-transition</span><span class="p">;</span>
+        <span class="nl">transition</span><span class="p">:</span> <span class="err">$</span><span class="n">global-transition</span><span class="p">;</span>
+        <span class="nl">-webkit-transform</span><span class="p">:</span> <span class="n">scaleX</span><span class="p">(</span><span class="m">0</span><span class="p">)</span> <span class="n">translate3d</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+        <span class="nl">transform</span><span class="p">:</span> <span class="n">scaleX</span><span class="p">(</span><span class="m">0</span><span class="p">)</span> <span class="n">translate3d</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span> <span class="err">//</span> <span class="err">hide</span>
+      <span class="p">}</span>
+
+      <span class="o">&amp;</span><span class="nd">:hover:before</span> <span class="p">{</span>
+        <span class="nl">-webkit-transform</span><span class="p">:</span> <span class="n">scaleX</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+        <span class="nl">-ms-transform</span><span class="p">:</span> <span class="n">scaleX</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+        <span class="nl">transform</span><span class="p">:</span> <span class="n">scaleX</span><span class="p">(</span><span class="m">1</span><span class="p">);</span> <span class="err">//</span> <span class="err">reveal</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span>
+
+
+  <span class="nc">.hidden-links</span> <span class="p">{</span>
+    <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+    <span class="nl">top</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="err">$</span><span class="n">border-color</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="err">$</span><span class="n">border-radius</span><span class="p">;</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="err">$</span><span class="n">background-color</span><span class="p">;</span>
+    <span class="nl">-webkit-box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">4px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">#000</span><span class="p">,</span> <span class="m">0.16</span><span class="p">),</span>
+      <span class="m">0</span> <span class="m">2px</span> <span class="m">10px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">#000</span><span class="p">,</span> <span class="m">0.12</span><span class="p">);</span>
+    <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">4px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">#000</span><span class="p">,</span> <span class="m">0.16</span><span class="p">),</span> <span class="m">0</span> <span class="m">2px</span> <span class="m">10px</span> <span class="m">0</span> <span class="n">rgba</span><span class="p">(</span><span class="m">#000</span><span class="p">,</span> <span class="m">0.12</span><span class="p">);</span>
+
+    <span class="err">&amp;.hidden</span> <span class="err">{</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">a</span> <span class="p">{</span>
+      <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+      <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span> <span class="m">20px</span><span class="p">;</span>
+      <span class="nl">font-size</span><span class="p">:</span> <span class="err">$</span><span class="n">type-size-5</span><span class="p">;</span>
+
+      <span class="err">&amp;:hover</span> <span class="err">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="err">$</span><span class="n">masthead-link-color-hover</span><span class="p">;</span>
+        <span class="nl">background</span><span class="p">:</span> <span class="err">$</span><span class="n">navicon-link-color-hover</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+
+    <span class="o">&amp;</span><span class="nd">:before</span> <span class="p">{</span>
+      <span class="nl">content</span><span class="p">:</span> <span class="s1">""</span><span class="p">;</span>
+      <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+      <span class="nl">top</span><span class="p">:</span> <span class="m">-11px</span><span class="p">;</span>
+      <span class="nl">right</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+      <span class="nl">width</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+      <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+      <span class="nl">border-width</span><span class="p">:</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">10px</span><span class="p">;</span>
+      <span class="nl">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">border-color</span> <span class="nb">transparent</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+      <span class="nl">z-index</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="o">&amp;</span><span class="nd">:after</span> <span class="p">{</span>
+      <span class="nl">content</span><span class="p">:</span> <span class="s1">""</span><span class="p">;</span>
+      <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+      <span class="nl">top</span><span class="p">:</span> <span class="m">-10px</span><span class="p">;</span>
+      <span class="nl">right</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+      <span class="nl">width</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+      <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+      <span class="nl">border-width</span><span class="p">:</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">10px</span><span class="p">;</span>
+      <span class="nl">border-color</span><span class="p">:</span> <span class="err">$</span><span class="n">background-color</span> <span class="nb">transparent</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+      <span class="nl">z-index</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">li</span> <span class="p">{</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+      <span class="nl">border-bottom</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="err">$</span><span class="n">border-color</span><span class="p">;</span>
+
+      <span class="err">&amp;:last-child</span> <span class="err">{</span>
+        <span class="nl">border-bottom</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="err">}</span>
+  <span class="err">}</span><span class="o">//</span><span class="nt">hidden</span> <span class="nt">link</span>
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="dropdown-아이콘이-안불러와지는-경우">Dropdown 아이콘이 안불러와지는 경우</h2>
+
+<p>다음과 같이 dropdown 아이콘이 안불러와지는 경우가 있다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png" /></p>
+
+<p><br /></p>
+
+<p>masthead.html 최상단에 icon.html을 불러와주면 해결된다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">'https://kit.fontawesome.com/a076d05399.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+
+	
+
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png" /></p>
+
+<p><br />
+<br /></p>
+
+<div align="center">
+  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-11/#1104">
+    본문으로 돌아가기
+  </a>
 </div>
 
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#github" class="page__taxonomy-item p-category" rel="tag">Github</a><span class="sep">, </span>
+    
+      <a href="/tags/#githubio" class="page__taxonomy-item p-category" rel="tag">Githubio</a><span class="sep">, </span>
+    
+      <a href="/tags/#jekyll" class="page__taxonomy-item p-category" rel="tag">jekyll</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#blog" class="page__taxonomy-item p-category" rel="tag">Blog</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-04">November 4, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BGithub_Io%5D%EC%83%81%EB%8B%A8+%EB%84%A4%EB%B9%84%EA%B2%8C%EC%9D%B4%EC%85%98+%EB%B0%94%20http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fmake_home%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fmake_home%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fmake_home%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/bbeojung/bbeojung/" class="pagination--pager" title="뻐정 프로젝트 최종 요약
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/blog/debug_jekyll/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[Github_Io]Jekyll 로컬에서 디버그 하는 법</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
         
           
 
@@ -1184,6 +1323,49 @@
 -->
     
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 02 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">뻐정 : 광주광역시 버스 정보 제공 시스템
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bbeojung/bj_update2/" rel="permalink">[뻐정] 프로젝트 개선사항(수정중)
+</a>
+            
+    </h2>
+    <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 01 2022</p>
     
     <p class="archive__item-excerpt" itemprop="description">뻐정 : 광주광역시 버스 정보 제공 시스템
 </p>

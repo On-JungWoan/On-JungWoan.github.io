@@ -4,6 +4,8 @@
   {% capture logo_path %}{{ site.logo | relative_url }}{% endcapture %}
 {% endif %}
 
+{% include icon.html %}
+
 <div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
@@ -54,6 +56,8 @@
                {% endif %}
            {% endfor %}
        </ul>
+
+       
 
         {% if site.search == true %}
         <button class="search__toggle" type="button">

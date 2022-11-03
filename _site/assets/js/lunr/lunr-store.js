@@ -448,4 +448,10 @@ var store = [{
         "tags": ["bbeojung"],
         "url": "/bbeojung/bbeojung/",
         "teaser": null
+      },{
+        "title": "[Github_Io]상단 네비게이션 바",
+        "excerpt":"navigation.yaml 수정 나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다. [navigation.yaml] main: - title: \"PROJECTS\" sublinks: - title: \"뻐정 : 버스정보종합시스템\" url: /categories/bbeojung - title: \"실시간 쓰레기 무단투기 탐지\" url: /categories/cctv - title: \"canvas...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/make_home/",
+        "teaser": null
       }]
