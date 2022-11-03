@@ -1,11 +1,11 @@
 ---
-title: "django"
+title: "Web 관련 공부내용"
 layout: archive
-permalink: categories/django
+permalink: categories/web
 author_profile: true
 sidebar_main: true
 ---
 
 
-{% assign posts = site.categories.django %}
+{% assign posts = site.categories.web %}
 {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

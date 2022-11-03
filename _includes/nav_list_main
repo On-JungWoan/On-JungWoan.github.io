@@ -15,44 +15,6 @@
       </li>
       <li>
       
-        <!--span 태그로 카테고리들을 크게 분류-->
-        <span class="nav__sub-title">AI</span>
-            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "DL" %}
-                        <li><a href="/categories/DL" class="">Computer Vision ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>            
-            <ul>
-                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
-                {% for category in site.categories %}
-                    {% if category[0] == "ML" %}
-                        <li><a href="/categories/ML" class="">Machine Learning ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "python" %}
-                        <li><a href="/categories/python" class="">Python 개념 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>       
-            
-
-        <span class="nav__sub-title">대외활동</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "Internship" %}
-                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>            
-            
-
         <span class="nav__sub-title">Projects</span>
             <ul>
                 {% for category in site.categories %}
@@ -81,14 +43,42 @@
                         <li><a href="/categories/toy_project" class="">Toy Project ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
+            </ul>
+
+
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "DL" %}
+                        <li><a href="/categories/DL" class="">Computer Vision ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>            
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                {% for category in site.categories %}
+                    {% if category[0] == "ML" %}
+                        <li><a href="/categories/ML" class="">Machine Learning ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>    
 
 
-        <span class="nav__sub-title">Platform Dev.</span>
+            <span class="nav__sub-title">Platform Dev.</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "django" %}
-                        <li><a href="/categories/django" class="">Django ({{category[1].size}})</a></li>
+                    {% if category[0] == "Blog" %}
+                        <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>                     
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "web" %}
+                        <li><a href="/categories/web" class="">Web ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>                             
@@ -99,16 +89,27 @@
                     {% endif %}
                 {% endfor %}
             </ul>       
+
+
+        <span class="nav__sub-title">대외활동</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Blog" %}
-                        <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
+                    {% if category[0] == "Internship" %}
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>                     
+            </ul>            
+            
 
             
-        <span class="nav__sub-title">etc</span>                                        
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "python" %}
+                        <li><a href="/categories/python" class="">Python 개념 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>                                            
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "harmonics" %}

@@ -248,6 +248,7 @@
     box-sizing: border-box;
   }
 
+
   .dropdown:hover .dropdown-content {
     display: block;
     // font-size: 17px;
@@ -258,6 +259,11 @@
     font-size: 15px;
   }
 
+  .dropdown-title{
+    padding: 10px;
+    font-size: 15px;
+    font-weight:bold;
+  }
 
 
 
@@ -281,7 +287,7 @@
       text-align: -webkit-match-parent;
     }
 
-    a {
+    .dropdown-item {
       position: relative;
 
       &:before {

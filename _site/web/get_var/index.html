@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Django 템플릿에서 src, href에 변수 불러오는 법 - 정완이의 개발 일기장</title>
+<!-- begin _includes/seo.html --><title>[Django] 템플릿에서 src, href에 변수 불러오는 법 - 정완이의 개발 일기장</title>
 <meta name="description" content="Django">
 
 
@@ -22,8 +22,8 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="Django 템플릿에서 src, href에 변수 불러오는 법">
-<meta property="og:url" content="http://localhost:4000/django/get_var/">
+<meta property="og:title" content="[Django] 템플릿에서 src, href에 변수 불러오는 법">
+<meta property="og:url" content="http://localhost:4000/web/get_var/">
 
 
   <meta property="og:description" content="Django">
@@ -45,7 +45,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/django/get_var/">
+<link rel="canonical" href="http://localhost:4000/web/get_var/">
 
 
 
@@ -123,558 +123,138 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-        <a class="site-title" href="/">
-          정완이의 개발 일기장
+        <a class="site-title" href="/"><img src="/assets/images/sitelogo.png" class="center"></a>
+          <!-- 정완이의 개발 일기장
           
-        </a>
+        </a> -->
+
+
 
         <ul class="visible-links">
                
                
-                   <li class="dropdown ">
-                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AI  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
 
-                       <ul class="dropdown-content" >
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                       </ul>
-                   </li>
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/bbeojung">    뻐정 : 버스정보종합시스템</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
                
            
                
                
-                   <li class="dropdown ">
-                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
 
-                       <ul class="dropdown-content" >
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                       </ul>
-                   </li>
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">AI</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/DL">    Computer Vision</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/ML">    Machine Learning</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Blog Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Web</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
                
            
                
                
-                   <li class="dropdown ">
-                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대외활동  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대외활동  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
 
-                       <ul class="dropdown-content" >
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                       </ul>
-                   </li>
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/internship">    2022 하반기 ICT 인턴십</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
                
            
                
                
-                   <li class="dropdown ">
-                       <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
 
-                       <ul class="dropdown-content" >
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                                  
-                         
-                               
-                           
-                       </ul>
-                   </li>
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python 개념</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
                
            
                
@@ -685,19 +265,7 @@
                
            
        </ul>
-        
-        
-<!--         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="">AI</a>
-            </li><li class="masthead__menu-item">
-              <a href="">PROJECTS</a>
-            </li><li class="masthead__menu-item">
-              <a href="">대외활동</a>
-            </li><li class="masthead__menu-item">
-              <a href="">ETC</a>
-            </li><li class="masthead__menu-item">
-              <a href="/TIL/">TIL</a>
-            </li></ul> -->
+
         
         <button class="greedy-nav__toggle hidden" type="button">
           <span class="visually-hidden">토글 메뉴</span>
@@ -728,7 +296,7 @@
   
     <div class="author__avatar">
       <a href="http://localhost:4000/">
-        <img src="/assets/image/profile_image.jpg" alt="온정완" itemprop="image" class="u-photo">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -860,140 +428,6 @@
       </li>
       <li>
       
-        <!--span 태그로 카테고리들을 크게 분류-->
-        <span class="nav__sub-title">AI</span>
-            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
-            <ul>
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                        <li><a href="/categories/DL" class="">Computer Vision (11)</a></li>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            </ul>            
-            <ul>
-                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
-                
-                    
-                
-                    
-                
-                    
-                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            </ul>
-            <ul>
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
-                    
-                
-                    
-                
-                    
-                
-            </ul>       
-            
-
-        <span class="nav__sub-title">대외활동</span>
-            <ul>
-                
-                    
-                
-                    
-                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (9)</a></li>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-            </ul>            
-            
-
         <span class="nav__sub-title">Projects</span>
             <ul>
                 
@@ -1118,10 +552,110 @@
                 
                     
                 
+            </ul>
+
+
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL" class="">Computer Vision (11)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
             </ul>    
 
 
-        <span class="nav__sub-title">Platform Dev.</span>
+            <span class="nav__sub-title">Platform Dev.</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Blog Dev (9)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
             <ul>
                 
                     
@@ -1149,7 +683,7 @@
                     
                 
                     
-                        <li><a href="/categories/django" class="">Django (1)</a></li>
+                        <li><a href="/categories/web" class="">Web (1)</a></li>
                     
                 
             </ul>                             
@@ -1184,10 +718,15 @@
                     
                 
             </ul>       
+
+
+        <span class="nav__sub-title">대외활동</span>
             <ul>
                 
                     
-                        <li><a href="/categories/Blog" class="">Blog Dev (9)</a></li>
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (9)</a></li>
                     
                 
                     
@@ -1212,12 +751,42 @@
                 
                     
                 
-                    
-                
-            </ul>                     
+            </ul>            
+            
 
             
-        <span class="nav__sub-title">etc</span>                                        
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
             <ul>
                 
                     
@@ -1292,7 +861,7 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Django 템플릿에서 src, href에 변수 불러오는 법">
+    <meta itemprop="headline" content="[Django] 템플릿에서 src, href에 변수 불러오는 법">
     <meta itemprop="description" content="Django">
     <meta itemprop="datePublished" content="2022-10-28T00:00:00+09:00">
     
@@ -1301,7 +870,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/django/get_var/" class="u-url" itemprop="url">Django 템플릿에서 src, href에 변수 불러오는 법
+            <a href="http://localhost:4000/web/get_var/" class="u-url" itemprop="url">[Django] 템플릿에서 src, href에 변수 불러오는 법
 </a>
           </h1>
           <!--
@@ -1417,7 +986,7 @@
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#django" class="page__taxonomy-item p-category" rel="tag">django</a>
+      <a href="/categories/#web" class="page__taxonomy-item p-category" rel="tag">web</a>
     
     </span>
   </p>
@@ -1434,22 +1003,22 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Django+%ED%85%9C%ED%94%8C%EB%A6%BF%EC%97%90%EC%84%9C+src%2C+href%EC%97%90+%EB%B3%80%EC%88%98+%EB%B6%88%EB%9F%AC%EC%98%A4%EB%8A%94+%EB%B2%95%20http%3A%2F%2Flocalhost%3A4000%2Fdjango%2Fget_var%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%5BDjango%5D+%ED%85%9C%ED%94%8C%EB%A6%BF%EC%97%90%EC%84%9C+src%2C+href%EC%97%90+%EB%B3%80%EC%88%98+%EB%B6%88%EB%9F%AC%EC%98%A4%EB%8A%94+%EB%B2%95%20http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fget_var%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdjango%2Fget_var%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fget_var%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdjango%2Fget_var%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fget_var%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       <!-- 
   <nav class="pagination">
     
-      <a href="/dl/summary/" class="pagination--pager" title="AI 개발 가이드 및 조언내용 정리
+      <a href="/canvas/table_structure/" class="pagination--pager" title="user정보 DB 구조파악
 ">이전</a>
     
     
-      <a href="/canvas/table_structure/" class="pagination--pager" title="user정보 DB 구조파악
+      <a href="/internship/Itern-TIL-10/" class="pagination--pager" title="[ICT 인턴십]2022년 10월 TIL
 ">다음</a>
     
   </nav>

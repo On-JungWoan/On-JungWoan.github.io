@@ -1,6 +1,6 @@
 
 .container {
-	max-width: 1000px;
+	max-width: 1200px;
 	width: 100%;
 	margin: 0 auto;
 	position: relative;
@@ -26,12 +26,13 @@ header {
 	color: #333;
 	min-width: 380px;
 	padding-bottom: 50px;
+	font-size: 20px;
 
 	// when its mobile
 		img {
-			margin: 0px auto 0 auto;
+			margin: 100px auto 0 auto;
 			display: block;
-			max-width: 70%;
+			max-width: 100%;
 		}
 
 
@@ -44,9 +45,9 @@ header {
 			flex: 1;
 
 			img {
-				margin: 50px auto 0 auto;
+				margin: 0px auto 0 auto;
 				max-width: none;
-				width: 100%;
+				width: 135%;
 			}
 
 			&:first-child {
@@ -81,7 +82,7 @@ header {
 
 header, nav {
 	.container {
-		padding-top: 0;
+		padding-top: 50px;
 		padding-bottom: 0;
 	}
 }
@@ -118,7 +119,7 @@ nav .button {
 			margin: 0 15px;
 
 			p {
-				font-size: 0.95rem;
+				font-size: 15px;
 				font-family: 'Lato', sans-serif;
 				color: #5a5a5a;
 			}
@@ -224,6 +225,7 @@ blockquote {
 
 .posts {
 	display: table;
+	margin: auto;
 
 	.grid__item .archive__item-title{
 		text-align: left;

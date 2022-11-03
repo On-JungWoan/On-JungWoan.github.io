@@ -407,16 +407,16 @@ var store = [{
         "url": "/dl/summary/",
         "teaser": null
       },{
-        "title": "Django 템플릿에서 src, href에 변수 불러오는 법",
-        "excerpt":"문제상황 카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에...","categories": ["django"],
-        "tags": ["django","web","backend"],
-        "url": "/django/get_var/",
-        "teaser": null
-      },{
         "title": "user정보 DB 구조파악",
         "excerpt":"우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다. 사이트 주소 WWW SQL Designer 아래는 해당 사이트에서 직접 그려본 실제 DB 스키마의 일부이다. 테이블 설명 users 회원을 생성할 수...","categories": ["canvas"],
         "tags": ["postgreSQL","DataGrip","유클리드소프트"],
         "url": "/canvas/table_structure/",
+        "teaser": null
+      },{
+        "title": "[Django] 템플릿에서 src, href에 변수 불러오는 법",
+        "excerpt":"문제상황 카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에...","categories": ["web"],
+        "tags": ["django","web","backend"],
+        "url": "/web/get_var/",
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 10월 TIL",

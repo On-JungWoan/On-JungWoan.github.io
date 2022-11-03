@@ -84,7 +84,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/canvas/table_structure/</loc>
+        <loc>http://localhost:4000/web/get_var/</loc>
         
         <lastmod>2022-10-28T00:00:00+09:00</lastmod>
         
@@ -100,7 +100,7 @@
     </url>
     
     <url>
-        <loc>http://localhost:4000/django/get_var/</loc>
+        <loc>http://localhost:4000/canvas/table_structure/</loc>
         
         <lastmod>2022-10-28T00:00:00+09:00</lastmod>
         

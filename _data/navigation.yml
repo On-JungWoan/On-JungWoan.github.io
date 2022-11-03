@@ -1,22 +1,32 @@
 # main links
 main:
-  - title: "AI"
-    sublinks:
-      - title: "Deep Learning"
-        url: /categories/DL
-      - title: "Machine Learning"
-        url: /categories/ML
-      - title: "Python"
-        url: /categories/python
-        
   - title: "PROJECTS"
     sublinks:
+      - title: "뻐정 : 버스정보종합시스템"
+        url: /categories/bbeojung    
       - title: "실시간 쓰레기 무단투기 탐지"
         url: /categories/cctv
-      - title: "Press It!"
-        url: /categories/pressit
-      - title: "Bbeojung.kr"
-        url: /categories/bbeojung
+      - title: "canvas 개발"
+        url: /categories/canvas
+      - title: "Toy Project"
+        url: /categories/toy_project
+
+  - title: "STUDY NOTE"
+    sublinks:
+      - title : 'AI'
+        sublinks:
+          - title: "Computer Vision"
+            url: /categories/DL
+          - title: "Machine Learning"
+            url: /categories/ML
+      - title : 'PLATFORM DEV.'
+        sublinks:
+          - title: "Blog Dev"
+            url: /categories/Blog
+          - title: "Web"
+            url: /categories/web
+          - title: "Tools"
+            url: /categories/tools
         
   - title: "대외활동"
     sublinks:
@@ -25,16 +35,12 @@ main:
         
   - title: "ETC"  
     sublinks:
-      - title: "Blog Dev"
-        url: /categories/blog
-      - title: "github"
-        url: /categories/github
-      - title: "SQL"
-        url: /categories/sql
+      - title: "Python 개념"
+        url: /categories/python
       - title: "화성학"
         url: /categories/harmonics
       - title: "etc"
-        url: /categories/dalle
+        url: /categories/etc
 
   - title: "TIL"    
     url: /TIL/

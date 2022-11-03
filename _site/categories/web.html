@@ -9,32 +9,28 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>user정보 DB 구조파악 - 정완이의 개발 일기장</title>
-<meta name="description" content="canvas 개발">
+<!-- begin _includes/seo.html --><title>Web 관련 공부내용 - 정완이의 개발 일기장</title>
+<meta name="description" content="정완이의 개발 일기장">
 
 
   <meta name="author" content="온정완">
   
-  <meta property="article:author" content="온정완">
-  
 
 
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="user정보 DB 구조파악">
-<meta property="og:url" content="http://localhost:4000/canvas/table_structure/">
+<meta property="og:title" content="Web 관련 공부내용">
+<meta property="og:url" content="http://localhost:4000/categories/web">
 
 
-  <meta property="og:description" content="canvas 개발">
-
-
-
+  <meta property="og:description" content="정완이의 개발 일기장">
 
 
 
 
-  <meta property="article:published_time" content="2022-10-28T00:00:00+09:00">
+
+
 
 
 
@@ -45,7 +41,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/canvas/table_structure/">
+<link rel="canonical" href="http://localhost:4000/categories/web">
 
 
 
@@ -107,7 +103,7 @@
 
   </head>
 
-  <body class="layout--single">
+  <body class="layout--archive">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -280,8 +276,6 @@
 
     <div class="initial-content">
       
-
-
 
 
 
@@ -860,360 +854,17 @@
 
 
 
-  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="user정보 DB 구조파악">
-    <meta itemprop="description" content="canvas 개발">
-    <meta itemprop="datePublished" content="2022-10-28T00:00:00+09:00">
+  <div class="archive">
     
-
-    <div class="page__inner-wrap">
-      
-        <header>
-          <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/canvas/table_structure/" class="u-url" itemprop="url">user정보 DB 구조파악
-</a>
-          </h1>
-          <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-          
-            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-10-28T00:00:00+09:00">October 28, 2022</time></p>
-          
-        </header>
-      
-
-      <section class="page__content e-content" itemprop="text">
-        
-        <p>우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.</p>
-
-<ul>
-  <li>
-    <p><strong>사이트 주소</strong></p>
-
-    <p><a href="https://ondras.zarovi.cz/sql/demo/">WWW SQL Designer</a></p>
-  </li>
-</ul>
-
-<p>아래는 해당 사이트에서 직접 그려본 실제 DB 스키마의 일부이다.</p>
-
-<p><img src="https://user-images.githubusercontent.com/84084372/198542945-80677db2-8b80-4e4e-a43b-5ff33d9405e1.png" alt="image" /></p>
-
-<p><br />
-<br /></p>
-
-<h2 id="테이블-설명">테이블 설명</h2>
-<h3 id="users">users</h3>
-
-<p>회원을 생성할 수 있는 방법은 총 2가지가 있다.</p>
-
-<ol>
-  <li>Site Admin이 직접 사용자 추가</li>
-  <li>Course에서 사용자 직접 추가</li>
-</ol>
-
-<p>자세한 사항은 이전 포스팅을 참조하면 된다.</p>
-
-<ul>
-  <li>
-    <p><strong>Refer.</strong></p>
-
-    <p><a href="https://on-jungwoan.github.io/canvas/setting_proj/#%ED%95%B4%EC%95%BC%ED%95%A0-%EC%9D%BC">프로젝트 개요 정리</a></p>
-  </li>
-</ul>
-
-<p>우선, 1번과 2번 방법으로 생성한 사용자 모두 users 테이블에 저장되는 것을 확인하였다. 생성 방법에 상관없이 그냥 모든 유저에 대한 정보가 users에 저장되는 것 같았다.</p>
-
-<p><br /></p>
-
-<h3 id="accounts">accounts</h3>
-
-<p>해당 테이블에는 계정 정보가 담겨있는데 정확한 구조는 아직 파악하지 못했다.</p>
-
-<p><br /></p>
-
-<h3 id="accounts-1">accounts</h3>
-
-<p>users 중에서 Site Admin이 생성한 user의 계정 정보가 저장된다.</p>
-
-<p><br /></p>
-
-<p>##</p>
-
-<p>월요일에 다시 포스팅하기</p>
-
-<p><br />
-<br /></p>
-
-<div align="center">
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021">
-    본문으로 돌아가기
-  </a>
-</div>
-
-        
-      </section>
-
-      <footer class="page__meta">
-        
-        
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/tags/#datagrip" class="page__taxonomy-item p-category" rel="tag">DataGrip</a><span class="sep">, </span>
-    
-      <a href="/tags/#postgresql" class="page__taxonomy-item p-category" rel="tag">postgreSQL</a><span class="sep">, </span>
-    
-      <a href="/tags/#%EC%9C%A0%ED%81%B4%EB%A6%AC%EB%93%9C%EC%86%8C%ED%94%84%ED%8A%B8" class="page__taxonomy-item p-category" rel="tag">유클리드소프트</a>
-    
-    </span>
-  </p>
-
-
-
-
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/categories/#canvas" class="page__taxonomy-item p-category" rel="tag">canvas</a>
-    
-    </span>
-  </p>
-
-
-        
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-28T00:00:00+09:00">October 28, 2022</time></p>
-
-      </footer>
-
-      <section class="page__share">
-  
-    <h4 class="page__share-title">공유하기</h4>
-  
-
-  <a href="https://twitter.com/intent/tweet?text=user%EC%A0%95%EB%B3%B4+DB+%EA%B5%AC%EC%A1%B0%ED%8C%8C%EC%95%85%20http%3A%2F%2Flocalhost%3A4000%2Fcanvas%2Ftable_structure%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
-
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcanvas%2Ftable_structure%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
-
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcanvas%2Ftable_structure%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
-</section>
-
-
-      <!-- 
-  <nav class="pagination">
-    
-      <a href="/dl/summary/" class="pagination--pager" title="AI 개발 가이드 및 조언내용 정리
-">이전</a>
+      <h1 id="page-title" class="page__title">Web 관련 공부내용</h1>
     
     
-      <a href="/web/get_var/" class="pagination--pager" title="[Django] 템플릿에서 src, href에 변수 불러오는 법
-">다음</a>
-    
-  </nav>
- -->
-
-
-
-
-  
-  	
-  	
-  	
-  	
-  	
-
-
-  <nav class="pagination">
-    
-      <a href="/canvas/setting_proj/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>프로젝트 개요 정리</a>
-    
-    
-      <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
-    
-  </nav>
-
-
-
-    </div>
-
-    
-  </article>
-
-  
-  
-    <div class="page__related">
-      <h2 class="page__related-title">참고</h2>
-      <div class="grid__wrapper">
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+<div class="list__item">
+  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/bbeojung/bbeojung/" rel="permalink">뻐정 프로젝트 최종 요약
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          7 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 02 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">뻐정 : 광주광역시 버스 정보 제공 시스템
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/bbeojung/bj_update2/" rel="permalink">[뻐정] 프로젝트 개선사항(수정중)
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 01 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">뻐정 : 광주광역시 버스 정보 제공 시스템
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/dl/cuda_stream/" rel="permalink">CUDA Stream
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 31 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Null Stream / Non-Null Stream
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/internship/Intern-TIL-11/" rel="permalink">[ICT 인턴십]2022년 11월 TIL
+        <a href="/web/get_var/" rel="permalink">[Django] 템플릿에서 src, href에 변수 불러오는 법
 </a>
             
     </h2>
@@ -1239,20 +890,16 @@
 
 -->
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 31 2022</p>
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 28 2022</p>
     
-    <p class="archive__item-excerpt" itemprop="description">회사에서 배운 내용들 정리
+    <p class="archive__item-excerpt" itemprop="description">Django
 </p>
   </article>
 </div>
 
-        
-      </div>
-    </div>
-  
-  
-</div>
 
+  </div>
+</div>
     </div>
 
     
@@ -1306,33 +953,6 @@
 
 
 
-
-
-    <script>
-  'use strict';
-
-  (function() {
-    var commentContainer = document.querySelector('#utterances-comments');
-
-    if (!commentContainer) {
-      return;
-    }
-
-    var script = document.createElement('script');
-    script.setAttribute('src', 'https://utteranc.es/client.js');
-    script.setAttribute('repo', 'On-JungWoan/blog_comments');
-    script.setAttribute('issue-term', 'pathname');
-    script.setAttribute('theme', 'github-light');
-    script.setAttribute('label', 'blog-comment')
-    script.setAttribute('crossorigin', 'anonymous');
-
-    commentContainer.appendChild(script);
-  })();
-</script>
-
-<!--  -->
-
-  
 
 
 

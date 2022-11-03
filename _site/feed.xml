@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-03T09:18:01+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">뻐정 프로젝트 최종 요약</title><link href="http://localhost:4000/bbeojung/bbeojung/" rel="alternate" type="text/html" title="뻐정 프로젝트 최종 요약" /><published>2022-11-02T00:00:00+09:00</published><updated>2022-11-02T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bbeojung</id><content type="html" xml:base="http://localhost:4000/bbeojung/bbeojung/">&lt;h1 id=&quot;0-contents&quot;&gt;0. Contents&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-03T14:58:20+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">뻐정 프로젝트 최종 요약</title><link href="http://localhost:4000/bbeojung/bbeojung/" rel="alternate" type="text/html" title="뻐정 프로젝트 최종 요약" /><published>2022-11-02T00:00:00+09:00</published><updated>2022-11-02T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bbeojung</id><content type="html" xml:base="http://localhost:4000/bbeojung/bbeojung/">&lt;h1 id=&quot;0-contents&quot;&gt;0. Contents&lt;/h1&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199517014-8ae43d4c-6c22-484d-9faa-94290d8a9237.png&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
 
@@ -959,53 +959,7 @@ cudaFreeHost -&amp;gt; 풀어주는 것
 
     &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/django/get_var/&quot;&gt;1) Django 템플릿에서 src, href에 변수 불러오는 법&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">Django 템플릿에서 src, href에 변수 불러오는 법</title><link href="http://localhost:4000/django/get_var/" rel="alternate" type="text/html" title="Django 템플릿에서 src, href에 변수 불러오는 법" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/django/get_var</id><content type="html" xml:base="http://localhost:4000/django/get_var/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
-
-&lt;p&gt;카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에 해당 변수를 집어넣고자 하였다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## secret.py ##
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;시크릿키&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## views.py ##
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.shortcuts&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;key&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;index.html&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;python에서 하던대로 문자열을 붙여보려고 하였으나, 제대로 문자열이 붙지 않았다. 구글링해도 잘 안나와서 이것저것 해보다가 매우매우 간단하게 해결하였다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//dapi.kakao.com/v2/maps/sdk.js?appkey=&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198508117-9b8fe72f-f660-4313-b4ca-f0a7044abbd0.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;해결&quot;&gt;해결&lt;/h2&gt;
-
-&lt;p&gt;다음과 같이 해결할 수 있다. 템플릿 언어가 큰 따옴표 안에서는 동작하지 않을줄 알아서 생각하지 못했는데 큰 따옴표 안에서도 잘 작동한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545047-6b956a96-47e2-4970-80ef-3cf7d252d419.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;href에서도 동일한 방법으로 해결할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545108-25ed2cba-d93e-4839-aed9-f5cafcb104de.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1028&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="django" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -1069,7 +1023,53 @@ cudaFreeHost -&amp;gt; 풀어주는 것
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="postgreSQL" /><category term="DataGrip" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">AI 개발 가이드 및 조언내용 정리</title><link href="http://localhost:4000/dl/summary/" rel="alternate" type="text/html" title="AI 개발 가이드 및 조언내용 정리" /><published>2022-10-26T00:00:00+09:00</published><updated>2022-10-26T00:00:00+09:00</updated><id>http://localhost:4000/dl/summary</id><content type="html" xml:base="http://localhost:4000/dl/summary/">&lt;h2 id=&quot;1-ai-최신-트랜드&quot;&gt;1. AI 최신 트랜드&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="postgreSQL" /><category term="DataGrip" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Django] 템플릿에서 src, href에 변수 불러오는 법</title><link href="http://localhost:4000/web/get_var/" rel="alternate" type="text/html" title="[Django] 템플릿에서 src, href에 변수 불러오는 법" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/web/get_var</id><content type="html" xml:base="http://localhost:4000/web/get_var/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
+
+&lt;p&gt;카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에 해당 변수를 집어넣고자 하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## secret.py ##
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;시크릿키&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## views.py ##
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.shortcuts&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&apos;key&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;index.html&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;python에서 하던대로 문자열을 붙여보려고 하였으나, 제대로 문자열이 붙지 않았다. 구글링해도 잘 안나와서 이것저것 해보다가 매우매우 간단하게 해결하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//dapi.kakao.com/v2/maps/sdk.js?appkey=&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198508117-9b8fe72f-f660-4313-b4ca-f0a7044abbd0.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;해결&quot;&gt;해결&lt;/h2&gt;
+
+&lt;p&gt;다음과 같이 해결할 수 있다. 템플릿 언어가 큰 따옴표 안에서는 동작하지 않을줄 알아서 생각하지 못했는데 큰 따옴표 안에서도 잘 작동한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545047-6b956a96-47e2-4970-80ef-3cf7d252d419.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;href에서도 동일한 방법으로 해결할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545108-25ed2cba-d93e-4839-aed9-f5cafcb104de.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1028&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">AI 개발 가이드 및 조언내용 정리</title><link href="http://localhost:4000/dl/summary/" rel="alternate" type="text/html" title="AI 개발 가이드 및 조언내용 정리" /><published>2022-10-26T00:00:00+09:00</published><updated>2022-10-26T00:00:00+09:00</updated><id>http://localhost:4000/dl/summary</id><content type="html" xml:base="http://localhost:4000/dl/summary/">&lt;h2 id=&quot;1-ai-최신-트랜드&quot;&gt;1. AI 최신 트랜드&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;초거대 AI를 만드는 회사의 등장&lt;/li&gt;
