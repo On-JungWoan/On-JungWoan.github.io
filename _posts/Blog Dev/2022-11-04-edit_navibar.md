@@ -1,6 +1,6 @@
 ---
-title:  "[Github_Io]상단 네비게이션 바"
-excerpt: "개발 블로그 로컬에서 디버깅"
+title:  "[Github_Io]상단 네비게이션 바 수정"
+excerpt: "네비바 수정"
 
 categories:
   - Blog

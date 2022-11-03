@@ -4,7 +4,7 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
-        <loc>http://localhost:4000/blog/make_home/</loc>
+        <loc>http://localhost:4000/blog/edit_navibar/</loc>
         
         <lastmod>2022-11-04T00:00:00+09:00</lastmod>
         

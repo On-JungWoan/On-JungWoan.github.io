@@ -167,7 +167,7 @@ var store = [{
         "url": "/blog/edit_navigation/",
         "teaser": null
       },{
-        "title": "[Github_Io]상단 네비게이션바 수정",
+        "title": "[Github_Io]좌측 사이드바 수정",
         "excerpt":"1. 홈 외의 다른 page에 사이드바 추가 홈 외의 다른 page에서 사이드바가 나오지 않는 문제점을 발견하여 해결하였다. [변경전] On-JungWoan.github.io/_pages/category-archive-grid.md의 일부이다. sidebar_main 옵션을 true로 주었다. --- title: \"Posts by Category (grid view)\" layout: categories permalink: /categories-grid/ entries_layout: grid author_profile: true sidebar_main: true --- [변경후] 2. TIL 페이지 생성 개발 블로그에 매일...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/change_navigation/",
@@ -426,7 +426,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 11월 TIL",
-        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 개선사항(수정중)       11/02           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약       11/03           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약      ","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 개선사항(수정중)       11/02           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약       11/03           업무지시       업무지시 없음            학습내용       1) [Github_Io]상단 네비게이션 바 수정      ","categories": ["Internship"],
         "tags": ["인턴","ICT인턴십","TIL"],
         "url": "/internship/Intern-TIL-11/",
         "teaser": null
@@ -449,9 +449,9 @@ var store = [{
         "url": "/bbeojung/bbeojung/",
         "teaser": null
       },{
-        "title": "[Github_Io]상단 네비게이션 바",
+        "title": "[Github_Io]상단 네비게이션 바 수정",
         "excerpt":"navigation.yaml 수정 나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다. [navigation.yaml] main: - title: \"PROJECTS\" sublinks: - title: \"뻐정 : 버스정보종합시스템\" url: /categories/bbeojung - title: \"실시간 쓰레기 무단투기 탐지\" url: /categories/cctv - title: \"canvas...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
-        "url": "/blog/make_home/",
+        "url": "/blog/edit_navibar/",
         "teaser": null
       }]
