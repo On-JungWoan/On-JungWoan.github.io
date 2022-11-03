@@ -30,7 +30,7 @@ header {
 
 	// when its mobile
 		img {
-			margin: 100px auto 0 auto;
+			margin: 0px auto 0 auto;
 			display: block;
 			max-width: 100%;
 		}
@@ -45,9 +45,9 @@ header {
 			flex: 1;
 
 			img {
-				margin: 0px auto 0 auto;
+				margin: 100px auto 0 auto;
 				max-width: none;
-				width: 135%;
+				width: 100%;
 			}
 
 			&:first-child {
@@ -149,6 +149,7 @@ nav .button {
 }
 
 
+
 blockquote {
 	border-left: 0.01em solid #ffffff;
 	padding: 0;
@@ -162,7 +163,7 @@ blockquote {
 		border-radius: 3px;
 		position: relative;
 		line-height: 1.7em;
-		font-size: 0.9em;
+		font-size: 17px;
 		text-align: center;
 		box-shadow: 0 20px 100px 0 rgba(0,0,0,0.1);
 		color: #232323;

@@ -1,5 +1,5 @@
 #terminal{
-    width: 670px !important;
+    width: 800px !important;
     max-width: 100%;
     margin: 0 auto;
   
@@ -71,7 +71,7 @@
       margin: 0;
       color: #D76D77;
       font-family: 'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', Courier, monospace;
-      font-size: 13px;
+      font-size: 15px;
       text-align: left;
       position: static;
       padding-left: 30px
@@ -89,7 +89,8 @@
       text-align: left;
       position: static;
       padding-left: 50px;
-      padding-top: 5px
+      padding-top: 5px;
+      line-height: 25px;
   }
   
   #screen .array::before {
