@@ -262,7 +262,7 @@ masthead.html 최상단에 icon.html을 불러와주면 해결된다.
 <br>
 
 <div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-11/#1104">
+  <a href="https://on-jungwoan.github.io/internship/Intern-TIL-11/#1103">
     본문으로 돌아가기
   </a>
 </div>  
