@@ -139,10 +139,12 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-        <a class="site-title" href="/"><img src="/assets/images/sitelogo.png" class="center" width="280px"></a>
-          <!-- 정완이의 개발 일기장
-          
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
         </a> -->
+          정완이의 개발 일기장
+          
+        </a>
 
 
 
@@ -932,7 +934,7 @@
 
 <p>나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.</p>
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png" style="border: 2px solid black" /></p>
 
 <div align="center"><strong>[navigation.yaml]</strong></div>
 
@@ -1142,6 +1144,12 @@
   <span class="err">}</span><span class="o">//</span><span class="nt">hidden</span> <span class="nt">link</span>
 </code></pre></div></div>
 
+<p>위 css에서 dropdown-title는 굵게 표시하였고, 마우스 호버링 이벤트는 dropdown-item에만 들어가도록 수정하였다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199765353-e752bb34-63ea-41be-ac8a-07a511b8d6af.png" /></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199765392-a64bf886-7028-4cb7-a900-0aee8cd8924c.png" /></p>
+
 <p><br />
 <br /></p>
 
@@ -1149,28 +1157,15 @@
 
 <p>다음과 같이 dropdown 아이콘이 안불러와지는 경우가 있다.</p>
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png" style="border: 2px solid black" /></p>
 
 <p><br /></p>
 
 <p>masthead.html 최상단에 icon.html을 불러와주면 해결된다.</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-	<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">'https://kit.fontawesome.com/a076d05399.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199764450-eb4dd6fc-9c09-4d58-bbd9-769d2dfa8620.png" /></p>
 
-
-	
-
-
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div></div>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png" style="border: 2px solid black" /></p>
 
 <p><br />
 <br /></p>

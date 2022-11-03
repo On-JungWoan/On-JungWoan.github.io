@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-04T00:28:34+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-04T01:32:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
 
 &lt;p&gt;나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[navigation.yaml]&lt;/strong&gt;&lt;/div&gt;
 
@@ -212,6 +212,12 @@
   &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;위 css에서 dropdown-title는 굵게 표시하였고, 마우스 호버링 이벤트는 dropdown-item에만 들어가도록 수정하였다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199765353-e752bb34-63ea-41be-ac8a-07a511b8d6af.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199765392-a64bf886-7028-4cb7-a900-0aee8cd8924c.png&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
@@ -219,28 +225,15 @@
 
 &lt;p&gt;다음과 같이 dropdown 아이콘이 안불러와지는 경우가 있다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;masthead.html 최상단에 icon.html을 불러와주면 해결된다.&lt;/p&gt;
 
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;https://kit.fontawesome.com/a076d05399.js&apos;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199764450-eb4dd6fc-9c09-4d58-bbd9-769d2dfa8620.png&quot; /&gt;&lt;/p&gt;
 
-
-	
-
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
