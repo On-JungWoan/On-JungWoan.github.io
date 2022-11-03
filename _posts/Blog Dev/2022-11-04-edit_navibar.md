@@ -21,7 +21,7 @@ last_modified_at: 2022-11-04
 
 나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png" style="border: 2px solid black"></p>
 
 <div align="center"><strong>[navigation.yaml]</strong></div>
 
@@ -233,6 +233,13 @@ masthead에 navigation 정보를 불러오는 코드를 넣어준다.
   }//hidden link
 ```
 
+위 css에서 dropdown-title는 굵게 표시하였고, 마우스 호버링 이벤트는 dropdown-item에만 들어가도록 수정하였다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199765353-e752bb34-63ea-41be-ac8a-07a511b8d6af.png"></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199765392-a64bf886-7028-4cb7-a900-0aee8cd8924c.png"></p>
+
+
 <br>
 <br>
 
@@ -240,17 +247,16 @@ masthead에 navigation 정보를 불러오는 코드를 넣어준다.
 
 다음과 같이 dropdown 아이콘이 안불러와지는 경우가 있다. 
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png" style="border: 2px solid black"></p>
 
 <br>
 
 masthead.html 최상단에 icon.html을 불러와주면 해결된다.
 
-```html
-{% include icon.html %}
-```
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199764450-eb4dd6fc-9c09-4d58-bbd9-769d2dfa8620.png"></p>
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png"></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png" style="border: 2px solid black"></p>
 
 <br>
 <br>
