@@ -3,7 +3,7 @@ main:
   - title: "PROJECTS"
     sublinks:
       - title: "뻐정 : 버스정보종합시스템"
-        url: /categories/bbeojung    
+        url: /bbeojung/bj_README/  
       - title: "실시간 쓰레기 무단투기 탐지"
         url: /categories/cctv
       - title: "canvas 개발"
@@ -35,7 +35,7 @@ main:
         
   - title: "ETC"  
     sublinks:
-      - title: "Python 개념"
+      - title: "Python"
         url: /categories/python
       - title: "화성학"
         url: /categories/harmonics

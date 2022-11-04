@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-04T01:40:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-04T12:33:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
 
 &lt;p&gt;나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.&lt;/p&gt;
 
@@ -239,10 +239,388 @@
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-11/#1104&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1103&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">네비바 수정</summary></entry><entry><title type="html">뻐정 프로젝트 최종 요약</title><link href="http://localhost:4000/bbeojung/bbeojung/" rel="alternate" type="text/html" title="뻐정 프로젝트 최종 요약" /><published>2022-11-02T00:00:00+09:00</published><updated>2022-11-02T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bbeojung</id><content type="html" xml:base="http://localhost:4000/bbeojung/bbeojung/">&lt;h1 id=&quot;0-contents&quot;&gt;0. Contents&lt;/h1&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">네비바 수정</summary></entry><entry><title type="html">Bbeojung PROJECT REPORT</title><link href="http://localhost:4000/bbeojung/bj_README/" rel="alternate" type="text/html" title="Bbeojung PROJECT REPORT" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bj_README</id><content type="html" xml:base="http://localhost:4000/bbeojung/bj_README/">&lt;h2 id=&quot;contents&quot;&gt;Contents&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;#ⅰ-basic-data&quot;&gt;&lt;strong&gt;Ⅰ. BASIC DATA&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;#ⅱ-opening-remarks&quot;&gt;&lt;strong&gt;Ⅱ. OPENING REMARKS&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;#ⅲ--implementation-details&quot;&gt;&lt;strong&gt;Ⅲ . IMPLEMENTATION DETAILS&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;a href=&quot;#1-real-time-obj-detection&quot;&gt;Real-time obj. detection&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#11-inference-process&quot;&gt;1.1 Inference process&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#12-visualization-inference-performance&quot;&gt;1.2 Visualization inference performance&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#13-using-multi-angle-of-view-%EC%98%88%EC%A0%95&quot;&gt;1.3 Using multi angle of view (예정)&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;a href=&quot;#2-bus-demand-predicting-model&quot;&gt;Bus demand predicting model&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#21-using-data&quot;&gt;2.1 Using data&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#22-train-feature&quot;&gt;2.2 Train feature&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#23-ensemble-algorithm&quot;&gt;2.3 Ensemble algorithm&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href=&quot;#24-hyperparameter-tuning&quot;&gt;2.4 Hyperparameter tuning&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;a href=&quot;#3-web&quot;&gt;Web&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;#ⅳ-test&quot;&gt;&lt;strong&gt;Ⅳ. TEST&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;a href=&quot;#1-real-time-object-detection&quot;&gt;Real-time object detection&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;&lt;a href=&quot;#2-web&quot;&gt;Web&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ⅰ-basic-data&quot;&gt;Ⅰ. BASIC DATA&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199860610-1a075e3f-267b-4314-bdb8-2b224f55c426.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Project Title&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;뻐정 (Bbeojung.kr)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Participation&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;개발 : 온정완&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;기획/ppt/발표 : 진유승&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Project Dates&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;1차 프로토타입 (Jun. 2022 ~ Jul.2022)&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;2차 개선버전 (Oct. 2022 ~ Nov. 2022)&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Detail description link&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Summary : &lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bbeojung/&quot;&gt;https://on-jungwoan.github.io/bbeojung/bbeojung/&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;full description : &lt;a href=&quot;https://on-jungwoan.github.io/categories/bbeojung&quot;&gt;https://on-jungwoan.github.io/categories/bbeojung&lt;/a&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ⅱ-opening-remarks&quot;&gt;Ⅱ. OPENING REMARKS&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Summary&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;뻐정은 obj detection 모델과 버스 수요 예측 ML 모델 및 광주광역시 BIS가 결합하여 탄생한 통합 플랫폼입니다.
+기존에 광주광역시가 제공한 버스 출발, 도착 예정 정보와 더불어정류장별 수요 예측을 통해
+시민들의 버스 이용 편의를 극대화하고 배차간격, 노선 체계 등의 결정과 같은 의사결정에 도움을 주는 플랫폼입니다.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Objectives/Skills&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;LGBM&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;SSD Network Model (TRT Engine)&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;CUDA Stream&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Overview&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199863866-1200ae81-2230-40b6-a0bb-ef9d77731324.png&quot; width=&quot;50%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;cctv와의 rtsp 통신을 바탕으로 특정 정류장의 real-time 객체 인식을 진행합니다. 또한, 이 인원 중 특정한 버스에 탑승할 인원이 몇 명이나 되는지 예측합니다. 사용자에게는 위 결과를 원활 / 보통 / 혼잡으로 나누어 제공합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ⅲ--implementation-details&quot;&gt;Ⅲ . IMPLEMENTATION DETAILS&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-real-time-obj-detection&quot;&gt;1. Real-time obj. detection&lt;/h3&gt;
+
+&lt;h4 id=&quot;11-inference-process&quot;&gt;1.1 Inference process&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199865040-079bacef-9d0a-4a0a-8bb4-0ae64ce1603e.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Description&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;coco 데이터셋으로 pre-train 된 SSD 모델을 obj detection 모델로 채택하였습니다.
+또한, real-time 추론을 위해 2가지 최적화를 해주었습니다.
+
+1. TensorRT로 변환 후 Engine 모듈 분리
+2. CUDA Stream을 사용한 Memory copy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;12-visualization-inference-performance&quot;&gt;1.2 Visualization inference performance&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199866075-81556b2c-1d10-4648-865b-e955d2b1e090.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Description&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 기존 ssd 모델 대비 연산속도 약 24배 향상
+2. Precision Reduction에 따른 confidence loss는 거의 없음
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;13-using-multi-angle-of-view-예정&quot;&gt;1.3 Using multi angle of view (예정)&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199866542-09fcacb0-54aa-4489-90f4-5e8a9ca6c50c.png&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Description&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;객체가 장애물 또는 사람에 가려져서 인식되지 않는 문제를 해결하기 위해 다음과 같은 해결책을 제시합니다.
+
+1. 시범 정류장에 다양한 화각의 cctv를 설치하여 각 화각의 데이터셋을 확보
+2. 해당 데이터셋에 대해 모델 파인튜닝 및 블랜딩
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-bus-demand-predicting-model&quot;&gt;2. Bus demand predicting model&lt;/h3&gt;
+
+&lt;h4 id=&quot;21-using-data&quot;&gt;2.1 Using data&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199867243-ac59cb13-e791-43cc-aa74-11766ad1efb7.png&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;22-train-feature&quot;&gt;2.2 Train feature&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;feature&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;거리&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;광주광역시 9개 주요 정류장과의 거리&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;인구&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;해당 정류장 소재지(동) 주민등록 인구&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;통계량&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;주요 변수(정류장명, 노선명, 요일, 월, 시간)에 대한 요약 통계량&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;혼잡도&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;주요 변수(정류장명, 노션명, 요일)별 이용승객 min-max scaling&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;주말여부&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;주말여부 one-hot encoding&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;기상청 데이터&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;온도, 습도, 풍속, 강수량&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;요일&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;weekday one-hot encoding&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199878964-9c115628-f4a0-45fe-84a7-f241cb2f4d7b.png&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Description&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;모델에 feature를 차례로 넣어보며 score를 파악
+score 개선이 있는 것을 확인 하였음
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;23-ensemble-algorithm&quot;&gt;2.3 Ensemble algorithm&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199868294-74b2b2c3-3859-4643-9d85-31d353767dbd.png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Description&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;초기 모델 RandomForest에서 부스팅 계열 LGBM으로 학습 모델 변경
+
+- 학습 속도 15배 이상 개선
+- error 약 20% 감소
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;24-hyperparameter-tuning&quot;&gt;2.4 Hyperparameter tuning&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Search algorithm&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;random search&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Score&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;RMSE : 2.3404&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;R2 : 0.9006&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;3-web&quot;&gt;3. Web&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199869772-e937c137-1154-44e0-ac0a-8143a7483439.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199869766-d1db9833-ea44-43eb-b653-9f453e48ed14.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ⅳ-test&quot;&gt;Ⅳ. TEST&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-real-time-object-detection&quot;&gt;1. Real-time object detection&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://user-images.githubusercontent.com/84084372/199408447-ee91aa5e-6fde-41b1-826b-5508998d791c.mp4&quot;&gt;https://user-images.githubusercontent.com/84084372/199408447-ee91aa5e-6fde-41b1-826b-5508998d791c.mp4&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-web&quot;&gt;2. Web&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://user-images.githubusercontent.com/84084372/199414700-e879d07b-c96e-4323-af01-57dbf2152fed.mp4&quot;&gt;https://user-images.githubusercontent.com/84084372/199414700-e879d07b-c96e-4323-af01-57dbf2152fed.mp4&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/internship/Intern-TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-03T00:00:00+09:00</published><updated>2022-11-03T00:00:00+09:00</updated><id>http://localhost:4000/internship/Intern-TIL-11</id><content type="html" xml:base="http://localhost:4000/internship/Intern-TIL-11/">&lt;h1 id=&quot;-학습내용-정리&quot;&gt;✍ 학습내용 정리&lt;/h1&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;-til&quot;&gt;🕮 TIL&lt;/h1&gt;
+&lt;h2 id=&quot;1주차&quot;&gt;&amp;lt;1주차&amp;gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; :&lt;/p&gt;
+
+&lt;h3 id=&quot;1031&quot;&gt;10/31&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;업무지시 없음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cuda_stream/&quot;&gt;1) CUDA Stream&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1101&quot;&gt;11/01&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;업무지시 없음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/bj_update2/&quot;&gt;1) [뻐정] 프로젝트 개선사항(수정중)&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1102&quot;&gt;11/02&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;업무지시 없음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bbeojung/&quot;&gt;1) [뻐정] 프로젝트 최종 요약&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1103&quot;&gt;11/03&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;업무지시 없음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/edit_navibar/&quot;&gt;1) [Github_Io]상단 네비게이션 바 수정&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">뻐정 프로젝트 최종 요약</title><link href="http://localhost:4000/bbeojung/bbeojung/" rel="alternate" type="text/html" title="뻐정 프로젝트 최종 요약" /><published>2022-11-02T00:00:00+09:00</published><updated>2022-11-02T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bbeojung</id><content type="html" xml:base="http://localhost:4000/bbeojung/bbeojung/">&lt;h1 id=&quot;0-contents&quot;&gt;0. Contents&lt;/h1&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199517014-8ae43d4c-6c22-484d-9faa-94290d8a9237.png&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
 
@@ -653,74 +1031,7 @@
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-11/#1101&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/internship/Intern-TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-10-31T00:00:00+09:00</published><updated>2022-10-31T00:00:00+09:00</updated><id>http://localhost:4000/internship/Intern-TIL-11</id><content type="html" xml:base="http://localhost:4000/internship/Intern-TIL-11/">&lt;h1 id=&quot;-학습내용-정리&quot;&gt;✍ 학습내용 정리&lt;/h1&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;-til&quot;&gt;🕮 TIL&lt;/h1&gt;
-&lt;h2 id=&quot;1주차&quot;&gt;&amp;lt;1주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; :&lt;/p&gt;
-
-&lt;h3 id=&quot;1031&quot;&gt;10/31&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cuda_stream/&quot;&gt;1) CUDA Stream&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1101&quot;&gt;11/01&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/bj_update2/&quot;&gt;1) [뻐정] 프로젝트 개선사항(수정중)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1102&quot;&gt;11/02&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bbeojung/&quot;&gt;1) [뻐정] 프로젝트 최종 요약&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1103&quot;&gt;11/03&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/edit_navibar/&quot;&gt;1) [Github_Io]상단 네비게이션 바 수정&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">CUDA Stream</title><link href="http://localhost:4000/dl/cuda_stream/" rel="alternate" type="text/html" title="CUDA Stream" /><published>2022-10-31T00:00:00+09:00</published><updated>2022-10-31T00:00:00+09:00</updated><id>http://localhost:4000/dl/cuda_stream</id><content type="html" xml:base="http://localhost:4000/dl/cuda_stream/">&lt;h2 id=&quot;1-stream&quot;&gt;1. Stream&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">CUDA Stream</title><link href="http://localhost:4000/dl/cuda_stream/" rel="alternate" type="text/html" title="CUDA Stream" /><published>2022-10-31T00:00:00+09:00</published><updated>2022-10-31T00:00:00+09:00</updated><id>http://localhost:4000/dl/cuda_stream</id><content type="html" xml:base="http://localhost:4000/dl/cuda_stream/">&lt;h2 id=&quot;1-stream&quot;&gt;1. Stream&lt;/h2&gt;
 &lt;h3 id=&quot;1-0-stream이란&quot;&gt;1-0) Stream이란?&lt;/h3&gt;
 &lt;p&gt;host에서 device로 명령을 보내는 통로이다. host에서 stream으로 명령을 넣어주면 device는 그걸 꺼내서 사용한다.&lt;/p&gt;
 
@@ -1218,7 +1529,53 @@ cudaFreeHost -&amp;gt; 풀어주는 것
 
     &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/django/get_var/&quot;&gt;1) Django 템플릿에서 src, href에 변수 불러오는 법&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Django] 템플릿에서 src, href에 변수 불러오는 법</title><link href="http://localhost:4000/web/get_var/" rel="alternate" type="text/html" title="[Django] 템플릿에서 src, href에 변수 불러오는 법" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/web/get_var</id><content type="html" xml:base="http://localhost:4000/web/get_var/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
+
+&lt;p&gt;카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에 해당 변수를 집어넣고자 하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## secret.py ##
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;시크릿키&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## views.py ##
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.shortcuts&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&apos;key&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;index.html&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;python에서 하던대로 문자열을 붙여보려고 하였으나, 제대로 문자열이 붙지 않았다. 구글링해도 잘 안나와서 이것저것 해보다가 매우매우 간단하게 해결하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//dapi.kakao.com/v2/maps/sdk.js?appkey=&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198508117-9b8fe72f-f660-4313-b4ca-f0a7044abbd0.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;해결&quot;&gt;해결&lt;/h2&gt;
+
+&lt;p&gt;다음과 같이 해결할 수 있다. 템플릿 언어가 큰 따옴표 안에서는 동작하지 않을줄 알아서 생각하지 못했는데 큰 따옴표 안에서도 잘 작동한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545047-6b956a96-47e2-4970-80ef-3cf7d252d419.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;href에서도 동일한 방법으로 해결할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545108-25ed2cba-d93e-4839-aed9-f5cafcb104de.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1028&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -1282,191 +1639,7 @@ cudaFreeHost -&amp;gt; 풀어주는 것
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="postgreSQL" /><category term="DataGrip" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Django] 템플릿에서 src, href에 변수 불러오는 법</title><link href="http://localhost:4000/web/get_var/" rel="alternate" type="text/html" title="[Django] 템플릿에서 src, href에 변수 불러오는 법" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/web/get_var</id><content type="html" xml:base="http://localhost:4000/web/get_var/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
-
-&lt;p&gt;카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에 해당 변수를 집어넣고자 하였다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## secret.py ##
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;시크릿키&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## views.py ##
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.shortcuts&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;key&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;index.html&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;python에서 하던대로 문자열을 붙여보려고 하였으나, 제대로 문자열이 붙지 않았다. 구글링해도 잘 안나와서 이것저것 해보다가 매우매우 간단하게 해결하였다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//dapi.kakao.com/v2/maps/sdk.js?appkey=&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198508117-9b8fe72f-f660-4313-b4ca-f0a7044abbd0.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;해결&quot;&gt;해결&lt;/h2&gt;
-
-&lt;p&gt;다음과 같이 해결할 수 있다. 템플릿 언어가 큰 따옴표 안에서는 동작하지 않을줄 알아서 생각하지 못했는데 큰 따옴표 안에서도 잘 작동한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545047-6b956a96-47e2-4970-80ef-3cf7d252d419.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;href에서도 동일한 방법으로 해결할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545108-25ed2cba-d93e-4839-aed9-f5cafcb104de.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1028&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">AI 개발 가이드 및 조언내용 정리</title><link href="http://localhost:4000/dl/summary/" rel="alternate" type="text/html" title="AI 개발 가이드 및 조언내용 정리" /><published>2022-10-26T00:00:00+09:00</published><updated>2022-10-26T00:00:00+09:00</updated><id>http://localhost:4000/dl/summary</id><content type="html" xml:base="http://localhost:4000/dl/summary/">&lt;h2 id=&quot;1-ai-최신-트랜드&quot;&gt;1. AI 최신 트랜드&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;초거대 AI를 만드는 회사의 등장&lt;/li&gt;
-  &lt;li&gt;요즘 AI 분야의 메이저 흐름은 메타버스, 멀티모달, 고수준 End-to-End TASK이다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/197939361-510efd25-3e80-4be7-8e97-b02d5bfcaa16.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-문제해결-노하우&quot;&gt;2. 문제해결 노하우&lt;/h2&gt;
-
-&lt;h3 id=&quot;2-1-보행자-이상검출-문제&quot;&gt;2-1) 보행자 이상검출 문제&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/197940898-d61b1a70-b216-4b98-af18-ff2f0e640d99.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;기존 방식은, 사람의 keypoint를 일일이 따서 이상 징후에 대한 keypoint를 학습시키고 분류한다. 이 방식의 문제점은 사람이 많아지면 keypoint가 너무 많아져서 실제 서비스가 불가하다는 것이다. 이를 해결하기 위한 해결책으로 다음을 제시한다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;1차적으로 이상행동을 opticalflow를 사용하여 푼다&lt;/li&gt;
-  &lt;li&gt;에스컬레이터를 찍는 어항 카메라는 위치에 따라 보이는 화각이 3가지이다. 이 3가지 화각별로 넘어진 상황을 분류하여 성능을 향상시킨다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-object-detection&quot;&gt;2-2) Object Detection&lt;/h3&gt;
-
-&lt;p&gt;장애물에 객체가 가려지거나, 객체끼리 가려지는 경우가 발생하여 정확도가 떨어지는 경우가 발생함. 따라서 화각을 여러개 사용하여 Detection하면 정확도를 올릴 수 있다고 한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-단계적-task&quot;&gt;2-3) 단계적 task&lt;/h3&gt;
-&lt;p&gt;한번에 다 풀기보다는 단계적으로 접근하여 푸는 것을 추천한다. 만약, 손금 인식하는 모델을 개발한다면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;손 인식(1차) -&amp;gt; 손바닥 인식(2차) -&amp;gt; 손금 인식(3차)&lt;/code&gt;처럼 task를 차근차근 밟아나간다. 이러한 방식으로 해당 데이터가 없으면 문제에 존재하는 도메인을 찾아서 풀면 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-딥러닝-모델-서비스&quot;&gt;3. 딥러닝 모델 서비스&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/197942839-0d8ab96c-cba9-4544-a1fc-52ad1ab3646c.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/197943723-3c8bbf8f-de46-4d5b-aa56-bbc435273436.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-서비스-관점&quot;&gt;3-1) 서비스 관점&lt;/h3&gt;
-
-&lt;p&gt;서비스 관점에서 필요한 것이 무엇인가를 항상 생각한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ex) 에스컬레이터 예제
-
-사람의 keypoint를 활용하면 해당 문제를 쉽게 풀수는 있지만, 추론 속도가 너무 느려서 서비스는 불가능
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;또한, 초기 모델이 개발되면 일단 출시한다. 대기업의 경우에는 네임 벨류가 있어서 특정 기대치가 있지만, 그렇지 않은 경우는 일단 출시하는 것이 유리하다. 성능이 별로 안나오더라도 있는 것과, 아예 없는 것은 하늘과 땅 차이이다. 서비스 운영의 핵심은 로그와 모니터링이라는 것을 잊지 말자&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-비용-관점&quot;&gt;3-2) 비용 관점&lt;/h3&gt;
-
-&lt;p&gt;프로젝트 비용을 절감하기 위한 솔루션이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/197944077-ad08d6dc-ba83-407a-8832-7195670aa9b0.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;1-실시간으로-응답을-주는-서비스-지양&quot;&gt;1) 실시간으로 응답을 주는 서비스 지양&lt;/h4&gt;
-
-&lt;p&gt;사용자에게 실시간으로 바로 응답을 주면 좋겠지만, GPU 서버는 비싸다. 따라서, CPU 서버를 사용하여 비용을 절감하고, 앱 푸시등을 활용. 이를 통해 사용자의 앱 접속 시간을 늘린다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ex) 강아지의 질병 진단 
-
-GPU서버(실시간 응답) -&amp;gt; CPU 서버(느리지만 싸다.)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;2-fp16-사용&quot;&gt;2) fp16 사용&lt;/h4&gt;
-&lt;p&gt;fp32와 fp16의 추론 성능차이는 엄청나다. 하지만 적은 비용으로 초기 서비스를 만들어보기에는 충분하다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-lambda를-활용한-ai-서빙&quot;&gt;3) Lambda를 활용한 AI 서빙&lt;/h4&gt;
-
-&lt;p&gt;실시간 응답은 절대 불가하지만 서버리스로 서빙할 수 있다. 단, cold start문제가 있으므로 해당 문제는 해결하여 사용한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-딥러닝-모델-서빙&quot;&gt;4. 딥러닝 모델 서빙&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/197944892-e366ba16-9392-4668-a0f7-29fc93c87fc7.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-1-서빙-방식&quot;&gt;4-1) 서빙 방식&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Tensorflow serving, Torch serving&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;해당 서빙은 매우 무거우므로 비추천한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;bentoml&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;무난하게 사용하기 괜찮다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;NVIDIA trition Inference server&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;극한으로 최적화 하고 싶을 때 사용하면 좋다고 하였다.&lt;br /&gt;
-단, 내 경험상 NVIDIA 제품은 NVIDIA GPU가 필수로 있어야 할 것이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-2-기본-흐름&quot;&gt;4-2) 기본 흐름&lt;/h3&gt;
-
-&lt;p&gt;nginx로 tomcat 분배. 프로메테우스 통해서 하드웨어 램 사용률등 모니터링하고 grafana로 실시간 확인한다. nginx부터 grafana까지가 운영의 최소 단위 이게 없으면 무조건 에러가 난다. 서비스 시에 꼭 유의하도록 하자.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-질의응답&quot;&gt;5. 질의응답&lt;/h2&gt;
-
-&lt;h3 id=&quot;ai-대학원이-필수인가&quot;&gt;AI, 대학원이 필수인가?&lt;/h3&gt;
-
-&lt;p&gt;리서처를 너무 하고싶다면 대학원을 추천. 왜냐하면 수학적인 확률 분포를 깊이 이해해서 모델 설계를 하는 것과 그렇지 않는 것의 차이는 매우 크다. 위에서 소개한 운영/서비스쪽은 학사가 많지만, 전체적으로 AI의 감을 키우기 위해서는 대학원을 추천한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;많은-클라우드-서버-중-aws를-선택해야하는-이유--aws의-비용문제&quot;&gt;많은 클라우드 서버 중, AWS를 선택해야하는 이유? &amp;amp; AWS의 비용문제&lt;/h3&gt;
-
-&lt;p&gt;AWS가 실제 서비스 시에 관리하기 가장 편하다. 또한, 사용자가 많지 않은 소규모 서비스에서는 비용이 많이 청구되지 않는다. 연구원님도 30만원선에서 해결하고 있다고 하심.&lt;/p&gt;
-
-&lt;h3 id=&quot;비전분야-이미지-전처리&quot;&gt;비전분야 이미지 전처리?&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extrinsic calibration&lt;/code&gt;을 찾아보기&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1026&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">time/matplotlib을 사용한 성능 시각화</summary></entry><entry><title type="html">[ICT 인턴십] 업무 지시내용</title><link href="http://localhost:4000/internship/notice/" rel="alternate" type="text/html" title="[ICT 인턴십] 업무 지시내용" /><published>2022-10-26T00:00:00+09:00</published><updated>2022-10-26T00:00:00+09:00</updated><id>http://localhost:4000/internship/notice</id><content type="html" xml:base="http://localhost:4000/internship/notice/">&lt;h1 id=&quot;9월&quot;&gt;9월&lt;/h1&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="postgreSQL" /><category term="DataGrip" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[ICT 인턴십] 업무 지시내용</title><link href="http://localhost:4000/internship/notice/" rel="alternate" type="text/html" title="[ICT 인턴십] 업무 지시내용" /><published>2022-10-26T00:00:00+09:00</published><updated>2022-10-26T00:00:00+09:00</updated><id>http://localhost:4000/internship/notice</id><content type="html" xml:base="http://localhost:4000/internship/notice/">&lt;h1 id=&quot;9월&quot;&gt;9월&lt;/h1&gt;
 &lt;h2 id=&quot;1주차&quot;&gt;1주차&lt;/h2&gt;
 &lt;h3 id=&quot;0901&quot;&gt;&lt;strong&gt;09/01&lt;/strong&gt;&lt;/h3&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* 팀즈로 소통하기 때문에 인턴분들 메시지 확인하면 확인표시 (👍) 누르기

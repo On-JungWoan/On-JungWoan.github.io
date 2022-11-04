@@ -425,12 +425,6 @@ var store = [{
         "url": "/internship/Itern-TIL-10/",
         "teaser": null
       },{
-        "title": "[ICT 인턴십]2022년 11월 TIL",
-        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 개선사항(수정중)       11/02           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약       11/03           업무지시       업무지시 없음            학습내용       1) [Github_Io]상단 네비게이션 바 수정      ","categories": ["Internship"],
-        "tags": ["인턴","ICT인턴십","TIL"],
-        "url": "/internship/Intern-TIL-11/",
-        "teaser": null
-      },{
         "title": "CUDA Stream",
         "excerpt":"1. Stream 1-0) Stream이란? host에서 device로 명령을 보내는 통로이다. host에서 stream으로 명령을 넣어주면 device는 그걸 꺼내서 사용한다. 1-1) NULL Stream 사용할 stream을 명시하지 않으면 NULL stream이 사용된다. NULL Stream 또는, 하나의 NON-NULL stream에 들어온 명령은 순서대로(동기적) device에 의해 처리된다. 1-2) NON-NULL Stream 명시적으로 생성 및 사용한 stream을 말한다. 서로 다른...","categories": ["DL"],
         "tags": ["DL","ICT인턴십"],
@@ -449,9 +443,21 @@ var store = [{
         "url": "/bbeojung/bbeojung/",
         "teaser": null
       },{
+        "title": "[ICT 인턴십]2022년 11월 TIL",
+        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 개선사항(수정중)       11/02           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약       11/03           업무지시       업무지시 없음            학습내용       1) [Github_Io]상단 네비게이션 바 수정      ","categories": ["Internship"],
+        "tags": ["인턴","ICT인턴십","TIL"],
+        "url": "/internship/Intern-TIL-11/",
+        "teaser": null
+      },{
         "title": "[Github_Io]상단 네비게이션 바 수정",
         "excerpt":"navigation.yaml 수정 나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다. [navigation.yaml] main: - title: \"PROJECTS\" sublinks: - title: \"뻐정 : 버스정보종합시스템\" url: /categories/bbeojung - title: \"실시간 쓰레기 무단투기 탐지\" url: /categories/cctv - title: \"canvas...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/edit_navibar/",
+        "teaser": null
+      },{
+        "title": "Bbeojung PROJECT REPORT",
+        "excerpt":"Contents Ⅰ. BASIC DATA Ⅱ. OPENING REMARKS Ⅲ . IMPLEMENTATION DETAILS Real-time obj. detection 1.1 Inference process 1.2 Visualization inference performance 1.3 Using multi angle of view (예정) Bus demand predicting model 2.1 Using data 2.2 Train feature 2.3 Ensemble algorithm 2.4 Hyperparameter tuning Web Ⅳ. TEST Real-time object detection...","categories": ["bbeojung"],
+        "tags": ["bbeojung"],
+        "url": "/bbeojung/bj_README/",
         "teaser": null
       }]
