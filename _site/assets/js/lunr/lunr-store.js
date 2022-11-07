@@ -461,6 +461,12 @@ var store = [{
         "url": "/bbeojung/bj_README/",
         "teaser": null
       },{
+        "title": "url, view 설계",
+        "excerpt":"LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다. - Components - button.html - color.html - form.html - modal.html - css - fonts - 폰트파일들 - import - color, font, grid, reset 관련 css 파일들 - common.css - html_pages - login.html - signUp.html - signUpModal.html -...","categories": ["canvas"],
+        "tags": ["django","유클리드소프트"],
+        "url": "/canvas/build/",
+        "teaser": null
+      },{
         "title": "[CSS] 폰트 관련 속성 정리",
         "excerpt":"사이즈 관련 옵션 px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다. 크기 조절 font-size 속성을 사용하여 폰트의 사이즈를 조절 #font{ font-size: 150%; } 굵기 조정 font-weight 속성을 통해 폰트 굵기를 지정할 수 있으며, bolder/lighter 및 굵기 직접 지정도 가능 #font{ font-weight: bold; /*bolder, lighter, 600 등 가능*/...","categories": ["web"],
         "tags": ["web","front-end"],

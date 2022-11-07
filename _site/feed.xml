@@ -1,4 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-07T15:07:46+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CSS] 폰트 관련 속성 정리</title><link href="http://localhost:4000/web/css_text/" rel="alternate" type="text/html" title="[CSS] 폰트 관련 속성 정리" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/web/css_text</id><content type="html" xml:base="http://localhost:4000/web/css_text/">&lt;h1 id=&quot;사이즈-관련-옵션&quot;&gt;사이즈 관련 옵션&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-07T23:12:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">url, view 설계</title><link href="http://localhost:4000/canvas/build/" rel="alternate" type="text/html" title="url, view 설계" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/canvas/build</id><content type="html" xml:base="http://localhost:4000/canvas/build/">&lt;p&gt;LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Components
+  - button.html
+  - color.html
+  - form.html
+  - modal.html
+
+- css
+  - fonts
+    - 폰트파일들
+  - import
+    - color, font, grid, reset 관련 css 파일들
+  - common.css
+
+- html_pages
+  - login.html
+  - signUp.html
+  - signUpModal.html
+  - forgotPw.html
+  - changePw.html
+  - changePwModal.html
+  - forgotId.html
+  - forgotIdModal.html
+
+- images
+  - svg 파일들
+
+- index.html
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;components&quot;&gt;Components&lt;/h2&gt;
+&lt;p&gt;컴포넌트들이 어떻게 작동하는지 보여주기 위한 예시들인 것 같았다. 실제 소스 적용시에는 사용하지 않았다.&lt;/p&gt;
+
+&lt;h2 id=&quot;css&quot;&gt;css&lt;/h2&gt;
+&lt;p&gt;static 파일들이 저장되어 있었다. django의 settings 파일에 static 경로를 지정해 준 뒤, load static하여 사용해주었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;html_pages&quot;&gt;html_pages&lt;/h2&gt;
+
+&lt;p&gt;html은 다음과 같은 흐름으로 작동하고 있었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200322538-38f936b3-96bb-436c-b9ae-f5f958098ac5.png&quot; alt=&quot;web drawio&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[CSS] 폰트 관련 속성 정리</title><link href="http://localhost:4000/web/css_text/" rel="alternate" type="text/html" title="[CSS] 폰트 관련 속성 정리" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/web/css_text</id><content type="html" xml:base="http://localhost:4000/web/css_text/">&lt;h1 id=&quot;사이즈-관련-옵션&quot;&gt;사이즈 관련 옵션&lt;/h1&gt;
 
 &lt;p&gt;px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다.&lt;/p&gt;
 
@@ -1633,53 +1683,7 @@ cudaFreeHost -&amp;gt; 풀어주는 것
 
     &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/django/get_var/&quot;&gt;1) Django 템플릿에서 src, href에 변수 불러오는 법&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Django] 템플릿에서 src, href에 변수 불러오는 법</title><link href="http://localhost:4000/web/get_var/" rel="alternate" type="text/html" title="[Django] 템플릿에서 src, href에 변수 불러오는 법" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/web/get_var</id><content type="html" xml:base="http://localhost:4000/web/get_var/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
-
-&lt;p&gt;카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에 해당 변수를 집어넣고자 하였다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## secret.py ##
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;시크릿키&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;## views.py ##
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.shortcuts&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;key&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAP_API_KEY&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;index.html&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;python에서 하던대로 문자열을 붙여보려고 하였으나, 제대로 문자열이 붙지 않았다. 구글링해도 잘 안나와서 이것저것 해보다가 매우매우 간단하게 해결하였다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;//dapi.kakao.com/v2/maps/sdk.js?appkey=&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198508117-9b8fe72f-f660-4313-b4ca-f0a7044abbd0.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;해결&quot;&gt;해결&lt;/h2&gt;
-
-&lt;p&gt;다음과 같이 해결할 수 있다. 템플릿 언어가 큰 따옴표 안에서는 동작하지 않을줄 알아서 생각하지 못했는데 큰 따옴표 안에서도 잘 작동한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545047-6b956a96-47e2-4970-80ef-3cf7d252d419.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;href에서도 동일한 방법으로 해결할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198545108-25ed2cba-d93e-4839-aed9-f5cafcb104de.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1028&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -1716,25 +1720,7 @@ cudaFreeHost -&amp;gt; 풀어주는 것
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;우선, 1번과 2번 방법으로 생성한 사용자 모두 users 테이블에 저장되는 것을 확인하였다. 생성 방법에 상관없이 그냥 모든 유저에 대한 정보가 users에 저장되는 것 같았다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;accounts&quot;&gt;accounts&lt;/h3&gt;
-
-&lt;p&gt;해당 테이블에는 계정 정보가 담겨있는데 정확한 구조는 아직 파악하지 못했다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;accounts-1&quot;&gt;accounts&lt;/h3&gt;
-
-&lt;p&gt;users 중에서 Site Admin이 생성한 user의 계정 정보가 저장된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;##&lt;/p&gt;
-
-&lt;p&gt;월요일에 다시 포스팅하기&lt;/p&gt;
+&lt;p&gt;우선, 1번과 2번 방법으로 생성한 사용자 모두 users 테이블에 저장되는 것을 확인하였다. 생성 방법에 상관없이 그냥 모든 유저에 대한 정보가 users에 저장되는 것 같았다. 또한 users 중에서 Site Admin이 생성한 user의 계정 정보가 account에 저장되는 것을 확인하였다. 자세한 사항은 디자인이 넘어오면 다시 확인해봐야겠다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
