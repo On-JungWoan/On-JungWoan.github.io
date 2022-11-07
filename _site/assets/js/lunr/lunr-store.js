@@ -444,7 +444,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 11월 TIL",
-        "excerpt":"✍ 학습내용 정리         🕮 TIL  &lt;1주차&gt;  느낀점 및 업무내용 :   10/31           업무지시       업무지시 없음            학습내용       1) CUDA Stream       11/01           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 개선사항(수정중)       11/02           업무지시       업무지시 없음            학습내용       1) [뻐정] 프로젝트 최종 요약       11/03           업무지시       업무지시 없음            학습내용       1) [Github_Io]상단 네비게이션 바 수정      ","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 10/31 업무지시 업무지시 없음 학습내용 1) CUDA Stream 11/01 업무지시 업무지시 없음 학습내용 1) [뻐정] 프로젝트 개선사항(수정중) 11/02 업무지시 업무지시 없음 학습내용 1) [뻐정] 프로젝트 최종 요약 11/03 업무지시 업무지시 없음 학습내용 1) [Github_Io]상단 네비게이션 바 수정 &lt;2주차&gt; 느낀점 및...","categories": ["Internship"],
         "tags": ["인턴","ICT인턴십","TIL"],
         "url": "/internship/Intern-TIL-11/",
         "teaser": null
@@ -459,5 +459,11 @@ var store = [{
         "excerpt":"Contents Ⅰ. BASIC DATA Ⅱ. OPENING REMARKS Ⅲ . IMPLEMENTATION DETAILS Real-time obj. detection 1.1 Inference process 1.2 Visualization inference performance 1.3 Using multi angle of view (예정) Bus demand predicting model 2.1 Using data 2.2 Train feature 2.3 Ensemble algorithm 2.4 Hyperparameter tuning Web Ⅳ. TEST Real-time object detection...","categories": ["bbeojung"],
         "tags": ["bbeojung"],
         "url": "/bbeojung/bj_README/",
+        "teaser": null
+      },{
+        "title": "[CSS] 폰트 관련 속성 정리",
+        "excerpt":"사이즈 관련 옵션 px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다. 크기 조절 font-size 속성을 사용하여 폰트의 사이즈를 조절 #font{ font-size: 150%; } 굵기 조정 font-weight 속성을 통해 폰트 굵기를 지정할 수 있으며, bolder/lighter 및 굵기 직접 지정도 가능 #font{ font-weight: bold; /*bolder, lighter, 600 등 가능*/...","categories": ["web"],
+        "tags": ["web","front-end"],
+        "url": "/web/css_text/",
         "teaser": null
       }]
