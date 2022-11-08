@@ -472,4 +472,22 @@ var store = [{
         "tags": ["web","front-end"],
         "url": "/web/css_text/",
         "teaser": null
+      },{
+        "title": "[Django]python manage.py inspectdb > models.py(초안)",
+        "excerpt":"              본문으로 돌아가기     ","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/db/",
+        "teaser": null
+      },{
+        "title": "[Django] Views.py 분리",
+        "excerpt":"0. views.py 분리 프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다. 0-1) 동작 원리? django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고...","categories": ["web"],
+        "tags": ["django","web","backend"],
+        "url": "/web/split/",
+        "teaser": null
+      },{
+        "title": "[HTML, JavaScript]Input 태그 유효성 검사",
+        "excerpt":"1. 유효성 검사 (값의 유무) 다음과 같은 폼에서 input에 값이 들어있는지 유효성 검사를 하고 싶다면 어떻게 해야할까? &lt;form name=\"login_form\" action=\"#\" method=\"post\"&gt; &lt;input type=\"password\" id=\"pw\" placeholder=\"비밀번호를 입력하세요.\" /&gt; &lt;button type=\"submit\"&gt; 로그인 &lt;/button&gt; &lt;/form&gt; 1-1) javascript 작성 id가 pw인 input 태그의 값이 비어있으면, 비밀번호를 입력하세요라는 문구를 출력한다. 그리고, 커서를 해당 태그로 옮기고...","categories": ["web"],
+        "tags": ["html","web","javascript"],
+        "url": "/web/test/",
+        "teaser": null
       }]

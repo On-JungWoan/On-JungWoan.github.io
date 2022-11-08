@@ -9,28 +9,32 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Blog dev - 정완이의 개발 일기장</title>
-<meta name="description" content="정완이의 개발 일기장">
+<!-- begin _includes/seo.html --><title>[Django] Views.py 분리 - 정완이의 개발 일기장</title>
+<meta name="description" content="Django">
 
 
   <meta name="author" content="온정완">
   
+  <meta property="article:author" content="온정완">
+  
 
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="Blog dev">
-<meta property="og:url" content="http://localhost:4000/categories/Blog">
+<meta property="og:title" content="[Django] Views.py 분리">
+<meta property="og:url" content="http://localhost:4000/web/split/">
 
 
-  <meta property="og:description" content="정완이의 개발 일기장">
-
-
-
+  <meta property="og:description" content="Django">
 
 
 
+
+
+
+
+  <meta property="article:published_time" content="2022-11-08T00:00:00+09:00">
 
 
 
@@ -41,7 +45,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/categories/Blog">
+<link rel="canonical" href="http://localhost:4000/web/split/">
 
 
 
@@ -103,7 +107,7 @@
 
   </head>
 
-  <body class="layout--archive">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -297,6 +301,8 @@
 
     <div class="initial-content">
       
+
+
 
 
 
@@ -875,17 +881,261 @@
 
 
 
-  <div class="archive">
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Django] Views.py 분리">
+    <meta itemprop="description" content="Django">
+    <meta itemprop="datePublished" content="2022-11-08T00:00:00+09:00">
     
-      <h1 id="page-title" class="page__title">Blog dev</h1>
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/web/split/" class="u-url" itemprop="url">[Django] Views.py 분리
+</a>
+          </h1>
+          <!--
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+-->
+          
+            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-11-08T00:00:00+09:00">November 08, 2022</time></p>
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <h2 id="0-viewspy-분리">0. views.py 분리</h2>
+<p>프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다.</p>
+
+<h3 id="0-1-동작-원리">0-1) 동작 원리?</h3>
+<p>django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고 views까지만 인식한다고 한다. 따라서 views라는 이름의 디렉토리에 뷰 함수를 넣어, views.py 대신 사용할 수 있다는 것이다. 다음은 그 방법들이다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="1-첫-번째-방법">1. 첫 번째 방법</h2>
+<h3 id="1-1-views-디렉토리-생성">1-1) Views 디렉토리 생성</h3>
+<p>우선, 앱 디렉토리 밑에 views 디렉토리를 생성해준다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200511934-87588451-01c0-4d1b-ba84-4788c54a3f55.png" /></p>
+
+<h3 id="1-2-viewspy-분리">1-2) views.py 분리</h3>
+
+<p>생성한 views 디렉토리 안에, 기존 views.py 내용들을 기능별로 나누어 저장한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200512589-66848294-b809-4a70-80e3-3bffb8851ded.png" /></p>
+
+<h3 id="1-3-__init__py-생성">1-3) <code class="language-plaintext highlighter-rouge">__init__.py</code> 생성</h3>
+
+<p>views 디렉토리 안에 <code class="language-plaintext highlighter-rouge">__init__.py</code>를 생성하고, 방금 작성한 파일들을 import 해준다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">.forgotid</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.forgotpw</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.login</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.signup</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h3 id="1-4-결과">1-4) 결과</h3>
+
+<p>최종적으로 다음과 같은 구조가 된다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200513188-743c8fc9-5375-4b5f-aafb-70644a99ea03.png" /></p>
+
+<h3 id="1-5-문제점">1-5) 문제점</h3>
+
+<p>하지만 이 방법은 단점이 있다. 해당 프로젝트를 서비스하던 중, 특정한 뷰 함수에 문제가 생겼을 시, 해당 함수가 어디에 위치해있는지 알기 어렵다는 것이다. 가령, url이 다음과 같이 정의되어 있다고 해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">...</span>
+
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">forgotpw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'forgotpw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">changepw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/modal'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">changepwmodal</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepwmodal'</span><span class="p">),</span>
+
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>만약, changepwmodal 함수에 문제가 생겨서 해당 함수를 고쳐야 할 일이 생긴다면, view 디렉토리 하위에 있는 모든 파일을 일일이 전부 확인해봐야 할 것이다. 규모가 작은 프로젝트라면 금방 찾겠지만, 그렇지 않다면 이를 찾는 것은 상당한 시간/자원낭비가 될 것이다. 따라서 과장님께서는 해당 방법은 별로 추천하지 않는다고 하셨다. 그렇다면 어떻게 하는 것이 좋을까?</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="2-두-번째-방법">2. 두 번째 방법</h2>
+<h3 id="2-1-__init__py-제거">2-1) <code class="language-plaintext highlighter-rouge">__init__.py</code> 제거</h3>
+
+<p><code class="language-plaintext highlighter-rouge">__init__.py</code>를 제거한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200514640-7b311613-b9f3-4bd5-8f1e-892d9bcfae95.png" /></p>
+
+<h3 id="2-2-urlspy-수정">2-2) urls.py 수정</h3>
+
+<p>url을 다음과 같이 수정하여 해결. 어떤 파일의 뷰 함수를 고쳐야 할지 확실하게 알 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">.views</span> <span class="kn">import</span> <span class="n">forgotpw</span><span class="p">,</span> <span class="p">...</span>
+    <span class="p">...</span>
+
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/'</span><span class="p">,</span> <span class="n">forgotpw</span><span class="p">.</span><span class="n">forgotpw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'forgotpw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/'</span><span class="p">,</span> <span class="n">forgotpw</span><span class="p">.</span><span class="n">changepw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/modal'</span><span class="p">,</span> <span class="n">forgotpw</span><span class="p">.</span><span class="n">changepwmodal</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepwmodal'</span><span class="p">),</span>
+
+    <span class="p">...</span> 
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="3-다른-파일modelspy-에도-적용">3. 다른 파일(Models.py …)에도 적용</h2>
+
+<p>views 말고 models나 urls에도 적용 가능하다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200617143-a53ea8f0-481a-4f2a-892f-7377adbf48b7.png" /></p>
+
+<p><br />
+<br /></p>
+
+<div align="center">
+  <a href="https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108">
+    본문으로 돌아가기
+  </a>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#backend" class="page__taxonomy-item p-category" rel="tag">backend</a><span class="sep">, </span>
+    
+      <a href="/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/tags/#web" class="page__taxonomy-item p-category" rel="tag">web</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#web" class="page__taxonomy-item p-category" rel="tag">web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08T00:00:00+09:00">November 8, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BDjango%5D+Views.py+%EB%B6%84%EB%A6%AC%20http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fsplit%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fsplit%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fsplit%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/web/db/" class="pagination--pager" title="[Django]python manage.py inspectdb &gt; models.py(초안)
+">이전</a>
     
     
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
+      <a href="/web/test/" class="pagination--pager" title="[HTML, JavaScript]Input 태그 유효성 검사
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/web/db/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[Django]python manage.py inspectdb > models.py(초안)</a>
+    
+    
+      <a href="/web/test/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>[HTML, JavaScript]Input 태그 유효성 검사</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/blog/edit_navibar/" rel="permalink">[Github_Io]상단 네비게이션 바 수정
+        <a href="/web/test/" rel="permalink">[HTML, JavaScript]Input 태그 유효성 검사
 </a>
             
     </h2>
@@ -911,19 +1161,24 @@
 
 -->
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 04 2022</p>
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 08 2022</p>
     
-    <p class="archive__item-excerpt" itemprop="description">네비바 수정
+    <p class="archive__item-excerpt" itemprop="description">html, javascript
 </p>
   </article>
 </div>
 
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/blog/debug_jekyll/" rel="permalink">[Github_Io]Jekyll 로컬에서 디버그 하는 법
+        <a href="/web/db/" rel="permalink">[Django]python manage.py inspectdb &gt; models.py(초안)
 </a>
             
     </h2>
@@ -949,19 +1204,24 @@
 
 -->
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> October 22 2022</p>
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 08 2022</p>
     
-    <p class="archive__item-excerpt" itemprop="description">개발 블로그 로컬에서 디버깅
+    <p class="archive__item-excerpt" itemprop="description">Django
 </p>
   </article>
 </div>
 
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/blog/change_navigation/" rel="permalink">[Github_Io]좌측 사이드바 수정
+        <a href="/web/css_text/" rel="permalink">[CSS] 폰트 관련 속성 정리
 </a>
             
     </h2>
@@ -987,19 +1247,24 @@
 
 -->
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> September 20 2022</p>
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 07 2022</p>
     
-    <p class="archive__item-excerpt" itemprop="description">상단 네비게이션 바 항목 수정 및 TIL 추가
+    <p class="archive__item-excerpt" itemprop="description">css 내용 정리
 </p>
   </article>
 </div>
 
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/blog/edit_navigation/" rel="permalink">[Github_Io]블로그 개선
+        <a href="/canvas/build/" rel="permalink">url, view 설계
 </a>
             
     </h2>
@@ -1025,244 +1290,20 @@
 
 -->
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> September 19 2022</p>
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 07 2022</p>
     
-    <p class="archive__item-excerpt" itemprop="description">상단 네비게이션바 수정 및 tease image 제거
+    <p class="archive__item-excerpt" itemprop="description">canvas 개발
 </p>
   </article>
 </div>
 
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/change_theme/" rel="permalink">[Github_Io]블로그 테마 변경 및 커스텀
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
         
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> September 15 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">테마 커스텀
-</p>
-  </article>
+      </div>
+    </div>
+  
+  
 </div>
 
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/edit-blog/" rel="permalink">[Github_Io]사이드바 간격조정
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> August 20 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">사이드바의 글꼴 및 간격 조정
-</p>
-  </article>
-</div>
-
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/Github-io-google/" rel="permalink">[Github_Io]개발 블로그 Google에 노출시키기
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> July 24 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">개발 블로그 google 노출
-</p>
-  </article>
-</div>
-
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/Github-io-categories/" rel="permalink">[Github_Io]사이드바 카테고리 기능 추가
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> July 23 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Github io의 사이드바 카테고리 기능 추가
-</p>
-  </article>
-</div>
-
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/Github-io-comments/" rel="permalink">[Github_Io]utterances 댓글 추가 안될 때 해결법
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> July 19 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">utterances를 사용한 댓글 기능 추가
-</p>
-  </article>
-</div>
-
-<div class="list__item">
-  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/blog/How-to-make-Github-io/" rel="permalink">[Github Io]Jekyll을 사용한 개발 블로그 생성
-</a>
-            
-    </h2>
-    <!--
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> July 13 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Jekyll을 이용한 Github io 생성방법
-</p>
-  </article>
-</div>
-
-
-  </div>
-</div>
     </div>
 
     
@@ -1316,6 +1357,33 @@
 
 
 
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
 
 
 

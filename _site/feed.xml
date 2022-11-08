@@ -1,54 +1,371 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-07T23:12:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">url, view 설계</title><link href="http://localhost:4000/canvas/build/" rel="alternate" type="text/html" title="url, view 설계" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/canvas/build</id><content type="html" xml:base="http://localhost:4000/canvas/build/">&lt;p&gt;LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-09T01:13:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Django]python manage.py inspectdb &amp;gt; models.py(초안)</title><link href="http://localhost:4000/web/db/" rel="alternate" type="text/html" title="[Django]python manage.py inspectdb &amp;gt; models.py(초안)" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/db</id><content type="html" xml:base="http://localhost:4000/web/db/">&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Components
-  - button.html
-  - color.html
-  - form.html
-  - modal.html
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[HTML, JavaScript]Input 태그 유효성 검사</title><link href="http://localhost:4000/web/test/" rel="alternate" type="text/html" title="[HTML, JavaScript]Input 태그 유효성 검사" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/test</id><content type="html" xml:base="http://localhost:4000/web/test/">&lt;style&gt;
+  form {
+    background: #ababab;
+  }
+&lt;/style&gt;
 
-- css
-  - fonts
-    - 폰트파일들
-  - import
-    - color, font, grid, reset 관련 css 파일들
-  - common.css
+&lt;h2 id=&quot;1-유효성-검사-값의-유무&quot;&gt;1. 유효성 검사 (값의 유무)&lt;/h2&gt;
 
-- html_pages
-  - login.html
-  - signUp.html
-  - signUpModal.html
-  - forgotPw.html
-  - changePw.html
-  - changePwModal.html
-  - forgotId.html
-  - forgotIdModal.html
+&lt;p&gt;다음과 같은 폼에서 input에 값이 들어있는지 유효성 검사를 하고 싶다면 어떻게 해야할까?&lt;/p&gt;
 
-- images
-  - svg 파일들
-
-- index.html
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;login_form&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;비밀번호를 입력하세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; 로그인 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;components&quot;&gt;Components&lt;/h2&gt;
-&lt;p&gt;컴포넌트들이 어떻게 작동하는지 보여주기 위한 예시들인 것 같았다. 실제 소스 적용시에는 사용하지 않았다.&lt;/p&gt;
+&lt;h3 id=&quot;1-1-javascript-작성&quot;&gt;1-1) javascript 작성&lt;/h3&gt;
 
-&lt;h2 id=&quot;css&quot;&gt;css&lt;/h2&gt;
-&lt;p&gt;static 파일들이 저장되어 있었다. django의 settings 파일에 static 경로를 지정해 준 뒤, load static하여 사용해주었다.&lt;/p&gt;
+&lt;p&gt;id가 pw인 input 태그의 값이 비어있으면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;비밀번호를 입력하세요&lt;/code&gt;라는 문구를 출력한다. 그리고, 커서를 해당 태그로 옮기고 해당 함수를 종료하는 식으로 동작한다. 만약 값이 비어있지 않으면, if문이 실행되지 않아 form을 submit한다.&lt;/p&gt;
 
-&lt;h2 id=&quot;html_pages&quot;&gt;html_pages&lt;/h2&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
-&lt;p&gt;html은 다음과 같은 흐름으로 작동하고 있었다.&lt;/p&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;비밀번호를 입력하세요.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;login_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200322538-38f936b3-96bb-436c-b9ae-f5f958098ac5.png&quot; alt=&quot;web drawio&quot; /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1-2-html-수정&quot;&gt;1-2) html 수정&lt;/h3&gt;
+
+&lt;p&gt;해당 자바 스크립트 함수를 input 태그의 onclick 옵션에 넣어주면 된다. 이 때, type은 submit이 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;button&lt;/code&gt;으로 바꾸어주어야 제대로 동작한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;login_form&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;비밀번호를 입력하세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;button&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onclick=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;checker()&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; 로그인 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;check.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;1-3-결과&quot;&gt;1-3) 결과&lt;/h3&gt;
+&lt;form name=&quot;login_form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
+  &lt;input type=&quot;password&quot; id=&quot;pw7&quot; placeholder=&quot;비밀번호를 입력하세요.&quot; /&gt;
+  &lt;button type=&quot;button&quot; onclick=&quot;checker(&apos;pw7&apos;, &apos;비밀번호를&apos;)&quot;&gt; 로그인 &lt;/button&gt;
+&lt;/form&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-유효성-검사-값의-비교&quot;&gt;2. 유효성 검사 (값의 비교)&lt;/h2&gt;
+
+&lt;p&gt;다음과 같은 폼에서 2개의 input value 값이 같은지 확인해보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw_form&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;비밀번호를 입력하세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw2&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;비밀번호를 다시 입력해주세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; 비밀번호 생성 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-1-javascript-작성&quot;&gt;2-1) javascript 작성&lt;/h3&gt;
+
+&lt;p&gt;비밀번호가 입력되지 않은 경우, pw(‘’) == pw2(‘‘)의 논리값은 true이기 때문에 pw에 대한 유효성 검정도 해줘야 한다. 아래 코드에서, pw에 값의 유무에 대한 유효성 검정을 통과하지 못하면 함수는 종료되어 폼이 작성되지 않는다. 따라서 pw 값에 대한 유효성 검정도 충족하면서 pw, pw2 두 값에 대한 유효성 검정도 통과하면 폼이 작성되게 설계하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;pw2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;비밀번호를 입력해주세요.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;비밀번호가 다릅니다.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;pw2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-2-html-변경&quot;&gt;2-2) html 변경&lt;/h3&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw_form&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;비밀번호를 입력하세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pw2&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;비밀번호를 다시 입력해주세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;button&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onclick=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;checker()&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; 비밀번호 생성 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-3-결과&quot;&gt;2-3) 결과&lt;/h3&gt;
+&lt;form name=&quot;pw_form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
+  &lt;input type=&quot;password&quot; id=&quot;pw8&quot; placeholder=&quot;비밀번호를 입력하세요.&quot; /&gt;
+  &lt;input type=&quot;password&quot; id=&quot;pw9&quot; placeholder=&quot;비밀번호를 다시 입력해주세요.&quot; /&gt;
+  &lt;button type=&quot;button&quot; onclick=&quot;test()&quot;&gt; 비밀번호 생성 &lt;/button&gt;
+&lt;/form&gt;
+
+&lt;h2 id=&quot;3-응용-여러개의-유효성-test&quot;&gt;3. 응용 (여러개의 유효성 test)&lt;/h2&gt;
+
+&lt;p&gt;가상의 회원가입 폼을 만들어 유효성 테스트를 해보겠다. 유효성 검사 대상은 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;성명&lt;/strong&gt; (name)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;아이디&lt;/strong&gt; (id_)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;이메일&lt;/strong&gt; (email)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;비밀번호&lt;/strong&gt; (pw)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;비밀번호 확인&lt;/strong&gt; (pw2)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;3-1-javascript&quot;&gt;3-1) javascript&lt;/h3&gt;
+
+&lt;p&gt;먼저, 유효성 검사를 만족하면 true를, 그렇지 않으면 false를 리턴하는 함수 checker()를 정의해주었다. signupform_check()는 성명, 아이디, 이메일, 비밀번호의 값에 대한 유효성 검사와 pw, pw2의 값에 대한 유효성 검사를 진행한다. 이 때, 위에서 정의한 checker()를 사용하여 유의성 검정을 해주었으며, checker()의 리턴값이 false이면 signupform_check()를 종료한다. 반대로, 모든 유효성 검정을 통과하면 form을 submit한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/* Checker */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ko_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;check&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ko_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 입력하세요.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/* Sign Up Form */&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;signupform_check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;pw2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;성명을&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;id_&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;아이디를&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;이메일을&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;checker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;비밀번호를&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pw2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;비밀번호가 다릅니다.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;pw2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;focus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;signup_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3-2-결과&quot;&gt;3-2) 결과&lt;/h3&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;form name=&quot;signup_form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
+    &lt;div class=&quot;wrap ptb-32&quot;&gt;
+      &lt;div class=&quot;col-span-6 mb-40&quot;&gt;
+        &lt;h1&gt;회원가입&lt;/h1&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-span-6 pb-16&quot;&gt;
+        &lt;div class=&quot;label-form&quot;&gt;
+          &lt;label class=&quot;label&quot;&gt;&lt;h3&gt;성명&lt;/h3&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;이름을 입력하세요.&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-span-6 pb-16&quot;&gt;
+        &lt;div class=&quot;label-form&quot;&gt;
+          &lt;label class=&quot;label&quot;&gt;&lt;h3&gt;아이디&lt;/h3&gt;&lt;/label&gt;
+          &lt;div class=&quot;btn-form&quot;&gt;
+            &lt;input type=&quot;text&quot; id=&quot;id_&quot; name=&quot;id_&quot; placeholder=&quot;아이디를 입력하세요.&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-span-6 pb-16&quot;&gt;
+        &lt;div class=&quot;label-form&quot;&gt;
+          &lt;label class=&quot;label&quot;&gt;&lt;h3&gt;이메일&lt;/h3&gt;&lt;/label&gt;
+          &lt;input type=&quot;text&quot; id=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;이메일을 입력하세요.&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-span-6 pb-16&quot;&gt;
+        &lt;div class=&quot;label-form&quot;&gt;
+          &lt;label class=&quot;label&quot;&gt;&lt;h3&gt;비밀번호&lt;/h3&gt;&lt;/label&gt;
+          &lt;div class=&quot;icon-form&quot;&gt;
+            &lt;input type=&quot;password&quot; id=&quot;pw&quot; name=&quot;pw&quot; class=&quot;pw&quot; placeholder=&quot;비밀번호를 입력하세요.&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-span-6 pb-74&quot;&gt;
+        &lt;div class=&quot;label-form&quot;&gt;
+          &lt;label class=&quot;label&quot;&gt;&lt;h3&gt;비밀번호 확인&lt;/h3&gt;&lt;/label&gt;
+          &lt;div class=&quot;icon-form&quot;&gt;
+            &lt;input type=&quot;password&quot; id=&quot;pw2&quot; name=&quot;pw2&quot; class=&quot;pw&quot; placeholder=&quot;비밀번호를 다시 입력하세요.&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-span-6 pb-16&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn-primary&quot; onclick=&quot;signupform_check()&quot;&gt;회원가입&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+/* Checker */
+function checker(id, ko_id) {
+    var check = document.getElementById(id);
+
+    if (!check.value) {
+        alert(ko_id + &quot; 입력하세요.&quot;);
+        check.focus();
+        return false;
+    }
+    return true;
+}
+
+/* Sign Up Form */
+function signupform_check() {
+    var pw = document.getElementById(&quot;pw&quot;);
+    var pw2 = document.getElementById(&quot;pw2&quot;);
+
+    if (!checker(&quot;name&quot;, &quot;성명을&quot;)) {
+        return false;
+    };
+    if (!checker(&quot;id_&quot;, &quot;아이디를&quot;)) {
+        return false;
+    };
+    if (!checker(&quot;email&quot;, &quot;이메일을&quot;)) {
+        return false;
+    };
+    if (!checker(&quot;pw&quot;, &quot;비밀번호를&quot;)) {
+        return false;
+    };
+    if (pw.value != pw2.value) {
+        alert(&quot;비밀번호가 다릅니다.&quot;);
+        pw2.focus();
+        return false;
+    };
+}
+
+function test() {
+    var pw8 = document.getElementById(&quot;pw8&quot;);
+    var pw9 = document.getElementById(&quot;pw9&quot;);  
+
+    if (!pw8.value) {
+        alert(&quot;비밀번호를 입력해주세요.&quot;);
+        pw8.focus();
+        return false;
+    };
+    if (pw8.value != pw9.value) {
+        alert(&quot;비밀번호가 다릅니다.&quot;);
+        pw9.focus();
+        return false;
+    };
+}
+&lt;/script&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[CSS] 폰트 관련 속성 정리</title><link href="http://localhost:4000/web/css_text/" rel="alternate" type="text/html" title="[CSS] 폰트 관련 속성 정리" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/web/css_text</id><content type="html" xml:base="http://localhost:4000/web/css_text/">&lt;h1 id=&quot;사이즈-관련-옵션&quot;&gt;사이즈 관련 옵션&lt;/h1&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="html" /><category term="web" /><category term="javascript" /><summary type="html">html, javascript</summary></entry><entry><title type="html">[Django] Views.py 분리</title><link href="http://localhost:4000/web/split/" rel="alternate" type="text/html" title="[Django] Views.py 분리" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/split</id><content type="html" xml:base="http://localhost:4000/web/split/">&lt;h2 id=&quot;0-viewspy-분리&quot;&gt;0. views.py 분리&lt;/h2&gt;
+&lt;p&gt;프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다.&lt;/p&gt;
+
+&lt;h3 id=&quot;0-1-동작-원리&quot;&gt;0-1) 동작 원리?&lt;/h3&gt;
+&lt;p&gt;django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고 views까지만 인식한다고 한다. 따라서 views라는 이름의 디렉토리에 뷰 함수를 넣어, views.py 대신 사용할 수 있다는 것이다. 다음은 그 방법들이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-첫-번째-방법&quot;&gt;1. 첫 번째 방법&lt;/h2&gt;
+&lt;h3 id=&quot;1-1-views-디렉토리-생성&quot;&gt;1-1) Views 디렉토리 생성&lt;/h3&gt;
+&lt;p&gt;우선, 앱 디렉토리 밑에 views 디렉토리를 생성해준다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200511934-87588451-01c0-4d1b-ba84-4788c54a3f55.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2-viewspy-분리&quot;&gt;1-2) views.py 분리&lt;/h3&gt;
+
+&lt;p&gt;생성한 views 디렉토리 안에, 기존 views.py 내용들을 기능별로 나누어 저장한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200512589-66848294-b809-4a70-80e3-3bffb8851ded.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-3-__init__py-생성&quot;&gt;1-3) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 생성&lt;/h3&gt;
+
+&lt;p&gt;views 디렉토리 안에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;를 생성하고, 방금 작성한 파일들을 import 해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.forgotid&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.forgotpw&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.login&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.signup&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;1-4-결과&quot;&gt;1-4) 결과&lt;/h3&gt;
+
+&lt;p&gt;최종적으로 다음과 같은 구조가 된다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200513188-743c8fc9-5375-4b5f-aafb-70644a99ea03.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-5-문제점&quot;&gt;1-5) 문제점&lt;/h3&gt;
+
+&lt;p&gt;하지만 이 방법은 단점이 있다. 해당 프로젝트를 서비스하던 중, 특정한 뷰 함수에 문제가 생겼을 시, 해당 함수가 어디에 위치해있는지 알기 어렵다는 것이다. 가령, url이 다음과 같이 정의되어 있다고 해보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약, changepwmodal 함수에 문제가 생겨서 해당 함수를 고쳐야 할 일이 생긴다면, view 디렉토리 하위에 있는 모든 파일을 일일이 전부 확인해봐야 할 것이다. 규모가 작은 프로젝트라면 금방 찾겠지만, 그렇지 않다면 이를 찾는 것은 상당한 시간/자원낭비가 될 것이다. 따라서 과장님께서는 해당 방법은 별로 추천하지 않는다고 하셨다. 그렇다면 어떻게 하는 것이 좋을까?&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-두-번째-방법&quot;&gt;2. 두 번째 방법&lt;/h2&gt;
+&lt;h3 id=&quot;2-1-__init__py-제거&quot;&gt;2-1) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 제거&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;를 제거한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200514640-7b311613-b9f3-4bd5-8f1e-892d9bcfae95.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-urlspy-수정&quot;&gt;2-2) urls.py 수정&lt;/h3&gt;
+
+&lt;p&gt;url을 다음과 같이 수정하여 해결. 어떤 파일의 뷰 함수를 고쳐야 할지 확실하게 알 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.views&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-다른-파일modelspy-에도-적용&quot;&gt;3. 다른 파일(Models.py …)에도 적용&lt;/h2&gt;
+
+&lt;p&gt;views 말고 models나 urls에도 적용 가능하다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200617143-a53ea8f0-481a-4f2a-892f-7377adbf48b7.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[CSS] 폰트 관련 속성 정리</title><link href="http://localhost:4000/web/css_text/" rel="alternate" type="text/html" title="[CSS] 폰트 관련 속성 정리" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/web/css_text</id><content type="html" xml:base="http://localhost:4000/web/css_text/">&lt;h1 id=&quot;사이즈-관련-옵션&quot;&gt;사이즈 관련 옵션&lt;/h1&gt;
 
 &lt;p&gt;px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다.&lt;/p&gt;
 
@@ -132,7 +449,57 @@
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="web" /><category term="front-end" /><summary type="html">css 내용 정리</summary></entry><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="web" /><category term="front-end" /><summary type="html">css 내용 정리</summary></entry><entry><title type="html">url, view 설계</title><link href="http://localhost:4000/canvas/build/" rel="alternate" type="text/html" title="url, view 설계" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/canvas/build</id><content type="html" xml:base="http://localhost:4000/canvas/build/">&lt;p&gt;LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Components
+  - button.html
+  - color.html
+  - form.html
+  - modal.html
+
+- css
+  - fonts
+    - 폰트파일들
+  - import
+    - color, font, grid, reset 관련 css 파일들
+  - common.css
+
+- html_pages
+  - login.html
+  - signUp.html
+  - signUpModal.html
+  - forgotPw.html
+  - changePw.html
+  - changePwModal.html
+  - forgotId.html
+  - forgotIdModal.html
+
+- images
+  - svg 파일들
+
+- index.html
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;components&quot;&gt;Components&lt;/h2&gt;
+&lt;p&gt;컴포넌트들이 어떻게 작동하는지 보여주기 위한 예시들인 것 같았다. 실제 소스 적용시에는 사용하지 않았다.&lt;/p&gt;
+
+&lt;h2 id=&quot;css&quot;&gt;css&lt;/h2&gt;
+&lt;p&gt;static 파일들이 저장되어 있었다. django의 settings 파일에 static 경로를 지정해 준 뒤, load static하여 사용해주었다.&lt;/p&gt;
+
+&lt;h2 id=&quot;html_pages&quot;&gt;html_pages&lt;/h2&gt;
+
+&lt;p&gt;html은 다음과 같은 흐름으로 작동하고 있었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200322538-38f936b3-96bb-436c-b9ae-f5f958098ac5.png&quot; alt=&quot;web drawio&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
 
 &lt;p&gt;나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.&lt;/p&gt;
 
@@ -774,6 +1141,23 @@ score 개선이 있는 것을 확인 하였음
 
     &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/css_text/&quot;&gt;1) [CSS] 폰트 관련 속성 정리&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1108&quot;&gt;11/08&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;업무지시 없음&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/split/&quot;&gt;1) [Django] Views.py 분리&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/test/&quot;&gt;2) [HTML, JavaScript]Input 태그 유효성 검사&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">뻐정 프로젝트 최종 요약</title><link href="http://localhost:4000/bbeojung/bbeojung/" rel="alternate" type="text/html" title="뻐정 프로젝트 최종 요약" /><published>2022-11-02T00:00:00+09:00</published><updated>2022-11-02T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bbeojung</id><content type="html" xml:base="http://localhost:4000/bbeojung/bbeojung/">&lt;h1 id=&quot;0-contents&quot;&gt;0. Contents&lt;/h1&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199517014-8ae43d4c-6c22-484d-9faa-94290d8a9237.png&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
@@ -1185,548 +1569,4 @@ score 개선이 있는 것을 확인 하였음
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-11/#1101&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">CUDA Stream</title><link href="http://localhost:4000/dl/cuda_stream/" rel="alternate" type="text/html" title="CUDA Stream" /><published>2022-10-31T00:00:00+09:00</published><updated>2022-10-31T00:00:00+09:00</updated><id>http://localhost:4000/dl/cuda_stream</id><content type="html" xml:base="http://localhost:4000/dl/cuda_stream/">&lt;h2 id=&quot;1-stream&quot;&gt;1. Stream&lt;/h2&gt;
-&lt;h3 id=&quot;1-0-stream이란&quot;&gt;1-0) Stream이란?&lt;/h3&gt;
-&lt;p&gt;host에서 device로 명령을 보내는 통로이다. host에서 stream으로 명령을 넣어주면 device는 그걸 꺼내서 사용한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-null-stream&quot;&gt;1-1) NULL Stream&lt;/h3&gt;
-&lt;p&gt;사용할 stream을 명시하지 않으면 NULL stream이 사용된다. NULL Stream 또는, 하나의 NON-NULL stream에 들어온 명령은 순서대로(동기적) device에 의해 처리된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198909088-1cc811ae-0540-4371-918f-33fca218181c.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-non-null-stream&quot;&gt;1-2) NON-NULL Stream&lt;/h3&gt;
-&lt;p&gt;명시적으로 생성 및 사용한 stream을 말한다. 서로 다른 stream 안에 있는 명령들 사이의 실행 순서는 비동기적(정해져있지 않음)이며, 실행 순서는 GPU의 스케쥴링 기법에 따라서 달라진다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198909110-8309602b-151c-417b-83b9-e75e19516315.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;비동기적 연산을 위해서는, 명시적으로 사용할 만큼의 non-null stream을 만들어서 사용하며, NON-NULL Stream의 작업 중 일부는 동시에 수행이 가능하다. 동시에 수행 가능한 작업은 다음과 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Host Computation and Device Computation&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Host Computation and Host-Device Data Transfer&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Device Computation and Host-Device Data Transfer&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Concurrent Device Computations&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;따라서, NON-NULL Stream을 이용함으로써 Host 연산 중 memory copy 및 kernel 연산이 동시에 이루어질 수 있으며, 서로 다른 커널들의 연산도 동시에 시행될 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-multi-core-programming-by-non-null-stream&quot;&gt;2. Multi-core Programming by NON-NULL Stream&lt;/h2&gt;
-
-&lt;h3 id=&quot;2-1-null-stream&quot;&gt;2-1) NULL Stream&lt;/h3&gt;
-&lt;p&gt;NULL Stream을 사용한 연산은 동기적이다. 따라서 Host에서 Device로 Memory Copy가 진행되는 동안, Kernal과 D2H는 아무런 동작을 하지 않고 놀게된다. H2D 메모리 카피가 끝나고 커널 연산을 하는 동안 또 다시 노는 부분이 생기게 된다. 이러한 비효율적인 부분을 해결하기 위해 NON-NULL Stream을 사용할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-non-null-stream&quot;&gt;2-2) NON-NULL Stream&lt;/h3&gt;
-&lt;p&gt;NON-NULL Stream은 연산 결과를 한번에 보내는게 아니라, 각각의 task를 나누어서 연산이 되는 것부터 먼저 보낸다. 이렇게 잘라진 것들을 여러개의 NON-NULL Stream으로 나누어 보내면, 노는 부분이 없이 동시에 병렬 연산이 가능하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-example&quot;&gt;2-3) Example&lt;/h3&gt;
-
-&lt;p&gt;1개의 NULL Stream 및 3개의 NON-NULL Stream 사용 예제이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198910036-9cc506a2-4a30-4331-9a99-61a7b31ca588.png&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;strong&gt;H2D_1(H2D의 첫 번째 조각) 명령을 먼저 수행하여 device로 메모리 전송&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;K_1(첫 번째 조각에 대한 커널 연산)을 수행한다. 또한, 동시에 H2D 통로가 쉬고 있으므로 H2D_2(2번째 H2D 작업 영역) 명령을 수행하여 device로 메모리 전송&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;K_1 연산 결과를 D2H_1을 통해 host로 보내주면, 다시 커널이 사용 가능해지므로 K_2 연산 수행. 또한 동시에 H2D_3를 통해 device로 메모리 전송&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;K_2 연산결과를 D2H_2 명령으로 다시 host로 넘겨줌. 동시에 k_3 연산 수행&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;마지막 K_3 연산 결과를 D2H_3 명령으로 다시 host에 넘겨줌&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-4-결론&quot;&gt;2-4) 결론&lt;/h3&gt;
-
-&lt;p&gt;이렇게 작업을 분할하여 여러 스트림에 나눠줌으로써, 연산 시간을 크게 줄일 수 있다. GPU 사용시, 데이터 보내는 작업이 상당히 큰 오버헤드인데, NON-NULL Stream을 사용하면 이를 숨기면서 GPU가 계속 돌 수 있게 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-비동기적-데이터-전송방법&quot;&gt;3. 비동기적 데이터 전송방법&lt;/h2&gt;
-&lt;h3 id=&quot;3-1-stream-생성&quot;&gt;3-1) Stream 생성&lt;/h3&gt;
-
-&lt;p&gt;사용할 stream을 생성해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaStreamCreate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 제거 : cudaStreamDestroy()
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-pinned-memory-생성&quot;&gt;3-2) Pinned Memory 생성&lt;/h3&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cudaMallocHost -&amp;gt; host에 메모리를 잡을 것인데, 이를 cuda가 잡겠다는 뜻
-cudaFreeHost -&amp;gt; 풀어주는 것
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;host와 device가 일하는 동안에 데이터를 보내고 싶다면, 반드시 그 데이터를 보내거나 받는 영역을 pinned memory로 잡아야 한다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;pinned memory?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;가상 메모리(swap device) 사용 시, swap device에 프로세스들이 페이지 단위로 구분되어 있으며, 이 중 필요한 page만 메모리에 올라와서 사용된다. 필요 없으면 다시 swap device로 내려가는데, 이를 swap out이라고 한다. 비동기적 데이터 전송을 위해서는 해당 메모리가 swap out되면 안되고, 메모리에 상주하고 있어야 한다. 이러한 메모리를 pinned memory라고 한다. pinned memory는 메모리에 항상 존재하는 것이 보장되므로 연산 속도도 더 빠르다.&lt;/p&gt;
-
-    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198917869-a061cb7f-30b8-413c-86f9-e8bcabddbb6f.png&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아래의 방법도 가능하다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;host_mem&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cuda_mem&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMallocAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host_mem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nbytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-3-async하게-gpu와-데이터-주고받기&quot;&gt;3-3) async하게 GPU와 데이터 주고받기&lt;/h3&gt;
-
-&lt;h4 id=&quot;1-h2d&quot;&gt;1) H2D&lt;/h4&gt;
-
-&lt;p&gt;Host Input -&amp;gt; Device Input&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMemcpyAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device_inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host_inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host_inputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nbytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        &lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMemcpyKind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMemcpyHostToDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# stream 마지막 인자에 stream 생략 시, NULL Stream이 들어감
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;2-커널-연산&quot;&gt;2) 커널 연산&lt;/h4&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;상황/모델에 따른 코드 작성
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;3-d2h&quot;&gt;3) D2H&lt;/h4&gt;
-
-&lt;p&gt;Device Output -&amp;gt; Host Output&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMemcpyAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host_outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ctypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cuda_outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host_outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nbytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                               &lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMemcpyKind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaMemcpyDeviceToHost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-4-모든-task-종료-대기&quot;&gt;3-4) 모든 task 종료 대기&lt;/h3&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cudaDeviceSynchronize()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위에서 일을 다 넣어놓고, 모든 device의 일이 끝날 때까지 기다린다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;또는 아래 코드와 같이 특정 stream만 기다릴 수도 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;cudart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cudaStreamSynchronize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-11/#1031&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Null Stream / Non-Null Stream</summary></entry><entry><title type="html">[ICT 인턴십]2022년 10월 TIL</title><link href="http://localhost:4000/internship/Itern-TIL-10/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 10월 TIL" /><published>2022-10-30T00:00:00+09:00</published><updated>2022-10-30T00:00:00+09:00</updated><id>http://localhost:4000/internship/Itern-TIL-10</id><content type="html" xml:base="http://localhost:4000/internship/Itern-TIL-10/">&lt;h1 id=&quot;-학습내용-정리&quot;&gt;✍ 학습내용 정리&lt;/h1&gt;
-
-&lt;h2 id=&quot;computer-vision&quot;&gt;Computer Vision&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/activation_opt/&quot;&gt;Activation Function, Optimizer&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/tensorrt/&quot;&gt;Pytorch To TensorRT Engine&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/tensorrtengine/&quot;&gt;TensorRT 모델에서 engine 모듈 추출하기&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/trt_speed/&quot;&gt;TensorRT vs TensorRT Engine vs Pytorch 연산속도 비교&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/torch2trt/&quot;&gt;Pytorch to TensorRT by torch2trt&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/tensorrt_engine/&quot;&gt;TensorRT Engine 성능 비교&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/modify_json/&quot;&gt;PyQT에 넘겨줄 json 수정&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_test/&quot;&gt;테스트셋에 대해서 투기 검출률 높이기(1)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_test2/&quot;&gt;테스트셋에 대해서 투기 검출률 높이기(2)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_test3/&quot;&gt;테스트셋에 대해서 투기 검출률 높이기(3)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_auto/&quot;&gt;테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/engine_output/&quot;&gt;TensorRT Engine Output Post-Treatment&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/project_prog/&quot;&gt;프로젝트 진행상황&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/md_speed/&quot;&gt;1차 파인튜닝 모델 분석&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/summary/&quot;&gt;AI 개발 가이드 및 조언내용 정리&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;ml&quot;&gt;ml&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/ml/apartpred/&quot;&gt;[toy_project] 아파트 실거래가 예측 (1)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/ml/apartpred2/&quot;&gt;[toy_project] 아파트 실거래가 예측 (2)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;web&quot;&gt;web&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/debug_jekyll/&quot;&gt;[Github_Io]Jekyll 로컬에서 디버그 하는 법&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/canvas/setting_proj/&quot;&gt;프로젝트 개요 정리&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/django/get_var/&quot;&gt;Django 템플릿에서 src, href에 변수 불러오는 법&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;etc&quot;&gt;etc&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/python/argparse/&quot;&gt;argparse 사용법&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/change/&quot;&gt;[뻐정] 프로젝트 개선사항&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bj_update/&quot;&gt;[뻐정] 프로젝트 목표 개선사항&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/github/bigfile_upload/&quot;&gt;Git 대용량 파일 push 방법 총정리&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/docker/install_docker/&quot;&gt;Window Docker 설치방법&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;-til&quot;&gt;🕮 TIL&lt;/h1&gt;
-&lt;h2 id=&quot;1주차&quot;&gt;&amp;lt;1주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : 내가 할 수 있는 일을 스스로 찾아서 이것저것 개선시켜 보려고 하고 있다. 아직은 많이 어렵지만 계속 하다보면 언젠간 좋은 결과가 있지 않을까 생각한다. 투기 행위 감지 모델의 성능이 좋지 않아서, 이번주는 모델 성능을 개선시키기 위해 다양한 시도들을 해보았다. 아직까지 모델에는 별 도움이 되지는 않고 있지만, 사소한 것들이 쌓여서 큰 결과를 만들어 낼 수 있다고 생각한다. 이러한 과정들이 너무 즐겁다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1004&quot;&gt;10/04&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1004&quot;&gt;10/04 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/activation_opt/&quot;&gt;1) Activation Function, Optimizer&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1005&quot;&gt;10/05&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1005&quot;&gt;10/05 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/modify_json/&quot;&gt;1) PyQT에 넘겨줄 json 수정&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1006&quot;&gt;10/06&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1006&quot;&gt;10/06 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_test/&quot;&gt;1) 테스트셋에 대해서 투기 검출률 높이기(1)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1007&quot;&gt;10/07&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1007&quot;&gt;10/07 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_test2/&quot;&gt;1) 테스트셋에 대해서 투기 검출률 높이기(2)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2주차&quot;&gt;&amp;lt;2주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : 이번 주는 이미지 연산 속도를 개선시킬 수 있는 실무적인 방법들을 많이 배웠다. 지금까지 인턴하면서 가장 많은 내용을 배운 한 주였고, 가장 유익한 주였다. 특히 TensorRT라는 좋은 최적화 tool을 알게 되어서 매우 보랍차다. 차장님께서 안될거라는 업무를 해결해서 모델 연산속도를 30배정도 개선시켰다. 덕분에 회사 사람들에게 인정받아서 매우 뿌듯한 한 주였다. 원래 나는 3학년인 관계로 NL2SQL 라벨링 작업을 계속 했어야했지만, 이번 일을 계기로 차장님께서 컴퓨터 비전분야 새로운 작업을 주셨다. 컴퓨터 비전을 계속 공부할 수 있어서 너무 기쁘고, 모르는 부분은 해당 분야 실력자에게 자문을 구할 수 있어서 너무 좋다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1011&quot;&gt;10/11&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1011&quot;&gt;10/11 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/tensorrt/&quot;&gt;1) Pytorch To TensorRT Engine&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_test3/&quot;&gt;2) 테스트셋에 대해서 투기 검출률 높이기(3)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1012&quot;&gt;10/12&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1012&quot;&gt;10/12 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/cctv_auto/&quot;&gt;1) 테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bj_update/&quot;&gt;2) [뻐정] 프로젝트 목표 개선사항&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1013&quot;&gt;10/13&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1013&quot;&gt;10/13 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/python/argparse/&quot;&gt;1) argparse 사용법&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/torch2trt/&quot;&gt;2) Pytorch to TensorRT by torch2trt&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1014&quot;&gt;10/14&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1014&quot;&gt;10/14 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/tensorrtengine/&quot;&gt;1) TensorRT 모델에서 engine 모듈 추출하기&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/tensorrt_engine/&quot;&gt;2) TensorRT Engine 성능 비교&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1015&quot;&gt;10/15&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;주말인 관계로 업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/ml/apartpred/&quot;&gt;1) [toy_project] 아파트 실거래가 예측 (1)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3주차&quot;&gt;&amp;lt;3주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : 이번주는 차장님께서 이것저것 다양한 업무를 주셨다. 인턴기간동안 다양한 실무 경험을 할 수 있게 해준다고 하셨다. 회사 입장에서 나는 정규직 채용 연계가 불가한 3학년 학생인데도, 많이 신경써주는 것 같아 감사했다. 새롭게 배우는 분야들도 내가 배우길 희망하는 기술 스택들과 겹쳐서 너무 보람찬 한 주였다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1017&quot;&gt;10/17&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1017&quot;&gt;10/17 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/engine_output/&quot;&gt;1) TensorRT Engine Output Post-Treatment&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1018&quot;&gt;10/18&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1018&quot;&gt;10/18 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/trt_speed/&quot;&gt;1) TensorRT vs TensorRT Engine vs Pytorch 연산속도 비교&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1019&quot;&gt;10/19&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1019&quot;&gt;10/19 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/project_prog/&quot;&gt;1) 프로젝트 진행상황&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/ml/apartpred2/&quot;&gt;2) [toy_project] 아파트 실거래가 예측 (2)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1021&quot;&gt;10/21&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1021&quot;&gt;10/21 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/canvas/setting_proj/&quot;&gt;1) 프로젝트 개요 정리&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/docker/install_docker/&quot;&gt;2) Window Docker 설치방법&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/cctv/md_speed/&quot;&gt;3) 1차 파인튜닝 모델 분석&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1022&quot;&gt;10/22&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;주말인 관계로 업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/debug_jekyll/&quot;&gt;1) [Github_Io]Jekyll 로컬에서 디버그 하는 법&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4주차&quot;&gt;&amp;lt;4주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : 빅데이터 경진대회가 얼마 남지 않아서 경진대회 준비하느라 너무 바쁜 한 주였다. 점심시간에는 편의점에서 대충 김밥먹고 들어와서 준비하고, 퇴근하고 나서도 계속 경진대회 준비만 하다가 잠드는 일상의 반복이었다. 너무 바쁘고 정신 없었지만, 스스로 개발한 서비스들이 하나 둘씩 완성되는 모습을 보니 뿌듯하고 보람찼다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1024&quot;&gt;10/24&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1024&quot;&gt;10/24 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/change/&quot;&gt;1) [뻐정] 프로젝트 개선사항&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1025&quot;&gt;10/25&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/github/bigfile_upload/&quot;&gt;1) Git 대용량 파일 push 방법 총정리&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1026&quot;&gt;10/26&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1026&quot;&gt;10/26 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/summary/&quot;&gt;1) AI 개발 가이드 및 조언내용 정리&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1028&quot;&gt;10/28&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1028&quot;&gt;10/28 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/django/get_var/&quot;&gt;1) Django 템플릿에서 src, href에 변수 불러오는 법&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">user정보 DB 구조파악</title><link href="http://localhost:4000/canvas/table_structure/" rel="alternate" type="text/html" title="user정보 DB 구조파악" /><published>2022-10-28T00:00:00+09:00</published><updated>2022-10-28T00:00:00+09:00</updated><id>http://localhost:4000/canvas/table_structure</id><content type="html" xml:base="http://localhost:4000/canvas/table_structure/">&lt;p&gt;우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;사이트 주소&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://ondras.zarovi.cz/sql/demo/&quot;&gt;WWW SQL Designer&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아래는 해당 사이트에서 직접 그려본 실제 DB 스키마의 일부이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/198542945-80677db2-8b80-4e4e-a43b-5ff33d9405e1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;테이블-설명&quot;&gt;테이블 설명&lt;/h2&gt;
-&lt;h3 id=&quot;users&quot;&gt;users&lt;/h3&gt;
-
-&lt;p&gt;회원을 생성할 수 있는 방법은 총 2가지가 있다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Site Admin이 직접 사용자 추가&lt;/li&gt;
-  &lt;li&gt;Course에서 사용자 직접 추가&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;자세한 사항은 이전 포스팅을 참조하면 된다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Refer.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/canvas/setting_proj/#%ED%95%B4%EC%95%BC%ED%95%A0-%EC%9D%BC&quot;&gt;프로젝트 개요 정리&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;우선, 1번과 2번 방법으로 생성한 사용자 모두 users 테이블에 저장되는 것을 확인하였다. 생성 방법에 상관없이 그냥 모든 유저에 대한 정보가 users에 저장되는 것 같았다. 또한 users 중에서 Site Admin이 생성한 user의 계정 정보가 account에 저장되는 것을 확인하였다. 자세한 사항은 디자인이 넘어오면 다시 확인해봐야겠다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="postgreSQL" /><category term="DataGrip" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry></feed>
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry></feed>
