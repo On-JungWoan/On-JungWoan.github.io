@@ -1,11 +1,246 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-09T01:13:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Django]python manage.py inspectdb &amp;gt; models.py(초안)</title><link href="http://localhost:4000/web/db/" rel="alternate" type="text/html" title="[Django]python manage.py inspectdb &amp;gt; models.py(초안)" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/db</id><content type="html" xml:base="http://localhost:4000/web/db/">&lt;p&gt;&lt;br /&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-09T17:54:08+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Django]admin에 model 등록</title><link href="http://localhost:4000/web/admin/" rel="alternate" type="text/html" title="[Django]admin에 model 등록" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/admin</id><content type="html" xml:base="http://localhost:4000/web/admin/">&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pip freeze &amp;gt; requirements.txt
+pip install -r requirements.txt
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[Django]secret 관리</title><link href="http://localhost:4000/web/secret/" rel="alternate" type="text/html" title="[Django]secret 관리" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/secret</id><content type="html" xml:base="http://localhost:4000/web/secret/">&lt;h2 id=&quot;secret-관리&quot;&gt;Secret 관리&lt;/h2&gt;
+
+&lt;p&gt;Django 프로젝트를 git에 push 하거나, 다른 곳에 공유할 때 비밀이 유출되는 것은 상당히 위험하다. 프로젝트의 규모가 클수록 위험도는 더더욱 증가하기 때문에 secret을 관리하는 것은 매우 중요하다. 본 포스팅에서는 민감정보를 효율적으로 관리하는 방법에 대하여 소개한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;django-environ&quot;&gt;Django Environ&lt;/h2&gt;
+&lt;h3 id=&quot;1-install-django-environ&quot;&gt;1) install django-environ&lt;/h3&gt;
+&lt;p&gt;별도의 파일을 환경 파일로 만들어 사용하려면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;django-environ&lt;/code&gt;을 사용하는 것이 가장 간편하다. 먼저, 터미널에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;django-environ&lt;/code&gt;을 설치해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; pip install django-environ
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;2-env-파일-생성&quot;&gt;2) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; 파일 생성&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; 파일을 생성하여, 민감 정보를 작성해준다. 장고 시크릿 키, DB 접속정보, 또는 API 키 등등 유출되면 안되는 정보들을 모두 작성해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 장고 시크릿 키&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;DJANGO_SECRET_KEY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;시크릿키&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// DB 접속정보&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;DB_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;DB_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;DB_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;localhost&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;DB_PASSWORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3-gitignore-작성&quot;&gt;3) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; 작성&lt;/h3&gt;
+
+&lt;p&gt;git에 push할 예정이라면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; 파일을 등록하여 push 되지 않게 해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.env
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;4-import-secret&quot;&gt;4) import secret&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;environ&lt;/code&gt;을 import 해준 뒤, env 파일이 작성되어 있는 곳의 경로를 지정해준다. 그리고 나서 env() 안에 원하는 환경변수의 이름을 넣어주면 끝이다. env파일 경로는 미리 베이스 디렉토리를 정해놓고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BASE_DIR / &apos;.env&apos;&lt;/code&gt;와 같은 형식으로 써주는 것이 유지/보수에 더 유리하다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;environ&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# environ setting
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;env 파일 경로&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 시크릿 키
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SECRET_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;DJANGO_SECRET_KEY&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[Django] 이미 존재하는 DB 연동 by inspectdb</title><link href="http://localhost:4000/web/inspectdb/" rel="alternate" type="text/html" title="[Django] 이미 존재하는 DB 연동 by inspectdb" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/inspectdb</id><content type="html" xml:base="http://localhost:4000/web/inspectdb/">&lt;h2 id=&quot;1-db-불러오기&quot;&gt;1. DB 불러오기&lt;/h2&gt;
+
+&lt;p&gt;DB가 이미 존재하는 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inspectdb&lt;/code&gt;를 사용하여 기존 DB 정보를 불러올 수 있다. 터미널에 아래 명령을 입력하면 기존 DB에 대한 models.py가 최상위 경로 아래 old_models.py에 저장된다. 여기서 필요한 부분만 발췌하여 사용하거나, 전체를 복사하여 models.py에 저장해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; python manage.py inspectdb &amp;gt; old_models.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-modelspy-수정&quot;&gt;2. Models.py 수정&lt;/h2&gt;
+
+&lt;p&gt;초기에는 managed=False로 되어 있기 때문에, 추후 모델 변경시 migrate 하기가 곤란하다. 따라서 managed=True로 수정해준다. 또한, charField의 max_length가 가변으로 되어 있을 경우, max_length=-1로 불러와져서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;max_length&quot; attribute that is a positive integer&lt;/code&gt; 에러가 발생한다. 따라서 해당 부분들은 Django에 맞게 수정해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.db&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BigAutoField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary_key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pronouns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CharField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;blank&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;(..&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;..)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;managed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;db_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;users&apos;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# unique_together = ((&apos;root_account_ids&apos;, &apos;id&apos;),)
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-fake-migrate&quot;&gt;3. Fake migrate&lt;/h2&gt;
+
+&lt;p&gt;이미 테이블이 존재하기 때문에 따로 migrate를 해줄 필요가 없으므로, fake migrate를 해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; python manage.py migrate --fake-initial
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-migrate&quot;&gt;4. Migrate&lt;/h2&gt;
+
+&lt;p&gt;이후에 모델 변경시에는 기존과 동일하게 makemigrations -&amp;gt; migrate 해주면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5-정리&quot;&gt;5. 정리&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;python manage.py inspectdb &amp;gt; 불러올 파일 경로&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;managed=True, max_length 수정&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;python manage.py migrate –fake-initial&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;모델 변경 시 makemigrations -&amp;gt; migrate&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">inspectdb 소개</summary></entry><entry><title type="html">requirements.txt 생성 및 설치방법</title><link href="http://localhost:4000/web/export/" rel="alternate" type="text/html" title="requirements.txt 생성 및 설치방법" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/export</id><content type="html" xml:base="http://localhost:4000/web/export/">&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+pip freeze &amp;gt; requirements.txt
+pip install -r requirements.txt
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[Django] Views.py 분리</title><link href="http://localhost:4000/web/split/" rel="alternate" type="text/html" title="[Django] Views.py 분리" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/split</id><content type="html" xml:base="http://localhost:4000/web/split/">&lt;h2 id=&quot;0-viewspy-분리&quot;&gt;0. views.py 분리&lt;/h2&gt;
+&lt;p&gt;프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다.&lt;/p&gt;
+
+&lt;h3 id=&quot;0-1-동작-원리&quot;&gt;0-1) 동작 원리?&lt;/h3&gt;
+&lt;p&gt;django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고 views까지만 인식한다고 한다. 따라서 views라는 이름의 디렉토리에 뷰 함수를 넣어, views.py 대신 사용할 수 있다는 것이다. 다음은 그 방법들이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-첫-번째-방법&quot;&gt;1. 첫 번째 방법&lt;/h2&gt;
+&lt;h3 id=&quot;1-1-views-디렉토리-생성&quot;&gt;1-1) Views 디렉토리 생성&lt;/h3&gt;
+&lt;p&gt;우선, 앱 디렉토리 밑에 views 디렉토리를 생성해준다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200511934-87588451-01c0-4d1b-ba84-4788c54a3f55.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2-viewspy-분리&quot;&gt;1-2) views.py 분리&lt;/h3&gt;
+
+&lt;p&gt;생성한 views 디렉토리 안에, 기존 views.py 내용들을 기능별로 나누어 저장한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200512589-66848294-b809-4a70-80e3-3bffb8851ded.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-3-__init__py-생성&quot;&gt;1-3) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 생성&lt;/h3&gt;
+
+&lt;p&gt;views 디렉토리 안에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;를 생성하고, 방금 작성한 파일들을 import 해준다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.forgotid&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.forgotpw&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.login&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.signup&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;1-4-결과&quot;&gt;1-4) 결과&lt;/h3&gt;
+
+&lt;p&gt;최종적으로 다음과 같은 구조가 된다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200513188-743c8fc9-5375-4b5f-aafb-70644a99ea03.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-5-문제점&quot;&gt;1-5) 문제점&lt;/h3&gt;
+
+&lt;p&gt;하지만 이 방법은 단점이 있다. 해당 프로젝트를 서비스하던 중, 특정한 뷰 함수에 문제가 생겼을 시, 해당 함수가 어디에 위치해있는지 알기 어렵다는 것이다. 가령, url이 다음과 같이 정의되어 있다고 해보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;만약, changepwmodal 함수에 문제가 생겨서 해당 함수를 고쳐야 할 일이 생긴다면, view 디렉토리 하위에 있는 모든 파일을 일일이 전부 확인해봐야 할 것이다. 규모가 작은 프로젝트라면 금방 찾겠지만, 그렇지 않다면 이를 찾는 것은 상당한 시간/자원낭비가 될 것이다. 따라서 과장님께서는 해당 방법은 별로 추천하지 않는다고 하셨다. 그렇다면 어떻게 하는 것이 좋을까?&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-두-번째-방법&quot;&gt;2. 두 번째 방법&lt;/h2&gt;
+&lt;h3 id=&quot;2-1-__init__py-제거&quot;&gt;2-1) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 제거&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;를 제거한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200514640-7b311613-b9f3-4bd5-8f1e-892d9bcfae95.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-urlspy-수정&quot;&gt;2-2) urls.py 수정&lt;/h3&gt;
+
+&lt;p&gt;url을 다음과 같이 수정하여 해결. 어떤 파일의 뷰 함수를 고쳐야 할지 확실하게 알 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.views&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-다른-파일modelspy-에도-적용&quot;&gt;3. 다른 파일(Models.py …)에도 적용&lt;/h2&gt;
+
+&lt;p&gt;views 말고 models나 urls에도 적용 가능하다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200617143-a53ea8f0-481a-4f2a-892f-7377adbf48b7.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[HTML, JavaScript]Input 태그 유효성 검사</title><link href="http://localhost:4000/web/test/" rel="alternate" type="text/html" title="[HTML, JavaScript]Input 태그 유효성 검사" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/test</id><content type="html" xml:base="http://localhost:4000/web/test/">&lt;style&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[HTML, JavaScript]Input 태그 유효성 검사</title><link href="http://localhost:4000/web/test/" rel="alternate" type="text/html" title="[HTML, JavaScript]Input 태그 유효성 검사" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/test</id><content type="html" xml:base="http://localhost:4000/web/test/">&lt;style&gt;
   form {
     background: #ababab;
   }
@@ -106,6 +341,9 @@
   &lt;input type=&quot;password&quot; id=&quot;pw9&quot; placeholder=&quot;비밀번호를 다시 입력해주세요.&quot; /&gt;
   &lt;button type=&quot;button&quot; onclick=&quot;test()&quot;&gt; 비밀번호 생성 &lt;/button&gt;
 &lt;/form&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;3-응용-여러개의-유효성-test&quot;&gt;3. 응용 (여러개의 유효성 test)&lt;/h2&gt;
 
@@ -273,99 +511,57 @@ function test() {
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="html" /><category term="web" /><category term="javascript" /><summary type="html">html, javascript</summary></entry><entry><title type="html">[Django] Views.py 분리</title><link href="http://localhost:4000/web/split/" rel="alternate" type="text/html" title="[Django] Views.py 분리" /><published>2022-11-08T00:00:00+09:00</published><updated>2022-11-08T00:00:00+09:00</updated><id>http://localhost:4000/web/split</id><content type="html" xml:base="http://localhost:4000/web/split/">&lt;h2 id=&quot;0-viewspy-분리&quot;&gt;0. views.py 분리&lt;/h2&gt;
-&lt;p&gt;프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다.&lt;/p&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="html" /><category term="web" /><category term="javascript" /><summary type="html">html, javascript</summary></entry><entry><title type="html">url, view 설계</title><link href="http://localhost:4000/canvas/build/" rel="alternate" type="text/html" title="url, view 설계" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/canvas/build</id><content type="html" xml:base="http://localhost:4000/canvas/build/">&lt;p&gt;LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다.&lt;/p&gt;
 
-&lt;h3 id=&quot;0-1-동작-원리&quot;&gt;0-1) 동작 원리?&lt;/h3&gt;
-&lt;p&gt;django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고 views까지만 인식한다고 한다. 따라서 views라는 이름의 디렉토리에 뷰 함수를 넣어, views.py 대신 사용할 수 있다는 것이다. 다음은 그 방법들이다.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Components
+  - button.html
+  - color.html
+  - form.html
+  - modal.html
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+- css
+  - fonts
+    - 폰트파일들
+  - import
+    - color, font, grid, reset 관련 css 파일들
+  - common.css
 
-&lt;h2 id=&quot;1-첫-번째-방법&quot;&gt;1. 첫 번째 방법&lt;/h2&gt;
-&lt;h3 id=&quot;1-1-views-디렉토리-생성&quot;&gt;1-1) Views 디렉토리 생성&lt;/h3&gt;
-&lt;p&gt;우선, 앱 디렉토리 밑에 views 디렉토리를 생성해준다.&lt;/p&gt;
+- html_pages
+  - login.html
+  - signUp.html
+  - signUpModal.html
+  - forgotPw.html
+  - changePw.html
+  - changePwModal.html
+  - forgotId.html
+  - forgotIdModal.html
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200511934-87588451-01c0-4d1b-ba84-4788c54a3f55.png&quot; /&gt;&lt;/p&gt;
+- images
+  - svg 파일들
 
-&lt;h3 id=&quot;1-2-viewspy-분리&quot;&gt;1-2) views.py 분리&lt;/h3&gt;
-
-&lt;p&gt;생성한 views 디렉토리 안에, 기존 views.py 내용들을 기능별로 나누어 저장한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200512589-66848294-b809-4a70-80e3-3bffb8851ded.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-3-__init__py-생성&quot;&gt;1-3) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 생성&lt;/h3&gt;
-
-&lt;p&gt;views 디렉토리 안에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;를 생성하고, 방금 작성한 파일들을 import 해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.forgotid&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.forgotpw&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.login&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.signup&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+- index.html
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;1-4-결과&quot;&gt;1-4) 결과&lt;/h3&gt;
+&lt;h2 id=&quot;components&quot;&gt;Components&lt;/h2&gt;
+&lt;p&gt;컴포넌트들이 어떻게 작동하는지 보여주기 위한 예시들인 것 같았다. 실제 소스 적용시에는 사용하지 않았다.&lt;/p&gt;
 
-&lt;p&gt;최종적으로 다음과 같은 구조가 된다.&lt;/p&gt;
+&lt;h2 id=&quot;css&quot;&gt;css&lt;/h2&gt;
+&lt;p&gt;static 파일들이 저장되어 있었다. django의 settings 파일에 static 경로를 지정해 준 뒤, load static하여 사용해주었다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200513188-743c8fc9-5375-4b5f-aafb-70644a99ea03.png&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;html_pages&quot;&gt;html_pages&lt;/h2&gt;
 
-&lt;h3 id=&quot;1-5-문제점&quot;&gt;1-5) 문제점&lt;/h3&gt;
+&lt;p&gt;html은 다음과 같은 흐름으로 작동하고 있었다.&lt;/p&gt;
 
-&lt;p&gt;하지만 이 방법은 단점이 있다. 해당 프로젝트를 서비스하던 중, 특정한 뷰 함수에 문제가 생겼을 시, 해당 함수가 어디에 위치해있는지 알기 어렵다는 것이다. 가령, url이 다음과 같이 정의되어 있다고 해보자.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;views&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;만약, changepwmodal 함수에 문제가 생겨서 해당 함수를 고쳐야 할 일이 생긴다면, view 디렉토리 하위에 있는 모든 파일을 일일이 전부 확인해봐야 할 것이다. 규모가 작은 프로젝트라면 금방 찾겠지만, 그렇지 않다면 이를 찾는 것은 상당한 시간/자원낭비가 될 것이다. 따라서 과장님께서는 해당 방법은 별로 추천하지 않는다고 하셨다. 그렇다면 어떻게 하는 것이 좋을까?&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-두-번째-방법&quot;&gt;2. 두 번째 방법&lt;/h2&gt;
-&lt;h3 id=&quot;2-1-__init__py-제거&quot;&gt;2-1) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 제거&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;를 제거한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200514640-7b311613-b9f3-4bd5-8f1e-892d9bcfae95.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-urlspy-수정&quot;&gt;2-2) urls.py 수정&lt;/h3&gt;
-
-&lt;p&gt;url을 다음과 같이 수정하여 해결. 어떤 파일의 뷰 함수를 고쳐야 할지 확실하게 알 수 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.views&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-다른-파일modelspy-에도-적용&quot;&gt;3. 다른 파일(Models.py …)에도 적용&lt;/h2&gt;
-
-&lt;p&gt;views 말고 models나 urls에도 적용 가능하다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200617143-a53ea8f0-481a-4f2a-892f-7377adbf48b7.png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200322538-38f936b3-96bb-436c-b9ae-f5f958098ac5.png&quot; alt=&quot;web drawio&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1108&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry><entry><title type="html">[CSS] 폰트 관련 속성 정리</title><link href="http://localhost:4000/web/css_text/" rel="alternate" type="text/html" title="[CSS] 폰트 관련 속성 정리" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/web/css_text</id><content type="html" xml:base="http://localhost:4000/web/css_text/">&lt;h1 id=&quot;사이즈-관련-옵션&quot;&gt;사이즈 관련 옵션&lt;/h1&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[CSS] 폰트 관련 속성 정리</title><link href="http://localhost:4000/web/css_text/" rel="alternate" type="text/html" title="[CSS] 폰트 관련 속성 정리" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/web/css_text</id><content type="html" xml:base="http://localhost:4000/web/css_text/">&lt;h1 id=&quot;사이즈-관련-옵션&quot;&gt;사이즈 관련 옵션&lt;/h1&gt;
 
 &lt;p&gt;px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다.&lt;/p&gt;
 
@@ -449,301 +645,7 @@ function test() {
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="web" /><category term="front-end" /><summary type="html">css 내용 정리</summary></entry><entry><title type="html">url, view 설계</title><link href="http://localhost:4000/canvas/build/" rel="alternate" type="text/html" title="url, view 설계" /><published>2022-11-07T00:00:00+09:00</published><updated>2022-11-07T00:00:00+09:00</updated><id>http://localhost:4000/canvas/build</id><content type="html" xml:base="http://localhost:4000/canvas/build/">&lt;p&gt;LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Components
-  - button.html
-  - color.html
-  - form.html
-  - modal.html
-
-- css
-  - fonts
-    - 폰트파일들
-  - import
-    - color, font, grid, reset 관련 css 파일들
-  - common.css
-
-- html_pages
-  - login.html
-  - signUp.html
-  - signUpModal.html
-  - forgotPw.html
-  - changePw.html
-  - changePwModal.html
-  - forgotId.html
-  - forgotIdModal.html
-
-- images
-  - svg 파일들
-
-- index.html
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;components&quot;&gt;Components&lt;/h2&gt;
-&lt;p&gt;컴포넌트들이 어떻게 작동하는지 보여주기 위한 예시들인 것 같았다. 실제 소스 적용시에는 사용하지 않았다.&lt;/p&gt;
-
-&lt;h2 id=&quot;css&quot;&gt;css&lt;/h2&gt;
-&lt;p&gt;static 파일들이 저장되어 있었다. django의 settings 파일에 static 경로를 지정해 준 뒤, load static하여 사용해주었다.&lt;/p&gt;
-
-&lt;h2 id=&quot;html_pages&quot;&gt;html_pages&lt;/h2&gt;
-
-&lt;p&gt;html은 다음과 같은 흐름으로 작동하고 있었다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200322538-38f936b3-96bb-436c-b9ae-f5f958098ac5.png&quot; alt=&quot;web drawio&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
-
-&lt;p&gt;나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[navigation.yaml]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PROJECTS&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;뻐정&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;버스정보종합시스템&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/bbeojung&lt;/span&gt;    
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;실시간&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;쓰레기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;무단투기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;탐지&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/cctv&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;canvas&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;개발&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/canvas&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Toy&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Project&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/toy_project&lt;/span&gt;
-
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;STUDY&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;NOTE&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;AI&apos;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Computer&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Vision&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/DL&lt;/span&gt;
-          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Machine&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Learning&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/ML&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PLATFORM&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;DEV.&apos;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Blog&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Dev&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/Blog&lt;/span&gt;
-          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Web&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/web&lt;/span&gt;
-          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Tools&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/tools&lt;/span&gt;
-        
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;대외활동&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;하반기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ICT&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;인턴십&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/internship&lt;/span&gt;
-        
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ETC&quot;&lt;/span&gt;  
-    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Python&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;개념&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/python&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;화성학&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/harmonics&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;etc&quot;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/etc&lt;/span&gt;
-
-  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;TIL&quot;&lt;/span&gt;    
-    &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/TIL/&lt;/span&gt;
-    
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;mastheadhtml-수정&quot;&gt;masthead.html 수정&lt;/h2&gt;
-
-&lt;p&gt;masthead에 navigation 정보를 불러오는 코드를 넣어준다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199758613-c1d0d41d-73ef-48a7-a0b5-b8c6623f11d2.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 때, 하위 sublink가 있으면 for문을 한 번 더 돌게 하였고 그렇지 않으면 바로 sublink 정보를 가져오도록 하였다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199758848-0c930ff9-3ed4-462a-a419-1819e1766f24.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;navigationscss-수정&quot;&gt;navigation.scss 수정&lt;/h2&gt;
-&lt;p&gt;.greedy-nav{}안에 다음 style을 넣어주면 된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;be&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;shared&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;both&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;visible&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt;
-  &lt;span class=&quot;nc&quot;&gt;.dropdown&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;border-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nc&quot;&gt;.dropdown-content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;darken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;min-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;160px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;border-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nc&quot;&gt;.dropdown&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:hover&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.dropdown-content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;17px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nc&quot;&gt;.dropdown-item&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-
-  &lt;span class=&quot;nc&quot;&gt;.visible-links&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-webkit-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-ms-flexbox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;-webkit-box-pack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;-ms-flex-pack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;justify-content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flex-end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;-webkit-box-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;-ms-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;overflow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;err&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;-webkit-box-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;-ms-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list-item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;text-align&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-webkit-match-parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-      &lt;span class=&quot;err&quot;&gt;&amp;amp;:before&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;-webkit-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;global-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;global-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;-webkit-transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;translate3d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;translate3d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;hide&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-      &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:hover:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;-webkit-transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;-ms-transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;reveal&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-
-
-  &lt;span class=&quot;nc&quot;&gt;.hidden-links&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;margin-top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;-webkit-box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-      &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;err&quot;&gt;&amp;amp;.hidden&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type-size-5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-      &lt;span class=&quot;err&quot;&gt;&amp;amp;:hover&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;masthead-link-color-hover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;navicon-link-color-hover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-11px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;background-color&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;nt&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-      &lt;span class=&quot;err&quot;&gt;&amp;amp;:last-child&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;border-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위 css에서 dropdown-title는 굵게 표시하였고, 마우스 호버링 이벤트는 dropdown-item에만 들어가도록 수정하였다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199765353-e752bb34-63ea-41be-ac8a-07a511b8d6af.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199765392-a64bf886-7028-4cb7-a900-0aee8cd8924c.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;dropdown-아이콘이-안불러와지는-경우&quot;&gt;Dropdown 아이콘이 안불러와지는 경우&lt;/h2&gt;
-
-&lt;p&gt;다음과 같이 dropdown 아이콘이 안불러와지는 경우가 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;masthead.html 최상단에 icon.html을 불러와주면 해결된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199764450-eb4dd6fc-9c09-4d58-bbd9-769d2dfa8620.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1103&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">네비바 수정</summary></entry><entry><title type="html">Bbeojung PROJECT REPORT</title><link href="http://localhost:4000/bbeojung/bj_README/" rel="alternate" type="text/html" title="Bbeojung PROJECT REPORT" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bj_README</id><content type="html" xml:base="http://localhost:4000/bbeojung/bj_README/">&lt;h2 id=&quot;contents&quot;&gt;Contents&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="web" /><category term="front-end" /><summary type="html">css 내용 정리</summary></entry><entry><title type="html">Bbeojung PROJECT REPORT</title><link href="http://localhost:4000/bbeojung/bj_README/" rel="alternate" type="text/html" title="Bbeojung PROJECT REPORT" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bj_README</id><content type="html" xml:base="http://localhost:4000/bbeojung/bj_README/">&lt;h2 id=&quot;contents&quot;&gt;Contents&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -1054,519 +956,248 @@ score 개선이 있는 것을 확인 하였음
 
     &lt;p&gt;&lt;a href=&quot;https://user-images.githubusercontent.com/84084372/199414700-e879d07b-c96e-4323-af01-57dbf2152fed.mp4&quot;&gt;https://user-images.githubusercontent.com/84084372/199414700-e879d07b-c96e-4323-af01-57dbf2152fed.mp4&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/internship/Intern-TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-03T00:00:00+09:00</published><updated>2022-11-03T00:00:00+09:00</updated><id>http://localhost:4000/internship/Intern-TIL-11</id><content type="html" xml:base="http://localhost:4000/internship/Intern-TIL-11/">&lt;h1 id=&quot;-학습내용-정리&quot;&gt;✍ 학습내용 정리&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">[Github_Io]상단 네비게이션 바 수정</title><link href="http://localhost:4000/blog/edit_navibar/" rel="alternate" type="text/html" title="[Github_Io]상단 네비게이션 바 수정" /><published>2022-11-04T00:00:00+09:00</published><updated>2022-11-04T00:00:00+09:00</updated><id>http://localhost:4000/blog/edit_navibar</id><content type="html" xml:base="http://localhost:4000/blog/edit_navibar/">&lt;h2 id=&quot;navigationyaml-수정&quot;&gt;navigation.yaml 수정&lt;/h2&gt;
+
+&lt;p&gt;나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199757662-7074cb35-28d9-49e7-bfb9-d9481b9e293e.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[navigation.yaml]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PROJECTS&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;뻐정&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;버스정보종합시스템&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/bbeojung&lt;/span&gt;    
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;실시간&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;쓰레기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;무단투기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;탐지&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/cctv&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;canvas&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;개발&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/canvas&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Toy&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Project&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/toy_project&lt;/span&gt;
+
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;STUDY&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;NOTE&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;AI&apos;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Computer&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Vision&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/DL&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Machine&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Learning&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/ML&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title &lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PLATFORM&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;DEV.&apos;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Blog&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Dev&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/Blog&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Web&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/web&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Tools&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/tools&lt;/span&gt;
+        
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;대외활동&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;하반기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ICT&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;인턴십&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/internship&lt;/span&gt;
+        
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ETC&quot;&lt;/span&gt;  
+    &lt;span class=&quot;na&quot;&gt;sublinks&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Python&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;개념&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/python&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;화성학&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/harmonics&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;etc&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/categories/etc&lt;/span&gt;
+
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;TIL&quot;&lt;/span&gt;    
+    &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/TIL/&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;-til&quot;&gt;🕮 TIL&lt;/h1&gt;
-&lt;h2 id=&quot;1주차&quot;&gt;&amp;lt;1주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; :&lt;/p&gt;
+&lt;h2 id=&quot;mastheadhtml-수정&quot;&gt;masthead.html 수정&lt;/h2&gt;
 
-&lt;h3 id=&quot;1031&quot;&gt;10/31&lt;/h3&gt;
+&lt;p&gt;masthead에 navigation 정보를 불러오는 코드를 넣어준다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199758613-c1d0d41d-73ef-48a7-a0b5-b8c6623f11d2.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;이 때, 하위 sublink가 있으면 for문을 한 번 더 돌게 하였고 그렇지 않으면 바로 sublink 정보를 가져오도록 하였다.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cuda_stream/&quot;&gt;1) CUDA Stream&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1101&quot;&gt;11/01&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/bj_update2/&quot;&gt;1) [뻐정] 프로젝트 개선사항(수정중)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1102&quot;&gt;11/02&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bbeojung/&quot;&gt;1) [뻐정] 프로젝트 최종 요약&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1103&quot;&gt;11/03&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/edit_navibar/&quot;&gt;1) [Github_Io]상단 네비게이션 바 수정&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2주차&quot;&gt;&amp;lt;2주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; :&lt;/p&gt;
-
-&lt;h3 id=&quot;1107&quot;&gt;11/07&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/css_text/&quot;&gt;1) [CSS] 폰트 관련 속성 정리&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1108&quot;&gt;11/08&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/split/&quot;&gt;1) [Django] Views.py 분리&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/test/&quot;&gt;2) [HTML, JavaScript]Input 태그 유효성 검사&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Internship" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">뻐정 프로젝트 최종 요약</title><link href="http://localhost:4000/bbeojung/bbeojung/" rel="alternate" type="text/html" title="뻐정 프로젝트 최종 요약" /><published>2022-11-02T00:00:00+09:00</published><updated>2022-11-02T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bbeojung</id><content type="html" xml:base="http://localhost:4000/bbeojung/bbeojung/">&lt;h1 id=&quot;0-contents&quot;&gt;0. Contents&lt;/h1&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199517014-8ae43d4c-6c22-484d-9faa-94290d8a9237.png&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;프로젝트명&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;뻐정(Bbeojung.kr)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;참여인원&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;개발 : 온정완&lt;/li&gt;
-      &lt;li&gt;기획/ppt/발표 : 진유승&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;개발 기간&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;1차 프로토타입 (Jun. 2022 ~ Jul.2022)&lt;/li&gt;
-      &lt;li&gt;2차 개선버전 (Oct. 2022 ~ Nov. 2022)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199758848-0c930ff9-3ed4-462a-a419-1819e1766f24.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;1-배경&quot;&gt;1. 배경&lt;/h1&gt;
+&lt;h2 id=&quot;navigationscss-수정&quot;&gt;navigation.scss 수정&lt;/h2&gt;
+&lt;p&gt;.greedy-nav{}안에 다음 style을 넣어주면 된다.&lt;/p&gt;
 
-&lt;h2 id=&quot;1-1-시장의-중요성&quot;&gt;1-1) 시장의 중요성&lt;/h2&gt;
+&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;be&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;shared&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;both&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;visible&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt;
+  &lt;span class=&quot;nc&quot;&gt;.dropdown&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;border-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404453-771b5c41-098c-4e74-a1da-cc0b15c1088f.JPG&quot; /&gt;&lt;/p&gt;
+  &lt;span class=&quot;nc&quot;&gt;.dropdown-content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;darken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;min-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;160px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;border-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;광주광역시 빅데이터 통합 플랫폼에 따르면, 2022년 8월 기준 약 89.7%가 버스를 이용하는 것으로 나타났습니다. 또한, 광주광역시의 버스 분담률은 근 10년간 80% 이상을 유지하고 있습니다. 이런 상황을 봤을 때, 광주 시민들에게 버스는 중요한 이동수단임을 알 수 있습니다. 이에, 버스 이용과 관련한 정확한 수요 예측과 다양한 정보 제공이 필수적이라고 생각하였습니다.&lt;/p&gt;
+  &lt;span class=&quot;nc&quot;&gt;.dropdown&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:hover&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.dropdown-content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;17px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;span class=&quot;nc&quot;&gt;.dropdown-item&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;h2 id=&quot;1-2-시장의-문제&quot;&gt;1-2) 시장의 문제&lt;/h2&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404454-d023fd44-1ded-4aa2-bc20-88ca8d848c19.JPG&quot; /&gt;&lt;/p&gt;
+  &lt;span class=&quot;nc&quot;&gt;.visible-links&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-webkit-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-ms-flexbox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;-webkit-box-pack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;-ms-flex-pack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;justify-content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flex-end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;-webkit-box-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;-ms-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;overflow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-&lt;p&gt;현재 광주광역시는 노선체계나 운영방안 등에 대한 연구와 정보 제공이 활발히 이루어지고 있지만, 버스 노선배치에 필요한 버스 수요 분석이나 이를 활용한 연구는 부족한 실정입니다.
-따라서 버스 이용객 정보를 활용하여 더 많은 정보를 버스 이용객 및 기업, 의사 결정론자들에게 제공하여 편의를 주는 게 필요하다고 생각하였습니다. 또한, 버스관련 정보는 정보의 분산화 문제를 가지고 있습니다. 버스 도착 예정정보는 카카오 버스에서, 출발 예정 시간은 광주광역시 버스 운행 정보에서 볼 수 있어 다소 불편함이 있습니다.&lt;/p&gt;
+    &lt;span class=&quot;err&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;-webkit-box-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;-ms-flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list-item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;text-align&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-webkit-match-parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+    &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404457-0c28b808-73cf-461e-a30d-083f7b7f0cfc.JPG&quot; /&gt;&lt;/p&gt;
+      &lt;span class=&quot;err&quot;&gt;&amp;amp;:before&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;-webkit-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;global-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;global-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;-webkit-transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;translate3d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;translate3d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;hide&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;이런 문제 상황 때문에 저희는 뻐정을 고안하게 되었습니다.&lt;/p&gt;
+      &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:hover:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;-webkit-transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;-ms-transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaleX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;reveal&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+
+
+  &lt;span class=&quot;nc&quot;&gt;.hidden-links&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;margin-top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;-webkit-box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;box-shadow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;#000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;err&quot;&gt;&amp;amp;.hidden&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type-size-5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+      &lt;span class=&quot;err&quot;&gt;&amp;amp;:hover&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;masthead-link-color-hover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;navicon-link-color-hover&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-11px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;background-color&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nl&quot;&gt;border-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+      &lt;span class=&quot;err&quot;&gt;&amp;amp;:last-child&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;border-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;link&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 css에서 dropdown-title는 굵게 표시하였고, 마우스 호버링 이벤트는 dropdown-item에만 들어가도록 수정하였다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199765353-e752bb34-63ea-41be-ac8a-07a511b8d6af.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199765392-a64bf886-7028-4cb7-a900-0aee8cd8924c.png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;2-기능&quot;&gt;2. 기능&lt;/h1&gt;
+&lt;h2 id=&quot;dropdown-아이콘이-안불러와지는-경우&quot;&gt;Dropdown 아이콘이 안불러와지는 경우&lt;/h2&gt;
 
-&lt;h2 id=&quot;2-1-뻐정-소개&quot;&gt;2-1) 뻐정 소개&lt;/h2&gt;
+&lt;p&gt;다음과 같이 dropdown 아이콘이 안불러와지는 경우가 있다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404458-222c9dd5-84b9-458f-bba0-79f360fe1edf.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;뻐정은 앤비디아 객체탐지 모델과 버스 수요 예측 모델 및 광주광역시 BIS가 결합하여 탄생한 통합 플랫폼입니다. 기존에 광주광역시가 제공한 버스 출발, 도착 예정 정보와 더불어 정류장별 수요 예측을 통해 시민들의 버스 이용 편의를 극대화하고 배차간격, 노선 체계 등의 결정과 같은 의사결정에 도움을 주는 플랫폼입니다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761237-3dfa421b-550c-4818-87c3-1b2c81d01c6f.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-2-뻐정의-기능&quot;&gt;2-2) 뻐정의 기능&lt;/h2&gt;
+&lt;p&gt;masthead.html 최상단에 icon.html을 불러와주면 해결된다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404462-378b5f45-2c79-4c16-8806-4a57a9ca3f00.JPG&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199764450-eb4dd6fc-9c09-4d58-bbd9-769d2dfa8620.png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;뻐정의 기능으로는 크게 5가지가 있습니다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;첫째, 특정 버스 예상 승차 수요 예측&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;저희가 자체적으로 빌드한 머신러닝 모델을 사용하여 특정 버스의 시간별 예상 수요를 사용자에게 서비스합니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;둘째, 실시간 정류장 혼잡도 확인&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;실시간으로 정류장에 사람이 얼마나 있는지 파악하여 실시간 정류장 혼잡도 정보를 제공합니다. 차후에 광주광역시의 승인을 받아 정류장마다 cctv를 설치하여 rtsp 통신을 통해 실시간 영상을 받아올 계획입니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;셋째, 정류장 검색 및 찾기&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;다양한 검색 기능을 통해 사용자가 원하는 정류장을 쉽게 찾을 수 있습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;넷째, 버스 정보 제공&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;마지막으로, 광주 BIS API를 사용하여 버스의 도착 예정시간과 운행 시간표 정보를 제공합니다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;3-사용-기술&quot;&gt;3. 사용 기술&lt;/h1&gt;
-
-&lt;p&gt;위 기능을 구현하기 위해 저희는 총 세가지의 기술을 사용하였습니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;3-1-버스-수요-예측-ml-model&quot;&gt;3-1) 버스 수요 예측 ML Model&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404466-2ab32795-a97c-4179-a866-5a3a31ab2810.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;버스 수요 예측 ML 모델에 대한 기술 설명입니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-1-데이터-및-eda과정&quot;&gt;3-1-1) 데이터 및 EDA과정&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404469-ddef4775-967d-4e9f-bc80-38784a995f5f.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;데이터는 왼쪽의 표에 나와있는 데이터를 사용하였습니다. EDA 과정에서는 요일별로 탑승 인원이 특정한 패턴을 나타내는 것을 확인하여 weekday에 대하여 onehot encoding을 진행하였습니다. 또한, 광주광역시 버스 이용객은 상위 약 20개 정도의 정류장에 치우쳐있어 해당 정류장들을 지도에 마킹했더니 8개 그룹으로 나누어지는 것을 확인하였습니다. 이에, 8개의 주요 정류장들 간의 거리를 feature로 추가해주었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-2-train-feature&quot;&gt;3-1-2) Train Feature&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404473-1d18a6e9-e766-4e1f-8fcf-212391b388ee.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;저희가 사용한 Train Feature는 거리, 인구, 통계량, 혼잡도 ,주말, 기상청 데이터, 요일 Feature 입니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-3-예측-모델의-결정계수-및-rmse-값-변화-그래프&quot;&gt;3-1-3) 예측 모델의 결정계수 및 RMSE 값 변화 그래프&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404475-ce49d577-e30c-42ef-b748-7ee17127ee58.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음으로는, 예측 모델의 결정계수 및 RMSE값 변화 그래프입니다. 타겟 데이터는 노이즈가 심해 이런 노이즈에 가중치를 부여하는 RMSE를 모델의 평가기준으로 사용해주었습니다. Feature를 순차적으로 누적해서 넣었을 때, error는 줄어들고, 결정계수는 높아지는 것을 확인할 수 있습니다. 즉, 추가한 feature들이 효과가 있음을 증명합니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-4-앙상블-알고리즘&quot;&gt;3-1-4) 앙상블 알고리즘&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404478-4feaade6-ae75-4704-993d-10d29358551b.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;최종 학습모델 선택 과정입니다. 모델의 대략적인 성능파악을 위해 초기 모델로 Random Forest를 사용하였습니다. 이때 학습 시간은 30분 이상이 소요되었고, RMSE 값은 3.11이 나왔습니다. 그래서 저희는 학습 시간을 단축시키고, score를 향상시켜야 한다고 판단했습니다. 먼저, 모델의 스코어를 높이기 위해 부스팅 알고리즘을 선택하였습니다. 부스팅 알고리즘은 배깅 계열 알고리즘보다 스코어는 높지만 학습 속도가 느리다는 단점이 존재하여 부스팅 중에서도 가볍고 학습시간이 빠른 Light GBM을 최종 모델로 선택하였습니다. 그 결과 학습 속도는 열 다섯배 빨라졌고, error는 약 20% 감소하였습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-5-하이퍼-파라미터-튜닝&quot;&gt;3-1-5) 하이퍼 파라미터 튜닝&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404480-b4630c3a-98a0-4dee-a0db-3c3719103488.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;하이퍼 파라미터 서치 알고리즘으로는 random search를 사용하였습니다. Bayesian Optimization이라는 더 좋은 대안이 있었지만, 이는 병렬처리가 불가하고 Gird, Random search에 비해 계산이 복잡하다는 단점이 있었습니다. 또한, BO는 실수형 파라미터에 대해서만 적용이 가능한데, LGBM은 정수형/범주형 파라미터도 존재하였습니다. 따라서 컴퓨팅 리소스의 제약으로 Random search를 최종 서치 알고리즘으로 채택하였습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-2-실시간-객체-탐지-모델&quot;&gt;3-2) 실시간 객체 탐지 모델&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404482-7b1eff58-8373-467b-9dd9-e65bf7f5048c.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Real-time Object Detection 모델에 대한 기술 설명입니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-1-inference-과정&quot;&gt;3-2-1) Inference 과정&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404485-fd1f1a7a-2660-49e3-a5fc-ea62b09cb6a3.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;coco 데이터셋으로 pre-train 된 ssd 네트워크 모델을 객체 탐지 모델로 채택하였습니다. ssd 네트워크란, 기존 object detection 모델의 정확도-추론시간 trade-off 문제를 해결한 객체탐지 모델이며, 이 모델의 real-time 추론을 위해 2가지의 최적화를 해주었습니다. 먼저, real-time 추론을 위해서는 모델이 1초에 30번 정도 추론이 가능해야 합니다. 하지만, SSD 모델로는 그 정도의 추론 속도가 나오지 않아 TensorRT로 변환해주는 작업을 해주었습니다. 이 중, 추론에 직접적으로 필요한 Engine부만 떼어서 사용하였으며, GPU에 Tensor들을 올려 커널 연산을 해주었습니다. 이 때, CUDA Stream을 사용해 비동기적으로 device에 memory를 카피해줌으로써 병렬연산을 가능케하여 추론 속도를 단축하였습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-2-tensorrt-추론-성능-시각화&quot;&gt;3-2-2) TensorRT 추론 성능 시각화&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404487-e1e7a5fd-5309-4227-83d6-159e376ba325.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음은 TensorRT의 추론 성능을 시각화 한 자료입니다. 기존 ssd 모델 대비 연산속도는 약 24배정도 빨라졌으며, Precision Reduction에 따른 confidence loss는 거의 존재하지 않는 것을 확인하였습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-3-다양한-화각-사용&quot;&gt;3-2-3) 다양한 화각 사용&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404488-dc34b6f2-f6c5-4730-8b2f-9ae1b11be4a5.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이 기술을 실무에서 활용하기 위해서는 객체가 장애물 또는 사람에 가려져서 인식되지 않는 문제를 해결해야 합니다. 이를 해결하기 위해 시범 정류장에 다양한 화각의 cctv를 설치하여 각 화각의 데이터셋을 확보하고, 모델 파인튜닝 및 블랜딩 할 예정입니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-4-시연-영상&quot;&gt;3-2-4) 시연 영상&lt;/h3&gt;
-
-&lt;iframe width=&quot;700&quot; height=&quot;500&quot; src=&quot;https://user-images.githubusercontent.com/84084372/199408447-ee91aa5e-6fde-41b1-826b-5508998d791c.mp4&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;오른쪽 화면의 좌측 상단을 보시면, 사람이 실시간으로 카운팅되는 것을 확인할 수 있습니다. 이해를 돕기 위해 바운딩 박스와 스켈레톤을 객체에 표시해 주었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-3-web&quot;&gt;3-3) Web&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404490-7914303c-60f2-4260-b113-d1e710096676.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Web 기술 설명은 따로 문서를 첨부하겠습니다. 본 포스팅에서는 Web의 기술 설명에 대한 내용은 다루지 않습니다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-3-1-시연-영상&quot;&gt;3-3-1) 시연 영상&lt;/h3&gt;
-
-&lt;iframe width=&quot;700&quot; height=&quot;500&quot; src=&quot;https://user-images.githubusercontent.com/84084372/199414700-e879d07b-c96e-4323-af01-57dbf2152fed.mp4&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;앞서 설명드린 기술들이 실제 Web에 적용되어 있는 것을 확인하실 수 있습니다. 지도에서 탑승하고자 하는 버스를 입력하면 해당 버스가 지나가는 정류장이 마크됩니다. 마크된 정류장에서 원하는 탑승 정류장을 클릭하면 실시간 혼잡도, 버스 탑승 예측인원, 
-버스 도착 예정시간, 운행시간표 등을 확인할 수 있습니다. 또한, 탑승 인원에 따라 원할, 보통, 매우 혼잡으로 구분되어 있는 것을 확인할 수 있습니다. 직접 검색기능을 통해 찾고자 하는 정류장을 직접 입력할 수 있는 기능도 제공합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;4-결론&quot;&gt;4. 결론&lt;/h1&gt;
-&lt;h2 id=&quot;4-1-기대효과&quot;&gt;4-1) 기대효과&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404497-5b8c659e-24d8-4a5b-b92b-89f2c00b9465.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;뻐정의 기대효과는 다음과 같습니다. 먼저, 시간대별 버스 수요를 정확히 예측하여 수치화된 데이터를 제공해 보다 효율적인 노선 체계를 설계할 수 있습니다. 이는 버스 탑승객을 위한 최적의 서비스 제공이 가능하게 합니다. 둘째, 각종 이벤트 및 행사를 위한 최적의 시간대와 장소 예측 정보를 제공하여 빠른 의사결정에 도움을 줄 수 있습니다. 이는 시간과 비용을 감소시켜 경제적 이득을 얻게 합니다. 셋째, 기존의 버스 출발 정보와 도착 정보 뿐만 아니라 시간대별 버스 정류장의 밀집도 예측 등의 추가적 정보를 제공함으로써 정보의 비대칭을 해소할 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-2-활용방안&quot;&gt;4-2) 활용방안&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199404498-08cda0d0-ec81-4574-b003-2d0e61ceb620.JPG&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;더 구체적인 사례를 들어 설명하겠습니다. 첫째, 선거철 유세장소 선정에 관한 정보를 제공할 수 있습니다. 유세장소를 선정할 때는 사람이 많은 곳을 선점하는 게 유리합니다. 이때 뻐정을 통해, 특정 시간 수요가 많은 정류장 근처에서 유세 활동을 한다면 홍보에 효과적일 것입니다. 둘째, 광주광역시와의 제휴를 통해 경제적 이익을 얻을 수 있습니다. 버스 전광판에 버스 정류장의 수요를 노출시켜 시민들에게 편의를 제공할 뿐만 아니라 제휴를 통해 수익을 창출할 수 있습니다. 셋째, 다람쥐 버스 운행입니다. 2017년부터 서울에서는 혼잡한 구간만 반복 운행하는 다람쥐 버스를 운행하고 있습니다. 뻐정을 이용해 혼잡 구간을 예측하여 노선을 개편해 운행한다면 광주 시민들에게도 편의를 제공할 수 있을 것입니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;5-예상질문-qna&quot;&gt;5. 예상질문 QnA&lt;/h1&gt;
-
-&lt;h2 id=&quot;5-1-ml-파트&quot;&gt;5-1) ML 파트&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;데이터는 얼마나 사용했나요? / 따로 validation 데이터를 만들었나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;총 데이터 : 200만개 중&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;train : 120만 (60%)&lt;/li&gt;
-      &lt;li&gt;valid : 40만 (20%)&lt;/li&gt;
-      &lt;li&gt;test : 40만 (20%)&lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;p&gt;개를 사용하였습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;따로 Feature Importance도 확인해보셨나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;요약 통계량에 대해서는 Feature Importance가 높은 상위 5개의 통계량만 사용. 나머지 피쳐는  모델에 Feature들을 하나씩 추가해봐서 성능 올라가는 것만 확인해 보았습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;모델이 오버피팅된 건 아닌지 확인해보셨나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;평가에 사용된 test 데이터는 trian 과정에 전혀 개입하지 않은 완전히 새로운 데이터입니다. 따라서 오버피팅되지 않았다고 판단하였습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;앙상블 알고리즘이라는 것이 무엇인가요?&amp;gt;&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;여러개의 머신러닝 모델을 이용해 최적의 답을 찾아내는 기법입니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;배깅과 부스팅 알고리즘이 뭔가요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;배깅 : 하나의 알고리즘 내에서 여러개의 샘픔을 중복 생성하여 결과를 도출하는 기법&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;부스팅 : 이전 오차를 보완해나가며 가중치를 부여하는 기법 -&amp;gt; 정확도가 높으나 병렬처리가 안되므로 학습 속도가 느림&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;하이퍼 파라미터 튜닝 시, grid search를 사용하지 않은 이유?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;그리드 서치가 최적의 효율을 내기 위해서는 해당 모델의 하이퍼 파라미터에 대한 도메인 지식이 있어야합니다. 하지만, LGBM에 대한 도메인 지식이 없었기 떄문에 random search를 최종 서치 알고리즘으로 선택하였습니다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-2-object-detection-모델-파트&quot;&gt;5-2) Object Detection 모델 파트&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;모델을 직접 파인튜닝하셨나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;coco 데이터셋으로 pre-train된 ssd 모델을 기본 모델로 사용하였습니다. 저희는 이 ssd 모델을 real-time으로 사용할 수 있게 optimization 해주었습니다. 차후에 정류장 관련 데이터셋을 구한다면, 해당 데이터셋으로 파인튜닝 시켜 줄 계획입니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;SSD 네트워크가 어떻게 기존의 trade-off 문제를 해결하였나요? or 성능을 개선시켰나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;기존 obj detection 모델들은 바운딩 박스 생성 후, 이를 재조정하는 step이 필요했습니다. ssd는 이러한 재조정 스탭을 없앰으로써 추론 속도를 향상시킬 수 있었습니다. 또한, convolution 후 feature map을 생성하는 과정에서 이미지 크기가 줄어드는 점을 이용하여 정확도도 올릴 수 있었습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;YOLO도 ssd의 좋은 대체제가 될 수 있었을텐데 ssd를 사용한 이유?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;YOLO의 초기 버전들은 속도는 빠르지만 정확도가 낮은 것으로 알고 있습니다. 또한, SSD 모델이 obj detection 분야에서 뛰어난 성능을 내는 것으로 알고 있었기 때문에 SSD 모델을 최종 모델로 선택하였습니다. 아직 해당 기능은 준비 단계이기 때문에 차후 해당 모델을 개선할 때, YOLOv5 이상의 모델도 고려해볼 것 같습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;TensorRT가 뭔가요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;앤비디아에서 만든 최적화 tool이며, 자사 GPU 사용 시 커널이 최적의 연산을 할 수 있게 도와줍니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;TensorRT가 어떻게 연산속도를 저렇게 개선할 수 있었나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ol&gt;
-      &lt;li&gt;
-        &lt;p&gt;모델 내부 python 코드를 c++로 컨버팅함으로써, 모델을 간단하고 가볍게 만들어주었으며,&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;FP32에서 FP16으로 precision reduction을 시켜주었습니다. 이 때, 앤비디아 자체 기술을 사용하여 컨피던스 로스를 최소화 합니다.&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;그래서 CUDA Stream이라는 게 정학히 뭔가요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;NULL Stream(널스트림)을 사용하여 mem copy시, 명령들은 동기적으로 수행되기 때문에 중간중간 연산 없이 노는 부분이 생깁니다. 하지만, CUDA Stream(쿠다 스트림)을 사용하면, 명령을 비동기적으로 수행하기 떄문에 노는 부분 없이 병렬적으로 명령을 수행할 수 있습니다. 자세한 사항은 제 기술블로그를 참고하시면 됩니다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
-
-        &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cuda_stream/&quot;&gt;https://on-jungwoan.github.io/dl/cuda_stream/&lt;/a&gt;&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;3-2-2의 그래프는 뭘 나타내는 건가요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;추론속도 그래프 : 이미지 한 장을 연산하는데 걸리는 시간을 ms(1/1000초)로 나타내준 것입니다. 맨 위 파란색이 원본모델, 초록색이 trt engine(텐서알티 엔진)입니다&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;Confidence Loss 그래프 : 선별 사진 500장 대한 각 모델의 추론 결과 중 일부입니다. FP32에서 FP16으로 precision reduction이 있었으나, Confidence Loss는 거의 나타나지 않습니다.&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-3-web&quot;&gt;5-3) Web&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Web은 어떻게 빌드하셨나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;Django(장고) + Nginx(앤진엑스) 조합으로 빌드하였습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;서버도 준비되어 있나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;기존 AWS의 무료 체험 기간이 끝나, 현재 따로 서버가 갖추어져 있지는 않습니다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;프론트앤드는 직접 디자인하셨나요?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;부트스트랩 템플릿으로 기본 뼈대를 잡고, css와 js를 직접 작성하여 디자인했습니다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry><entry><title type="html">[뻐정] 프로젝트 개선사항(수정중)</title><link href="http://localhost:4000/bbeojung/bj_update2/" rel="alternate" type="text/html" title="[뻐정] 프로젝트 개선사항(수정중)" /><published>2022-11-01T00:00:00+09:00</published><updated>2022-11-01T00:00:00+09:00</updated><id>http://localhost:4000/bbeojung/bj_update2</id><content type="html" xml:base="http://localhost:4000/bbeojung/bj_update2/">&lt;h2 id=&quot;1-main-화면&quot;&gt;1. Main 화면&lt;/h2&gt;
-
-&lt;p&gt;기존에는 사용자가 소재지와 정류장명을 select box에서 입력히면(노선명은 생략 가능), 해당 정류장의 정보를 POST-GET 방식으로 넘겨주어 detail 페이지를 띄웠다. 하지만, 해당 정류장의 소재지를 모르는 경우가 있을 수 있고, 지도에서 직접 선택하는 것이 사용자 편의적인 측면에서 더 좋을 것이라고 생각했다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[기존화면]&lt;/strong&gt;&lt;/div&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/174231183-6f34ce39-f180-480c-a075-0678677bf190.jpg&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;따라서 main 화면을 다음과 같이 변경하였다. 기존의 셀렉트 박스로 검색하는 기능은 ‘직접 검색’ 섹션을 따로 빼서 분리해주었으며, 기본적으로 지도에서 사용자가 직접 정류장을 선택할 수 있게 하였다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[변경화면]&lt;/strong&gt;&lt;/div&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199156723-452cba03-f45e-4fcb-b7db-d22b7bc543d5.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-지도-검색&quot;&gt;1-1) 지도 검색&lt;/h3&gt;
-
-&lt;p&gt;조회하고자 하는 버스를 검색하면, 해당 버스가 지나는 정류장을 마커로 표시한다. 또한, 검색결과를 좌측 상단에 리스트로 표현하였으며, 클릭 이벤트를 줘서 detail 페이지로 넘어갈 수 있게 하였다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199157173-eb90e574-416e-47f0-8bc5-826d5d508703.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;사용-기술&quot;&gt;사용 기술&lt;/h4&gt;
-
-&lt;p&gt;KakaoMaps API를 메인 기술로 사용하였으며, 아래 Reference를 참고하였다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/&quot;&gt;https://apis.map.kakao.com/&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/web/sample/addMapCustomControl/&quot;&gt;지도에 사용자 컨트롤 올리기&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/web/sample/multipleMarkerImage/&quot;&gt;여러개 마커 표시하기&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/web/sample/multipleMarkerControl/&quot;&gt;여러개 마커 제어하기&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/web/sample/multipleMarkerEvent/&quot;&gt;여러개 마커에 이벤트 등록하기1&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/web/sample/multipleMarkerEvent2/&quot;&gt;여러개 마커에 이벤트 등록하기2&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://apis.map.kakao.com/web/sample/keywordBasic/&quot;&gt;키워드로 장소 검색&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;위 Reference들을 참고하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kakaomap.css&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kakaomap.js&lt;/code&gt;를 만들어 main html에 불러와서 사용하였다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199158380-1d7eead8-33d6-47fe-b958-fe027b0b7c76.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-직접-검색&quot;&gt;1-2) 직접 검색&lt;/h3&gt;
-
-&lt;p&gt;직접 검색 섹션에서는, 사용자가 직접 정류장명을 입력하거나, 셀렉트 박스에서 정류장을 고를 수 있게 하였다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199157503-ec045b54-0e1a-4624-b062-abf004a6c27c.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;사용-기술-1&quot;&gt;사용 기술&lt;/h4&gt;
-
-&lt;p&gt;3번 텍스트 상자의 값을 받아와서, 만약 값이 비어있지 않으면 1,2번 셀렉트 박스의 display를 false로 바꾸고 그렇지 않으면 true로 바꾸어주는 js 함수를 작성하였다. 3번 텍스트 상자 onchage 옵션에 해당 js 함수를 넣어주어, 값이 바뀔 때마다 동작하도록 하였다. js 문법은 아직 익숙하지가 않아서, 쉬운 기능인데도 한참 헤맸던 기억이 난다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199158752-ef22a487-38e4-413e-8bb6-3caeb4ff628b.png&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png&quot; style=&quot;border: 2px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-11/#1101&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1103&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="bbeojung" /><category term="bbeojung" /><summary type="html">뻐정 : 광주광역시 버스 정보 제공 시스템</summary></entry></feed>
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">네비바 수정</summary></entry></feed>

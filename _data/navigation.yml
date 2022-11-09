@@ -21,10 +21,10 @@ main:
             url: /categories/ML
       - title : 'PLATFORM DEV.'
         sublinks:
+          - title: "Web"
+            url: /categories/web        
           - title: "Blog Dev"
             url: /categories/Blog
-          - title: "Web"
-            url: /categories/web
           - title: "Tools"
             url: /categories/tools
         

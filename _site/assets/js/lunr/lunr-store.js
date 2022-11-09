@@ -444,7 +444,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 11월 TIL",
-        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 10/31 업무지시 업무지시 없음 학습내용 1) CUDA Stream 11/01 업무지시 업무지시 없음 학습내용 1) [뻐정] 프로젝트 개선사항(수정중) 11/02 업무지시 업무지시 없음 학습내용 1) [뻐정] 프로젝트 최종 요약 11/03 업무지시 업무지시 없음 학습내용 1) [Github_Io]상단 네비게이션 바 수정 &lt;2주차&gt; 느낀점 및...","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 이번주는 web 퍼블리싱이 아직 덜 되어서 별 작업 없이 일주일을 보냈다. 차장님께 문의드린 결과, web 퍼블리싱이 완료될 때까지 대기라하고만 하셔서 11월 1일에 있는 경진대회 준비를 하였다. 퇴근 후에도 열심히 준비했고 결과는 1등! 10/31 업무지시 업무지시 없음 학습내용 1) CUDA Stream...","categories": ["Internship"],
         "tags": ["인턴","ICT인턴십","TIL"],
         "url": "/internship/Intern-TIL-11/",
         "teaser": null
@@ -473,12 +473,6 @@ var store = [{
         "url": "/web/css_text/",
         "teaser": null
       },{
-        "title": "[Django]python manage.py inspectdb > models.py(초안)",
-        "excerpt":"              본문으로 돌아가기     ","categories": ["web"],
-        "tags": ["Django","web","backend"],
-        "url": "/web/db/",
-        "teaser": null
-      },{
         "title": "[Django] Views.py 분리",
         "excerpt":"0. views.py 분리 프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다. 0-1) 동작 원리? django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고...","categories": ["web"],
         "tags": ["django","web","backend"],
@@ -489,5 +483,29 @@ var store = [{
         "excerpt":"1. 유효성 검사 (값의 유무) 다음과 같은 폼에서 input에 값이 들어있는지 유효성 검사를 하고 싶다면 어떻게 해야할까? &lt;form name=\"login_form\" action=\"#\" method=\"post\"&gt; &lt;input type=\"password\" id=\"pw\" placeholder=\"비밀번호를 입력하세요.\" /&gt; &lt;button type=\"submit\"&gt; 로그인 &lt;/button&gt; &lt;/form&gt; 1-1) javascript 작성 id가 pw인 input 태그의 값이 비어있으면, 비밀번호를 입력하세요라는 문구를 출력한다. 그리고, 커서를 해당 태그로 옮기고...","categories": ["web"],
         "tags": ["html","web","javascript"],
         "url": "/web/test/",
+        "teaser": null
+      },{
+        "title": "[Django]admin에 model 등록",
+        "excerpt":" pip freeze &gt; requirements.txt pip install -r requirements.txt                  본문으로 돌아가기     ","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/admin/",
+        "teaser": null
+      },{
+        "title": "requirements.txt 생성 및 설치방법",
+        "excerpt":" pip freeze &gt; requirements.txt pip install -r requirements.txt                  본문으로 돌아가기     ","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/export/",
+        "teaser": null
+      },{
+        "title": "[Django] 이미 존재하는 DB 연동 by inspectdb",
+        "excerpt":"1. DB 불러오기 DB가 이미 존재하는 경우 inspectdb를 사용하여 기존 DB 정보를 불러올 수 있다. 터미널에 아래 명령을 입력하면 기존 DB에 대한 models.py가 최상위 경로 아래 old_models.py에 저장된다. 여기서 필요한 부분만 발췌하여 사용하거나, 전체를 복사하여 models.py에 저장해준다. &gt;&gt;&gt; python manage.py inspectdb &gt; old_models.py 2. Models.py 수정 초기에는 managed=False로 되어 있기...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/inspectdb/",
+        "teaser": null
+      },{
+        "title": "[Django]secret 관리",
+        "excerpt":"Secret 관리 Django 프로젝트를 git에 push 하거나, 다른 곳에 공유할 때 비밀이 유출되는 것은 상당히 위험하다. 프로젝트의 규모가 클수록 위험도는 더더욱 증가하기 때문에 secret을 관리하는 것은 매우 중요하다. 본 포스팅에서는 민감정보를 효율적으로 관리하는 방법에 대하여 소개한다. Django Environ 1) install django-environ 별도의 파일을 환경 파일로 만들어 사용하려면 django-environ을 사용하는 것이...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/secret/",
         "teaser": null
       }]

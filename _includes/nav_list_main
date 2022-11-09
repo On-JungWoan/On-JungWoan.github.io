@@ -70,18 +70,18 @@
             <span class="nav__sub-title">Platform Dev.</span>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Blog" %}
-                        <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>                     
-            <ul>
-                {% for category in site.categories %}
                     {% if category[0] == "web" %}
                         <li><a href="/categories/web" class="">Web ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>                             
+            </ul>             
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Blog" %}
+                        <li><a href="/categories/Blog" class="">Blog Dev ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>                                                 
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "tools" %}
