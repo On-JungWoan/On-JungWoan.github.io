@@ -485,7 +485,7 @@ var store = [{
         "url": "/web/test/",
         "teaser": null
       },{
-        "title": "[Django]admin에 model 등록",
+        "title": "[Django]admin에 model 등록(초안)",
         "excerpt":" pip freeze &gt; requirements.txt pip install -r requirements.txt                  본문으로 돌아가기     ","categories": ["web"],
         "tags": ["Django","web","backend"],
         "url": "/web/admin/",
