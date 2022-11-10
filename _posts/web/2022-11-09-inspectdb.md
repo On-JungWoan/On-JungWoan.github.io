@@ -6,6 +6,12 @@ categories:
   - web
 tags:
   - [Django, web, backend]
+
+toc: true
+toc_sticky: true
+ 
+date: 2022-07-15
+last_modified_at: 2022-07-15  
 ---
 
 ## 1. DB 불러오기

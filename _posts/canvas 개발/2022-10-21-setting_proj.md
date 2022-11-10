@@ -7,6 +7,11 @@ categories:
 tags:
   - [postgreSQL, Docker, DataGrip, 유클리드소프트]
 
+toc: true
+toc_sticky: true
+ 
+date: 2022-07-15
+last_modified_at: 2022-07-15
 ---
 
 ## 프로젝트 개요
