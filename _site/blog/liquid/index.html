@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>CUDA Stream - 정완이의 개발 일기장</title>
-<meta name="description" content="Null Stream / Non-Null Stream">
+<!-- begin _includes/seo.html --><title>[Github_Io]포스팅 시 Liquid 문법 사용하는 법 - 정완이의 개발 일기장</title>
+<meta name="description" content="포스팅 시 Liquid 문법이 실행되는 문제 해결">
 
 
   <meta name="author" content="온정완">
@@ -22,32 +22,32 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="CUDA Stream">
-<meta property="og:url" content="http://localhost:4000/dl/cuda_stream/">
+<meta property="og:title" content="[Github_Io]포스팅 시 Liquid 문법 사용하는 법">
+<meta property="og:url" content="http://localhost:4000/blog/liquid/">
 
 
-  <meta property="og:description" content="Null Stream / Non-Null Stream">
-
-
-
+  <meta property="og:description" content="포스팅 시 Liquid 문법이 실행되는 문제 해결">
 
 
 
 
-  <meta property="article:published_time" content="2022-10-31T00:00:00+09:00">
 
 
 
-  <meta property="article:modified_time" content="2022-10-31T00:00:00+09:00">
+  <meta property="article:published_time" content="2022-11-10T00:00:00+09:00">
 
 
 
-  
+  <meta property="article:modified_time" content="2022-11-10T00:00:00+09:00">
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/dl/cuda_stream/">
+
+<link rel="canonical" href="http://localhost:4000/blog/liquid/">
 
 
 
@@ -884,16 +884,16 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="CUDA Stream">
-    <meta itemprop="description" content="Null Stream / Non-Null Stream">
-    <meta itemprop="datePublished" content="2022-10-31T00:00:00+09:00">
-    <meta itemprop="dateModified" content="2022-10-31T00:00:00+09:00">
+    <meta itemprop="headline" content="[Github_Io]포스팅 시 Liquid 문법 사용하는 법">
+    <meta itemprop="description" content="포스팅 시 Liquid 문법이 실행되는 문제 해결">
+    <meta itemprop="datePublished" content="2022-11-10T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-11-10T00:00:00+09:00">
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/dl/cuda_stream/" class="u-url" itemprop="url">CUDA Stream
+            <a href="http://localhost:4000/blog/liquid/" class="u-url" itemprop="url">[Github_Io]포스팅 시 Liquid 문법 사용하는 법
 </a>
           </h1>
           <!--
@@ -910,7 +910,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          2 분 소요
+          최대 1 분 소요
         
       </span>
     
@@ -918,7 +918,7 @@
 
 -->
           
-            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-10-31T00:00:00+09:00">October 31, 2022</time></p>
+            <p class="page__date"><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트: <time datetime="2022-11-10T00:00:00+09:00">November 10, 2022</time></p>
           
         </header>
       
@@ -928,156 +928,53 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#1-stream">1. Stream</a><ul><li><a href="#1-0-stream이란">1-0) Stream이란?</a></li><li><a href="#1-1-null-stream">1-1) NULL Stream</a></li><li><a href="#1-2-non-null-stream">1-2) NON-NULL Stream</a></li></ul></li><li><a href="#2-multi-core-programming-by-non-null-stream">2. Multi-core Programming by NON-NULL Stream</a><ul><li><a href="#2-1-null-stream">2-1) NULL Stream</a></li><li><a href="#2-2-non-null-stream">2-2) NON-NULL Stream</a></li><li><a href="#2-3-example">2-3) Example</a></li><li><a href="#2-4-결론">2-4) 결론</a></li></ul></li><li><a href="#3-비동기적-데이터-전송방법">3. 비동기적 데이터 전송방법</a><ul><li><a href="#3-1-stream-생성">3-1) Stream 생성</a></li><li><a href="#3-2-pinned-memory-생성">3-2) Pinned Memory 생성</a></li><li><a href="#3-3-async하게-gpu와-데이터-주고받기">3-3) async하게 GPU와 데이터 주고받기</a><ul><li><a href="#1-h2d">1) H2D</a></li><li><a href="#2-커널-연산">2) 커널 연산</a></li><li><a href="#3-d2h">3) D2H</a></li></ul></li><li><a href="#3-4-모든-task-종료-대기">3-4) 모든 task 종료 대기</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#문제상황">문제상황</a></li><li><a href="#해결방법">해결방법</a></li></ul>
 
             </nav>
           </aside>
         
-        <h2 id="1-stream">1. Stream</h2>
-<h3 id="1-0-stream이란">1-0) Stream이란?</h3>
-<p>host에서 device로 명령을 보내는 통로이다. host에서 stream으로 명령을 넣어주면 device는 그걸 꺼내서 사용한다.</p>
+        <h2 id="문제상황">문제상황</h2>
 
-<p><br /></p>
+<p>포스팅 시에 <code class="language-plaintext highlighter-rouge">{{% ~ %}}</code>, <code class="language-plaintext highlighter-rouge">{{ }}</code>와 같은 Liquid 문법을 사용하면, 해당 Liquid문이 실행되어 이상한 결과가 출력된다. 가령, 나는 포스팅에서 <code class="language-plaintext highlighter-rouge">{% include ~~.html %}</code>이라는 문자 그 자체를 쓰고 싶은데, 실제로 사용해보면 다음과 같이 해당 Liquid문이 실행된 결과가 출력된다.</p>
 
-<h3 id="1-1-null-stream">1-1) NULL Stream</h3>
-<p>사용할 stream을 명시하지 않으면 NULL stream이 사용된다. NULL Stream 또는, 하나의 NON-NULL stream에 들어온 명령은 순서대로(동기적) device에 의해 처리된다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/198909088-1cc811ae-0540-4371-918f-33fca218181c.png" /></p>
 
-<p><br /></p>
 
-<h3 id="1-2-non-null-stream">1-2) NON-NULL Stream</h3>
-<p>명시적으로 생성 및 사용한 stream을 말한다. 서로 다른 stream 안에 있는 명령들 사이의 실행 순서는 비동기적(정해져있지 않음)이며, 실행 순서는 GPU의 스케쥴링 기법에 따라서 달라진다.</p>
 
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/198909110-8309602b-151c-417b-83b9-e75e19516315.png" /></p>
 
-<p>비동기적 연산을 위해서는, 명시적으로 사용할 만큼의 non-null stream을 만들어서 사용하며, NON-NULL Stream의 작업 중 일부는 동시에 수행이 가능하다. 동시에 수행 가능한 작업은 다음과 같다.</p>
+
+
+<span class="c">&lt;!-- Courtesy of embedresponsively.com --&gt;</span>
+
+
+
+</code></pre></div></div>
+
+<h2 id="해결방법">해결방법</h2>
+
+<p>Liquid문을 사용하고자 하는 부분을 raw tag로 감싸면 해당 문제를 해결할 수 있다.</p>
 
 <ul>
-  <li><strong>Host Computation and Device Computation</strong></li>
-  <li><strong>Host Computation and Host-Device Data Transfer</strong></li>
-  <li><strong>Device Computation and Host-Device Data Transfer</strong></li>
-  <li><strong>Concurrent Device Computations</strong></li>
+  <li><strong>Example</strong></li>
 </ul>
 
-<p>따라서, NON-NULL Stream을 이용함으로써 Host 연산 중 memory copy 및 kernel 연산이 동시에 이루어질 수 있으며, 서로 다른 커널들의 연산도 동시에 시행될 수 있다.</p>
+<div align="center"><strong>[html문]</strong></div>
 
-<p><br />
-<br /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/201034707-66b80536-b53f-4935-8903-f2d1345255bb.png" /></p>
 
-<h2 id="2-multi-core-programming-by-non-null-stream">2. Multi-core Programming by NON-NULL Stream</h2>
+<p>다음과 같이 Liquid문이 정상적으로 출력되는 것을 확인할 수 있다.</p>
 
-<h3 id="2-1-null-stream">2-1) NULL Stream</h3>
-<p>NULL Stream을 사용한 연산은 동기적이다. 따라서 Host에서 Device로 Memory Copy가 진행되는 동안, Kernal과 D2H는 아무런 동작을 하지 않고 놀게된다. H2D 메모리 카피가 끝나고 커널 연산을 하는 동안 또 다시 노는 부분이 생기게 된다. 이러한 비효율적인 부분을 해결하기 위해 NON-NULL Stream을 사용할 수 있다.</p>
+<div align="center"><strong>[실행결과]</strong></div>
 
-<p><br /></p>
-
-<h3 id="2-2-non-null-stream">2-2) NON-NULL Stream</h3>
-<p>NON-NULL Stream은 연산 결과를 한번에 보내는게 아니라, 각각의 task를 나누어서 연산이 되는 것부터 먼저 보낸다. 이렇게 잘라진 것들을 여러개의 NON-NULL Stream으로 나누어 보내면, 노는 부분이 없이 동시에 병렬 연산이 가능하다.</p>
-
-<p><br /></p>
-
-<h3 id="2-3-example">2-3) Example</h3>
-
-<p>1개의 NULL Stream 및 3개의 NON-NULL Stream 사용 예제이다.</p>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/84084372/198910036-9cc506a2-4a30-4331-9a99-61a7b31ca588.png" /></p>
-
-<ol>
-  <li><strong>H2D_1(H2D의 첫 번째 조각) 명령을 먼저 수행하여 device로 메모리 전송</strong></li>
-  <li><strong>K_1(첫 번째 조각에 대한 커널 연산)을 수행한다. 또한, 동시에 H2D 통로가 쉬고 있으므로 H2D_2(2번째 H2D 작업 영역) 명령을 수행하여 device로 메모리 전송</strong></li>
-  <li><strong>K_1 연산 결과를 D2H_1을 통해 host로 보내주면, 다시 커널이 사용 가능해지므로 K_2 연산 수행. 또한 동시에 H2D_3를 통해 device로 메모리 전송</strong></li>
-  <li><strong>K_2 연산결과를 D2H_2 명령으로 다시 host로 넘겨줌. 동시에 k_3 연산 수행</strong></li>
-  <li><strong>마지막 K_3 연산 결과를 D2H_3 명령으로 다시 host에 넘겨줌</strong></li>
-</ol>
-
-<p><br /></p>
-
-<h3 id="2-4-결론">2-4) 결론</h3>
-
-<p>이렇게 작업을 분할하여 여러 스트림에 나눠줌으로써, 연산 시간을 크게 줄일 수 있다. GPU 사용시, 데이터 보내는 작업이 상당히 큰 오버헤드인데, NON-NULL Stream을 사용하면 이를 숨기면서 GPU가 계속 돌 수 있게 할 수 있다.</p>
-
-<p><br />
-<br /></p>
-
-<h2 id="3-비동기적-데이터-전송방법">3. 비동기적 데이터 전송방법</h2>
-<h3 id="3-1-stream-생성">3-1) Stream 생성</h3>
-
-<p>사용할 stream을 생성해준다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_</span><span class="p">,</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">cudart</span><span class="p">.</span><span class="n">cudaStreamCreate</span><span class="p">()</span> <span class="c1"># 제거 : cudaStreamDestroy()
-</span></code></pre></div></div>
-
-<p><br /></p>
-
-<h3 id="3-2-pinned-memory-생성">3-2) Pinned Memory 생성</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cudaMallocHost -&gt; host에 메모리를 잡을 것인데, 이를 cuda가 잡겠다는 뜻
-cudaFreeHost -&gt; 풀어주는 것
-</code></pre></div></div>
-
-<p>host와 device가 일하는 동안에 데이터를 보내고 싶다면, 반드시 그 데이터를 보내거나 받는 영역을 pinned memory로 잡아야 한다.</p>
-
-<ul>
-  <li>
-    <p><strong>pinned memory?</strong></p>
-
-    <p>가상 메모리(swap device) 사용 시, swap device에 프로세스들이 페이지 단위로 구분되어 있으며, 이 중 필요한 page만 메모리에 올라와서 사용된다. 필요 없으면 다시 swap device로 내려가는데, 이를 swap out이라고 한다. 비동기적 데이터 전송을 위해서는 해당 메모리가 swap out되면 안되고, 메모리에 상주하고 있어야 한다. 이러한 메모리를 pinned memory라고 한다. pinned memory는 메모리에 항상 존재하는 것이 보장되므로 연산 속도도 더 빠르다.</p>
-
-    <p align="center"><img src="https://user-images.githubusercontent.com/84084372/198917869-a061cb7f-30b8-413c-86f9-e8bcabddbb6f.png" /></p>
-  </li>
-</ul>
-
-<p>아래의 방법도 가능하다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">host_mem</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">cuda_mem</span> <span class="o">=</span> <span class="n">cudart</span><span class="p">.</span><span class="n">cudaMallocAsync</span><span class="p">(</span><span class="n">host_mem</span><span class="p">.</span><span class="n">nbytes</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><br /></p>
-
-<h3 id="3-3-async하게-gpu와-데이터-주고받기">3-3) async하게 GPU와 데이터 주고받기</h3>
-
-<h4 id="1-h2d">1) H2D</h4>
-
-<p>Host Input -&gt; Device Input</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cudart</span><span class="p">.</span><span class="n">cudaMemcpyAsync</span><span class="p">(</span><span class="n">device_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">host_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">ctypes</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">host_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">nbytes</span><span class="p">,</span>
-                        <span class="n">cudart</span><span class="p">.</span><span class="n">cudaMemcpyKind</span><span class="p">.</span><span class="n">cudaMemcpyHostToDevice</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
-<span class="c1"># stream 마지막 인자에 stream 생략 시, NULL Stream이 들어감
-</span></code></pre></div></div>
-
-<h4 id="2-커널-연산">2) 커널 연산</h4>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>상황/모델에 따른 코드 작성
-</code></pre></div></div>
-
-<h4 id="3-d2h">3) D2H</h4>
-
-<p>Device Output -&gt; Host Output</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">cudart</span><span class="p">.</span><span class="n">cudaMemcpyAsync</span><span class="p">(</span><span class="n">host_outputs</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">ctypes</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">cuda_outputs</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">host_outputs</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">nbytes</span><span class="p">,</span>
-                               <span class="n">cudart</span><span class="p">.</span><span class="n">cudaMemcpyKind</span><span class="p">.</span><span class="n">cudaMemcpyDeviceToHost</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><br /></p>
-
-<h3 id="3-4-모든-task-종료-대기">3-4) 모든 task 종료 대기</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cudaDeviceSynchronize()
-</code></pre></div></div>
-
-<p>위에서 일을 다 넣어놓고, 모든 device의 일이 끝날 때까지 기다린다.<br /></p>
-
-<p>또는 아래 코드와 같이 특정 stream만 기다릴 수도 있다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cudart</span><span class="p">.</span><span class="n">cudaStreamSynchronize</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include ~~.html %}
 </code></pre></div></div>
 
 <p><br />
 <br /></p>
 
 <div align="center">
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-11/#1031">
+  <a href="https://on-jungwoan.github.io/internship/Intern-TIL-11/#1110">
     본문으로 돌아가기
   </a>
 </div>
@@ -1097,9 +994,11 @@ cudaFreeHost -&gt; 풀어주는 것
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a><span class="sep">, </span>
+      <a href="/tags/#github" class="page__taxonomy-item p-category" rel="tag">Github</a><span class="sep">, </span>
     
-      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a>
+      <a href="/tags/#githubio" class="page__taxonomy-item p-category" rel="tag">Githubio</a><span class="sep">, </span>
+    
+      <a href="/tags/#jekyll" class="page__taxonomy-item p-category" rel="tag">jekyll</a>
     
     </span>
   </p>
@@ -1116,7 +1015,7 @@ cudaFreeHost -&gt; 풀어주는 것
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+      <a href="/categories/#blog" class="page__taxonomy-item p-category" rel="tag">Blog</a>
     
     </span>
   </p>
@@ -1124,7 +1023,7 @@ cudaFreeHost -&gt; 풀어주는 것
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-31">October 31, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-10">November 10, 2022</time></p>
 
       </footer>
 
@@ -1133,22 +1032,22 @@ cudaFreeHost -&gt; 풀어주는 것
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=CUDA+Stream%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcuda_stream%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%5BGithub_Io%5D%ED%8F%AC%EC%8A%A4%ED%8C%85+%EC%8B%9C+Liquid+%EB%AC%B8%EB%B2%95+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EB%B2%95%20http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fliquid%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcuda_stream%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fliquid%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcuda_stream%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fliquid%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       <!-- 
   <nav class="pagination">
     
-      <a href="/internship/Itern-TIL-10/" class="pagination--pager" title="[ICT 인턴십]2022년 10월 TIL
+      <a href="/web/secret/" class="pagination--pager" title="[Django]secret 관리
 ">이전</a>
     
     
-      <a href="/bbeojung/bj_update2/" class="pagination--pager" title="[뻐정] 프로젝트 개선사항(수정중)
+      <a href="/canvas/canvas/" class="pagination--pager" title="url, view, DB 설계
 ">다음</a>
     
   </nav>
@@ -1167,7 +1066,7 @@ cudaFreeHost -&gt; 풀어주는 것
 
   <nav class="pagination">
     
-      <a href="/dl/summary/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>AI 개발 가이드 및 조언내용 정리</a>
+      <a href="/blog/edit_navibar/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[Github_Io]상단 네비게이션 바 수정</a>
     
     
       <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
@@ -1325,7 +1224,7 @@ cudaFreeHost -&gt; 풀어주는 것
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/blog/liquid/" rel="permalink">[Github_Io]포스팅 시 Liquid 문법 사용하는 법
+        <a href="/web/secret/" rel="permalink">[Django]secret 관리
 </a>
             
     </h2>
@@ -1351,9 +1250,9 @@ cudaFreeHost -&gt; 풀어주는 것
 
 -->
     
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 10 2022</p>
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 09 2022</p>
     
-    <p class="archive__item-excerpt" itemprop="description">포스팅 시 Liquid 문법이 실행되는 문제 해결
+    <p class="archive__item-excerpt" itemprop="description">Django
 </p>
   </article>
 </div>

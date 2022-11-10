@@ -17,78 +17,6 @@ var store = [{
         "url": "/internship/ICT-Internship(1)/",
         "teaser": null
       },{
-        "title": "프로젝트 개요 정리",
-        "excerpt":"프로젝트 개요 회사 내부 학습관리시스템(LMS)의 로그인 창이다. 현재 회사 내부 LMS 기술은 INSTRUCTURE라는 곳에서 가져왔다고 한다. 거의 기술 이전이 완료된 상태이지만, 아직 로그인 창은 제대로 구현이 되어있지 않은 상태라고 한다. 따라서 일단 Django 템플릿으로 로그인 canvas를 개발하는 것이 주 목표라고 하셨다. Django 템플릿으로 회원가입 폼을 만들어서 회원 정보를 DB로 보내주면...","categories": ["canvas"],
-        "tags": ["postgreSQL","Docker","DataGrip","유클리드소프트"],
-        "url": "/canvas/setting_proj/",
-        "teaser": null
-      },{
-        "title": "user정보 DB 구조파악",
-        "excerpt":"우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다. 사이트 주소 WWW SQL Designer 아래는 해당 사이트에서 직접 그려본 실제 DB 스키마의 일부이다. 테이블 설명 users 회원을 생성할 수...","categories": ["canvas"],
-        "tags": ["postgreSQL","DataGrip","유클리드소프트"],
-        "url": "/canvas/table_structure/",
-        "teaser": null
-      },{
-        "title": "url, view 설계",
-        "excerpt":"LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다. - Components - button.html - color.html - form.html - modal.html - css - fonts - 폰트파일들 - import - color, font, grid, reset 관련 css 파일들 - common.css - html_pages - login.html - signUp.html - signUpModal.html -...","categories": ["canvas"],
-        "tags": ["django","유클리드소프트"],
-        "url": "/canvas/build/",
-        "teaser": null
-      },{
-        "title": "[Django] 템플릿에서 src, href에 변수 불러오는 법",
-        "excerpt":"문제상황 카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에...","categories": ["web"],
-        "tags": ["django","web","backend"],
-        "url": "/web/get_var/",
-        "teaser": null
-      },{
-        "title": "[CSS] 폰트 관련 속성 정리",
-        "excerpt":"사이즈 관련 옵션 px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다. 크기 조절 font-size 속성을 사용하여 폰트의 사이즈를 조절 #font{ font-size: 150%; } 굵기 조정 font-weight 속성을 통해 폰트 굵기를 지정할 수 있으며, bolder/lighter 및 굵기 직접 지정도 가능 #font{ font-weight: bold; /*bolder, lighter, 600 등 가능*/...","categories": ["web"],
-        "tags": ["web","front-end"],
-        "url": "/web/css_text/",
-        "teaser": null
-      },{
-        "title": "[Django] Views.py 분리",
-        "excerpt":"0. views.py 분리 프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다. 0-1) 동작 원리? django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고...","categories": ["web"],
-        "tags": ["django","web","backend"],
-        "url": "/web/split/",
-        "teaser": null
-      },{
-        "title": "[HTML, JavaScript]Input 태그 유효성 검사",
-        "excerpt":"1. 유효성 검사 (값의 유무) 다음과 같은 폼에서 input에 값이 들어있는지 유효성 검사를 하고 싶다면 어떻게 해야할까? &lt;form name=\"login_form\" action=\"#\" method=\"post\"&gt; &lt;input type=\"password\" id=\"pw\" placeholder=\"비밀번호를 입력하세요.\" /&gt; &lt;button type=\"submit\"&gt; 로그인 &lt;/button&gt; &lt;/form&gt; 1-1) javascript 작성 id가 pw인 input 태그의 값이 비어있으면, 비밀번호를 입력하세요라는 문구를 출력한다. 그리고, 커서를 해당 태그로 옮기고...","categories": ["web"],
-        "tags": ["html","web","javascript"],
-        "url": "/web/test/",
-        "teaser": null
-      },{
-        "title": "[Django] 이미 존재하는 DB 연동 by inspectdb",
-        "excerpt":"1. DB 불러오기 DB가 이미 존재하는 경우 inspectdb를 사용하여 기존 DB 정보를 불러올 수 있다. 터미널에 아래 명령을 입력하면 기존 DB에 대한 models.py가 최상위 경로 아래 old_models.py에 저장된다. 여기서 필요한 부분만 발췌하여 사용하거나, 전체를 복사하여 models.py에 저장해준다. &gt;&gt;&gt; python manage.py inspectdb &gt; old_models.py 2. Models.py 수정 초기에는 managed=False로 되어 있기...","categories": ["web"],
-        "tags": ["Django","web","backend"],
-        "url": "/web/inspectdb/",
-        "teaser": null
-      },{
-        "title": "[Django]secret 관리",
-        "excerpt":"Secret 관리 Django 프로젝트를 git에 push 하거나, 다른 곳에 공유할 때 비밀이 유출되는 것은 상당히 위험하다. 프로젝트의 규모가 클수록 위험도는 더더욱 증가하기 때문에 secret을 관리하는 것은 매우 중요하다. 본 포스팅에서는 민감정보를 효율적으로 관리하는 방법에 대하여 소개한다. Django Environ 1) install django-environ 별도의 파일을 환경 파일로 만들어 사용하려면 django-environ을 사용하는 것이...","categories": ["web"],
-        "tags": ["Django","web","backend"],
-        "url": "/web/secret/",
-        "teaser": null
-      },{
-        "title": "[JQuery]AJAX를 활용한 비동기적 데이터 교환",
-        "excerpt":"1. JQuerry 제이쿼리는 웹사이트에 자바스크립트를 쉽게 활용할 수 있도록 도와주는 오픈소스 기반의 자바스크립트 라이브러리이다. 제이쿼리를 활용하여 Ajax 응용 프로그램 및 플러그인을 빠르게 개발할 수 있다는 장점이 있다. JQuerry를 사용하기 위해서는 다음의 절차를 따라야 한다. 1-1) Import JQuerry html의 header 부분에 다음 코드를 삽입하여 jquerry를 불러와준다. 이때, slim 빌드를 사용하게 되면...","categories": ["web"],
-        "tags": ["Django","web","backend"],
-        "url": "/web/ajax/",
-        "teaser": null
-      },{
-        "title": "requirements.txt 생성 및 설치방법(초안)",
-        "excerpt":" pip freeze &gt; requirements.txt pip install -r requirements.txt                  본문으로 돌아가기     ","categories": ["web"],
-        "tags": ["Django","web","backend"],
-        "url": "/web/export/",
-        "teaser": null
-      },{
-        "title": "[Docker]Window Docker 설치방법",
-        "excerpt":"1. 환경설정 1-1) 가상화 사용설정 작업관리자 -&gt; 성능 -&gt; CPU의 가상화가 사용으로 되어있는지 확인한다. 만약 사용으로 되어 있지 않으면, BIOS에서 사용함으로 설정해야한다. 1-2) Hyper-V 켜기 window + s -&gt; 프로그램 추가/제거 -&gt; 선택적 기능 -&gt; 기타 Windows 기능 -&gt; Hyper-V 체크하기 2. Docker 설치 2-1) Docker installer 설치  - https://hub.docker.com/editions/community/docker-ce-desktop-windows/...","categories": ["tools"],
-        "tags": ["Docker"],
-        "url": "/tools/install_docker/",
-        "teaser": null
-      },{
         "title": "[ICT 인턴십]인턴 서류 및 면접 준비 #3",
         "excerpt":"내가 지원한 세 곳의 회사중 두 곳의 회사의 서류 전형을 합격하고 면접준비를 하고 있었다. 근데 회사 한 곳의 면접 날짜 공지가 계속 안되고 있었다. 당장 오늘부터 면접 기간인데 어제 밤까지 공지가 없어서 메일을 보내보았다. 면접 탈락? - 기업으로부터 받은 메일 정말 말 그대로 멘붕이 왔다. 면접일정 조율 관련 안내가 문자...","categories": ["Internship"],
         "tags": ["인턴","ICT인턴십"],
@@ -431,10 +359,22 @@ var store = [{
         "url": "/cctv/project_prog/",
         "teaser": null
       },{
+        "title": "프로젝트 개요 정리",
+        "excerpt":"프로젝트 개요 회사 내부 학습관리시스템(LMS)의 로그인 창이다. 현재 회사 내부 LMS 기술은 INSTRUCTURE라는 곳에서 가져왔다고 한다. 거의 기술 이전이 완료된 상태이지만, 아직 로그인 창은 제대로 구현이 되어있지 않은 상태라고 한다. 따라서 일단 Django 템플릿으로 로그인 canvas를 개발하는 것이 주 목표라고 하셨다. Django 템플릿으로 회원가입 폼을 만들어서 회원 정보를 DB로 보내주면...","categories": ["canvas"],
+        "tags": ["postgreSQL","Docker","DataGrip","유클리드소프트"],
+        "url": "/canvas/setting_proj/",
+        "teaser": null
+      },{
         "title": "1차 파인튜닝 모델 분석",
         "excerpt":"기존에 사용하던 투기 감지 모델에, 신규로 이미지 600장을 더 학습시켜 파인튜닝한 모델에 대한 성능 비교이다. 파인튜닝 모델은 Pytorch 모델이며 TensorRT와 TensorRT Engine으로 변환하여 성능을 측정하였다. 변수명 모델 Origin Model 이전 TensorRT 모델 Pytorch Model 파인튜닝 Pytorch 모델 TensorRT Model 파인튜닝 TensorRT 모델 Engine File 파인튜닝 Engine 파일 0. 측정 기준...","categories": ["cctv"],
         "tags": ["DL","TensorRT","pytorch","ICT인턴십","유클리드소프트"],
         "url": "/cctv/md_speed/",
+        "teaser": null
+      },{
+        "title": "[Docker]Window Docker 설치방법",
+        "excerpt":"1. 환경설정 1-1) 가상화 사용설정 작업관리자 -&gt; 성능 -&gt; CPU의 가상화가 사용으로 되어있는지 확인한다. 만약 사용으로 되어 있지 않으면, BIOS에서 사용함으로 설정해야한다. 1-2) Hyper-V 켜기 window + s -&gt; 프로그램 추가/제거 -&gt; 선택적 기능 -&gt; 기타 Windows 기능 -&gt; Hyper-V 체크하기 2. Docker 설치 2-1) Docker installer 설치  - https://hub.docker.com/editions/community/docker-ce-desktop-windows/...","categories": ["tools"],
+        "tags": ["Docker"],
+        "url": "/tools/install_docker/",
         "teaser": null
       },{
         "title": "[Github_Io]Jekyll 로컬에서 디버그 하는 법",
@@ -465,6 +405,18 @@ var store = [{
         "excerpt":"1. AI 최신 트랜드 초거대 AI를 만드는 회사의 등장 요즘 AI 분야의 메이저 흐름은 메타버스, 멀티모달, 고수준 End-to-End TASK이다. 2. 문제해결 노하우 2-1) 보행자 이상검출 문제 기존 방식은, 사람의 keypoint를 일일이 따서 이상 징후에 대한 keypoint를 학습시키고 분류한다. 이 방식의 문제점은 사람이 많아지면 keypoint가 너무 많아져서 실제 서비스가 불가하다는 것이다....","categories": ["DL"],
         "tags": ["DL","ICT인턴십"],
         "url": "/dl/summary/",
+        "teaser": null
+      },{
+        "title": "user정보 DB 구조파악",
+        "excerpt":"우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다. 사이트 주소 WWW SQL Designer 아래는 해당 사이트에서 직접 그려본 실제 DB 스키마의 일부이다. 테이블 설명 users 회원을 생성할 수...","categories": ["canvas"],
+        "tags": ["postgreSQL","DataGrip","유클리드소프트"],
+        "url": "/canvas/table_structure/",
+        "teaser": null
+      },{
+        "title": "[Django] 템플릿에서 src, href에 변수 불러오는 법",
+        "excerpt":"문제상황 카카오 지도 API를 사용하여 웹에 지도를 그려주는 작업을 하고 있었다. git에 커밋할 때, API키가 노출되게 하지 않게 하기 위해서 시크릿 정보를 따로 분리해주고자 하였다. 우선, 시크릿 파일을 따로 만들어서 gitignore에 등록해줌으로써, 시크릿 키가 커밋에 올라기지 않도록 하였다. 그리고 이렇게 만들어진 secret 파일을 view 함수에서 import하여 html에 넘겨준 뒤, src에...","categories": ["web"],
+        "tags": ["django","web","backend"],
+        "url": "/web/get_var/",
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 10월 TIL",
@@ -507,5 +459,65 @@ var store = [{
         "excerpt":"Contents Ⅰ. BASIC DATA Ⅱ. OPENING REMARKS Ⅲ . IMPLEMENTATION DETAILS Real-time obj. detection 1.1 Inference process 1.2 Visualization inference performance 1.3 Using multi angle of view (예정) Bus demand predicting model 2.1 Using data 2.2 Train feature 2.3 Ensemble algorithm 2.4 Hyperparameter tuning Web Ⅳ. TEST Real-time object detection...","categories": ["bbeojung"],
         "tags": ["bbeojung"],
         "url": "/bbeojung/bj_README/",
+        "teaser": null
+      },{
+        "title": "퍼블리싱 파일 개요 파악",
+        "excerpt":"LimeEdu 로그인 페이지의 html, css파일이 오늘 넘어왔다. 내가 받은 파일의 구조는 다음과 같았다. - Components - button.html - color.html - form.html - modal.html - css - fonts - 폰트파일들 - import - color, font, grid, reset 관련 css 파일들 - common.css - html_pages - login.html - signUp.html - signUpModal.html -...","categories": ["canvas"],
+        "tags": ["django","유클리드소프트"],
+        "url": "/canvas/build/",
+        "teaser": null
+      },{
+        "title": "[CSS] 폰트 관련 속성 정리",
+        "excerpt":"사이즈 관련 옵션 px, pt, %, xx-small ~ xx-large까지 다양한 단위를 사용할 수 있다. 크기 조절 font-size 속성을 사용하여 폰트의 사이즈를 조절 #font{ font-size: 150%; } 굵기 조정 font-weight 속성을 통해 폰트 굵기를 지정할 수 있으며, bolder/lighter 및 굵기 직접 지정도 가능 #font{ font-weight: bold; /*bolder, lighter, 600 등 가능*/...","categories": ["web"],
+        "tags": ["web","front-end"],
+        "url": "/web/css_text/",
+        "teaser": null
+      },{
+        "title": "[Django] Views.py 분리",
+        "excerpt":"0. views.py 분리 프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다. 0-1) 동작 원리? django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고...","categories": ["web"],
+        "tags": ["django","web","backend"],
+        "url": "/web/split/",
+        "teaser": null
+      },{
+        "title": "[HTML, JavaScript]Input 태그 유효성 검사",
+        "excerpt":"1. 유효성 검사 (값의 유무) 다음과 같은 폼에서 input에 값이 들어있는지 유효성 검사를 하고 싶다면 어떻게 해야할까? &lt;form name=\"login_form\" action=\"#\" method=\"post\"&gt; &lt;input type=\"password\" id=\"pw\" placeholder=\"비밀번호를 입력하세요.\" /&gt; &lt;button type=\"submit\"&gt; 로그인 &lt;/button&gt; &lt;/form&gt; 1-1) javascript 작성 id가 pw인 input 태그의 값이 비어있으면, 비밀번호를 입력하세요라는 문구를 출력한다. 그리고, 커서를 해당 태그로 옮기고...","categories": ["web"],
+        "tags": ["html","web","javascript"],
+        "url": "/web/test/",
+        "teaser": null
+      },{
+        "title": "[Django] 이미 존재하는 DB 연동 by inspectdb",
+        "excerpt":"1. DB 불러오기 DB가 이미 존재하는 경우 inspectdb를 사용하여 기존 DB 정보를 불러올 수 있다. 터미널에 아래 명령을 입력하면 기존 DB에 대한 models.py가 최상위 경로 아래 old_models.py에 저장된다. 여기서 필요한 부분만 발췌하여 사용하거나, 전체를 복사하여 models.py에 저장해준다. &gt;&gt;&gt; python manage.py inspectdb &gt; old_models.py 2. Models.py 수정 초기에는 managed=False로 되어 있기...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/inspectdb/",
+        "teaser": null
+      },{
+        "title": "[Django]secret 관리",
+        "excerpt":"Secret 관리 Django 프로젝트를 git에 push 하거나, 다른 곳에 공유할 때 비밀이 유출되는 것은 상당히 위험하다. 프로젝트의 규모가 클수록 위험도는 더더욱 증가하기 때문에 secret을 관리하는 것은 매우 중요하다. 본 포스팅에서는 민감정보를 효율적으로 관리하는 방법에 대하여 소개한다. Django Environ 1) install django-environ 별도의 파일을 환경 파일로 만들어 사용하려면 django-environ을 사용하는 것이...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/secret/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]포스팅 시 Liquid 문법 사용하는 법",
+        "excerpt":"문제상황 포스팅 시에 {{% ~ %}}, {{ }}와 같은 Liquid 문법을 사용하면, 해당 Liquid문이 실행되어 이상한 결과가 출력된다. 가령, 나는 포스팅에서 {% include ~~.html %}이라는 문자 그 자체를 쓰고 싶은데, 실제로 사용해보면 다음과 같이 해당 Liquid문이 실행된 결과가 출력된다. &lt;!-- Courtesy of embedresponsively.com --&gt; 해결방법 Liquid문을 사용하고자 하는 부분을 raw...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/liquid/",
+        "teaser": null
+      },{
+        "title": "url, view, DB 설계",
+        "excerpt":"template - static 최근에는 퍼블러셔분에게 받은 파일들이 웹에서 실제로 동작하도록 비즈니스 로직을 짜는 업무를 맡았다. 우선, template 파일과 css 파일을 이어주는 작업을 하였으며, 퍼블러셔 분의 의도에 따라 작동할 수 있게 적절히 js도 작성해서 main.js에 담아주었다. URL - View - DB url 및 뷰 함수를 설계하고 template과 연결시켜주었다. 그리고 서버 DB와...","categories": ["canvas"],
+        "tags": ["django","유클리드소프트"],
+        "url": "/canvas/canvas/",
+        "teaser": null
+      },{
+        "title": "[JQuery]AJAX를 활용한 비동기적 데이터 교환",
+        "excerpt":"1. JQuerry 제이쿼리는 웹사이트에 자바스크립트를 쉽게 활용할 수 있도록 도와주는 오픈소스 기반의 자바스크립트 라이브러리이다. 제이쿼리를 활용하면 Ajax 응용 프로그램 및 플러그인을 빠르게 개발할 수 있다는 장점이 있다. 1-1) Import JQuerry 우선, JQuerry를 사용하기 위해서는 JQuerry의 js 코드를 불러와줘야 한다. html의 header 부분에 다음 코드를 삽입하여 jquerry를 불러와준다. 이때, slim 빌드를...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/ajax/",
+        "teaser": null
+      },{
+        "title": "배포용 requirements.txt 생성 및 설치",
+        "excerpt":"프로젝트 단위가 커져 프로젝트에서 사용하고 있는 라이브러리가 많아질수록, 의존성 문제가 생길 위험이 높아진다. 따라서 프로젝트 배포시에는 개발 가상환경(v_env , conda …)에서 사용한 라이브러리들을 requirements.txt를 작성하여 같이 배포하는 것이 좋다. 본 포스팅에서는 requirements.txt를 작성하고, 설치하는 방법에 대해서 다룬다. 1. requirements.txt 생성 1-1) pip freeze 터미널에 pip freeze를 입력하면 현재 개발하고 있는...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/export/",
         "teaser": null
       }]
