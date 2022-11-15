@@ -520,4 +520,10 @@ var store = [{
         "tags": ["Django","web","backend"],
         "url": "/web/export/",
         "teaser": null
+      },{
+        "title": "[Django]DRF(Django Rest Framework) 듀토리얼",
+        "excerpt":"1. DRF를 사용하는 이유? Django만 사용하는 경우, Model을 불러올 때 Queryset의 형태로 가져오게 된다. 만약 프론트 앤드를 직접 개발하는 경우 이러한 방식이 문제가 되지 않지만, 실무에서는 그렇지 않은 경우가 더 많다. Django는 백앤드로만 사용하고 React 등을 사용하여 프론트를 개발하는 경우에는 이러한 Queryset 형태를 피하는 것이 좋다. 따라서 DRF를 사용하여 Queryset을...","categories": ["web"],
+        "tags": ["Django","web","backend"],
+        "url": "/web/drf/",
+        "teaser": null
       }]
