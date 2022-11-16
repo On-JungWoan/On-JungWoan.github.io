@@ -526,4 +526,10 @@ var store = [{
         "tags": ["Django","web","backend"],
         "url": "/web/drf/",
         "teaser": null
+      },{
+        "title": "BISON 회장 인수인계",
+        "excerpt":"1. 동아리 재등록 학기가 시작하는 기간(3월, 9월)에 동아리 재등록 해야 함. 1-1) 재등록 온라인/오프라인 서류 작성 등록 기간이 되면 총동연 공지방에 서류들이 올라올텐데 해당 서류 받아서 채우면 됨. 오프라인 서류는 수기로 직접 작성하면 되고, 온라인 서류는 워드 치면 됩니다. 관련된 샘플자료는 카톡으로 보냄. 해당 자료 보고 참고해서 이름만 바꿔서 내면...","categories": ["harmonics"],
+        "tags": ["동아리"],
+        "url": "/harmonics/bison/",
+        "teaser": null
       }]
