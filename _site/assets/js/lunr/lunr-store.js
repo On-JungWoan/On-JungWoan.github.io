@@ -246,9 +246,9 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 09월 TIL",
-        "excerpt":"✍ 학습내용 정리 DL 실시간 영상 프레임 향상 최적화 기법 Tensorflow 개념 및 메소드 정리 Tensorflow로 XOR 문제 해결 알고리즘 흐름 / CUDA Streams 객체/행위인식 모델 코드수정 및 자동화 검출정보 json에 저장 / BBOX 이미지 분리 투기 행위 인식률 개선 ML 치과 데이터 상관분석 머신러닝의 개념과 종류 Web 개발블로그 css...","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리 DL 실시간 영상 프레임 향상 최적화 기법 Tensorflow 개념 및 메소드 정리 Tensorflow로 XOR 문제 해결 알고리즘 흐름 / CUDA Streams 객체/행위인식 모델 코드수정 및 자동화 검출정보 json에 저장 / BBOX 이미지 분리 투기 행위 인식률 개선 ML 치과 데이터 상관분석 머신러닝의 개념과 종류 Web 개발블로그 css...","categories": ["TIL"],
         "tags": ["인턴","ICT인턴십","TIL"],
-        "url": "/internship/Itern-TIL/",
+        "url": "/til/Itern-TIL/",
         "teaser": null
       },{
         "title": "투기행위 인식률 개선",
@@ -420,9 +420,9 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 10월 TIL",
-        "excerpt":"✍ 학습내용 정리 Computer Vision Activation Function, Optimizer Pytorch To TensorRT Engine TensorRT 모델에서 engine 모듈 추출하기 TensorRT vs TensorRT Engine vs Pytorch 연산속도 비교 Pytorch to TensorRT by torch2trt TensorRT Engine 성능 비교 PyQT에 넘겨줄 json 수정 테스트셋에 대해서 투기 검출률 높이기(1) 테스트셋에 대해서 투기 검출률 높이기(2) 테스트셋에 대해서...","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리 Computer Vision Activation Function, Optimizer Pytorch To TensorRT Engine TensorRT 모델에서 engine 모듈 추출하기 TensorRT vs TensorRT Engine vs Pytorch 연산속도 비교 Pytorch to TensorRT by torch2trt TensorRT Engine 성능 비교 PyQT에 넘겨줄 json 수정 테스트셋에 대해서 투기 검출률 높이기(1) 테스트셋에 대해서 투기 검출률 높이기(2) 테스트셋에 대해서...","categories": ["TIL"],
         "tags": ["인턴","ICT인턴십","TIL"],
-        "url": "/internship/Itern-TIL-10/",
+        "url": "/til/Itern-TIL-10/",
         "teaser": null
       },{
         "title": "CUDA Stream",
@@ -444,9 +444,9 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 11월 TIL",
-        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 이번주는 web 퍼블리싱이 아직 덜 되어서 별 작업 없이 일주일을 보냈다. 차장님께 문의드린 결과, web 퍼블리싱이 완료될 때까지 대기라하고만 하셔서 11월 1일에 있는 경진대회 준비를 하였다. 퇴근 후에도 열심히 준비했고 결과는 1등! 10/31 업무지시 업무지시 없음 학습내용 1) CUDA Stream...","categories": ["Internship"],
+        "excerpt":"✍ 학습내용 정리 🕮 TIL &lt;1주차&gt; 느낀점 및 업무내용 : 이번주는 web 퍼블리싱이 아직 덜 되어서 별 작업 없이 일주일을 보냈다. 차장님께 문의드린 결과, web 퍼블리싱이 완료될 때까지 대기라하고만 하셔서 11월 1일에 있는 경진대회 준비를 하였다. 퇴근 후에도 열심히 준비했고 결과는 1등! 10/31 업무지시 업무지시 없음 학습내용 1) CUDA Stream...","categories": ["TIL"],
         "tags": ["인턴","ICT인턴십","TIL"],
-        "url": "/internship/Intern-TIL-11/",
+        "url": "/til/Intern-TIL-11/",
         "teaser": null
       },{
         "title": "[Github_Io]상단 네비게이션 바 수정",
@@ -540,7 +540,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[Github_Io]상단 masthead 고정하기",
-        "excerpt":"1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의 최상단으로 부터 x=100px만큼 떨어지게...","categories": ["Blog"],
+        "excerpt":"/blog/sticky/ 11 1117 test 1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/sticky/",
         "teaser": null
