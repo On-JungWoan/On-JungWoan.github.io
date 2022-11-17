@@ -527,9 +527,21 @@ var store = [{
         "url": "/web/drf/",
         "teaser": null
       },{
+        "title": "[업무 자동화] 초안 작성",
+        "excerpt":"1. 문제상황                 본문으로 돌아가기     ","categories": ["toy_project"],
+        "tags": ["python","ICT인턴십"],
+        "url": "/toy_project/auto/",
+        "teaser": null
+      },{
         "title": "BISON 회장 인수인계",
         "excerpt":"1. 동아리 재등록 학기가 시작하는 기간(3월, 9월)에 동아리 재등록 해야 함. 1-1) 재등록 온라인/오프라인 서류 작성 등록 기간이 되면 총동연 공지방에 서류들이 올라올텐데 해당 서류 받아서 채우면 됨. 오프라인 서류는 수기로 직접 작성하면 되고, 온라인 서류는 워드 치면 됩니다. 관련된 샘플자료는 카톡으로 보냄. 해당 자료 보고 참고해서 이름만 바꿔서 내면...","categories": ["harmonics"],
         "tags": ["동아리"],
         "url": "/harmonics/bison/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]상단 masthead 고정하기",
+        "excerpt":"1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의 최상단으로 부터 x=100px만큼 떨어지게...","categories": ["Blog"],
+        "tags": ["Github","Githubio","jekyll"],
+        "url": "/blog/sticky/",
         "teaser": null
       }]
