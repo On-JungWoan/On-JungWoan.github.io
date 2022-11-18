@@ -42,7 +42,7 @@ sidebar_main: true
 <div class="list__item">
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     <h2 class="archive__item-title no_toc" itemprop="headline">
-        <a href="/til/TIL-9/" rel="permalink">[ICT 인턴십]2022년 09월 TIL</a>
+        <a href="/til/TIL-09/" rel="permalink">[ICT 인턴십]2022년 09월 TIL</a>
     </h2>
     <!--{% include page__meta.html type=include.type %}-->
     <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ "9 30 2022" | date: "%B %d %Y" }}</p>

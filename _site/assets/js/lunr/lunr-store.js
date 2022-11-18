@@ -248,7 +248,7 @@ var store = [{
         "title": "[ICT 인턴십]2022년 09월 TIL",
         "excerpt":"✍ 학습내용 정리 DL 실시간 영상 프레임 향상 최적화 기법 Tensorflow 개념 및 메소드 정리 Tensorflow로 XOR 문제 해결 알고리즘 흐름 / CUDA Streams 객체/행위인식 모델 코드수정 및 자동화 검출정보 json에 저장 / BBOX 이미지 분리 투기 행위 인식률 개선 ML 치과 데이터 상관분석 머신러닝의 개념과 종류 Web 개발블로그 css...","categories": ["TIL"],
         "tags": ["인턴","ICT인턴십","TIL"],
-        "url": "/til/TIL-9/",
+        "url": "/til/TIL-09/",
         "teaser": null
       },{
         "title": "투기행위 인식률 개선",
