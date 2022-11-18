@@ -126,13 +126,13 @@ var store = [{
         "teaser": null
       },{
         "title": "[SQL기초] self join",
-        "excerpt":"동일 테이블 내의 특정 컬럼을 기준으로 테이블 이어 붙여주며, 조건 컬럼 설정해주면 동일한 값끼리 조인 된다. 단, self join시에는 테이블 이름 꼭 지정해줘야 함.   SELECT T1.조회컬럼 FROM 테이블명 T1 JOIN 테이블명 T2 ON T1.조건컬럼 = T2.조건컬럼               본문으로 돌아가기     ","categories": ["etc"],
+        "excerpt":"동일 테이블 내의 특정 컬럼을 기준으로 테이블 이어 붙여주며, 조건 컬럼 설정해주면 동일한 값끼리 조인 된다. 단, self join시에는 테이블 이름 꼭 지정해줘야 함.   SELECT T1.조회컬럼 FROM 테이블명 T1 JOIN 테이블명 T2 ON T1.조건컬럼 = T2.조건컬럼  ","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
         "url": "/etc/TIL_0905/",
         "teaser": null
       },{
         "title": "[SQL기초] SQL 실행순서",
-        "excerpt":"SQL문은 다음 실행 순서에 맞춰 실행된다.   FROM &gt; ON &gt; JOIN &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT &gt; ORDER BY               본문으로 돌아가기     ","categories": ["etc"],
+        "excerpt":"SQL문은 다음 실행 순서에 맞춰 실행된다.   FROM &gt; ON &gt; JOIN &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT &gt; ORDER BY  ","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
         "url": "/etc/TIL_0905_1/",
         "teaser": null
@@ -144,7 +144,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[SQL기초] ORDER BY 용어정리",
-        "excerpt":"               본문으로 돌아가기     ","categories": ["etc"],
+        "excerpt":"  ","categories": ["etc"],
         "tags": ["인턴","ICT인턴십","sql"],
         "url": "/etc/TIL_0913/",
         "teaser": null
@@ -246,7 +246,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 09월 TIL",
-        "excerpt":"✍ 학습내용 정리 DL 실시간 영상 프레임 향상 최적화 기법 Tensorflow 개념 및 메소드 정리 Tensorflow로 XOR 문제 해결 알고리즘 흐름 / CUDA Streams 객체/행위인식 모델 코드수정 및 자동화 검출정보 json에 저장 / BBOX 이미지 분리 투기 행위 인식률 개선 ML 치과 데이터 상관분석 머신러닝의 개념과 종류 Web 개발블로그 css...","categories": ["TIL"],
+        "excerpt":"✍ 학습내용 정리 DL 프로젝트 설명 / 실시간 영상 프레임 향상 최적화 기법 Tensorflow 개념 및 메소드 정리 Tensorflow로 XOR 문제 해결 알고리즘 흐름 / CUDA Streams 객체/행위인식 모델 코드수정 및 자동화 검출정보 json에 저장 / BBOX 이미지 분리 투기 행위 인식률 개선 ML 치과 데이터 상관분석 머신러닝의 개념과 종류...","categories": ["TIL"],
         "tags": ["인턴","ICT인턴십","TIL"],
         "url": "/til/TIL-09/",
         "teaser": null
@@ -528,7 +528,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[업무 자동화] 초안 작성",
-        "excerpt":"1. 문제상황                 본문으로 돌아가기     ","categories": ["toy_project"],
+        "excerpt":"1. 문제상황  ","categories": ["toy_project"],
         "tags": ["python","ICT인턴십"],
         "url": "/toy_project/auto/",
         "teaser": null
@@ -543,6 +543,12 @@ var store = [{
         "excerpt":"1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의 최상단으로 부터 x=100px만큼 떨어지게...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/sticky/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]자동화",
+        "excerpt":"header 이미지 post 최상단에 다음과 같은 yaml 설정을 집어넣으면 Header Image를 Overlay할 수 있다. --- title: \"CUDA Stream\" excerpt: \"Null Stream / Non-Null Stream\" header: overlay_image: /assets/images/white_img.jpg overlay_filter: 0.5 actions: - label: \"TIL로 돌아가기\" url: \"/til/TIL-11/#1031\" --- 단순히 post 상단에 해당 코드를 넣기만 해도 잘 동작하지만, 나는 기존 포스팅이 약...","categories": ["Blog"],
+        "tags": ["Githubio","jekyll","html"],
+        "url": "/blog/custom/",
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 12월 TIL",

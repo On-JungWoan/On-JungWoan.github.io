@@ -1,4 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-18T14:49:46+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;h2 id=&quot;1-문제-상황&quot;&gt;1. 문제 상황&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-18T18:01:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Github_Io]자동화</title><link href="http://localhost:4000/blog/custom/" rel="alternate" type="text/html" title="[Github_Io]자동화" /><published>2022-11-18T00:00:00+09:00</published><updated>2022-11-18T00:00:00+09:00</updated><id>http://localhost:4000/blog/custom</id><content type="html" xml:base="http://localhost:4000/blog/custom/">&lt;h2 id=&quot;header-이미지&quot;&gt;header 이미지&lt;/h2&gt;
+
+&lt;p&gt;post 최상단에 다음과 같은 yaml 설정을 집어넣으면 Header Image를 Overlay할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;CUDA&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&quot;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;excerpt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Null&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Non-Null&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&quot;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;overlay_image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/assets/images/white_img.jpg&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;overlay_filter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;TIL로&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;돌아가기&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/til/TIL-11/#1031&quot;&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;      
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202646217-709687fe-b704-4d3a-b5b4-fa20218c8bdc.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;단순히 post 상단에 해당 코드를 넣기만 해도 잘 동작하지만, 나는 기존 포스팅이 약 90개 정도가 있기 때문에 일일이 다 수정해 줄 수가 없는 노릇이었다. 또한, 게시물마다 header image를 다르게 할 것도 아니기 때문에, 디폴트 header image를 만들어 일단 모든 게시물에 적용시키고, 특별하게 수정하고자 하는 게시물은 위 방법으로 수정할 수 있도록 설계하였다. 따라서 본 포스팅에서는 post 수정 없이 직접 html을 수정하여 default header image를 삽입할 수 있는 방법을 소개한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;a&quot;&gt;a&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_include/page__hero.html&lt;/code&gt;의 내용을 다음과 같이 수정해준다. post 상단 yaml에 header를 설정한 경우에는 사용자가 post에서 커스텀한대로 Header Image가 overlay되게 하였고, 그렇지 않은 경우에는 default Header Image가 overlay되게 하였다. 변수 선언 부분의 이미지 경로와 투명도를 원하는 값으로 바꾸어주면 된다. 또한, 코드가 너무 길어 원본 page_hero.html 내용은 생략하였기 때문에, 실제 사용할 때는 2번째 줄 주석처리 해놓은 곳에 원본 파일을 붙여넣기 하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% if page.header %}
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--기존 page_hero.html의 내용을 여기에 넣으면 됩니다.--&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!--여기부터는 default header image 설정부분--&amp;gt;&lt;/span&gt;
+{% else %}
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--변수 선언부분--&amp;gt;&lt;/span&gt;
+  {% capture overlay_img_path %}/assets/images/empty-header.jpg{% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 이미지 경로로 바꿔주기--&amp;gt;&lt;/span&gt;
+  {% capture overlay_filter %}rgba(0, 0, 0, 0.5){% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 투명도로 바꿔주기--&amp;gt;&lt;/span&gt;
+  {% capture overlay_filter %}linear-gradient({{ overlay_filter }}, {{ overlay_filter }}){% endcapture %}
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--end 변수 선언부분--&amp;gt;&lt;/span&gt;
+
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__hero--overlay&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-image: {{ overlay_filter }}, url(&apos;{{ overlay_img_path }}&apos;);&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;wrapper&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;headline&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        {% if paginator and site.paginate_show_page_num %}
+          {{ site.title }}{% unless paginator.page == 1 %} {{ site.data.ui-text[site.locale].page | default: &quot;Page&quot; }} {{ paginator.page }}{% endunless %}
+        {% else %}
+          {{ page.title | default: site.title | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}
+        {% endif %}
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__lead&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;{{ page.excerpt | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      {% include page__meta.html %}
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+      {% assign month_int = month | plus: 0 %}
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;일일이 post를 수정해주지 않아도, 다음과 같이 Header Image가 잘 표현되는 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202654404-b94aaafb-fe74-4887-a4fe-aec3ebe20a41.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;만약 특정 post의 Header Image를 default와 다르게 커스텀하고 싶다면, 기존 방식과 같이 post 상단에 yaml을 추가하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;overlay_image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;http://www.kogl.or.kr/upload_recommend/%ED%82%A4%EC%9B%8C%EB%93%9C%20%EC%A0%80%EC%9E%91%EB%AC%BC/%EC%A0%84%ED%86%B5%EB%AC%B8%EC%96%91/2D/1667881149503.jpg&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;overlay_filter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rgba(255, 0, 0, 0.5)&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202655572-633f4cd0-4401-434d-83ff-31a049be98a1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;action&quot;&gt;action&lt;/h2&gt;
+
+&lt;p&gt;나는 여기서 추가적으로 action에 대한 부분도 커스텀했다. post 상단 yaml에 til이라는 key를 추가하여 해당 key가 존재하면 특정한 링크로 이동하게끔 하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% if page.header %}
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--기존 page_hero.html의 내용을 여기에 넣으면 됩니다.--&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!--여기부터는 default header image 설정부분--&amp;gt;&lt;/span&gt;
+{% else %}
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--변수 선언부분--&amp;gt;&lt;/span&gt;
+  {% capture overlay_img_path %}/assets/images/empty-header.jpg{% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 이미지 경로로 바꿔주기--&amp;gt;&lt;/span&gt;
+  {% capture overlay_filter %}rgba(0, 0, 0, 0.5){% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 투명도로 바꿔주기--&amp;gt;&lt;/span&gt;
+  {% capture overlay_filter %}linear-gradient({{ overlay_filter }}, {{ overlay_filter }}){% endcapture %}
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--커스텀 변수--&amp;gt;&lt;/span&gt;
+  {% capture date %}{{page.date | remove: &apos;-&apos;}}{% endcapture %} 
+  {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
+  {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}
+
+
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__hero--overlay&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-image: {{ overlay_filter }}, url(&apos;{{ overlay_img_path }}&apos;);&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;wrapper&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;headline&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        {% if paginator and site.paginate_show_page_num %}
+          {{ site.title }}{% unless paginator.page == 1 %} {{ site.data.ui-text[site.locale].page | default: &quot;Page&quot; }} {{ paginator.page }}{% endunless %}
+        {% else %}
+          {{ page.title | default: site.title | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}
+        {% endif %}
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__lead&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;{{ page.excerpt | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+      {% include page__meta.html %}
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+      {% assign month_int = month | plus: 0 %}
+      {% if page.til %}
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;btn btn--light-outline btn--large&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;TIL로 돌아가기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+      {% endif %}
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+{% endif %}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선, 우리가 게시물을 작성하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;게시물 -&amp;gt; single.html -&amp;gt; default.html&lt;/code&gt;의 순서로 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이므로 해당 템플릿을 수정해주면 된다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">Default Header Image 설정, post에 특정 문구 고정</summary></entry><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;h2 id=&quot;1-문제-상황&quot;&gt;1. 문제 상황&lt;/h2&gt;
 
 &lt;p&gt;페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다.&lt;/p&gt;
 
@@ -115,25 +235,7 @@
 
 &lt;p&gt;스크롤을 내려도 masthead가 상단에 잘 붙어있다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202340561-b5f1ed94-80d7-441a-b972-f773dda0088d.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1117&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">css sticky 속성 활용</summary></entry><entry><title type="html">[업무 자동화] 초안 작성</title><link href="http://localhost:4000/toy_project/auto/" rel="alternate" type="text/html" title="[업무 자동화] 초안 작성" /><published>2022-11-16T00:00:00+09:00</published><updated>2022-11-16T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto</id><content type="html" xml:base="http://localhost:4000/toy_project/auto/">&lt;h2 id=&quot;1-문제상황&quot;&gt;1. 문제상황&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Itern-TIL-10/#1019&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">BISON 회장 인수인계</title><link href="http://localhost:4000/harmonics/bison/" rel="alternate" type="text/html" title="BISON 회장 인수인계" /><published>2022-11-16T00:00:00+09:00</published><updated>2022-11-16T00:00:00+09:00</updated><id>http://localhost:4000/harmonics/bison</id><content type="html" xml:base="http://localhost:4000/harmonics/bison/">&lt;h2 id=&quot;1-동아리-재등록&quot;&gt;1. 동아리 재등록&lt;/h2&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202340561-b5f1ed94-80d7-441a-b972-f773dda0088d.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">css sticky 속성 활용</summary></entry><entry><title type="html">BISON 회장 인수인계</title><link href="http://localhost:4000/harmonics/bison/" rel="alternate" type="text/html" title="BISON 회장 인수인계" /><published>2022-11-16T00:00:00+09:00</published><updated>2022-11-16T00:00:00+09:00</updated><id>http://localhost:4000/harmonics/bison</id><content type="html" xml:base="http://localhost:4000/harmonics/bison/">&lt;h2 id=&quot;1-동아리-재등록&quot;&gt;1. 동아리 재등록&lt;/h2&gt;
 
 &lt;p&gt;학기가 시작하는 기간(3월, 9월)에 동아리 재등록 해야 함.&lt;/p&gt;
 
@@ -227,7 +329,7 @@
 
 &lt;h2 id=&quot;5-인원-모집&quot;&gt;5. 인원 모집&lt;/h2&gt;
 
-&lt;p&gt;인원 모집 시즌이 따로 정해져 있진 않고, 인원이 비게 되거나 추가 인원이 필요하면 에타에 올리면 됨. 홍보물이나 홍보글 작성해서 에타에 올리면 됨. 현재는 세 팀으로 운영되고 있지만, 팀을 더 늘리고 싶으면 그렇게 해도 상관 없음&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="harmonics" /><category term="동아리" /><summary type="html">.</summary></entry><entry><title type="html">[Django]DRF(Django Rest Framework) 듀토리얼</title><link href="http://localhost:4000/web/drf/" rel="alternate" type="text/html" title="[Django]DRF(Django Rest Framework) 듀토리얼" /><published>2022-11-14T00:00:00+09:00</published><updated>2022-11-14T00:00:00+09:00</updated><id>http://localhost:4000/web/drf</id><content type="html" xml:base="http://localhost:4000/web/drf/">&lt;h2 id=&quot;1-drf를-사용하는-이유&quot;&gt;1. DRF를 사용하는 이유?&lt;/h2&gt;
+&lt;p&gt;인원 모집 시즌이 따로 정해져 있진 않고, 인원이 비게 되거나 추가 인원이 필요하면 에타에 올리면 됨. 홍보물이나 홍보글 작성해서 에타에 올리면 됨. 현재는 세 팀으로 운영되고 있지만, 팀을 더 늘리고 싶으면 그렇게 해도 상관 없음&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="harmonics" /><category term="동아리" /><summary type="html">.</summary></entry><entry><title type="html">[업무 자동화] 초안 작성</title><link href="http://localhost:4000/toy_project/auto/" rel="alternate" type="text/html" title="[업무 자동화] 초안 작성" /><published>2022-11-16T00:00:00+09:00</published><updated>2022-11-16T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto</id><content type="html" xml:base="http://localhost:4000/toy_project/auto/">&lt;h2 id=&quot;1-문제상황&quot;&gt;1. 문제상황&lt;/h2&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">[Django]DRF(Django Rest Framework) 듀토리얼</title><link href="http://localhost:4000/web/drf/" rel="alternate" type="text/html" title="[Django]DRF(Django Rest Framework) 듀토리얼" /><published>2022-11-14T00:00:00+09:00</published><updated>2022-11-14T00:00:00+09:00</updated><id>http://localhost:4000/web/drf</id><content type="html" xml:base="http://localhost:4000/web/drf/">&lt;h2 id=&quot;1-drf를-사용하는-이유&quot;&gt;1. DRF를 사용하는 이유?&lt;/h2&gt;
 
 &lt;p&gt;Django만 사용하는 경우, Model을 불러올 때 Queryset의 형태로 가져오게 된다. 만약 프론트 앤드를 직접 개발하는 경우 이러한 방식이 문제가 되지 않지만, 실무에서는 그렇지 않은 경우가 더 많다. Django는 백앤드로만 사용하고 React 등을 사용하여 프론트를 개발하는 경우에는 이러한 Queryset 형태를 피하는 것이 좋다. 따라서 DRF를 사용하여 Queryset을 serialize하고 json 형태로 데이터를 받아오는 것이 확장성 측면에서 더 바람직한 개발이라고 할 수 있다.&lt;/p&gt;
 
@@ -379,15 +481,6 @@
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1114&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
@@ -462,16 +555,7 @@
 &lt;p&gt;해당 requirements.txt를 설치하고 싶다면, 터미널에 다음 명령어를 입력하면 된다.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pip install -r requirements.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1110&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">프로젝트 배포</summary></entry><entry><title type="html">[JQuery]AJAX를 활용한 비동기적 데이터 교환</title><link href="http://localhost:4000/web/ajax/" rel="alternate" type="text/html" title="[JQuery]AJAX를 활용한 비동기적 데이터 교환" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/web/ajax</id><content type="html" xml:base="http://localhost:4000/web/ajax/">&lt;script src=&quot;https://code.jquery.com/jquery-3.5.1.js&quot;&gt;&lt;/script&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">프로젝트 배포</summary></entry><entry><title type="html">[JQuery]AJAX를 활용한 비동기적 데이터 교환</title><link href="http://localhost:4000/web/ajax/" rel="alternate" type="text/html" title="[JQuery]AJAX를 활용한 비동기적 데이터 교환" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/web/ajax</id><content type="html" xml:base="http://localhost:4000/web/ajax/">&lt;script src=&quot;https://code.jquery.com/jquery-3.5.1.js&quot;&gt;&lt;/script&gt;
 
 &lt;script&gt;
     $.ajaxSetup({
@@ -808,16 +892,7 @@
             $(&apos;#test&apos;).css(&apos;color&apos;, &apos;red&apos;);
         }
     };
-&lt;/script&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1110&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">예시 : 아이디 중복확인 기능 구현</summary></entry><entry><title type="html">url, view, DB 설계</title><link href="http://localhost:4000/canvas/canvas/" rel="alternate" type="text/html" title="url, view, DB 설계" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/canvas/canvas</id><content type="html" xml:base="http://localhost:4000/canvas/canvas/">&lt;h2 id=&quot;template---static&quot;&gt;template - static&lt;/h2&gt;
+&lt;/script&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">예시 : 아이디 중복확인 기능 구현</summary></entry><entry><title type="html">url, view, DB 설계</title><link href="http://localhost:4000/canvas/canvas/" rel="alternate" type="text/html" title="url, view, DB 설계" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/canvas/canvas</id><content type="html" xml:base="http://localhost:4000/canvas/canvas/">&lt;h2 id=&quot;template---static&quot;&gt;template - static&lt;/h2&gt;
 
 &lt;p&gt;최근에는 퍼블러셔분에게 받은 파일들이 웹에서 실제로 동작하도록 비즈니스 로직을 짜는 업무를 맡았다. 우선, template 파일과 css 파일을 이어주는 작업을 하였으며, 퍼블러셔 분의 의도에 따라 작동할 수 있게 적절히 js도 작성해서 main.js에 담아주었다.&lt;/p&gt;
 
@@ -889,69 +964,4 @@
 
 &lt;p&gt;최종적으로 다음과 같이 동작한다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201017877-9e9b1677-8243-46ec-870d-c4656c1418d7.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Django]secret 관리</title><link href="http://localhost:4000/web/secret/" rel="alternate" type="text/html" title="[Django]secret 관리" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/secret</id><content type="html" xml:base="http://localhost:4000/web/secret/">&lt;h2 id=&quot;secret-관리&quot;&gt;Secret 관리&lt;/h2&gt;
-
-&lt;p&gt;Django 프로젝트를 git에 push 하거나, 다른 곳에 공유할 때 비밀이 유출되는 것은 상당히 위험하다. 프로젝트의 규모가 클수록 위험도는 더더욱 증가하기 때문에 secret을 관리하는 것은 매우 중요하다. 본 포스팅에서는 민감정보를 효율적으로 관리하는 방법에 대하여 소개한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;django-environ&quot;&gt;Django Environ&lt;/h2&gt;
-&lt;h3 id=&quot;1-install-django-environ&quot;&gt;1) install django-environ&lt;/h3&gt;
-&lt;p&gt;별도의 파일을 환경 파일로 만들어 사용하려면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;django-environ&lt;/code&gt;을 사용하는 것이 가장 간편하다. 먼저, 터미널에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;django-environ&lt;/code&gt;을 설치해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; pip install django-environ
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;2-env-파일-생성&quot;&gt;2) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; 파일 생성&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; 파일을 생성하여, 민감 정보를 작성해준다. 장고 시크릿 키, DB 접속정보, 또는 API 키 등등 유출되면 안되는 정보들을 모두 작성해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 장고 시크릿 키&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;DJANGO_SECRET_KEY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;시크릿키&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// DB 접속정보&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;DB_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;DB_USER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;DB_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;localhost&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;DB_PASSWORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pw&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;3-gitignore-작성&quot;&gt;3) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; 작성&lt;/h3&gt;
-
-&lt;p&gt;git에 push할 예정이라면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.env&lt;/code&gt; 파일을 등록하여 push 되지 않게 해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.env
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;4-import-secret&quot;&gt;4) import secret&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;environ&lt;/code&gt;을 import 해준 뒤, env 파일이 작성되어 있는 곳의 경로를 지정해준다. 그리고 나서 env() 안에 원하는 환경변수의 이름을 넣어주면 끝이다. env파일 경로는 미리 베이스 디렉토리를 정해놓고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BASE_DIR / &apos;.env&apos;&lt;/code&gt;와 같은 형식으로 써주는 것이 유지/보수에 더 유리하다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;environ&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# environ setting
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;env 파일 경로&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# 시크릿 키
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SECRET_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;DJANGO_SECRET_KEY&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">Django</summary></entry></feed>
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201017877-9e9b1677-8243-46ec-870d-c4656c1418d7.png&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry></feed>
