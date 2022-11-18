@@ -60,6 +60,10 @@
 {% capture overlay_img_path %}/assets/images/empty-header.jpg{% endcapture %}
 {% capture overlay_filter %}rgba(0, 0, 0, 0.5){% endcapture %}
 {% capture overlay_filter %}linear-gradient({{ overlay_filter }}, {{ overlay_filter }}){% endcapture %}
+<!--커스텀 변수-->
+{% capture date %}{{page.date | remove: '-'}}{% endcapture %}
+{% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
+{% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}
 
 
 <div class="page__hero--overlay" style="background-image: {{ overlay_filter }}, url('{{ overlay_img_path }}');">
@@ -77,13 +81,13 @@
       <p class="page__lead">{{ page.excerpt | markdownify | remove: "<p>" | remove: "</p>" }}</p>
     {% endif %}
     {% include page__meta.html %}
-    {% if page.header.cta_url %}
-      <p><a href="{{ page.header.cta_url | relative_url }}" class="btn btn--light-outline btn--large">{{ page.header.cta_label | default: site.data.ui-text[site.locale].more_label | default: "Learn More" }}</a></p>
-    {% endif %}
     <p>
-    {% for action in page.header.actions %}
-      <a href="{{ action.url | relative_url }}" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
-    {% endfor %}
+    {% assign month_int = month | plus: 0 %}
+    {% if month_int>8 %}
+      {% unless page.title contains 'TIL' %}
+        <a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
+      {% endunless %}
+    {% endif %}
   </div>
 
 
