@@ -228,12 +228,8 @@ break_vis
 {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
 {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}
 
-
-<a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}">test</a>
-
-
 <div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0920">
+  <a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}">
     본문으로 돌아가기
   </a>
 </div>

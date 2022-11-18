@@ -540,7 +540,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[Github_Io]상단 masthead 고정하기",
-        "excerpt":"/blog/sticky/ 11 1117 test 1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의...","categories": ["Blog"],
+        "excerpt":"1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의 최상단으로 부터 x=100px만큼 떨어지게...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/sticky/",
         "teaser": null
