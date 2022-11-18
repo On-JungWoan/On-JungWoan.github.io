@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-17T17:56:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;p&gt;/blog/sticky/&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-18T10:47:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;p&gt;/blog/sticky/&lt;/p&gt;
 
 &lt;p&gt;11
 1117&lt;/p&gt;
@@ -403,7 +403,51 @@
 
     &lt;p&gt;&lt;a href=&quot;https://leffept.tistory.com/296&quot;&gt;[Django]Django REST Framework 튜토리얼 (Quickstart)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">DRF 초기 setting</summary></entry><entry><title type="html">배포용 requirements.txt 생성 및 설치</title><link href="http://localhost:4000/web/export/" rel="alternate" type="text/html" title="배포용 requirements.txt 생성 및 설치" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/web/export</id><content type="html" xml:base="http://localhost:4000/web/export/">&lt;p&gt;프로젝트 단위가 커져 프로젝트에서 사용하고 있는 라이브러리가 많아질수록, 의존성 문제가 생길 위험이 높아진다. 따라서 프로젝트 배포시에는 개발 가상환경(v_env , conda …)에서 사용한 라이브러리들을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;를 작성하여 같이 배포하는 것이 좋다. 본 포스팅에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;를 작성하고, 설치하는 방법에 대해서 다룬다.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">DRF 초기 setting</summary></entry><entry><title type="html">[Github_Io]포스팅 시 Liquid 문법 사용하는 법</title><link href="http://localhost:4000/blog/liquid/" rel="alternate" type="text/html" title="[Github_Io]포스팅 시 Liquid 문법 사용하는 법" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/blog/liquid</id><content type="html" xml:base="http://localhost:4000/blog/liquid/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
+
+&lt;p&gt;포스팅 시에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{% ~ %}}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{ }}&lt;/code&gt;와 같은 Liquid 문법을 사용하면, 해당 Liquid문이 실행되어 이상한 결과가 출력된다. 가령, 나는 포스팅에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{% include ~~.html %}&lt;/code&gt;이라는 문자 그 자체를 쓰고 싶은데, 실제로 사용해보면 다음과 같이 해당 Liquid문이 실행된 결과가 출력된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+
+
+
+
+
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Courtesy of embedresponsively.com --&amp;gt;&lt;/span&gt;
+
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;해결방법&quot;&gt;해결방법&lt;/h2&gt;
+
+&lt;p&gt;Liquid문을 사용하고자 하는 부분을 raw tag로 감싸면 해당 문제를 해결할 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[html문]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201034707-66b80536-b53f-4935-8903-f2d1345255bb.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같이 Liquid문이 정상적으로 출력되는 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[실행결과]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% include ~~.html %}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1110&quot;&gt;
+    본문으로 돌아가기
+  &lt;/a&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">포스팅 시 Liquid 문법이 실행되는 문제 해결</summary></entry><entry><title type="html">배포용 requirements.txt 생성 및 설치</title><link href="http://localhost:4000/web/export/" rel="alternate" type="text/html" title="배포용 requirements.txt 생성 및 설치" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/web/export</id><content type="html" xml:base="http://localhost:4000/web/export/">&lt;p&gt;프로젝트 단위가 커져 프로젝트에서 사용하고 있는 라이브러리가 많아질수록, 의존성 문제가 생길 위험이 높아진다. 따라서 프로젝트 배포시에는 개발 가상환경(v_env , conda …)에서 사용한 라이브러리들을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;를 작성하여 같이 배포하는 것이 좋다. 본 포스팅에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;를 작성하고, 설치하는 방법에 대해서 다룬다.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-requirementstxt-생성&quot;&gt;1. requirements.txt 생성&lt;/h2&gt;
 &lt;h3 id=&quot;1-1-pip-freeze&quot;&gt;1-1) pip freeze&lt;/h3&gt;
@@ -870,119 +914,7 @@
   &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1107&quot;&gt;
     본문으로 돌아가기
   &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Github_Io]포스팅 시 Liquid 문법 사용하는 법</title><link href="http://localhost:4000/blog/liquid/" rel="alternate" type="text/html" title="[Github_Io]포스팅 시 Liquid 문법 사용하는 법" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/blog/liquid</id><content type="html" xml:base="http://localhost:4000/blog/liquid/">&lt;h2 id=&quot;문제상황&quot;&gt;문제상황&lt;/h2&gt;
-
-&lt;p&gt;포스팅 시에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{% ~ %}}&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{ }}&lt;/code&gt;와 같은 Liquid 문법을 사용하면, 해당 Liquid문이 실행되어 이상한 결과가 출력된다. 가령, 나는 포스팅에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{% include ~~.html %}&lt;/code&gt;이라는 문자 그 자체를 쓰고 싶은데, 실제로 사용해보면 다음과 같이 해당 Liquid문이 실행된 결과가 출력된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-
-
-
-
-
-
-
-&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Courtesy of embedresponsively.com --&amp;gt;&lt;/span&gt;
-
-
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;해결방법&quot;&gt;해결방법&lt;/h2&gt;
-
-&lt;p&gt;Liquid문을 사용하고자 하는 부분을 raw tag로 감싸면 해당 문제를 해결할 수 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[html문]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201034707-66b80536-b53f-4935-8903-f2d1345255bb.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 Liquid문이 정상적으로 출력되는 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[실행결과]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% include ~~.html %}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1110&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">포스팅 시 Liquid 문법이 실행되는 문제 해결</summary></entry><entry><title type="html">[Django] 이미 존재하는 DB 연동 by inspectdb</title><link href="http://localhost:4000/web/inspectdb/" rel="alternate" type="text/html" title="[Django] 이미 존재하는 DB 연동 by inspectdb" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/inspectdb</id><content type="html" xml:base="http://localhost:4000/web/inspectdb/">&lt;h2 id=&quot;1-db-불러오기&quot;&gt;1. DB 불러오기&lt;/h2&gt;
-
-&lt;p&gt;DB가 이미 존재하는 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inspectdb&lt;/code&gt;를 사용하여 기존 DB 정보를 불러올 수 있다. 터미널에 아래 명령을 입력하면 기존 DB에 대한 models.py가 최상위 경로 아래 old_models.py에 저장된다. 여기서 필요한 부분만 발췌하여 사용하거나, 전체를 복사하여 models.py에 저장해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; python manage.py inspectdb &amp;gt; old_models.py
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-modelspy-수정&quot;&gt;2. Models.py 수정&lt;/h2&gt;
-
-&lt;p&gt;초기에는 managed=False로 되어 있기 때문에, 추후 모델 변경시 migrate 하기가 곤란하다. 따라서 managed=True로 수정해준다. 또한, charField의 max_length가 가변으로 되어 있을 경우, max_length=-1로 불러와져서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;max_length&quot; attribute that is a positive integer&lt;/code&gt; 에러가 발생한다. 따라서 해당 부분들은 Django에 맞게 수정해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.db&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BigAutoField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary_key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pronouns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CharField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;blank&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;(..&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;..)&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;managed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;db_table&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;users&apos;&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;# unique_together = ((&apos;root_account_ids&apos;, &apos;id&apos;),)
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-fake-migrate&quot;&gt;3. Fake migrate&lt;/h2&gt;
-
-&lt;p&gt;이미 테이블이 존재하기 때문에 따로 migrate를 해줄 필요가 없으므로, fake migrate를 해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; python manage.py migrate --fake-initial
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-migrate&quot;&gt;4. Migrate&lt;/h2&gt;
-
-&lt;p&gt;이후에 모델 변경시에는 기존과 동일하게 makemigrations -&amp;gt; migrate 해주면 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-정리&quot;&gt;5. 정리&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;python manage.py inspectdb &amp;gt; 불러올 파일 경로&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;managed=True, max_length 수정&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;python manage.py migrate –fake-initial&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;모델 변경 시 makemigrations -&amp;gt; migrate&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-  &lt;a href=&quot;https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109&quot;&gt;
-    본문으로 돌아가기
-  &lt;/a&gt;
-&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">inspectdb 소개</summary></entry><entry><title type="html">[Django]secret 관리</title><link href="http://localhost:4000/web/secret/" rel="alternate" type="text/html" title="[Django]secret 관리" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/secret</id><content type="html" xml:base="http://localhost:4000/web/secret/">&lt;h2 id=&quot;secret-관리&quot;&gt;Secret 관리&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry><entry><title type="html">[Django]secret 관리</title><link href="http://localhost:4000/web/secret/" rel="alternate" type="text/html" title="[Django]secret 관리" /><published>2022-11-09T00:00:00+09:00</published><updated>2022-11-09T00:00:00+09:00</updated><id>http://localhost:4000/web/secret</id><content type="html" xml:base="http://localhost:4000/web/secret/">&lt;h2 id=&quot;secret-관리&quot;&gt;Secret 관리&lt;/h2&gt;
 
 &lt;p&gt;Django 프로젝트를 git에 push 하거나, 다른 곳에 공유할 때 비밀이 유출되는 것은 상당히 위험하다. 프로젝트의 규모가 클수록 위험도는 더더욱 증가하기 때문에 secret을 관리하는 것은 매우 중요하다. 본 포스팅에서는 민감정보를 효율적으로 관리하는 방법에 대하여 소개한다.&lt;/p&gt;
 
