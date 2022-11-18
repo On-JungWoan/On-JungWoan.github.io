@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-09-30
 last_modified_at: 2022-09-30
+til: 'true'
 ---
 
 ## 투기 행위 검출이 잘 안됨
@@ -50,12 +51,3 @@ last_modified_at: 2022-09-30
 위 방법으로 어느정도 행위 인식률을 개선할 수 있었다(해당 사진은 본인이 직접 옥상에 올라가서 찍은 테스트셋이다).
 
 ![image](https://user-images.githubusercontent.com/84084372/193232846-586cb066-01f8-4ad2-980d-2cd2c731b812.png)
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0930">
-    본문으로 돌아가기
-  </a>
-</div>

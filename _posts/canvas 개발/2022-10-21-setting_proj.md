@@ -12,6 +12,7 @@ toc_sticky: true
  
 date: 2022-10-21
 last_modified_at: 2022-10-21
+til: 'true'
 ---
 
 ## 프로젝트 개요
@@ -37,12 +38,3 @@ last_modified_at: 2022-10-21
 DB 툴은 DataGrip을 사용하였다. DB와 연결하기 위해 다음과 같이 DB 정보를 입력해야 한다. `docker-compose.dev.yml` 파일에있는 DB 포트 정보를 입력하여 접속하려고 했는데, 해당 포트는 docker에서만 사용하기 떄문에 접속이 안되고, localhost로 접속해야 한다고 하셨다.
 
 ![image](https://user-images.githubusercontent.com/84084372/197144751-40eb6469-c87a-494f-aa3b-66718f52e52c.png)
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021">
-    본문으로 돌아가기
-  </a>
-</div>

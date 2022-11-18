@@ -12,6 +12,7 @@ toc_sticky: true
  
 date: 2022-10-28
 last_modified_at: 2022-10-28  
+til: 'true'
 ---
 
 우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.
@@ -43,12 +44,3 @@ last_modified_at: 2022-10-28
 
   
 우선, 1번과 2번 방법으로 생성한 사용자 모두 users 테이블에 저장되는 것을 확인하였다. 생성 방법에 상관없이 그냥 모든 유저에 대한 정보가 users에 저장되는 것 같았다. 또한 users 중에서 Site Admin이 생성한 user의 계정 정보가 account에 저장되는 것을 확인하였다. 자세한 사항은 디자인이 넘어오면 다시 확인해봐야겠다.
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021">
-    본문으로 돌아가기
-  </a>
-</div>

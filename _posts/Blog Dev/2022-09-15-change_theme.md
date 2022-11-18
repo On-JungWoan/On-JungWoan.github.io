@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-09-15
 last_modified_at: 2022-09-15
+til: 'true'
 ---
 
 ## 테마 변경
@@ -75,10 +76,3 @@ a {
 <p align="center">  
   <img src="https://user-images.githubusercontent.com/84084372/190319346-788872f0-7f8e-4c0b-a1ef-5c6eb05c8596.png">
 </p>  
-
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0915">
-    본문으로 돌아가기
-  </a>
-</div>

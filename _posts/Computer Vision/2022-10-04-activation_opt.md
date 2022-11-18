@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-04
 last_modified_at: 2022-10-04
+til: 'true'
 ---
 
 ## 1. 신경망 층
@@ -85,13 +86,6 @@ Loss Function은 실제값과 예측값간의 차이를 나타낸다. 이러한 
 <p align="center">
     <img src="https://blog.kakaocdn.net/dn/bZzrdA/btq9Muy3UxE/COPts93KkQbCdKatHjMm1k/img.gif">
 </p>
-
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1004">
-    본문으로 돌아가기
-  </a>
-</div>
 
 
 <br>

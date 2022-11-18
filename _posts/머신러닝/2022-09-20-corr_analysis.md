@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-09-20
 last_modified_at: 2022-09-20
+til: true
 ---
 
 주변 지인이 논문에 사용할 상관분석을 부탁해서 해드렸다.
@@ -219,17 +220,3 @@ break_vis
 | 0.4 \~ 0.6 | 상관관계가 있음 |
 | 0.6 \~ 0.8 | 강한 상관관계 |
 | 0.8 \~ 1.0 | 매우 강한 상관관계 |
-
-<br>
-
-
-
-{% capture date %}{{page.date | remove: '-'}}{% endcapture %}
-{% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
-{% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}">
-    본문으로 돌아가기
-  </a>
-</div>

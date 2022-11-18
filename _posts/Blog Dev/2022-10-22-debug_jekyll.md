@@ -15,6 +15,7 @@ toc_sticky: true
  
 date: 2022-10-22
 last_modified_at: 2022-10-22
+til: 'true'
 ---
 
 ## 1. Git Clone
@@ -122,15 +123,6 @@ ruby 터미널에 다음과 같이 입력하면 된다.
 ```
 >>> bundle update
 ```
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1022">
-    본문으로 돌아가기
-  </a>
-</div>
 
 <br>
 <br>

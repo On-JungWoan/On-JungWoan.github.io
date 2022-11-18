@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-25
 last_modified_at: 2022-10-25
+til: 'true'
 ---
 
 ## 1. 문제상황
@@ -113,15 +114,6 @@ git push origin branch이름
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/197827271-81d3fb32-f2ee-4c14-a2fa-763cd7c2f6a3.png"></p>
 
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1025">
-    본문으로 돌아가기
-  </a>
-</div>  
 
 <br>
 <br>

@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-09-27
 last_modified_at: 2022-09-28
+til: 'true'
 ---
 
 ## 1. 객체/행위 탐지 알고리즘 흐름
@@ -79,10 +80,3 @@ cudart.cudaStreamSynchronize(stream)
 ## 3. Output Image
 
 ![image](https://user-images.githubusercontent.com/84084372/192480229-fc3afdea-0b86-4379-bfe7-adf734a27cf5.png)
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0927">
-    본문으로 돌아가기
-  </a>
-</div>
-

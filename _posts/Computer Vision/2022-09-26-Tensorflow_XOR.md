@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-09-26
 last_modified_at: 2022-09-26
+til: 'true'
 ---
 
 ## XOR 문제?
@@ -50,12 +51,3 @@ hypothesis = tf.sigmoid(tf.matmul(K, W2) + b2)
 ## 가중치 설정 문제
 하지만 이러한 다층 퍼셉트론 모델은 가중치 설정이 어렵다는 문제점이 있었다. 
 해당 문제를 해결하기 위해 은닉층이 도입 되었다.
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0926">
-    본문으로 돌아가기
-  </a>
-</div>  

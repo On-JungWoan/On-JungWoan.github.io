@@ -15,6 +15,7 @@ toc_sticky: true
  
 date: 2022-09-20
 last_modified_at: 2022-09-20
+til: 'true'
 ---
 
 ## 1. 홈 외의 다른 page에 사이드바 추가
@@ -99,11 +100,3 @@ tags:
 <p align="center">
   <img src="https://user-images.githubusercontent.com/84084372/191178629-e6358cfb-5815-4473-9e9a-f0727150e1c0.png" style="border: 2px solid black">
 </p>
-
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0920">
-    본문으로 돌아가기
-  </a>
-</div>

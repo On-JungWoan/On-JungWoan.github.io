@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-31
 last_modified_at: 2022-10-31
+til: 'true'
 ---
 
 ## 1. Stream
@@ -155,12 +156,3 @@ cudaDeviceSynchronize()
 ```python
 cudart.cudaStreamSynchronize(stream)
 ```
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-11/#1031">
-    본문으로 돌아가기
-  </a>
-</div>  

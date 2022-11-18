@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-14
 last_modified_at: 2022-10-14
+til: 'true'
 ---
 
 
@@ -93,17 +94,6 @@ context = engine.create_execution_context()
 <br>
 
 우선, 일반 TensorRT 같은 경우는, 모델 프로젝트 파일과 함께 돌돌 말아놓은 형태여서, 모델 파일에 의존한다고 하셨다. 이 말인 즉슨, 모델 파일이 조금이라도 손상되면 TensorRT 파일도 사용할 수 없다는 것이다. 반면 Engine 파일은 그러한 종속성이 없어진 상태여서 파인튜닝할 때 주로 사용하신다고 하였다. 사실 TensorRT에 대한 자료는 너무 적어서 한국어로 된 자료가 거의 없다. 그래서 차장님도 확실하지는 않다고 하셨다. 개인 프로젝트를 할 때는 그냥 TensorRT만 사용하면 될 것 같다.
-
-
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1014">
-    본문으로 돌아가기
-  </a>
-</div>  
 
 <br>
 <br>

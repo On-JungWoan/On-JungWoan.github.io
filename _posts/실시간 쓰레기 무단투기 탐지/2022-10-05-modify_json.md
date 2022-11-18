@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-05
 last_modified_at: 2022-10-05
+til: 'true'
 ---
 
 ## 1. 기존 객체검출 Confusion Matrix 문제점
@@ -89,13 +90,3 @@ Box의 좌표는 이미지를 Crop하는 과정에서 계산되므로, 해당 �
 
 일단 dumping_yn에 default 값으로 'N'을 지정하고, CUDA에서 return된 output 값 중 Treshold를 넘는 case가 발생하면 'Y'를 return하였다. 
 for문 끝단에 dumping_list에 append하는 코드를 추가해주었다.
-
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1005">
-    본문으로 돌아가기
-  </a>
-</div>

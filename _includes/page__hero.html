@@ -83,10 +83,8 @@
     {% include page__meta.html %}
     <p>
     {% assign month_int = month | plus: 0 %}
-    {% if month_int>8 %}
-      {% unless page.title contains 'TIL' %}
-        <a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
-      {% endunless %}
+    {% if page.til %}
+      <a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
     {% endif %}
   </div>
 

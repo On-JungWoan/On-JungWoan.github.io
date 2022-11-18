@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-15
 last_modified_at: 2022-10-15
+til: 'true'
 ---
 
 ## 1. Make Train/Test Data
@@ -270,12 +271,3 @@ MODEL_PATH = 'c:/users/user/desktop/model.pkcls'
 
 model = joblib.load(MODEL_PATH)
 ```
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1015">
-    본문으로 돌아가기
-  </a>
-</div>    

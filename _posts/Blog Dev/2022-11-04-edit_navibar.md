@@ -15,6 +15,7 @@ toc_sticky: true
  
 date: 2022-11-04
 last_modified_at: 2022-11-04
+til: 'true'
 ---
 
 ## navigation.yaml 수정
@@ -257,12 +258,3 @@ masthead.html 최상단에 icon.html을 불러와주면 해결된다.
 
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/199761635-ad29b45c-cb82-4417-9515-c149b4d28fe0.png" style="border: 2px solid black"></p>
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Intern-TIL-11/#1103">
-    본문으로 돌아가기
-  </a>
-</div>  

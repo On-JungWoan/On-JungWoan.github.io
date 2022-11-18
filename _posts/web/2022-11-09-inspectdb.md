@@ -12,6 +12,7 @@ toc_sticky: true
  
 date: 2022-11-09
 last_modified_at: 2022-11-09  
+til: 'true'
 ---
 
 ## 1. DB 불러오기
@@ -70,12 +71,3 @@ class Users(models.Model):
 3. python manage.py migrate --fake-initial
 
 4. 모델 변경 시 makemigrations -> migrate
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Intern-TIL-11/#1109">
-    본문으로 돌아가기
-  </a>
-</div>

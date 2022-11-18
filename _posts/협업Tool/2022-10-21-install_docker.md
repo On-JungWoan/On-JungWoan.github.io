@@ -12,6 +12,7 @@ toc_sticky: true
  
 date: 2022-10-21
 last_modified_at: 2022-10-21
+til: 'true'
 ---
 
 ## 1. 환경설정
@@ -60,12 +61,3 @@ Docker 실행시에 다음과 같은 에러가 뜬다면 화면에 보이는 사
 cmd에 `docker -v`를 입력했을 때, docker 버전이 표시되면 설치 완료이다.
 
 ![image](https://user-images.githubusercontent.com/84084372/197148698-3a4ffe68-5307-4750-96d4-94b28e3c1f31.png)
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1021">
-    본문으로 돌아가기
-  </a>
-</div>

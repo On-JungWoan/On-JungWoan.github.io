@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-09-19
 last_modified_at: 2022-09-19
+til: 'true'
 ---
 
 ## 1. 상단 네비게이션 바 목록 수정
@@ -77,12 +78,3 @@ main:
 <p align="center">
   <img src="https://user-images.githubusercontent.com/84084372/190979274-9b15701a-415a-4201-b5dd-e1a12286e46e.png">
 </p>
-
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL/#0919">
-    본문으로 돌아가기
-  </a>
-</div>
-

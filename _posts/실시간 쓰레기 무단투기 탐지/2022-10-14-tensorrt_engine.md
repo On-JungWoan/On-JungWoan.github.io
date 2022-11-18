@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-14
 last_modified_at: 2022-10-14
+til: 'true'
 ---
 
 ## 1. Make TensorRT Engine
@@ -97,12 +98,3 @@ Pytorch -> TensorRT에는 눈부신 성능 향상이 있었지만, TensorRT -> T
 
     투기 감지 모델은 객체/skeleton ssd모델의 output값에 영향을 받는다.
     yolov5에도 객체 감지 기능이 있긴 한데 약하므로 ssd 모델을 녹여주자.
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1014">
-    본문으로 돌아가기
-  </a>
-</div>

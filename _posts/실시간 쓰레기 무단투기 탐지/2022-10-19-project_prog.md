@@ -14,6 +14,7 @@ toc_sticky: true
  
 date: 2022-10-19
 last_modified_at: 2022-10-19
+til: true
 ---
 
 프로젝트가 마무리 단계에 들어섰다. 
@@ -21,12 +22,3 @@ last_modified_at: 2022-10-19
 그렇게 해서 나온 투기행위 사진 중, 오분류되거나 흐릿하게 나온 프레임은 제거해주었다. 
 또한, 프레임 차이가 얼마 나지 않아서 겹치는 모션등은 제거해주었다. 
 결과적으로 dumping 이미지 240장, 일반 이미지 60장해서 총 300장의 테스트셋 준비를 완료하였다. 
-
-<br>
-<br>
-
-<div align='center'>
-  <a href="https://on-jungwoan.github.io/internship/Itern-TIL-10/#1019">
-    본문으로 돌아가기
-  </a>
-</div>
