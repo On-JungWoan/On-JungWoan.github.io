@@ -545,10 +545,16 @@ var store = [{
         "url": "/blog/sticky/",
         "teaser": null
       },{
-        "title": "[Github_Io]자동화",
-        "excerpt":"header 이미지 post 최상단에 다음과 같은 yaml 설정을 집어넣으면 Header Image를 Overlay할 수 있다. --- title: \"CUDA Stream\" excerpt: \"Null Stream / Non-Null Stream\" header: overlay_image: /assets/images/white_img.jpg overlay_filter: 0.5 actions: - label: \"TIL로 돌아가기\" url: \"/til/TIL-11/#1031\" --- 단순히 post 상단에 해당 코드를 넣기만 해도 잘 동작하지만, 나는 기존 포스팅이 약...","categories": ["Blog"],
+        "title": "[Github_Io]Header Image 설정",
+        "excerpt":"1. Header Image Overlay by yaml post 최상단에 다음과 같은 yaml 코드를 집어넣으면 Header Image를 Overlay할 수 있다. --- title: \"CUDA Stream\" excerpt: \"Null Stream / Non-Null Stream\" header: overlay_image: /assets/images/white_img.jpg overlay_filter: 0.5 actions: - label: \"TIL로 돌아가기\" url: \"/til/TIL-11/#1031\" --- 1-1) 문제점 단순히 post 상단에 해당 코드를 넣기만 해도...","categories": ["Blog"],
         "tags": ["Githubio","jekyll","html"],
-        "url": "/blog/custom/",
+        "url": "/blog/header/",
+        "teaser": null
+      },{
+        "title": "[Github_Io]포스트에 특정 문구 고정",
+        "excerpt":" 우선, 우리가 게시물을 작성하면 게시물 -&gt; single.html -&gt; default.html의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이므로 해당 템플릿의 내용을 수정해주면 된다.   ","categories": ["Blog"],
+        "tags": ["Githubio","jekyll","html"],
+        "url": "/blog/post_custom/",
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 12월 TIL",

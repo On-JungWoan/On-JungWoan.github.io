@@ -76,7 +76,6 @@
       <p class="page__lead">{{ page.excerpt | markdownify | remove: "<p>" | remove: "</p>" }}</p>
       {% include page__meta.html %}
       <p>
-      {% assign month_int = month | plus: 0 %}
       {% if page.til %}
         <a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
       {% endif %}

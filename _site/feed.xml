@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-18T18:01:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Github_Io]자동화</title><link href="http://localhost:4000/blog/custom/" rel="alternate" type="text/html" title="[Github_Io]자동화" /><published>2022-11-18T00:00:00+09:00</published><updated>2022-11-18T00:00:00+09:00</updated><id>http://localhost:4000/blog/custom</id><content type="html" xml:base="http://localhost:4000/blog/custom/">&lt;h2 id=&quot;header-이미지&quot;&gt;header 이미지&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-21T10:52:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Github_Io]포스트에 특정 문구 고정</title><link href="http://localhost:4000/blog/post_custom/" rel="alternate" type="text/html" title="[Github_Io]포스트에 특정 문구 고정" /><published>2022-11-21T00:00:00+09:00</published><updated>2022-11-21T00:00:00+09:00</updated><id>http://localhost:4000/blog/post_custom</id><content type="html" xml:base="http://localhost:4000/blog/post_custom/">&lt;p&gt;우선, 우리가 게시물을 작성하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;게시물 -&amp;gt; single.html -&amp;gt; default.html&lt;/code&gt;의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이므로 해당 템플릿의 내용을 수정해주면 된다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">post에 특정한 문구가 자동으로 고정되게 하는 법</summary></entry><entry><title type="html">[Github_Io]Header Image 설정</title><link href="http://localhost:4000/blog/header/" rel="alternate" type="text/html" title="[Github_Io]Header Image 설정" /><published>2022-11-18T00:00:00+09:00</published><updated>2022-11-18T00:00:00+09:00</updated><id>http://localhost:4000/blog/header</id><content type="html" xml:base="http://localhost:4000/blog/header/">&lt;h2 id=&quot;1-header-image-overlay-by-yaml&quot;&gt;1. Header Image Overlay by yaml&lt;/h2&gt;
 
-&lt;p&gt;post 최상단에 다음과 같은 yaml 설정을 집어넣으면 Header Image를 Overlay할 수 있다.&lt;/p&gt;
+&lt;p&gt;post 최상단에 다음과 같은 yaml 코드를 집어넣으면 Header Image를 Overlay할 수 있다.&lt;/p&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;CUDA&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&quot;&lt;/span&gt;
@@ -14,15 +14,22 @@
 &lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;      
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202646217-709687fe-b704-4d3a-b5b4-fa20218c8bdc.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;단순히 post 상단에 해당 코드를 넣기만 해도 잘 동작하지만, 나는 기존 포스팅이 약 90개 정도가 있기 때문에 일일이 다 수정해 줄 수가 없는 노릇이었다. 또한, 게시물마다 header image를 다르게 할 것도 아니기 때문에, 디폴트 header image를 만들어 일단 모든 게시물에 적용시키고, 특별하게 수정하고자 하는 게시물은 위 방법으로 수정할 수 있도록 설계하였다. 따라서 본 포스팅에서는 post 수정 없이 직접 html을 수정하여 default header image를 삽입할 수 있는 방법을 소개한다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202646217-709687fe-b704-4d3a-b5b4-fa20218c8bdc.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;a&quot;&gt;a&lt;/h2&gt;
+&lt;h3 id=&quot;1-1-문제점&quot;&gt;1-1) 문제점&lt;/h3&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_include/page__hero.html&lt;/code&gt;의 내용을 다음과 같이 수정해준다. post 상단 yaml에 header를 설정한 경우에는 사용자가 post에서 커스텀한대로 Header Image가 overlay되게 하였고, 그렇지 않은 경우에는 default Header Image가 overlay되게 하였다. 변수 선언 부분의 이미지 경로와 투명도를 원하는 값으로 바꾸어주면 된다. 또한, 코드가 너무 길어 원본 page_hero.html 내용은 생략하였기 때문에, 실제 사용할 때는 2번째 줄 주석처리 해놓은 곳에 원본 파일을 붙여넣기 하면 된다.&lt;/p&gt;
+&lt;p&gt;단순히 post 상단에 해당 코드를 넣기만 해도 잘 동작하지만, 나는 기존 포스팅이 약 90개 정도가 있기 때문에 일일이 다 수정해 줄 수가 없는 노릇이었다. 또한, 게시물마다 header image를 다르게 할 것도 아니기 때문에, 디폴트 header image를 만들어 일단 모든 게시물에 적용시키고, 특별하게 수정하고자 하는 게시물은 위 방법으로 수정할 수 있도록 설계하였다. 따라서 본 포스팅에서는 post 수정 없이 직접 html을 수정하여 default header image를 삽입할 수 있는 방법을 소개한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-default-header-image&quot;&gt;2. Default Header Image&lt;/h2&gt;
+
+&lt;h3 id=&quot;2-1-default-header-image-생성&quot;&gt;2-1) Default Header Image 생성&lt;/h3&gt;
+
+&lt;p&gt;Header Image와 관련된 내용은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_include/page__hero.html&lt;/code&gt;에 작성되어 있다. 해당 html 파일의 내용을 다음과 같이 수정해준다.&lt;/p&gt;
 
 &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% if page.header %}
   &lt;span class=&quot;c&quot;&gt;&amp;lt;!--기존 page_hero.html의 내용을 여기에 넣으면 됩니다.--&amp;gt;&lt;/span&gt;
@@ -53,13 +60,19 @@
 {% endif %}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;post 상단 yaml에 header를 설정한 경우에는 사용자가 post에서 커스텀한대로 Header Image가 overlay되게 하였고, 그렇지 않은 경우에는 default Header Image가 overlay되게 하였다. 변수 선언 부분의 이미지 경로와 투명도를 원하는 값으로 바꾸어주면 된다. 또한, 코드가 너무 길어 원본 page_hero.html 내용은 생략하였기 때문에, 실제 사용할 때는 2번째 줄 주석처리 해놓은 곳에 원본 파일을 붙여넣기 하면 된다.&lt;/p&gt;
+
+&lt;h4 id=&quot;결과&quot;&gt;결과&lt;/h4&gt;
+
 &lt;p&gt;일일이 post를 수정해주지 않아도, 다음과 같이 Header Image가 잘 표현되는 것을 확인할 수 있다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202654404-b94aaafb-fe74-4887-a4fe-aec3ebe20a41.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202654404-b94aaafb-fe74-4887-a4fe-aec3ebe20a41.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;만약 특정 post의 Header Image를 default와 다르게 커스텀하고 싶다면, 기존 방식과 같이 post 상단에 yaml을 추가하면 된다.&lt;/p&gt;
+&lt;h3 id=&quot;2-2-header-image-custom&quot;&gt;2-2) Header Image Custom&lt;/h3&gt;
+
+&lt;p&gt;만약 특정 post의 Header Image를 위에서 설정한 default Header Image와 다르게 커스텀하고 싶다면, 기존 방식과 같이 post 상단에 yaml 코드를 추가하면 된다.&lt;/p&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
@@ -68,26 +81,25 @@
 &lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202655572-633f4cd0-4401-434d-83ff-31a049be98a1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202655572-633f4cd0-4401-434d-83ff-31a049be98a1.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;action&quot;&gt;action&lt;/h2&gt;
+&lt;h3 id=&quot;2-3-default-header-image의-action-지정&quot;&gt;2-3) Default Header Image의 action 지정&lt;/h3&gt;
 
-&lt;p&gt;나는 여기서 추가적으로 action에 대한 부분도 커스텀했다. post 상단 yaml에 til이라는 key를 추가하여 해당 key가 존재하면 특정한 링크로 이동하게끔 하였다.&lt;/p&gt;
+&lt;p&gt;만약 Header Image에 다음과 같이 버튼을 만들어 특정 링크와 연결시키고 싶다면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_include/page__hero.html&lt;/code&gt;에 class=”btn”인 a 태그를 만들어주면 된다.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202934658-cc4dd22f-8123-4940-889f-129cbcd5e324.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% if page.header %}
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--기존 page_hero.html의 내용을 여기에 넣으면 됩니다.--&amp;gt;&lt;/span&gt;
+&lt;p&gt;예를 들어, 나는 post 상단 yaml에 til이라는 key를 추가하여 해당 key가 존재하면 특정한 링크로 이동하게끔 하였다. 링크는 현재 날짜에 따라 자동으로 바뀌도록 하였으며, liquid문의 capture를 사용하여 변수를 선언해주었다.&lt;/p&gt;
 
-&lt;span class=&quot;c&quot;&gt;&amp;lt;!--여기부터는 default header image 설정부분--&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(중략)
+
 {% else %}
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--변수 선언부분--&amp;gt;&lt;/span&gt;
-  {% capture overlay_img_path %}/assets/images/empty-header.jpg{% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 이미지 경로로 바꿔주기--&amp;gt;&lt;/span&gt;
-  {% capture overlay_filter %}rgba(0, 0, 0, 0.5){% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 투명도로 바꿔주기--&amp;gt;&lt;/span&gt;
-  {% capture overlay_filter %}linear-gradient({{ overlay_filter }}, {{ overlay_filter }}){% endcapture %}
+
+  (중략)
+
   &lt;span class=&quot;c&quot;&gt;&amp;lt;!--커스텀 변수--&amp;gt;&lt;/span&gt;
   {% capture date %}{{page.date | remove: &apos;-&apos;}}{% endcapture %} 
   {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
@@ -95,30 +107,32 @@
 
 
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__hero--overlay&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-image: {{ overlay_filter }}, url(&apos;{{ overlay_img_path }}&apos;);&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;wrapper&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;headline&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-        {% if paginator and site.paginate_show_page_num %}
-          {{ site.title }}{% unless paginator.page == 1 %} {{ site.data.ui-text[site.locale].page | default: &quot;Page&quot; }} {{ paginator.page }}{% endunless %}
-        {% else %}
-          {{ page.title | default: site.title | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}
-        {% endif %}
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__lead&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;{{ page.excerpt | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+      (중략)
+
       {% include page__meta.html %}
       &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-      {% assign month_int = month | plus: 0 %}
+      &lt;span class=&quot;c&quot;&gt;&amp;lt;!--til key가 존재하는 경우 버튼 생성--&amp;gt;&lt;/span&gt;
       {% if page.til %}
         &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;btn btn--light-outline btn--large&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;TIL로 돌아가기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
       {% endif %}
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-{% endif %}
+    
+      (중략)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;결과-1&quot;&gt;결과&lt;/h4&gt;
 
-&lt;p&gt;우선, 우리가 게시물을 작성하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;게시물 -&amp;gt; single.html -&amp;gt; default.html&lt;/code&gt;의 순서로 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이므로 해당 템플릿을 수정해주면 된다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">Default Header Image 설정, post에 특정 문구 고정</summary></entry><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;h2 id=&quot;1-문제-상황&quot;&gt;1. 문제 상황&lt;/h2&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[Django]DRF(Django&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Rest&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Framework)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;듀토리얼&quot;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;excerpt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;DRF&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;초기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;setting&quot;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;2022-11-14&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;last_modified_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;2022-11-14&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;til&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&apos;&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202935098-f2820f08-6410-427a-a4c5-ca55a25af7c1.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">post 일일이 수정하지 않고 Default Header Image 지정하는 방법</summary></entry><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;h2 id=&quot;1-문제-상황&quot;&gt;1. 문제 상황&lt;/h2&gt;
 
 &lt;p&gt;페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다.&lt;/p&gt;
 
@@ -892,76 +906,4 @@
             $(&apos;#test&apos;).css(&apos;color&apos;, &apos;red&apos;);
         }
     };
-&lt;/script&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">예시 : 아이디 중복확인 기능 구현</summary></entry><entry><title type="html">url, view, DB 설계</title><link href="http://localhost:4000/canvas/canvas/" rel="alternate" type="text/html" title="url, view, DB 설계" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/canvas/canvas</id><content type="html" xml:base="http://localhost:4000/canvas/canvas/">&lt;h2 id=&quot;template---static&quot;&gt;template - static&lt;/h2&gt;
-
-&lt;p&gt;최근에는 퍼블러셔분에게 받은 파일들이 웹에서 실제로 동작하도록 비즈니스 로직을 짜는 업무를 맡았다. 우선, template 파일과 css 파일을 이어주는 작업을 하였으며, 퍼블러셔 분의 의도에 따라 작동할 수 있게 적절히 js도 작성해서 main.js에 담아주었다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201012894-18ed60f0-0bb5-4125-a6fa-b14f480861ed.png&quot; width=&quot;30%&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201012947-9c24e1eb-8b78-441d-8ea6-1d93cc0ed390.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;url---view---db&quot;&gt;URL - View - DB&lt;/h2&gt;
-
-&lt;p&gt;url 및 뷰 함수를 설계하고 template과 연결시켜주었다. 그리고 서버 DB와 연동하여 기능들이 제대로 동작하도록 해주었으며, 우선 inspectdb로 서버 DB를 쭉 뽑아온 뒤, 필요한 테이블만 추출하여 사용하였다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[urls.py]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.urls&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.views&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;urlpatterns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# log in
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;login/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;login&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;login/check&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;login_check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;login_check&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# sign up
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;signup/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;signup&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;signup/check&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signup_check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;signup_check&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;signup/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signupmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;signupmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# forgot pw
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotpw/changepw/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotpw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;changepwmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;# forgot id
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotid/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotid&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotid/modal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;forgotid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;forgotidmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;forgotidmodal&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;    
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201013951-a13d011d-9e63-4666-a081-47a52ae1062c.png&quot; /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[models.py]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.db&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BigAutoField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary_key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CharField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;blank&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sortable_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CharField&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;blank&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;(...&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[settings.py]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(...&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;DATABASES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&apos;default&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;ENGINE&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;django.db.backends.postgresql_psycopg2&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;NAME&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;DB_NAME&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;USER&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;DB_USER&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;PASSWORD&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;DB_PASSWORD&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;HOST&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;DB_HOST&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;PORT&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;5432&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;    
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(...&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;result&quot;&gt;Result&lt;/h2&gt;
-
-&lt;p&gt;최종적으로 다음과 같이 동작한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201017877-9e9b1677-8243-46ec-870d-c4656c1418d7.png&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="canvas" /><category term="django" /><category term="유클리드소프트" /><summary type="html">canvas 개발</summary></entry></feed>
+&lt;/script&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">예시 : 아이디 중복확인 기능 구현</summary></entry></feed>
