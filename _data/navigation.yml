@@ -21,7 +21,7 @@ main:
             url: /categories/ML
       - title : 'PLATFORM DEV.'
         sublinks:
-          - title: "Web"
+          - title: "Full-Stack Dev"
             url: /categories/web        
           - title: "Blog Dev"
             url: /categories/Blog
