@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[Github_Io]포스트에 특정 문구 고정 - 정완이의 개발 일기장</title>
-<meta name="description" content="post에 특정한 문구가 자동으로 고정되게 하는 법">
+<!-- begin _includes/seo.html --><title>[Github_Io]포스트에 특정 문구 고정(초안) - 정완이의 개발 일기장</title>
+<meta name="description" content="post에 특정한 문구를 고정시키는 법">
 
 
   <meta name="author" content="온정완">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="[Github_Io]포스트에 특정 문구 고정">
+<meta property="og:title" content="[Github_Io]포스트에 특정 문구 고정(초안)">
 <meta property="og:url" content="http://localhost:4000/blog/post_custom/">
 
 
-  <meta property="og:description" content="post에 특정한 문구가 자동으로 고정되게 하는 법">
+  <meta property="og:description" content="post에 특정한 문구를 고정시키는 법">
 
 
 
@@ -214,7 +214,7 @@
 
                                 
                                     <!-- <li> -->
-                                    <a class = "dropdown-item" href="/categories/web">    Web</a>
+                                    <a class = "dropdown-item" href="/categories/web">    Full-Stack Dev</a>
                                     <!-- </li> -->
                                 
                                     <!-- <li> -->
@@ -319,11 +319,11 @@
     <div class="wrapper">
       <h1 id="page-title" class="page__title" itemprop="headline">
         
-          [Github_Io]포스트에 특정 문구 고정
+          [Github_Io]포스트에 특정 문구 고정(초안)
 
         
       </h1>
-      <p class="page__lead">post에 특정한 문구가 자동으로 고정되게 하는 법
+      <p class="page__lead">post에 특정한 문구를 고정시키는 법
 </p>
       
 
@@ -482,7 +482,7 @@
  
             <br>
  
-            📂 <span style="">전체 글 수</style> <span style="">94</style> <span style="">개</style> 
+            📂 <span style="">전체 글 수</style> <span style="">95</style> <span style="">개</style> 
       </li>
       <li>
       
@@ -633,7 +633,7 @@
                     
                 
                     
-                        <li><a href="/categories/DL" class="">Computer Vision (11)</a></li>
+                        <li><a href="/categories/DL" class="">Computer Vision (12)</a></li>
                     
                 
                     
@@ -724,7 +724,7 @@
                     
                 
                     
-                        <li><a href="/categories/web" class="">Web (9)</a></li>
+                        <li><a href="/categories/web" class="">Full-Stack Dev (9)</a></li>
                     
                 
             </ul>             
@@ -945,18 +945,15 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[Github_Io]포스트에 특정 문구 고정">
-    <meta itemprop="description" content="post에 특정한 문구가 자동으로 고정되게 하는 법">
+    <meta itemprop="headline" content="[Github_Io]포스트에 특정 문구 고정(초안)">
+    <meta itemprop="description" content="post에 특정한 문구를 고정시키는 법">
     <meta itemprop="datePublished" content="2022-11-21T00:00:00+09:00">
     <meta itemprop="dateModified" content="2022-11-21T00:00:00+09:00">
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/blog/post_custom/" class="u-url" itemprop="url">[Github_Io]포스트에 특정 문구 고정
-</a>
-          </h1>
+          
           
         </header>
       
@@ -966,13 +963,29 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              
+              <ul class="toc__menu"><li><a href="#ㅁ">ㅁ</a></li></ul>
 
             </nav>
           </aside>
         
         
-<p>우선, 우리가 게시물을 작성하면 <code class="language-plaintext highlighter-rouge">게시물 -&gt; single.html -&gt; default.html</code>의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이므로 해당 템플릿의 내용을 수정해주면 된다.</p>
+<p>우선, 우리가 게시물을 작성하면 <code class="language-plaintext highlighter-rouge">게시물 -&gt; single.html -&gt; default.html</code>의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이다. 따라서 해당 템플릿의 내용을 적절히 수정해주면 포스팅 형식을 바꿀 수 있다.</p>
+
+<h2 id="ㅁ">ㅁ</h2>
+
+<p>single.html의 중간의 {{content}}가 포스팅 내용이 들어가는 영역이다. 따라서 해당 부분 전후로 원하는 문구를 넣으면, 포스팅에 해당 문구가 고정되어 출력된다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        (중략)
+
+        {{ content }}
+
+        {% if page.til %}
+          {% capture date %}{{page.date | remove: '-'}}{% endcapture %}
+          {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
+          {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}        
+          <span class="nt">&lt;br&gt;&lt;br&gt;&lt;div</span> <span class="na">align=</span><span class="s">'center'</span><span class="nt">&gt;&lt;a</span> <span class="na">href=</span><span class="s">"https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}"</span><span class="nt">&gt;</span>본문으로 돌아가기<span class="nt">&lt;/a&gt;&lt;/div&gt;</span>
+        {% endif %}
+</code></pre></div></div>
 
 
         
@@ -1034,7 +1047,7 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%5BGithub_Io%5D%ED%8F%AC%EC%8A%A4%ED%8A%B8%EC%97%90+%ED%8A%B9%EC%A0%95+%EB%AC%B8%EA%B5%AC+%EA%B3%A0%EC%A0%95%20http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fpost_custom%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%5BGithub_Io%5D%ED%8F%AC%EC%8A%A4%ED%8A%B8%EC%97%90+%ED%8A%B9%EC%A0%95+%EB%AC%B8%EA%B5%AC+%EA%B3%A0%EC%A0%95%28%EC%B4%88%EC%95%88%29%20http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fpost_custom%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fblog%2Fpost_custom%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -1049,7 +1062,7 @@
 ">이전</a>
     
     
-      <a href="/til/TIL-12/" class="pagination--pager" title="[ICT 인턴십]2022년 12월 TIL
+      <a href="/dl/cs231n_1/" class="pagination--pager" title="Image Classification
 ">다음</a>
     
   </nav>
@@ -1125,6 +1138,34 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
+        <a href="/dl/cs231n_1/" rel="permalink">Image Classification
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-21">November 21, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 22 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Stanford University CS231n, Spring 2017, Lecture 2
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
         <a href="/blog/header/" rel="permalink">[Github_Io]Header Image 설정
 </a>
             
@@ -1167,34 +1208,6 @@
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 17 2022</p>
     
     <p class="archive__item-excerpt" itemprop="description">css sticky 속성 활용
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/harmonics/bison/" rel="permalink">BISON 회장 인수인계
-</a>
-            
-    </h2>
-    <!--
-
-
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-21">November 21, 2022</time></p>
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 16 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">.
 </p>
   </article>
 </div>

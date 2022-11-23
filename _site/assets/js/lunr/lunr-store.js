@@ -551,10 +551,16 @@ var store = [{
         "url": "/blog/header/",
         "teaser": null
       },{
-        "title": "[Github_Io]포스트에 특정 문구 고정",
-        "excerpt":" 우선, 우리가 게시물을 작성하면 게시물 -&gt; single.html -&gt; default.html의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이므로 해당 템플릿의 내용을 수정해주면 된다.   ","categories": ["Blog"],
+        "title": "[Github_Io]포스트에 특정 문구 고정(초안)",
+        "excerpt":"우선, 우리가 게시물을 작성하면 게시물 -&gt; single.html -&gt; default.html의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이다. 따라서 해당 템플릿의 내용을 적절히 수정해주면 포스팅 형식을 바꿀 수 있다. ㅁ single.html의 중간의 {{content}}가 포스팅 내용이 들어가는 영역이다. 따라서 해당 부분 전후로 원하는 문구를 넣으면, 포스팅에 해당 문구가...","categories": ["Blog"],
         "tags": ["Githubio","jekyll","html"],
         "url": "/blog/post_custom/",
+        "teaser": null
+      },{
+        "title": "Image Classification",
+        "excerpt":"Image Classification? Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들(조명, 화각, 객체 자세 변화, 가려짐,...","categories": ["DL"],
+        "tags": ["DL","ICT인턴십"],
+        "url": "/dl/cs231n_1/",
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 12월 TIL",

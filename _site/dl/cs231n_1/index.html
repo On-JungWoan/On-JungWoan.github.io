@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>투기행위 인식률 개선 - 정완이의 개발 일기장</title>
-<meta name="description" content="쓰레기 무단투기 탐지 프로젝트">
+<!-- begin _includes/seo.html --><title>Image Classification - 정완이의 개발 일기장</title>
+<meta name="description" content="Stanford University CS231n, Spring 2017, Lecture 2">
 
 
   <meta name="author" content="온정완">
@@ -22,32 +22,32 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="투기행위 인식률 개선">
-<meta property="og:url" content="http://localhost:4000/cctv/cctv_detect/">
+<meta property="og:title" content="Image Classification">
+<meta property="og:url" content="http://localhost:4000/dl/cs231n_1/">
 
 
-  <meta property="og:description" content="쓰레기 무단투기 탐지 프로젝트">
-
-
-
+  <meta property="og:description" content="Stanford University CS231n, Spring 2017, Lecture 2">
 
 
 
 
-  <meta property="article:published_time" content="2022-09-30T00:00:00+09:00">
 
 
 
-  <meta property="article:modified_time" content="2022-09-30T00:00:00+09:00">
+  <meta property="article:published_time" content="2022-11-22T00:00:00+09:00">
 
 
 
-  
+  <meta property="article:modified_time" content="2022-11-22T00:00:00+09:00">
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/cctv/cctv_detect/">
+
+<link rel="canonical" href="http://localhost:4000/dl/cs231n_1/">
 
 
 
@@ -319,21 +319,21 @@
     <div class="wrapper">
       <h1 id="page-title" class="page__title" itemprop="headline">
         
-          투기행위 인식률 개선
+          Image Classification
 
         
       </h1>
-      <p class="page__lead">쓰레기 무단투기 탐지 프로젝트
+      <p class="page__lead">Stanford University CS231n, Spring 2017, Lecture 2
 </p>
       
 
 
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-09-30">September 30, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-22">November 22, 2022</time></p>
 
       <p>
       
-        <a href="https://on-jungwoan.github.io/til/TIL-09/#0930" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
+        <a href="https://on-jungwoan.github.io/til/TIL-11/#1122" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
       
     </div>
   </div>
@@ -945,10 +945,10 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="투기행위 인식률 개선">
-    <meta itemprop="description" content="쓰레기 무단투기 탐지 프로젝트">
-    <meta itemprop="datePublished" content="2022-09-30T00:00:00+09:00">
-    <meta itemprop="dateModified" content="2022-09-30T00:00:00+09:00">
+    <meta itemprop="headline" content="Image Classification">
+    <meta itemprop="description" content="Stanford University CS231n, Spring 2017, Lecture 2">
+    <meta itemprop="datePublished" content="2022-11-22T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-11-22T00:00:00+09:00">
 
     <div class="page__inner-wrap">
       
@@ -963,53 +963,241 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#투기-행위-검출이-잘-안됨">투기 행위 검출이 잘 안됨</a></li><li><a href="#1-normal-pose에-대한-오버피팅-가능성">1. Normal Pose에 대한 오버피팅 가능성</a></li><li><a href="#2-threshold-조정">2. threshold 조정</a></li><li><a href="#3-최종-output">3. 최종 Output</a></li></ul>
+              <ul class="toc__menu"><li><a href="#image-classification">Image Classification?</a></li><li><a href="#image-classification의-방법">Image Classification의 방법</a><ul><li><a href="#1-명시적인-규칙-집합-선언">1. 명시적인 규칙 집합 선언</a></li><li><a href="#2-data-driven-approach">2. Data-Driven Approach</a><ul><li><a href="#2-1-nearest-neighbor">2-1) Nearest Neighbor</a><ul><li><a href="#2-1-1-유사성-판단">2-1-1) 유사성 판단</a></li><li><a href="#2-1-2-구현">2-1-2) 구현</a></li><li><a href="#2-1-3-속도">2-1-3) 속도</a></li><li><a href="#2-1-4-문제점">2-1-4) 문제점</a></li></ul></li><li><a href="#2-2-k-nearest-neighbors">2-2) k-Nearest Neighbors</a><ul><li><a href="#2-2-1-하이퍼-파라미터">2-2-1) 하이퍼 파라미터</a></li><li><a href="#2-2-2-문제점">2-2-2) 문제점</a></li></ul></li></ul></li><li><a href="#3-parametric-approach">3. Parametric Approach</a><ul><li><a href="#3-1-linear-classifier">3-1) Linear classifier</a><ul><li><a href="#3-1-1-속도">3-1-1) 속도</a></li><li><a href="#3-1-2-내부-연산">3-1-2) 내부 연산</a></li><li><a href="#3-1-3-문제점">3-1-3) 문제점</a></li></ul></li></ul></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <h2 id="투기-행위-검출이-잘-안됨">투기 행위 검출이 잘 안됨</h2>
-<p>객체 검출은 잘 되는데 투기 행위 인식률이 매우 떨어지는 issue가 발생하였다. 며칠 전 옥상에서 찍은 테스트셋을 모델에 넣어보았는데, 명백히 투기행위로 인식되는 이미지조차 투기 행위로 인식하지 못하고 있었다. 현장에서 사용하는 모델과 다르고, 아직 파인튜닝이 완전히 끝난 모델이 아니긴 했지만, 1500장 당 1~2건밖에 인식을 못할정도로 성능이 너무 안좋아서 차장님께 문의드려서 얻은 결과이다.</p>
+        
+<h1 id="image-classification">Image Classification?</h1>
+
+<p>Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들<code class="language-plaintext highlighter-rouge">(조명, 화각, 객체 자세 변화, 가려짐, background clutter:배경과 비슷, 하나의 클래스에서의 다양성 등등)</code>에 강인해야 한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203449094-862884d0-3a22-49f8-bd8d-c351c8086c13.png" style="border:1px solid black" width="70%" /></p>
 
 <p><br />
 <br /></p>
 
-<h2 id="1-normal-pose에-대한-오버피팅-가능성">1. Normal Pose에 대한 오버피팅 가능성</h2>
-<p>클래스별 train 데이터셋의 수가 1:1이 아니라 노멀 포즈에 대한 데이터셋이 압도적으로 많아 해당 클래스에 대해 오버 피팅되었을 가능성이 있다고 하셨다. 현재 모델에서 사용하고 있는 행위 탐지 로직은 다음과 같다.</p>
+<h1 id="image-classification의-방법">Image Classification의 방법</h1>
+<h2 id="1-명시적인-규칙-집합-선언">1. 명시적인 규칙 집합 선언</h2>
 
-<ol>
-  <li>객체를 검출하여 해당 크기만큼 이미지를 crop한다.</li>
-  <li>crop된 이미지를 CUDA에 넣어 연산하고 다시 호스트에 return한다.</li>
-  <li>return한 output값 중, confidence가 threshold를 넘지 못하는 box는 걸러낸다.</li>
-  <li>최종적으로 남은 box 중에서 score가 가장 좋은 box를 선택한다.</li>
-  <li>해당 box의 클래스가 0(투기행위)인지 확인하고, 0이면 투기행위로 인식하여 경고 음성을 출력한다.</li>
-</ol>
+<p>명시적으로 모든 case에 대한 조건을 하드 코딩하는 알고리즘이다. 강인하지 않고, 또 다른 객체 인식 시, 규칙을 처음부터 다시 선언해야 하기에 확장성이 없다는 큰 문제점이 있어 CV에서는 사용하지 않는다.</p>
 
-<p>하지만 이렇게 될 경우, 노멀 포즈가 오버피팅 되어 있기 때문에 대부분의 case에서 클래스 1(Normal Pose)인 경우가 Max값으로 추출된다. 따라서 투기 행위가 인식될 가능성이 낮아진다는 것이다. 따라서 Max값을 추출할 때, class가 0인것들만 먼저 뽑아서 그 중에서 최대값을 추출하는 방식으로 해당 문제를 해결하였다.</p>
+<h2 id="2-data-driven-approach">2. Data-Driven Approach</h2>
+<p>해당 데이터를 매우 많이 수집하여 ML Classifier를 학습하는 방법이다. 데이터 중심 접근 방법은, 물고기는 무엇이고 고양이는 무엇이다라고 일일이 하드 코딩을 하지 않고, 고양이/물고기 사진을 매우 많이 수집하여 컴퓨터가 스스로 학습할 수 있게 한다.(본 강의는 CIFAR-10을 사용하여 설명한다.)</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/193232012-7e808d9a-af35-4a16-b073-bd1b883a1a70.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203451073-be3dfd3b-6534-4213-a3cc-26d35021f2dc.png" style="border:1px solid black" width="70%" /></p>
+
+<h3 id="2-1-nearest-neighbor">2-1) Nearest Neighbor</h3>
+
+<p>모든 데이터 저장하고(train) 가장 유사한 이미지를 찾는(pred) 가장 간단한 Data-Driven Approach Classifier이다. 다양한 거리척도를 사용하여 유사성을 판단하며, train 시간보다 test 시간이 더 느리다는 특징이 있다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203451448-6422ad0a-9412-4881-a117-473ebc3029bc.png" style="border:1px solid black" width="70%" /></p>
+
+<h4 id="2-1-1-유사성-판단">2-1-1) 유사성 판단</h4>
+
+<p>NN은 유사성 판단에 사용하는 거리척도를 사용한다. 거리척도에는 대표적으로 L1(manhattan) distance, L2(Euclidean) distance가 있다. 거리척도마다 특성이 다르기 때문에, 데이터 및 target의 성질에 따라 적절한 거리척도를 사용해주는 것이 좋다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203452036-3034f012-6434-493e-ac2b-f1f6a93846cd.png" style="border:1px solid black" width="70%" /></p>
+
+<ul>
+  <li>
+    <p><strong>L2 distance</strong></p>
+
+    <p>L1 distance는, test와 train 이미지 픽셀간 차이의 제곱을 계산하며, 모든 픽셀의 수행결과를 모두 더한 뒤, 제곱근을 구한다. 좌표계와 연관이 없으며 각 요소의 특성을 잘 모를때 사용한다.</p>
+  </li>
+  <li>
+    <p><strong>L1 distance</strong></p>
+
+    <p>L1 distance는, test와 train 이미지 픽셀간 차이의 절대값을 계산하며, 모든 픽셀의 수행결과를 모두 더한다. 아래와 같은 예제에서, test 이미지와 train 이미지는 L1 distance 기준 456만큼 차이가 난다고 할 수 있다. L1 distance는 어떤 좌표 시스템이냐에 따라 영향을 많이 받는다. 좌표계만 회전시켜도 distance가 변하며, 각 요소가 특별한 의미를 가지고 있을 때(봉급, 나이 등등) 사용.</p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203451690-c2fac68d-b52c-4831-a443-763a7045a034.png" style="border:1px solid black" width="70%" /></p>
+
+<h4 id="2-1-2-구현">2-1-2) 구현</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+<h4 id="2-1-3-속도">2-1-3) 속도</h4>
+
+<p>train set의 이미지가 N개일때의 속도는 다음과 같다.</p>
+
+<ul>
+  <li>
+    <p><strong>train</strong></p>
+
+    <p>O(1) : 단순히 데이터를 기억하기만 하면 됨</p>
+  </li>
+  <li>
+    <p><strong>pred</strong></p>
+
+    <p>O(N) : N개의 모든 이미지와 비교하는 과정이 필요함</p>
+  </li>
+</ul>
+
+<p>predict 속도가 train 속도보다 느리다.</p>
+
+<h4 id="2-1-4-문제점">2-1-4) 문제점</h4>
+
+<ul>
+  <li>
+    <p><strong>속도 문제</strong></p>
+
+    <p>우리는 train 속도는 느리더라도 predict 속도가 빠른 것을 원한다. train 과정은 어차피 개발 과정에서 진행되는 것이기 때문에, 속도가 느려도 개발 기간이 늘어날 뿐 큰 문제가 되지 않는다. 그러나 실제 서비스 시에는, 모델이 핸드폰이나 브라우저 같은 low power device에서 동작해야할 수도 있기 때문에, predict 속도가 어느정도 빨라야한다. NN은 이러한 우리의 기대와 정반대이기 때문에 실제 서비스 시 사용하기 어렵다.</p>
+  </li>
+  <li>
+    <p><strong>Decision Regions</strong></p>
+
+    <p>다음은 NN의 Decision Regions를 나타낸 것이다. 2차원 평면상의 각 점은 train 데이터이며, 각 점의 색은 해당 점의 클래스를 나타낸다. 색이 칠해진 영역은 NN이 만들어낸 결정 영역이다.</p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203455284-5189918d-43c7-4ac4-a1e8-2cd45c582d2a.png" style="border:1px solid black" width="70%" /></p>
+
+<p>위 사진에서 보았듯이, NN은 최근접 이웃만을 보고 결정 영역을 생성하므로 이상치에 매우 민감하다. 따라서, 초록색 영역 한 가운데에 노란색 영역이 생기기도 하고, 파란색 영역에 빨간색과 초록색이 침범하기도 하는 등, 제대로 된 분류가 되고있지 않다.</p>
 
 <p><br />
 <br /></p>
 
-<h2 id="2-threshold-조정">2. threshold 조정</h2>
+<h3 id="2-2-k-nearest-neighbors">2-2) k-Nearest Neighbors</h3>
 
-<p>또한, threshold값은 하이퍼 파라미터 느낌이어서 적절하게 값을 조정해 주어야한다고 하셨다. 1차적으로 모든 box가 threshold값을 넘지 못해서 score 자체가 뽑아지지 않는 경우가 발생하였다. 따라서 threshold값을 살짝 낮추어주었다.</p>
+<p>NN의 문제점을 일부 개선한 K-NN은, 단순히 가장 가까운 이웃을 찾기보다는 k개의 가까운 이웃을 찾고 이웃끼리 투표를 진행한다. 여기서 가장 많은 투표를 획득한 클래스를 최종 클래스로 분류한다. K는 적어도 1보다 커야 결정 경계가 더 부드러워지고 좋은 결과를 보이며, 여기서 K는 하이퍼 파라미터이다.</p>
 
-<p><br />
-<br /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203457109-9e545353-e202-45d6-8b5d-5c9f9a0cdfe3.png" style="border:1px solid black" width="70%" /></p>
 
-<h2 id="3-최종-output">3. 최종 Output</h2>
+<p>이미지 분류에서 K-NN은 성능이 좋지 않지만, K-NN에 다양한 거리 척도를 사용하면 다양한 문제를 다룰 수 있음(e.g. NLP). 거리척도만 잘 정해주면 어떤 종류의 데이터도 다룰 수 있기 때문에, 새로운 문제를 접했을 때 간단히 시도해 볼만함.</p>
 
-<p>위 방법으로 어느정도 행위 인식률을 개선할 수 있었다(해당 사진은 본인이 직접 옥상에 올라가서 찍은 테스트셋이다).</p>
+<h4 id="2-2-1-하이퍼-파라미터">2-2-1) 하이퍼 파라미터</h4>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/193232846-586cb066-01f8-4ad2-980d-2cd2c731b812.png" alt="image" /></p>
+<p>K-NN의 하이퍼 파리미터에는 K와 거리척도가 있다. 학습 전 사전에 반드시 정해야 하며, 여러가지를 실험/시도해보고 최고를 찾아야 한다. 다음은 하이퍼 파라미터 튜닝의 가능한 시나리오별 정리 내용이다.</p>
+
+<ul>
+  <li>
+    <p><strong>1. 학습 데이터의 정확도와 성능을 최대화하는 하이퍼 파라미터 선택</strong></p>
+
+    <ul>
+      <li>terrible idea</li>
+      <li>K=1일 때, 모델은 학습 데이터를 완벽하게 분류하지만, 위 decision regions에서도 보았듯이, test 데이터에 대해서는 제대로 된 분류가 되지 않는다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203458068-f57a5b93-e8ae-48e9-a9c4-ba12cd55de39.png" style="border:1px solid black" width="70%" /></p>
+
+<ul>
+  <li>
+    <p><strong>2. 전체 데이터 중 학습 데이터를 쪼개서 학습 데이터로 다양한 하이퍼 파라미터 값들을 학습시키고 테스트 데이터에 적용</strong></p>
+
+    <ul>
+      <li>조금 더 합리적이지만 여전히 terrible idea.</li>
+      <li>한번도 보지 못했던 데이터에 대해서 성능이 잘 나와야 하지만, 그저 테스트 셋에서만 잘 동작하는 하이퍼파라미터가 됨.</li>
+    </ul>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203458458-36766ff4-ddd6-419f-8963-5041b8cef1eb.png" style="border:1px solid black" width="70%" /></p>
+
+<ul>
+  <li>
+    <p><strong>3. train, validation, test로 나눔</strong></p>
+
+    <ul>
+      <li>가장 괜찮은 시나리오이다.</li>
+      <li>다양한 하이퍼 파라미터로 트레인 셋을 학습시키고, validation 데이터로 검증한다. 이 때, 가장 좋았던 하이퍼 파라미터를 선택하고, 해당 하이퍼 파라미터를 test에서는 오로지 한번만 수행하여 스코어를 산출한다. 이렇게 되면, test 데이터는 한번도 보지 못한 데이터가 되어 올바른 score를 계산할 수 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203458560-1e5b8c16-5c4f-4521-b5dd-9eabf3a61d97.png" style="border:1px solid black" width="70%" /></p>
+
+<ul>
+  <li>
+    <p><strong>4. cross validation(교차검증)</strong></p>
+
+    <ul>
+      <li>작은 데이터셋일 때 사용하며 딥러닝에서는 계산량이 많아 잘 사용하지 않는다.</li>
+      <li>이외 ML에서는 거의 표준처럼 사용한다.</li>
+      <li>test 데이터를 정하고 validation set을 번갈아가며 지정하는 방식</li>
+    </ul>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203458924-c24f7882-c2c0-4a3f-93b3-f2647d4f71fd.png" style="border:1px solid black" width="70%" /></p>
+
+<h4 id="2-2-2-문제점">2-2-2) 문제점</h4>
+
+<p>이미지에 K-NN을 사용할 수 없는 이유는 다음과 같다.</p>
+
+<ul>
+  <li>
+    <p><strong>1. 너무 느린 predict 시간</strong></p>
+
+    <p>위에서 설명했듯이, predict 시간이 너무 느리다. train 속도는 느리더라도 predict 속도가 빠른 모델이 좋은 모델이다.</p>
+  </li>
+  <li>
+    <p><strong>2. 거리척도의 지각적 유사성 판단 불가</strong></p>
+
+    <p>L1/L2 Distance는 이미지간의 거리를 측정하기에 유용하지 않음</p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203459190-a57a08ae-6a1a-4723-8828-84582b774aa6.png" style="border:1px solid black" width="70%" /></p>
+
+<p>위 사진은 원본 이미지를 적절히 변형한 것이다. 하지만 위 사진의 L2 Distance는 모두 동일하다. 지각적 유사도를 측정하기에 적합하지 않다는 것이다. 혹자는 해당 이미지가 모두 같은 사람이므로 모두 같은 거리이면 좋은 게 아닌가?라고 생각할 수도 있다. 그러나 이 말인 즉슨, 서로 다른 이미지에 대해 적절한 변형을 통해 distance를 가깝게 만들 수도 있고, 동일 이미지에 대해서 미묘한 변화에도 제멋대로 distance가 변할 수 있다는 말과 같다. 이는, 글의 서두에서 밝힌 강인함을 모델이 만족하지 못한다는 뜻이다.</p>
+
+<ul>
+  <li><strong>3. 차원의 저주 문제</strong></li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203468262-2a19d329-1c78-45b3-8417-34182e624887.png" style="border:1px solid black" width="70%" /></p>
+
+<p>K-NN은 트레인 데이터를 이용하여 공간을 분할한다. 따라서 K-NN이 잘 동작하려면 전체 공간을 조밀하게 커버할 만큼의 충분한 트레이닝 샘플이 필요하며, 차원이 증가함에 따라 필요한 샘플의 수는 기하급수적으로 증가한다. 기하 급수적으로 증가하는 모든 것은 언제나 옳지 않으며, 특히 CV에 사용되는 고화질 이미지는 더더욱 데이터 확보가 어렵다는 문제가 있다.</p>
+
+<h2 id="3-parametric-approach">3. Parametric Approach</h2>
+
+<h3 id="3-1-linear-classifier">3-1) Linear classifier</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203469905-ae426a2c-aee7-4b94-86e0-212b85c640fb.png" style="border:1px solid black" width="70%" /></p>
+
+<p>아주 간단한 Neural Network과 CNN 기반 알고리즘이다. Nueral Network와 CNN은 마치 레고 블럭과 같은데, 이러한 딥러닝 알고리즘의 가장 기본이 되는 블럭이 바로 Linear classifier이다. parametric model의 가장 단순한 형태이며 입력 이미지 x와 가중치 w를 요소로 갖고, F(x,W) = Wx + (bias)의 형태로 표현된다.</p>
+
+<h4 id="3-1-1-속도">3-1-1) 속도</h4>
+
+<p>K-NN은 파라미터 없이 그저 전체 트레이닝 셋을 가지고 있었고, 모든 트레이닝 셋을 test time에 사용하여, predict time이 매우 오래걸렸다. 그러나, parametric approach에서는 트레이닝 데이터의 정보를 요약하여 파라미터 W에 모아주기 때문에, predict시에는 W만 있으면 된다. 트레이닝 데이터가 필요 없기 떄문에 predict time이 훨씬 빠르다.</p>
+
+<h4 id="3-1-2-내부-연산">3-1-2) 내부 연산</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203468925-ac0e2616-2d05-4d27-bd57-5dc430618151.png" style="border:1px solid black" width="70%" /></p>
+
+<p>Linear classifier는 x와 W를 가지고 class의 개수와 동일한 output을 출력한다. 각각의 숫자는 각 카테고리의 스코어이며, 특정 카테고리의 스코어가 높다는건, x가 해당 카테고리일 확률이 높다는 것이다.</p>
+
+<p>CIFAR-10을 예로 들어보겠다. 입력이미지는 (32,32,3)의 shape를 가지는 array인데, 해당 array를 (32×32×3=3012, 1)의 열 벡터로 펴준다. 해당 열 벡터가 10-classes 스코어가 되어야 하므로, 10×3072가 되어야 한다. 따라서 최종적으로 W(10×3072) × X(3072×1) = 10×1짜리 스코어가 출력된다. bias term은 10-dim 열 벡터로 입력과 직접 연결되지는 않고, 데이터와 독립적으로 각 카테고리에 연결된다. 고양이가 개 데이터보다 많다면 고양이 클래스에 상응하는 bias가 더 커지는 형태이다.</p>
+
+<h4 id="3-1-3-문제점">3-1-3) 문제점</h4>
+
+<ul>
+  <li><strong>템플릿 관점</strong></li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203470870-c5194c31-15a9-4df7-8d96-ec8e25eb1939.png" style="border:1px solid black" /></p>
+
+<p>위 이미지는 가중치 행렬 W의 한 행을 뽑아서 이미지로 시각화 해본 결과이다. W의 특정 행 벡터(특정 카테고리)와 이미지의 열벡터간의 내적을 계산하는 것은, 클래스 간 템플릿의 유사도를 측정하는 것과 유사하다. 따라서 가중치 행렬 W의 각 행은 각 이미지에 대한 템플릿으로 볼 수 있다. 여기서, Linear classifier는 각 클래스에 대해서 단 하나의 템플릿만을 학습한다. 한 클래스 내에 다양한 특징이 존재할 수 있지만 모든 것을 평균화하기 때문에 horse의 경우 말 머리가 앞뒤에 존재하는 등 제대로 된 템플릿을 생성하는 데 한계가 존재한다.</p>
+
+<ul>
+  <li><strong>결정경계 관점</strong></li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203470910-bc0e95e3-cf16-4cea-98d4-0990473c1671.png" style="border:1px solid black" width="70%" /></p>
+
+<p>이미지를 고차원 공간의 한점이라고 보면, Linear classifier는 각 클래스를 구분시켜 주는 선형 결정 경계를 그어준다. 하지만 선이 하나(템플릿이 하나)이기 때문에, 선 하나로 분류할 수 없는 문제가 생길 수 있다. 가령, 홀/짝수를 분류하는 것과 같은 parity problem은 Linear Classifier로 풀기 힘들다.</p>
+
 
         
           
           
                   
-          <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-09/#0930">본문으로 돌아가기</a></div>
+          <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-11/#1122">본문으로 돌아가기</a></div>
         
         
       </section>
@@ -1026,13 +1214,9 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a><span class="sep">, </span>
     
-      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a><span class="sep">, </span>
-    
-      <a href="/tags/#%EB%94%A5%EB%9F%AC%EB%8B%9D" class="page__taxonomy-item p-category" rel="tag">딥러닝</a><span class="sep">, </span>
-    
-      <a href="/tags/#%EC%9C%A0%ED%81%B4%EB%A6%AC%EB%93%9C%EC%86%8C%ED%94%84%ED%8A%B8" class="page__taxonomy-item p-category" rel="tag">유클리드소프트</a>
+      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a>
     
     </span>
   </p>
@@ -1049,7 +1233,7 @@
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#cctv" class="page__taxonomy-item p-category" rel="tag">cctv</a>
+      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
     
     </span>
   </p>
@@ -1057,7 +1241,7 @@
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-09-30">September 30, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-22">November 22, 2022</time></p>
 
       </footer>
 
@@ -1066,22 +1250,22 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%ED%88%AC%EA%B8%B0%ED%96%89%EC%9C%84+%EC%9D%B8%EC%8B%9D%EB%A5%A0+%EA%B0%9C%EC%84%A0%20http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_detect%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Image+Classification%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_detect%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_detect%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       <!-- 
   <nav class="pagination">
     
-      <a href="/til/TIL-09/" class="pagination--pager" title="[ICT 인턴십]2022년 09월 TIL
+      <a href="/blog/post_custom/" class="pagination--pager" title="[Github_Io]포스트에 특정 문구 고정(초안)
 ">이전</a>
     
     
-      <a href="/dl/activation_opt/" class="pagination--pager" title="Activation Function, Optimizer
+      <a href="/til/TIL-12/" class="pagination--pager" title="[ICT 인턴십]2022년 12월 TIL
 ">다음</a>
     
   </nav>
@@ -1091,26 +1275,6 @@
 
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
   	
   	
   	
@@ -1120,10 +1284,10 @@
 
   <nav class="pagination">
     
-      <a href="/cctv/cctv_json/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>검출정보 json에 저장 / BBOX 이미지 분리</a>
+      <a href="/dl/cuda_stream/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>CUDA Stream</a>
     
     
-      <a href="/cctv/modify_json/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>PyQT에 넘겨줄 json 수정</a>
+      <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
     
   </nav>
 
@@ -1157,40 +1321,12 @@
 
 
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-09-30">September 30, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-22">November 22, 2022</time></p>
 -->
     
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 01 2022</p>
     
     <p class="archive__item-excerpt" itemprop="description">회사에서 배운 내용들 정리
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/dl/cs231n_1/" rel="permalink">Image Classification
-</a>
-            
-    </h2>
-    <!--
-
-
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-09-30">September 30, 2022</time></p>
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 22 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Stanford University CS231n, Spring 2017, Lecture 2
 </p>
   </article>
 </div>
@@ -1213,7 +1349,7 @@
 
 
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-09-30">September 30, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-22">November 22, 2022</time></p>
 -->
     
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 21 2022</p>
@@ -1241,12 +1377,40 @@
 
 
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-09-30">September 30, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-22">November 22, 2022</time></p>
 -->
     
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 18 2022</p>
     
     <p class="archive__item-excerpt" itemprop="description">post 일일이 수정하지 않고 Default Header Image 지정하는 방법
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/sticky/" rel="permalink">[Github_Io]상단 masthead 고정하기
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-22">November 22, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 17 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">css sticky 속성 활용
 </p>
   </article>
 </div>
