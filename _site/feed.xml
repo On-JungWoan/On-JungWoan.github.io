@@ -1,1111 +1,243 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-23T17:55:12+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">Image Classification</title><link href="http://localhost:4000/dl/cs231n_1/" rel="alternate" type="text/html" title="Image Classification" /><published>2022-11-22T00:00:00+09:00</published><updated>2022-11-22T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_1</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_1/">&lt;h1 id=&quot;image-classification&quot;&gt;Image Classification?&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-23T22:25:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Jekyll]빌드 속도 최적화</title><link href="http://localhost:4000/blog/optim_jekyll/" rel="alternate" type="text/html" title="[Jekyll]빌드 속도 최적화" /><published>2022-11-23T00:00:00+09:00</published><updated>2022-11-23T00:00:00+09:00</updated><id>http://localhost:4000/blog/optim_jekyll</id><content type="html" xml:base="http://localhost:4000/blog/optim_jekyll/">{% raw %}
 
-&lt;p&gt;Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(조명, 화각, 객체 자세 변화, 가려짐, background clutter:배경과 비슷, 하나의 클래스에서의 다양성 등등)&lt;/code&gt;에 강인해야 한다.&lt;/p&gt;
+## 1. 최적화 방법
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203449094-862884d0-3a22-49f8-bd8d-c351c8086c13.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+Hugo 대비 Jekyll의 가장 큰 단점은 바로 빌드 시간이 매우 느리다는 것이다. 포스팅의 개수가 늘어날수록 빌드 시간은 매우 느려져서, 혹자의 경우 빌드 시간이 10분을 초과하는 경우도 있다고 한다. 따라서 해당 포스팅에서는 Jekyll 빌드 시간을 최적화하는 방법에 대해 소개한다.
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+### 1-1) liquid-c
 
-&lt;h1 id=&quot;image-classification의-방법&quot;&gt;Image Classification의 방법&lt;/h1&gt;
-&lt;h2 id=&quot;1-명시적인-규칙-집합-선언&quot;&gt;1. 명시적인 규칙 집합 선언&lt;/h2&gt;
+liquid-c를 설치하면, liquid문을 C로 처리하면서 빌드 속도를 올려준다고 한다. gem install을 사용하여 쉘에서 직접 설치하거나, gemfile 작성 후 bundle install로 liquid-c를 설치해주면 끝이다.
 
-&lt;p&gt;명시적으로 모든 case에 대한 조건을 하드 코딩하는 알고리즘이다. 강인하지 않고, 또 다른 객체 인식 시, 규칙을 처음부터 다시 선언해야 하기에 확장성이 없다는 큰 문제점이 있어 CV에서는 사용하지 않는다.&lt;/p&gt;
+- **1. 직접 설치**
 
-&lt;h2 id=&quot;2-data-driven-approach&quot;&gt;2. Data-Driven Approach&lt;/h2&gt;
-&lt;p&gt;해당 데이터를 매우 많이 수집하여 ML Classifier를 학습하는 방법이다. 데이터 중심 접근 방법은, 물고기는 무엇이고 고양이는 무엇이다라고 일일이 하드 코딩을 하지 않고, 고양이/물고기 사진을 매우 많이 수집하여 컴퓨터가 스스로 학습할 수 있게 한다.(본 강의는 CIFAR-10을 사용하여 설명한다.)&lt;/p&gt;
+```ruby
+gem install liquid-c
+```
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451073-be3dfd3b-6534-4213-a3cc-26d35021f2dc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+- **2. gemfile 작성**
 
-&lt;h3 id=&quot;2-1-nearest-neighbor&quot;&gt;2-1) Nearest Neighbor&lt;/h3&gt;
+```ruby
+gem &quot;liquid-c&quot;
+```
 
-&lt;p&gt;모든 데이터 저장하고(train) 가장 유사한 이미지를 찾는(pred) 가장 간단한 Data-Driven Approach Classifier이다. 다양한 거리척도를 사용하여 유사성을 판단하며, train 시간보다 test 시간이 더 느리다는 특징이 있다.&lt;/p&gt;
+```
+bundle install
+```
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451448-6422ad0a-9412-4881-a117-473ebc3029bc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;br&gt;
 
-&lt;h4 id=&quot;2-1-1-유사성-판단&quot;&gt;2-1-1) 유사성 판단&lt;/h4&gt;
+### 1-2) incremental 옵션 변경
 
-&lt;p&gt;NN은 유사성 판단에 사용하는 거리척도를 사용한다. 거리척도에는 대표적으로 L1(manhattan) distance, L2(Euclidean) distance가 있다. 거리척도마다 특성이 다르기 때문에, 데이터 및 target의 성질에 따라 적절한 거리척도를 사용해주는 것이 좋다.&lt;/p&gt;
+기존 jekyll은 하나의 파일만 수정되어도, 전체 파일을 전부 빌드한다. 따라서 포스트 개수가 많아질수록 빌드 시간도 오래 걸린다. 필자의 경우, 포스팅 100개 기준 빌드 시간은 약 15초정도였다. 따라서 바뀐 부분만 빌드되게 하여 빌드 속도를 크게 향상시킬 수 있다. `_config.yml`의 `incremental`옵션을 true로 바꾸어주면 자동으로 적용된다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203452036-3034f012-6434-493e-ac2b-f1f6a93846cd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;br&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L2 distance&lt;/strong&gt;&lt;/p&gt;
+### 1-3) limit post 설정
 
-    &lt;p&gt;L1 distance는, test와 train 이미지 픽셀간 차이의 제곱을 계산하며, 모든 픽셀의 수행결과를 모두 더한 뒤, 제곱근을 구한다. 좌표계와 연관이 없으며 각 요소의 특성을 잘 모를때 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L1 distance&lt;/strong&gt;&lt;/p&gt;
+jekyll 빌드 시, `--limit_posts` 플래그를 사용하면, post 개수에 제한을 걸어 빌드할 수 있다. 가령 터미널에 다음과 같이 입력했다고 가정하면, 작성일자 기준 최신 3개의 포스팅만 볼 수 있다. 포스팅 디버깅할 떄 아주 유용하게 사용할 수 있을 것 같다.
 
-    &lt;p&gt;L1 distance는, test와 train 이미지 픽셀간 차이의 절대값을 계산하며, 모든 픽셀의 수행결과를 모두 더한다. 아래와 같은 예제에서, test 이미지와 train 이미지는 L1 distance 기준 456만큼 차이가 난다고 할 수 있다. L1 distance는 어떤 좌표 시스템이냐에 따라 영향을 많이 받는다. 좌표계만 회전시켜도 distance가 변하며, 각 요소가 특별한 의미를 가지고 있을 때(봉급, 나이 등등) 사용.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+```ruby
+bundle exec jekyll serve --limit_posts 3
+```
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451690-c2fac68d-b52c-4831-a443-763a7045a034.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-&lt;h4 id=&quot;2-1-2-구현&quot;&gt;2-1-2) 구현&lt;/h4&gt;
+## 2. 속도 차이
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+생각보다 속도 차이가 엄청나서 깜짝 놀랐다. 빨라져봤자 3~4초정도일 줄 알았는데, 거의 15배 가량의 눈부신 성능 향상을 보여주었다.
 
-&lt;h4 id=&quot;2-1-3-속도&quot;&gt;2-1-3) 속도&lt;/h4&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[최적화 전]&lt;/strong&gt;&lt;/div&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203552958-6d710312-cf2b-487e-951f-10cb1ef022ad.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;train set의 이미지가 N개일때의 속도는 다음과 같다.&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[최적화 후]&lt;/strong&gt;&lt;/div&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203555535-3e3e189b-ccfb-42c8-ad58-7285ddb7a2d8.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;train&lt;/strong&gt;&lt;/p&gt;
+{% endraw %}</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">다양한 방법을 사용하여 Jekyll 빌드 시간 개선</summary></entry><entry><title type="html">Image Classification</title><link href="http://localhost:4000/dl/cs231n_1/" rel="alternate" type="text/html" title="Image Classification" /><published>2022-11-22T00:00:00+09:00</published><updated>2022-11-22T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_1</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_1/">{% raw %}
 
-    &lt;p&gt;O(1) : 단순히 데이터를 기억하기만 하면 됨&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;pred&lt;/strong&gt;&lt;/p&gt;
+# Image Classification?
 
-    &lt;p&gt;O(N) : N개의 모든 이미지와 비교하는 과정이 필요함&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들`(조명, 화각, 객체 자세 변화, 가려짐, background clutter:배경과 비슷, 하나의 클래스에서의 다양성 등등)`에 강인해야 한다.
 
-&lt;p&gt;predict 속도가 train 속도보다 느리다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203449094-862884d0-3a22-49f8-bd8d-c351c8086c13.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;2-1-4-문제점&quot;&gt;2-1-4) 문제점&lt;/h4&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;속도 문제&lt;/strong&gt;&lt;/p&gt;
+# Image Classification의 방법
+## 1. 명시적인 규칙 집합 선언
 
-    &lt;p&gt;우리는 train 속도는 느리더라도 predict 속도가 빠른 것을 원한다. train 과정은 어차피 개발 과정에서 진행되는 것이기 때문에, 속도가 느려도 개발 기간이 늘어날 뿐 큰 문제가 되지 않는다. 그러나 실제 서비스 시에는, 모델이 핸드폰이나 브라우저 같은 low power device에서 동작해야할 수도 있기 때문에, predict 속도가 어느정도 빨라야한다. NN은 이러한 우리의 기대와 정반대이기 때문에 실제 서비스 시 사용하기 어렵다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Decision Regions&lt;/strong&gt;&lt;/p&gt;
+명시적으로 모든 case에 대한 조건을 하드 코딩하는 알고리즘이다. 강인하지 않고, 또 다른 객체 인식 시, 규칙을 처음부터 다시 선언해야 하기에 확장성이 없다는 큰 문제점이 있어 CV에서는 사용하지 않는다.
 
-    &lt;p&gt;다음은 NN의 Decision Regions를 나타낸 것이다. 2차원 평면상의 각 점은 train 데이터이며, 각 점의 색은 해당 점의 클래스를 나타낸다. 색이 칠해진 영역은 NN이 만들어낸 결정 영역이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+## 2. Data-Driven Approach
+해당 데이터를 매우 많이 수집하여 ML Classifier를 학습하는 방법이다. 데이터 중심 접근 방법은, 물고기는 무엇이고 고양이는 무엇이다라고 일일이 하드 코딩을 하지 않고, 고양이/물고기 사진을 매우 많이 수집하여 컴퓨터가 스스로 학습할 수 있게 한다.(본 강의는 CIFAR-10을 사용하여 설명한다.)
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203455284-5189918d-43c7-4ac4-a1e8-2cd45c582d2a.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451073-be3dfd3b-6534-4213-a3cc-26d35021f2dc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;위 사진에서 보았듯이, NN은 최근접 이웃만을 보고 결정 영역을 생성하므로 이상치에 매우 민감하다. 따라서, 초록색 영역 한 가운데에 노란색 영역이 생기기도 하고, 파란색 영역에 빨간색과 초록색이 침범하기도 하는 등, 제대로 된 분류가 되고있지 않다.&lt;/p&gt;
+### 2-1) Nearest Neighbor
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+모든 데이터 저장하고(train) 가장 유사한 이미지를 찾는(pred) 가장 간단한 Data-Driven Approach Classifier이다. 다양한 거리척도를 사용하여 유사성을 판단하며, train 시간보다 test 시간이 더 느리다는 특징이 있다.
 
-&lt;h3 id=&quot;2-2-k-nearest-neighbors&quot;&gt;2-2) k-Nearest Neighbors&lt;/h3&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451448-6422ad0a-9412-4881-a117-473ebc3029bc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;NN의 문제점을 일부 개선한 K-NN은, 단순히 가장 가까운 이웃을 찾기보다는 k개의 가까운 이웃을 찾고 이웃끼리 투표를 진행한다. 여기서 가장 많은 투표를 획득한 클래스를 최종 클래스로 분류한다. K는 적어도 1보다 커야 결정 경계가 더 부드러워지고 좋은 결과를 보이며, 여기서 K는 하이퍼 파라미터이다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203457109-9e545353-e202-45d6-8b5d-5c9f9a0cdfe3.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+#### 2-1-1) 유사성 판단
 
-&lt;p&gt;이미지 분류에서 K-NN은 성능이 좋지 않지만, K-NN에 다양한 거리 척도를 사용하면 다양한 문제를 다룰 수 있음(e.g. NLP). 거리척도만 잘 정해주면 어떤 종류의 데이터도 다룰 수 있기 때문에, 새로운 문제를 접했을 때 간단히 시도해 볼만함.&lt;/p&gt;
+NN은 유사성 판단에 사용하는 거리척도를 사용한다. 거리척도에는 대표적으로 L1(manhattan) distance, L2(Euclidean) distance가 있다. 거리척도마다 특성이 다르기 때문에, 데이터 및 target의 성질에 따라 적절한 거리척도를 사용해주는 것이 좋다.
 
-&lt;h4 id=&quot;2-2-1-하이퍼-파라미터&quot;&gt;2-2-1) 하이퍼 파라미터&lt;/h4&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203452036-3034f012-6434-493e-ac2b-f1f6a93846cd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;K-NN의 하이퍼 파리미터에는 K와 거리척도가 있다. 학습 전 사전에 반드시 정해야 하며, 여러가지를 실험/시도해보고 최고를 찾아야 한다. 다음은 하이퍼 파라미터 튜닝의 가능한 시나리오별 정리 내용이다.&lt;/p&gt;
+- **L2 distance**
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;1. 학습 데이터의 정확도와 성능을 최대화하는 하이퍼 파라미터 선택&lt;/strong&gt;&lt;/p&gt;
+  L1 distance는, test와 train 이미지 픽셀간 차이의 제곱을 계산하며, 모든 픽셀의 수행결과를 모두 더한 뒤, 제곱근을 구한다. 좌표계와 연관이 없으며 각 요소의 특성을 잘 모를때 사용한다.
 
-    &lt;ul&gt;
-      &lt;li&gt;terrible idea&lt;/li&gt;
-      &lt;li&gt;K=1일 때, 모델은 학습 데이터를 완벽하게 분류하지만, 위 decision regions에서도 보았듯이, test 데이터에 대해서는 제대로 된 분류가 되지 않는다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+- **L1 distance**
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458068-f57a5b93-e8ae-48e9-a9c4-ba12cd55de39.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+  L1 distance는, test와 train 이미지 픽셀간 차이의 절대값을 계산하며, 모든 픽셀의 수행결과를 모두 더한다. 아래와 같은 예제에서, test 이미지와 train 이미지는 L1 distance 기준 456만큼 차이가 난다고 할 수 있다. L1 distance는 어떤 좌표 시스템이냐에 따라 영향을 많이 받는다. 좌표계만 회전시켜도 distance가 변하며, 각 요소가 특별한 의미를 가지고 있을 때(봉급, 나이 등등) 사용.
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;2. 전체 데이터 중 학습 데이터를 쪼개서 학습 데이터로 다양한 하이퍼 파라미터 값들을 학습시키고 테스트 데이터에 적용&lt;/strong&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451690-c2fac68d-b52c-4831-a443-763a7045a034.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-    &lt;ul&gt;
-      &lt;li&gt;조금 더 합리적이지만 여전히 terrible idea.&lt;/li&gt;
-      &lt;li&gt;한번도 보지 못했던 데이터에 대해서 성능이 잘 나와야 하지만, 그저 테스트 셋에서만 잘 동작하는 하이퍼파라미터가 됨.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458458-36766ff4-ddd6-419f-8963-5041b8cef1eb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+#### 2-1-2) 구현
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;3. train, validation, test로 나눔&lt;/strong&gt;&lt;/p&gt;
+```python
+```
 
-    &lt;ul&gt;
-      &lt;li&gt;가장 괜찮은 시나리오이다.&lt;/li&gt;
-      &lt;li&gt;다양한 하이퍼 파라미터로 트레인 셋을 학습시키고, validation 데이터로 검증한다. 이 때, 가장 좋았던 하이퍼 파라미터를 선택하고, 해당 하이퍼 파라미터를 test에서는 오로지 한번만 수행하여 스코어를 산출한다. 이렇게 되면, test 데이터는 한번도 보지 못한 데이터가 되어 올바른 score를 계산할 수 있다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+#### 2-1-3) 속도
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458560-1e5b8c16-5c4f-4521-b5dd-9eabf3a61d97.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+train set의 이미지가 N개일때의 속도는 다음과 같다.
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;4. cross validation(교차검증)&lt;/strong&gt;&lt;/p&gt;
+- **train** 
 
-    &lt;ul&gt;
-      &lt;li&gt;작은 데이터셋일 때 사용하며 딥러닝에서는 계산량이 많아 잘 사용하지 않는다.&lt;/li&gt;
-      &lt;li&gt;이외 ML에서는 거의 표준처럼 사용한다.&lt;/li&gt;
-      &lt;li&gt;test 데이터를 정하고 validation set을 번갈아가며 지정하는 방식&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+  O(1) : 단순히 데이터를 기억하기만 하면 됨
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458924-c24f7882-c2c0-4a3f-93b3-f2647d4f71fd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+- **pred** 
 
-&lt;h4 id=&quot;2-2-2-문제점&quot;&gt;2-2-2) 문제점&lt;/h4&gt;
+  O(N) : N개의 모든 이미지와 비교하는 과정이 필요함
 
-&lt;p&gt;이미지에 K-NN을 사용할 수 없는 이유는 다음과 같다.&lt;/p&gt;
+predict 속도가 train 속도보다 느리다.
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;1. 너무 느린 predict 시간&lt;/strong&gt;&lt;/p&gt;
+#### 2-1-4) 문제점
 
-    &lt;p&gt;위에서 설명했듯이, predict 시간이 너무 느리다. train 속도는 느리더라도 predict 속도가 빠른 모델이 좋은 모델이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;2. 거리척도의 지각적 유사성 판단 불가&lt;/strong&gt;&lt;/p&gt;
+- **속도 문제**
 
-    &lt;p&gt;L1/L2 Distance는 이미지간의 거리를 측정하기에 유용하지 않음&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+  우리는 train 속도는 느리더라도 predict 속도가 빠른 것을 원한다. train 과정은 어차피 개발 과정에서 진행되는 것이기 때문에, 속도가 느려도 개발 기간이 늘어날 뿐 큰 문제가 되지 않는다. 그러나 실제 서비스 시에는, 모델이 핸드폰이나 브라우저 같은 low power device에서 동작해야할 수도 있기 때문에, predict 속도가 어느정도 빨라야한다. NN은 이러한 우리의 기대와 정반대이기 때문에 실제 서비스 시 사용하기 어렵다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203459190-a57a08ae-6a1a-4723-8828-84582b774aa6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+- **Decision Regions**
 
-&lt;p&gt;위 사진은 원본 이미지를 적절히 변형한 것이다. 하지만 위 사진의 L2 Distance는 모두 동일하다. 지각적 유사도를 측정하기에 적합하지 않다는 것이다. 혹자는 해당 이미지가 모두 같은 사람이므로 모두 같은 거리이면 좋은 게 아닌가?라고 생각할 수도 있다. 그러나 이 말인 즉슨, 서로 다른 이미지에 대해 적절한 변형을 통해 distance를 가깝게 만들 수도 있고, 동일 이미지에 대해서 미묘한 변화에도 제멋대로 distance가 변할 수 있다는 말과 같다. 이는, 글의 서두에서 밝힌 강인함을 모델이 만족하지 못한다는 뜻이다.&lt;/p&gt;
+  다음은 NN의 Decision Regions를 나타낸 것이다. 2차원 평면상의 각 점은 train 데이터이며, 각 점의 색은 해당 점의 클래스를 나타낸다. 색이 칠해진 영역은 NN이 만들어낸 결정 영역이다.
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;3. 차원의 저주 문제&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203455284-5189918d-43c7-4ac4-a1e8-2cd45c582d2a.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468262-2a19d329-1c78-45b3-8417-34182e624887.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+  위 사진에서 보았듯이, NN은 최근접 이웃만을 보고 결정 영역을 생성하므로 이상치에 매우 민감하다. 따라서, 초록색 영역 한 가운데에 노란색 영역이 생기기도 하고, 파란색 영역에 빨간색과 초록색이 침범하기도 하는 등, 제대로 된 분류가 되고있지 않다.
 
-&lt;p&gt;K-NN은 트레인 데이터를 이용하여 공간을 분할한다. 따라서 K-NN이 잘 동작하려면 전체 공간을 조밀하게 커버할 만큼의 충분한 트레이닝 샘플이 필요하며, 차원이 증가함에 따라 필요한 샘플의 수는 기하급수적으로 증가한다. 기하 급수적으로 증가하는 모든 것은 언제나 옳지 않으며, 특히 CV에 사용되는 고화질 이미지는 더더욱 데이터 확보가 어렵다는 문제가 있다.&lt;/p&gt;
 
-&lt;h2 id=&quot;3-parametric-approach&quot;&gt;3. Parametric Approach&lt;/h2&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-&lt;h3 id=&quot;3-1-linear-classifier&quot;&gt;3-1) Linear classifier&lt;/h3&gt;
+### 2-2) k-Nearest Neighbors
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203469905-ae426a2c-aee7-4b94-86e0-212b85c640fb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+NN의 문제점을 일부 개선한 K-NN은, 단순히 가장 가까운 이웃을 찾기보다는 k개의 가까운 이웃을 찾고 이웃끼리 투표를 진행한다. 여기서 가장 많은 투표를 획득한 클래스를 최종 클래스로 분류한다. K는 적어도 1보다 커야 결정 경계가 더 부드러워지고 좋은 결과를 보이며, 여기서 K는 하이퍼 파라미터이다.
 
-&lt;p&gt;아주 간단한 Neural Network과 CNN 기반 알고리즘이다. Nueral Network와 CNN은 마치 레고 블럭과 같은데, 이러한 딥러닝 알고리즘의 가장 기본이 되는 블럭이 바로 Linear classifier이다. parametric model의 가장 단순한 형태이며 입력 이미지 x와 가중치 w를 요소로 갖고, F(x,W) = Wx + (bias)의 형태로 표현된다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203457109-9e545353-e202-45d6-8b5d-5c9f9a0cdfe3.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;3-1-1-속도&quot;&gt;3-1-1) 속도&lt;/h4&gt;
 
-&lt;p&gt;K-NN은 파라미터 없이 그저 전체 트레이닝 셋을 가지고 있었고, 모든 트레이닝 셋을 test time에 사용하여, predict time이 매우 오래걸렸다. 그러나, parametric approach에서는 트레이닝 데이터의 정보를 요약하여 파라미터 W에 모아주기 때문에, predict시에는 W만 있으면 된다. 트레이닝 데이터가 필요 없기 떄문에 predict time이 훨씬 빠르다.&lt;/p&gt;
+이미지 분류에서 K-NN은 성능이 좋지 않지만, K-NN에 다양한 거리 척도를 사용하면 다양한 문제를 다룰 수 있음(e.g. NLP). 거리척도만 잘 정해주면 어떤 종류의 데이터도 다룰 수 있기 때문에, 새로운 문제를 접했을 때 간단히 시도해 볼만함.
 
-&lt;h4 id=&quot;3-1-2-내부-연산&quot;&gt;3-1-2) 내부 연산&lt;/h4&gt;
+#### 2-2-1) 하이퍼 파라미터
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468925-ac0e2616-2d05-4d27-bd57-5dc430618151.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+K-NN의 하이퍼 파리미터에는 K와 거리척도가 있다. 학습 전 사전에 반드시 정해야 하며, 여러가지를 실험/시도해보고 최고를 찾아야 한다. 다음은 하이퍼 파라미터 튜닝의 가능한 시나리오별 정리 내용이다.
 
-&lt;p&gt;Linear classifier는 x와 W를 가지고 class의 개수와 동일한 output을 출력한다. 각각의 숫자는 각 카테고리의 스코어이며, 특정 카테고리의 스코어가 높다는건, x가 해당 카테고리일 확률이 높다는 것이다.&lt;/p&gt;
+- **1. 학습 데이터의 정확도와 성능을 최대화하는 하이퍼 파라미터 선택**
 
-&lt;p&gt;CIFAR-10을 예로 들어보겠다. 입력이미지는 (32,32,3)의 shape를 가지는 array인데, 해당 array를 (32×32×3=3012, 1)의 열 벡터로 펴준다. 해당 열 벡터가 10-classes 스코어가 되어야 하므로, 10×3072가 되어야 한다. 따라서 최종적으로 W(10×3072) × X(3072×1) = 10×1짜리 스코어가 출력된다. bias term은 10-dim 열 벡터로 입력과 직접 연결되지는 않고, 데이터와 독립적으로 각 카테고리에 연결된다. 고양이가 개 데이터보다 많다면 고양이 클래스에 상응하는 bias가 더 커지는 형태이다.&lt;/p&gt;
+  - terrible idea
+  - K=1일 때, 모델은 학습 데이터를 완벽하게 분류하지만, 위 decision regions에서도 보았듯이, test 데이터에 대해서는 제대로 된 분류가 되지 않는다.
 
-&lt;h4 id=&quot;3-1-3-문제점&quot;&gt;3-1-3) 문제점&lt;/h4&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458068-f57a5b93-e8ae-48e9-a9c4-ba12cd55de39.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;템플릿 관점&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470870-c5194c31-15a9-4df7-8d96-ec8e25eb1939.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;위 이미지는 가중치 행렬 W의 한 행을 뽑아서 이미지로 시각화 해본 결과이다. W의 특정 행 벡터(특정 카테고리)와 이미지의 열벡터간의 내적을 계산하는 것은, 클래스 간 템플릿의 유사도를 측정하는 것과 유사하다. 따라서 가중치 행렬 W의 각 행은 각 이미지에 대한 템플릿으로 볼 수 있다. 여기서, Linear classifier는 각 클래스에 대해서 단 하나의 템플릿만을 학습한다. 한 클래스 내에 다양한 특징이 존재할 수 있지만 모든 것을 평균화하기 때문에 horse의 경우 말 머리가 앞뒤에 존재하는 등 제대로 된 템플릿을 생성하는 데 한계가 존재한다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;결정경계 관점&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
+- **2. 전체 데이터 중 학습 데이터를 쪼개서 학습 데이터로 다양한 하이퍼 파라미터 값들을 학습시키고 테스트 데이터에 적용**
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470910-bc0e95e3-cf16-4cea-98d4-0990473c1671.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+  - 조금 더 합리적이지만 여전히 terrible idea.
+  - 한번도 보지 못했던 데이터에 대해서 성능이 잘 나와야 하지만, 그저 테스트 셋에서만 잘 동작하는 하이퍼파라미터가 됨.
 
-&lt;p&gt;이미지를 고차원 공간의 한점이라고 보면, Linear classifier는 각 클래스를 구분시켜 주는 선형 결정 경계를 그어준다. 하지만 선이 하나(템플릿이 하나)이기 때문에, 선 하나로 분류할 수 없는 문제가 생길 수 있다. 가령, 홀/짝수를 분류하는 것과 같은 parity problem은 Linear Classifier로 풀기 힘들다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 2</summary></entry><entry><title type="html">[Github_Io]포스트에 특정 문구 고정(초안)</title><link href="http://localhost:4000/blog/post_custom/" rel="alternate" type="text/html" title="[Github_Io]포스트에 특정 문구 고정(초안)" /><published>2022-11-21T00:00:00+09:00</published><updated>2022-11-21T00:00:00+09:00</updated><id>http://localhost:4000/blog/post_custom</id><content type="html" xml:base="http://localhost:4000/blog/post_custom/">&lt;p&gt;우선, 우리가 게시물을 작성하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;게시물 -&amp;gt; single.html -&amp;gt; default.html&lt;/code&gt;의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이다. 따라서 해당 템플릿의 내용을 적절히 수정해주면 포스팅 형식을 바꿀 수 있다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458458-36766ff4-ddd6-419f-8963-5041b8cef1eb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;ㅁ&quot;&gt;ㅁ&lt;/h2&gt;
+- **3. train, validation, test로 나눔**
 
-&lt;p&gt;single.html의 중간의 {{content}}가 포스팅 내용이 들어가는 영역이다. 따라서 해당 부분 전후로 원하는 문구를 넣으면, 포스팅에 해당 문구가 고정되어 출력된다.&lt;/p&gt;
+  - 가장 괜찮은 시나리오이다.
+  - 다양한 하이퍼 파라미터로 트레인 셋을 학습시키고, validation 데이터로 검증한다. 이 때, 가장 좋았던 하이퍼 파라미터를 선택하고, 해당 하이퍼 파라미터를 test에서는 오로지 한번만 수행하여 스코어를 산출한다. 이렇게 되면, test 데이터는 한번도 보지 못한 데이터가 되어 올바른 score를 계산할 수 있다.
 
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        (중략)
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458560-1e5b8c16-5c4f-4521-b5dd-9eabf3a61d97.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-        {{ content }}
+- **4. cross validation(교차검증)**
 
-        {% if page.til %}
-          {% capture date %}{{page.date | remove: &apos;-&apos;}}{% endcapture %}
-          {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
-          {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}        
-          &lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;align=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;center&apos;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;본문으로 돌아가기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-        {% endif %}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">post에 특정한 문구를 고정시키는 법</summary></entry><entry><title type="html">[Github_Io]Header Image 설정</title><link href="http://localhost:4000/blog/header/" rel="alternate" type="text/html" title="[Github_Io]Header Image 설정" /><published>2022-11-18T00:00:00+09:00</published><updated>2022-11-18T00:00:00+09:00</updated><id>http://localhost:4000/blog/header</id><content type="html" xml:base="http://localhost:4000/blog/header/">&lt;h2 id=&quot;1-header-image-overlay-by-yaml&quot;&gt;1. Header Image Overlay by yaml&lt;/h2&gt;
+  - 작은 데이터셋일 때 사용하며 딥러닝에서는 계산량이 많아 잘 사용하지 않는다.
+  - 이외 ML에서는 거의 표준처럼 사용한다.
+  - test 데이터를 정하고 validation set을 번갈아가며 지정하는 방식
 
-&lt;p&gt;post 최상단에 다음과 같은 yaml 코드를 집어넣으면 Header Image를 Overlay할 수 있다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458924-c24f7882-c2c0-4a3f-93b3-f2647d4f71fd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;CUDA&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;excerpt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Null&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Non-Null&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Stream&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;overlay_image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/assets/images/white_img.jpg&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;overlay_filter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;TIL로&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;돌아가기&quot;&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/til/TIL-11/#1031&quot;&lt;/span&gt;
-&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;      
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+#### 2-2-2) 문제점
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202646217-709687fe-b704-4d3a-b5b4-fa20218c8bdc.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+이미지에 K-NN을 사용할 수 없는 이유는 다음과 같다.
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+- **1. 너무 느린 predict 시간**
 
-&lt;h3 id=&quot;1-1-문제점&quot;&gt;1-1) 문제점&lt;/h3&gt;
+  위에서 설명했듯이, predict 시간이 너무 느리다. train 속도는 느리더라도 predict 속도가 빠른 모델이 좋은 모델이다.
 
-&lt;p&gt;단순히 post 상단에 해당 코드를 넣기만 해도 잘 동작하지만, 나는 기존 포스팅이 약 90개 정도가 있기 때문에 일일이 다 수정해 줄 수가 없는 노릇이었다. 또한, 게시물마다 header image를 다르게 할 것도 아니기 때문에, 디폴트 header image를 만들어 일단 모든 게시물에 적용시키고, 특별하게 수정하고자 하는 게시물은 위 방법으로 수정할 수 있도록 설계하였다. 따라서 본 포스팅에서는 post 수정 없이 직접 html을 수정하여 default header image를 삽입할 수 있는 방법을 소개한다.&lt;/p&gt;
+- **2. 거리척도의 지각적 유사성 판단 불가**
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+  L1/L2 Distance는 이미지간의 거리를 측정하기에 유용하지 않음
 
-&lt;h2 id=&quot;2-default-header-image&quot;&gt;2. Default Header Image&lt;/h2&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203459190-a57a08ae-6a1a-4723-8828-84582b774aa6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-1-default-header-image-생성&quot;&gt;2-1) Default Header Image 생성&lt;/h3&gt;
+  위 사진은 원본 이미지를 적절히 변형한 것이다. 하지만 위 사진의 L2 Distance는 모두 동일하다. 지각적 유사도를 측정하기에 적합하지 않다는 것이다. 혹자는 해당 이미지가 모두 같은 사람이므로 모두 같은 거리이면 좋은 게 아닌가?라고 생각할 수도 있다. 그러나 이 말인 즉슨, 서로 다른 이미지에 대해 적절한 변형을 통해 distance를 가깝게 만들 수도 있고, 동일 이미지에 대해서 미묘한 변화에도 제멋대로 distance가 변할 수 있다는 말과 같다. 이는, 글의 서두에서 밝힌 강인함을 모델이 만족하지 못한다는 뜻이다.
 
-&lt;p&gt;Header Image와 관련된 내용은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_include/page__hero.html&lt;/code&gt;에 작성되어 있다. 해당 html 파일의 내용을 다음과 같이 수정해준다.&lt;/p&gt;
+- **3. 차원의 저주 문제**
 
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{% if page.header %}
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--기존 page_hero.html의 내용을 여기에 넣으면 됩니다.--&amp;gt;&lt;/span&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468262-2a19d329-1c78-45b3-8417-34182e624887.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;span class=&quot;c&quot;&gt;&amp;lt;!--여기부터는 default header image 설정부분--&amp;gt;&lt;/span&gt;
-{% else %}
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--변수 선언부분--&amp;gt;&lt;/span&gt;
-  {% capture overlay_img_path %}/assets/images/empty-header.jpg{% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 이미지 경로로 바꿔주기--&amp;gt;&lt;/span&gt;
-  {% capture overlay_filter %}rgba(0, 0, 0, 0.5){% endcapture %} &lt;span class=&quot;c&quot;&gt;&amp;lt;!--원하는 투명도로 바꿔주기--&amp;gt;&lt;/span&gt;
-  {% capture overlay_filter %}linear-gradient({{ overlay_filter }}, {{ overlay_filter }}){% endcapture %}
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--end 변수 선언부분--&amp;gt;&lt;/span&gt;
 
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__hero--overlay&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-image: {{ overlay_filter }}, url(&apos;{{ overlay_img_path }}&apos;);&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;wrapper&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page-title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__title&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;itemprop=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;headline&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-        {% if paginator and site.paginate_show_page_num %}
-          {{ site.title }}{% unless paginator.page == 1 %} {{ site.data.ui-text[site.locale].page | default: &quot;Page&quot; }} {{ paginator.page }}{% endunless %}
-        {% else %}
-          {{ page.title | default: site.title | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}
-        {% endif %}
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__lead&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;{{ page.excerpt | markdownify | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;&quot; | remove: &quot;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&quot; }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-      {% include page__meta.html %}
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-      {% assign month_int = month | plus: 0 %}
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-{% endif %}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+  K-NN은 트레인 데이터를 이용하여 공간을 분할한다. 따라서 K-NN이 잘 동작하려면 전체 공간을 조밀하게 커버할 만큼의 충분한 트레이닝 샘플이 필요하며, 차원이 증가함에 따라 필요한 샘플의 수는 기하급수적으로 증가한다. 기하 급수적으로 증가하는 모든 것은 언제나 옳지 않으며, 특히 CV에 사용되는 고화질 이미지는 더더욱 데이터 확보가 어렵다는 문제가 있다.
 
-&lt;p&gt;post 상단 yaml에 header를 설정한 경우에는 사용자가 post에서 커스텀한대로 Header Image가 overlay되게 하였고, 그렇지 않은 경우에는 default Header Image가 overlay되게 하였다. 변수 선언 부분의 이미지 경로와 투명도를 원하는 값으로 바꾸어주면 된다. 또한, 코드가 너무 길어 원본 page_hero.html 내용은 생략하였기 때문에, 실제 사용할 때는 2번째 줄 주석처리 해놓은 곳에 원본 파일을 붙여넣기 하면 된다.&lt;/p&gt;
 
-&lt;h4 id=&quot;결과&quot;&gt;결과&lt;/h4&gt;
+## 3. Parametric Approach
 
-&lt;p&gt;일일이 post를 수정해주지 않아도, 다음과 같이 Header Image가 잘 표현되는 것을 확인할 수 있다.&lt;/p&gt;
+### 3-1) Linear classifier
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202654404-b94aaafb-fe74-4887-a4fe-aec3ebe20a41.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203469905-ae426a2c-aee7-4b94-86e0-212b85c640fb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+아주 간단한 Neural Network과 CNN 기반 알고리즘이다. Nueral Network와 CNN은 마치 레고 블럭과 같은데, 이러한 딥러닝 알고리즘의 가장 기본이 되는 블럭이 바로 Linear classifier이다. parametric model의 가장 단순한 형태이며 입력 이미지 x와 가중치 w를 요소로 갖고, F(x,W) = Wx + (bias)의 형태로 표현된다.
 
-&lt;h3 id=&quot;2-2-header-image-custom&quot;&gt;2-2) Header Image Custom&lt;/h3&gt;
+#### 3-1-1) 속도
 
-&lt;p&gt;만약 특정 post의 Header Image를 위에서 설정한 default Header Image와 다르게 커스텀하고 싶다면, 기존 방식과 같이 post 상단에 yaml 코드를 추가하면 된다.&lt;/p&gt;
+K-NN은 파라미터 없이 그저 전체 트레이닝 셋을 가지고 있었고, 모든 트레이닝 셋을 test time에 사용하여, predict time이 매우 오래걸렸다. 그러나, parametric approach에서는 트레이닝 데이터의 정보를 요약하여 파라미터 W에 모아주기 때문에, predict시에는 W만 있으면 된다. 트레이닝 데이터가 필요 없기 떄문에 predict time이 훨씬 빠르다.
 
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;overlay_image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;http://www.kogl.or.kr/upload_recommend/%ED%82%A4%EC%9B%8C%EB%93%9C%20%EC%A0%80%EC%9E%91%EB%AC%BC/%EC%A0%84%ED%86%B5%EB%AC%B8%EC%96%91/2D/1667881149503.jpg&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;overlay_filter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rgba(255, 0, 0, 0.5)&lt;/span&gt;
-&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202655572-633f4cd0-4401-434d-83ff-31a049be98a1.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+#### 3-1-2) 내부 연산
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468925-ac0e2616-2d05-4d27-bd57-5dc430618151.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-3-default-header-image의-action-지정&quot;&gt;2-3) Default Header Image의 action 지정&lt;/h3&gt;
+Linear classifier는 x와 W를 가지고 class의 개수와 동일한 output을 출력한다. 각각의 숫자는 각 카테고리의 스코어이며, 특정 카테고리의 스코어가 높다는건, x가 해당 카테고리일 확률이 높다는 것이다.
 
-&lt;p&gt;만약 Header Image에 다음과 같이 버튼을 만들어 특정 링크와 연결시키고 싶다면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/_include/page__hero.html&lt;/code&gt;에 class=”btn”인 a 태그를 만들어주면 된다.&lt;/p&gt;
+CIFAR-10을 예로 들어보겠다. 입력이미지는 (32,32,3)의 shape를 가지는 array인데, 해당 array를 (32×32×3=3012, 1)의 열 벡터로 펴준다. 해당 열 벡터가 10-classes 스코어가 되어야 하므로, 10×3072가 되어야 한다. 따라서 최종적으로 W(10×3072) × X(3072×1) = 10×1짜리 스코어가 출력된다. bias term은 10-dim 열 벡터로 입력과 직접 연결되지는 않고, 데이터와 독립적으로 각 카테고리에 연결된다. 고양이가 개 데이터보다 많다면 고양이 클래스에 상응하는 bias가 더 커지는 형태이다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202934658-cc4dd22f-8123-4940-889f-129cbcd5e324.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+#### 3-1-3) 문제점
 
-&lt;p&gt;예를 들어, 나는 post 상단 yaml에 til이라는 key를 추가하여 해당 key가 존재하면 특정한 링크로 이동하게끔 하였다. 링크는 현재 날짜에 따라 자동으로 바뀌도록 하였으며, liquid문의 capture를 사용하여 변수를 선언해주었다.&lt;/p&gt;
+- **템플릿 관점**
 
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(중략)
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470870-c5194c31-15a9-4df7-8d96-ec8e25eb1939.png&quot; style=&quot;border:1px solid black&quot; &gt;&lt;/p&gt;
 
-{% else %}
+  위 이미지는 가중치 행렬 W의 한 행을 뽑아서 이미지로 시각화 해본 결과이다. W의 특정 행 벡터(특정 카테고리)와 이미지의 열벡터간의 내적을 계산하는 것은, 클래스 간 템플릿의 유사도를 측정하는 것과 유사하다. 따라서 가중치 행렬 W의 각 행은 각 이미지에 대한 템플릿으로 볼 수 있다. 여기서, Linear classifier는 각 클래스에 대해서 단 하나의 템플릿만을 학습한다. 한 클래스 내에 다양한 특징이 존재할 수 있지만 모든 것을 평균화하기 때문에 horse의 경우 말 머리가 앞뒤에 존재하는 등 제대로 된 템플릿을 생성하는 데 한계가 존재한다.
 
-  (중략)
+- **결정경계 관점**
 
-  &lt;span class=&quot;c&quot;&gt;&amp;lt;!--커스텀 변수--&amp;gt;&lt;/span&gt;
-  {% capture date %}{{page.date | remove: &apos;-&apos;}}{% endcapture %} 
-  {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
-  {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470910-bc0e95e3-cf16-4cea-98d4-0990473c1671.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
 
 
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;page__hero--overlay&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;background-image: {{ overlay_filter }}, url(&apos;{{ overlay_img_path }}&apos;);&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  이미지를 고차원 공간의 한점이라고 보면, Linear classifier는 각 클래스를 구분시켜 주는 선형 결정 경계를 그어준다. 하지만 선이 하나(템플릿이 하나)이기 때문에, 선 하나로 분류할 수 없는 문제가 생길 수 있다. 가령, 홀/짝수를 분류하는 것과 같은 parity problem은 Linear Classifier로 풀기 힘들다.
 
-      (중략)
-
-      {% include page__meta.html %}
-      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&amp;lt;!--til key가 존재하는 경우 버튼 생성--&amp;gt;&lt;/span&gt;
-      {% if page.til %}
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;btn btn--light-outline btn--large&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;TIL로 돌아가기&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
-      {% endif %}
-    
-      (중략)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;결과-1&quot;&gt;결과&lt;/h4&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[Django]DRF(Django&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Rest&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Framework)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;듀토리얼&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;excerpt&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;DRF&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;초기&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;setting&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;2022-11-14&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;last_modified_at&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;2022-11-14&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;til&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&apos;&lt;/span&gt;
-&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202935098-f2820f08-6410-427a-a4c5-ca55a25af7c1.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">post 일일이 수정하지 않고 Default Header Image 지정하는 방법</summary></entry><entry><title type="html">[Github_Io]상단 masthead 고정하기</title><link href="http://localhost:4000/blog/sticky/" rel="alternate" type="text/html" title="[Github_Io]상단 masthead 고정하기" /><published>2022-11-17T00:00:00+09:00</published><updated>2022-11-17T00:00:00+09:00</updated><id>http://localhost:4000/blog/sticky</id><content type="html" xml:base="http://localhost:4000/blog/sticky/">&lt;h2 id=&quot;1-문제-상황&quot;&gt;1. 문제 상황&lt;/h2&gt;
-
-&lt;p&gt;페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202333558-6c873ee8-0eb3-41e1-8d4f-6e1fada13ac1.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202333576-5af79c3f-fb5c-42df-8d67-60d07807901b.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-시도한-방법들&quot;&gt;2. 시도한 방법들&lt;/h2&gt;
-&lt;h3 id=&quot;2-1-fixed-position&quot;&gt;2-1) fixed position&lt;/h3&gt;
-
-&lt;p&gt;masthead의 element 속성을 보면, position이 relative로 되어있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202334380-9dd205c9-f241-4d67-a342-15b24aedef0b.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의 최상단으로 부터 x=100px만큼 떨어지게 표현하고자 하였다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202334756-f69b9ac2-7319-4d50-b06e-6878ebf1faa3.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;문제점&quot;&gt;문제점&lt;/h4&gt;
-
-&lt;p&gt;fix가 되긴 하지만, css 속성들이 깨져서 margin이 제대로 들어가지 않는 문제점이 있었다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202335042-795fc8fa-572b-468e-a7a6-a6f97acb9079.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-sticky-position&quot;&gt;2-2) sticky position&lt;/h3&gt;
-
-&lt;p&gt;따라서 position을 sticky로 지정하여 해당 문제를 해결하였다. position을 sticky로 설정하면, 해당 영역의 x 또는 y 값이 설정한 위치에 도달하기 전까지는 static으로, 넘어가면 fixed로 취급한다. top:0px로 놓으면 초기에는 static으로 보이다가 스크롤 하는 순간 fixed로 취급되어 masthead가 상단에 붙어있는 것처럼 보인다. 더불어서, background-color와 세부 요소들을 조금 더 수정해주면, masthead를 상단에 고정시킬 수 있다!&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202335385-65343665-13b6-4555-8731-e937577f2d01.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202335357-24f794ce-9f6c-4b88-86b5-5c99ed0d4342.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-코드&quot;&gt;3. 코드&lt;/h2&gt;
-
-&lt;h3 id=&quot;3-1-masthead-css-수정&quot;&gt;3-1) masthead css 수정&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_sass/minimal-mistakes/_masthead.scss&lt;/code&gt;의 masthead에 대한 속성을 변경한다. position을 sticky로 바꾸어주고, top, background-color 속성을 부여한다. 이 때, color는 본인이 사용하고 있는 테마에 맞게 바꾸어주면 된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;.masthead&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sticky&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 이 부분 수정 default : relative&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 이 부분 추가&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;rgb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 이 부분 추가&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;border-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;-webkit-animation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$intro-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;animation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$intro-transition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;-webkit-animation-delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;.15s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;animation-delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;.15s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;3-2-우측-sidebar-css-수정&quot;&gt;3-2) 우측 sidebar css 수정&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_sass/minimal-mistakes/_sidebar.scss&lt;/code&gt;의 sidebar__right 속성을 변경해준다. 본인의 경우에는 우측에 페이지 목차를 요약해주는 사이드 바를 사용하는데, 해당 사이드 바를 사용하지 않는 경우에는 바꾸어 줄 필요없다.&lt;/p&gt;
-
-&lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;.sidebar__right&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;margin-bottom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;breakpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$large&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$right-sidebar-width-narrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;margin-right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$right-sidebar-width-narrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;padding-left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.sticky&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;clearfix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit-sticky&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sticky&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 이 부분 수정 default : 2em&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-      &lt;span class=&quot;nc&quot;&gt;.toc&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nc&quot;&gt;.toc__menu&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;overflow-y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-          &lt;span class=&quot;nl&quot;&gt;max-height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;100vh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;7em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;3-3-좌측-sidebar-css-수정&quot;&gt;3-3) 좌측 sidebar css 수정&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_sass/minimal-mistakes/_utillities.scss&lt;/code&gt;의 sticky 속성을 변경해준다. 이 부분도 좌측 사이드바가 있는 경우에 바꾸어주면 된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-scss highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;.sticky&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;breakpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$large&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;clearfix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit-sticky&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sticky&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 이 부분 수정 default : 2em&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-결과&quot;&gt;4. 결과&lt;/h2&gt;
-
-&lt;p&gt;스크롤을 내려도 masthead가 상단에 잘 붙어있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/202340561-b5f1ed94-80d7-441a-b972-f773dda0088d.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Github" /><category term="Githubio" /><category term="jekyll" /><summary type="html">css sticky 속성 활용</summary></entry><entry><title type="html">[업무 자동화] 초안 작성</title><link href="http://localhost:4000/toy_project/auto/" rel="alternate" type="text/html" title="[업무 자동화] 초안 작성" /><published>2022-11-16T00:00:00+09:00</published><updated>2022-11-16T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto</id><content type="html" xml:base="http://localhost:4000/toy_project/auto/">&lt;h2 id=&quot;1-문제상황&quot;&gt;1. 문제상황&lt;/h2&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">BISON 회장 인수인계</title><link href="http://localhost:4000/harmonics/bison/" rel="alternate" type="text/html" title="BISON 회장 인수인계" /><published>2022-11-16T00:00:00+09:00</published><updated>2022-11-16T00:00:00+09:00</updated><id>http://localhost:4000/harmonics/bison</id><content type="html" xml:base="http://localhost:4000/harmonics/bison/">&lt;h2 id=&quot;1-동아리-재등록&quot;&gt;1. 동아리 재등록&lt;/h2&gt;
-
-&lt;p&gt;학기가 시작하는 기간(3월, 9월)에 동아리 재등록 해야 함.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-재등록-온라인오프라인-서류-작성&quot;&gt;1-1) 재등록 온라인/오프라인 서류 작성&lt;/h3&gt;
-
-&lt;p&gt;등록 기간이 되면 총동연 공지방에 서류들이 올라올텐데 해당 서류 받아서 채우면 됨. 오프라인 서류는 수기로 직접 작성하면 되고, 온라인 서류는 워드 치면 됩니다. 관련된 샘플자료는 카톡으로 보냄. 해당 자료 보고 참고해서 이름만 바꿔서 내면 됨.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-총동연-임원-명단-엑셀파일-작성&quot;&gt;1-2) 총동연 임원 명단 엑셀파일 작성&lt;/h3&gt;
-
-&lt;p&gt;총동연 임원 명단은 바이슨 회장, 부회장, 총무 인적사항 적어서 보내면 됨. 이것도 샘플 파일 첨부했으니까 보면서 그냥 수정만 하면 됨. 현재 총동연 임원은 회장(온정완), 부회장(임금재), 총무(배유미)임.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-3-총동연에-회비-납부&quot;&gt;1-3) 총동연에 회비 납부&lt;/h3&gt;
-
-&lt;p&gt;재등록할 때 총동연에 회비를 납부해야 함. 우리는 동방이 있어서 8만원인가? 내야함. 그래서 매 학기마다 바이슨 학내 인원들에게 회비 3만원씩을 걷고, 해당 돈으로 회비를 내면 됨.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-회비&quot;&gt;2. 회비&lt;/h2&gt;
-
-&lt;p&gt;인당 3만원씩 걷으면 현재 기준으로 학기당 60만원의 돈이 생김. 이 돈으로 행사/동아리 물품 구매/회식 등등 유도리 있게 진행하면 됨.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-회비-관리&quot;&gt;2-1) 회비 관리&lt;/h3&gt;
-&lt;p&gt;회비는 총무가 관리하도록 하고, 물품 구매 또는 회비를 사용할 일이 있으면 총무에게 말하면 됨. 이 부분은 아직 뚜렷하게 정해진 게 없어서 총무랑 상의하여 좋은 방법을 찾아나가면 됨.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-행사-회비-사용&quot;&gt;2-2) 행사 회비 사용&lt;/h3&gt;
-
-&lt;p&gt;행사(특히 발표회)는 이번에 준비하면서 느낀 결과, 자금이 많이 부족함. 대관비 20정도에, 의자 대여비, 간식이나 회식비 등등 돈이 많이 부족함. 이번에는 선배들의 도움을 많이 받았는데, 매번 도움을 받을수는 없으니 학내에서 자체적으로 해결할 방법을 찾아야 함. 지난번에 나온 해결책은 다음과 같이 총 2가지가 있음&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;입장료 받기&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;가장 무난하지만, 입장료를 받으려면 연습을 많이 해서 연주 퀄리티를 높여아 함. 지난번 발표회 조사결과 입장료 있었으면 안왔을거라는 여론이 많아서, 이 부분은 잘 고려해봐야 함.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;회비 더 걷기&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;이건 현실적으로 조금 어려움. 보통 발표회를 9월쯤에 하는데, 이미 9월에 회비를 3만원 낸 상태에서 더 내라고 하는건 부담 가지는 인원이 생길 수 있음. 따라서 연습을 많이 해서 입장료 받는 게 좋아보임&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;2-3-기타-회비-사용&quot;&gt;2-3) 기타 회비 사용&lt;/h3&gt;
-
-&lt;p&gt;이외의 물품 구매, 회식비 지원 등은 남은 회비 보고 총무랑 상의해서 유도리있게 진행하면 됨.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-홍보&quot;&gt;3. 홍보&lt;/h2&gt;
-
-&lt;p&gt;원래는 회장이 인스타/유튜브 관리 혼자 다 했었는데, 회장 일 많아지고 비효율적임. 따라서 홍보를 맡아줄 인원을 한 명 뽑는 걸 추천함.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-인스타&quot;&gt;3-1) 인스타&lt;/h3&gt;
-
-&lt;p&gt;인스타 계정은 지금 성광이가 관리하고 있음. 근데 올해까지만 관리할 수 있다고 해서 내년에 관리할 수 있는 인원을 새롭게 찾아야 함.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-유튜브&quot;&gt;3-2) 유튜브&lt;/h3&gt;
-
-&lt;p&gt;지금 내 개인 계정을 바이슨 공식 유튜브 채널로 사용하고 있어서, 내년에는 아마 새로 만들어야 할 듯.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-3-다음-카페&quot;&gt;3-3) 다음 카페&lt;/h3&gt;
-
-&lt;p&gt;바이슨 다음 카페에 가입해야 하는데, 이건 총무 선배님한테 말씀드리면 가입시켜 줄 거야.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-단톡방&quot;&gt;4. 단톡방&lt;/h2&gt;
-
-&lt;p&gt;단톡방은 총 4개가 있음.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-1-2022-총동연-공지방&quot;&gt;4-1) 2022 총동연 공지방&lt;/h3&gt;
-
-&lt;p&gt;총동연 비대위원장이 공지같은 거 올려주는 공지방. 여기서는 총동연 비대위원장만 말할 수 있고, 이외 임원들은 여기에 채팅치면 안됨. 여기에 서폿어스나 중요한 정보들 올라오니까 수시로 확인하는 게 좋음&lt;/p&gt;
-
-&lt;h3 id=&quot;4-2-2022-총동연-질문수다방&quot;&gt;4-2) 2022 총동연 질문&amp;amp;수다방&lt;/h3&gt;
-
-&lt;p&gt;위 공지방에 올라온 공지 중 궁금한 사항이나, 총동연에 건의하고 싶은 사항들을 자유롭게 올리면 됨. 보통 여기 올리면 총동연 비대위원장이 대답해주거나, 다른 동아리 회장들이 대답해 줌. 궁금한 거 여기에 자유롭게 물어보면 됨.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-3-2022-문예분과-톡방&quot;&gt;4-3) 2022 문예분과 톡방&lt;/h3&gt;
-
-&lt;p&gt;총동연 회의가 있을 때 회의록 같은 게 올라옴. 그 외에는 잘 사용하지 않음.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-4-바이슨-팀장-톡방&quot;&gt;4-4) 바이슨 팀장 톡방&lt;/h3&gt;
-
-&lt;p&gt;동아리 운영하면서 에로 사항이나 특이 사항들 여기서 회의하면 됨. 혹은 팀장들에게 공지사항 전달할 때도 여기서 공지하면 됨. 회의는 구글 미팅으로 해도 되고 그냥 카톡으로 해도 되고 자유롭게 하면 됨.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-인원-모집&quot;&gt;5. 인원 모집&lt;/h2&gt;
-
-&lt;p&gt;인원 모집 시즌이 따로 정해져 있진 않고, 인원이 비게 되거나 추가 인원이 필요하면 에타에 올리면 됨. 홍보물이나 홍보글 작성해서 에타에 올리면 됨. 현재는 세 팀으로 운영되고 있지만, 팀을 더 늘리고 싶으면 그렇게 해도 상관 없음&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="harmonics" /><category term="동아리" /><summary type="html">.</summary></entry><entry><title type="html">[Django]DRF(Django Rest Framework) 듀토리얼</title><link href="http://localhost:4000/web/drf/" rel="alternate" type="text/html" title="[Django]DRF(Django Rest Framework) 듀토리얼" /><published>2022-11-14T00:00:00+09:00</published><updated>2022-11-14T00:00:00+09:00</updated><id>http://localhost:4000/web/drf</id><content type="html" xml:base="http://localhost:4000/web/drf/">&lt;h2 id=&quot;1-drf를-사용하는-이유&quot;&gt;1. DRF를 사용하는 이유?&lt;/h2&gt;
-
-&lt;p&gt;Django만 사용하는 경우, Model을 불러올 때 Queryset의 형태로 가져오게 된다. 만약 프론트 앤드를 직접 개발하는 경우 이러한 방식이 문제가 되지 않지만, 실무에서는 그렇지 않은 경우가 더 많다. Django는 백앤드로만 사용하고 React 등을 사용하여 프론트를 개발하는 경우에는 이러한 Queryset 형태를 피하는 것이 좋다. 따라서 DRF를 사용하여 Queryset을 serialize하고 json 형태로 데이터를 받아오는 것이 확장성 측면에서 더 바람직한 개발이라고 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201577590-9fb41976-396e-4ad9-8329-25da72e4b8b1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-drf-setting&quot;&gt;2. DRF setting&lt;/h2&gt;
-
-&lt;p&gt;본 포스팅은 기존에 accounts app과 Users Model이 존재한다고 가정하고 설명한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-install-drf&quot;&gt;2-1) install DRF&lt;/h3&gt;
-
-&lt;p&gt;우선, DRF를 설치하고, settings.py의 INSTALLED_APPS에 추가해준다. 그리고 나서 DEFAULT_PERMISSION_CLASSES를 설정해주어야 하는데, View를 호출하기 위한 권한을 설정해주는 것이다. 일단 단순 결과 확인을 위해 AllowAny로 설정하였다. 권한 설정은 언제든지 다시 바꿀 수 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pip install djangorestframework
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;INSTALLED_APPS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&apos;rest_framework&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Restframework
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REST_FRAMEWORK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;DEFAULT_PERMISSION_CLASSES&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&apos;rest_framework.permissions.AllowAny&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;DRF permission 종류&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;AllowAny : 디폴트로 지정된 전역 설정으로 인증 여부에 상관없이, View를 호출할 수 있다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;IsAuthenticated : 회원으로 인증된 요청에 한해서, View 호출&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;IsAdmin : staff 인증 요청에 한해서, View 호출&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;IsAuthenticatedOrReadOnly : 비인증된 요청에 대해서는 읽기 권한만 허용&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;rest_framework_api_key를 install하여 api key가 있는 경우에만 View를 호출할 수 있게 할수도 있음&lt;/p&gt;
-
-        &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;REST_FRAMEWORK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;s&quot;&gt;&quot;DEFAULT_PERMISSION_CLASSES&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-          &lt;span class=&quot;s&quot;&gt;&quot;rest_framework_api_key.permissions.HasAPIKey&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-serializers-선언&quot;&gt;2-2) Serializers 선언&lt;/h3&gt;
-
-&lt;p&gt;모델의 Queryset을 serialize 해줄 serializer를 선언해준다. 이 때, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;serializers.py&lt;/code&gt;는 django-app(accounts) 하위 디렉토리에 생성해주며, 권한별로 열람 범위를 제한하여 필요한 데이터만 뽑아서 사용할 수 있다. 사용할 수 있는 seriailizer에는 대표적으로 ModelSerializer와 HyperlinkedModelSerializer가 있으며(각각 M.S, H.S로 축약하겠다.), 본 포스팅에서는 H.S를 사용한다. H.S가 M.S와 다른점은, id 필드를 default로 가지지 않고, relationship으로 HyperlinkedRelatedField를 사용한다는 점인데, 현재는 해당 기능들을 사용하지 않으므로 관련 설명은 생략한다. 다만, 일반적으로 hyperlinking을 하는 것이 좋은 RESTful 디자인으로 알려져있다고 한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# accounts/serializers.py
-&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework.serializers&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HyperLinkedModelSerializer&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CommonUsersSerializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HyperLinkedModelSerializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;fields&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;email&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;pw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AdminUsersSerializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HyperLinkedModelSerializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;models&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;fields&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;__all__&apos;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 모든 필드 포함
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-view-함수-작성&quot;&gt;2-3) View 함수 작성&lt;/h3&gt;
-
-&lt;p&gt;DRF 관련 뷰 함수는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;accounts/views/api.py&lt;/code&gt;에 작성해주었다. 다음과 같이 일반적인 동작은 ViewSets를 사용하여 그룹화하고, 필요한 동작이 있을 경우 개별 뷰로 나누어 사용할 수 있다. 또한 serializers.py에서 미리 지정한 열람 범위를 상황에 맞게 사용할 수 있으며, decorator를 사용하여 개별함수를 쉽게 제어할 수 있다. serializer의 CRUD 적용도 가능한데, 해당 내용은 다음 포스팅에서 설명하겠다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# accounts/views/api.py
-&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;accounts.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;accounts.serializers&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewsets&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework.permissions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IsAuthenticated&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework.decorators&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;api_view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;permission_classes&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UsersViewSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewsets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModelViewSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;queryset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;serializer_class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AdminUsersSerializer&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;permission_classes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAuthenticated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;########
-# 또는 #
-#######
-&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;api_view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;POST&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;permission_classes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IsAuthenticated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;pw&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;user&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;serializer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CommonUsersSerializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;many&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serializer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_valid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-4-url-연결&quot;&gt;2-4) URL 연결&lt;/h3&gt;
-
-&lt;p&gt;위에서 일반적인 동작은 ViewSet으로 묶었고, 다른 세부적인 동작은 개별 함수로 만들어 제어해주었다. 따라서 ViewSet은 router에 등록하여 URL conf가 자동으로 생성되게 하고, 개별 함수는 명시적으로 URL conf를 작성해준다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.urls&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;rest_framework&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;accounts.views&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;api&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DefaultRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;register&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;users&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UsersViewSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;urlpatterns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;api/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;api/changpw/&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;changepwmodal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-결과&quot;&gt;3. 결과&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201609801-4e85139e-c57c-4fab-af4e-dc824a7fdfd9.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201608799-8921c063-a4c2-4311-9524-f8f922d1f44b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://freedman.tistory.com/57&quot;&gt;DRF(Django Rest Framework)를 사용하는 이유&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://leffept.tistory.com/296&quot;&gt;[Django]Django REST Framework 튜토리얼 (Quickstart)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">DRF 초기 setting</summary></entry><entry><title type="html">배포용 requirements.txt 생성 및 설치</title><link href="http://localhost:4000/web/export/" rel="alternate" type="text/html" title="배포용 requirements.txt 생성 및 설치" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/web/export</id><content type="html" xml:base="http://localhost:4000/web/export/">&lt;p&gt;프로젝트 단위가 커져 프로젝트에서 사용하고 있는 라이브러리가 많아질수록, 의존성 문제가 생길 위험이 높아진다. 따라서 프로젝트 배포시에는 개발 가상환경(v_env , conda …)에서 사용한 라이브러리들을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;를 작성하여 같이 배포하는 것이 좋다. 본 포스팅에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;를 작성하고, 설치하는 방법에 대해서 다룬다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-requirementstxt-생성&quot;&gt;1. requirements.txt 생성&lt;/h2&gt;
-&lt;h3 id=&quot;1-1-pip-freeze&quot;&gt;1-1) pip freeze&lt;/h3&gt;
-
-&lt;p&gt;터미널에 pip freeze를 입력하면 현재 개발하고 있는 환경에 설치된 라이브러리들과 버전이 출력된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pip freeze
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201036922-ca191acc-cf46-4a90-b509-e3ed6b24afc9.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-requirementstxt에-저장&quot;&gt;1-2) requirements.txt에 저장&lt;/h3&gt;
-
-&lt;p&gt;터미널에 다음 명령어를 입력하면 pip freeze의 결과가 wd의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;에 저장된다. 경로를 직접 지정해 줄 수도 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pip freeze &amp;gt; requirements.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/201037589-f632de58-6768-4d56-bef3-2f4d0d47ee24.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-requirementstxt-설치&quot;&gt;2. requirements.txt 설치&lt;/h2&gt;
-
-&lt;p&gt;해당 requirements.txt를 설치하고 싶다면, 터미널에 다음 명령어를 입력하면 된다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pip install -r requirements.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">프로젝트 배포</summary></entry><entry><title type="html">[JQuery]AJAX를 활용한 비동기적 데이터 교환</title><link href="http://localhost:4000/web/ajax/" rel="alternate" type="text/html" title="[JQuery]AJAX를 활용한 비동기적 데이터 교환" /><published>2022-11-10T00:00:00+09:00</published><updated>2022-11-10T00:00:00+09:00</updated><id>http://localhost:4000/web/ajax</id><content type="html" xml:base="http://localhost:4000/web/ajax/">&lt;script src=&quot;https://code.jquery.com/jquery-3.5.1.js&quot;&gt;&lt;/script&gt;
-
-&lt;script&gt;
-    $.ajaxSetup({
-        headers: { &quot;X-CSRFToken&quot;: &apos;{{csrf_token}}&apos; }
-    });
-&lt;/script&gt;
-
-&lt;h2 id=&quot;1-jquerry&quot;&gt;1. JQuerry&lt;/h2&gt;
-
-&lt;p&gt;제이쿼리는 웹사이트에 자바스크립트를 쉽게 활용할 수 있도록 도와주는 오픈소스 기반의 자바스크립트 라이브러리이다. 제이쿼리를 활용하면 Ajax 응용 프로그램 및 플러그인을 빠르게 개발할 수 있다는 장점이 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-import-jquerry&quot;&gt;1-1) Import JQuerry&lt;/h3&gt;
-
-&lt;p&gt;우선, JQuerry를 사용하기 위해서는 JQuerry의 js 코드를 불러와줘야 한다. html의 header 부분에 다음 코드를 삽입하여 jquerry를 불러와준다. 이때, slim 빌드를 사용하게 되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$.ajax()&lt;/code&gt;를 사용할 수 없으니 AJAX를 사용하기 위해서는 slim을 뺀 빌드버전을 사용해야한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://code.jquery.com/jquery-3.5.1.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-요소값-변경-by-using-jquerry&quot;&gt;1-2) 요소값 변경 by using JQuerry&lt;/h3&gt;
-
-&lt;p&gt;JQuerry를 사용하면 특정 요소값도 쉽게 변경할 수 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;div 내용 변경&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;id가 test인 div 텍스트가 변경된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;원하는 텍스트 입력&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;css 속성 변경&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;body의 font-weight가 10px로 변경된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;font-weight&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;align=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;input box에 text를 입력하고 변경 버튼을 눌러보세요&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;test_input&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text 입력&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text_btn&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;변경&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;color_btn&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;색변경&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#color_btn&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;        
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#text_btn&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;test_input&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#text&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;test2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#text&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;        
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div align=&quot;center&quot;&gt;
-    &lt;div id=&quot;text&quot;&gt;input box에 text를 입력하고 변경 버튼을 눌러보세요&lt;/div&gt;
-    &lt;input id=&quot;test_input&quot; placeholder=&quot;text 입력&quot; /&gt;
-    &lt;button id=&quot;text_btn&quot;&gt;변경&lt;/button&gt;
-    &lt;button id=&quot;color_btn&quot;&gt;색변경&lt;/button&gt;
-    &lt;script&gt;
-        $(&quot;#color_btn&quot;).click(test2);        
-        $(&quot;#text_btn&quot;).click(test);
-        function test(){
-            var text = document.getElementById(&apos;test_input&apos;).value;
-            $(&quot;#text&quot;).html(text);
-        };
-        function test2(){
-            $(&quot;#text&quot;).css(&apos;color&apos;,&apos;red&apos;);
-        };        
-    &lt;/script&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-ajax&quot;&gt;2. AJAX&lt;/h2&gt;
-
-&lt;p&gt;Asynchronous Javascript And XML의 줄임말로, 자바스크립트를 이용해 서버와 브라우저가 비동기적으로 데이터를 교환할 수 있게 하는 통신기능이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-동기식-vs-비동기식&quot;&gt;2-1) 동기식 vs 비동기식&lt;/h3&gt;
-
-&lt;p&gt;사용자가 어떤 게시물의 추천 버튼을 누르는 상황을 가정해보자. 만약 이를 동기적으로 처리한다면, 해당 추천 버튼과 연결된 url을 호출한 뒤 뷰 함수에 정의된 기타 함수들을 처리한 후 html 템플릿이 출력된다. 이렇게 되면, 단순히 추천 버튼을 누른 것 뿐인데 웹페이지가 리로드 되면서 불필요한 리소스가 낭비된다. 리소스뿐만 아니라 사용자 입장에서도 이는 상당히 불편한 상황일 것이다. 같은 내용을 AJAX를 통해 비동기적으로 수행하면, JSON/XML 형태로 필요한 데이터만 받아 갱신하기 때문에 페이지가 갱신되지 않고, 불필요한 리소스를 절약할 수 있다. 또한, 사용자 입장에서도 훨씬 쾌적한 이용을 할 수 있을 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/200984882-6f9ba070-1c45-4fd5-b211-e3b677795ade.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-csrf-사용-해제&quot;&gt;2-2) CSRF 사용 해제&lt;/h3&gt;
-
-&lt;p&gt;우선, Django에서 AJAX를 이용해 데이터 교환을 하기 위해서는, Django의 CSRF(Cross Site Request Forgery 사이트 간 요청 위조) 보안 정책을 해결해야 한다. 방법은 3가지가 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Decorator를 사용하여 특정 view에 csrf 적용해제&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;방법은 가장 단순하지만 보안상 추천하지 않는 방법이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.views.decorators.csrf&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;csrf_exempt&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;csrf_exempt&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HttpResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;success&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;html 파일 header부분에 csrf token 생성하기&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;html header 부분에 해당 코드를 집어 넣으면 된다. Django 공식문서에서 권장하는 방법이지만 복잡하다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getCookie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cookieValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-          &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cookies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-              &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cookies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;trim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-              &lt;span class=&quot;c1&quot;&gt;// Does this cookie string begin with the name we want?&lt;/span&gt;
-              &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                  &lt;span class=&quot;nx&quot;&gt;cookieValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;decodeURIComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;cookie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-                  &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-              &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cookieValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;csrftoken&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getCookie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;csrftoken&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;csrfSafeMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// these HTTP methods do not require CSRF protection&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;GET|HEAD|OPTIONS|TRACE&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajaxSetup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-      &lt;span class=&quot;na&quot;&gt;beforeSend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;csrfSafeMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;crossDomain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-              &lt;span class=&quot;nx&quot;&gt;xhr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setRequestHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;X-CSRFToken&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;csrftoken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;권장 방법&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;ajax setup 해주는 부분만 넣어도 csrf 사용을 중단할 수 있다. 가장 간결하고 편하다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajaxSetup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;X-CSRFToken&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;{{csrf_token}}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-문법&quot;&gt;2-3) 문법&lt;/h3&gt;
-
-&lt;p&gt;다음과 같은 문법으로 간단하게 사용할 수 있다.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;           &lt;span class=&quot;c1&quot;&gt;// 타입 (get, post, put 등등)&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;           &lt;span class=&quot;c1&quot;&gt;// 요청할 서버url&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 보낼 데이터 (Object , String, Array)&lt;/span&gt;
-      &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;nick&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;nick&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 결과 성공 콜백함수&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 결과 에러 콜백함수&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-예시--아이디-중복확인&quot;&gt;3. 예시 : 아이디 중복확인&lt;/h2&gt;
-&lt;h3 id=&quot;3-1-문제상황&quot;&gt;3-1) 문제상황&lt;/h3&gt;
-&lt;p&gt;다음과 같은 간단한 회원가입 폼이 있다고 해보자. 이 때, 사용자가 이메일을 입력하고 중복확인 버튼을 누르면, DB에 저장되어 있는 회원 정보와 일치하는 이메일이 있는지 확인하여 중복확인 결과를 출력하고자 한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;signup_form&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&lt;/span&gt;회원가입 폼&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;이름을 입력하세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;placeholder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;이메일을 입력하세요.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;button&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email_btn&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;btn-secondary&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;중복확인&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;회원가입&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;    
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-url-view-점의&quot;&gt;3-2) URL, View 점의&lt;/h3&gt;
-
-&lt;p&gt;POST 방식으로 넘겨줄 url을 정의해준다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[urls.py]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;test&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;중략&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;해당 url을 받아줄 뷰 함수를 정의한다. DB에서 Users 모델을 불러와 일치하는 email을 가진 유저가 있는지 확인한다. 일치하는 유저의 유무에 따라 boolean 값을 dict에 저장하여 return 해준다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[views.py]&lt;/strong&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;django.http&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JsonResponse&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;accounts.models&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;signup_check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;POST&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;email&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-        &lt;span class=&quot;c1&quot;&gt;# 일치하는 id가 있다면,
-&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;user_yn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;# 일치하는 id 없음
-&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;user_yn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JsonResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;result&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_yn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-3-ajax-코드-작성&quot;&gt;3-3) AJAX 코드 작성&lt;/h3&gt;
-
-&lt;p&gt;특정 URL로 데이터를 POST하고, View에서 계산된 결과를 받아와 후처리하는 AJAX 코드를 작성해준다. email_btn을 클릭하는 이벤트가 발생하면, test URL로 email POST한다. 그 후 뷰 함수에서 계산된 결과에 따라 test div의 값과 css 속성을 변경한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ready&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#email_btn&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ajax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;{.% url &apos;test&apos; %.}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-            &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;success&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;사용 가능한 ID입니다.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;이미 아이디가 존재합니다.&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-4-결과&quot;&gt;3-4) 결과&lt;/h3&gt;
-
-&lt;h4&gt;DB에 존재하는 ID : test0, test1&lt;/h4&gt;
-&lt;div&gt;
-    &lt;form name=&quot;signup_form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
-        &lt;div&gt;&lt;h3&gt;회원가입 폼&lt;/h3&gt;&lt;/div&gt;
-        &lt;div&gt;
-            &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; placeholder=&quot;이름을 입력하세요.&quot; /&gt;
-        &lt;/div&gt;
-        &lt;div&gt;
-            &lt;input type=&quot;text&quot; id=&quot;email&quot; name=&quot;email&quot; placeholder=&quot;이메일을 입력하세요.&quot; /&gt;
-            &lt;button type=&quot;button&quot; id=&quot;email_btn&quot; class=&quot;btn-secondary&quot;&gt;중복확인&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;div id=&quot;test&quot;&gt;&lt;/div&gt;
-        &lt;div style=&quot;padding-left:50px ;padding-top:20px&quot;&gt;
-            &lt;button type=&quot;button&quot;&gt;회원가입&lt;/button&gt;
-        &lt;/div&gt;          
-    &lt;/form&gt;
-&lt;/div&gt;
-&lt;script&gt;
-    $(document).ready(function() {
-        $(&quot;#email_btn&quot;).click(test);
-    });
-    function test() {
-        var email = document.getElementById(&quot;email&quot;).value;
-        if (!((email==&quot;test1&quot;) || (email==&quot;test0&quot;))){
-            $(&apos;#test&apos;).html(&apos;사용 가능한 ID입니다.&apos;);
-            $(&apos;#test&apos;).css(&apos;color&apos;, &apos;blue&apos;);
-        } else {
-            $(&apos;#test&apos;).html(&apos;이미 아이디가 존재합니다.&apos;);
-            $(&apos;#test&apos;).css(&apos;color&apos;, &apos;red&apos;);
-        }
-    };
-&lt;/script&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="web" /><category term="Django" /><category term="web" /><category term="backend" /><summary type="html">예시 : 아이디 중복확인 기능 구현</summary></entry></feed>
+{% endraw %}</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 2</summary></entry></feed>

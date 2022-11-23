@@ -1,5 +1,5 @@
 var store = [{
-        "title": "[Github Io]Jekyll을 사용한 개발 블로그 생성",
+        "title": "[Jekyll]Jekyll을 사용한 개발 블로그 생성",
         "excerpt":"Repository 생성 우선, username.github.io의 형식으로 Repository를 생성해준다. 이 때, username이 다르면 사이트가 제대로 생성되지 않는다. Jekyll 테마 사용 - 원하는 Jekyll 테마 고르기 원하는 Jekyll 테마를 고른다. 본인은 사람들이 가장 많이 사용하는 minimal-mistakes를 선택했다. 처음엔 fork를 하여 사용하였는데 fork하여 commit시, 잔디가 심어지지 않는다는 아주 큰 문제가 있었다!! 그래서 fork Repository를...","categories": ["Blog"],
         "tags": ["jekyll","Github","Githubio"],
         "url": "/blog/How-to-make-Github-io/",
@@ -23,7 +23,7 @@ var store = [{
         "url": "/internship/ICT-Internship(2)/",
         "teaser": null
       },{
-        "title": "[Github_Io]utterances 댓글 추가 안될 때 해결법",
+        "title": "[Jekyll]utterances 댓글 추가 안될 때 해결법",
         "excerpt":"개발 블로그에 댓글 기능을 추가해보려고 한다. utterances를 사용하여 댓글 기능을 추가하려고 하는데, 인터넷에 나와있는 방법으로는 제대로 작동을 안해서 내가 삽질해서 얻은 노하우를 공유하고자 한다. 해당 내용은 minimal-mistakes 사용자 기준으로 작성되었습니다. 0. utterances 설치 댓글 플랫폼 중 utterances가 가볍고 괜찮다고 하길래 해당 댓글 플랫폼을 사용하기로 했다. 댓글을 달기 위해서는 깃허브 계정이...","categories": ["Blog"],
         "tags": ["jekyll","Github","Githubio"],
         "url": "/blog/Github-io-comments/",
@@ -35,13 +35,13 @@ var store = [{
         "url": "/internship/ICT-Internship(3)/",
         "teaser": null
       },{
-        "title": "[Github_Io]사이드바 카테고리 기능 추가",
+        "title": "[Jekyll]사이드바 카테고리 기능 추가",
         "excerpt":"해당 포스팅은 “공부하는 식빵맘”님의 포스트를 참조하여 만들었습니다. [출처] : https://ansohxxn.github.io/blog/category/ 0. 만들고자 하는 카테고리 정의 우선 만들고자 하는 카테고리를 정의하여준다. 나는 다음과 같은 구조를 가지는 카테고리를 만들고자 하였다. AI ML DL 대외활동 인턴 etc Blog Dev AI, 대외활동, etc는 대분류를 위한 span값이고 ML, DL, 인턴, Blog Dev가 카테고리이다. 해당 카테고리가...","categories": ["Blog"],
         "tags": ["jekyll","Github","Githubio"],
         "url": "/blog/Github-io-categories/",
         "teaser": null
       },{
-        "title": "[Github_Io]개발 블로그 Google에 노출시키기",
+        "title": "[Jekyll]개발 블로그 Google에 노출시키기",
         "excerpt":"개발 블로그에 작성한 글들을 다양한 사람들과 공유하기 위해서 Google에 노출시키고자 한다. 다음 일련의 과정은 해당 내용을 담고있다. 1. Google Search Console google에 해당 기술 블로그를 노출시키기 위해서 google search console을 사용합니다. google search console은 google에서 검색시, 나의 개발 블로그가 보여질 수 있도록 등록하는 google 서비스입니다. 화면의 시작하기 버튼을 눌러서 시작합니다....","categories": ["Blog"],
         "tags": ["jekyll","Github","Githubio"],
         "url": "/blog/Github-io-google/",
@@ -107,7 +107,7 @@ var store = [{
         "url": "/toy_project/pressit(2)/",
         "teaser": null
       },{
-        "title": "[Github_Io]사이드바 간격조정",
+        "title": "[Jekyll]사이드바 간격조정",
         "excerpt":"1. 기존 사이드바의 모습 기존 사이드바는 다른 영역과 경계가 모호하고, 각 주제간의 분리도 잘 되어있지 않은 느낌이었다. 따라서 처음보는 입장에서는 상당히 가독성이 떨어질 것 같았다. 사이드바 영역과 그 위 설명 영역이 제대로 분리가 되어있지 않아, 이를 제대로 분리시켜주고 카테고리 묶음 제목의 폰트 크기를 더 키우도록 해보자 2. 내부 코드 수정...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/edit-blog/",
@@ -155,19 +155,19 @@ var store = [{
         "url": "/etc/TIL_0914/",
         "teaser": null
       },{
-        "title": "[Github_Io]블로그 테마 변경 및 커스텀",
+        "title": "[Jekyll]블로그 테마 변경 및 커스텀",
         "excerpt":"테마 변경 테마를 기존 “dirt” 테마에서 “contrast” 테마로 변경하였는데, 마음에 들지 않는 부분이 있었다. 링크 텍스트 색이 파랗게 되어있는 것과, 선택 영역이 빨간색인 것들을 수정해주었다. css 수정 [경로] On-JungWoan.github.io/_sass/minimal-mistakes/skins/_contrast.scss [변경 전] $primary-color: #ff0000 !default; $link-color: #0000ff !default; [변경 후] $primary-color: #000000 !default; $link-color: #340000 !default; base.scss 수정 링크에 밑줄이 없으니...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/change_theme/",
         "teaser": null
       },{
-        "title": "[Github_Io]블로그 개선",
+        "title": "[Jekyll]블로그 개선",
         "excerpt":"1. 상단 네비게이션 바 목록 수정 상단 네비게이션 바에 불필요한 카테고리가 많이 있는 관계로 조금 제거해주기로 하였다. /_data/navigation.yml의 내용을 다음과 같이 수정하여주었다. [수정 전] main: - title: \"Home\" # 보여지는 이름 url: https://on-jungwoan.github.io/ # 이동하는 url - title: \"Category\" url: /categories/ - title: \"Tag\" url: /tags/ - title: \"Posts\" url:...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/edit_navigation/",
         "teaser": null
       },{
-        "title": "[Github_Io]좌측 사이드바 수정",
+        "title": "[Jekyll]좌측 사이드바 수정",
         "excerpt":"1. 홈 외의 다른 page에 사이드바 추가 홈 외의 다른 page에서 사이드바가 나오지 않는 문제점을 발견하여 해결하였다. [변경전] On-JungWoan.github.io/_pages/category-archive-grid.md의 일부이다. sidebar_main 옵션을 true로 주었다. --- title: \"Posts by Category (grid view)\" layout: categories permalink: /categories-grid/ entries_layout: grid author_profile: true sidebar_main: true --- [변경후] 2. TIL 페이지 생성 개발 블로그에 매일...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/change_navigation/",
@@ -377,7 +377,7 @@ var store = [{
         "url": "/tools/install_docker/",
         "teaser": null
       },{
-        "title": "[Github_Io]Jekyll 로컬에서 디버그 하는 법",
+        "title": "[Jekyll]Jekyll 로컬에서 디버그 하는 법",
         "excerpt":"1. Git Clone 프로젝트 파일을 원하는 로컬 환경에 clone 해준다. &gt;&gt;&gt; git clone repo경로 2. Edit Gemfile Gemfile을 수정해준다. 나는 minimal-mistakes를 사용하고 있어서 공식 문서를 참고하였다. Link : Remote theme methodPermalink source \"https://rubygems.org\" gem \"github-pages\", group: :jekyll_plugins gem \"jekyll-include-cache\", group: :jekyll_plugins gem \"webrick\", \"~&gt; 1.7\" 3. Ruby 설치 아래 링크에서...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/debug_jekyll/",
@@ -449,7 +449,7 @@ var store = [{
         "url": "/til/TIL-11/",
         "teaser": null
       },{
-        "title": "[Github_Io]상단 네비게이션 바 수정",
+        "title": "[Jekyll]상단 네비게이션 바 수정",
         "excerpt":"navigation.yaml 수정 나는 기존에 사용하던 카테고리가 있었기 때문에, 해당 카테고리를 그대로 구현해주었다. 이 때, AI와 Platform Dev 섹션은 Study Note로 묶어주었다. sublink는 최대 2단계까지만 지원한다고 한다. [navigation.yaml] main: - title: \"PROJECTS\" sublinks: - title: \"뻐정 : 버스정보종합시스템\" url: /categories/bbeojung - title: \"실시간 쓰레기 무단투기 탐지\" url: /categories/cctv - title: \"canvas...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/edit_navibar/",
@@ -497,7 +497,7 @@ var store = [{
         "url": "/web/secret/",
         "teaser": null
       },{
-        "title": "[Github_Io]포스팅 시 Liquid 문법 사용하는 법",
+        "title": "[Jekyll]포스팅 시 Liquid 문법 사용하는 법",
         "excerpt":"문제상황 포스팅 시에 {{% ~ %}}, {{ }}와 같은 Liquid 문법을 사용하면, 해당 Liquid문이 실행되어 이상한 결과가 출력된다. 가령, 나는 포스팅에서 {% include ~~.html %}이라는 문자 그 자체를 쓰고 싶은데, 실제로 사용해보면 다음과 같이 해당 Liquid문이 실행된 결과가 출력된다. &lt;!-- Courtesy of embedresponsively.com --&gt; 해결방법 Liquid문을 사용하고자 하는 부분을 raw...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/liquid/",
@@ -539,19 +539,19 @@ var store = [{
         "url": "/harmonics/bison/",
         "teaser": null
       },{
-        "title": "[Github_Io]상단 masthead 고정하기",
+        "title": "[Jekyll]상단 masthead 고정하기",
         "excerpt":"1. 문제 상황 페이지를 아래로 내리면 masthead가 가려져서, 다시 masthead를 보기 위해 페이지 최상단까지 올라가야 하는 불편함이 있다. 따라서 본 포스팅에서는 상단 masthead를 고정하는 방법을 소개한다. 2. 시도한 방법들 2-1) fixed position masthead의 element 속성을 보면, position이 relative로 되어있다. 처음에는, 다음과 같이 position을 fixed로 지정하여 디바이스의 최상단으로 부터 x=100px만큼 떨어지게...","categories": ["Blog"],
         "tags": ["Github","Githubio","jekyll"],
         "url": "/blog/sticky/",
         "teaser": null
       },{
-        "title": "[Github_Io]Header Image 설정",
+        "title": "[Jekyll]Header Image 설정",
         "excerpt":"1. Header Image Overlay by yaml post 최상단에 다음과 같은 yaml 코드를 집어넣으면 Header Image를 Overlay할 수 있다. --- title: \"CUDA Stream\" excerpt: \"Null Stream / Non-Null Stream\" header: overlay_image: /assets/images/white_img.jpg overlay_filter: 0.5 actions: - label: \"TIL로 돌아가기\" url: \"/til/TIL-11/#1031\" --- 1-1) 문제점 단순히 post 상단에 해당 코드를 넣기만 해도...","categories": ["Blog"],
         "tags": ["Githubio","jekyll","html"],
         "url": "/blog/header/",
         "teaser": null
       },{
-        "title": "[Github_Io]포스트에 특정 문구 고정(초안)",
+        "title": "[Jekyll]포스트에 특정 문구 고정(초안)",
         "excerpt":"우선, 우리가 게시물을 작성하면 게시물 -&gt; single.html -&gt; default.html의 순서로 layout이 상속되어 화면에 출력된다. 여기서, 게시물의 직접적인 요소가 담겨있는 layout은 single.html이다. 따라서 해당 템플릿의 내용을 적절히 수정해주면 포스팅 형식을 바꿀 수 있다. ㅁ single.html의 중간의 {{content}}가 포스팅 내용이 들어가는 영역이다. 따라서 해당 부분 전후로 원하는 문구를 넣으면, 포스팅에 해당 문구가...","categories": ["Blog"],
         "tags": ["Githubio","jekyll","html"],
         "url": "/blog/post_custom/",
@@ -561,6 +561,12 @@ var store = [{
         "excerpt":"Image Classification? Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들(조명, 화각, 객체 자세 변화, 가려짐,...","categories": ["DL"],
         "tags": ["DL","ICT인턴십"],
         "url": "/dl/cs231n_1/",
+        "teaser": null
+      },{
+        "title": "[Jekyll]포스트에 특정 문구 고정(초안)",
+        "excerpt":"1. liquid-c liquid-c는 liquid문을 C로 처리하면서 빌드 속도를 올려준다고 한다. gem install을 사용하여 쉘에서 직접 설치하거나, gemfile 작성 후 bundle install로 liquid-c만 설치해주면 끝이다. gem install liquid-c 혹은 Gemfile에 다음과 같이 작성후 gem \"liquid-c\" Gemfile에 작성된 gem을 아래와 같은 명령어로 설치하면 된다. bundle install 2. incremental 옵션 변경 기존 jekyll은...","categories": ["Blog"],
+        "tags": ["Githubio","jekyll","html"],
+        "url": "/blog/optim_jekyll/",
         "teaser": null
       },{
         "title": "[ICT 인턴십]2022년 12월 TIL",

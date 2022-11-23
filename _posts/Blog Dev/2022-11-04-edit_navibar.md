@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]상단 네비게이션 바 수정"
+title:  "[Jekyll]상단 네비게이션 바 수정"
 excerpt: "네비바 수정"
 
 categories:

@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]개발 블로그 Google에 노출시키기"
+title:  "[Jekyll]개발 블로그 Google에 노출시키기"
 excerpt: "개발 블로그 google 노출"
 
 categories:

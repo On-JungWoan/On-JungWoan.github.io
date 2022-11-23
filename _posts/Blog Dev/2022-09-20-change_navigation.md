@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]좌측 사이드바 수정"
+title:  "[Jekyll]좌측 사이드바 수정"
 excerpt: "상단 네비게이션 바 항목 수정 및 TIL 추가"
 
 categories:

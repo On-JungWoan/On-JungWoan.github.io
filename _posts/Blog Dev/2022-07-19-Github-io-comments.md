@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]utterances 댓글 추가 안될 때 해결법"
+title:  "[Jekyll]utterances 댓글 추가 안될 때 해결법"
 excerpt: "utterances를 사용한 댓글 기능 추가"
 
 categories:

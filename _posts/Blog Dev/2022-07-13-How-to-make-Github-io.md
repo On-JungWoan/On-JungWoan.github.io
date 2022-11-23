@@ -1,5 +1,5 @@
 ---
-title:  "[Github Io]Jekyll을 사용한 개발 블로그 생성"
+title:  "[Jekyll]Jekyll을 사용한 개발 블로그 생성"
 excerpt: "Jekyll을 이용한 Github io 생성방법"
 
 categories:

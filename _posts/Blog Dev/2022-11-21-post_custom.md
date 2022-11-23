@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]포스트에 특정 문구 고정(초안)"
+title:  "[Jekyll]포스트에 특정 문구 고정(초안)"
 excerpt: "post에 특정한 문구를 고정시키는 법"
 
 categories:

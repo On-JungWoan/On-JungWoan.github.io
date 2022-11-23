@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]사이드바 카테고리 기능 추가"
+title:  "[Jekyll]사이드바 카테고리 기능 추가"
 excerpt: "Github io의 사이드바 카테고리 기능 추가"
 
 categories:

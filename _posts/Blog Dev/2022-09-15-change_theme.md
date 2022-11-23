@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]블로그 테마 변경 및 커스텀"
+title:  "[Jekyll]블로그 테마 변경 및 커스텀"
 excerpt: "테마 커스텀"
 
 categories:

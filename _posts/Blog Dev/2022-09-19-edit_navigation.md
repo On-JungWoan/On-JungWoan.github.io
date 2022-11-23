@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]블로그 개선"
+title:  "[Jekyll]블로그 개선"
 excerpt: "상단 네비게이션바 수정 및 tease image 제거"
 
 categories:

@@ -1,5 +1,5 @@
 ---
-title:  "[Github_Io]Jekyll 로컬에서 디버그 하는 법"
+title:  "[Jekyll]Jekyll 로컬에서 디버그 하는 법"
 excerpt: "개발 블로그 로컬에서 디버깅"
 
 categories:
