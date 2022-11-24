@@ -1,243 +1,219 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-23T22:25:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[Jekyll]빌드 속도 최적화</title><link href="http://localhost:4000/blog/optim_jekyll/" rel="alternate" type="text/html" title="[Jekyll]빌드 속도 최적화" /><published>2022-11-23T00:00:00+09:00</published><updated>2022-11-23T00:00:00+09:00</updated><id>http://localhost:4000/blog/optim_jekyll</id><content type="html" xml:base="http://localhost:4000/blog/optim_jekyll/">{% raw %}
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-24T17:56:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">Loss Functions and Optimization</title><link href="http://localhost:4000/dl/cs231n_2/" rel="alternate" type="text/html" title="Loss Functions and Optimization" /><published>2022-11-24T00:00:00+09:00</published><updated>2022-11-24T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_2</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_2/">&lt;h1 id=&quot;가중치-w구하는-법&quot;&gt;가중치 W구하는 법&lt;/h1&gt;
+&lt;p&gt;가중치 W를 구하기 위해서는 해당 가중치가 좋은지 나쁜지를 정량화 할 방법이 필요하다. 따라서 가중치의 성능을 파악하기 위해 도입된 것이 바로 손실함수이다. 따라서 행렬 W가 될 수 있는 모든 가능의 수 중에서 손실함수가 가장 적은 W를 찾는 것이 가중치 W를 구하는 방법이며, 이를 최적화 과정(optimization)이라 한다.&lt;/p&gt;
 
-## 1. 최적화 방법
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-Hugo 대비 Jekyll의 가장 큰 단점은 바로 빌드 시간이 매우 느리다는 것이다. 포스팅의 개수가 늘어날수록 빌드 시간은 매우 느려져서, 혹자의 경우 빌드 시간이 10분을 초과하는 경우도 있다고 한다. 따라서 해당 포스팅에서는 Jekyll 빌드 시간을 최적화하는 방법에 대해 소개한다.
+&lt;h1 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h1&gt;
 
-### 1-1) liquid-c
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203700206-2bc385c0-57c7-494d-a5c6-6b31f93ad8a7.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-liquid-c를 설치하면, liquid문을 C로 처리하면서 빌드 속도를 올려준다고 한다. gem install을 사용하여 쉘에서 직접 설치하거나, gemfile 작성 후 bundle install로 liquid-c를 설치해주면 끝이다.
+&lt;p&gt;x_i는 i번째 이미지, y_i는 i번째 타겟(정답 카테고리, CIFAR-10의 경우 0~9사이의 정수)을 의미한다. 예측함수 f는 x_i와 W를 입력으로 받아서 y_pred_i를 예측한다. 손실함수 L_i는 f의 output y_pred_i와 정답 y_i를 입력으로 받아 Loss가 얼마인지(얼마나 구리게 예측하는지)를 정량화 시킨다. 위에서 구한 Loss들을 N개 샘플들에 대해서 평균 내주면, 최종 Loss가 구해진다.&lt;/p&gt;
 
-- **1. 직접 설치**
+&lt;h2 id=&quot;1-multi-class-svm-loss&quot;&gt;1. Multi-class SVM loss&lt;/h2&gt;
 
-```ruby
-gem install liquid-c
-```
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203700823-10f5f921-9b8c-40d1-b6d2-13ac96942ea6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-- **2. gemfile 작성**
+&lt;p&gt;이진 SVM의 일반적인 형태로서 이진 SVM과 달리 여러 클래스를 다루며, 그래프 모양이 경첩과 비슷하여 hinge loss라고도 한다. SVM loss는 올바른 카테고리의 스코어(s_yi)와 그렇지 않은 카테고리의 스코어(s_j)를 비교하여, 올바른 카테고리의 스코어가 일정 수준(margin) 이상 더 크면 0을 반환한다. 그렇지 않으면, 올바르지 않은 카테고리와 올바른 카테고리의 차(sj - syi: 잘못된 경우 loss가 더 커져야하므로)에 margin을 더한 값이 반환된다. 위 과정을 나머지 클래스(정답이 아닌 클래스)에 대해서도 동일하게 순회하며 이를 모두 더한 값이 SVM loss function의 i번째 output이 된다. 이를 수식으로 나타내면, sigma{max(o, s_j-s_yi+1)}이 되며, output의 i개 카테고리에 대한 합을 N으로 나눠주면, Loss가 되는 것이다.&lt;/p&gt;
 
-```ruby
-gem &quot;liquid-c&quot;
-```
+&lt;h3 id=&quot;1-1-특징&quot;&gt;1-1) 특징&lt;/h3&gt;
 
-```
-bundle install
-```
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Loss의 범위&lt;/strong&gt;&lt;/p&gt;
 
-&lt;br&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= Loss &amp;lt; positive infinity&lt;/code&gt;&lt;/p&gt;
 
-### 1-2) incremental 옵션 변경
+    &lt;p&gt;정답 스코어가 그렇지 않은 스코어보다 모두 클 경우, Loss는 0이 된다. 반면, 정답이 아닌 스코어가 양의 무한대로 발산하면, Loss는 양의 무한대가 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
 
-기존 jekyll은 하나의 파일만 수정되어도, 전체 파일을 전부 빌드한다. 따라서 포스트 개수가 많아질수록 빌드 시간도 오래 걸린다. 필자의 경우, 포스팅 100개 기준 빌드 시간은 약 15초정도였다. 따라서 바뀐 부분만 빌드되게 하여 빌드 속도를 크게 향상시킬 수 있다. `_config.yml`의 `incremental`옵션을 true로 바꾸어주면 자동으로 적용된다.
+    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;클래스의 수 - margin&lt;/code&gt;이 된다. C-1개의 클래스를 순회하며 스코어 비교를 하는 과정에서, 비교하는 두 스코어가 거의 비슷하니 결국 margin만 남게 된다(s_j - s_yi ≈ 0). 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 C - margin이 아니라면 버그가 있는 것을 확인 가능하다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;정답 스코어 조금 바꿔도 Loss 변화 없음&lt;/strong&gt;&lt;/p&gt;
 
-&lt;br&gt;
+    &lt;p&gt;정답 스코어가 충분히 크고, 다른 클래스의 스코어가 낮은 경우, margin의 범위 내에서 정답 스코어가 조금 바뀌어도 Loss의 변화는 없다. SVM Loss가 단순히, 정답 스코어가 그렇지 않은 스코어보다 일정 수준이상 큰지만 체크하기 떄문이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;including j = y_i&lt;/strong&gt;&lt;/p&gt;
 
-### 1-3) limit post 설정
+    &lt;p&gt;정답 클래스도 순회에 포함한다면 어떻게 될까? Loss가 margin만큼 더 증가한다(s_yi - s_yi + margin = margin).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Loss에서 전체합이 아니라 평균을 사용한다면?&lt;/strong&gt;&lt;/p&gt;
 
-jekyll 빌드 시, `--limit_posts` 플래그를 사용하면, post 개수에 제한을 걸어 빌드할 수 있다. 가령 터미널에 다음과 같이 입력했다고 가정하면, 작성일자 기준 최신 3개의 포스팅만 볼 수 있다. 포스팅 디버깅할 떄 아주 유용하게 사용할 수 있을 것 같다.
+    &lt;p&gt;영향을 미치지 않는다. 클래스 수는 어짜피 정해져 있으니, 평균 취하는건 그냥 함수를 리스케일 할 뿐이다. 스코어 값이 몇인지는 신경쓰지 않고 단순히 얼만큼 크냐 작냐를 따지는 것이기 떄문에 스케일이 바뀌는 것은 아무 영향을 미치지 않는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;그럼 손실함수를 제곱항으로 바꾼다면?&lt;/strong&gt;&lt;/p&gt;
 
-```ruby
-bundle exec jekyll serve --limit_posts 3
-```
+    &lt;p&gt;이를 square hinge loss라고 하며, 결과는 달라진다. 제곱항을 사용하면, Loss에 더 많은 가중치를 부여할 수 있다. loss를 얼마나 심각하게 받아들이느냐의 차이인듯 하다(제곱하면 절대값이 더 커지기 때문이다).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;위 코드 구현하기&lt;/strong&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vertorized 기법
+전체 합을 구할 떄 제외하고 싶은 부분만 0으로 만들면 순회 안해도 됨
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-## 2. 속도 차이
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-생각보다 속도 차이가 엄청나서 깜짝 놀랐다. 빨라져봤자 3~4초정도일 줄 알았는데, 거의 15배 가량의 눈부신 성능 향상을 보여주었다.
+&lt;h3 id=&quot;1-2-regularization-term&quot;&gt;1-2) Regularization Term&lt;/h3&gt;
 
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[최적화 전]&lt;/strong&gt;&lt;/div&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203552958-6d710312-cf2b-487e-951f-10cb1ef022ad.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203706632-304a78d1-0ebc-4ba0-963e-569b01021acf.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[최적화 후]&lt;/strong&gt;&lt;/div&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203555535-3e3e189b-ccfb-42c8-ad58-7285ddb7a2d8.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;오컴의 면도날 이론&lt;/strong&gt;&lt;/p&gt;
 
-{% endraw %}</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">다양한 방법을 사용하여 Jekyll 빌드 시간 개선</summary></entry><entry><title type="html">Image Classification</title><link href="http://localhost:4000/dl/cs231n_1/" rel="alternate" type="text/html" title="Image Classification" /><published>2022-11-22T00:00:00+09:00</published><updated>2022-11-22T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_1</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_1/">{% raw %}
+&lt;p&gt;다양한 가설이 존재하고, 그 가설들이 전부 옳다면 더 단순한 것을 선택하는 것이 좋다는 이론이다. 즉, 더 단순한 가설이 미래에 일어날 현상을 잘 설명할 가능성이 높다는 것이다. 이 이론은 기계학습 분야에서도 적용된다. 만약 상단 이미지의 파란색 그래프처럼 모델이 train 데이터에 오버피팅되면, 새로운 데이터(초록색)에 전혀 대응하지 못하게 된다. 우리는 파란색 그래프가 아니라, 새로운 데이터에도 유동적으로 반응하는 초록색 그래프(강인함)를 원하므로 모델을 어느정도 단순하게 만들 필요가 있다.&lt;/p&gt;
 
-# Image Classification?
+&lt;p&gt;Loss Function에는 우리가 앞서 살펴본 Data Loss Term 이외에도 Regularization Term이 존재하는데, 이 Regularization Term이 모델을 단순하게 만들어준다. Data Loss Term에서는 분류기가 트레이닝 데이터에 fit하게 한다면, Regularization Term에서는 모델이 좀 더 단순한 W를 선택하도록 한다. 이는 모델에 soft 패널티를 추가하여 복잡해지지 못하도록 하는 것으로 구현된다. 즉, 일반적으로 모델은 고차 다항식으로 풀려고 하지만, regulation이 저차 다항식을 선호하도록 하며, 만약 복잡한 다항식을 쓰고 싶다면, 모델은 패널티를 감수해야 할 것이다. 만약 Regularization Term 없이 Data loss Term만 존재한다면 모델은 파란색 그래프와 같은 예측을 하게되는 것이다. 또한, Regularization은 딥러닝 뿐만 아니라 ML에서도 사용하니 기억해두자.&lt;/p&gt;
 
-Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들`(조명, 화각, 객체 자세 변화, 가려짐, background clutter:배경과 비슷, 하나의 클래스에서의 다양성 등등)`에 강인해야 한다.
+&lt;h4 id=&quot;1-2-1-regularization의-종류&quot;&gt;1-2-1) Regularization의 종류&lt;/h4&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203449094-862884d0-3a22-49f8-bd8d-c351c8086c13.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203723217-08ef5fca-e242-45d7-a0c9-d03431148fad.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;L2 regularization&lt;/strong&gt;&lt;/p&gt;
 
-# Image Classification의 방법
-## 1. 명시적인 규칙 집합 선언
+    &lt;p&gt;weight decay. 가장 보편적이며, W에 대한 Euclidean Norm 또는 Square Norm이라고도 한다. 1/2 * Square Norm을 사용하면 미분이 더 깔끔해진다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;L1 regularization&lt;/strong&gt;&lt;/p&gt;
 
-명시적으로 모든 case에 대한 조건을 하드 코딩하는 알고리즘이다. 강인하지 않고, 또 다른 객체 인식 시, 규칙을 처음부터 다시 선언해야 하기에 확장성이 없다는 큰 문제점이 있어 CV에서는 사용하지 않는다.
+    &lt;p&gt;L1 Norm으로 W에 패널티를 부가하여, W가 희소행렬이 되도록 함.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Elastic net regularization&lt;/strong&gt;&lt;/p&gt;
 
-## 2. Data-Driven Approach
-해당 데이터를 매우 많이 수집하여 ML Classifier를 학습하는 방법이다. 데이터 중심 접근 방법은, 물고기는 무엇이고 고양이는 무엇이다라고 일일이 하드 코딩을 하지 않고, 고양이/물고기 사진을 매우 많이 수집하여 컴퓨터가 스스로 학습할 수 있게 한다.(본 강의는 CIFAR-10을 사용하여 설명한다.)
+    &lt;p&gt;L1과 L2를 혼합시켜놓은 형태&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Max norm regularization&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451073-be3dfd3b-6534-4213-a3cc-26d35021f2dc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+    &lt;p&gt;L1, L2 대신 Max norm을 사용함&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-### 2-1) Nearest Neighbor
+&lt;h4 id=&quot;1-2-2-l1-reg-vs-l2-reg&quot;&gt;1-2-2) L1 reg. vs L2 reg.&lt;/h4&gt;
 
-모든 데이터 저장하고(train) 가장 유사한 이미지를 찾는(pred) 가장 간단한 Data-Driven Approach Classifier이다. 다양한 거리척도를 사용하여 유사성을 판단하며, train 시간보다 test 시간이 더 느리다는 특징이 있다.
+&lt;p&gt;[1,1,1,1]의 input 이미지가 주어졌을 때, 다음과 같은 w1과 w2라는 가중치가 있다고 가정해보자.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451448-6422ad0a-9412-4881-a117-473ebc3029bc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203728984-b6c56793-cd51-4e7e-8328-bfd8a28be4c7.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;Linear Classifier의 관점에서, {w1 (dot) x} == {w2 (dot) x}이므로 w1과 w2 가중치는 동일하다. 하지만 L1 regularization과 L2 regularization이 바라보는 관점은 조금 다르다.&lt;/p&gt;
 
-#### 2-1-1) 유사성 판단
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;L2 regularization&lt;/strong&gt;&lt;/p&gt;
 
-NN은 유사성 판단에 사용하는 거리척도를 사용한다. 거리척도에는 대표적으로 L1(manhattan) distance, L2(Euclidean) distance가 있다. 거리척도마다 특성이 다르기 때문에, 데이터 및 target의 성질에 따라 적절한 거리척도를 사용해주는 것이 좋다.
+    &lt;p&gt;L2 reg.는 w2 가중치를 더 선호하는데 그 이유는 다음과 같다. L2 reg는 x의 모든 요소가 골고루 영향을 줬으면 한다. 즉, x의 특정 요소에만 의존하기보다 모든 요소가 골고루 영향을 미치게 하여 외부 변화에도 강인해지길 바란다. 따라서 L2 reg는 분류기의 복잡도를, 상대적으로 w1과 w2중 어느것이 더 coarse한지 측정(값이 매끄러워야 함)한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;L1 regularization&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203452036-3034f012-6434-493e-ac2b-f1f6a93846cd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+    &lt;p&gt;L1 reg.는 L2 reg.와는 반대로 오히려 w1을 더 선호한다. w에 0의 개수에 따라 모델의 복잡도를 다루기 때문에 sparse한 solution을 선호한다. 따라서 w의 요소 중 대부분이 0이 되게 한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;정리&lt;/strong&gt;&lt;/p&gt;
 
-- **L2 distance**
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;어떤 문제 / 어떤 모델 / 어떤 데이터냐에 따라 복잡하다의 정의가 달라짐&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;L1 : 0이 아닌 것들은 복잡하다&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;L2 : 요소가 전체적으로 퍼져있을 떄 덜 복잡하다&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;데이터와 문제에 따라 L1, L2를 적절하게 선택하면 된다.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-  L1 distance는, test와 train 이미지 픽셀간 차이의 제곱을 계산하며, 모든 픽셀의 수행결과를 모두 더한 뒤, 제곱근을 구한다. 좌표계와 연관이 없으며 각 요소의 특성을 잘 모를때 사용한다.
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-- **L1 distance**
+&lt;h2 id=&quot;2-softmax-multinomal-logistic-regression--다항-로지스틱-회귀&quot;&gt;2. Softmax (Multinomal logistic regression : 다항 로지스틱 회귀)&lt;/h2&gt;
 
-  L1 distance는, test와 train 이미지 픽셀간 차이의 절대값을 계산하며, 모든 픽셀의 수행결과를 모두 더한다. 아래와 같은 예제에서, test 이미지와 train 이미지는 L1 distance 기준 456만큼 차이가 난다고 할 수 있다. L1 distance는 어떤 좌표 시스템이냐에 따라 영향을 많이 받는다. 좌표계만 회전시켜도 distance가 변하며, 각 요소가 특별한 의미를 가지고 있을 때(봉급, 나이 등등) 사용.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203732140-d33634b5-e3ad-4d18-bd93-3d4b1648ac31.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451690-c2fac68d-b52c-4831-a443-763a7045a034.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+&lt;p&gt;딥러닝에서는 Multiclass SVM loss보다 더 많이 사용한다. Multiclass SVM의 경우, 스코어 자체는 신경쓰지 않고, 정답 클래스가 정답이 아닌 클래스보다 더 높은 스코어 내기만을 원한다. 따라서 스코어 자체에는 관심 없었으나, Softmax Loss function은 스코어 자체에 추가적인 의미를 부여한다. Softmax의 Loss 계산 과정은 다음과 같다.&lt;/p&gt;
 
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;모델에서 나온 스코어 -&amp;gt; 스코어를 지수화 시킴(양수화) -&amp;gt; 합이 1이 되도록 정규화(확률값이 됨) -&amp;gt; 정답 스코어에만 -log를 붙여줌&lt;/code&gt;&lt;/p&gt;
 
-#### 2-1-2) 구현
+&lt;p&gt;Softmax를 통해 나온 확률이 정답 클래스에서 1이 가깝게 계산되는 것이 목표이다. log를 붙이면 그래프가 단조 증가함수가 되므로, 그냥 확률값을 최대화 시키는 것보다 더 쉽다. 또한, 얼마나 좋은지가 아니라 얼마나 성능이 좋지 않은지를 측정하는 측도가 되어야하므로 부호가 음수가 되어야한다. 따라서 최종적으로 스코어에 -log가 붙게되는 것이다.&lt;/p&gt;
 
-```python
-```
+&lt;h3 id=&quot;2-1-특징&quot;&gt;2-1) 특징&lt;/h3&gt;
 
-#### 2-1-3) 속도
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Loss의 범위&lt;/strong&gt;&lt;/p&gt;
 
-train set의 이미지가 N개일때의 속도는 다음과 같다.
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= Loss &amp;lt; positive infinity&lt;/code&gt;&lt;/p&gt;
 
-- **train** 
+    &lt;p&gt;정답 스코어가 양의 무한대, 그 외는 음의 무한대로 발산한다면, 정답 클래스의 확률은 100%가 된다(지수/정규화 시키기 때문). 이 때 Loss는 0(-log(1) == 0)이되며 완벽한 분류가 된다. 반대로, 정답 클래스 스코어가 음의 무한대, 그 외가 양의 무한대로 발산하면, log(0) = 양의 무한대이므로 양의 무한대로 발산한다. 즉, 정답 클래스의 확률이 0%이면 loss는 무한대이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
 
-  O(1) : 단순히 데이터를 기억하기만 하면 됨
+    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;log(C)&lt;/code&gt;가 된다. (이유 추가) 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 log(c)가 아니라면 버그가 있는 것을 확인할 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Multiclass SVM Loss와의 차이점&lt;/strong&gt;&lt;/p&gt;
 
-- **pred** 
+    &lt;p&gt;svm은 정답 스코어와 그렇지 않은 스코어 간의 마진을 신경쓴다. 따라서 정답 클래스의 스코어가 충분히 높다면, 정답 스코어가 조금 바뀐다고 해서 loss가 변하진 않는다. 그 이유인 즉슨, SVM loss는 정답과 그 외 클래스의 마진이 얼마나 되는지에만 관심있기 때문이다. 반면 Softmax(Cross Entropy Loss)는 정답 클래스의 스코어가 충분히 높고 다른 클래스 스코어가 충분히 낮아도 최대한 정답에 확률을 몰아 넣으려고 할테고, 정답 클래스는 무한대로, 그 외의 클래스는 음의 무한대로 보내려 할 것이다.&lt;/p&gt;
 
-  O(N) : N개의 모든 이미지와 비교하는 과정이 필요함
+    &lt;p&gt;정리해보자면, SVM Loss는 일정 Margin을 넘으면 더이상 성능 개선에 신경쓰지 않는다. 그러나 Softmax는 더더욱 좋게 성능을 높이려 할 것이다. 두 손실함수의 성능 차이는 엄청나게 크진 않지만, 차이를 알고 있는 것은 유용할 것이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;위 코드 구현하기&lt;/strong&gt;&lt;/p&gt;
 
-predict 속도가 train 속도보다 느리다.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-#### 2-1-4) 문제점
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-- **속도 문제**
+&lt;h1 id=&quot;3-optimization&quot;&gt;3. Optimization&lt;/h1&gt;
 
-  우리는 train 속도는 느리더라도 predict 속도가 빠른 것을 원한다. train 과정은 어차피 개발 과정에서 진행되는 것이기 때문에, 속도가 느려도 개발 기간이 늘어날 뿐 큰 문제가 되지 않는다. 그러나 실제 서비스 시에는, 모델이 핸드폰이나 브라우저 같은 low power device에서 동작해야할 수도 있기 때문에, predict 속도가 어느정도 빨라야한다. NN은 이러한 우리의 기대와 정반대이기 때문에 실제 서비스 시 사용하기 어렵다.
+&lt;p&gt;데이터셋 x와 y
+-&amp;gt; 리니어 클래스 파이어로 x로부터 스코어 얻음 -&amp;gt; 소맥, svm loss와 같은 손실함수를 이용해서 모델의 예측값이 정답 값에 비해 얼마나 구린지 측정 + 모델의 복잡함과 단순함을 통제하기 위해 손실 함수에 regularization term을 추가 -&amp;gt; 최종 손실함수가 최소가 되게 하는 가중치 행렬이자 파라미터 행렬인 행렬 W를 구하게 됨&lt;/p&gt;
 
-- **Decision Regions**
+&lt;p&gt;optimization&lt;/p&gt;
 
-  다음은 NN의 Decision Regions를 나타낸 것이다. 2차원 평면상의 각 점은 train 데이터이며, 각 점의 색은 해당 점의 클래스를 나타낸다. 색이 칠해진 영역은 NN이 만들어낸 결정 영역이다.
+&lt;p&gt;산골짜기에서 내려오는 사람을 생각해보자. 산의 높이는 Loss가 되고, 우리는 골짜기에 있는 늪이나 개울을 피해 최대한 골짜기의 밑바닥까지 내려와야 함. 밑바닥까지 바로 내려갈 수 있으면 좋겠지만, 실제로 NN을 사용하면 예측 함수, Loss func, regularizer같은 것들이 엄청 크고 복잡해짐. 따라서 어떤 명시적인 솔루션을 만들어내서 최적의 솔루션(minima)을 직접 얻어내는 건 불가능 함.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203455284-5189918d-43c7-4ac4-a1e8-2cd45c582d2a.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+&lt;p&gt;따라서 iterative한 방법을 씀 : 임의의 지점에서 시작해서 점차적으로 성능 향상&lt;/p&gt;
 
-  위 사진에서 보았듯이, NN은 최근접 이웃만을 보고 결정 영역을 생성하므로 이상치에 매우 민감하다. 따라서, 초록색 영역 한 가운데에 노란색 영역이 생기기도 하고, 파란색 영역에 빨간색과 초록색이 침범하기도 하는 등, 제대로 된 분류가 되고있지 않다.
+&lt;ol&gt;
+  &lt;li&gt;random search&lt;/li&gt;
+&lt;/ol&gt;
 
+&lt;p&gt;랜덤 샘플링한 W를 많이 모아놓고 loss를 계산해서 어떤 w가 가장 좋은지 고름
+-&amp;gt; 매우 구린 알고리즘. 한번쯤 상상해볼법하긴 함&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;ol&gt;
+  &lt;li&gt;local geometry(지역적인 기하학적 특성) 이용&lt;/li&gt;
+&lt;/ol&gt;
 
-### 2-2) k-Nearest Neighbors
+&lt;p&gt;두 발로 느끼고 그곳의 지형을 파악 두 발로 땅의 경사를 느끼고 어느 방향으로 가야할지 알게 됨.
+-&amp;gt; 그 방향으로 한발자국 내딛고 다시 두발로 느끼고 방향을 다시 찾음 -&amp;gt; 반복하면 골짜기 내려갈 수 있음
+-&amp;gt; 쉬워보이지만 정말 잘 동작함 NN이나 클래스파이어 학습시킬 떄 실제로 사용함&lt;/p&gt;
 
-NN의 문제점을 일부 개선한 K-NN은, 단순히 가장 가까운 이웃을 찾기보다는 k개의 가까운 이웃을 찾고 이웃끼리 투표를 진행한다. 여기서 가장 많은 투표를 획득한 클래스를 최종 클래스로 분류한다. K는 적어도 1보다 커야 결정 경계가 더 부드러워지고 좋은 결과를 보이며, 여기서 K는 하이퍼 파라미터이다.
+&lt;p&gt;경사(slope)란?&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203457109-9e545353-e202-45d6-8b5d-5c9f9a0cdfe3.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
+&lt;p&gt;어떤 함수에 대한 미분값임
+but x가 scalar가 아니라 벡터이므로 미분을 다변수로 확장해야 함.
+다변수 상황에서의 미분으로 일반화 시켜보면 gradient(벡터 x의 각 요소를 편도함수들의 집합(벡터))
+gradient shape은 x와 같음(입력 3개면 gradient도 3개)
+그레디언트가 알려주는 것 -&amp;gt; 우리가 그쪽으로 갈 떄 함수 f의 경사가 어떤지&lt;/p&gt;
 
-
-이미지 분류에서 K-NN은 성능이 좋지 않지만, K-NN에 다양한 거리 척도를 사용하면 다양한 문제를 다룰 수 있음(e.g. NLP). 거리척도만 잘 정해주면 어떤 종류의 데이터도 다룰 수 있기 때문에, 새로운 문제를 접했을 때 간단히 시도해 볼만함.
-
-#### 2-2-1) 하이퍼 파라미터
-
-K-NN의 하이퍼 파리미터에는 K와 거리척도가 있다. 학습 전 사전에 반드시 정해야 하며, 여러가지를 실험/시도해보고 최고를 찾아야 한다. 다음은 하이퍼 파라미터 튜닝의 가능한 시나리오별 정리 내용이다.
-
-- **1. 학습 데이터의 정확도와 성능을 최대화하는 하이퍼 파라미터 선택**
-
-  - terrible idea
-  - K=1일 때, 모델은 학습 데이터를 완벽하게 분류하지만, 위 decision regions에서도 보았듯이, test 데이터에 대해서는 제대로 된 분류가 되지 않는다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458068-f57a5b93-e8ae-48e9-a9c4-ba12cd55de39.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-
-
-
-- **2. 전체 데이터 중 학습 데이터를 쪼개서 학습 데이터로 다양한 하이퍼 파라미터 값들을 학습시키고 테스트 데이터에 적용**
-
-  - 조금 더 합리적이지만 여전히 terrible idea.
-  - 한번도 보지 못했던 데이터에 대해서 성능이 잘 나와야 하지만, 그저 테스트 셋에서만 잘 동작하는 하이퍼파라미터가 됨.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458458-36766ff4-ddd6-419f-8963-5041b8cef1eb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-- **3. train, validation, test로 나눔**
-
-  - 가장 괜찮은 시나리오이다.
-  - 다양한 하이퍼 파라미터로 트레인 셋을 학습시키고, validation 데이터로 검증한다. 이 때, 가장 좋았던 하이퍼 파라미터를 선택하고, 해당 하이퍼 파라미터를 test에서는 오로지 한번만 수행하여 스코어를 산출한다. 이렇게 되면, test 데이터는 한번도 보지 못한 데이터가 되어 올바른 score를 계산할 수 있다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458560-1e5b8c16-5c4f-4521-b5dd-9eabf3a61d97.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-- **4. cross validation(교차검증)**
-
-  - 작은 데이터셋일 때 사용하며 딥러닝에서는 계산량이 많아 잘 사용하지 않는다.
-  - 이외 ML에서는 거의 표준처럼 사용한다.
-  - test 데이터를 정하고 validation set을 번갈아가며 지정하는 방식
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458924-c24f7882-c2c0-4a3f-93b3-f2647d4f71fd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-#### 2-2-2) 문제점
-
-이미지에 K-NN을 사용할 수 없는 이유는 다음과 같다.
-
-- **1. 너무 느린 predict 시간**
-
-  위에서 설명했듯이, predict 시간이 너무 느리다. train 속도는 느리더라도 predict 속도가 빠른 모델이 좋은 모델이다.
-
-- **2. 거리척도의 지각적 유사성 판단 불가**
-
-  L1/L2 Distance는 이미지간의 거리를 측정하기에 유용하지 않음
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203459190-a57a08ae-6a1a-4723-8828-84582b774aa6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-  위 사진은 원본 이미지를 적절히 변형한 것이다. 하지만 위 사진의 L2 Distance는 모두 동일하다. 지각적 유사도를 측정하기에 적합하지 않다는 것이다. 혹자는 해당 이미지가 모두 같은 사람이므로 모두 같은 거리이면 좋은 게 아닌가?라고 생각할 수도 있다. 그러나 이 말인 즉슨, 서로 다른 이미지에 대해 적절한 변형을 통해 distance를 가깝게 만들 수도 있고, 동일 이미지에 대해서 미묘한 변화에도 제멋대로 distance가 변할 수 있다는 말과 같다. 이는, 글의 서두에서 밝힌 강인함을 모델이 만족하지 못한다는 뜻이다.
-
-- **3. 차원의 저주 문제**
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468262-2a19d329-1c78-45b3-8417-34182e624887.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-
-  K-NN은 트레인 데이터를 이용하여 공간을 분할한다. 따라서 K-NN이 잘 동작하려면 전체 공간을 조밀하게 커버할 만큼의 충분한 트레이닝 샘플이 필요하며, 차원이 증가함에 따라 필요한 샘플의 수는 기하급수적으로 증가한다. 기하 급수적으로 증가하는 모든 것은 언제나 옳지 않으며, 특히 CV에 사용되는 고화질 이미지는 더더욱 데이터 확보가 어렵다는 문제가 있다.
-
-
-## 3. Parametric Approach
-
-### 3-1) Linear classifier
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203469905-ae426a2c-aee7-4b94-86e0-212b85c640fb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-아주 간단한 Neural Network과 CNN 기반 알고리즘이다. Nueral Network와 CNN은 마치 레고 블럭과 같은데, 이러한 딥러닝 알고리즘의 가장 기본이 되는 블럭이 바로 Linear classifier이다. parametric model의 가장 단순한 형태이며 입력 이미지 x와 가중치 w를 요소로 갖고, F(x,W) = Wx + (bias)의 형태로 표현된다.
-
-#### 3-1-1) 속도
-
-K-NN은 파라미터 없이 그저 전체 트레이닝 셋을 가지고 있었고, 모든 트레이닝 셋을 test time에 사용하여, predict time이 매우 오래걸렸다. 그러나, parametric approach에서는 트레이닝 데이터의 정보를 요약하여 파라미터 W에 모아주기 때문에, predict시에는 W만 있으면 된다. 트레이닝 데이터가 필요 없기 떄문에 predict time이 훨씬 빠르다.
-
-
-#### 3-1-2) 내부 연산
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468925-ac0e2616-2d05-4d27-bd57-5dc430618151.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-Linear classifier는 x와 W를 가지고 class의 개수와 동일한 output을 출력한다. 각각의 숫자는 각 카테고리의 스코어이며, 특정 카테고리의 스코어가 높다는건, x가 해당 카테고리일 확률이 높다는 것이다.
-
-CIFAR-10을 예로 들어보겠다. 입력이미지는 (32,32,3)의 shape를 가지는 array인데, 해당 array를 (32×32×3=3012, 1)의 열 벡터로 펴준다. 해당 열 벡터가 10-classes 스코어가 되어야 하므로, 10×3072가 되어야 한다. 따라서 최종적으로 W(10×3072) × X(3072×1) = 10×1짜리 스코어가 출력된다. bias term은 10-dim 열 벡터로 입력과 직접 연결되지는 않고, 데이터와 독립적으로 각 카테고리에 연결된다. 고양이가 개 데이터보다 많다면 고양이 클래스에 상응하는 bias가 더 커지는 형태이다.
-
-#### 3-1-3) 문제점
-
-- **템플릿 관점**
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470870-c5194c31-15a9-4df7-8d96-ec8e25eb1939.png&quot; style=&quot;border:1px solid black&quot; &gt;&lt;/p&gt;
-
-  위 이미지는 가중치 행렬 W의 한 행을 뽑아서 이미지로 시각화 해본 결과이다. W의 특정 행 벡터(특정 카테고리)와 이미지의 열벡터간의 내적을 계산하는 것은, 클래스 간 템플릿의 유사도를 측정하는 것과 유사하다. 따라서 가중치 행렬 W의 각 행은 각 이미지에 대한 템플릿으로 볼 수 있다. 여기서, Linear classifier는 각 클래스에 대해서 단 하나의 템플릿만을 학습한다. 한 클래스 내에 다양한 특징이 존재할 수 있지만 모든 것을 평균화하기 때문에 horse의 경우 말 머리가 앞뒤에 존재하는 등 제대로 된 템플릿을 생성하는 데 한계가 존재한다.
-
-- **결정경계 관점**
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470910-bc0e95e3-cf16-4cea-98d4-0990473c1671.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot;&gt;&lt;/p&gt;
-
-
-  이미지를 고차원 공간의 한점이라고 보면, Linear classifier는 각 클래스를 구분시켜 주는 선형 결정 경계를 그어준다. 하지만 선이 하나(템플릿이 하나)이기 때문에, 선 하나로 분류할 수 없는 문제가 생길 수 있다. 가령, 홀/짝수를 분류하는 것과 같은 parity problem은 Linear Classifier로 풀기 힘들다.
-
-{% endraw %}</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 2</summary></entry></feed>
+&lt;p&gt;유한 차분법?&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 3</summary></entry></feed>
