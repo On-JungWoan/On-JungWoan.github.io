@@ -1,21 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-24T23:47:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">Loss Functions and Optimization</title><link href="http://localhost:4000/dl/cs231n_2/" rel="alternate" type="text/html" title="Loss Functions and Optimization" /><published>2022-11-24T00:00:00+09:00</published><updated>2022-11-24T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_2</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_2/">&lt;h1 id=&quot;가중치-w구하는-법&quot;&gt;가중치 W구하는 법&lt;/h1&gt;
-&lt;p&gt;가중치 W를 구하기 위해서는 해당 가중치가 좋은지 나쁜지를 정량화 할 방법이 필요하다. 따라서 가중치의 성능을 파악하기 위해 도입된 것이 바로 손실함수이다. 따라서 행렬 W가 될 수 있는 모든 가능의 수 중에서 손실함수가 가장 적은 W를 찾는 것이 가중치 W를 구하는 방법이며, 이를 최적화 과정(optimization)이라 한다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-25T11:01:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Loss Functions and Optimization</title><link href="http://localhost:4000/dl/cs231n_2/" rel="alternate" type="text/html" title="[CS231n]Loss Functions and Optimization" /><published>2022-11-24T00:00:00+09:00</published><updated>2022-11-24T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_2</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_2/">&lt;h1 id=&quot;가중치-w구하는-법&quot;&gt;가중치 W구하는 법&lt;/h1&gt;
+&lt;p&gt;가중치 W를 구하기 위해서는 해당 가중치가 좋은지 나쁜지를 정량화 할 방법이 필요하다. 따라서 가중치의 성능을 파악하기 위해 도입된 것이 바로 손실함수이다. 행렬 W가 될 수 있는 모든 가능의 수 중에서 손실함수가 가장 적은 W를 찾는 것이 가중치 W를 구하는 방법이며, 이를 최적화 과정(optimization)이라 한다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;loss-function&quot;&gt;Loss Function&lt;/h1&gt;
+&lt;h1 id=&quot;loss&quot;&gt;Loss&lt;/h1&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203778112-b5dc99c5-f9e6-42c0-9a8c-9ec54640d1af.png&quot; style=&quot;border:1px solid black&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Loss는 Data Loss Term의 평균과 Regularization Term의 합으로 이루어져있다. Data loss term은 모델이 데이터에 좀 더 fit할 수 있게 도와주며, Regularization term은 모델을 단순하게 하여 오버피팅되지 않게 한다. Data loss term은 모든 클래스의 loss에 대한 총 합계로 이루어져 있는데, 이 때 loss를 구하기 위해 사용되는 함수가 Loss function이다. Loss Function에는 대표적으로 SVM과 Softmax가 존재한다.&lt;/p&gt;
 
-&lt;h2 id=&quot;1-hinge-loss-multi-class-svm&quot;&gt;1. Hinge Loss (Multi-class SVM)&lt;/h2&gt;
+&lt;h2 id=&quot;1-data-loss-term-loss-function&quot;&gt;1. Data Loss Term (Loss function)&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-1-hinge-loss-multi-class-svm&quot;&gt;1-1. Hinge Loss (Multi-class SVM)&lt;/h3&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203700823-10f5f921-9b8c-40d1-b6d2-13ac96942ea6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;이진 SVM의 일반적인 형태로서 이진 SVM과 달리 여러 클래스를 다루며, 그래프 모양이 경첩과 비슷하여 hinge loss라고 한다. hinge는 올바른 카테고리의 스코어(s_yi)와 그렇지 않은 카테고리의 스코어(s_j)를 비교하여, 올바른 카테고리의 스코어가 일정 수준(margin) 이상 더 크면 0을 반환한다. 그렇지 않으면, 올바르지 않은 카테고리와 올바른 카테고리의 차(sj - syi: 잘못된 경우 loss가 더 커져야하므로)에 margin을 더한 값이 반환된다. 위 과정을 나머지 클래스(정답이 아닌 클래스)에 대해서도 동일하게 순회하며 이를 모두 더한 값이 hinge function의 i번째 output이 된다. 이를 수식으로 나타내면, sigma{max(o, s_j-s_yi+1)}이 되며, output의 i개 카테고리에 대한 합을 N으로 나눠주면, Loss가 되는 것이다.&lt;/p&gt;
+&lt;p&gt;이진 SVM의 일반적인 형태로서 이진 SVM과 달리 여러 클래스를 다루며, 그래프 모양이 경첩과 비슷하여 hinge loss라고 한다. hinge loss는 올바른 카테고리의 스코어(s_yi)와 그렇지 않은 카테고리의 스코어(s_j)를 비교하여, 올바른 카테고리의 스코어가 일정 수준(margin) 이상 더 크면 0을 반환한다. 그렇지 않으면, 올바르지 않은 카테고리와 올바른 카테고리의 차(sj - syi: 잘못된 경우 loss가 더 커져야하므로)에 margin을 더한 값이 반환된다. 위 과정을 나머지 클래스(정답이 아닌 클래스)에 대해서도 동일하게 순회하며 이를 모두 더한 값이 hinge loss function의 i번째 output이 된다. 이를 수식으로 나타내면, sigma{max(o, s_j-s_yi+1)}이 되며, output의 i개 카테고리에 대한 합을 N으로 나눠주면, Loss가 되는 것이다.&lt;/p&gt;
 
-&lt;h3 id=&quot;1-1-예시&quot;&gt;1-1) 예시&lt;/h3&gt;
+&lt;h4 id=&quot;1-1-1-예시&quot;&gt;1-1-1) 예시&lt;/h4&gt;
 
 &lt;p&gt;모델에 input 이미지를 넣은 결과 다음과 같은 스코어가 나왔다고 가정해보자. 내가 그냥 노트에 끄적거린거라 표가 살짝 헷갈리게 나와있는데, 첫 번째 열부터 순서대로 cat, car, frog에 대한 score이다.&lt;/p&gt;
 
@@ -33,7 +36,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;1-2-구현&quot;&gt;1-2) 구현&lt;/h3&gt;
+&lt;h4 id=&quot;1-1-2-구현&quot;&gt;1-1-2) 구현&lt;/h4&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  vertorized 기법 
   전체 합을 구할 떄 제외하고 싶은 부분만 0으로 만들면 순회 안해도 됨
@@ -41,7 +44,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;1-3-특징&quot;&gt;1-3) 특징&lt;/h3&gt;
+&lt;h4 id=&quot;1-1-3-특징&quot;&gt;1-1-3) 특징&lt;/h4&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -54,22 +57,23 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;클래스의 수 - margin&lt;/code&gt;이 된다. C-1개의 클래스를 순회하며 스코어 비교를 하는 과정에서, 비교하는 두 스코어가 거의 비슷하니 결국 margin만 남게 된다(s_j - s_yi ≈ 0). 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 C - margin이 아니라면 버그가 있는 것을 확인 가능하다.&lt;/p&gt;
+    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;클래스의 수 - margin&lt;/code&gt;이 된다. C-1개의 클래스를 순회하며 스코어 비교를 하는 과정에서, 비교하는 두 스코어가 거의 비슷하니 결국 margin만 남게 되기 때문이다(s_j - s_yi ≈ 0). 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 C - margin이 아니라면 버그가 있는 것을 확인할 수 있다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;정답 스코어 조금 바꿔도 Loss 변화 없음&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;정답 스코어가 충분히 크고, 다른 클래스의 스코어가 낮은 경우, margin의 범위 내에서 정답 스코어가 조금 바뀌어도 Loss의 변화는 없다. SVM Loss가 단순히, 정답 스코어가 그렇지 않은 스코어보다 일정 수준이상 큰지만 체크하기 떄문이다.&lt;/p&gt;
+    &lt;p&gt;정답 스코어가 충분히 크고, 다른 클래스의 스코어가 낮은 경우, margin의 범위 내에서 정답 스코어가 조금 바뀌어도 Loss의 변화는 없다. 정답 스코어가 그렇지 않은 스코어보다 일정 수준이상 큰지만 체크하기 떄문이다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;including j = y_i&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;정답 클래스도 순회에 포함한다면 어떻게 될까? Loss가 margin만큼 더 증가한다(s_yi - s_yi + margin = margin).&lt;/p&gt;
+    &lt;p&gt;정답 클래스도 순회에 포함한다면 어떻게 될까?&lt;br /&gt;
+-&amp;gt; s_yi - s_yi + margin = margin이므로, Loss가 margin만큼 더 증가한다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Loss에서 전체합이 아니라 평균을 사용한다면?&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;영향을 미치지 않는다. 클래스 수는 어짜피 정해져 있으니, 평균 취하는건 그냥 함수를 리스케일 할 뿐이다. 스코어 값이 몇인지는 신경쓰지 않고 단순히 얼만큼 크냐 작냐를 따지는 것이기 떄문에 스케일이 바뀌는 것은 아무 영향을 미치지 않는다.&lt;/p&gt;
+    &lt;p&gt;영향을 미치지 않는다. 클래스 수는 어차피 정해져 있으니, 평균 취하는건 그냥 함수를 리스케일 할 뿐이다. 스코어 값이 몇인지는 신경쓰지 않고 단순히 얼만큼 크냐 작냐를 따지는 것이기 떄문에 스케일이 바뀌는 것은 아무 영향을 미치지 않는다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;그럼 손실함수를 제곱항으로 바꾼다면?&lt;/strong&gt;&lt;/p&gt;
@@ -80,17 +84,81 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;1-4-regularization-term&quot;&gt;1-4) Regularization Term&lt;/h3&gt;
+&lt;h3 id=&quot;1-2-cross-entropy-loss-softmax&quot;&gt;1-2. Cross-entropy Loss (Softmax)&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203732140-d33634b5-e3ad-4d18-bd93-3d4b1648ac31.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;딥러닝에서는 Multiclass SVM loss보다 더 많이 사용한다. Multiclass SVM의 경우, 스코어 자체는 신경쓰지 않고, 정답 클래스가 정답이 아닌 클래스보다 더 높은 스코어 내기만을 원한다. 따라서 스코어 자체에는 관심 없었으나, Softmax는 스코어 자체에 추가적인 의미를 부여한다. Softmax의 Loss 계산 과정은 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;모델에서 나온 스코어 -&amp;gt; 스코어를 지수화 시킴(양수화) -&amp;gt; 합이 1이 되도록 정규화(확률값이 됨) -&amp;gt; 정답 스코어에만 -log를 붙여줌&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;지수/정규화 통해 나온 확률이 정답 클래스에서 1에 가깝게 계산되는 것이 Softmax의 목표이다. log를 붙이면 그래프가 단조 증가함수가 되므로, 그냥 확률값을 최대화 시키는 것보다 더 쉽다. 또한, 얼마나 좋은지가 아니라 얼마나 성능이 좋지 않은지를 측정하는 측도가 되어야하므로 부호가 음수가 되어야한다. 따라서 최종 확률에 -log가 붙은 것이 Cross-entropy Loss(Softmax)이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-1-예시&quot;&gt;1-2-1) 예시&lt;/h4&gt;
+
+&lt;p&gt;다음은 cat에 대한 Cross-entropy Loss, L_cat을 구하는 과정이다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774821-e91970df-326d-4308-83d4-9fcda28e7c85.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;각각의 스코어를 지수화 하고, 이를 정규화 시키면 각 클래스에 대한 확률값이 나오게 된다. 이 중, 정답 클래스의 확률을 뽑아 -log를 씌워주면, cat에 대한 Cross-entropy Loss를 구할 수 있게된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-2-구현&quot;&gt;1-2-2) 구현&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-3-특징&quot;&gt;1-2-3) 특징&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Loss의 범위&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= Loss &amp;lt; positive infinity&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;정답 스코어가 양의 무한대, 그 외는 음의 무한대로 발산한다면, 정답 클래스의 확률은 100%가 된다(지수/정규화 시키기 때문). 이 때 Loss는 0(-log(1) == 0)이되며 완벽한 분류가 된다. 반대로, 정답 클래스 스코어가 음의 무한대, 그 외가 양의 무한대로 발산하면, log(0) = 양의 무한대이므로 양의 무한대로 발산한다. 즉, 정답 클래스의 확률이 0%이면 loss는 무한대이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;log(C)&lt;/code&gt;가 된다. 그 이유는 다음과 같다.&lt;/p&gt;
+
+    &lt;p&gt;우선, 모든 스코어가 비슷한 경우 지수/정규화를 마친 확률값도 비슷하게 나와야 할 것이다. 이 때, 확률의 합은 1이 되어야 하므로, 각각의 확률은 1/클래스의 개수(C)로 모두 동일할 것이다. 여기서 정답 클래스를 뽑아 -log를 씌우게 되면 -log(1/C)이 되는데, 이 값은 로그 변환에 의해 log(C)로 바꿀 수 있다. 따라서 log(C)가 최종 결과가 되는 것이다.&lt;/p&gt;
+
+    &lt;p&gt;이는, 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 log(c)가 아니라면 버그가 있는 것을 확인할 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Multiclass SVM Loss와의 차이점&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;svm은 정답 스코어와 그렇지 않은 스코어 간의 마진을 신경쓴다. 따라서 정답 클래스의 스코어가 충분히 높다면, 정답 스코어가 조금 바뀐다고 해서 loss가 변하진 않는다. 왜냐하면, SVM loss는 정답과 그 외 클래스의 마진이 얼마나 되는지에만 관심있기 때문이다. 반면 Softmax(Cross Entropy Loss)는 정답 클래스의 스코어가 충분히 높고 다른 클래스 스코어가 충분히 낮아도, 최대한 정답에 확률을 몰아 넣으려고 할테고 그 결과, 정답 클래스 스코어는 무한대로, 그 외의 클래스 스코어는 음의 무한대로 발산하게 된다.&lt;/p&gt;
+
+    &lt;p&gt;정리해보자면, SVM Loss는 일정 Margin을 넘으면 더이상 성능 개선에 신경쓰지 않는다. 그러나 Softmax는 더더욱 좋게 성능을 높이려 할 것이다. 두 손실함수의 성능 차이는 엄청나게 크진 않지만, 이러한 차이를 알고 있는 것이 좋다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;위 코드 구현하기&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-regularization-term&quot;&gt;2. Regularization Term&lt;/h2&gt;
+
+&lt;p&gt;Loss Function에는 우리가 앞서 살펴본 Data Loss Term 이외에도 Regularization Term이 존재하는데, 이 Regularization Term이 모델을 단순하게 만들어준다. 다시 말해, Data Loss Term에서는 분류기가 트레이닝 데이터에 fit하게 한다면, Regularization Term에서는 모델이 좀 더 단순한 W를 선택하도록 한다는 것이다. 이는 모델에 soft 패널티를 추가하여 복잡해지지 못하도록 하는 것으로 구현된다. 즉, 일반적으로 모델은 어떠한 문제를 고차 다항식으로 풀려고 하지만, regularization이 저차 다항식을 선호하도록 하며, 만약 복잡한 다항식을 쓰고 싶다면, 모델은 패널티를 감수해야 할 것이다. 만약 Regularization Term 없이 Data loss Term만 존재한다면 모델은 쉽게 오버피팅될 수 있다. 또한, Regularization은 딥러닝 뿐만 아니라 ML에서도 사용하니 기억해두자.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-1-오컴의-면도날-이론&quot;&gt;2-1) 오컴의 면도날 이론&lt;/h3&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203706632-304a78d1-0ebc-4ba0-963e-569b01021acf.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;오컴의 면도날 이론&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;다양한 가설이 존재하고, 그 가설들이 전부 옳다면 더 단순한 것을 선택하는 것이 좋다는 이론이다. 즉, 더 단순한 가설이 미래에 일어날 현상을 잘 설명할 가능성이 높다는 것이다. 이 이론은 기계학습 분야에서도 적용된다. 만약 상단 이미지의 파란색 그래프처럼 모델이 train 데이터에 오버피팅되면, 새로운 데이터(초록색)에 전혀 대응하지 못하게 된다. 우리는 파란색 그래프가 아니라, 새로운 데이터에도 유동적으로 반응하는 초록색 그래프(강인함)를 원하므로 모델을 어느정도 단순하게 만들 필요가 있다. 이것이 바로 Regularization Term을 사용하는 이유이다.&lt;/p&gt;
 
-&lt;p&gt;다양한 가설이 존재하고, 그 가설들이 전부 옳다면 더 단순한 것을 선택하는 것이 좋다는 이론이다. 즉, 더 단순한 가설이 미래에 일어날 현상을 잘 설명할 가능성이 높다는 것이다. 이 이론은 기계학습 분야에서도 적용된다. 만약 상단 이미지의 파란색 그래프처럼 모델이 train 데이터에 오버피팅되면, 새로운 데이터(초록색)에 전혀 대응하지 못하게 된다. 우리는 파란색 그래프가 아니라, 새로운 데이터에도 유동적으로 반응하는 초록색 그래프(강인함)를 원하므로 모델을 어느정도 단순하게 만들 필요가 있다.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;Loss Function에는 우리가 앞서 살펴본 Data Loss Term 이외에도 Regularization Term이 존재하는데, 이 Regularization Term이 모델을 단순하게 만들어준다. Data Loss Term에서는 분류기가 트레이닝 데이터에 fit하게 한다면, Regularization Term에서는 모델이 좀 더 단순한 W를 선택하도록 한다. 이는 모델에 soft 패널티를 추가하여 복잡해지지 못하도록 하는 것으로 구현된다. 즉, 일반적으로 모델은 고차 다항식으로 풀려고 하지만, regulation이 저차 다항식을 선호하도록 하며, 만약 복잡한 다항식을 쓰고 싶다면, 모델은 패널티를 감수해야 할 것이다. 만약 Regularization Term 없이 Data loss Term만 존재한다면 모델은 파란색 그래프와 같은 예측을 하게되는 것이다. 또한, Regularization은 딥러닝 뿐만 아니라 ML에서도 사용하니 기억해두자.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-4-1-regularization의-종류&quot;&gt;1-4-1) Regularization의 종류&lt;/h4&gt;
+&lt;h3 id=&quot;2-2-regularization의-종류&quot;&gt;2-2) Regularization의 종류&lt;/h3&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203723217-08ef5fca-e242-45d7-a0c9-d03431148fad.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
 
@@ -117,7 +185,9 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;1-4-2-l1-reg-vs-l2-reg&quot;&gt;1-4-2) L1 reg. vs L2 reg.&lt;/h4&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-3-l1-reg-vs-l2-reg&quot;&gt;2-3) L1 reg. vs L2 reg.&lt;/h3&gt;
 
 &lt;p&gt;[1,1,1,1]의 input 이미지가 주어졌을 때, 다음과 같은 w1과 w2라는 가중치가 있다고 가정해보자.&lt;/p&gt;
 
@@ -129,12 +199,12 @@
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;L2 regularization&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;L2 reg.는 w2 가중치를 더 선호하는데 그 이유는 다음과 같다. L2 reg는 x의 모든 요소가 골고루 영향을 줬으면 한다. 즉, x의 특정 요소에만 의존하기보다 모든 요소가 골고루 영향을 미치게 하여 외부 변화에도 강인해지길 바란다. 따라서 L2 reg는 분류기의 복잡도를, 상대적으로 w1과 w2중 어느것이 더 coarse한지 측정(값이 매끄러워야 함)한다.&lt;/p&gt;
+    &lt;p&gt;L2 reg.는 w2 가중치를 더 선호하는데 그 이유는 다음과 같다. L2 reg는 x의 모든 요소가 골고루 영향을 줬으면 한다. 즉, x의 특정 요소에만 의존하기보다 모든 요소가 골고루 영향을 미치게 하여 외부 변화에도 강인해지길 바란다. 따라서 L2 reg는 w1과 w2중 어느것이 더 상대적으로 coarse한지 측정(값이 매끄러워야 함)하여 분류기의 복잡도를 계산한다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;L1 regularization&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;L1 reg.는 L2 reg.와는 반대로 오히려 w1을 더 선호한다. w에 0의 개수에 따라 모델의 복잡도를 다루기 때문에 sparse한 solution을 선호한다. 따라서 w의 요소 중 대부분이 0이 되게 한다.&lt;/p&gt;
+    &lt;p&gt;L1 reg.는 L2 reg.와는 반대로 오히려 w1을 더 선호한다. L1 reg는 w에 존재하는 0의 개수에 따라 모델의 복잡도를 다루기 때문에 sparse한 solution을 선호한다. 따라서 w의 요소 중 대부분이 0이 되게 한다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;정리&lt;/strong&gt;&lt;/p&gt;
@@ -156,73 +226,26 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-cross-entropy-loss-softmax&quot;&gt;2. Cross-entropy Loss (Softmax)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203732140-d33634b5-e3ad-4d18-bd93-3d4b1648ac31.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;딥러닝에서는 Multiclass SVM loss보다 더 많이 사용한다. Multiclass SVM의 경우, 스코어 자체는 신경쓰지 않고, 정답 클래스가 정답이 아닌 클래스보다 더 높은 스코어 내기만을 원한다. 따라서 스코어 자체에는 관심 없었으나, Softmax는 스코어 자체에 추가적인 의미를 부여한다. Softmax의 Loss 계산 과정은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;모델에서 나온 스코어 -&amp;gt; 스코어를 지수화 시킴(양수화) -&amp;gt; 합이 1이 되도록 정규화(확률값이 됨) -&amp;gt; 정답 스코어에만 -log를 붙여줌&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Softmax를 통해 나온 확률이 정답 클래스에서 1이 가깝게 계산되는 것이 목표이다. log를 붙이면 그래프가 단조 증가함수가 되므로, 그냥 확률값을 최대화 시키는 것보다 더 쉽다. 또한, 얼마나 좋은지가 아니라 얼마나 성능이 좋지 않은지를 측정하는 측도가 되어야하므로 부호가 음수가 되어야한다. 따라서 최종적으로 스코어에 -log가 붙게되는 것이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-예시&quot;&gt;2-1) 예시&lt;/h3&gt;
-
-&lt;p&gt;다음은 cat에 대한 Cross-entropy Loss, L_cat을 구하는 과정이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774821-e91970df-326d-4308-83d4-9fcda28e7c85.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;cat의 스코어를 지수화 하고, 이를 정규화 시키면 각 클래스에 대한 확률값이 나오게 된다. 이 중, 정답 클래스의 확률을 뽑아 -log를 씌워주면, cat에 대한 Cross-entropy Loss를 구할 수 있게된다.&lt;/p&gt;
-
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-2-구현&quot;&gt;2-2) 구현&lt;/h3&gt;
+&lt;h2 id=&quot;3-loss-총정리&quot;&gt;3. Loss 총정리&lt;/h2&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;데이터셋 x와 y&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;-&amp;gt; Model(Linear Classifier 등)을 통해 x로부터 스코어 얻음&lt;/p&gt;
 
-&lt;h3 id=&quot;2-3-특징&quot;&gt;2-3) 특징&lt;/h3&gt;
+&lt;p&gt;-&amp;gt; Softmax, SVM등의 Loss function을 통해 모델의 예측값이 정답값에 비해 얼마나 좋지 않은지 측정&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Loss의 범위&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;-&amp;gt; 모델의 복잡함과 단순함을 통제하기 위해 Loss function에 regularization term을 추가&lt;/p&gt;
 
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= Loss &amp;lt; positive infinity&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;-&amp;gt; Optimization 과정 (아래에서 설명)&lt;/p&gt;
 
-    &lt;p&gt;정답 스코어가 양의 무한대, 그 외는 음의 무한대로 발산한다면, 정답 클래스의 확률은 100%가 된다(지수/정규화 시키기 때문). 이 때 Loss는 0(-log(1) == 0)이되며 완벽한 분류가 된다. 반대로, 정답 클래스 스코어가 음의 무한대, 그 외가 양의 무한대로 발산하면, log(0) = 양의 무한대이므로 양의 무한대로 발산한다. 즉, 정답 클래스의 확률이 0%이면 loss는 무한대이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;log(C)&lt;/code&gt;가 된다. (이유 추가) 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 log(c)가 아니라면 버그가 있는 것을 확인할 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Multiclass SVM Loss와의 차이점&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;svm은 정답 스코어와 그렇지 않은 스코어 간의 마진을 신경쓴다. 따라서 정답 클래스의 스코어가 충분히 높다면, 정답 스코어가 조금 바뀐다고 해서 loss가 변하진 않는다. 그 이유인 즉슨, SVM loss는 정답과 그 외 클래스의 마진이 얼마나 되는지에만 관심있기 때문이다. 반면 Softmax(Cross Entropy Loss)는 정답 클래스의 스코어가 충분히 높고 다른 클래스 스코어가 충분히 낮아도 최대한 정답에 확률을 몰아 넣으려고 할테고, 정답 클래스는 무한대로, 그 외의 클래스는 음의 무한대로 보내려 할 것이다.&lt;/p&gt;
-
-    &lt;p&gt;정리해보자면, SVM Loss는 일정 Margin을 넘으면 더이상 성능 개선에 신경쓰지 않는다. 그러나 Softmax는 더더욱 좋게 성능을 높이려 할 것이다. 두 손실함수의 성능 차이는 엄청나게 크진 않지만, 차이를 알고 있는 것은 유용할 것이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;위 코드 구현하기&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;-&amp;gt; 최종 손실함수가 최소가 되게 하는 가중치 행렬이자 파라미터 행렬인 행렬 W를 구하게 됨&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;3-optimization&quot;&gt;3. Optimization&lt;/h1&gt;
-
-&lt;p&gt;데이터셋 x와 y
--&amp;gt; 리니어 클래스 파이어로 x로부터 스코어 얻음 -&amp;gt; 소맥, svm loss와 같은 손실함수를 이용해서 모델의 예측값이 정답 값에 비해 얼마나 구린지 측정 + 모델의 복잡함과 단순함을 통제하기 위해 손실 함수에 regularization term을 추가 -&amp;gt; 최종 손실함수가 최소가 되게 하는 가중치 행렬이자 파라미터 행렬인 행렬 W를 구하게 됨&lt;/p&gt;
-
-&lt;p&gt;optimization&lt;/p&gt;
+&lt;h1 id=&quot;optimization&quot;&gt;Optimization&lt;/h1&gt;
 
 &lt;p&gt;산골짜기에서 내려오는 사람을 생각해보자. 산의 높이는 Loss가 되고, 우리는 골짜기에 있는 늪이나 개울을 피해 최대한 골짜기의 밑바닥까지 내려와야 함. 밑바닥까지 바로 내려갈 수 있으면 좋겠지만, 실제로 NN을 사용하면 예측 함수, Loss func, regularizer같은 것들이 엄청 크고 복잡해짐. 따라서 어떤 명시적인 솔루션을 만들어내서 최적의 솔루션(minima)을 직접 얻어내는 건 불가능 함.&lt;/p&gt;
 
