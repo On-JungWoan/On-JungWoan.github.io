@@ -627,160 +627,270 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              
+              <ul class="toc__menu"><li><a href="#analytic-gradient">Analytic gradient</a><ul><li><a href="#1-computational-graph">1. Computational graph</a></li><li><a href="#2-backpropagation">2. backpropagation</a><ul><li><a href="#2-1-example-1">2-1) Example 1</a><ul><li><a href="#2-1-1-함수-f를-computational-graph로-표현하기">2-1-1) 함수 f를 Computational graph로 표현하기</a></li><li><a href="#2-1-2-forward-propagation">2-1-2) Forward propagation</a></li><li><a href="#2-1-3-local-gradient">2-1-3) Local Gradient</a></li><li><a href="#2-1-4-back-propagation">2-1-4) Back propagation</a></li><li><a href="#2-1-5-도식화">2-1-5) 도식화</a></li><li><a href="#2-1-6-정리">2-1-6) 정리</a></li></ul></li><li><a href="#2-2-example-2">2-2) Example 2</a><ul><li><a href="#2-1-1-forward-propagation">2-1-1) forward propagation</a></li><li><a href="#2-1-2-local-gradient-계산">2-1-2) local gradient 계산</a></li><li><a href="#2-1-3-backward-propagation">2-1-3) backward propagation</a></li><li><a href="#2-1-4-노드의-그룹화">2-1-4) 노드의 그룹화</a></li></ul></li><li><a href="#2-3-패턴">2-3) 패턴</a><ul><li><a href="#2-3-1-덧셈-게이트">2-3-1) 덧셈 게이트</a></li><li><a href="#2-3-2-max-게이트-gradient-router">2-3-2) max 게이트 (gradient router)</a></li><li><a href="#2-3-3-곱셈-게이트-gradient-switcher-or-scaler">2-3-3) 곱셈 게이트 (gradient switcher or scaler)</a></li><li><a href="#2-3-4-하나의-노드에서-다른-노드-두개로-이어진-경우">2-3-4) 하나의 노드에서 다른 노드 두개로 이어진 경우</a></li></ul></li><li><a href="#2-4-요약">2-4) 요약</a></li></ul></li></ul></li><li><a href="#xyz가-숫자가-아니라-벡터라면">x,y,z가 숫자가 아니라 벡터라면?</a></li><li><a href="#요약">요약</a></li></ul>
 
             </nav>
           </aside>
         
-        <p>analytic gradient 계산 -&gt; computational graph라는 그래프(프레임워크) 이용
--&gt; 매우 복잡한 함수를 이용하여 작업시에 아주 유용하게 사용됨</p>
+        <h1 id="analytic-gradient">Analytic gradient</h1>
 
-<p>Linear Classifier에서 우리는 x와 W를 input으로 받아 곱셈 노드 지나 score vector를 출력함
--&gt; ingle loss라는 계산 노드를 지나 Li 계산
-최종 로스는 reg.항과 data항의 합계</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204448878-5e0739ff-ebd7-4ed3-a74d-071e09252b5d.png" width="60%" style="border:1px solid black;" /></p>
 
-<p>backpropagation은 gradient를 얻기 위해 컴. 그래프 내부의 모든 변수에 대해 chain rule을 재귀적으로 사용함</p>
+<p>지난 강의에서 Numerical gradient와 Analystic gradient에 대해서 소개했었다. Numerical gradient는 유한차분 추정을 통해 쉽게 구할 수 있었지만, 느리고 정확하지 않다는 단점이 있었다. 본 강의에서는, 유한차분 추정보다는 어렵지만, 훨씬 더 정확하고 빠르게 gradient를 구할 수 있는 Analytic gradient에 대해서 소개하고자 한다. 이를 위해 먼저 Computation graph를 소개한다.</p>
 
-<p>ex)
-(x+y)*z를 computational graph로 나타낸 것임.
-우리는 function f 출력에 대한 어떤 변수의 grad를 찾고자 함</p>
+<h2 id="1-computational-graph">1. Computational graph</h2>
 
-<p>q : x+y
-f : q*z
-미분값?</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204449312-0403d399-a358-4ff2-a6f4-16e35aab1f84.png" width="60%" style="border:1px solid black;" /></p>
 
-<p>ex) f(x, y, z) = (x+y)*z인 f가 있다고 가정해보자.</p>
+<p>Computational graph는 매우 복잡한 형태의 함수를 node와 edge로 나타낸 그래프이며, 복잡한 함수를 이용한 작업 및 계산시 아주 유용하게 사용된다. 위 예시는 Linear Classifier가 Loss를 구하는 과정을 Computational graph로 나타낸 것이며, hinge loss와 regularization term의 합계가 최종 Loss로 구해지는 과정이 표현되어 있다.</p>
 
-<p>f의 파라미터는 x, y, z이므로, 우리는 f에 대한 x, y, z의 gradient를 얻어 W를 조정해야 함.
-이 때, Chain rule을 이용해 f에 대한 x, y, z의 gradient를 얻을 수 있음
-q = x+y라고 하면, dq/dx = 1, dq/dy = 1이고, f = qz이다.
-또한 df/dq = z, df/dz = q이다.
-이제 f부터 미분을 하며 내려온다.
-df/dz = q = 3
-df/dq = z = -4
-df/dx = df/dq * dq/dx = z * 1 = z = -4 (chain rule)
-df/dy = df/dq * dq/dy = z * 1 = z = -4 (chain rule)</p>
+<p>Computational graph의 최대 장점은, 일단 우리가 Computational graph로 함수를 표현하면 backpropagation이라고 불리는 테크닉을 사용할 수 있다는 것이다. backpropagation이란, 재귀적으로 chain rule을 사용하여 computatinal graph의 모든 변수에 대해 경사를 계산하는 기법인데, 자세한 내용은 아래에서 좀 더 구체적인 예시를 가지고 설명해보겠다.</p>
 
-<p>지금 이 예시는 간단해서 바로 미분할 수 있지만, 복잡해지면 이 방법이 유용하다.
-chain rule을 사용하여, 복잡한 계산 없이 단순한 미분만으로 차근차근 구해나갈 수 있음</p>
+<p><br />
+<br /></p>
 
-<p>ex2)</p>
+<h2 id="2-backpropagation">2. backpropagation</h2>
 
-<p>우선, x와 y(input)을 f에 넣어 z(output)을 얻어낸다.
-이후, z에 대한 x와 y의 gradient값을 미분을 통해 얻을 수 있는데, 이를 local gradient라고 함.
-우리가 알고 싶은건 z 값을 통해 계산한 Loss에 대한 x, y의 gradient 값이다.
-이 때, 앞에서 설명한 chain rule을 이용하여 쉽게 계산할 수 있다.
-Loss를 z에 대해 먼저 미분하고, dL/dz * dz/(dx or dy)를 통해 Loss에 대한 x, y의 gradient 값을 계싼할 수 있다.
-이렇게 input을 받아 출력된 output을 바탕으로 Loss를 계산하는 과정을 forward pass라고 하고, 
-forward pass가 끝난 후, 역으로 미분해가며 gradient값을 구하는 과정을 backward pass(backpropagation)라고 한다.
--&gt; 노드와 연결된 노드 이외의 다른 어떤 값에 대하여 신경쓰지 않아도 된다.</p>
+<h3 id="2-1-example-1">2-1) Example 1</h3>
 
-<p>각 노드는 오직 주변에 대해서만 알고 있음
-우리가 가지고 있는건 각 노드와 각 노드의 local 입력
-z로부터 x에 대한 grad, y에 대한 grad (local grad)를 구할 수 있음</p>
+\[f(x,y,z) = (x+y) \times z\]
 
-<p>ex3)
-ws와 xs가 주어졌다고 했을 때, 우리는 값을 이용해 모든 단계마다 계산을 통해서 뒤로(오른족) 진행할 수 있음</p>
+<p>다음은 function $f(x, y, z) = (x+y) \times z$에 대한 backpropagation 예제이다. input으로는 x=-2, y=5, z=-4가 주어져있다.</p>
 
-<p>upstream gradient</p>
+<p>여기서 우리의 목표는, f에 대한 x, y, z의 gradient를 얻어 W를 조정하는 것이다. 따라서, 우리가 최종적으로 얻고자 하는 것은, function f의 출력(Loss와 관련)에 대한 x, y, z의 Gradient값이다. 설명이 조금 rough하지만, 뒤에 다른 예제가 또 나오기 때문에, 일단은 이해가 되지 않더라도 이런게 있구나 하며 흐름만 파악하면 된다.</p>
 
-<p>forward propagation을 통해 최종 변수에 대한 출력이 0.73임을 계산하였다.
-제일 뒷단부터 backward propagation을 통해 gradient를 제일 앞 단으로 전파시켜 f의 파라미터에 대한 gradient를 구할 수 있다.</p>
+<h4 id="2-1-1-함수-f를-computational-graph로-표현하기">2-1-1) 함수 f를 Computational graph로 표현하기</h4>
 
-<p>1/x에 대한 upstream gradient는 1.00이다.
-f=1/x에 대한 local gradient는 -1/x^2이다.
-chain rule에 의해 f에 대한 gradient는 upstream gradient * local gradient = 1 * -1/x^2이다.
-따라서 -0.53</p>
+<p>우선, gradient를 구하고자 하는 함수 f를 Computational graph로 표현해준다. 차근차근 그려나가면 어렵지 않게 그릴 수 있다.</p>
 
-<p>f=x+1에 대한 upstream gradient는 -0.53이다.
-f=x+1에 대한 local gradient는 1이다.
-chain rule에 의해 f에 대한 gradient는 upstream gradient * local gradient = -0.53 * 1이다.
-따라서 -0.53</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204479798-d9afefca-9539-4d85-87f5-8fe3a2e0b113.png" width="60%" style="border:1px solid black;" /></p>
 
-<p>f=exp에 대한 upstream gradient는 -0.53이다.
-f=exp에 대한 local gradient는 e^x이다.
-chain rule에 의해 f에 대한 gradient는 upstream gradient * local gradient = -0.53 * e^x이다.
-x=-1 이므로 최종 gradient는 -0.20</p>
+<h4 id="2-1-2-forward-propagation">2-1-2) Forward propagation</h4>
 
-<p>f=-x에 대한 upstream gradient는 -0.2이다.
-f=-x에 대한 local gradient는 -1이다.
-chain rule에 의해 f에 대한 gradient는 upstream gradient * local gradient = -0.2 * -1이다.
-x=-1 이므로 최종 gradient는 0.2</p>
+<p>input을 계속 뒤로(오른쪽) 전달하여 각 노드의 값을 계산한다. 이를 forward pass라고 한다.**</p>
 
-<p>f=x_p+x_k에 대한 upstream gradient는 0.2이다.
-f=x_p+x_k에 대한 local gradient는 모두 1이다(df/dx_p=1, df/dx_k=1).
-chain rule에 의해 f에 대한 gradient는 upstream gradient * local gradient = 0.2 * 1이다.
-x_p=x_k=0.2 이므로 최종 gradient는 모두 0.2</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204480261-3ff243e3-f915-4998-b12c-f9f9f87048b2.png" width="60%" style="border:1px solid black;" /></p>
 
-<p>f=w0<em>x0에 대한 upstream gradient는 0.2이다.
-f=w0</em>x0에 대한 local gradient는 다른 input의 값이다(df/dw0=x0, df/dx0=w0).
-chain rule에 의해 f에 대한 gradient는 upstream gradient * local gradient = 0.2 * (x0 or w0)이다.
-따라서 최종 gradient는 0.2x2.0(x0), 0.2x-1(w0)이다</p>
+<h4 id="2-1-3-local-gradient">2-1-3) Local Gradient</h4>
 
-<p>지금은 가장 작은 단위를 사용하였지만, 이 노드를 더 복잡한 그룹으로 묶을수도 있음
-그 노드에 대한 local gradient를 적어놓으면 문제 없이 더 간단히 사용 가능하다
-따라서 local gradient를 적을 수 있는한 더 복잡한 노드 그룹을 만들 수 있음
-이 모든 것은 trade-off의 관계에 있음
-그래프가 단순 -&gt; 복잡한 gradient 계산
-그래프가 복잡 -&gt; 단순한 gradient 계산</p>
+<p>각 노드의 local gradient를 미리 구한다. 여기서 local gradient란, 해당 노드의 편미분값이라고 생각하면 된다.</p>
 
-<p>gradient를 구하기 어려울 때는 언제든지 이를 쪼개서 chain rule을 사용할 수 있다.</p>
+\[q = x+y \quad\quad \frac{\partial q}{\partial x} = 1, \frac{\partial q}{\partial y} = 1\\\]
 
-<p>-시그모이드로 묶었을 때-</p>
+\[f = qz \quad\quad \frac{\partial f}{\partial q} = z, \frac{\partial f}{\partial z} = q\\\]
 
-<p>input : 1
-output : 0.73
-upstream gradient = 1
-local gradient = (1-sig(x)) * sig(x) = 0.2이므로
-sig gate의 gradient는 1*0.2이다.(결과 동일)</p>
+\[Want : \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\]
+
+<h4 id="2-1-4-back-propagation">2-1-4) Back propagation</h4>
+
+<p>제일 뒷 단부터 앞 단으로 gradient를 전파시킨다. 이를 backward pass라고 한다.</p>
+
+<div align="center"><strong>우선, 바로 미분이 가능한 노드부터 미분해준다.</strong></div>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204459012-bffe1c90-77b6-489d-9a92-96d1c6b90f46.png" width="60%" style="border:1px solid black;" /></p>
+
+\[-&gt; \; \frac{\partial f}{\partial f} = 1\\\]
+
+\[-&gt; \; \frac{\partial f}{\partial z} = q = 3\\\]
+
+\[-&gt; \; \frac{\partial f}{\partial q} = z = -4\\\]
+
+<div align="center"><strong>
+  f와 직접적으로 연결되어있지 않은 노드들의 gradient는<br />
+  간단한 수학적 trick을 사용하여 구해줄 수 있는데,<br />
+  이 trick을 chain rule이라고 한다.</strong>
+</div>
+
+\[-&gt; \; \frac{\partial f}{\partial x}\]
+
+\[= \frac{\partial f}{\partial q} \; \frac{\partial q}{\partial x}\\(upstream \; gradient \times local \; gradient)\]
+
+\[= -4 \times 1 = -4\\\]
+
+\[-&gt; \; \frac{\partial f}{\partial y}\]
+
+\[= \frac{\partial f}{\partial q} \; \frac{\partial q}{\partial y}\]
+
+\[= -4 \times 1 = -4\\\]
+
+<p>위처럼, chain rule을 사용하면, 어려운 계산 없이 단순한 미분만으로 복잡한 함수에 대한 편미분 gradient 값을 차근차근 구해나갈 수 있다. 지금 이 예시의 함수 f는, 식이 간단해서 바로 편미분할 수 있지만, 함수가 복잡해질 경우 위 방법을 사용하는 것이 유용하다.</p>
+
+<h4 id="2-1-5-도식화">2-1-5) 도식화</h4>
+
+<p>다음은 위 예제를 간단하게 도식화한 그림이다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204461793-2aed8788-4719-4519-b443-613fb3801745.png" width="60%" style="border:1px solid black;" /></p>
+
+<p>우선, 우리는 x와 y(input)을 f에 넣어 z(output)을 얻어냈다. 이렇게 input을 받아 출력된 output을 바탕으로 Loss를 계산하는 과정을 forward pass라고 한다. 이후, z에 대한 x와 y의 gradient값을 미분을 통해 얻을 수 있는데, 이를 local gradient라고 한다. 여기서 우리가 알고 싶은건, z 값을 통해 계산한 Loss에 대한 x, y의 gradient 값이다. 이 때, 앞에서 설명한 chain rule을 이용하면 쉽게 계산할 수 있는데, Loss를 z에 대해 먼저 미분하고, $\frac{\partial L}{\partial z} \times \frac{\partial z}{\partial x \; or \; \partial y}$를 통해 Loss에 대한 x, y의 gradient 값을 계산하면 된다. 이처럼, forward pass가 끝난 후, 역으로 미분해가며 gradient값을 구하는 과정을 backward pass(backpropagation)라고 한다.</p>
+
+<h4 id="2-1-6-정리">2-1-6) 정리</h4>
+
+<p>위 예제를 통해 얻을 수 있는 정보는 다음과 같다. 우선, 각 노드들은 자신과 인접한 노드에 대한 정보만 알 수 있다. 이러한 한계로 인해 고안해낸 trick이 바로 chain rule이며, 우리는 특정 노드의 gradient가 <code class="language-plaintext highlighter-rouge">upstream gradient * local gradient</code>임을 확인하였다. 따라서 우리는, forward propagation을 통해 구한 Loss를 다시 back propagation을 통해 앞단으로 전파하여 f의 파라미터에 대한 gradient를 얻을 수 있게 되었다.</p>
+
+<p><br /></p>
+
+<h3 id="2-2-example-2">2-2) Example 2</h3>
+
+<p>다음의 함수 $f(w,x)$에 대하여 파라미터들의 gradient를 구해보자.</p>
+
+\[f(w,x) = \frac{1}{1+e^-{w_0x_0+w_1x_1+w_2}}\]
+
+<h4 id="2-1-1-forward-propagation">2-1-1) forward propagation</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204464307-15fdd3a1-f2d1-4b00-a829-ec8c7e019bb0.png" width="60%" style="border:1px solid black;" /></p>
+
+<h4 id="2-1-2-local-gradient-계산">2-1-2) local gradient 계산</h4>
+
+\[f(x) = \frac{1}{x} \quad -&gt; \quad \frac{\partial f}{\partial x} = -\frac{1}{x^2}\\\]
+
+\[f_c(x) = x + c \quad -&gt; \quad \frac{\partial f}{\partial x} = 1\\\]
+
+\[f(x) = e^x \quad -&gt; \quad \frac{\partial f}{\partial x} = e^x\\\]
+
+\[f_a(x) = ax \quad -&gt; \quad \frac{\partial f}{\partial x} = a\\\]
+
+<h4 id="2-1-3-backward-propagation">2-1-3) backward propagation</h4>
 
 <ul>
   <li>
-    <p>알 수 있는 패턴</p>
+    <p><strong>step 1.</strong></p>
+
+    <p>$\frac{\partial f}{\partial x}=1$이므로 마지막 노드의 출력에 대한 gradient는 1이다.</p>
+
+    <p align="center"><img src="https://user-images.githubusercontent.com/84084372/204467794-47fc62d5-7c23-4e25-a244-6429cbaedff0.png" width="40%" style="border:1px solid black;" /></p>
   </li>
   <li>
-    <p>두 개의 브랜치와 연결되는 덧셈 게이트</p>
+    <p><strong>step 2.</strong></p>
+
+    <ul>
+      <li>upstream gradient : 1.00</li>
+      <li>local gradient : $-\frac{1}{x^2}=\frac{-1}{1.37^2}=-0.53$</li>
+      <li>gradient : (-0.53) $\times$ 1 = -0.53</li>
+    </ul>
   </li>
 </ul>
 
-<p>upstream gradient를 연결된 브랜치에 정확히 같은 값으로 나누어 줌</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204467886-24a166ee-6a27-41d9-b798-c02d97982115.png" width="40%" style="border:1px solid black;" /></p>
 
 <ul>
-  <li>max 게이트 (gradient 라우터)</li>
+  <li>
+    <p><strong>step 3.</strong></p>
+
+    <ul>
+      <li>upstream gradient : -0.53</li>
+      <li>local gradient : 1</li>
+      <li>gradient : 1 $\times$ (-0.53) = -0.53</li>
+    </ul>
+  </li>
 </ul>
 
-<p>하나에는 upstream gradient의 전체값이, 나머지 하나에는 0이 들어감
-왜냐하면 local gradient가 1,0이기 때문이다.</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204467928-1c9c3c46-f409-4ef2-ada9-46c8cfcb41bb.png" width="40%" style="border:1px solid black;" /></p>
 
 <ul>
-  <li>곱셈 게이트 (gradient switcher or scaler)</li>
+  <li>
+    <p><strong>step 4.</strong></p>
+
+    <ul>
+      <li>upstream gradient : -0.53</li>
+      <li>local gradient : $e^x = e^{-1}$</li>
+      <li>gradient : e^{-1} $\times$ (-0.53) = -0.20</li>
+    </ul>
+
+    <p align="center"><img src="https://user-images.githubusercontent.com/84084372/204467990-8c23560b-4a94-4772-9ee7-990cb067e9ac.png" width="50%" style="border:1px solid black;" /></p>
+  </li>
+  <li>
+    <p><strong>step 5.</strong></p>
+
+    <ul>
+      <li>upstream gradient : -0.20</li>
+      <li>local gradient : $-x = -1$</li>
+      <li>gradient : -1 $\times$ -0.20 = 0.20</li>
+    </ul>
+  </li>
 </ul>
 
-<p>다른 변수의 값</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204468040-91783147-2dd6-416a-8e37-80f7dd79ed46.png" width="50%" style="border:1px solid black;" /></p>
 
 <ul>
-  <li>하나의 노드에서 다른 노드 두개로 이어진 경우</li>
+  <li>
+    <p><strong>step 6.</strong></p>
+
+    <ul>
+      <li>upstream gradient : 0.20</li>
+      <li>local gradient : 1 (both)</li>
+      <li>gradient : 1 $\times$ 0.20 = 0.20 (both)</li>
+    </ul>
+  </li>
 </ul>
 
-<p>뒤의 두개의 노드에서 오는 미분 값을 더한 값
-반대로 앞의 노드 하나만 바뀌어도 뒤의 노드 두 개가 모두 바뀐다는 사실을 알아두시면 좋습니다.</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204468099-d5850ea9-bfe2-42b6-85df-327f0fe4a0b1.png" width="80%" style="border:1px solid black;" /></p>
 
-<p>-&gt; 지금까지는 임의의 복잡한 함수에 대해 gradient를 계산하는 방법을 배운 것임.</p>
+<ul>
+  <li>
+    <p><strong>step 7.</strong></p>
 
-<p>x,y,z가 숫자가 아니라 벡터라면?
-모든 흐름은 같지만 gradient는 jacobian 행렬(이것들은 각 요소의 미분을 포함하는 행렬)이 될 것이다.
-input(4096 벡터-cnn에서 흔히 볼 수 있는 사이즈)
-요소별로 0과 비교해 최대값을 갖는 x를 취하는 f
-출력또한 4096차원의 벡터일 때 jacobian 행렬의 사이즈는? 4096*4096
-mini batch가 100이면 409600 * 409600 -&gt; 매우 큼
-매우 거대해서 작업에 실용적이지 않음 -&gt; 실제로는 이 거대한 자코비안을 계싼할 필요는 없음(대각행렬임)</p>
+    <ul>
+      <li>upstream gradient : 0.20</li>
+      <li>local gradient : $x_0, w_0$</li>
+      <li>
+        <p>gradient</p>
 
-<p>-&gt; jacobian matrix는 input matrix의 길이를 변으로 가지는 정방형 행렬임을 알고 넘어가면 됩니다.</p>
+        <p>$w_0$ : -1 $\times$ 0.2 = -0.2</p>
 
-<p>ex)
-asdasd</p>
+        <p>$x_0$ : 2 $\times$ 0.2 = 0.4</p>
+      </li>
+    </ul>
+  </li>
+</ul>
 
-<p>forward pass backowar pass의 API</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204468144-e41b62e5-437e-48ac-b55d-9266dc83ce2d.png" width="80%" style="border:1px solid black;" /></p>
+
+<h4 id="2-1-4-노드의-그룹화">2-1-4) 노드의 그룹화</h4>
+
+<p>또한, 지금은 가장 작은 단위의 노드를 사용하였지만, 이 노드를 더 복잡한 그룹으로 묶을수도 있다. 그 노드에 대한 local gradient를 구할수만 있다면, 문제없이 더 간단히 gradient를 구할 수 있다(<code class="language-plaintext highlighter-rouge">local gradient * upstream gradient</code>).</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204471177-1aea7f69-f744-44fb-845f-d519c316c61f.png" width="80%" style="border:1px solid black;" /></p>
+
+<p>위 그림과 같이 특정 노드 그룹의 도함수를 알고있는 경우, 그룹화시켜 그래프를 단순하게 만들 수 있는 것이다. 하지만, 계산량과 그래프의 단순함은 trade-off 관계에 있음을 유의하자!</p>
+
+<ul>
+  <li>그래프가 단순 -&gt; gradient 계산 복잡</li>
+  <li>그래프가 복잡 -&gt; gradient 계산 단순</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-3-패턴">2-3) 패턴</h3>
+
+<p>우리는 앞서 살펴본 예제에서 다음과 같은 패턴을 확인할 수 있다.</p>
+
+<h4 id="2-3-1-덧셈-게이트">2-3-1) 덧셈 게이트</h4>
+
+<p>upstream gradient를 연결된 브랜치에 정확히 같은 값으로 나누어 준다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204472004-e107dc2c-e1ca-4117-b551-9c8a60d70d96.png" width="60%" style="border:1px solid black;" /></p>
+
+<h4 id="2-3-2-max-게이트-gradient-router">2-3-2) max 게이트 (gradient router)</h4>
+
+<p>하나에는 upstream gradient의 전체값이, 나머지 하나에는 0이 들어간다. 왜냐하면 local gradient가 1,0이기 때문이다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204472072-96b6e081-987c-463f-8b6b-17c33fb04050.png" width="60%" style="border:1px solid black;" /></p>
+
+<h4 id="2-3-3-곱셈-게이트-gradient-switcher-or-scaler">2-3-3) 곱셈 게이트 (gradient switcher or scaler)</h4>
+
+<p>반대편 변수의 값이 upstream gradient와 곱해져 들어간다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204475032-57363ead-685f-459e-a270-8f0595df6be0.png" width="60%" style="border:1px solid black;" /></p>
+
+<h4 id="2-3-4-하나의-노드에서-다른-노드-두개로-이어진-경우">2-3-4) 하나의 노드에서 다른 노드 두개로 이어진 경우</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204475202-a1fa2baa-e8a3-4b3d-852d-528872734f74.png" width="60%" style="border:1px solid black;" /></p>
+
+<p>뒤의 두개의 노드에서 오는 미분 값을 더한 값이 들어간다. 반대로 앞의 노드 하나만 바뀌어도 뒤의 노드 두 개가 모두 바뀐다.</p>
+
+<p><br /></p>
+
+<h3 id="2-4-요약">2-4) 요약</h3>
 
 <ol>
   <li>computational graph로 나타내기</li>
@@ -788,7 +898,17 @@ asdasd</p>
   <li>역방향 계산 // computational graph에서 정의한, 계산에 필요한 중간 변수에 대한 gradient 가져오기</li>
 </ol>
 
-<p>요약</p>
+<h1 id="xyz가-숫자가-아니라-벡터라면">x,y,z가 숫자가 아니라 벡터라면?</h1>
+
+<p>모든 흐름은 같지만 gradient는 jacobian 행렬(각 요소의 미분을 포함하는 행렬)이 될 것이다. 이 때, jacobian matrix는 input matrix의 길이를 변으로 가지는 정방형 행렬이다. 가령 input이 cnn에서 흔히 볼 수 있는 사이즈인 409x4096 벡터라면, jacobian 행렬의 사이즈는 4096x4096이 된다. 이 때, mini batch가 100이면 사이즈는 409600 * 409600으로, 매우 크다. 그러나 실제로 jacobian matrix는 diagonal matrix이기 때문에 이 거대한 값을 일일이 계산할 필요는 없다.</p>
+
+<p>#</p>
+
+<p>scalar일때와 기본적인 흐름은 동일한 것을 알 수 있다. 자세한 계산 과정은 위에서 자세히 다뤘으므로 생략하겠다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204476176-773083f3-7a2b-45d5-9fa8-5eeabb983340.png" width="60%" style="border:1px solid black;" /></p>
+
+<h1 id="요약">요약</h1>
 
 <p>신경망 -&gt; 매우 크고 복잡함
 따라서 모든 파라미터에 대해 gradient를 손으로 구하고 써내려가는 것은 비현실적이다.
@@ -1055,6 +1175,22 @@ asdasd</p>
 
 
 
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
 
   </body>
 </html>
