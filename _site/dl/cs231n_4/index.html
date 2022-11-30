@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[CS231n]Introduction to Neural Networks(초안) - 정완이의 개발 일기장</title>
+<!-- begin _includes/seo.html --><title>[CS231n]Introduction to Neural Networks(1) - 정완이의 개발 일기장</title>
 <meta name="description" content="Stanford University CS231n, Spring 2017, Lecture 4">
 
 
@@ -22,7 +22,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="[CS231n]Introduction to Neural Networks(초안)">
+<meta property="og:title" content="[CS231n]Introduction to Neural Networks(1)">
 <meta property="og:url" content="http://localhost:4000/dl/cs231n_4/">
 
 
@@ -319,7 +319,7 @@
     <div class="wrapper">
       <h1 id="page-title" class="page__title" itemprop="headline">
         
-          [CS231n]Introduction to Neural Networks(초안)
+          [CS231n]Introduction to Neural Networks(1)
 
         
       </h1>
@@ -482,7 +482,7 @@
  
             <br>
  
-            📂 <span style="">전체 글 수</style> <span style="">3</style> <span style="">개</style> 
+            📂 <span style="">전체 글 수</style> <span style="">2</style> <span style="">개</style> 
       </li>
       <li>
       
@@ -523,7 +523,7 @@
             <ul>
                 
                     
-                        <li><a href="/categories/DL" class="">Computer Vision (2)</a></li>
+                        <li><a href="/categories/DL" class="">Computer Vision (1)</a></li>
                     
                 
                     
@@ -609,7 +609,7 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[CS231n]Introduction to Neural Networks(초안)">
+    <meta itemprop="headline" content="[CS231n]Introduction to Neural Networks(1)">
     <meta itemprop="description" content="Stanford University CS231n, Spring 2017, Lecture 4">
     <meta itemprop="datePublished" content="2022-11-28T00:00:00+09:00">
     <meta itemprop="dateModified" content="2022-11-28T00:00:00+09:00">
@@ -627,7 +627,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#analytic-gradient">Analytic gradient</a><ul><li><a href="#1-computational-graph">1. Computational graph</a></li><li><a href="#2-backpropagation">2. backpropagation</a><ul><li><a href="#2-1-example-1">2-1) Example 1</a><ul><li><a href="#2-1-1-함수-f를-computational-graph로-표현하기">2-1-1) 함수 f를 Computational graph로 표현하기</a></li><li><a href="#2-1-2-forward-propagation">2-1-2) Forward propagation</a></li><li><a href="#2-1-3-local-gradient">2-1-3) Local Gradient</a></li><li><a href="#2-1-4-back-propagation">2-1-4) Back propagation</a></li><li><a href="#2-1-5-도식화">2-1-5) 도식화</a></li><li><a href="#2-1-6-정리">2-1-6) 정리</a></li></ul></li><li><a href="#2-2-example-2">2-2) Example 2</a><ul><li><a href="#2-1-1-forward-propagation">2-1-1) forward propagation</a></li><li><a href="#2-1-2-local-gradient-계산">2-1-2) local gradient 계산</a></li><li><a href="#2-1-3-backward-propagation">2-1-3) backward propagation</a></li><li><a href="#2-1-4-노드의-그룹화">2-1-4) 노드의 그룹화</a></li></ul></li><li><a href="#2-3-패턴">2-3) 패턴</a><ul><li><a href="#2-3-1-덧셈-게이트">2-3-1) 덧셈 게이트</a></li><li><a href="#2-3-2-max-게이트-gradient-router">2-3-2) max 게이트 (gradient router)</a></li><li><a href="#2-3-3-곱셈-게이트-gradient-switcher-or-scaler">2-3-3) 곱셈 게이트 (gradient switcher or scaler)</a></li><li><a href="#2-3-4-하나의-노드에서-다른-노드-두개로-이어진-경우">2-3-4) 하나의 노드에서 다른 노드 두개로 이어진 경우</a></li></ul></li><li><a href="#2-4-요약">2-4) 요약</a></li></ul></li></ul></li><li><a href="#xyz가-숫자가-아니라-벡터라면">x,y,z가 숫자가 아니라 벡터라면?</a></li><li><a href="#요약">요약</a></li></ul>
+              <ul class="toc__menu"><li><a href="#analytic-gradient">Analytic gradient</a><ul><li><a href="#1-computational-graph">1. Computational graph</a></li><li><a href="#2-backpropagation-at-scalar">2. backpropagation at scalar</a><ul><li><a href="#2-1-example-1">2-1) Example 1</a><ul><li><a href="#2-1-1-함수-f를-computational-graph로-표현하기">2-1-1) 함수 f를 Computational graph로 표현하기</a></li><li><a href="#2-1-2-forward-propagation">2-1-2) Forward propagation</a></li><li><a href="#2-1-3-local-gradient">2-1-3) Local Gradient</a></li><li><a href="#2-1-4-back-propagation">2-1-4) Back propagation</a></li><li><a href="#2-1-5-도식화">2-1-5) 도식화</a></li><li><a href="#2-1-6-정리">2-1-6) 정리</a></li></ul></li><li><a href="#2-2-example-2">2-2) Example 2</a><ul><li><a href="#2-1-1-forward-propagation">2-1-1) forward propagation</a></li><li><a href="#2-1-2-local-gradient-계산">2-1-2) local gradient 계산</a></li><li><a href="#2-1-3-backward-propagation">2-1-3) backward propagation</a></li><li><a href="#2-1-4-노드의-그룹화">2-1-4) 노드의 그룹화</a></li></ul></li><li><a href="#2-3-패턴">2-3) 패턴</a><ul><li><a href="#2-3-1-덧셈-게이트">2-3-1) 덧셈 게이트</a></li><li><a href="#2-3-2-max-게이트-gradient-router">2-3-2) max 게이트 (gradient router)</a></li><li><a href="#2-3-3-곱셈-게이트-gradient-switcher-or-scaler">2-3-3) 곱셈 게이트 (gradient switcher or scaler)</a></li><li><a href="#2-3-4-하나의-노드에서-다른-노드-두개로-이어진-경우">2-3-4) 하나의 노드에서 다른 노드 두개로 이어진 경우</a></li></ul></li><li><a href="#2-4-요약">2-4) 요약</a></li></ul></li><li><a href="#2-backpropagation-at-vector">2. backpropagation at vector</a><ul><li><a href="#2-1-calculate">2-1) Calculate</a></li></ul></li><li><a href="#3-요약">3. 요약</a></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -649,7 +649,7 @@
 <p><br />
 <br /></p>
 
-<h2 id="2-backpropagation">2. backpropagation</h2>
+<h2 id="2-backpropagation-at-scalar">2. backpropagation at scalar</h2>
 
 <h3 id="2-1-example-1">2-1) Example 1</h3>
 
@@ -898,25 +898,46 @@
   <li>역방향 계산 // computational graph에서 정의한, 계산에 필요한 중간 변수에 대한 gradient 가져오기</li>
 </ol>
 
-<h1 id="xyz가-숫자가-아니라-벡터라면">x,y,z가 숫자가 아니라 벡터라면?</h1>
+<p><br />
+<br /></p>
+
+<h2 id="2-backpropagation-at-vector">2. backpropagation at vector</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204682000-911ab96f-880f-40f1-ae44-d8ebc5d06fc7.png" width="60%" style="border:1px solid black;" /></p>
 
 <p>모든 흐름은 같지만 gradient는 jacobian 행렬(각 요소의 미분을 포함하는 행렬)이 될 것이다. 이 때, jacobian matrix는 input matrix의 길이를 변으로 가지는 정방형 행렬이다. 가령 input이 cnn에서 흔히 볼 수 있는 사이즈인 409x4096 벡터라면, jacobian 행렬의 사이즈는 4096x4096이 된다. 이 때, mini batch가 100이면 사이즈는 409600 * 409600으로, 매우 크다. 그러나 실제로 jacobian matrix는 diagonal matrix이기 때문에 이 거대한 값을 일일이 계산할 필요는 없다.</p>
 
-<p>#</p>
+<h3 id="2-1-calculate">2-1) Calculate</h3>
 
 <p>scalar일때와 기본적인 흐름은 동일한 것을 알 수 있다. 자세한 계산 과정은 위에서 자세히 다뤘으므로 생략하겠다.</p>
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/204476176-773083f3-7a2b-45d5-9fa8-5eeabb983340.png" width="60%" style="border:1px solid black;" /></p>
 
-<h1 id="요약">요약</h1>
+<p><br />
+<br /></p>
 
-<p>신경망 -&gt; 매우 크고 복잡함
-따라서 모든 파라미터에 대해 gradient를 손으로 구하고 써내려가는 것은 비현실적이다.
-따라서 gradient를 계산하기 위해 backpropagation을 사용(신경망의 핵심 기술)
-그리고 이것은 computational graph에서 chain rule을 재귀적으로 적용한 것임
-(입력이나 파라미터 등등 모든 중간 변수를 구하기 위해 뒤에서부터 올라옴)</p>
+<h2 id="3-요약">3. 요약</h2>
 
-<p>이를 구현하는 것은 매우 크다 -&gt; 따라서 forward backward API 구현하는 방법들</p>
+<ul>
+  <li>
+    <p>신경망 -&gt; 매우 크고 복잡함</p>
+  </li>
+  <li>
+    <p>따라서 모든 파라미터에 대해 gradient를 손으로 구하고 써내려가는 것은 비현실적이다.</p>
+  </li>
+  <li>
+    <p>따라서 gradient를 계산하기 위해 backpropagation을 사용(신경망의 핵심 기술)</p>
+  </li>
+  <li>
+    <p>그리고 이것은 computational graph에서 chain rule을 재귀적으로 적용한 것임</p>
+  </li>
+  <li>
+    <p>vector에서, 이를 구현하는 것은 size가 매우 크다.</p>
+  </li>
+  <li>
+    <p>따라서 forward/backward API 구현하는 방법들을 도입(생략)</p>
+  </li>
+</ul>
 
         
           
@@ -975,7 +996,7 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%5BCS231n%5DIntroduction+to+Neural+Networks%28%EC%B4%88%EC%95%88%29%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_4%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231n%5DIntroduction+to+Neural+Networks%281%29%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_4%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_4%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -986,8 +1007,7 @@
       <!-- 
   <nav class="pagination">
     
-      <a href="/dl/cs231n_3/" class="pagination--pager" title="[CS231n]Loss Functions and Optimization
-">이전</a>
+      <a href="#" class="pagination--pager disabled">이전</a>
     
     
       <a href="/til/TIL-12/" class="pagination--pager" title="[ICT 인턴십]2022년 12월 TIL
@@ -1006,15 +1026,6 @@
   	
   	
 
-
-  <nav class="pagination">
-    
-      <a href="/dl/cs231n_3/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[CS231n]Loss Functions and Optimization</a>
-    
-    
-      <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
-    
-  </nav>
 
 
 
@@ -1052,34 +1063,6 @@
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 01 2022</p>
     
     <p class="archive__item-excerpt" itemprop="description">회사에서 배운 내용들 정리
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/dl/cs231n_3/" rel="permalink">[CS231n]Loss Functions and Optimization
-</a>
-            
-    </h2>
-    <!--
-
-
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-28">November 28, 2022</time></p>
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> November 24 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Stanford University CS231n, Spring 2017, Lecture 3
 </p>
   </article>
 </div>
