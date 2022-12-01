@@ -1,307 +1,212 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-30T10:16:01+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Introduction to Neural Networks(1)</title><link href="http://localhost:4000/dl/cs231n_4/" rel="alternate" type="text/html" title="[CS231n]Introduction to Neural Networks(1)" /><published>2022-11-28T00:00:00+09:00</published><updated>2022-11-28T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_4</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_4/"># Analytic gradient
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204448878-5e0739ff-ebd7-4ed3-a74d-071e09252b5d.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-지난 강의에서 Numerical gradient와 Analystic gradient에 대해서 소개했었다. Numerical gradient는 유한차분 추정을 통해 쉽게 구할 수 있었지만, 느리고 정확하지 않다는 단점이 있었다. 본 강의에서는, 유한차분 추정보다는 어렵지만, 훨씬 더 정확하고 빠르게 gradient를 구할 수 있는 Analytic gradient에 대해서 소개하고자 한다. 이를 위해 먼저 Computation graph를 소개한다.
-
-## 1. Computational graph
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204449312-0403d399-a358-4ff2-a6f4-16e35aab1f84.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-Computational graph는 매우 복잡한 형태의 함수를 node와 edge로 나타낸 그래프이며, 복잡한 함수를 이용한 작업 및 계산시 아주 유용하게 사용된다. 위 예시는 Linear Classifier가 Loss를 구하는 과정을 Computational graph로 나타낸 것이며, hinge loss와 regularization term의 합계가 최종 Loss로 구해지는 과정이 표현되어 있다.
-
-Computational graph의 최대 장점은, 일단 우리가 Computational graph로 함수를 표현하면 backpropagation이라고 불리는 테크닉을 사용할 수 있다는 것이다. backpropagation이란, 재귀적으로 chain rule을 사용하여 computatinal graph의 모든 변수에 대해 경사를 계산하는 기법인데, 자세한 내용은 아래에서 좀 더 구체적인 예시를 가지고 설명해보겠다.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-01T15:46:32+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"># ✍ 학습내용 정리
 
 &lt;br&gt;
 &lt;br&gt;
 
-## 2. backpropagation at scalar
+# 🕮 TIL
+## \&lt;1주차\&gt;
+### 12/01
 
-### 2-1) Example 1
+* **업무지시**
 
-$$
-f(x,y,z) = (x+y) \times z
-$$
+  업무지시 없음
 
-다음은 function $f(x, y, z) = (x+y) \times z$에 대한 backpropagation 예제이다. input으로는 x=-2, y=5, z=-4가 주어져있다.
+* **학습내용**    
 
-여기서 우리의 목표는, f에 대한 x, y, z의 gradient를 얻어 W를 조정하는 것이다. 따라서, 우리가 최종적으로 얻고자 하는 것은, function f의 출력(Loss와 관련)에 대한 x, y, z의 Gradient값이다. 설명이 조금 rough하지만, 뒤에 다른 예제가 또 나오기 때문에, 일단은 이해가 되지 않더라도 이런게 있구나 하며 흐름만 파악하면 된다.
-
-#### 2-1-1) 함수 f를 Computational graph로 표현하기
-
-우선, gradient를 구하고자 하는 함수 f를 Computational graph로 표현해준다. 차근차근 그려나가면 어렵지 않게 그릴 수 있다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204479798-d9afefca-9539-4d85-87f5-8fe3a2e0b113.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-#### 2-1-2) Forward propagation
-
-input을 계속 뒤로(오른쪽) 전달하여 각 노드의 값을 계산한다. 이를 forward pass라고 한다.**
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204480261-3ff243e3-f915-4998-b12c-f9f9f87048b2.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-#### 2-1-3) Local Gradient
-
-각 노드의 local gradient를 미리 구한다. 여기서 local gradient란, 해당 노드의 편미분값이라고 생각하면 된다.
-
-$$
-q = x+y \quad\quad \frac{\partial q}{\partial x} = 1, \frac{\partial q}{\partial y} = 1\\
-$$
-
-$$
-f = qz \quad\quad \frac{\partial f}{\partial q} = z, \frac{\partial f}{\partial z} = q\\
-$$
-
-$$
-Want : \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}
-$$
-
-#### 2-1-4) Back propagation
-
-제일 뒷 단부터 앞 단으로 gradient를 전파시킨다. 이를 backward pass라고 한다.
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;우선, 바로 미분이 가능한 노드부터 미분해준다.&lt;/strong&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204459012-bffe1c90-77b6-489d-9a92-96d1c6b90f46.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-$$
--&gt; \; \frac{\partial f}{\partial f} = 1\\
-$$
-
-$$
--&gt; \; \frac{\partial f}{\partial z} = q = 3\\
-$$
-
-$$
--&gt; \; \frac{\partial f}{\partial q} = z = -4\\
-$$
-
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;
-  f와 직접적으로 연결되어있지 않은 노드들의 gradient는&lt;br&gt;
-  간단한 수학적 trick을 사용하여 구해줄 수 있는데,&lt;br&gt;
-  이 trick을 chain rule이라고 한다.&lt;/strong&gt;
-&lt;/div&gt;
-
-$$
--&gt; \; \frac{\partial f}{\partial x}
-$$
-
-$$
-= \frac{\partial f}{\partial q} \; \frac{\partial q}{\partial x}\\(upstream \; gradient \times local \; gradient)
-$$
-
-$$
-= -4 \times 1 = -4\\
-$$
-
-
-$$
--&gt; \; \frac{\partial f}{\partial y}
-$$
-
-$$
-= \frac{\partial f}{\partial q} \; \frac{\partial q}{\partial y}
-$$
-
-$$
-= -4 \times 1 = -4\\
-$$
-
-위처럼, chain rule을 사용하면, 어려운 계산 없이 단순한 미분만으로 복잡한 함수에 대한 편미분 gradient 값을 차근차근 구해나갈 수 있다. 지금 이 예시의 함수 f는, 식이 간단해서 바로 편미분할 수 있지만, 함수가 복잡해질 경우 위 방법을 사용하는 것이 유용하다.
-
-#### 2-1-5) 도식화
-
-다음은 위 예제를 간단하게 도식화한 그림이다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204461793-2aed8788-4719-4519-b443-613fb3801745.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-우선, 우리는 x와 y(input)을 f에 넣어 z(output)을 얻어냈다. 이렇게 input을 받아 출력된 output을 바탕으로 Loss를 계산하는 과정을 forward pass라고 한다. 이후, z에 대한 x와 y의 gradient값을 미분을 통해 얻을 수 있는데, 이를 local gradient라고 한다. 여기서 우리가 알고 싶은건, z 값을 통해 계산한 Loss에 대한 x, y의 gradient 값이다. 이 때, 앞에서 설명한 chain rule을 이용하면 쉽게 계산할 수 있는데, Loss를 z에 대해 먼저 미분하고, $\frac{\partial L}{\partial z} \times \frac{\partial z}{\partial x \; or \; \partial y}$를 통해 Loss에 대한 x, y의 gradient 값을 계산하면 된다. 이처럼, forward pass가 끝난 후, 역으로 미분해가며 gradient값을 구하는 과정을 backward pass(backpropagation)라고 한다.
-
-#### 2-1-6) 정리
-
-위 예제를 통해 얻을 수 있는 정보는 다음과 같다. 우선, 각 노드들은 자신과 인접한 노드에 대한 정보만 알 수 있다. 이러한 한계로 인해 고안해낸 trick이 바로 chain rule이며, 우리는 특정 노드의 gradient가 `upstream gradient * local gradient`임을 확인하였다. 따라서 우리는, forward propagation을 통해 구한 Loss를 다시 back propagation을 통해 앞단으로 전파하여 f의 파라미터에 대한 gradient를 얻을 수 있게 되었다.
-
-&lt;br&gt;
-
-### 2-2) Example 2
-
-다음의 함수 $f(w,x)$에 대하여 파라미터들의 gradient를 구해보자.
-
-$$
-f(w,x) = \frac{1}{1+e^-{w_0x_0+w_1x_1+w_2}}
-$$
-
-#### 2-1-1) forward propagation
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204464307-15fdd3a1-f2d1-4b00-a829-ec8c7e019bb0.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-#### 2-1-2) local gradient 계산
-
-$$
-f(x) = \frac{1}{x} \quad -&gt; \quad \frac{\partial f}{\partial x} = -\frac{1}{x^2}\\
-$$
-
-$$
-f_c(x) = x + c \quad -&gt; \quad \frac{\partial f}{\partial x} = 1\\
-$$
-
-$$
-f(x) = e^x \quad -&gt; \quad \frac{\partial f}{\partial x} = e^x\\
-$$
-
-$$
-f_a(x) = ax \quad -&gt; \quad \frac{\partial f}{\partial x} = a\\
-$$
-
-#### 2-1-3) backward propagation
-
-- **step 1.**
-
-  $\frac{\partial f}{\partial x}=1$이므로 마지막 노드의 출력에 대한 gradient는 1이다.
-
-  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467794-47fc62d5-7c23-4e25-a244-6429cbaedff0.png&quot; width=&quot;40%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-- **step 2.**
-
-  - upstream gradient : 1.00
-  - local gradient : $-\frac{1}{x^2}=\frac{-1}{1.37^2}=-0.53$
-  - gradient : (-0.53) $\times$ 1 = -0.53
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467886-24a166ee-6a27-41d9-b798-c02d97982115.png&quot; width=&quot;40%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-- **step 3.**
-
-  - upstream gradient : -0.53
-  - local gradient : 1
-  - gradient : 1 $\times$ (-0.53) = -0.53
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467928-1c9c3c46-f409-4ef2-ada9-46c8cfcb41bb.png&quot; width=&quot;40%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-- **step 4.**
-
-  - upstream gradient : -0.53
-  - local gradient : $e^x = e^{-1}$
-  - gradient : e^{-1} $\times$ (-0.53) = -0.20
-
-  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467990-8c23560b-4a94-4772-9ee7-990cb067e9ac.png&quot; width=&quot;50%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-- **step 5.**
-
-  - upstream gradient : -0.20
-  - local gradient : $-x = -1$
-  - gradient : -1 $\times$ -0.20 = 0.20  
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204468040-91783147-2dd6-416a-8e37-80f7dd79ed46.png&quot; width=&quot;50%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-- **step 6.**
-
-  - upstream gradient : 0.20
-  - local gradient : 1 (both)
-  - gradient : 1 $\times$ 0.20 = 0.20 (both)
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204468099-d5850ea9-bfe2-42b6-85df-327f0fe4a0b1.png&quot; width=&quot;80%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-- **step 7.**
-
-  - upstream gradient : 0.20
-  - local gradient : $x_0, w_0$
-  - gradient
-
-    $w_0$ : -1 $\times$ 0.2 = -0.2
-
-    $x_0$ : 2 $\times$ 0.2 = 0.4
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204468144-e41b62e5-437e-48ac-b55d-9266dc83ce2d.png&quot; width=&quot;80%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-#### 2-1-4) 노드의 그룹화
-
-또한, 지금은 가장 작은 단위의 노드를 사용하였지만, 이 노드를 더 복잡한 그룹으로 묶을수도 있다. 그 노드에 대한 local gradient를 구할수만 있다면, 문제없이 더 간단히 gradient를 구할 수 있다(`local gradient * upstream gradient`). 
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204471177-1aea7f69-f744-44fb-845f-d519c316c61f.png&quot; width=&quot;80%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-위 그림과 같이 특정 노드 그룹의 도함수를 알고있는 경우, 그룹화시켜 그래프를 단순하게 만들 수 있는 것이다. 하지만, 계산량과 그래프의 단순함은 trade-off 관계에 있음을 유의하자!
-
-- 그래프가 단순 -&gt; gradient 계산 복잡
-- 그래프가 복잡 -&gt; gradient 계산 단순
-
-&lt;br&gt;
-
-### 2-3) 패턴
-
-우리는 앞서 살펴본 예제에서 다음과 같은 패턴을 확인할 수 있다.
-
-#### 2-3-1) 덧셈 게이트
-
-upstream gradient를 연결된 브랜치에 정확히 같은 값으로 나누어 준다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204472004-e107dc2c-e1ca-4117-b551-9c8a60d70d96.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-#### 2-3-2) max 게이트 (gradient router)
-
-하나에는 upstream gradient의 전체값이, 나머지 하나에는 0이 들어간다. 왜냐하면 local gradient가 1,0이기 때문이다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204472072-96b6e081-987c-463f-8b6b-17c33fb04050.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-#### 2-3-3) 곱셈 게이트 (gradient switcher or scaler)
-
-반대편 변수의 값이 upstream gradient와 곱해져 들어간다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204475032-57363ead-685f-459e-a270-8f0595df6be0.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-
-#### 2-3-4) 하나의 노드에서 다른 노드 두개로 이어진 경우
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204475202-a1fa2baa-e8a3-4b3d-852d-528872734f74.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
-
-뒤의 두개의 노드에서 오는 미분 값을 더한 값이 들어간다. 반대로 앞의 노드 하나만 바뀌어도 뒤의 노드 두 개가 모두 바뀐다.
-
-&lt;br&gt;
-
-### 2-4) 요약
-
-1. computational graph로 나타내기
-2. 출력으로 이어지는 모든 계산이 무엇인지 파악(순전파)
-3. 역방향 계산 // computational graph에서 정의한, 계산에 필요한 중간 변수에 대한 gradient 가져오기
-
+  [1) [CS231n]Training Neural Networks, Part I](https://on-jungwoan.github.io/dl/cs231n_6/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part I(초안)</title><link href="http://localhost:4000/dl/cs231n_6/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part I(초안)" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_6</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_6/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 6</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/til/TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-11</id><content type="html" xml:base="http://localhost:4000/til/TIL-11/"># ✍ 학습내용 정리
 
 &lt;br&gt;
 &lt;br&gt;
 
-## 2. backpropagation at vector
+# 🕮 TIL
+## \&lt;1주차\&gt;
+**느낀점 및 업무내용** : 이번주는 web 퍼블리싱이 아직 덜 되어서 별 작업 없이 일주일을 보냈다. 차장님께 문의드린 결과, web 퍼블리싱이 완료될 때까지 대기라하고만 하셔서 11월 1일에 있는 경진대회 준비를 하였다. 퇴근 후에도 열심히 준비했고 결과는 1등!
+  
+### 11/01
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204682000-911ab96f-880f-40f1-ae44-d8ebc5d06fc7.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
+* **업무지시**
 
-모든 흐름은 같지만 gradient는 jacobian 행렬(각 요소의 미분을 포함하는 행렬)이 될 것이다. 이 때, jacobian matrix는 input matrix의 길이를 변으로 가지는 정방형 행렬이다. 가령 input이 cnn에서 흔히 볼 수 있는 사이즈인 409x4096 벡터라면, jacobian 행렬의 사이즈는 4096x4096이 된다. 이 때, mini batch가 100이면 사이즈는 409600 * 409600으로, 매우 크다. 그러나 실제로 jacobian matrix는 diagonal matrix이기 때문에 이 거대한 값을 일일이 계산할 필요는 없다.
+  업무지시 없음
 
-### 2-1) Calculate
+* **학습내용**
 
-scalar일때와 기본적인 흐름은 동일한 것을 알 수 있다. 자세한 계산 과정은 위에서 자세히 다뤘으므로 생략하겠다.
+  [1) [뻐정] 프로젝트 개선사항(수정중)](https://on-jungwoan.github.io/bbeojung/bj_update2/)
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204476176-773083f3-7a2b-45d5-9fa8-5eeabb983340.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot;&gt;&lt;/p&gt;
+### 11/02
 
-&lt;br&gt;
-&lt;br&gt;
+* **업무지시**
 
-## 3. 요약
+  업무지시 없음
 
-- 신경망 -&gt; 매우 크고 복잡함
+* **학습내용**
 
-- 따라서 모든 파라미터에 대해 gradient를 손으로 구하고 써내려가는 것은 비현실적이다.
+  [1) [뻐정] 프로젝트 최종 요약](https://on-jungwoan.github.io/bbeojung/bbeojung/)  
 
-- 따라서 gradient를 계산하기 위해 backpropagation을 사용(신경망의 핵심 기술)
+### 11/03
 
-- 그리고 이것은 computational graph에서 chain rule을 재귀적으로 적용한 것임
+* **업무지시**
 
-- vector에서, 이를 구현하는 것은 size가 매우 크다.
+  업무지시 없음
 
-- 따라서 forward/backward API 구현하는 방법들을 도입(생략)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 4</summary></entry></feed>
+* **학습내용**
+
+  [1) [Github_Io]상단 네비게이션 바 수정](https://on-jungwoan.github.io/blog/edit_navibar/)
+
+&lt;br&gt;  
+
+## \&lt;2주차\&gt;
+**느낀점 및 업무내용** : 웹에 관련해서 정말 많은 것들을 배운 주이다. Django의 웬만한 기능들은 다 사용하고 있다고 생각했는데, 내가 몰랐던 기능들이 생각보다 많아서 놀랐다. Django에 이런 편리한 기능들이 있었다니.. 다시 한 번 겸손의 중요성을 깨달았고, 역시 개발자는 평생 공부해야하는 직업이라는 걸 깨달았다.
+
+### 11/07
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [CSS] 폰트 관련 속성 정리](https://on-jungwoan.github.io/web/css_text/)
+
+### 11/08
+
+* **업무지시**
+
+  [11/08 업무지시](https://on-jungwoan.github.io/internship/notice/#1108)
+
+* **학습내용**
+
+  [1) [Django] Views.py 분리](https://on-jungwoan.github.io/web/split/)  
+
+  [2) [HTML, JavaScript]Input 태그 유효성 검사](https://on-jungwoan.github.io/web/test/)  
+
+### 11/09
+
+* **업무지시**
+
+  [11/09 업무지시](https://on-jungwoan.github.io/internship/notice/#1109)
+
+* **학습내용**
+
+  [1) [Django]secret 관리](https://on-jungwoan.github.io/web/secret/)
+
+  [2) [Django] 이미 존재하는 DB 연동 by inspectdb](https://on-jungwoan.github.io/web/inspectdb/)  
+
+
+### 11/10
+
+* **업무지시**
+
+  [11/10 업무지시](https://on-jungwoan.github.io/internship/notice/#1110)
+
+* **학습내용**
+
+  [1) [JQuery]AJAX를 활용한 비동기적 데이터 교환](https://on-jungwoan.github.io/web/ajax/)
+
+  [2) [Github_Io]포스팅 시 Liquid 문법 사용하는 법](https://on-jungwoan.github.io/blog/liquid/)
+
+  [3) 배포용 requirements.txt 생성 및 설치](https://on-jungwoan.github.io/web/export/)
+
+&lt;br&gt;  
+
+## \&lt;3주차\&gt;
+**느낀점 및 업무내용** : canvas 프로젝트 관련해서 요청된 사항을 담당 과장님에게 말씀드렸다. 백앤드를 ruby로 교체해야해서 해당 코드가 도착할 때까지 다른 공부를 하면서 대기 하라고 하셨는데, 벌써 일주일이 흘렀다. 해당 작업 관련해서 문의를 드려도 코드가 올 떄까지 계속 대기하라는 말씀만 하신다. 소통도 너무 안되고 일처리가 심각하게 느려서 답답했다. 그냥 있기에는 시간이 너무 아까워서 평소 가고 싶었던 대학원 랩실에 컨택 요청을 드렸다. 다행히 성공적으로 컨택이 되어서 다음 학기부터 교류 학생으로 해당 학교를 다니며 랩실 인턴을 하기로 하였다. 다음 주에는 좀 제대로 된 업무를 받았으면 좋겠다.
+
+### 11/14
+
+* **업무지시**
+
+  [11/14 업무지시](https://on-jungwoan.github.io/internship/notice/#1114)
+
+* **학습내용**
+
+  [1) [Django]DRF(Django Rest Framework) 듀토리얼](https://on-jungwoan.github.io/web/drf/)  
+
+### 11/17
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Github_Io]상단 masthead 고정하기](https://on-jungwoan.github.io/blog/sticky/)    
+
+### 11/18
+
+* **업무지시**
+
+  [11/18 업무지시](https://on-jungwoan.github.io/internship/notice/#1118)
+
+* **학습내용**
+
+  [1) [Github_Io]Header Image 설정](https://on-jungwoan.github.io/blog/header/)      
+
+&lt;br&gt;  
+
+## \&lt;4주차\&gt;
+**느낀점 및 업무내용** : ICT 인턴십 기업 평가 기간이 끝나기가 무섭게 모든 업무가 뚝 끊겨버렸다. 정말 그 이후로 단 한 건의 업무 지시도 받지 못하였다. 아직 인턴 기간이 한 달 남짓 남았는데, 이대로 시간을 보낼수는 없어서 Stanford의 CS231n 강의를 듣기 시작했다. 아무리 내가 회사에서 바로 데려가지 못하는 3학년이라고 해도, 이건 좀 심한 거 아닌가싶다. ICT 인턴십 취지가 학교에서 배우지 못하는 실무를 3~4학년 학생들에게 경험시켜주는 것인데, 이럴거면 ICT 인턴십 사업에 왜 참여했는지도 모르겠고, 면접 때 날 왜 뽑았는지도 잘 모르겠다. 중소 SI에 대해서 많은 것을 느끼고 간다. 앞으로는 잡플래닛 리뷰를 절대 무시하면 안된다는 교훈을 얻었다.
+
+### 11/21
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Github_Io]포스트에 특정 문구 고정](https://on-jungwoan.github.io/blog/post_custom/)    
+
+### 11/22
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [CS231n]Image Classification](https://on-jungwoan.github.io/dl/cs231n_2/)      
+
+### 11/23
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Jekyll]빌드 속도 최적화](https://on-jungwoan.github.io/blog/optim_jekyll/)        
+
+### 11/24
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [CS231n]Loss Functions and Optimization](https://on-jungwoan.github.io/dl/cs231n_3/)              
+
+&lt;br&gt;  
+
+## \&lt;5주차\&gt;
+**느낀점 및 업무내용** : 
+
+### 11/28
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Backpropagation and Neural Networks](https://on-jungwoan.github.io/dl/cs231n_4/)     
+
+### 11/30
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Convolutional Neural Networks](https://on-jungwoan.github.io/dl/cs231n_5/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry></feed>
