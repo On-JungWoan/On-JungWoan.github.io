@@ -655,7 +655,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#activation-functions">activation functions</a><ul><li><a href="#sigmoid">sigmoid</a><ul><li><a href="#문제점">문제점</a><ul><li><a href="#gradient-vanishing-문제">gradient vanishing 문제</a></li><li><a href="#no-zero-centered">No zero-centered</a></li><li><a href="#exp-계선비용-문제">exp() 계선비용 문제</a></li></ul></li></ul></li><li><a href="#tanh">tanh</a><ul><li><a href="#문제점-1">문제점</a></li></ul></li><li><a href="#relu">ReLU</a><ul><li><a href="#문제점-2">문제점</a><ul><li><a href="#zero-centered가-아님">zero-centered가 아님</a></li><li><a href="#음의-경우-saturation">음의 경우 saturation</a></li><li><a href="#dead-relu">Dead ReLU</a></li></ul></li></ul></li><li><a href="#leaky-relu">Leaky ReLU</a></li><li><a href="#parametric-rectifierprelu">parametric rectifier(PReLU)</a></li><li><a href="#elu">ELU</a></li><li><a href="#maxout-neuron">Maxout Neuron</a></li><li><a href="#정리">정리</a></li></ul></li><li><a href="#data-preprocessing">data preprocessing</a><ul><li><a href="#sigmoid-zero-centered-scaling">Sigmoid zero-centered scaling?</a></li></ul></li><li><a href="#weight-initialization">weight initialization</a><ul><li><a href="#small-random-numbers">Small random numbers</a><ul><li><a href="#문제점-3">문제점</a></li></ul></li><li><a href="#big-random-numbers">Big random numbers</a></li><li><a href="#xavier-initializationglorot-2010">Xavier Initialization(Glorot, 2010)</a><ul><li><a href="#문제">문제</a></li><li><a href="#해결법">해결법</a></li></ul></li></ul></li><li><a href="#batch-normalization">Batch Normalization</a><ul><li><a href="#문제-1">문제</a></li><li><a href="#요약">요약</a></li></ul></li><li><a href="#babysitting-the-learning-process">Babysitting the Learning Process</a><ul><li><a href="#1-preprocess-the-data">1. preprocess the data</a></li><li><a href="#2-choose-the-architecture">2. Choose the architecture</a></li><li><a href="#3-initialize-network">3. Initialize network</a><ul><li><a href="#sanity-check">sanity check</a><ul><li><a href="#초기-loss가-정상인지-확인">초기 loss가 정상인지 확인</a></li><li><a href="#regularization-추가">regularization 추가</a></li><li><a href="#우선-학습">우선 학습</a></li></ul></li></ul></li><li><a href="#4-학습">4. 학습</a></li></ul></li><li><a href="#hyperparameter-ooptimization">hyperparameter ooptimization</a><ul><li><a href="#grid-search-vs-random-search">grid search vs random search</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#activation-functions">activation functions</a><ul><li><a href="#sigmoid">sigmoid</a><ul><li><a href="#문제점">문제점</a><ul><li><a href="#vanishing-gradient-문제">Vanishing Gradient 문제</a></li><li><a href="#no-zero-centered">No zero-centered</a></li><li><a href="#exp-계선비용-문제">exp() 계선비용 문제</a></li></ul></li></ul></li><li><a href="#tanh">tanh</a><ul><li><a href="#문제점-1">문제점</a></li></ul></li><li><a href="#relu">ReLU</a><ul><li><a href="#문제점-2">문제점</a><ul><li><a href="#zero-centered가-아님">zero-centered가 아님</a></li><li><a href="#음의-경우-saturation">음의 경우 saturation</a></li><li><a href="#dead-relu">Dead ReLU</a></li></ul></li></ul></li><li><a href="#leaky-relu">Leaky ReLU</a></li><li><a href="#parametric-rectifierprelu">parametric rectifier(PReLU)</a></li><li><a href="#elu">ELU</a></li><li><a href="#maxout-neuron">Maxout Neuron</a></li><li><a href="#정리">정리</a></li></ul></li><li><a href="#data-preprocessing">data preprocessing</a><ul><li><a href="#sigmoid-zero-centered-scaling">Sigmoid zero-centered scaling?</a></li></ul></li><li><a href="#weight-initialization">weight initialization</a><ul><li><a href="#small-random-numbers">Small random numbers</a><ul><li><a href="#문제점-3">문제점</a></li></ul></li><li><a href="#big-random-numbers">Big random numbers</a></li><li><a href="#xavier-initializationglorot-2010">Xavier Initialization(Glorot, 2010)</a><ul><li><a href="#문제">문제</a></li><li><a href="#해결법-by-kaiming-he">해결법 by Kaiming He</a></li></ul></li><li><a href="#batch-normalization-ioffe-and-szegedy-2015">Batch Normalization (Ioffe and Szegedy, 2015)</a><ul><li><a href="#요약">요약</a></li></ul></li></ul></li><li><a href="#babysitting-the-learning-process">Babysitting the Learning Process</a><ul><li><a href="#1-preprocess-the-data">1. preprocess the data</a></li><li><a href="#2-choose-the-architecture">2. Choose the architecture</a></li><li><a href="#3-initialize-network">3. Initialize network</a><ul><li><a href="#sanity-check">sanity check</a><ul><li><a href="#초기-loss가-정상인지-확인">초기 loss가 정상인지 확인</a></li><li><a href="#regularization-추가">regularization 추가</a></li><li><a href="#우선-학습">우선 학습</a></li></ul></li></ul></li><li><a href="#4-학습">4. 학습</a></li></ul></li><li><a href="#hyperparameter-ooptimization">hyperparameter ooptimization</a><ul><li><a href="#grid-search-vs-random-search">grid search vs random search</a></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -674,7 +674,7 @@
 
 <h3 id="문제점">문제점</h3>
 
-<h4 id="gradient-vanishing-문제">gradient vanishing 문제</h4>
+<h4 id="vanishing-gradient-문제">Vanishing Gradient 문제</h4>
 
 <p>sigmoid의 양 끝값은 saturation 되어있는 것을 확인할 수 있는데, 이러한 sigmoid의 특성이 gradient를 없애는 문제가 발생한다. sigmoid를 activation function으로 사용했을 때, backprop 과정에서 일어날 수 있는 상황을 생각해보자.</p>
 
@@ -704,7 +704,7 @@
 
 <h3 id="문제점-1">문제점</h3>
 
-<p>여전히 양 끝 값에서 평평해지는 구간 존재한다. 따라서 여전히 gradient vanishing 문제가 발생한다.</p>
+<p>여전히 양 끝 값에서 평평해지는 구간 존재한다. 따라서 여전히 Vanishing Gradient 문제가 발생한다.</p>
 
 <h2 id="relu">ReLU</h2>
 
@@ -716,9 +716,9 @@
 
 <ol>
   <li>
-    <p><strong>Gradient Vanishing 문제가 없다.</strong></p>
+    <p><strong>Vanishing Gradient 문제가 없다.</strong></p>
 
-    <p>ReLU의 가장 큰 장점은, 양의 값에서 완만해지는 부분이 없기 때문에 saturation 되지 않는다는 것이다. 따라서 Gradient Vanishing 문제가 없다.</p>
+    <p>ReLU의 가장 큰 장점은, 양의 값에서 완만해지는 부분이 없기 때문에 saturation 되지 않는다는 것이다. 따라서 Vanishing Gradient 문제가 없다.</p>
   </li>
   <li>
     <p><strong>지수항이 없고, 단순 max연산만 하기 떄문에 계산이 매우 빠르다.</strong></p>
@@ -769,7 +769,7 @@
 
 \[f(x) = max(0.01x, x)\]
 
-<p>negative regime에도 기울기를 살짝 줘서, ReLU의 Gradient Vanishing 문제를 해결하였다. sigmoid, tanh보다 계산도 빠르며, dead relu현상도 없다고 한다.</p>
+<p>negative regime에도 기울기를 살짝 줘서, ReLU의 Vanishing Gradient 문제를 해결하였다. sigmoid, tanh보다 계산도 빠르며, dead relu현상도 없다고 한다.</p>
 
 <h2 id="parametric-rectifierprelu">parametric rectifier(PReLU)</h2>
 
@@ -848,6 +848,8 @@ x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
 
 \[W = 1.0 \times np.random.randn(D, H)\]
 
+<p><img src="https://user-images.githubusercontent.com/84084372/205663565-049a757f-4c95-4ab7-9a75-d21febf525e4.png" alt="image" /></p>
+
 <p>이런 경우, activation function(tanh)의 특성에 따라 값들이 saturation 될 것이다. tanh의 양 끝의 output은 기울기가 완만하므로 그 때의 gradient는 0이 된다. 따라서 가중치가 업데이트되지 않기 때문에, 출력은 항상 -1이거나 +1이 된다.</p>
 
 <p>적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 적절한 가중치를 얻을 수 있는 좋은 방법은 없을까?</p>
@@ -872,65 +874,78 @@ x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
 
 <p>분포 그래프를 보면, 뒷단으로 갈수록 분포가 줄어들기 시작하여 점점 더 많은 값들이 0이 되고, 결국에는 비활성 되는 모습이다.</p>
 
-<h3 id="해결법">해결법</h3>
+<h3 id="해결법-by-kaiming-he">해결법 by Kaiming He</h3>
 
 \[W = \frac {np.random.randn(D, H)}{\sqrt{D/2}}\]
 
-<p>뉴런 중 절반이 없어진다는 사실을 고려, Xavier의 수식에 추가적으로 2를 더 나눠줌으로서 해결하였다.</p>
+<p>뉴런 중 절반이 없어진다는 사실을 고려, Xavier의 수식에 추가적으로 2를 더 나눠줌으로서 해당 문제를 해결하였다. ReLU에 최적인 weight 초기화 방법이라고 할 수 있다.</p>
 
 <p><img src="https://user-images.githubusercontent.com/84084372/205596600-0ff08f10-b4b8-45be-b0b2-869c2e2eeda5.png" alt="image" />
 <img src="https://user-images.githubusercontent.com/84084372/205596623-90d607a0-9e05-41db-bfed-3229afc69984.png" alt="image" /></p>
 
-<p>(실제 입력은 반밖에 안들어가므로 반으로 나눠주는 텀을 추가) -&gt; 실제로 잘 동작함</p>
+<p>위에서도 잠시 언급하였지만, 적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 그렇다면, weight initialization에 의존하지 않고 vanishing gradient 문제를 막을 수 있는 방법은 없을까?</p>
 
-<p>==&gt; 초기화는 Xavier Initialization을 추천한다</p>
+<h2 id="batch-normalization-ioffe-and-szegedy-2015">Batch Normalization (Ioffe and Szegedy, 2015)</h2>
 
-<h1 id="batch-normalization">Batch Normalization</h1>
+<p>앞서 살펴보았던 방법들은, vanishing gradient 문제를 해결하기 위해 activation function을 조작한다거나 가중치 조작을 신중하게 하는 방법 등 간접적인 방법을 사용하였다. 그러나 Batch Normalization은 학습하는 과정에 직접적으로 개입하여 정규화를 시켜준다.</p>
 
-<p>gaussian의 범위로 activation을 유지시키는 것에 관련한 또 다른 아이디어
-우리는 레이어의 출력이 unit gaussian이길 바란다.
-batch norm은 강제로(or empirically) 그렇게 만드는 방법임</p>
+<p><img src="https://user-images.githubusercontent.com/84084372/205667590-fb72a754-2f8f-4dd7-a6f1-92615bd2153e.png" alt="image" /></p>
 
-<p>어떤 레이어로부터 나온 batch 단위 만큼의 activations이 있다고 했을 때, empirically하게 unit gaussian으로 만들 수 있다. 현재 batch에서 계산한 mean과 var로 norm 시킬 수 있음.
-학습할 떄 마다 각 레이어에 이런 일을 해줘서 모든 레이어가 unit gaussian이 되도록 해줌.
--&gt; forward pass동안 이렇게 되도록 명시적으로 만들어 주는 것 (함수로 구현)</p>
+<p>Ioffe와 Szegedy는 위에서 발생했던 문제점이, 각 layer를 지나면서 입력값의 분포가 달라지기 때문에 발생하는 것이라고 생각하였다. 따라서 layer를 지날때마다 분포를 맞춰주자는 것이 Batch Normalization의 기본 idea이다. 각 Layer마다 mini batch를 뽑아서 이 batch에 대한 표본 평균/분산으로 정규화 시켜주며, 해당 정규화 식은 여전히 미분 가능한 함수이기 때문에 forward, backward pass가 가능하다.</p>
 
-<p>이 연산은 FC나 conv layer 직후에 넣어준다.
-깊은 네트워크에서 각 레이어의 W가 지속적으로 곱해져서 bad scaling effect가 발생했으나, normalization은 그 bad effect를 상쇄시킨다.
-BN은 입력의 스케일만 살짝 조정해주는 역할이기 떄문에 FC와 Conv 어디에든 적용가능</p>
+<p><img src="https://user-images.githubusercontent.com/84084372/205675034-ebf07b96-7398-41b9-93c8-42a652abc08c.png" alt="image" /></p>
 
-<p>-&gt; 매우 유용, 실제로 정말 많이 사용한다</p>
+<p>일반적으로 FC(or Conv)와 Activation Function 사이에 위치한다. Layer의 연산 결과를 정규화 시킨 뒤, activation function으로 넘겨주는 것이다. 그러나 종종 Batch Normalization을 통한 unit gaussian을 Activation Function에 넘겨주는 게 적합하지 않은 상황이 있을 수도 있다. BN은 Normalization이 적합한가?에 대한 판단 조차도 학습에 의해 가능하게 만들었다.</p>
 
-<h2 id="문제-1">문제</h2>
+\[\begin{align}
+y^{(k)} &amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
 
-<p>FC layer 거칠떄마다 매번 normalization을 해줘야하나?
-tanh의 입력이 unit gaussian이길 바라는 것인가?</p>
 
-<p>normalization이 하는 일 : 입력이 tanh의 linear한 영역에만 존재하도록 강제함 -&gt; saturation이 전혀 일어나지 않음
-but, 전혀 일어나지 않는 것보다는 얼마나 saturation이 일어날지를 우리가 조절하는 것이 더 바람직해 보임</p>
+\gamma &amp;= \sqrt{Var[x^{(k)}]}\\
+\beta &amp;= E[x^{(k)}]
 
-<p>normalization 연산 이후에 scaling 연산을 추가함.
-감마(스케일링 효과), 베타(이동 효과) 파라미터를 추가해서 모델이 tanh에 얼마나 saturation 시킬지를 학습시킴 -&gt; 유연성 얻을 수 있음</p>
+\end{align}\]
 
-<h2 id="요약">요약</h2>
+<p>BN은 위에서 설명한 Normalization 단계를 거친 후, 정규화 된 것을 조정할 수 있는 단계를 거치게된다. Normalize된 정도(scale)를 조정할 수 있는 파라미터 $\gamma$ 와 이를 shift시켜주는 파라미터 $\beta$ 를 학습 가능하게 하여, 모델이 activation func에 얼마나 saturation 시킬지를 학습시킨다. 이를 통해 유연성 얻을 수 있으며, saturation 정도를 조정할 수도 있다.</p>
 
-<p>입력이 있고 우리는 mini-bach에서의 평균을 계산
-모든 mini-batch마다 각각 계싼하고 분산도 계산함
-평균과 분산으로 nomalize 한 이후에 다시 추가적인 scaling shifting factor를 사용한다</p>
+<h3 id="요약">요약</h3>
 
-<p>BN은 gradient의 흐름을 보다 원활하게 해주면 결국 더 학습이 잘되게(robust) 해준다.
--&gt; 따라서 BN을 쓰면 learning rates를 더 키울 수도 있고 다양한 초기화 기법들도 사용해 볼 수 있다.
--&gt; BN을 쓰면 학습이 더 쉬워짐(BN을 써야하는 이유)</p>
+<ul>
+  <li>
+    <p><strong>BN 과정</strong></p>
 
-<p>또한, regularization 기능도 함
-왜냐하면 각 레이어의 입력은 해당 배치의 표본 평균으로 normalize되기 떄문이다.
-따라서 이 레이어의 출력은 오직 하나의 샘플에 대한 deterministic한 값이 아니게 되고, batch 내의 모든 데이터가 입력으로 한데 모이게 됨 -&gt; 이는 regularization effect를 줌</p>
+    <p><img src="https://user-images.githubusercontent.com/84084372/205675697-85f994a3-ee76-4ef3-8ab3-5bc8ad1e4b79.png" alt="image" /></p>
 
-<p>주의! test 데이터에 대해서는 평균/분산을 구하지 않고 train 데이터에서 얻은 값을 사용한다</p>
+    <ol>
+      <li>
+        <p>각 Layer input의 mini-bach에서의 평균과 분산을 계산한다.</p>
+      </li>
+      <li>
+        <p>평균과 분산으로 normalize 한다.</p>
+      </li>
+      <li>
+        <p>추가적인 scaling/shifting factor를 사용한다.</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p><strong>장점</strong></p>
 
-<p><code class="language-plaintext highlighter-rouge">-------------------------</code>
-여기까지는 네트워크 설계
-<code class="language-plaintext highlighter-rouge">-------------------------</code></p>
+    <ul>
+      <li>
+        <p>gradient의 흐름을 보다 원활하게 해주어, 학습이 더 잘되게(robust) 해준다.</p>
+      </li>
+      <li>
+        <p>따라서 BN을 사용하면, learning rates를 더 키울 수도 있고, 다양한 초기화 기법들도 사용해 볼 수 있다.</p>
+      </li>
+      <li>
+        <p>결과적으로, BN을 쓰면 학습이 더 쉬워진다.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>위에서 설명한 장점 외에도, BN은 regularization 기능도 한다. 왜냐하면, 각 레이어의 입력은 해당 배치의 표본 평균으로 normalize되는데, 이 레이어의 출력은 오직 하나의 샘플에 대한 deterministic한 값이 아니게 되기 때문이다. 즉, batch 내의 모든 데이터가 입력으로 한데 모이게 되며, 이는 regularization effect를 준다.</p>
 
 <h1 id="babysitting-the-learning-process">Babysitting the Learning Process</h1>
 

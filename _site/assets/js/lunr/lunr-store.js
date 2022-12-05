@@ -1,6 +1,6 @@
 var store = [{
         "title": "[CS231n]Convolutional Neural Networks(초안)",
-        "excerpt":"CNN NN : 선형 레이어를 쌓고 그 사이에 비선형 레이어를 추가 -&gt; Mode 문제 해결 how? 자동차를 올바르게 분류하기 위해 중간 단계 템플릿 학습: 노란차, 빨간차 등 그리고 이 템플릿들을 결합해서 최종 클래스 스코어 계산 CNN convolutional layer? 기본적으로 공간적 구조를 유지한다 - perceptron : wx+b와 유사한 함수 사용, but...","categories": ["DL"],
+        "excerpt":"CNN 1. Fully Connected Layer FC Layer는, input 이미지를 1차원으로 쭉 펴서 Weight와 곱해주는 Layer이다. 가령, 32x32x3의 input image가 있다면, FC Layer는 이를 3072x1의 벡터로 쭉 핀 다음 W와 내적을 하여 activation map을 얻는다. 가장 간단하게 생각할 수 있는 layer이긴 하지만, Fully Connected Layer에는 치명적인 단점이 2가지 존재한다. 이미지의 지역적...","categories": ["DL"],
         "tags": ["DL","ICT인턴십"],
         "url": "/dl/cs231n_5/",
         "teaser": null
@@ -12,7 +12,7 @@ var store = [{
         "teaser": null
       },{
         "title": "[CS231n]Training Neural Networks, Part I(초안)",
-        "excerpt":"Mini-batch SGD Mini-batch SGD에 대해 복습하기 NN의 학습 필요한 기본 설정 활성함수 선택 데이터 전처리 가중치 초기화 Regularization gradient checking training dynamics part 1. activation functions 지난시간에 봤던 layer : 데이터 입력이 들어오면 가중치와 곱합 FC, CNN 등등 -&gt; 그리고 나서 활성함수 (비선형 연산)을 거치게 됨. sigmoid 1/(1+…) : 각...","categories": ["DL"],
+        "excerpt":"activation functions FC, CNN 등등의 Layer는, 데이터 입력이 들어오면 가중치와 곱하는 연산을 마친 뒤, 활성함수(비선형 연산)를 거치게 된다. 지금부터는 활성 함수의 종류와 장단점에 대하여 소개한다. sigmoid \\[\\sigma(x) = \\frac{1}{1+e^{-x}}\\] 각 입력을 받아서 그 입력을 0~1 사이의 값이 되도록 해준다. 입력값이 크면 출력은 1에 가까울 것이고, 그렇지 않으면 0에 가까울 것이다....","categories": ["DL"],
         "tags": ["DL","ICT인턴십"],
         "url": "/dl/cs231n_6/",
         "teaser": null
