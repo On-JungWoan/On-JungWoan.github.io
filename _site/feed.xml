@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-02T17:59:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-05T18:02:01+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
 
 ```python
 import os
@@ -55,468 +55,620 @@ for _, _, files in os.walk(PATH):
 
 * **학습내용**    
 
-  [1) [업무 자동화] 행 생성 업무 자동화](https://on-jungwoan.github.io/toy_project/auto_raw/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part I(초안)</title><link href="http://localhost:4000/dl/cs231n_6/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part I(초안)" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_6</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_6/"># Mini-batch SGD
+  [1) [업무 자동화] 행 생성 업무 자동화](https://on-jungwoan.github.io/toy_project/auto_raw/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part I(초안)</title><link href="http://localhost:4000/dl/cs231n_6/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part I(초안)" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_6</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_6/">&lt;h1 id=&quot;activation-functions&quot;&gt;activation functions&lt;/h1&gt;
 
-Mini-batch SGD에 대해 복습하기
+&lt;p&gt;FC, CNN 등등의 Layer는, 데이터 입력이 들어오면 가중치와 곱하는 연산을 마친 뒤, 활성함수(비선형 연산)를 거치게 된다. 지금부터는 활성 함수의 종류와 장단점에 대하여 소개한다.&lt;/p&gt;
 
-# NN의 학습
-## 필요한 기본 설정
-### 활성함수 선택
-### 데이터 전처리
-### 가중치 초기화
-### Regularization
-### gradient checking
-### training dynamics
+&lt;h2 id=&quot;sigmoid&quot;&gt;sigmoid&lt;/h2&gt;
 
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205562519-723d85a3-7a55-46d4-aa6a-a3efc8149d0b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-## part 1.
+\[\sigma(x) = \frac{1}{1+e^{-x}}\]
 
-### activation functions
+&lt;p&gt;각 입력을 받아서 그 입력을 0~1 사이의 값이 되도록 해준다. 입력값이 크면 출력은 1에 가까울 것이고, 그렇지 않으면 0에 가까울 것이다. 뉴런의 firing rate를 saturation 시키는 것으로 해석시킬 수 있어서 인기가 많았다고 한다(= 0~1 범위의 값을 가질 수 있어서 인기가 많았다).&lt;/p&gt;
 
-지난시간에 봤던 layer : 데이터 입력이 들어오면 가중치와 곱합
-FC, CNN 등등 -&gt; 그리고 나서 활성함수 (비선형 연산)을 거치게 됨.
+&lt;h3 id=&quot;문제점&quot;&gt;문제점&lt;/h3&gt;
 
-- sigmoid
+&lt;h4 id=&quot;gradient-vanishing-문제&quot;&gt;gradient vanishing 문제&lt;/h4&gt;
 
-1/(1+...) : 각 입력을 받아서 그 입력을 0~1 사이의 값이 되도록 해줌.
-입력값이 크면 출력은 1에 클 겂이고 그렇지 않으면 0
-뉴런의 firing rate를 saturation 시키는 것으로 해석시킬 수 있어서 인기가 많았음(0~1사이의 값이 firing rate)
+&lt;p&gt;sigmoid의 양 끝값은 saturation 되어있는 것을 확인할 수 있는데, 이러한 sigmoid의 특성이 gradient를 없애는 문제가 발생한다. sigmoid를 activation function으로 사용했을 때, backprop 과정에서 일어날 수 있는 상황을 생각해보자.&lt;/p&gt;
 
-문제점
-1. saturation 되는게 gradient를 없앤다.
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205565518-254a91cb-4b04-4df3-bddb-d12e51fd909d.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-sigmoid gate를 computational graph에서 확인.
-backprop에서 gradient는?
-sigmoid gate의 local gradient는 dL/sig x sig/dx가 되고, 이것이 앞단으로 계속 전파될 것임.
+&lt;p&gt;우선, sigmoid gate의 gradient는 $\frac{\partial L}{\partial x} = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial x}$이며, 이 gradient는 앞단으로 계속 전파된다. 이 때, 만약 x가 -10이라면, $\frac{\partial \sigma}{\partial x}=0$(x=-10에서 sigmoid가 flat하기 때문에)이므로 gradient가 0이 된다. 따라서 이 부분에서 gradient가 죽어버리게 되고 밑으로 0이 계속 전달되게 된다. 반대로, x가 10인 경우에도 동일하게 sigmoid가 flat하므로 gradient가 다 죽게된다. 따라서 sigmoid가 flat하지 않은 x=0 근처에서만 잘 동작하고 나머지 구간에서는 이러한 기울기 소실문제가 발생한다.&lt;/p&gt;
 
-그럼 만약 x가 -10이라면?
-x=-10일 때 dsig/dx = 0이므로 gradient가 0이 됨(sigmoid가 flat하기 때문에)
+&lt;h4 id=&quot;no-zero-centered&quot;&gt;No zero-centered&lt;/h4&gt;
 
-따라서 거의 0에 가까운 값이 backprop 됨
-이 부분에서 gradient가 죽어버리게 되고 밑으로 0이 계속 전달되게 됨.
+&lt;p&gt;sigmoid의 output은 0~1사이의 값으로, 항상 양수이며 zero-centered하지 않다.&lt;/p&gt;
 
-x가 0이면?
-이 구간에서는 잘 동작할 것이고 그럴싸한 gradient를 얻게 됨
+&lt;p&gt;또한, sigmoid는 $\sum_{i}w_i x_i + b$ 를 input으로 받으므로, 이를 수식으로 $ f( \sum_{i}w_i x_i + b) $ 와 같이 표현할 수 있다. 여기서, W에 대한 $gradient = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial w}$ 인데, $\frac{\partial f}{\partial w}$는 w가 모두 소거되므로 x에 관한 식임을 알 수 있다. 여기서, sigmoid는 항상 양수이기 때문에 x(local gradient)도 항상 양수이다. 따라서 sigmoid의 gradient는 x값에 상관없이 항상 upstream gradient의 부호와 동일하다는 것을 알 수 있다. 즉, W가 모두 같은 방향(파라미터 업데이트 시, 다 같이 증가 or 다 같이 감소)으로 움직이게 될 것이다. 이렇게 되면 다음과 같은 문제가 발생할 수 있다.&lt;/p&gt;
 
-x가 10이면?
-역시 0 -&gt; sigmoid가 flat하기 때문에 gradient를 다 죽여서 잘 흐르지 ㅇ낳게 ㄱ됨.
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205574470-6548883f-7947-41e1-a1c5-3e86c9e6fa04.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-2. sig의 output이 zero-centered하지 않ㅇ므
+&lt;p&gt;그래프와 같이 4분면 중 gradient가 이동할 수 있는 방향은 2개 사분면밖에 없다(부호가 동일한 사분면은 1,3 사분면). 만약 이론적으로 가장 최적의 W 업데이트가 저 파란색 화살표이고, 빨간 화살표의 시작부분부터 가중치를 업데이트한다고 하면, gradient를 여러번 업데이트 해야하는 문제가 생길 수 있다. 파란색 방향으로 gradient가 내려갈 수 없으므로 gradient 가동범위 내에서 여러번 업데이트 해야하는데, 이는 매우 비효율적이다. 이러한 이유로, output이 zero-mean인 function을 원하는 것이다.&lt;/p&gt;
 
-뉴런의 입력이 항상 양수인 경우?
-이 x는 어떤 가중치와 곱해져서 활성함수를 통과하게 됨.
-그럼 W에 대한 gradient는?
-전부 양수이거나 전부 음수가 됨
+&lt;h4 id=&quot;exp-계선비용-문제&quot;&gt;exp() 계선비용 문제&lt;/h4&gt;
 
-gradient = dL/d활성함수 x d활성함수/dW인데,
-d활성함수/dW는 그냥 X임
-따라서 gradient의 부호는 그저 위에서 내려온 gradient의 부호와 같아질 것임
--&gt; W가 모두 같은 방향(파라미터 업데이트 시, 다 같이 증가 or 다 같이 감소)으로 움직이게 될 것임.
+&lt;p&gt;exp() 함수는 다른 함수에 비해 계산 비용이 크다. 그리 큰 문제는 아니지만, 굳이 문제로 뽑자면 포함될 수 있다.&lt;/p&gt;
 
-그래프와 같이 4분면 중 gradient가 이동할 수 있는 방향은 2개 사분면밖에 안됨
-만약 이론적으로 가장 최적의 W 업데이트가 저 파란색 화살표이고, 빨간 화살표의 시작부분부터 시작한다고 가정해보자.
-파란색 방향으로 gradient가 내려갈 수 없으므로 여러번 gradient 업데이트를 해야 함.(gradient가 움직일 수 있는 방향으로) -&gt; zero-mean data를 원하는 이유
+&lt;h2 id=&quot;tanh&quot;&gt;tanh&lt;/h2&gt;
 
-3. exp()로 인해 계산 비용이 크다.
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205575925-65bd6b09-4503-4fd5-b8d5-0edaa6da8c38.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-그리 큰 문제는 아니지만, 굳이 문제로 뽑자면 이렇다
+&lt;p&gt;sigmoid와 유사하지만 output의 범위를 -1~1로 늘렸다. 범위를 -1까지 확장함으로써 output이 zero-centered하게 되었다.&lt;/p&gt;
 
-## tanh
+&lt;h3 id=&quot;문제점-1&quot;&gt;문제점&lt;/h3&gt;
 
-sigmoid와 유사하지만 -1~1범위
-가장 큰 차이점 : zero-centered이지만, saturation 때문에 gradient가 죽음
-(여전히 양 끝 값에서 평평해지는 구간 존재)
+&lt;p&gt;여전히 양 끝 값에서 평평해지는 구간 존재한다. 따라서 여전히 gradient vanishing 문제가 발생한다.&lt;/p&gt;
 
-## ReLU
+&lt;h2 id=&quot;relu&quot;&gt;ReLU&lt;/h2&gt;
 
-상당히 자주 쓰임
-f(x) = max(0, x)
-입력값이 음수면 0이 되며, 양수면 입력값 그대로를 출력한다.
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205576984-df88e0d8-b614-42d5-abd3-771f14c6a459.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-ReLU는 양의 값에서는 saturation 되지 않음(완만해지는 부분 업승ㅁ) -&gt; 가장 큰 장점
-계산 효율이 매우 뛰어남(지수항이 없음, 단순 max연산 -&gt; 계산이 매우 빠르다)
-sig나 tanh보다 6배정도 더 빠르다
-생물핮적 타당성도 relu가 sigmoid보다 더 크다.
-실제 뉴런의 입/출력값은 isgmoid보다 relu스러움
+\[f(x) = max(0,x)\]
 
-문제
-
-1. zero-centered가 아님 -&gt; relu가 가진 이슈
-
-2. 음의 경우에서 saturation이 되지 않음
-
-x=-10이면 gradient 10
-x=10이면, 선형영역
-x=0이면, 여기서 정의되지는 않았지만 실제로는 0임
-
--&gt; 따라서 ReLU는 기본적으로 gradient의 절반을 죽여버리는 셈임
-
-dead relu?
-
-1. w의 시작점이 data cloud(train data)에서 너무 멀리 떨어져있는 경우
-어떤 데이터 입력에 대해서도 activate되지 않음, backprop이 일어나지 않음
-activate되지도, update되지도 않음
-
-2. learning late가 너무 큰 경우
-가중치가 날뛰어서 ReLU가 데이터의 mainfold를 벗어나게 됨
-처음에는 학습이 잘 되다가 갑자기 죽어버림
-
-실제로 학습을 다 시켜놓은 네트워크를 보면 10~20%가량은 dead relu가 되어있음
-relu를 사용하고 있다면 대부분의 네트워크가 이 문제를 겪음.
-하지만 10~20가량이면 네트워크 학습에 크게 지장이 있지는 않음.
-
--&gt; 따라서 relu 초기화 시 positive biases를 추가해주는 경우가 있음
-update 시 active relu가 될 가능성을 높여줄 수 있지만(도움이 안된다는 의견도 있음)
-항상 사용하지 않고 대부분은 zero-biases
-
-## Leaky ReLU
-
-negative regime에서 더이상 0이 아님.
-negative에도 기울기를 살짝 줌.
-negative space에서 saturation되지 않고, sig, tanh보다 계산도 빠르며, dead relu현상도 없음
-
-## parametric rectifier(PReLU)
-
-negative regime에서 기울기가 존재함은 leaky relu와 비슷하지만, prelu는 기울기가 alpha라는 파라미터로 결정됨
-여기서 alpha는 backprop으로 학습시키는 파라미터로 만든 것
-활성함수가 좀 더 유연해짐
-
-## ELU
-
-ReLU의 장점을 가져오며 zero-mean에 가까운 출력을 보임
-saturation을 갖긴 하지만, 이러한 saturation이 noise에 강하며,
-이러한 deactivation이 좀 더 강인함을 줄 수 있다고 주장
-ReLU와 leaky relu의 중간정도라고 보면 됨
-(leaky relu처럼 zero-mean의 출력을 내지만 saturation의 관점에서 relu와 닮아있음)
-
-## Maxout Neuron
-
-입력을 받아들이는 특정한 기본형식을 미리 정의하지 않음.
-대신에 w1와 x내적한 값 + b1, w2와 x내적한 값 + b2의 최대값을 사용함
-이 두 함수 중 최대값을 취하는 것임
-relu와 le relu의 일반화 된 형태.
-maxout은 이 두개의 선형 함수를 취하기 때문
-maxout은 선형이기 때문에 saturation되지 않으며 gradient가 죽지 않을 것
-그러나 뉴런당 파라미터 수가 두배가 됨(w1, w2를 지니고 있어야 함)
-
-실제로 가장 많이 쓰이고 표준이고 대게는 잘 동작하는건 relu
-but learning ratge를 아주 조심스럽게 결정해야 함.
-le relu elu maxout등도 써볼 수 있지만 아직은 실험단계
-대게는 relu와 relu의 변종들이 잘 동작함
-sigmoid(가장 구식)나 tanh보다는 LU 패밀리 계열이 더 잘 동작함
-
-# data preprocessing
-
-가장 대표적인 전처리 과정
-
-1. zero-mean으로 만들기 : 입력값이 전부 positive인 경우의 문제 때문(0이거나 negative인 경우에도 발생)
-2. normalize(std로) : 모든 차원이 동일한 범위안에 인게 해줘서 전부 동등한 기열르 하게 함. 이미지는 zero-centering정도만 해줌. 이미지는 이미 각 차원간에 스케일이 어느정도 맞춰져있기 때문이다.
-
-스케일이 다양한 ML 문제와 달리 이미지에서는 normalization을 잘 해줄 필요는 없음
-
-이미지에서 PCA, Whitening등의 전처리는 잘 사용하지 않음
-CNN에서는 원본 이미지 자체의 spatial(공간) 정보를를 이용해서 이미지의 spatial structure를 얻을 수 있도로 ㄱ한다
-
--&gt; 이미지를 다룰때는 기본적으로 zero-mean으로 ㅈ전처리 해줌
-평군은 전체 traing data에서 계싼 -&gt; 미니배치 전 한번에 구해놓고 사용하는 것이 좋음, 데이터가 매우 큰 경우 미니배치로 샘플링해서 샘플 평균 사용하는 경우도 있음
-네트워크에 들어가기 전에 평균값을 뺴주게 됨
-\test time의 이미지에서도 training time에서 계산한 값을 빼줌
-일부 네트워크에서는 채널(ex. RGB 채널)마다 평균을 독립적으로 계산하는 경우도 있음(VGGNet - RGB별로 각각 평균을 구함)
-채널별로 평균이 비슷할지, 독립적으로 계산해야 할 것인지는 직접 판단해야함
-
-그렇다면 sigmoid의 zero-mean문제를 전처리로 해결 가능?
-첫 번째 레이어에서는 해결할 수 있겠지만, 그 다음 layer부터는 동일한 문제를 겪게 될 것이고, 더 깊은 네트워크일 수록 이 문제는 더 시맿짐
-
-# weight initialization
-
-모든 파라미터를 0으로 세팅하면?(모든 가중치가 0이라면?)
--&gt; 모든 뉴런이 전부 똑같은 일을 하게된다(죽지는 않음)
-모든 뉴런은 모두 다 같은 연산을 하게되므로, 출력도 모두 같을 것이고 gradient도 같을 것이다. 따라서 모든 가중치가 똑같은 값으로 업데이트 되며, 결국 모든 뉴런이 모두 똑같이 생기게 됨.
--&gt; 모든 가중치를 동일하게 초기화시켰을 때 나타나는 문제 (Symmetry breaking이 일어날 수 없음)
-
-따라서 임의의 작은값으로 초기화 해야함
-초기 W를 standard gaussian에서 샘플링 하고 좀 더 작은 값을 위해 스케일링 해준다.
-0.01을 나눠 표준 편차를 0.01로 만들어준다.</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 6</summary></entry><entry><title type="html">[CS231n]Convolutional Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_5/" rel="alternate" type="text/html" title="[CS231n]Convolutional Neural Networks(초안)" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_5</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_5/">&lt;h1 id=&quot;cnn&quot;&gt;CNN&lt;/h1&gt;
-
-&lt;h2 id=&quot;1-fully-connected-layer&quot;&gt;1. Fully Connected Layer&lt;/h2&gt;
-
-&lt;p&gt;FC Layer는, input 이미지를 1차원으로 쭉 펴서 Weight와 곱해주는 Layer이다. 가령, 32x32x3의 input image가 있다면, FC Layer는 이를 3072x1의 벡터로 쭉 핀 다음 W와 내적을 하여 activation map을 얻는다. 가장 간단하게 생각할 수 있는 layer이긴 하지만, Fully Connected Layer에는 치명적인 단점이 2가지 존재한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205216564-e9b1f9ae-f78a-42c9-b5c4-e350852dbecd.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;ReLU는 딥러닝 분야에서 상당히 자주 쓰이는 activation function으로, 입력값이 음수면 0을 출력, 양수면 입력값 그대로를 출력한다.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;이미지의 지역적 정보 반영x&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Gradient Vanishing 문제가 없다.&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;이미지를 1차원으로 펴서 사용하기 떄문에, 이미지의 지역적인 정보가 사라진다는 단점이 존재한다.&lt;/p&gt;
+    &lt;p&gt;ReLU의 가장 큰 장점은, 양의 값에서 완만해지는 부분이 없기 때문에 saturation 되지 않는다는 것이다. 따라서 Gradient Vanishing 문제가 없다.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Overfitting&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;지수항이 없고, 단순 max연산만 하기 떄문에 계산이 매우 빠르다.&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;class가 많아질 경우, overfitting 문제가 발생하기 쉽다고 한다.&lt;/p&gt;
+    &lt;p&gt;그 속도는 sigmoid나 tanh보다 6배정도 더 빠르다고 한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;생물학적 타당성또한 relu가 sigmoid보다 더 크다.&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;실제 뉴런의 입/출력값은 sigmoid보다 ReLU스럽다고 한다.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;문제점-2&quot;&gt;문제점&lt;/h3&gt;
 
-&lt;h2 id=&quot;2-convolutional-layer&quot;&gt;2. Convolutional Layer&lt;/h2&gt;
+&lt;h4 id=&quot;zero-centered가-아님&quot;&gt;zero-centered가 아님&lt;/h4&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205217939-f63c4c52-cde1-4161-8af7-e249637d951f.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;ReLU도 마찬가지로 output이 항상 양수이기 때문에 zero-centered하지 않다. ReLU가 가진 이슈이기도 하다.&lt;/p&gt;
 
-&lt;p&gt;FC Layer가 input image를 쭉 펴서 연산하였다면, Conv Layer는 기존의 이미지 구조를 그대로 유지한 채 연산한다. CNN에서는 가중치를 필터라고 부르는데, 이 작은 필터가(예시에서는 5x5x3 필터) 이미지를 슬라이딩 하며 공간적으로 내적을 수행하게 된다. Conv Layer는 input 이미지의 구조를 그대로 유지한 채 필터가 움직이며 연산을 하므로, 이미지의 지역적 정보가 보존된다.&lt;/p&gt;
+&lt;h4 id=&quot;음의-경우-saturation&quot;&gt;음의 경우 saturation&lt;/h4&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205229863-17e04751-a390-4d47-9f83-ab023de8cde4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;x가 음수이면 gradient는 0이 된다. 따라서 ReLU는 기본적으로 gradient의 절반을 죽여버리는 셈이다.&lt;/p&gt;
 
-&lt;p&gt;CNN은 이런식의 convolutional layer들이 연속된 형태이며, 입력 이미지는 이 Layer들을 차례로 통과한다. 그 사이사이에 ReLU와 같은 non-linaer layer(activation function)를 넣어, conv-ReLU가 반복되는 구조이며, 이미지 크기 조정을 위해 중간중간 Pooling Layer가 추가된다. 각 layer의 출력은 다음 layer의 input이 되어 뒷단으로 계속 전파되며, 제일 끝단의 FC-Layer가 정답 클래스에 맞게 1차원 벡터로 펴준다.&lt;/p&gt;
+&lt;h4 id=&quot;dead-relu&quot;&gt;Dead ReLU&lt;/h4&gt;
 
-&lt;h3 id=&quot;2-1-filter&quot;&gt;2-1) Filter&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580039-30b945e9-3fb3-42d2-a2ed-9c005753ed11.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;필터는 CNN에서 사용하는 가중치로서, input image에서 특정 feature를 추출하는 역할을 한다. 하나의 필터를 가지고 input 이미지에 convolution을 수행하여 나온 출력값을 activation map이라고 하는데, 이 activation map들이 다음 Layer의 input으로 들어가 계속 뒷단으로 전파된다. 이게 CNN의 핵심 아이디어다. (중간에 Activation Function, Pooling Layer도 있긴 하지만, 해당 내용은 차후에 차차 소개하겠다.)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220446-0168b7ff-aa00-4d52-8253-fc4773fe0b49.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220463-24a641b4-c9b4-46b3-a74a-08cac12fe74f.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-1-연산&quot;&gt;2-1-1) 연산&lt;/h4&gt;
-
-&lt;p&gt;Filter는 이미지의 좌상단부터 시작하여, 내적을 수행하게 된다. 여기서 나온 값(단일 스칼라 값)은, 다시 output activation map의 해당 위치에 저장된다. 그리고 다시 옆으로 슬라이딩하여 위 과정을 반복한다. 이 때, 슬라이딩하는 거리나 필터의 크기에 따라서 activation map의 크기가 달라진다(activation map의 크기를 계산하는 방법은 이후에 설명한다). 이는 하이퍼 파라미터로, 데이터의 크기나 상황등에 따라 잘 조정해야한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Ffbdp1202%2Fpost%2F2c8ec5f6-a20f-4dd9-9fae-9aded7ac8fa0%2Fcs231n-05-010-convolutional_layer_cal_ex.gif&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-2-depth&quot;&gt;2-1-2) Depth&lt;/h4&gt;
-
-&lt;p&gt;하나의 필터는 input 이미지의 아주 작은 부분을 취하며(32x32 중 3x3, 5x5 등), depth는 input image의 depth를 따른다. 아래 그림과 같이 input image의 채널이 RGB 3채널이라면, filter의 depth도 3이되어 각각의 채널에서 연산을 진행한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205219315-39b88657-ba43-4dd1-8bff-9965c85f5fa0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-3-필터의-개수&quot;&gt;2-1-3) 필터의 개수&lt;/h4&gt;
-
-&lt;p&gt;또한, 보통 convolution layer에서는 여러개의 필터를 사용한다. 왜냐하면, 이미지마다 여러가지의 특징이 있을 수 있는데(ex. 고양이: 뾰족한 귀, 털, 꼬리 등등), 이러한 이미지 특성을 고려하여 다양한 필터로 다양한 특징을 추출하고 싶기 때문이다. 이렇게 되면, 각 필터마다 1개의 activation map이 추출되어, 최종적으로 필터의 총 개수만큼 activation map이 추출된다. 따라서 output activation map의 채널은 필터의 개수와 동일하다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220928-f01117d5-0500-41b7-b5e0-27239a6cf7e5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-4-stride&quot;&gt;2-1-4) Stride&lt;/h4&gt;
-
-&lt;p&gt;만약, 다음과 같은 7x7 이미지에 3x3 필터를 적용한다고 해보자.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205230612-2bbc1176-7498-4588-9590-4ce60bfb4de2.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;filter는 다음과 같은 process로 activation map을 얻게 될 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;좌측 상단에서 시작 -&amp;gt; 필터를  씌우고, 해당 값들의 내적을 수행 -&amp;gt; 결과값은 activation map의 좌상단에 위치 -&amp;gt; 값하나 얻기 -&amp;gt; 필터를 오른쪽으로 n칸 움직임 -&amp;gt; 반복...&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;여기서 filter가 움직이는 칸의 수를 지정할 수 있는데, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stride&lt;/code&gt;라고 한다.&lt;/p&gt;
-
-&lt;ul&gt;
+&lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stride = 1&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;w의 시작점이 data cloud(train data)에서 너무 멀리 떨어져있는 경우&lt;/strong&gt;*&lt;/p&gt;
 
-    &lt;p&gt;stride가 1인 경우, 위 process를 계속 반복하면 상하좌우로 총 5번까지 수행가능하다. 따라서 최종적으로 5x5의 activation map을 얻게된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239933-5283c315-5781-4adc-9032-529d94d4d035.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stride = 2&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;stride가 2인 경우, output은 3x3이 된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239948-ec920867-d516-4ac7-a4be-308c1d9a3879.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stride = 3&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;그렇다면, stride가 3인 경우는 어떨까? 다음과 같이 이미지에 필터가 정확히 맞아떨어지지 않는다. 이럴경우, 불균형한 결과를 초래할 수 있으므로 이러한 stride는 피하는 것이 좋다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239953-1f5d6b9b-f538-4ca4-b638-38bd585304a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-5-spatial-dimension&quot;&gt;2-1-5) Spatial Dimension&lt;/h4&gt;
-
-&lt;p&gt;위와 같은 이유로, 미리 output activation map의 사이즈를 계산하여, 정수로 나누어 떨어지는 stride를 사용하여야 한다. output의 size를 계산하는 공식은 다음과 같다.&lt;/p&gt;
-
-\[let) \quad N=이미지 사이즈, F=필터 사이즈\\\]
-
-\[ouptut \; size = \frac{N - F}{stride} + 1\]
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;stride가 3인 경우는 정확히 정수로 떨어지지 않는 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205233181-d834683f-afeb-4a6f-b8ab-da86fbf698d0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-6-주로-사용하는-size&quot;&gt;2-1-6) 주로 사용하는 size&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;filter&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;보통 filter는 3x3, 5x5, 7x7을 많이 사용한다.&lt;/p&gt;
+    &lt;p&gt;어떤 데이터 입력에 대해서도 activate되지 않고, backprop이 일어나지 않는다. (activate되지도, update되지도 않음)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;stride&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;learning late가 너무 큰 경우&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;주로 stride는 filter의 사이즈에 따라서 다음과 같이 준다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;3x3 : 1&lt;/li&gt;
-      &lt;li&gt;5x5 : 2&lt;/li&gt;
-      &lt;li&gt;7x7 : 3&lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;p&gt;가중치가 날뛰어서 ReLU가 데이터의 mainfold를 벗어나게 된다. (처음에는 학습이 잘 되다가 갑자기 죽어버림)&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;filter의 개수&lt;/strong&gt;&lt;/p&gt;
+&lt;/ol&gt;
 
-    &lt;p&gt;필터의 개수는 32, 64, 128, 512와 같은 2의 제곱수를 사용한다&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;실제로 학습을 다 시켜놓은 네트워크를 보면 10~20% 가량은 dead relu가 되어있다. relu를 사용하고 있다면 대부분의 네트워크가 이 문제를 겪는다고 할 수 있다. 10%~20%가량이면 네트워크 학습에 크게 지장이 없긴 하지만, dead relu의 비율이 그 이상으로 올라가지 않도록 주의할 필요는 있을 것 같다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;이를 해결하기 위해, relu 초기화 시 positive biases를 추가해주는 경우가 있다. 이렇게 되면, gradient update 시에 active relu가 될 가능성을 높여줄 수 있다고 하지만, 실제로는 도움이 안된다는 의견도 있다. 대부분은 zero-biases로 세팅한다.&lt;/p&gt;
 
-&lt;h3 id=&quot;2-2-padding-zero-padding&quot;&gt;2-2) padding (zero-padding)&lt;/h3&gt;
+&lt;h2 id=&quot;leaky-relu&quot;&gt;Leaky ReLU&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&quot;#2-1-5-spatial-dimension&quot;&gt;2-1-5&lt;/a&gt;에서 보았듯이, 특정한 stride를 사용하고 싶은데, filter가 이미지 가장자리까지 닿지 않는 경우에는 어떻게 하는 것이 좋을까? 그럴때는 padding이라는 기법을 사용하면 된다. padding은 이미지의 가장자리에 특정한 값을 채워넣는 기법인데, 이미지의 가장자리에 0을 채워 넣는 zero-padding을 일반적으로 많이 사용한다(mirror나 extend 등도 있음). padding을 사용하면, 모서리가 상대적으로 필터에 덜 적용되는 것을 막을 수 있으며, 위 상황처럼 필터가 가장자리까지 닿지 않는 경우의 문제도 해결할 수 있다. 또한, layer를 거치면서 입력 사이즈가 점점 줄어들게 되는데, padding을 하면 출력 사이즈와 입력 사이즈를 동일하게 유지할 수 있게된다. 만약 layer가 여러겹 쌓였는데 zero-padding을 하지 않으면, layer를 거칠수록 activation map은 점점 줄어들어 엄청 작아지게 되어 일부 정보가 손실될 우려가 있다.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580106-87c702f0-6d30-4266-b9b2-27da038fba4b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205234828-a074332e-8040-45e6-bff4-f57b0d6acab4.png&quot; width=&quot;35%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+\[f(x) = max(0.01x, x)\]
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Ffbdp1202%2Fpost%2F7260f062-912f-4047-9088-b2a238df633c%2Fcs231n-05-012-convolutional_layer_padding.gif&quot; width=&quot;35%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;negative regime에도 기울기를 살짝 줘서, ReLU의 Gradient Vanishing 문제를 해결하였다. sigmoid, tanh보다 계산도 빠르며, dead relu현상도 없다고 한다.&lt;/p&gt;
 
-&lt;h4 id=&quot;2-2-1-spatial-dimension&quot;&gt;2-2-1) Spatial Dimension&lt;/h4&gt;
+&lt;h2 id=&quot;parametric-rectifierprelu&quot;&gt;parametric rectifier(PReLU)&lt;/h2&gt;
 
-&lt;p&gt;padding을 하게 되면 각 모서리마다 2개의 픽셀이 증가되므로, output size는 다음과 같다.&lt;/p&gt;
+\[f(x) = max(\alpha x, x)\]
 
-\[let) \quad N=이미지 사이즈, F=필터 사이즈\\\]
+&lt;p&gt;negative regime에서 기울기가 존재함은 leaky relu와 비슷하지만, prelu는 기울기를 $\alpha$라는 파라미터로 정할 수 있게 하였다. 여기서 $\alpha$는 backprop으로 학습시킬 수 있으며, 활성함수가 좀 더 유연해지게 된다.&lt;/p&gt;
 
-\[ouptut \; size = \frac{N+2 - F}{stride} + 1\]
+&lt;h2 id=&quot;elu&quot;&gt;ELU&lt;/h2&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580685-c3b13bf9-5f02-4e8f-89e8-ceff9f8b7934.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-3-계층적-학습&quot;&gt;2-3) 계층적 학습&lt;/h3&gt;
+\[f(x) = \begin{cases}
+x \quad \quad \quad \quad \quad \quad \quad if \; x&amp;gt;0  \\
+\alpha ( exp(x) - 1 ) \quad \; \ if \; x \le 0 
+\end{cases}\]
 
-&lt;p&gt;각 layer는 여러개의 필터를 가지고 있으며, 각 필터마다 각각의 출력 map을 만드는데, 여러 layer를 쌓다보면 결국 각 필터들이 계층적으로 학습하게 되는 것을 알 수 있다. 다음은 이미지가 어떻게 생겨야 해당 뉴련의 활성을 최대화시킬 수 있는지를 시각화한 것이다(그리드의 각 요소는 각 뉴런의 활성을 최대화시키는 입력의 모양을 나타낸 것). 가령, 앞쪽에 있는 필터들은 edge와 같은 low-level feature를, mid-level을 보면 코너, blob등 좀 더 복잡한 특징을, high-level features를 보면 좀 더 객체와 닮은 것들이 출력으로 나온다.&lt;/p&gt;
+&lt;p&gt;ReLU의 장점을 가져오며 zero-mean에 가까운 출력을 보인다. saturation을 갖긴 하지만, 이러한 saturation과 deactivation이 모델을 좀 더 noise에 강해지게 한다고 주장한다. leaky relu처럼 zero-mean의 출력을 내지만 saturation의 관점에서 relu와 닮아있는 모습이다. 따라서 ReLU와 leaky relu의 중간정도라고 보면 된다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205230336-a0996121-7fb3-4d7a-81e8-12eae7b606f8.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;maxout-neuron&quot;&gt;Maxout Neuron&lt;/h2&gt;
 
-&lt;p&gt;각 conv의 입력은 이전 레이어에서 나온 edge maps이며, 이것들이 전부 누적되어 복잡한 추론을 하는 것이다. 그리고 이런 정보를 가지고 FC layer를 거치게 되면, 그 정보들을 한데 모아 클래스 스코어를 계산하는 것이다.&lt;/p&gt;
+\[max(w_1^Tx+b1, w_2^Tx+b2)\]
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;입력을 받아들이는 특정한 기본형식을 미리 정의하지 않는 대신에, w1와 x내적한 값 + b1, w2와 x내적한 값 + b2의 최대값을 input으로 사용한다. relu와 leakey relu의 일반화 된 형태라고 할 수 있다. maxout은 이 두개의 선형 함수를 취하기 때문에, saturation되지 않으며 gradient가 죽지 않는다고 한다. 그러나 w1, w2를 지니고 있어야 하기 때문에 뉴런당 파라미터 수가 두배가 된다.&lt;/p&gt;
 
-&lt;h2 id=&quot;3-pooling-layer&quot;&gt;3. Pooling layer&lt;/h2&gt;
+&lt;h2 id=&quot;정리&quot;&gt;정리&lt;/h2&gt;
 
-&lt;p&gt;Pooling은 activation map의 크기를 downsampling 하는 과정을 말한다. Conv layer에서 했던 것처럼, pooling에도 필터 크기와 stride를 정해 특정한 계산을 마치고, 슬라이딩 한다. 대신 Pooling은 conv layer와는 다르게, 기본적으로 영역이 겹치지 않게 하며 내적을 하는 것이 아니라 최대값을 찾는다(max pooling의 경우)&lt;/p&gt;
+&lt;p&gt;실제로 가장 많이 쓰이고, 대부분의 상황에서 잘 동작하는건 ReLU이다. 하지만 Dead ReLU의 비율을 줄이기 위해서는 Learning Rate를 아주 조심스럽게 결정해야 한다. 이외의 LU계열 activation fucntion들은 아직 실험단계이므로, 참고만 하도록 하자. 또한, sigmoid나 tanh같은 경우는 구식이므로 웬만하면 LU계열 function을 사용하는 것을 추천한다..&lt;/p&gt;
 
-&lt;p&gt;Convolutional Layer의 깊이가 깊어지면 많은 계산 양을 요구하는데, 이때 Pooling 기법을 이용해 이미지의 크기를 줄여, 연산 속도를 높일 수 있다(파라미터의 수가 줄기 때문). 이 때 중요한 점은, depth에는 아무런 변화도 일어나지 않고, 공간적으로만 줄어든다는 것이다. 가령, 224x224x64인 입력이 있다면 이를 112x112x64로 공간적으로 줄여줌(공간적인 불변성)&lt;/p&gt;
+&lt;h1 id=&quot;data-preprocessing&quot;&gt;data preprocessing&lt;/h1&gt;
 
-&lt;h3 id=&quot;3-1-max-pooling&quot;&gt;3-1) Max Pooling&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205588455-d819f761-f2c5-4dda-b98e-578759244038.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;다양한 종류의 Pooling 중, max pooling이 일반적으로 사용된다. max pooling은 지정된 filter 범위 내에서 가장 큰 값을 뽑아내고 stride만큼 슬라이딩 한다.&lt;/p&gt;
+&lt;p&gt;데이터 전처리는 대표적으로 zero-centered scaling, Normalize등이 있다. 이미지는 이미 각 차원간에 스케일이 어느정도 맞춰져있기 때문에 zero-centered scaling정도만 해주며, 스케일이 다양한 ML 문제에서는 normalization까지 해준다. zero-centered scaling은 모든 특징들이 동일한 범위에 있도록 데이터를 정규화해서 그 특징들이 결과에 동등하게 기여할 수 있도록하는 것이다. training data에서 평균 이미지 채널 계산하고, 이것을 각 이미지 채널에서 빼는 방식이다. 해당 내용은 위에서 소개했으므로 여기까지만 설명하겠다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205244323-d7b0f7bd-0ef6-4bf6-b72e-bfaa9da849fb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;sigmoid-zero-centered-scaling&quot;&gt;Sigmoid zero-centered scaling?&lt;/h2&gt;
 
-&lt;h4 id=&quot;3-1-1-단어-우월-효과&quot;&gt;3-1-1) 단어 우월 효과&lt;/h4&gt;
+&lt;p&gt;그렇다면 sigmoid의 zero-mean문제를 전처리로 해결 가능할까?&lt;/p&gt;
 
-&lt;p&gt;Max Pooling을 일반적으로 많이 사용하는 이유는, max pooling이 우리가 하는 인식과 상당부분 닮아있기 때문이다. 우리 뇌는 값들이 어떻게 분포하고 있는지 보다 그 값이 얼마나 큰지를 더 중요하게 여긴다. 그 예시로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;단어 우월 효과&lt;/code&gt;를 들 수 있겠다. 우리는 단어의 앞 뒤 순서를 바꿔도 전체적인 형태가 유사하면 동일한 단어로 인식한다. 다음의 예문을 보도록 하자.&lt;/p&gt;
+&lt;p&gt;첫 번째 레이어에 대해서는 부분적으로 해결할 수 있다. 그러나, “전처리”라는 것은 input 이미지에 대해서만 영향을 미칠 수 있기 때문에, 그 다음 layer부터는 동일한 문제를 겪게 될 것이다. 더 깊은 네트워크일 수록 이 문제는 더 심해진다.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;캠릿브지 대학의 연결구과에 따르면, 한 단어 안에서 글자가 어떤 순서로 배되열어 있는지는 중요하지 않고, 첫 번째와 마지막 글자가 올바른 위치에 있는 것이 중하요다고 한다. 나머지 글들자은 완전히 엉진망창의 순서로 되어 있라을지도 당신은 아무 문제 없이 이것을 읽을 수 있다. 왜하냐면, 인간의 두뇌는 모든 글자를 하하나나 읽는 것이 아니라 단어 하나를 전체로 인하식기 때이문다.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h1 id=&quot;weight-initialization&quot;&gt;weight initialization&lt;/h1&gt;
 
-&lt;p&gt;단어 앞뒤 순서가 뒤죽박죽으로 바뀌어도 쉽게 알아차릴 수가 없다. 사람이 단어를 인식할 때 개별 문자의 집합으로 인식하는 게 아닌 단어의 총체적 이미지로 인식하기 때문이라고 한다. max pooling도 이러한 사람의 인지 과정과 상당히 닮아있다. 우리가 다루는 값들은, 이 뉴런이 얼마나 활성되었는지, 바꿔 말하면 필터가 각 위치에서 얼마나 활성되었는지를 나타내는 값이다. 따라서 max pooling은 그 지역이 어디든 어떤 신호에 대해 얼마나 그 필터가 활성화되었는지를 알려준다고 알 수 있다.&lt;/p&gt;
+&lt;p&gt;가중치를 적절한 값으로 초기화하는 것은 중요하다. 만약 모든 파라미터를 0으로 세팅(모든 가중치가 0)한다면, 모든 뉴런이 전부 똑같은 일을 하게될 것이다. 모든 뉴런은 모두 다 같은 연산을 하게되므로, 출력도 모두 같을 것이고 gradient도 같을 것이다. 따라서 모든 가중치가 똑같은 값으로 업데이트 되며, 결국 모든 뉴런이 모두 똑같이 생기게 될 것이다. 이렇게 되면, Symmetry breaking이 일어날 수 없기 때문에 모델이 적절한 추론을 하지 못하게 된다.&lt;/p&gt;
 
-&lt;p&gt;따라서 이러한 이유로 max pooling을 많이 사용한다.&lt;/p&gt;
+&lt;p&gt;따라서 가중치를 임의의 작은 값으로 초기화 해야한다. 그렇다면, 우리는 다음과 같은 아이디어를 떠올릴 수 있을 것이다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;small-random-numbers&quot;&gt;Small random numbers&lt;/h2&gt;
 
-&lt;h3 id=&quot;3-2-spatial-dimension&quot;&gt;3-2) Spatial Dimension&lt;/h3&gt;
+\[W = 0.1 \times np.random.randn(D, H)\]
 
-&lt;p&gt;앞서 conv layer에서 사용했던 수식을 그대로 이용해서 design choice를 할 수 있다&lt;/p&gt;
+&lt;p&gt;초기 W를 standard gaussian에서 랜덤 샘플링 하고 좀 더 작은 값을 위해 0.01을 곱해, 표준 편차를 0.01로 만들어주는 방법이다.&lt;/p&gt;
 
-\[let) \quad N=이미지 사이즈, F=필터 사이즈\\\]
+&lt;p&gt;이 방법은 작은 네트워크에서는 symmetry breaking에 충분하지만, 깊은 네트워크에서는 잘 작동하지 않을수도 있다.&lt;/p&gt;
 
-\[ouptut \; size = \frac{N+2 - F}{stride} + 1\]
+&lt;h3 id=&quot;문제점-3&quot;&gt;문제점&lt;/h3&gt;
 
-&lt;p&gt;여기서, 한 가지 특징이 있다면 pooling layer에서는 보통 padding을 하지 않는다. pooling을 하는 이유는 downsampling을 하고 싶기 때문인데, padding을 하면 이미지의 크기가 유지된다. 또한, conv layer처럼 코너의 값을 계산하지 못하는 경우가 pooling layer에서는 존재하지 않는다. 따라서 pooling 할때 padding은 고려하지 않아도 된다.&lt;/p&gt;
+&lt;p&gt;아래 그래프는 이 가중치로 forward pass 했을 때, 각 레이어별 activations의 평균과 표준편차를 나타낸 것이다. 이 때, activation function으로는 tanh를 사용하였다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205591112-f8b80c62-8b85-4704-b78d-90d1e48cad2f.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;3-3-주로-사용하는-size&quot;&gt;3-3) 주로 사용하는 size&lt;/h3&gt;
+&lt;p&gt;activation 값은 x와 W를 내적한 값에 tanh를 취한 것이다. 따라서, activation의 평균은 tanh 특성상 항상 0 근처에 있는 것을 확인할 수 있다(tanh의 zero-centered한 특성 반영). 그러나, 표준편차는 가파르게 줄어서 4번째 레이어부터는 거의 0에 수렴하는 것을 볼 수 있다.&lt;/p&gt;
 
-&lt;p&gt;가장 널리 쓰이는 필터 사이즈는 2x2, 3x3이고 보통 stride는 2로 한다. filter가 3x3일때도 보통 stride는 2x2로 하는 편이다.&lt;/p&gt;
+&lt;p&gt;아래 그래프는 위에서 얻은 mean, std를 바탕으로 분포로 표현한 것이다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205591127-8dbc896d-6bcb-48b6-823d-9a77884d8f94.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;3-4-pooling-vs-stride&quot;&gt;3-4) pooling vs stride&lt;/h3&gt;
+&lt;p&gt;첫번재 레이어에서는 gaussian스럽게 생긴 좋은 분포를 형성하는 것을 확인할 수 있으나, w를 곱하면 곱할수록 출력값이 급격히 줄어드는 것을 확인할 수 있다. 이는 w가 너무 작은 값들이기 때문에 Wx가 결국 0이 되어 모든 활성함수 결과가 0이 되었기 때문이다. 이는 우리가 원하는 결과가 아니다.&lt;/p&gt;
 
-&lt;p&gt;우선, image를 다운 샘플링한다는 점에서 conv layer의 stride와 pooling layer는 비슷하다. 따라서 요즘에는 downsample할 떄 pooling보다 strdie를 더 많이 사용하고 있는 추세이다. 실제로 요즘은 stride가 더 좋은 성능을 보이고 있으며, pooling도 일종의 stride의 기법이라고 생각하면 된다. 상황에 맞게 선택하면 될 것 같다.&lt;/p&gt;
+&lt;p&gt;backward pass의 경우도 살펴보자. Chain rule에 의해서 gradient는 upstream gradient $\times$ local gradient이다. $\frac {\partial Wx}{\partial W} = x$이므로 $gradient = upstream \; gradient \times x$ 가 된다. 여기서, $x$는 매우 작기 떄문에 gradient도 매우 작을 것이고, 결국 upstream gradient는 0에 수렴하여 업데이트가 잘 일어나지 않게 된다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;수정사항&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;cf) forward pass의 형태를 살펴보고 이런 경우 gradient가 어떤 식으로 전파되는지 짐작할 수 있어야 한다&lt;/p&gt;
 
-    &lt;p&gt;관련 자료를 찾아보던 중, pooling이 stride보다 더 좋은 효율을 나타낸다는 글을 보았다. CS231n에서는 그 반대로 말하던데 어떤 말이 맞는지는 잘 모르겠다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;big-random-numbers&quot;&gt;Big random numbers&lt;/h2&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;만약 다음과 같이 가중치를 좀 더 큰 값으로 초기화 하는 경우는 어떨까?&lt;/p&gt;
 
-&lt;h2 id=&quot;3-예시&quot;&gt;3. 예시&lt;/h2&gt;
+\[W = 1.0 \times np.random.randn(D, H)\]
 
-&lt;ul&gt;
-  &lt;li&gt;ex1)&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;이런 경우, activation function(tanh)의 특성에 따라 값들이 saturation 될 것이다. tanh의 양 끝의 output은 기울기가 완만하므로 그 때의 gradient는 0이 된다. 따라서 가중치가 업데이트되지 않기 때문에, 출력은 항상 -1이거나 +1이 된다.&lt;/p&gt;
 
-&lt;p&gt;32x32x3의 input 이미지, 10개의 5x5필터, stride 1, padding 2일때의 출력 사이즈는?
-32x32x10&lt;/p&gt;
+&lt;p&gt;적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 적절한 가중치를 얻을 수 있는 좋은 방법은 없을까?&lt;/p&gt;
 
-&lt;p&gt;f:32 padding:2x2 filter_size:-5 stride:/1 이므로
-{(32+2x2-5)/1} + 1 = 32 -&amp;gt; 32x32
-전체 필터의 갯수는 10개이므로 32x32x10의 activation map이 나옴&lt;/p&gt;
+&lt;h2 id=&quot;xavier-initializationglorot-2010&quot;&gt;Xavier Initialization(Glorot, 2010)&lt;/h2&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;ex2)&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;초기 가중치 설정 과정에서 선택할 수 있는 가장 최선의 방법이다. Standard Gaussian에서 임의로 추출한 값을 “입력의 수”로 스케일링 해줌으로써, 입/출력의 분산을 맞춰준다.&lt;/p&gt;
 
-&lt;p&gt;input volume : 32x32x3
+\[W = \frac {np.random.randn(D, H)}{\sqrt{D}}\]
+
+&lt;p&gt;위 수식을 통해 직관적으로 이해할 수 있는 것은, 입력의 수가 작으면 그만큼 작은 값으로 나누어 좀 더 큰 값을 얻는다는 것이다. 즉, 입력의 수가 작은 경우 큰 가중치를 곱하고, 반대로 입력의 수가 큰 경우 작은 가중치를 곱해 입/출력의 분산을 맞춰준다. 각 레이어의 입력이 unit gaussian(approximately하다)이길 원한다면 이런류의 초기화 기법을 이용해 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205595563-fe2595ef-6292-4671-90e4-8993ffe233ef.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;모든 Layer의 분포가 gaussian을 따르는 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;문제&quot;&gt;문제&lt;/h3&gt;
+
+&lt;p&gt;그러나, Xavier Initialization은 ReLU를 쓰면 잘 동작하지 않는다. ReLU는 출력의 절반을 죽이고 그 절반은 매번 0이되기 때문에, 출력의 분산을 반토막내버린다. 따라서 이전과 같은 가정을 하면 ReLU에서 값이 너무 작어져 잘 작동하지 않는다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596073-3bb8e8d7-6d40-4126-ab08-f59cec17c50d.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;분포 그래프를 보면, 뒷단으로 갈수록 분포가 줄어들기 시작하여 점점 더 많은 값들이 0이 되고, 결국에는 비활성 되는 모습이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;해결법&quot;&gt;해결법&lt;/h3&gt;
+
+\[W = \frac {np.random.randn(D, H)}{\sqrt{D/2}}\]
+
+&lt;p&gt;뉴런 중 절반이 없어진다는 사실을 고려, Xavier의 수식에 추가적으로 2를 더 나눠줌으로서 해결하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596600-0ff08f10-b4b8-45be-b0b2-869c2e2eeda5.png&quot; alt=&quot;image&quot; /&gt;
+&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596623-90d607a0-9e05-41db-bfed-3229afc69984.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(실제 입력은 반밖에 안들어가므로 반으로 나눠주는 텀을 추가) -&amp;gt; 실제로 잘 동작함&lt;/p&gt;
+
+&lt;p&gt;==&amp;gt; 초기화는 Xavier Initialization을 추천한다&lt;/p&gt;
+
+&lt;h1 id=&quot;batch-normalization&quot;&gt;Batch Normalization&lt;/h1&gt;
+
+&lt;p&gt;gaussian의 범위로 activation을 유지시키는 것에 관련한 또 다른 아이디어
+우리는 레이어의 출력이 unit gaussian이길 바란다.
+batch norm은 강제로(or empirically) 그렇게 만드는 방법임&lt;/p&gt;
+
+&lt;p&gt;어떤 레이어로부터 나온 batch 단위 만큼의 activations이 있다고 했을 때, empirically하게 unit gaussian으로 만들 수 있다. 현재 batch에서 계산한 mean과 var로 norm 시킬 수 있음.
+학습할 떄 마다 각 레이어에 이런 일을 해줘서 모든 레이어가 unit gaussian이 되도록 해줌.
+-&amp;gt; forward pass동안 이렇게 되도록 명시적으로 만들어 주는 것 (함수로 구현)&lt;/p&gt;
+
+&lt;p&gt;이 연산은 FC나 conv layer 직후에 넣어준다.
+깊은 네트워크에서 각 레이어의 W가 지속적으로 곱해져서 bad scaling effect가 발생했으나, normalization은 그 bad effect를 상쇄시킨다.
+BN은 입력의 스케일만 살짝 조정해주는 역할이기 떄문에 FC와 Conv 어디에든 적용가능&lt;/p&gt;
+
+&lt;p&gt;-&amp;gt; 매우 유용, 실제로 정말 많이 사용한다&lt;/p&gt;
+
+&lt;h2 id=&quot;문제-1&quot;&gt;문제&lt;/h2&gt;
+
+&lt;p&gt;FC layer 거칠떄마다 매번 normalization을 해줘야하나?
+tanh의 입력이 unit gaussian이길 바라는 것인가?&lt;/p&gt;
+
+&lt;p&gt;normalization이 하는 일 : 입력이 tanh의 linear한 영역에만 존재하도록 강제함 -&amp;gt; saturation이 전혀 일어나지 않음
+but, 전혀 일어나지 않는 것보다는 얼마나 saturation이 일어날지를 우리가 조절하는 것이 더 바람직해 보임&lt;/p&gt;
+
+&lt;p&gt;normalization 연산 이후에 scaling 연산을 추가함.
+감마(스케일링 효과), 베타(이동 효과) 파라미터를 추가해서 모델이 tanh에 얼마나 saturation 시킬지를 학습시킴 -&amp;gt; 유연성 얻을 수 있음&lt;/p&gt;
+
+&lt;h2 id=&quot;요약&quot;&gt;요약&lt;/h2&gt;
+
+&lt;p&gt;입력이 있고 우리는 mini-bach에서의 평균을 계산
+모든 mini-batch마다 각각 계싼하고 분산도 계산함
+평균과 분산으로 nomalize 한 이후에 다시 추가적인 scaling shifting factor를 사용한다&lt;/p&gt;
+
+&lt;p&gt;BN은 gradient의 흐름을 보다 원활하게 해주면 결국 더 학습이 잘되게(robust) 해준다.
+-&amp;gt; 따라서 BN을 쓰면 learning rates를 더 키울 수도 있고 다양한 초기화 기법들도 사용해 볼 수 있다.
+-&amp;gt; BN을 쓰면 학습이 더 쉬워짐(BN을 써야하는 이유)&lt;/p&gt;
+
+&lt;p&gt;또한, regularization 기능도 함
+왜냐하면 각 레이어의 입력은 해당 배치의 표본 평균으로 normalize되기 떄문이다.
+따라서 이 레이어의 출력은 오직 하나의 샘플에 대한 deterministic한 값이 아니게 되고, batch 내의 모든 데이터가 입력으로 한데 모이게 됨 -&amp;gt; 이는 regularization effect를 줌&lt;/p&gt;
+
+&lt;p&gt;주의! test 데이터에 대해서는 평균/분산을 구하지 않고 train 데이터에서 얻은 값을 사용한다&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-------------------------&lt;/code&gt;
+여기까지는 네트워크 설계
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-------------------------&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;babysitting-the-learning-process&quot;&gt;Babysitting the Learning Process&lt;/h1&gt;
+
+&lt;h2 id=&quot;1-preprocess-the-data&quot;&gt;1. preprocess the data&lt;/h2&gt;
+
+&lt;p&gt;zero-mean을 사용&lt;/p&gt;
+
+&lt;h2 id=&quot;2-choose-the-architecture&quot;&gt;2. Choose the architecture&lt;/h2&gt;
+
+&lt;p&gt;우선, 하나의 hidden layer와 50개의 뉴런을 가진 모델로 해보자
+그 밖에 어떤 모델을 사용해도 상관 없음&lt;/p&gt;
+
+&lt;h2 id=&quot;3-initialize-network&quot;&gt;3. Initialize network&lt;/h2&gt;
+
+&lt;h3 id=&quot;sanity-check&quot;&gt;sanity check&lt;/h3&gt;
+
+&lt;h4 id=&quot;초기-loss가-정상인지-확인&quot;&gt;초기 loss가 정상인지 확인&lt;/h4&gt;
+
+&lt;p&gt;forward pass를 하고난 후에 loss가 그럴듯 해야 함
+가령 우리가 softmax를 사용하고자 한다면, 가중치가 작은 값일 때 Loss는 negative log likelihood가 되어야 함(loc(C) = -log(1/c)).
+가령 10개의 클래스라면 loss는 -log(1/10)이 될 것임&lt;/p&gt;
+
+&lt;h4 id=&quot;regularization-추가&quot;&gt;regularization 추가&lt;/h4&gt;
+
+&lt;p&gt;Loss가 증가한다(손실함수에 reg term이 추가되기 떄문)
+Loss가 증가하는지 확인&lt;/p&gt;
+
+&lt;h4 id=&quot;우선-학습&quot;&gt;우선 학습&lt;/h4&gt;
+
+&lt;p&gt;우선 데이터의 일부만 우선 학습 시켜 본다,.
+데이터가 적으므로 당연히 overfit이 생길 것이고 loss가 많이 줄어들 것임
+이 때는 regularization을 사용하지 않고, Loss가 내려가는지를 확인함
+Epoch마다 Loss가 0을 향해 꾸준히 잘 내려가는지 확인
+데이터가 작은 경우라면 모델이 완벽하게 데이터를 overfit할 수 있어야 함&lt;/p&gt;
+
+&lt;h2 id=&quot;4-학습&quot;&gt;4. 학습&lt;/h2&gt;
+
+&lt;p&gt;전체 데이터 셋 사용
+reg를 약간만 주면서 적절한 learning rete를 찾는다.
+learning rate : 가장 중요한 하이퍼 파라미터이고, 가장 먼저 정해야 함&lt;/p&gt;
+
+&lt;p&gt;l.r.을 몇가지로 정하고 실험해봄 (예제에서는 1e -6 으로 설정)
+Loss가 잘 줄어들지 않는다면, learning rate가 지나치게 작기 떄문임.
+_&amp;gt; gradient 업데이트가 충분히 일어나지 않게 되고 cost가 변하지 않음&lt;/p&gt;
+
+&lt;p&gt;but, 본 예제에서는 loss는 잘 변하지 않음에도 train vlicatoin accuartcyt가 20%까지 증가하였다. 그 이유는?
+accuarcy는 가장 큰 값만 취하기 떄문에 갑자기 값이 크게 뛸 수도 있음&lt;/p&gt;
+
+&lt;p&gt;lr을 1e6으로 바꿔봄
+-&amp;gt; cost가 nan이 됨 (nan이라는 것은 cost가 발산한 것임)&lt;/p&gt;
+
+&lt;p&gt;보통은 1e-3에서 1e05 사이의 값을 사용
+이 범위의 값을 사용해서 crsos svalidation 해줌&lt;/p&gt;
+
+&lt;h1 id=&quot;hyperparameter-ooptimization&quot;&gt;hyperparameter ooptimization&lt;/h1&gt;
+
+&lt;p&gt;cross-valication 전략&lt;/p&gt;
+
+&lt;p&gt;trainset으로 핛브 시키고 valid로 평가하는 방법임&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;coarse stage&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;넓은 범위에서 값을 골라냄. epoch 몇 번 만으로도 현재 값이 잘 동작하는지 알 수 있음
+nan이 뜨거나 혹은 loss가 줄지 않거나 하는 것을 보면서 이에 따라 적절히 잘 조절
+-&amp;gt; 어느 범위에서 잘 동작하겠다를 대충 알게 됨&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;fine stage&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;좀 더 좁은 범위를 설정하고 학습을 좀 더 길게 시켜보면서 최적의 값을 찾는다
+train 동안 cost가 어떻게 변하는지를 살펴봄으로서 non으로 발산하는 것을 미리 감지 (cost가 엄청 크고 빠르게 오르고 있다면) -&amp;gt; loop를 멈춰버리고 다른 하이퍼파라미터 선택&lt;/p&gt;
+
+&lt;p&gt;주목해야할 점)
+하이퍼 파라미터 최적화 시에는 log scale로 값을 주는 것이 좋음
+파라미터 값을 샘플링 할 댸 10^-3 ~ 10^-6을 샘플링 하지 말고, 10의차수 값만 샘플링 한느것이 좋다(-3~-6)
+lr은 gradient와 곱해지기 떄문에 lr의 선택범위를 log scale을 사용하는 편이 좋다
+따라서 차수(roders of magnitude)를 이용하는 편이 좋다&lt;/p&gt;
+
+&lt;p&gt;최적의 값ㅇ이 내가 정한 범위의 중앙쯤에 위치하도록 범위를 잘 설정해줘야 함&lt;/p&gt;
+
+&lt;h2 id=&quot;grid-search-vs-random-search&quot;&gt;grid search vs random search&lt;/h2&gt;
+
+&lt;p&gt;실제로는 grid search 보단느 random search를 하는 것이 더 좋다.’
+만약 내 모델이 어떤 특정 파라미터의 변화에 더 민감하게 반응하고 있따고 생각해보면(노랑 &amp;lt; 초록)
+이 함수가 더 비효율적인 dimentionality를 보인다고 할 수 있음&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 6</summary></entry><entry><title type="html">[CS231n]Convolutional Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_5/" rel="alternate" type="text/html" title="[CS231n]Convolutional Neural Networks(초안)" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_5</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_5/"># CNN
+
+## 1. Fully Connected Layer
+
+FC Layer는, input 이미지를 1차원으로 쭉 펴서 Weight와 곱해주는 Layer이다. 가령, 32x32x3의 input image가 있다면, FC Layer는 이를 3072x1의 벡터로 쭉 핀 다음 W와 내적을 하여 activation map을 얻는다. 가장 간단하게 생각할 수 있는 layer이긴 하지만, Fully Connected Layer에는 치명적인 단점이 2가지 존재한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205216564-e9b1f9ae-f78a-42c9-b5c4-e350852dbecd.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+1. **이미지의 지역적 정보 반영x**
+
+    이미지를 1차원으로 펴서 사용하기 떄문에, 이미지의 지역적인 정보가 사라진다는 단점이 존재한다.
+
+2. **Overfitting**
+
+    class가 많아질 경우, overfitting 문제가 발생하기 쉽다고 한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 2. Convolutional Layer
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205217939-f63c4c52-cde1-4161-8af7-e249637d951f.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+FC Layer가 input image를 쭉 펴서 연산하였다면, Conv Layer는 기존의 이미지 구조를 그대로 유지한 채 연산한다. CNN에서는 가중치를 필터라고 부르는데, 이 작은 필터가(예시에서는 5x5x3 필터) 이미지를 슬라이딩 하며 공간적으로 내적을 수행하게 된다. Conv Layer는 input 이미지의 구조를 그대로 유지한 채 필터가 움직이며 연산을 하므로, 이미지의 지역적 정보가 보존된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205229863-17e04751-a390-4d47-9f83-ab023de8cde4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+CNN은 이런식의 convolutional layer들이 연속된 형태이며, 입력 이미지는 이 Layer들을 차례로 통과한다. 그 사이사이에 ReLU와 같은 non-linaer layer(activation function)를 넣어, conv-ReLU가 반복되는 구조이며, 이미지 크기 조정을 위해 중간중간 Pooling Layer가 추가된다. 각 layer의 출력은 다음 layer의 input이 되어 뒷단으로 계속 전파되며, 제일 끝단의 FC-Layer가 정답 클래스에 맞게 1차원 벡터로 펴준다.
+
+### 2-1) Filter
+
+필터는 CNN에서 사용하는 가중치로서, input image에서 특정 feature를 추출하는 역할을 한다. 하나의 필터를 가지고 input 이미지에 convolution을 수행하여 나온 출력값을 activation map이라고 하는데, 이 activation map들이 다음 Layer의 input으로 들어가 계속 뒷단으로 전파된다. 이게 CNN의 핵심 아이디어다. (중간에 Activation Function, Pooling Layer도 있긴 하지만, 해당 내용은 차후에 차차 소개하겠다.)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220446-0168b7ff-aa00-4d52-8253-fc4773fe0b49.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220463-24a641b4-c9b4-46b3-a74a-08cac12fe74f.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-1-1) 연산
+
+Filter는 이미지의 좌상단부터 시작하여, 내적을 수행하게 된다. 여기서 나온 값(단일 스칼라 값)은, 다시 output activation map의 해당 위치에 저장된다. 그리고 다시 옆으로 슬라이딩하여 위 과정을 반복한다. 이 때, 슬라이딩하는 거리나 필터의 크기에 따라서 activation map의 크기가 달라진다(activation map의 크기를 계산하는 방법은 이후에 설명한다). 이는 하이퍼 파라미터로, 데이터의 크기나 상황등에 따라 잘 조정해야한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Ffbdp1202%2Fpost%2F2c8ec5f6-a20f-4dd9-9fae-9aded7ac8fa0%2Fcs231n-05-010-convolutional_layer_cal_ex.gif&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-1-2) Depth
+
+하나의 필터는 input 이미지의 아주 작은 부분을 취하며(32x32 중 3x3, 5x5 등), depth는 input image의 depth를 따른다. 아래 그림과 같이 input image의 채널이 RGB 3채널이라면, filter의 depth도 3이되어 각각의 채널에서 연산을 진행한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205219315-39b88657-ba43-4dd1-8bff-9965c85f5fa0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-1-3) 필터의 개수
+
+또한, 보통 convolution layer에서는 여러개의 필터를 사용한다. 왜냐하면, 이미지마다 여러가지의 특징이 있을 수 있는데(ex. 고양이: 뾰족한 귀, 털, 꼬리 등등), 이러한 이미지 특성을 고려하여 다양한 필터로 다양한 특징을 추출하고 싶기 때문이다. 이렇게 되면, 각 필터마다 1개의 activation map이 추출되어, 최종적으로 필터의 총 개수만큼 activation map이 추출된다. 따라서 output activation map의 채널은 필터의 개수와 동일하다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220928-f01117d5-0500-41b7-b5e0-27239a6cf7e5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-1-4) Stride
+
+만약, 다음과 같은 7x7 이미지에 3x3 필터를 적용한다고 해보자.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205230612-2bbc1176-7498-4588-9590-4ce60bfb4de2.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+filter는 다음과 같은 process로 activation map을 얻게 될 것이다.
+
+`좌측 상단에서 시작 -&gt; 필터를  씌우고, 해당 값들의 내적을 수행 -&gt; 결과값은 activation map의 좌상단에 위치 -&gt; 값하나 얻기 -&gt; 필터를 오른쪽으로 n칸 움직임 -&gt; 반복...`
+
+여기서 filter가 움직이는 칸의 수를 지정할 수 있는데, 이를 `stride`라고 한다.
+
+- **Stride = 1**
+
+  stride가 1인 경우, 위 process를 계속 반복하면 상하좌우로 총 5번까지 수행가능하다. 따라서 최종적으로 5x5의 activation map을 얻게된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239933-5283c315-5781-4adc-9032-529d94d4d035.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+- **Stride = 2**
+
+  stride가 2인 경우, output은 3x3이 된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239948-ec920867-d516-4ac7-a4be-308c1d9a3879.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+- **Stride = 3**
+
+  그렇다면, stride가 3인 경우는 어떨까? 다음과 같이 이미지에 필터가 정확히 맞아떨어지지 않는다. 이럴경우, 불균형한 결과를 초래할 수 있으므로 이러한 stride는 피하는 것이 좋다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239953-1f5d6b9b-f538-4ca4-b638-38bd585304a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-1-5) Spatial Dimension
+
+위와 같은 이유로, 미리 output activation map의 사이즈를 계산하여, 정수로 나누어 떨어지는 stride를 사용하여야 한다. output의 size를 계산하는 공식은 다음과 같다.
+
+$$
+let) \quad N=이미지 사이즈, F=필터 사이즈\\
+$$
+
+$$
+ouptut \; size = \frac{N - F}{stride} + 1
+$$
+
+&lt;br&gt;
+
+stride가 3인 경우는 정확히 정수로 떨어지지 않는 것을 확인할 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205233181-d834683f-afeb-4a6f-b8ab-da86fbf698d0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-1-6) 주로 사용하는 size
+
+- **filter**
+
+  보통 filter는 3x3, 5x5, 7x7을 많이 사용한다.
+
+- **stride**
+
+  주로 stride는 filter의 사이즈에 따라서 다음과 같이 준다.
+
+  - 3x3 : 1
+  - 5x5 : 2
+  - 7x7 : 3
+
+- **filter의 개수**
+
+  필터의 개수는 32, 64, 128, 512와 같은 2의 제곱수를 사용한다
+
+&lt;br&gt;
+
+### 2-2) padding (zero-padding)
+
+[2-1-5](#2-1-5-spatial-dimension)에서 보았듯이, 특정한 stride를 사용하고 싶은데, filter가 이미지 가장자리까지 닿지 않는 경우에는 어떻게 하는 것이 좋을까? 그럴때는 padding이라는 기법을 사용하면 된다. padding은 이미지의 가장자리에 특정한 값을 채워넣는 기법인데, 이미지의 가장자리에 0을 채워 넣는 zero-padding을 일반적으로 많이 사용한다(mirror나 extend 등도 있음). padding을 사용하면, 모서리가 상대적으로 필터에 덜 적용되는 것을 막을 수 있으며, 위 상황처럼 필터가 가장자리까지 닿지 않는 경우의 문제도 해결할 수 있다. 또한, layer를 거치면서 입력 사이즈가 점점 줄어들게 되는데, padding을 하면 출력 사이즈와 입력 사이즈를 동일하게 유지할 수 있게된다. 만약 layer가 여러겹 쌓였는데 zero-padding을 하지 않으면, layer를 거칠수록 activation map은 점점 줄어들어 엄청 작아지게 되어 일부 정보가 손실될 우려가 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205234828-a074332e-8040-45e6-bff4-f57b0d6acab4.png&quot; width=&quot;35%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Ffbdp1202%2Fpost%2F7260f062-912f-4047-9088-b2a238df633c%2Fcs231n-05-012-convolutional_layer_padding.gif&quot; width=&quot;35%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+#### 2-2-1) Spatial Dimension
+
+padding을 하게 되면 각 모서리마다 2개의 픽셀이 증가되므로, output size는 다음과 같다.
+
+$$
+let) \quad N=이미지 사이즈, F=필터 사이즈\\
+$$
+
+$$
+ouptut \; size = \frac{N+2 - F}{stride} + 1
+$$
+
+&lt;br&gt;
+
+### 2-3) 계층적 학습
+
+각 layer는 여러개의 필터를 가지고 있으며, 각 필터마다 각각의 출력 map을 만드는데, 여러 layer를 쌓다보면 결국 각 필터들이 계층적으로 학습하게 되는 것을 알 수 있다. 다음은 이미지가 어떻게 생겨야 해당 뉴련의 활성을 최대화시킬 수 있는지를 시각화한 것이다(그리드의 각 요소는 각 뉴런의 활성을 최대화시키는 입력의 모양을 나타낸 것). 가령, 앞쪽에 있는 필터들은 edge와 같은 low-level feature를, mid-level을 보면 코너, blob등 좀 더 복잡한 특징을, high-level features를 보면 좀 더 객체와 닮은 것들이 출력으로 나온다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205230336-a0996121-7fb3-4d7a-81e8-12eae7b606f8.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+각 conv의 입력은 이전 레이어에서 나온 edge maps이며, 이것들이 전부 누적되어 복잡한 추론을 하는 것이다. 그리고 이런 정보를 가지고 FC layer를 거치게 되면, 그 정보들을 한데 모아 클래스 스코어를 계산하는 것이다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 3. Pooling layer
+
+Pooling은 activation map의 크기를 downsampling 하는 과정을 말한다. Conv layer에서 했던 것처럼, pooling에도 필터 크기와 stride를 정해 특정한 계산을 마치고, 슬라이딩 한다. 대신 Pooling은 conv layer와는 다르게, 기본적으로 영역이 겹치지 않게 하며 내적을 하는 것이 아니라 최대값을 찾는다(max pooling의 경우)
+
+Convolutional Layer의 깊이가 깊어지면 많은 계산 양을 요구하는데, 이때 Pooling 기법을 이용해 이미지의 크기를 줄여, 연산 속도를 높일 수 있다(파라미터의 수가 줄기 때문). 이 때 중요한 점은, depth에는 아무런 변화도 일어나지 않고, 공간적으로만 줄어든다는 것이다. 가령, 224x224x64인 입력이 있다면 이를 112x112x64로 공간적으로 줄여줌(공간적인 불변성)
+
+### 3-1) Max Pooling
+
+다양한 종류의 Pooling 중, max pooling이 일반적으로 사용된다. max pooling은 지정된 filter 범위 내에서 가장 큰 값을 뽑아내고 stride만큼 슬라이딩 한다.
+
+![image](https://user-images.githubusercontent.com/84084372/205244323-d7b0f7bd-0ef6-4bf6-b72e-bfaa9da849fb.png)
+
+#### 3-1-1) 단어 우월 효과
+
+Max Pooling을 일반적으로 많이 사용하는 이유는, max pooling이 우리가 하는 인식과 상당부분 닮아있기 때문이다. 우리 뇌는 값들이 어떻게 분포하고 있는지 보다 그 값이 얼마나 큰지를 더 중요하게 여긴다. 그 예시로 `단어 우월 효과`를 들 수 있겠다. 우리는 단어의 앞 뒤 순서를 바꿔도 전체적인 형태가 유사하면 동일한 단어로 인식한다. 다음의 예문을 보도록 하자.
+
+&gt; 캠릿브지 대학의 연결구과에 따르면, 한 단어 안에서 글자가 어떤 순서로 배되열어 있는지는 중요하지 않고, 첫 번째와 마지막 글자가 올바른 위치에 있는 것이 중하요다고 한다. 나머지 글들자은 완전히 엉진망창의 순서로 되어 있라을지도 당신은 아무 문제 없이 이것을 읽을 수 있다. 왜하냐면, 인간의 두뇌는 모든 글자를 하하나나 읽는 것이 아니라 단어 하나를 전체로 인하식기 때이문다.
+
+단어 앞뒤 순서가 뒤죽박죽으로 바뀌어도 쉽게 알아차릴 수가 없다. 사람이 단어를 인식할 때 개별 문자의 집합으로 인식하는 게 아닌 단어의 총체적 이미지로 인식하기 때문이라고 한다. max pooling도 이러한 사람의 인지 과정과 상당히 닮아있다. 우리가 다루는 값들은, 이 뉴런이 얼마나 활성되었는지, 바꿔 말하면 필터가 각 위치에서 얼마나 활성되었는지를 나타내는 값이다. 따라서 max pooling은 그 지역이 어디든 어떤 신호에 대해 얼마나 그 필터가 활성화되었는지를 알려준다고 알 수 있다.
+
+따라서 이러한 이유로 max pooling을 많이 사용한다.
+
+&lt;br&gt;
+
+### 3-2) Spatial Dimension
+
+앞서 conv layer에서 사용했던 수식을 그대로 이용해서 design choice를 할 수 있다
+
+$$
+let) \quad N=이미지 사이즈, F=필터 사이즈\\
+$$
+
+$$
+ouptut \; size = \frac{N+2 - F}{stride} + 1
+$$
+
+여기서, 한 가지 특징이 있다면 pooling layer에서는 보통 padding을 하지 않는다. pooling을 하는 이유는 downsampling을 하고 싶기 때문인데, padding을 하면 이미지의 크기가 유지된다. 또한, conv layer처럼 코너의 값을 계산하지 못하는 경우가 pooling layer에서는 존재하지 않는다. 따라서 pooling 할때 padding은 고려하지 않아도 된다.
+
+&lt;br&gt;
+
+### 3-3) 주로 사용하는 size
+
+가장 널리 쓰이는 필터 사이즈는 2x2, 3x3이고 보통 stride는 2로 한다. filter가 3x3일때도 보통 stride는 2x2로 하는 편이다.
+
+&lt;br&gt;
+
+### 3-4) pooling vs stride
+
+우선, image를 다운 샘플링한다는 점에서 conv layer의 stride와 pooling layer는 비슷하다. 따라서 요즘에는 downsample할 떄 pooling보다 strdie를 더 많이 사용하고 있는 추세이다. 실제로 요즘은 stride가 더 좋은 성능을 보이고 있으며, pooling도 일종의 stride의 기법이라고 생각하면 된다. 상황에 맞게 선택하면 될 것 같다.
+
+- **수정사항**
+
+  관련 자료를 찾아보던 중, pooling이 stride보다 더 좋은 효율을 나타낸다는 글을 보았다. CS231n에서는 그 반대로 말하던데 어떤 말이 맞는지는 잘 모르겠다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 3. 예시
+
+- ex1)
+
+32x32x3의 input 이미지, 10개의 5x5필터, stride 1, padding 2일때의 출력 사이즈는?
+32x32x10
+
+f:32 padding:2x2 filter_size:-5 stride:/1 이므로
+{(32+2x2-5)/1} + 1 = 32 -&gt; 32x32
+전체 필터의 갯수는 10개이므로 32x32x10의 activation map이 나옴
+
+- ex2)
+
+input volume : 32x32x3
 filter : 10개의 5*5 필터가 있을때,
-파라미터의 개수는 몇개일까?&lt;/p&gt;
+파라미터의 개수는 몇개일까?
 
-&lt;p&gt;5*5 필터가 입력의 depth만큼 통과 + bias
+5*5 필터가 입력의 depth만큼 통과 + bias
 5x5x3 + 1(bias) = 76
-따라서, 필터당 76개의 파라미터가 들어있는데,&lt;/p&gt;
+따라서, 필터당 76개의 파라미터가 들어있는데,
 
-&lt;p&gt;그게 10개 있음
-76*10 = 760개&lt;/p&gt;
+그게 10개 있음
+76*10 = 760개
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-&lt;h2 id=&quot;4-정리&quot;&gt;4. 정리&lt;/h2&gt;
+## 4. 정리
 
-&lt;p&gt;CNN은 기본적으로 conv layer와 pool layer를 쌓아올리다가 마지막에 FC layer에 모아준다.&lt;/p&gt;
+CNN은 기본적으로 conv layer와 pool layer를 쌓아올리다가 마지막에 FC layer에 모아준다. 
 
-&lt;p&gt;전형적인 CNN 아키텍쳐는 conv layer와 relu를 n번(일반적으로 n은 5정도) 반복하고, 그 중간에 pooling도 몇 번 들어간다. 그리고 fc layer에 연산결과를 모아주는데, 한번에서 두번 또는 그 이상일 수도 있다. 그리고 clas score를 구하기 위해 softmax를 사용한다.&lt;/p&gt;
+전형적인 CNN 아키텍쳐는 conv layer와 relu를 n번(일반적으로 n은 5정도) 반복하고, 그 중간에 pooling도 몇 번 들어간다. 그리고 fc layer에 연산결과를 모아주는데, 한번에서 두번 또는 그 이상일 수도 있다. 그리고 clas score를 구하기 위해 softmax를 사용한다.
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+- **Reference**
 
-    &lt;p&gt;&lt;a href=&quot;https://codlingual.tistory.com/84&quot;&gt;CNN : Convolutional Neural Network 정리&lt;/a&gt;&lt;/p&gt;
+  [CNN : Convolutional Neural Network 정리](https://codlingual.tistory.com/84)
 
-    &lt;p&gt;&lt;a href=&quot;https://velog.io/@fbdp1202/CS231n-%EC%A0%95%EB%A6%AC-5.-Convolutional-Neural-Networks&quot;&gt;[CS231n 정리] 5. Convolutional Neural Networks&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 5</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/til/TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-11</id><content type="html" xml:base="http://localhost:4000/til/TIL-11/"># ✍ 학습내용 정리
+  [[CS231n 정리] 5. Convolutional Neural Networks](https://velog.io/@fbdp1202/CS231n-%EC%A0%95%EB%A6%AC-5.-Convolutional-Neural-Networks)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 5</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/til/TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-11</id><content type="html" xml:base="http://localhost:4000/til/TIL-11/"># ✍ 학습내용 정리
 
 &lt;br&gt;
 &lt;br&gt;
