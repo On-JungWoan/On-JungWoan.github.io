@@ -1,0 +1,1677 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[CS231n]Loss Functions and Optimization - 정완이의 개발 일기장</title>
+<meta name="description" content="Stanford University CS231n, Spring 2017, Lecture 3">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="[CS231n]Loss Functions and Optimization">
+<meta property="og:url" content="http://localhost:4000/dl/cs231n_3/">
+
+
+  <meta property="og:description" content="Stanford University CS231n, Spring 2017, Lecture 3">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-11-24T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-11-24T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl/cs231n_3/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		window.FontAwesomeKitConfig = {"asyncLoading":{"enabled":true},"autoA11y":{"enabled":true},"baseUrl":"https://ka-f.fontawesome.com","baseUrlKit":"https://kit.fontawesome.com","detectConflictsUntil":null,"iconUploads":{},"id":91177765,"license":"free","method":"css","minify":{"enabled":true},"token":"a076d05399","v4FontFaceShim":{"enabled":false},"v4shim":{"enabled":false},"v5FontFaceShim":{"enabled":false},"version":"5.15.4"};
+		!function(t){"function"==typeof define&&define.amd?define("kit-loader",t):t()}((function(){"use strict";function t(e){return(t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(e)}function e(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function n(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,o)}return n}function o(t){for(var o=1;o<arguments.length;o++){var r=null!=arguments[o]?arguments[o]:{};o%2?n(Object(r),!0).forEach((function(n){e(t,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):n(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],o=!0,r=!1,i=void 0;try{for(var c,a=t[Symbol.iterator]();!(o=(c=a.next()).done)&&(n.push(c.value),!e||n.length!==e);o=!0);}catch(t){r=!0,i=t}finally{try{o||null==a.return||a.return()}finally{if(r)throw i}}return n}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=new Array(e);n<e;n++)o[n]=t[n];return o}function c(t,e){var n=e&&e.addOn||"",o=e&&e.baseFilename||t.license+n,r=e&&e.minify?".min":"",i=e&&e.fileSuffix||t.method,c=e&&e.subdir||t.method;return t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/"+c+"/"+o+r+"."+i}function a(t){return t.baseUrlKit+"/"+t.token+"/"+t.id+"/kit-upload.css"}function u(t,e){var n=e||["fa"],o="."+Array.prototype.join.call(n,",."),r=t.querySelectorAll(o);Array.prototype.forEach.call(r,(function(e){var n=e.getAttribute("title");e.setAttribute("aria-hidden","true");var o=!e.nextElementSibling||!e.nextElementSibling.classList.contains("sr-only");if(n&&o){var r=t.createElement("span");r.innerHTML=n,r.classList.add("sr-only"),e.parentNode.insertBefore(r,e.nextSibling)}}))}var f,s=function(){},d="undefined"!=typeof global&&void 0!==global.process&&"function"==typeof global.process.emit,l="undefined"==typeof setImmediate?setTimeout:setImmediate,h=[];function m(){for(var t=0;t<h.length;t++)h[t][0](h[t][1]);h=[],f=!1}function p(t,e){h.push([t,e]),f||(f=!0,l(m,0))}function v(t){var e=t.owner,n=e._state,o=e._data,r=t[n],i=t.then;if("function"==typeof r){n="fulfilled";try{o=r(o)}catch(t){w(i,t)}}y(i,o)||("fulfilled"===n&&b(i,o),"rejected"===n&&w(i,o))}function y(e,n){var o;try{if(e===n)throw new TypeError("A promises callback cannot return that same promise.");if(n&&("function"==typeof n||"object"===t(n))){var r=n.then;if("function"==typeof r)return r.call(n,(function(t){o||(o=!0,n===t?g(e,t):b(e,t))}),(function(t){o||(o=!0,w(e,t))})),!0}}catch(t){return o||w(e,t),!0}return!1}function b(t,e){t!==e&&y(t,e)||g(t,e)}function g(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(S,t))}function w(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(O,t))}function A(t){t._then=t._then.forEach(v)}function S(t){t._state="fulfilled",A(t)}function O(t){t._state="rejected",A(t),!t._handled&&d&&global.process.emit("unhandledRejection",t._data,t)}function j(t){global.process.emit("rejectionHandled",t)}function E(t){if("function"!=typeof t)throw new TypeError("Promise resolver "+t+" is not a function");if(this instanceof E==!1)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this._then=[],function(t,e){function n(t){w(e,t)}try{t((function(t){b(e,t)}),n)}catch(t){n(t)}}(t,this)}E.prototype={constructor:E,_state:"pending",_then:null,_data:void 0,_handled:!1,then:function(t,e){var n={owner:this,then:new this.constructor(s),fulfilled:t,rejected:e};return!e&&!t||this._handled||(this._handled=!0,"rejected"===this._state&&d&&p(j,this)),"fulfilled"===this._state||"rejected"===this._state?p(v,n):this._then.push(n),n.then},catch:function(t){return this.then(null,t)}},E.all=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.all().");return new E((function(e,n){var o=[],r=0;function i(t){return r++,function(n){o[t]=n,--r||e(o)}}for(var c,a=0;a<t.length;a++)(c=t[a])&&"function"==typeof c.then?c.then(i(a),n):o[a]=c;r||e(o)}))},E.race=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.race().");return new E((function(e,n){for(var o,r=0;r<t.length;r++)(o=t[r])&&"function"==typeof o.then?o.then(e,n):e(o)}))},E.resolve=function(e){return e&&"object"===t(e)&&e.constructor===E?e:new E((function(t){t(e)}))},E.reject=function(t){return new E((function(e,n){n(t)}))};var _="function"==typeof Promise?Promise:E;function F(t,e){var n=e.fetch,o=e.XMLHttpRequest,r=e.token,i=t;return"URLSearchParams"in window?(i=new URL(t)).searchParams.set("token",r):i=i+"?token="+encodeURIComponent(r),i=i.toString(),new _((function(t,e){if("function"==typeof n)n(i,{mode:"cors",cache:"default"}).then((function(t){if(t.ok)return t.text();throw new Error("")})).then((function(e){t(e)})).catch(e);else if("function"==typeof o){var r=new o;r.addEventListener("loadend",(function(){this.responseText?t(this.responseText):e(new Error(""))}));["abort","error","timeout"].map((function(t){r.addEventListener(t,(function(){e(new Error(""))}))})),r.open("GET",i),r.send()}else{e(new Error(""))}}))}function P(t,e,n){var o=t;return[[/(url\("?)\.\.\/\.\.\/\.\./g,function(t,n){return"".concat(n).concat(e)}],[/(url\("?)\.\.\/webfonts/g,function(t,o){return"".concat(o).concat(e,"/releases/v").concat(n,"/webfonts")}],[/(url\("?)https:\/\/kit-free([^.])*\.fontawesome\.com/g,function(t,n){return"".concat(n).concat(e)}]].forEach((function(t){var e=r(t,2),n=e[0],i=e[1];o=o.replace(n,i)})),o}function C(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){},r=e.document||r,i=u.bind(u,r,["fa","fab","fas","far","fal","fad","fak"]),f=Object.keys(t.iconUploads||{}).length>0;t.autoA11y.enabled&&n(i);var s=[{id:"fa-main",addOn:void 0}];t.v4shim&&t.v4shim.enabled&&s.push({id:"fa-v4-shims",addOn:"-v4-shims"}),t.v5FontFaceShim&&t.v5FontFaceShim.enabled&&s.push({id:"fa-v5-font-face",addOn:"-v5-font-face"}),t.v4FontFaceShim&&t.v4FontFaceShim.enabled&&s.push({id:"fa-v4-font-face",addOn:"-v4-font-face"}),f&&s.push({id:"fa-kit-upload",customCss:!0});var d=s.map((function(n){return new _((function(r,i){F(n.customCss?a(t):c(t,{addOn:n.addOn,minify:t.minify.enabled}),e).then((function(i){r(U(i,o(o({},e),{},{baseUrl:t.baseUrl,version:t.version,id:n.id,contentFilter:function(t,e){return P(t,e.baseUrl,e.version)}})))})).catch(i)}))}));return _.all(d)}function U(t,e){var n=e.contentFilter||function(t,e){return t},o=document.createElement("style"),r=document.createTextNode(n(t,e));return o.appendChild(r),o.media="all",e.id&&o.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&o.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),o}function k(t,e){e.autoA11y=t.autoA11y.enabled,"pro"===t.license&&(e.autoFetchSvg=!0,e.fetchSvgFrom=t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/svgs",e.fetchUploadedSvgFrom=t.uploadsUrl);var n=[];return t.v4shim.enabled&&n.push(new _((function(n,r){F(c(t,{addOn:"-v4-shims",minify:t.minify.enabled}),e).then((function(t){n(I(t,o(o({},e),{},{id:"fa-v4-shims"})))})).catch(r)}))),n.push(new _((function(n,r){F(c(t,{minify:t.minify.enabled}),e).then((function(t){var r=I(t,o(o({},e),{},{id:"fa-main"}));n(function(t,e){var n=e&&void 0!==e.autoFetchSvg?e.autoFetchSvg:void 0,o=e&&void 0!==e.autoA11y?e.autoA11y:void 0;void 0!==o&&t.setAttribute("data-auto-a11y",o?"true":"false");n&&(t.setAttributeNode(document.createAttribute("data-auto-fetch-svg")),t.setAttribute("data-fetch-svg-from",e.fetchSvgFrom),t.setAttribute("data-fetch-uploaded-svg-from",e.fetchUploadedSvgFrom));return t}(r,e))})).catch(r)}))),_.all(n)}function I(t,e){var n=document.createElement("SCRIPT"),o=document.createTextNode(t);return n.appendChild(o),n.referrerPolicy="strict-origin",e.id&&n.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n}function L(t){var e,n=[],o=document,r=o.documentElement.doScroll,i=(r?/^loaded|^c/:/^loaded|^i|^c/).test(o.readyState);i||o.addEventListener("DOMContentLoaded",e=function(){for(o.removeEventListener("DOMContentLoaded",e),i=1;e=n.shift();)e()}),i?setTimeout(t,0):n.push(t)}function T(t){"undefined"!=typeof MutationObserver&&new MutationObserver(t).observe(document,{childList:!0,subtree:!0})}try{if(window.FontAwesomeKitConfig){var x=window.FontAwesomeKitConfig,M={detectingConflicts:x.detectConflictsUntil&&new Date<=new Date(x.detectConflictsUntil),detectionIgnoreAttr:"data-fa-detection-ignore",fetch:window.fetch,token:x.token,XMLHttpRequest:window.XMLHttpRequest,document:document},D=document.currentScript,N=D?D.parentElement:document.head;(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"js"===t.method?k(t,e):"css"===t.method?C(t,e,(function(t){L(t),T(t)})):void 0})(x,M).then((function(t){t.map((function(t){try{N.insertBefore(t,D?D.nextSibling:null)}catch(e){N.appendChild(t)}})),M.detectingConflicts&&D&&L((function(){D.setAttributeNode(document.createAttribute(M.detectionIgnoreAttr));var t=function(t,e){var n=document.createElement("script");return e&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n.src=c(t,{baseFilename:"conflict-detection",fileSuffix:"js",subdir:"js",minify:t.minify.enabled}),n}(x,M);document.body.appendChild(t)}))})).catch((function(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}))}}catch(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}}));	
+	</script>
+</head>
+<body>
+
+
+	
+
+
+</body>
+</html>
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
+        </a> -->
+          정완이의 개발 일기장
+          
+        </a>
+
+
+
+        <ul class="visible-links">
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/bbeojung/bj_README/">    뻐정 : 버스정보종합시스템</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">AI</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/DL">    Computer Vision</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/ML">    Machine Learning</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Full-Stack Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Blog Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">대외활동  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/Internship">    2022 하반기 ICT 인턴십</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+       </ul>
+
+       
+
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          [CS231n]Loss Functions and Optimization
+
+        
+      </h1>
+      <p class="page__lead">Stanford University CS231n, Spring 2017, Lecture 3
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-24">November 24, 2022</time></p>
+
+      <p>
+      
+        <a href="https://on-jungwoan.github.io/til/TIL-11/#1124" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>AI/플랫폼 개발을 공부합니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">102</style> <span style="">개</style> 
+      </li>
+      <li>
+      
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (4)</a></li>
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/toy_project" class="">Toy Project (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL" class="">Computer Vision (17)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+
+
+            <span class="nav__sub-title">Platform Dev.</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/web" class="">Full-Stack Dev (9)</a></li>
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Blog Dev (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                                 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/tools" class="">Tools (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (10)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/etc" class="">etc (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[CS231n]Loss Functions and Optimization">
+    <meta itemprop="description" content="Stanford University CS231n, Spring 2017, Lecture 3">
+    <meta itemprop="datePublished" content="2022-11-24T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-11-24T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#가중치-w구하는-법">가중치 W구하는 법</a></li><li><a href="#loss">Loss</a><ul><li><a href="#1-data-loss-term-loss-function">1. Data Loss Term (Loss function)</a><ul><li><a href="#1-1-hinge-loss-multi-class-svm">1-1. Hinge Loss (Multi-class SVM)</a><ul><li><a href="#1-1-1-예시">1-1-1) 예시</a></li><li><a href="#1-1-2-특징">1-1-2) 특징</a></li></ul></li><li><a href="#1-2-cross-entropy-loss-softmax">1-2. Cross-entropy Loss (Softmax)</a><ul><li><a href="#1-2-1-예시">1-2-1) 예시</a></li><li><a href="#1-2-2-특징">1-2-2) 특징</a></li></ul></li></ul></li><li><a href="#2-regularization-term">2. Regularization Term</a><ul><li><a href="#2-1-오컴의-면도날-이론">2-1) 오컴의 면도날 이론</a></li><li><a href="#2-2-regularization의-종류">2-2) Regularization의 종류</a></li><li><a href="#2-3-l1-reg-vs-l2-reg">2-3) L1 reg. vs L2 reg.</a></li></ul></li><li><a href="#3-loss-총정리">3. Loss 총정리</a></li></ul></li><li><a href="#optimization">Optimization</a><ul><li><a href="#1-search-방법">1. Search 방법</a><ul><li><a href="#1-1-random-search">1-1) random search</a></li><li><a href="#1-2-local-geometry-이용-경사하강법">1-2) local geometry 이용 (경사하강법)</a><ul><li><a href="#1-2-1-slope-계산">1-2-1) Slope 계산</a></li></ul></li></ul></li></ul></li><li><a href="#특징-변환">특징 변환</a><ul><li><a href="#1-예시">1. 예시</a><ul><li><a href="#1-1-극좌표계-변환">1-1) 극좌표계 변환</a></li><li><a href="#1-2-컬러-히스토그램">1-2) 컬러 히스토그램</a></li><li><a href="#1-3-histogram-of-oriented-gradients-hog">1-3) Histogram of oriented gradients (HoG)</a></li><li><a href="#1-4-bag-of-words">1-4) bag of words</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="가중치-w구하는-법">가중치 W구하는 법</h1>
+<p>가중치 W를 구하기 위해서는 해당 가중치가 좋은지 나쁜지를 정량화 할 방법이 필요하다. 따라서 가중치의 성능을 파악하기 위해 도입된 것이 바로 손실함수이다. 행렬 W가 될 수 있는 모든 가능의 수 중에서 손실함수가 가장 적은 W를 찾는 것이 가중치 W를 구하는 방법이며, 이를 최적화 과정(optimization)이라 한다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="loss">Loss</h1>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203778112-b5dc99c5-f9e6-42c0-9a8c-9ec54640d1af.png" style="border:1px solid black" width="100%" /></p>
+
+<p>Loss는 Data Loss Term의 평균과 Regularization Term의 합으로 이루어져있다. Data loss term은 모델이 데이터에 좀 더 fit할 수 있게 도와주며, Regularization term은 모델을 단순하게 하여 오버피팅되지 않게 한다. Data loss term은 모든 클래스의 loss에 대한 총 합계로 이루어져 있는데, 이 때 loss를 구하기 위해 사용되는 함수가 Loss function이다. Loss Function에는 대표적으로 SVM과 Softmax가 존재한다.</p>
+
+<h2 id="1-data-loss-term-loss-function">1. Data Loss Term (Loss function)</h2>
+
+<h3 id="1-1-hinge-loss-multi-class-svm">1-1. Hinge Loss (Multi-class SVM)</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203700823-10f5f921-9b8c-40d1-b6d2-13ac96942ea6.png" style="border:1px solid black" width="40%" /></p>
+
+<p>이진 SVM의 일반적인 형태로서 이진 SVM과 달리 여러 클래스를 다루며, 그래프 모양이 경첩과 비슷하여 hinge loss라고 한다. hinge loss는 올바른 카테고리의 스코어(s_yi)와 그렇지 않은 카테고리의 스코어(s_j)를 비교하여, 올바른 카테고리의 스코어가 일정 수준(margin) 이상 더 크면 0을 반환한다. 그렇지 않으면, 올바르지 않은 카테고리와 올바른 카테고리의 차(sj - syi: 잘못된 경우 loss가 더 커져야하므로)에 margin을 더한 값이 반환된다. 위 과정을 나머지 클래스(정답이 아닌 클래스)에 대해서도 동일하게 순회하며 이를 모두 더한 값이 hinge loss function의 i번째 output이 된다. 이를 수식으로 나타내면, sigma{max(o, s_j-s_yi+1)}이 되며, output의 i개 카테고리에 대한 합을 N으로 나눠주면, Loss가 되는 것이다.</p>
+
+<h4 id="1-1-1-예시">1-1-1) 예시</h4>
+
+<p>모델에 input 이미지를 넣은 결과 다음과 같은 스코어가 나왔다고 가정해보자. 내가 그냥 노트에 끄적거린거라 표가 살짝 헷갈리게 나와있는데, 첫 번째 열부터 순서대로 cat, car, frog에 대한 score이다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203774750-707d8c70-af9f-4b5a-8745-7e2b7e044066.png" style="border: 1px solid black;" width="50%" /></p>
+
+<p>각 카테고리에 대해서 lose들을 각각 구해준다. margin이 1일 때, loss는 각각 2.9, 0, 12.9이 나왔다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203774794-28221bdd-bb30-4ceb-9ab2-ad2fc4540662.png" style="border: 1px solid black;" width="50%" /></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203774779-79e0fdad-43ed-4b33-b28e-dc293dcee2a8.png" style="border: 1px solid black;" width="50%" /></p>
+
+<p>Loss들을 전부 더해서 클래스 수로 나누어주면 최종 Loss를 구할 수 있다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203774812-49710c89-8b18-4171-bb3a-92fcf2610b2f.png" style="border: 1px solid black;" width="30%" /></p>
+
+<p><br /></p>
+
+<h4 id="1-1-2-특징">1-1-2) 특징</h4>
+
+<ul>
+  <li>
+    <p><strong>Loss의 범위</strong></p>
+
+    <p><code class="language-plaintext highlighter-rouge">0 &lt;= Loss &lt; positive infinity</code></p>
+
+    <p>정답 스코어가 그렇지 않은 스코어보다 모두 클 경우, Loss는 0이 된다. 반면, 정답이 아닌 스코어가 양의 무한대로 발산하면, Loss는 양의 무한대가 된다.</p>
+  </li>
+  <li>
+    <p><strong>디버깅 전략</strong></p>
+
+    <p>모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 <code class="language-plaintext highlighter-rouge">클래스의 수 - margin</code>이 된다. C-1개의 클래스를 순회하며 스코어 비교를 하는 과정에서, 비교하는 두 스코어가 거의 비슷하니 결국 margin만 남게 되기 때문이다(s_j - s_yi ≈ 0). 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 C - margin이 아니라면 버그가 있는 것을 확인할 수 있다.</p>
+  </li>
+  <li>
+    <p><strong>정답 스코어 조금 바꿔도 Loss 변화 없음</strong></p>
+
+    <p>정답 스코어가 충분히 크고, 다른 클래스의 스코어가 낮은 경우, margin의 범위 내에서 정답 스코어가 조금 바뀌어도 Loss의 변화는 없다. 정답 스코어가 그렇지 않은 스코어보다 일정 수준이상 큰지만 체크하기 떄문이다.</p>
+  </li>
+  <li>
+    <p><strong>including j = y_i</strong></p>
+
+    <p>정답 클래스도 순회에 포함한다면 어떻게 될까?<br />
+-&gt; s_yi - s_yi + margin = margin이므로, Loss가 margin만큼 더 증가한다.</p>
+  </li>
+  <li>
+    <p><strong>Loss에서 전체합이 아니라 평균을 사용한다면?</strong></p>
+
+    <p>영향을 미치지 않는다. 클래스 수는 어차피 정해져 있으니, 평균 취하는건 그냥 함수를 리스케일 할 뿐이다. 스코어 값이 몇인지는 신경쓰지 않고 단순히 얼만큼 크냐 작냐를 따지는 것이기 떄문에 스케일이 바뀌는 것은 아무 영향을 미치지 않는다.</p>
+  </li>
+  <li>
+    <p><strong>그럼 손실함수를 제곱항으로 바꾼다면?</strong></p>
+
+    <p>이를 square hinge loss라고 하며, 결과는 달라진다. 제곱항을 사용하면, Loss에 더 많은 가중치를 부여할 수 있다. loss를 얼마나 심각하게 받아들이느냐의 차이인듯 하다(제곱하면 절대값이 더 커지기 때문이다).</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="1-2-cross-entropy-loss-softmax">1-2. Cross-entropy Loss (Softmax)</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203732140-d33634b5-e3ad-4d18-bd93-3d4b1648ac31.png" style="border:1px solid black" width="60%" /></p>
+
+<p>딥러닝에서는 Multiclass SVM loss보다 더 많이 사용한다. Multiclass SVM의 경우, 스코어 자체는 신경쓰지 않고, 정답 클래스가 정답이 아닌 클래스보다 더 높은 스코어 내기만을 원한다. 따라서 스코어 자체에는 관심 없었으나, Softmax는 스코어 자체에 추가적인 의미를 부여한다. Softmax의 Loss 계산 과정은 다음과 같다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">모델에서 나온 스코어 -&gt; 스코어를 지수화 시킴(양수화) -&gt; 합이 1이 되도록 정규화(확률값이 됨) -&gt; 정답 스코어에만 -log를 붙여줌</code></p>
+
+<p>지수/정규화 통해 나온 확률이 정답 클래스에서 1에 가깝게 계산되는 것이 Softmax의 목표이다. log를 붙이면 그래프가 단조 증가함수가 되므로, 그냥 확률값을 최대화 시키는 것보다 더 쉽다. 또한, 얼마나 좋은지가 아니라 얼마나 성능이 좋지 않은지를 측정하는 측도가 되어야하므로 부호가 음수가 되어야한다. 따라서 최종 확률에 -log가 붙은 것이 Cross-entropy Loss(Softmax)이다.</p>
+
+<h4 id="1-2-1-예시">1-2-1) 예시</h4>
+
+<p>다음은 cat에 대한 Cross-entropy Loss, L_cat을 구하는 과정이다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203774821-e91970df-326d-4308-83d4-9fcda28e7c85.png" style="border: 1px solid black;" width="70%" /></p>
+
+<p>각각의 스코어를 지수화 하고, 이를 정규화 시키면 각 클래스에 대한 확률값이 나오게 된다. 이 중, 정답 클래스의 확률을 뽑아 -log를 씌워주면, cat에 대한 Cross-entropy Loss를 구할 수 있게된다.</p>
+
+<p><br /></p>
+
+<h4 id="1-2-2-특징">1-2-2) 특징</h4>
+
+<ul>
+  <li>
+    <p><strong>Loss의 범위</strong></p>
+
+    <p><code class="language-plaintext highlighter-rouge">0 &lt;= Loss &lt; positive infinity</code></p>
+
+    <p>정답 스코어가 양의 무한대, 그 외는 음의 무한대로 발산한다면, 정답 클래스의 확률은 100%가 된다(지수/정규화 시키기 때문). 이 때 Loss는 0(-log(1) == 0)이되며 완벽한 분류가 된다. 반대로, 정답 클래스 스코어가 음의 무한대, 그 외가 양의 무한대로 발산하면, log(0) = 양의 무한대이므로 양의 무한대로 발산한다. 즉, 정답 클래스의 확률이 0%이면 loss는 무한대이다.</p>
+  </li>
+  <li>
+    <p><strong>디버깅 전략</strong></p>
+
+    <p>모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 <code class="language-plaintext highlighter-rouge">log(C)</code>가 된다. 그 이유는 다음과 같다.</p>
+
+    <p>우선, 모든 스코어가 비슷한 경우 지수/정규화를 마친 확률값도 비슷하게 나와야 할 것이다. 이 때, 확률의 합은 1이 되어야 하므로, 각각의 확률은 1/클래스의 개수(C)로 모두 동일할 것이다. 여기서 정답 클래스를 뽑아 -log를 씌우게 되면 -log(1/C)이 되는데, 이 값은 로그 변환에 의해 log(C)로 바꿀 수 있다. 따라서 log(C)가 최종 결과가 되는 것이다.</p>
+
+    <p>이는, 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 log(c)가 아니라면 버그가 있는 것을 확인할 수 있다.</p>
+  </li>
+  <li>
+    <p><strong>Multiclass SVM Loss와의 차이점</strong></p>
+
+    <p>svm은 정답 스코어와 그렇지 않은 스코어 간의 마진을 신경쓴다. 따라서 정답 클래스의 스코어가 충분히 높다면, 정답 스코어가 조금 바뀐다고 해서 loss가 변하진 않는다. 왜냐하면, SVM loss는 정답과 그 외 클래스의 마진이 얼마나 되는지에만 관심있기 때문이다. 반면 Softmax(Cross Entropy Loss)는 정답 클래스의 스코어가 충분히 높고 다른 클래스 스코어가 충분히 낮아도, 최대한 정답에 확률을 몰아 넣으려고 할테고 그 결과, 정답 클래스 스코어는 무한대로, 그 외의 클래스 스코어는 음의 무한대로 발산하게 된다.</p>
+
+    <p>정리해보자면, SVM Loss는 일정 Margin을 넘으면 더이상 성능 개선에 신경쓰지 않는다. 그러나 Softmax는 더더욱 좋게 성능을 높이려 할 것이다. 두 손실함수의 성능 차이는 엄청나게 크진 않지만, 이러한 차이를 알고 있는 것이 좋다.</p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h2 id="2-regularization-term">2. Regularization Term</h2>
+
+<p>Loss Function에는 우리가 앞서 살펴본 Data Loss Term 이외에도 Regularization Term이 존재하는데, 이 Regularization Term이 모델을 단순하게 만들어준다. 다시 말해, Data Loss Term에서는 분류기가 트레이닝 데이터에 fit하게 한다면, Regularization Term에서는 모델이 좀 더 단순한 W를 선택하도록 한다는 것이다. 이는 모델에 soft 패널티를 추가하여 복잡해지지 못하도록 하는 것으로 구현된다. 즉, 일반적으로 모델은 어떠한 문제를 고차 다항식으로 풀려고 하지만, regularization이 저차 다항식을 선호하도록 하며, 만약 복잡한 다항식을 쓰고 싶다면, 모델은 패널티를 감수해야 할 것이다. 만약 Regularization Term 없이 Data loss Term만 존재한다면 모델은 쉽게 오버피팅될 수 있다. 또한, Regularization은 딥러닝 뿐만 아니라 ML에서도 사용하니 기억해두자.</p>
+
+<h3 id="2-1-오컴의-면도날-이론">2-1) 오컴의 면도날 이론</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203706632-304a78d1-0ebc-4ba0-963e-569b01021acf.png" style="border:1px solid black" width="60%" /></p>
+
+<p>다양한 가설이 존재하고, 그 가설들이 전부 옳다면 더 단순한 것을 선택하는 것이 좋다는 이론이다. 즉, 더 단순한 가설이 미래에 일어날 현상을 잘 설명할 가능성이 높다는 것이다. 이 이론은 기계학습 분야에서도 적용된다. 만약 상단 이미지의 파란색 그래프처럼 모델이 train 데이터에 오버피팅되면, 새로운 데이터(초록색)에 전혀 대응하지 못하게 된다. 우리는 파란색 그래프가 아니라, 새로운 데이터에도 유동적으로 반응하는 초록색 그래프(강인함)를 원하므로 모델을 어느정도 단순하게 만들 필요가 있다. 이것이 바로 Regularization Term을 사용하는 이유이다.</p>
+
+<p><br /></p>
+
+<h3 id="2-2-regularization의-종류">2-2) Regularization의 종류</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203723217-08ef5fca-e242-45d7-a0c9-d03431148fad.png" style="border:1px solid black" width="60%" /></p>
+
+<ul>
+  <li>
+    <p><strong>L2 regularization</strong></p>
+
+    <p>weight decay. 가장 보편적이며, W에 대한 Euclidean Norm 또는 Square Norm이라고도 한다. 1/2 * Square Norm을 사용하면 미분이 더 깔끔해진다.</p>
+  </li>
+  <li>
+    <p><strong>L1 regularization</strong></p>
+
+    <p>L1 Norm으로 W에 패널티를 부가하여, W가 희소행렬이 되도록 함.</p>
+  </li>
+  <li>
+    <p><strong>Elastic net regularization</strong></p>
+
+    <p>L1과 L2를 혼합시켜놓은 형태</p>
+  </li>
+  <li>
+    <p><strong>Max norm regularization</strong></p>
+
+    <p>L1, L2 대신 Max norm을 사용함</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-3-l1-reg-vs-l2-reg">2-3) L1 reg. vs L2 reg.</h3>
+
+<p>[1,1,1,1]의 input 이미지가 주어졌을 때, 다음과 같은 w1과 w2라는 가중치가 있다고 가정해보자.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/203728984-b6c56793-cd51-4e7e-8328-bfd8a28be4c7.png" style="border:1px solid black" width="40%" /></p>
+
+<p>Linear Classifier의 관점에서, {w1 (dot) x} == {w2 (dot) x}이므로 w1과 w2 가중치는 동일하다. 하지만 L1 regularization과 L2 regularization이 바라보는 관점은 조금 다르다.</p>
+
+<ul>
+  <li>
+    <p><strong>L2 regularization</strong></p>
+
+    <p>L2 reg.는 w2 가중치를 더 선호하는데 그 이유는 다음과 같다. L2 reg는 x의 모든 요소가 골고루 영향을 줬으면 한다. 즉, x의 특정 요소에만 의존하기보다 모든 요소가 골고루 영향을 미치게 하여 외부 변화에도 강인해지길 바란다. 따라서 L2 reg는 w1과 w2중 어느것이 더 상대적으로 coarse한지 측정(값이 매끄러워야 함)하여 분류기의 복잡도를 계산한다.</p>
+  </li>
+  <li>
+    <p><strong>L1 regularization</strong></p>
+
+    <p>L1 reg.는 L2 reg.와는 반대로 오히려 w1을 더 선호한다. L1 reg는 w에 존재하는 0의 개수에 따라 모델의 복잡도를 다루기 때문에 sparse한 solution을 선호한다. 따라서 w의 요소 중 대부분이 0이 되게 한다.</p>
+  </li>
+  <li>
+    <p><strong>정리</strong></p>
+
+    <ul>
+      <li>
+        <p>어떤 문제 / 어떤 모델 / 어떤 데이터냐에 따라 복잡하다의 정의가 달라짐</p>
+      </li>
+      <li>
+        <p>L1 : 0이 아닌 것들은 복잡하다</p>
+      </li>
+      <li>
+        <p>L2 : 요소가 전체적으로 퍼져있을 떄 덜 복잡하다</p>
+      </li>
+      <li>
+        <p>데이터와 문제에 따라 L1, L2를 적절하게 선택하면 된다.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="3-loss-총정리">3. Loss 총정리</h2>
+
+<p>데이터셋 x와 y</p>
+
+<p>-&gt; Model(Linear Classifier 등)을 통해 x로부터 스코어 얻음</p>
+
+<p>-&gt; Softmax, SVM등의 Loss function을 통해 모델의 예측값이 정답값에 비해 얼마나 좋지 않은지 측정</p>
+
+<p>-&gt; 모델의 복잡함과 단순함을 통제하기 위해 Loss function에 regularization term을 추가</p>
+
+<p>-&gt; Optimization 과정 (아래에서 설명)</p>
+
+<p>-&gt; 최종 손실함수가 최소가 되게 하는 가중치 행렬이자 파라미터 행렬인 행렬 W를 구하게 됨</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="optimization">Optimization</h1>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204129151-9314ec6e-4116-4a79-b9e0-cc0b3adff1c0.png" style="border: 1px solid black;" width="60%" /></p>
+
+<p>Optimization은 가능한 W의 경우의 수 중, 가장 Loss가 적은 W를 찾아 나가는 과정을 의미하며, 흔히들 산골짜기에서 내려오는 사람에 빗대어 표현하곤 한다. 산의 높이는 Loss가 되고, 우리는 골짜기에 있는 늪이나 개울을 피해 최대한 골짜기의 밑바닥까지 내려와야 하는 것이다. 밑바닥까지 바로 내려갈 수 있으면 좋겠지만, 실제로 NN을 사용하면 예측 함수, Loss func, regularizer같은 것들이 엄청 크고 복잡해진다. 따라서 어떤 명시적인 솔루션을 만들어내서 최적의 솔루션(minima)을 직접 얻어내는 건 불가능하다. 따라서 실제 Optimization은 임의의 지점에서 시작해서 점차적으로 성능 향상시키는 iterative한 방법을 쓴다.</p>
+
+<h2 id="1-search-방법">1. Search 방법</h2>
+
+<h3 id="1-1-random-search">1-1) random search</h3>
+
+<p>랜덤 샘플링한 W를 많이 모아놓고 loss를 계산해서 어떤 w가 가장 좋은지 고르는 방법이다. 매우 구린 성능의 알고리즘이므로 실제로 사용하지는 않고, 한번쯤 상상만 해볼 법한 방법이다.</p>
+
+<p><br /></p>
+
+<h3 id="1-2-local-geometry-이용-경사하강법">1-2) local geometry 이용 (경사하강법)</h3>
+
+<p>특정한 지점에서의 경사(gradient)를 구해, 경사가 하강하는 방향으로 지속적으로 나아가, 최적의 loss를 찾는 방법이다. 골짜기에 빗대어 표현하자면, 어떠한 한 지점을 두 발로 느끼고 그 곳의 지형을 파악하여 땅의 경사(Slope)에 따라 어느 방향으로 가야할지 정하는 방법이다. 위 방법을 계속 반복하여 골짜기를 내려갈 수 있으며, 쉬워보이는 아이디어이지만, 정말 잘 동작한다.</p>
+
+<ul>
+  <li>
+    <p><strong>경사(slope)란?</strong></p>
+
+    <p>어떤 함수에 대한 미분값(기울기)을 의미한다. 이때, x가 scalar가 아니라 벡터이므로 미분을 다변수로 확장해야 한다. 다변수 상황에서의 미분은 gradient(벡터 x의 각 요소를 편도함수들의 집합(벡터))를 구하면 되고, gradient의 shape은 x와 같다(입력 3개면 gradient도 3개). 이때 그레디언트가 알려주는 것이 바로, 우리가 그쪽으로 갈 떄 함수 f의 경사(Slope)이다.</p>
+  </li>
+</ul>
+
+<h4 id="1-2-1-slope-계산">1-2-1) Slope 계산</h4>
+
+<ul>
+  <li>
+    <p><strong>Numerical gradient(유한 차분법)</strong></p>
+
+    <p>W의 첫 번째 요소에 차례로 작은 값 h를 넣어 loss를 계산한다. 이 때, 변화된 loss와 원래 loss의 차(y축 증가량)를 h(x축 증가량)로 나누어주면 dW의 첫 번쨰 요소가 완성된다. 이렇게 나머지 원소도 전부 반복하면 gradient dW를 구할 수 있다. 그러나 해당 방법은 파라미터의 개수가 수천, 수만개로 늘어날 경우 끔찍하게 느려서 사용하지 않는 방법이고, 더 정확하고 빠른 Analytic gradient를 더 많이 사용한다.</p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204171797-25a0913e-efb4-4141-82b0-5d1ef007a2b8.png" style="border: 1px solid black;" width="60%" /></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204171868-334e3a9d-0e75-4eb7-8583-0bf68e632d99.png" style="border: 1px solid black;" width="60%" /></p>
+
+<ul>
+  <li>
+    <p><strong>Analytic gradient</strong></p>
+
+    <p>우리는 파라미터 하나하나 모두 계산하는 게 아니라, 단지 W가 변화할 때의 loss를 알고싶을 뿐이다. 이는, 뉴턴과 라이프니츠가 만든 미분식을 이용하면 쉽게 해결할 수 있다. gradient를 나타내는 식이 뭔지만 먼저 찾아내고, 그걸 수식으로 나타내서 한번에 gradient dW를 계산할 수 있는 일종의 <code class="language-plaintext highlighter-rouge">마법의 망치</code>이다. 이에 대한 자세한 설명은 Chain rule과 함께 다음장에서 설명된다.</p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204173167-385183bd-5e6f-415f-ae1a-a290da574c53.png" style="border: 1px solid black" width="60%" /></p>
+
+<ul>
+  <li>
+    <p><strong>Stochastic Gradient Descent (SGD)</strong></p>
+
+    <p>N이 엄청나게 커질 경우, Loss를 계산하는데 엄청난 시간이 필요하다. Gradient는 선형 연산자이기 떄문에 loss는 각 데이터 loss의 gradient 합이되므로, gradient를 한번 더 계산하려면 N개의 전체 트레이닝 셋을 한번 더 돌면서 계산해야 한다. 따라서 실제로는 SGD를 많이 사용한다. SGD는 전체 데이터의 Gradient와 Loss를 계산하기보다는, Mini batch라는 작은 트레이닝 샘플 집합으로 나누어 학습힌다. 이때, 미니 배치는 보통 2의 승수인 32, 64, 128을 주로 사용하며, 이를 이용해 loss 전체합의 추정치와 Gradient의 추정치를 계산한다. stochasitc 하다는 것은 monte carlo method의 실제 값 추정 방법과 유사하다고 볼 수 있으며, 거의 모든 DNN 알고리즘에 사용되는 기반적인 학습 알고리즘이다.</p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204173627-20e9bebe-d387-43bd-b484-c4fa2e015ab9.png" style="border: 1px solid black" width="60%" /></p>
+
+<ul>
+  <li>
+    <p><strong>Summary</strong></p>
+
+    <ul>
+      <li>
+        <p>Numerical gradient</p>
+
+        <p>간단하고 그럴싸하다. loss의 gradient를 계산 하는 코드를 짜고 있을 때, 디버깅 툴로는 사용 가능하다(gradient check). 단, 매우 느리므로, 파라미터의 스케일을 줄여서 사용해야 할 것이다.</p>
+      </li>
+      <li>
+        <p>Analytic gradient</p>
+
+        <p>Numerical gradient에 비해 빠르고 정확하다. 하지만 식을 유도하기 위해 많은 수학과 미적분학을 이해해야하며, 실수하기 쉬움. 수학적 검증 필요.</p>
+      </li>
+      <li>
+        <p>과정</p>
+
+        <p>Gradient descent에서 우선 W를 임의의 값으로 초기화 -&gt; 그리고 Loss와 Gradient 계산한 뒤에 가중치를 Gradient 반대 방향으로 업데이트(gradient가 증가하는 방향이기 떄문에 -해야 내려가는 방향이 됨) -&gt; 이걸 무한 반복하면 결국 어딘가에 수렴함</p>
+
+        <p>cf) step size(learning late) -&gt; 대게 트레이닝 시작 시 가장먼저 정하는 하이퍼 파라미터이다. 학습률(걸음의 보폭)을 정하는 파라미터이며, 너무 작지도 너무 크지도 않은 적절한 값을 정해주어야한다.</p>
+
+        <p align="center"><img src="https://user-images.githubusercontent.com/84084372/204174790-05c722c5-8a9b-4edf-8fd1-920499df9c1d.png" style="border: 1px solid black" width="60%" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="특징-변환">특징 변환</h1>
+
+<p>Linear Classifier는 실제 raw 이미지 픽셀을 입력으로 받지만, 이는 multi-modality와 같은 문제(말머리 두개)가 있을 수 있기 때문에, 좋은 방법은 아니다. 따라서 DNN이 유행하기 전, 다음과 같이 2가지 스테이지를 거치는 방법을 주로 사용했다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204175106-99fd8ff8-082c-42e5-8ddf-f62504e83e76.png" style="border: 1px solid black" width="60%" /></p>
+
+<ol>
+  <li>이미지가 있으면 여러가지 특징 표현을 계산(모양새 등등)</li>
+  <li>이러한 특징 표현들을 한데 연결시켜 하나의 특징 벡터로 만듦</li>
+  <li>이 특징 벡터를 모델에 input으로 넣어줌</li>
+</ol>
+
+<h2 id="1-예시">1. 예시</h2>
+
+<h3 id="1-1-극좌표계-변환">1-1) 극좌표계 변환</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204175264-433078f0-4955-4647-bda0-f3326ccb2bd2.png" style="border: 1px solid black" width="60%" /></p>
+
+<p>위와 같은 이미지는 Linear한 결정 경계를 그릴 방법이 없다. 따라서 그림의 예시는 왼쪽 이미지를 적절하게 극좌표계로 특징 변환(오른쪽 그림)하여, 복잡하던 데이터를 선형으로 분리할 수 있도록 하였다. 이미지의 경우 픽셀들을 극좌표계로 바꾸는 건 말이 안되지만, 극좌표계로 변환하는 것을 일종의 특징 변환이라 생각하면 말이 되며, 실제로 raw 이미지를 넣는것보다 좋은 성능을 보여주고 있다. 따라서 이런 기법들은 해당 이미지에 어떤 특징 변환이 필요한가를 알아내는 것이 중요하다고 할 수 있다.</p>
+
+<p><br /></p>
+
+<h3 id="1-2-컬러-히스토그램">1-2) 컬러 히스토그램</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204175622-0106d602-581f-4d88-910a-e0e02d82aa22.png" style="border: 1px solid black" width="60%" /></p>
+
+<p>이미지에서 hue값만 뽑아서 각 픽셀이 해당하는 색의 양동이에 넣고, 각 양동이에 들어있는 픽셀의 개수를 세는 방법이다. 이는 이미지가 전체적으로 어떤 색인지 알려주며, 실제로 사용하는 간단한 특징 벡터이다.</p>
+
+<blockquote>
+  <p>ex) 개구리는 초록이 많고, 자주색이나 붉은 색이 적다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="1-3-histogram-of-oriented-gradients-hog">1-3) Histogram of oriented gradients (HoG)</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204176377-a5398d44-0291-4ba1-8faa-93dc04829927.png" style="border: 1px solid black" width="60%" /></p>
+
+<p>oriented edges가 인간의 시각시스템에서 정말 중요하다고 생각한 researcher들이 개발한 특징 벡터이다. NN이 뜨기 전에 인기있었던 또 다른 특징 벡터 중 하나이며, Local orientation edges를 측정한다. 8*8로 픽셀을 나누어 지역 내 가장 지배적인 Edge의 방향을 계산하고, Edge directions를 양자화해서 양동이에 넣어 다양한 Edge orientations에 대한 히스토그램을 계산한다. 오른쪽 사진은 HoG를 시각화한 것이다.</p>
+
+<p><br /></p>
+
+<h3 id="1-4-bag-of-words">1-4) bag of words</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/204177939-cb3e063c-07ba-47f7-a632-f40bff640fb4.png" style="border: 1px solid black" width="60%" /></p>
+
+<p>BOW 여러 문장의 단어 발생 빈도를 세어 특징 벡터로 사용하는 것에서 아이디어를 얻어 이미지에 적용한 방법이다. 시각 단어라고 하는 것을 만들었으며, 매우 많은 이미지를 가지고 그 이미지들을 임의대로 조각내고 k-means와 같은 알고리즘으로 군집화한다. 이는 이미지내의 다양한 것들을 표현할 수 잇는 군집을 만든 것이며, 군집화 단계를 거치고 나면 시각 단어는 빨강 파랑 노랑과 같은 다양한 색을 포착해냄뿐만 아니라 다양한 종류와 다양한 방향의 oriented edges또한 포착할 수 있다.</p>
+
+        
+          
+          
+                  
+          <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-11/#1124">본문으로 돌아가기</a></div>
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a><span class="sep">, </span>
+    
+      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-24">November 24, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231n%5DLoss+Functions+and+Optimization%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_3%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_3%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fcs231n_3%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/blog/optim_jekyll/" class="pagination--pager" title="[Jekyll]빌드 속도 최적화
+">이전</a>
+    
+    
+      <a href="/dl/cs231n_4/" class="pagination--pager" title="[CS231n]Backpropagation and Neural Networks
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/dl/cs231n_2/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[CS231n]Image Classification</a>
+    
+    
+      <a href="/dl/cs231n_4/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>[CS231n]Backpropagation and Neural Networks</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/cs231n_7/" rel="permalink">[CS231n]Training Neural Networks, Part I(초안)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-24">November 24, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 06 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Stanford University CS231n, Spring 2017, Lecture 6
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/toy_project/auto_raw/" rel="permalink">[업무 자동화] 행 생성 업무 자동화(초안)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-24">November 24, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 02 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">업무 자동화 초안
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/TIL-12/" rel="permalink">[ICT 인턴십]2022년 12월 TIL
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-24">November 24, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 01 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">회사에서 배운 내용들 정리
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/cs231n_6/" rel="permalink">[CS231n]Training Neural Networks, Part I(초안)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-24">November 24, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 01 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Stanford University CS231n, Spring 2017, Lecture 6
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+  </body>
+</html>
