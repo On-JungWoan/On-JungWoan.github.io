@@ -655,16 +655,16 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#activation-functions">activation functions</a><ul><li><a href="#sigmoid">sigmoid</a><ul><li><a href="#문제점">문제점</a><ul><li><a href="#vanishing-gradient-문제">Vanishing Gradient 문제</a></li><li><a href="#no-zero-centered">No zero-centered</a></li><li><a href="#exp-계선비용-문제">exp() 계선비용 문제</a></li></ul></li></ul></li><li><a href="#tanh">tanh</a><ul><li><a href="#문제점-1">문제점</a></li></ul></li><li><a href="#relu">ReLU</a><ul><li><a href="#문제점-2">문제점</a><ul><li><a href="#zero-centered가-아님">zero-centered가 아님</a></li><li><a href="#음의-경우-saturation">음의 경우 saturation</a></li><li><a href="#dead-relu">Dead ReLU</a></li></ul></li></ul></li><li><a href="#leaky-relu">Leaky ReLU</a></li><li><a href="#parametric-rectifierprelu">parametric rectifier(PReLU)</a></li><li><a href="#elu">ELU</a></li><li><a href="#maxout-neuron">Maxout Neuron</a></li><li><a href="#정리">정리</a></li></ul></li><li><a href="#data-preprocessing">data preprocessing</a><ul><li><a href="#sigmoid-zero-centered-scaling">Sigmoid zero-centered scaling?</a></li></ul></li><li><a href="#weight-initialization">weight initialization</a><ul><li><a href="#small-random-numbers">Small random numbers</a><ul><li><a href="#문제점-3">문제점</a></li></ul></li><li><a href="#big-random-numbers">Big random numbers</a></li><li><a href="#xavier-initializationglorot-2010">Xavier Initialization(Glorot, 2010)</a><ul><li><a href="#문제">문제</a></li><li><a href="#해결법-by-kaiming-he">해결법 by Kaiming He</a></li></ul></li><li><a href="#batch-normalization-ioffe-and-szegedy-2015">Batch Normalization (Ioffe and Szegedy, 2015)</a><ul><li><a href="#요약">요약</a></li></ul></li></ul></li><li><a href="#babysitting-the-learning-process">Babysitting the Learning Process</a><ul><li><a href="#1-preprocess-the-data">1. preprocess the data</a></li><li><a href="#2-choose-the-architecture">2. Choose the architecture</a></li><li><a href="#3-initialize-network">3. Initialize network</a><ul><li><a href="#sanity-check">sanity check</a><ul><li><a href="#초기-loss가-정상인지-확인">초기 loss가 정상인지 확인</a></li><li><a href="#regularization-추가">regularization 추가</a></li><li><a href="#우선-학습">우선 학습</a></li></ul></li></ul></li><li><a href="#4-학습">4. 학습</a></li></ul></li><li><a href="#hyperparameter-ooptimization">hyperparameter ooptimization</a><ul><li><a href="#grid-search-vs-random-search">grid search vs random search</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#ⅰ-activation-functions">Ⅰ. activation functions</a><ul><li><a href="#1-sigmoid">1. sigmoid</a><ul><li><a href="#1-1-문제점">1-1) 문제점</a><ul><li><a href="#1-1-1-vanishing-gradient-문제">1-1-1) Vanishing Gradient 문제</a></li><li><a href="#1-1-2-no-zero-centered">1-1-2) No zero-centered</a></li><li><a href="#1-1-3-exp-계선비용-문제">1-1-3) exp() 계선비용 문제</a></li></ul></li></ul></li><li><a href="#2-tanh">2. tanh</a><ul><li><a href="#2-1-문제점">2-1) 문제점</a></li></ul></li><li><a href="#3-relu">3. ReLU</a><ul><li><a href="#3-1-장점">3-1) 장점</a></li><li><a href="#3-2-문제점">3-2) 문제점</a><ul><li><a href="#3-2-1-zero-centered가-아님">3-2-1) zero-centered가 아님</a></li><li><a href="#3-2-2-음의-경우-saturation">3-2-2) 음의 경우 saturation</a></li><li><a href="#3-3-3-dead-relu">3-3-3) Dead ReLU</a></li></ul></li></ul></li><li><a href="#4-leaky-relu">4. Leaky ReLU</a></li><li><a href="#5-parametric-rectifierprelu">5. parametric rectifier(PReLU)</a></li><li><a href="#6-elu">6. ELU</a></li><li><a href="#7-maxout-neuron">7. Maxout Neuron</a></li><li><a href="#8-정리">8. 정리</a></li></ul></li><li><a href="#ⅱ-data-preprocessing">Ⅱ. data preprocessing</a><ul><li><a href="#1-sigmoid-zero-centered-scaling">1. Sigmoid zero-centered scaling?</a></li></ul></li><li><a href="#ⅲ-weight-initialization">Ⅲ. weight initialization</a><ul><li><a href="#1-small-random-numbers">1. Small random numbers</a><ul><li><a href="#1-1-문제점-1">1-1) 문제점</a></li></ul></li><li><a href="#2-big-random-numbers">2. Big random numbers</a></li><li><a href="#3-xavier-initializationglorot-2010">3. Xavier Initialization(Glorot, 2010)</a><ul><li><a href="#3-1-문제">3-1) 문제</a></li><li><a href="#3-2-해결법-kaiming-he-2015">3-2) 해결법 (Kaiming He, 2015)</a></li></ul></li><li><a href="#4-batch-normalization-ioffe-and-szegedy-2015">4. Batch Normalization (Ioffe and Szegedy, 2015)</a><ul><li><a href="#4-1-요약">4-1) 요약</a><ul><li><a href="#4-1-1-bn-과정">4-1-1) BN 과정</a></li><li><a href="#4-1-2-장점">4-1-2) 장점</a></li></ul></li></ul></li></ul></li><li><a href="#ⅳ-babysitting-the-learning-process">Ⅳ. Babysitting the Learning Process</a></li><li><a href="#ⅴ-hyperparameter-optimization">Ⅴ. Hyperparameter Optimization</a><ul><li><a href="#1-과정">1. 과정</a></li><li><a href="#2-grid-search-vs-random-search">2. grid search vs random search</a></li><li><a href="#3-visualization">3. Visualization</a><ul><li><a href="#3-1-learning-rate">3-1) Learning Rate</a></li><li><a href="#3-2-weight-initialization">3-2) Weight Initialization</a></li><li><a href="#3-3-regularization-term">3-3) Regularization Term</a></li></ul></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <h1 id="activation-functions">activation functions</h1>
+        <h1 id="ⅰ-activation-functions">Ⅰ. activation functions</h1>
 
 <p>FC, CNN 등등의 Layer는, 데이터 입력이 들어오면 가중치와 곱하는 연산을 마친 뒤, 활성함수(비선형 연산)를 거치게 된다. 지금부터는 활성 함수의 종류와 장단점에 대하여 소개한다.</p>
 
-<h2 id="sigmoid">sigmoid</h2>
+<h2 id="1-sigmoid">1. sigmoid</h2>
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/205562519-723d85a3-7a55-46d4-aa6a-a3efc8149d0b.png" width="60%" style="border: 1px solid black" /></p>
 
@@ -672,47 +672,53 @@
 
 <p>각 입력을 받아서 그 입력을 0~1 사이의 값이 되도록 해준다. 입력값이 크면 출력은 1에 가까울 것이고, 그렇지 않으면 0에 가까울 것이다. 뉴런의 firing rate를 saturation 시키는 것으로 해석시킬 수 있어서 인기가 많았다고 한다(= 0~1 범위의 값을 가질 수 있어서 인기가 많았다).</p>
 
-<h3 id="문제점">문제점</h3>
+<h3 id="1-1-문제점">1-1) 문제점</h3>
 
-<h4 id="vanishing-gradient-문제">Vanishing Gradient 문제</h4>
+<h4 id="1-1-1-vanishing-gradient-문제">1-1-1) Vanishing Gradient 문제</h4>
 
 <p>sigmoid의 양 끝값은 saturation 되어있는 것을 확인할 수 있는데, 이러한 sigmoid의 특성이 gradient를 없애는 문제가 발생한다. sigmoid를 activation function으로 사용했을 때, backprop 과정에서 일어날 수 있는 상황을 생각해보자.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205565518-254a91cb-4b04-4df3-bddb-d12e51fd909d.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205565518-254a91cb-4b04-4df3-bddb-d12e51fd909d.png" width="80%" style="border: 1px solid black;" /></p>
 
 <p>우선, sigmoid gate의 gradient는 $\frac{\partial L}{\partial x} = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial x}$이며, 이 gradient는 앞단으로 계속 전파된다. 이 때, 만약 x가 -10이라면, $\frac{\partial \sigma}{\partial x}=0$(x=-10에서 sigmoid가 flat하기 때문에)이므로 gradient가 0이 된다. 따라서 이 부분에서 gradient가 죽어버리게 되고 밑으로 0이 계속 전달되게 된다. 반대로, x가 10인 경우에도 동일하게 sigmoid가 flat하므로 gradient가 다 죽게된다. 따라서 sigmoid가 flat하지 않은 x=0 근처에서만 잘 동작하고 나머지 구간에서는 이러한 기울기 소실문제가 발생한다.</p>
 
-<h4 id="no-zero-centered">No zero-centered</h4>
+<h4 id="1-1-2-no-zero-centered">1-1-2) No zero-centered</h4>
 
 <p>sigmoid의 output은 0~1사이의 값으로, 항상 양수이며 zero-centered하지 않다.</p>
 
 <p>또한, sigmoid는 $\sum_{i}w_i x_i + b$ 를 input으로 받으므로, 이를 수식으로 $ f( \sum_{i}w_i x_i + b) $ 와 같이 표현할 수 있다. 여기서, W에 대한 $gradient = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial w}$ 인데, $\frac{\partial f}{\partial w}$는 w가 모두 소거되므로 x에 관한 식임을 알 수 있다. 여기서, sigmoid는 항상 양수이기 때문에 x(local gradient)도 항상 양수이다. 따라서 sigmoid의 gradient는 x값에 상관없이 항상 upstream gradient의 부호와 동일하다는 것을 알 수 있다. 즉, W가 모두 같은 방향(파라미터 업데이트 시, 다 같이 증가 or 다 같이 감소)으로 움직이게 될 것이다. 이렇게 되면 다음과 같은 문제가 발생할 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205574470-6548883f-7947-41e1-a1c5-3e86c9e6fa04.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205574470-6548883f-7947-41e1-a1c5-3e86c9e6fa04.png" width="60%" style="border: 1px solid black;" /></p>
 
 <p>그래프와 같이 4분면 중 gradient가 이동할 수 있는 방향은 2개 사분면밖에 없다(부호가 동일한 사분면은 1,3 사분면). 만약 이론적으로 가장 최적의 W 업데이트가 저 파란색 화살표이고, 빨간 화살표의 시작부분부터 가중치를 업데이트한다고 하면, gradient를 여러번 업데이트 해야하는 문제가 생길 수 있다. 파란색 방향으로 gradient가 내려갈 수 없으므로 gradient 가동범위 내에서 여러번 업데이트 해야하는데, 이는 매우 비효율적이다. 이러한 이유로, output이 zero-mean인 function을 원하는 것이다.</p>
 
-<h4 id="exp-계선비용-문제">exp() 계선비용 문제</h4>
+<h4 id="1-1-3-exp-계선비용-문제">1-1-3) exp() 계선비용 문제</h4>
 
 <p>exp() 함수는 다른 함수에 비해 계산 비용이 크다. 그리 큰 문제는 아니지만, 굳이 문제로 뽑자면 포함될 수 있다.</p>
 
-<h2 id="tanh">tanh</h2>
+<p><br /></p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205575925-65bd6b09-4503-4fd5-b8d5-0edaa6da8c38.png" alt="image" /></p>
+<h2 id="2-tanh">2. tanh</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205575925-65bd6b09-4503-4fd5-b8d5-0edaa6da8c38.png" width="60%" style="border: 1px solid black;" /></p>
 
 <p>sigmoid와 유사하지만 output의 범위를 -1~1로 늘렸다. 범위를 -1까지 확장함으로써 output이 zero-centered하게 되었다.</p>
 
-<h3 id="문제점-1">문제점</h3>
+<h3 id="2-1-문제점">2-1) 문제점</h3>
 
 <p>여전히 양 끝 값에서 평평해지는 구간 존재한다. 따라서 여전히 Vanishing Gradient 문제가 발생한다.</p>
 
-<h2 id="relu">ReLU</h2>
+<p><br /></p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205576984-df88e0d8-b614-42d5-abd3-771f14c6a459.png" alt="image" /></p>
+<h2 id="3-relu">3. ReLU</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205576984-df88e0d8-b614-42d5-abd3-771f14c6a459.png" width="60%" style="border: 1px solid black;" /></p>
 
 \[f(x) = max(0,x)\]
 
 <p>ReLU는 딥러닝 분야에서 상당히 자주 쓰이는 activation function으로, 입력값이 음수면 0을 출력, 양수면 입력값 그대로를 출력한다.</p>
+
+<h3 id="3-1-장점">3-1) 장점</h3>
 
 <ol>
   <li>
@@ -732,23 +738,23 @@
   </li>
 </ol>
 
-<h3 id="문제점-2">문제점</h3>
+<h3 id="3-2-문제점">3-2) 문제점</h3>
 
-<h4 id="zero-centered가-아님">zero-centered가 아님</h4>
+<h4 id="3-2-1-zero-centered가-아님">3-2-1) zero-centered가 아님</h4>
 
 <p>ReLU도 마찬가지로 output이 항상 양수이기 때문에 zero-centered하지 않다. ReLU가 가진 이슈이기도 하다.</p>
 
-<h4 id="음의-경우-saturation">음의 경우 saturation</h4>
+<h4 id="3-2-2-음의-경우-saturation">3-2-2) 음의 경우 saturation</h4>
 
 <p>x가 음수이면 gradient는 0이 된다. 따라서 ReLU는 기본적으로 gradient의 절반을 죽여버리는 셈이다.</p>
 
-<h4 id="dead-relu">Dead ReLU</h4>
+<h4 id="3-3-3-dead-relu">3-3-3) Dead ReLU</h4>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205580039-30b945e9-3fb3-42d2-a2ed-9c005753ed11.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205580039-30b945e9-3fb3-42d2-a2ed-9c005753ed11.png" width="80%" style="border: 1px solid black;" /></p>
 
 <ol>
   <li>
-    <p><strong>w의 시작점이 data cloud(train data)에서 너무 멀리 떨어져있는 경우</strong>*</p>
+    <p><strong>w의 시작점이 data cloud(train data)에서 너무 멀리 떨어져있는 경우</strong></p>
 
     <p>어떤 데이터 입력에 대해서도 activate되지 않고, backprop이 일어나지 않는다. (activate되지도, update되지도 않음)</p>
   </li>
@@ -763,23 +769,29 @@
 
 <p>이를 해결하기 위해, relu 초기화 시 positive biases를 추가해주는 경우가 있다. 이렇게 되면, gradient update 시에 active relu가 될 가능성을 높여줄 수 있다고 하지만, 실제로는 도움이 안된다는 의견도 있다. 대부분은 zero-biases로 세팅한다.</p>
 
-<h2 id="leaky-relu">Leaky ReLU</h2>
+<p><br /></p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205580106-87c702f0-6d30-4266-b9b2-27da038fba4b.png" alt="image" /></p>
+<h2 id="4-leaky-relu">4. Leaky ReLU</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205580106-87c702f0-6d30-4266-b9b2-27da038fba4b.png" width="60%" style="border: 1px solid black;" /></p>
 
 \[f(x) = max(0.01x, x)\]
 
 <p>negative regime에도 기울기를 살짝 줘서, ReLU의 Vanishing Gradient 문제를 해결하였다. sigmoid, tanh보다 계산도 빠르며, dead relu현상도 없다고 한다.</p>
 
-<h2 id="parametric-rectifierprelu">parametric rectifier(PReLU)</h2>
+<p><br /></p>
+
+<h2 id="5-parametric-rectifierprelu">5. parametric rectifier(PReLU)</h2>
 
 \[f(x) = max(\alpha x, x)\]
 
 <p>negative regime에서 기울기가 존재함은 leaky relu와 비슷하지만, prelu는 기울기를 $\alpha$라는 파라미터로 정할 수 있게 하였다. 여기서 $\alpha$는 backprop으로 학습시킬 수 있으며, 활성함수가 좀 더 유연해지게 된다.</p>
 
-<h2 id="elu">ELU</h2>
+<p><br /></p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205580685-c3b13bf9-5f02-4e8f-89e8-ceff9f8b7934.png" alt="image" /></p>
+<h2 id="6-elu">6. ELU</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205580685-c3b13bf9-5f02-4e8f-89e8-ceff9f8b7934.png" width="60%" style="border: 1px solid black;" /></p>
 
 \[f(x) = \begin{cases}
 x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
@@ -788,35 +800,45 @@ x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
 
 <p>ReLU의 장점을 가져오며 zero-mean에 가까운 출력을 보인다. saturation을 갖긴 하지만, 이러한 saturation과 deactivation이 모델을 좀 더 noise에 강해지게 한다고 주장한다. leaky relu처럼 zero-mean의 출력을 내지만 saturation의 관점에서 relu와 닮아있는 모습이다. 따라서 ReLU와 leaky relu의 중간정도라고 보면 된다.</p>
 
-<h2 id="maxout-neuron">Maxout Neuron</h2>
+<p><br /></p>
+
+<h2 id="7-maxout-neuron">7. Maxout Neuron</h2>
 
 \[max(w_1^Tx+b1, w_2^Tx+b2)\]
 
 <p>입력을 받아들이는 특정한 기본형식을 미리 정의하지 않는 대신에, w1와 x내적한 값 + b1, w2와 x내적한 값 + b2의 최대값을 input으로 사용한다. relu와 leakey relu의 일반화 된 형태라고 할 수 있다. maxout은 이 두개의 선형 함수를 취하기 때문에, saturation되지 않으며 gradient가 죽지 않는다고 한다. 그러나 w1, w2를 지니고 있어야 하기 때문에 뉴런당 파라미터 수가 두배가 된다.</p>
 
-<h2 id="정리">정리</h2>
+<p><br /></p>
 
-<p>실제로 가장 많이 쓰이고, 대부분의 상황에서 잘 동작하는건 ReLU이다. 하지만 Dead ReLU의 비율을 줄이기 위해서는 Learning Rate를 아주 조심스럽게 결정해야 한다. 이외의 LU계열 activation fucntion들은 아직 실험단계이므로, 참고만 하도록 하자. 또한, sigmoid나 tanh같은 경우는 구식이므로 웬만하면 LU계열 function을 사용하는 것을 추천한다..</p>
+<h2 id="8-정리">8. 정리</h2>
 
-<h1 id="data-preprocessing">data preprocessing</h1>
+<p>실제로 가장 많이 쓰이고, 대부분의 상황에서 잘 동작하는건 ReLU이다. 하지만 Dead ReLU의 비율을 줄이기 위해서는 Learning Rate를 아주 조심스럽게 결정해야 한다. 이외의 LU계열 activation fucntion들은 아직 실험단계이므로, 참고만 하도록 하자. 또한, sigmoid나 tanh같은 경우는 구식이므로 웬만하면 LU계열 function을 사용하는 것을 추천한다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205588455-d819f761-f2c5-4dda-b98e-578759244038.png" alt="image" /></p>
+<p><br />
+<br /></p>
+
+<h1 id="ⅱ-data-preprocessing">Ⅱ. data preprocessing</h1>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205588455-d819f761-f2c5-4dda-b98e-578759244038.png" width="80%" style="border: 1px solid black;" /></p>
 
 <p>데이터 전처리는 대표적으로 zero-centered scaling, Normalize등이 있다. 이미지는 이미 각 차원간에 스케일이 어느정도 맞춰져있기 때문에 zero-centered scaling정도만 해주며, 스케일이 다양한 ML 문제에서는 normalization까지 해준다. zero-centered scaling은 모든 특징들이 동일한 범위에 있도록 데이터를 정규화해서 그 특징들이 결과에 동등하게 기여할 수 있도록하는 것이다. training data에서 평균 이미지 채널 계산하고, 이것을 각 이미지 채널에서 빼는 방식이다. 해당 내용은 위에서 소개했으므로 여기까지만 설명하겠다.</p>
 
-<h2 id="sigmoid-zero-centered-scaling">Sigmoid zero-centered scaling?</h2>
+<h2 id="1-sigmoid-zero-centered-scaling">1. Sigmoid zero-centered scaling?</h2>
 
 <p>그렇다면 sigmoid의 zero-mean문제를 전처리로 해결 가능할까?</p>
 
 <p>첫 번째 레이어에 대해서는 부분적으로 해결할 수 있다. 그러나, “전처리”라는 것은 input 이미지에 대해서만 영향을 미칠 수 있기 때문에, 그 다음 layer부터는 동일한 문제를 겪게 될 것이다. 더 깊은 네트워크일 수록 이 문제는 더 심해진다.</p>
 
-<h1 id="weight-initialization">weight initialization</h1>
+<p><br />
+<br /></p>
+
+<h1 id="ⅲ-weight-initialization">Ⅲ. weight initialization</h1>
 
 <p>가중치를 적절한 값으로 초기화하는 것은 중요하다. 만약 모든 파라미터를 0으로 세팅(모든 가중치가 0)한다면, 모든 뉴런이 전부 똑같은 일을 하게될 것이다. 모든 뉴런은 모두 다 같은 연산을 하게되므로, 출력도 모두 같을 것이고 gradient도 같을 것이다. 따라서 모든 가중치가 똑같은 값으로 업데이트 되며, 결국 모든 뉴런이 모두 똑같이 생기게 될 것이다. 이렇게 되면, Symmetry breaking이 일어날 수 없기 때문에 모델이 적절한 추론을 하지 못하게 된다.</p>
 
 <p>따라서 가중치를 임의의 작은 값으로 초기화 해야한다. 그렇다면, 우리는 다음과 같은 아이디어를 떠올릴 수 있을 것이다.</p>
 
-<h2 id="small-random-numbers">Small random numbers</h2>
+<h2 id="1-small-random-numbers">1. Small random numbers</h2>
 
 \[W = 0.1 \times np.random.randn(D, H)\]
 
@@ -824,17 +846,17 @@ x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
 
 <p>이 방법은 작은 네트워크에서는 symmetry breaking에 충분하지만, 깊은 네트워크에서는 잘 작동하지 않을수도 있다.</p>
 
-<h3 id="문제점-3">문제점</h3>
+<h3 id="1-1-문제점-1">1-1) 문제점</h3>
 
 <p>아래 그래프는 이 가중치로 forward pass 했을 때, 각 레이어별 activations의 평균과 표준편차를 나타낸 것이다. 이 때, activation function으로는 tanh를 사용하였다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205591112-f8b80c62-8b85-4704-b78d-90d1e48cad2f.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205591112-f8b80c62-8b85-4704-b78d-90d1e48cad2f.png" width="100%" style="border: 1px solid black;" /></p>
 
 <p>activation 값은 x와 W를 내적한 값에 tanh를 취한 것이다. 따라서, activation의 평균은 tanh 특성상 항상 0 근처에 있는 것을 확인할 수 있다(tanh의 zero-centered한 특성 반영). 그러나, 표준편차는 가파르게 줄어서 4번째 레이어부터는 거의 0에 수렴하는 것을 볼 수 있다.</p>
 
 <p>아래 그래프는 위에서 얻은 mean, std를 바탕으로 분포로 표현한 것이다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205591127-8dbc896d-6bcb-48b6-823d-9a77884d8f94.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205591127-8dbc896d-6bcb-48b6-823d-9a77884d8f94.png" width="100%" style="border: 1px solid black;" /></p>
 
 <p>첫번재 레이어에서는 gaussian스럽게 생긴 좋은 분포를 형성하는 것을 확인할 수 있으나, w를 곱하면 곱할수록 출력값이 급격히 줄어드는 것을 확인할 수 있다. 이는 w가 너무 작은 값들이기 때문에 Wx가 결국 0이 되어 모든 활성함수 결과가 0이 되었기 때문이다. 이는 우리가 원하는 결과가 아니다.</p>
 
@@ -842,19 +864,23 @@ x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
 
 <p>cf) forward pass의 형태를 살펴보고 이런 경우 gradient가 어떤 식으로 전파되는지 짐작할 수 있어야 한다</p>
 
-<h2 id="big-random-numbers">Big random numbers</h2>
+<p><br /></p>
+
+<h2 id="2-big-random-numbers">2. Big random numbers</h2>
 
 <p>만약 다음과 같이 가중치를 좀 더 큰 값으로 초기화 하는 경우는 어떨까?</p>
 
 \[W = 1.0 \times np.random.randn(D, H)\]
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205663565-049a757f-4c95-4ab7-9a75-d21febf525e4.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205663565-049a757f-4c95-4ab7-9a75-d21febf525e4.png" width="100%" style="border: 1px solid black;" /></p>
 
 <p>이런 경우, activation function(tanh)의 특성에 따라 값들이 saturation 될 것이다. tanh의 양 끝의 output은 기울기가 완만하므로 그 때의 gradient는 0이 된다. 따라서 가중치가 업데이트되지 않기 때문에, 출력은 항상 -1이거나 +1이 된다.</p>
 
 <p>적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 적절한 가중치를 얻을 수 있는 좋은 방법은 없을까?</p>
 
-<h2 id="xavier-initializationglorot-2010">Xavier Initialization(Glorot, 2010)</h2>
+<p><br /></p>
+
+<h2 id="3-xavier-initializationglorot-2010">3. Xavier Initialization(Glorot, 2010)</h2>
 
 <p>초기 가중치 설정 과정에서 선택할 수 있는 가장 최선의 방법이다. Standard Gaussian에서 임의로 추출한 값을 “입력의 수”로 스케일링 해줌으로써, 입/출력의 분산을 맞춰준다.</p>
 
@@ -862,38 +888,40 @@ x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
 
 <p>위 수식을 통해 직관적으로 이해할 수 있는 것은, 입력의 수가 작으면 그만큼 작은 값으로 나누어 좀 더 큰 값을 얻는다는 것이다. 즉, 입력의 수가 작은 경우 큰 가중치를 곱하고, 반대로 입력의 수가 큰 경우 작은 가중치를 곱해 입/출력의 분산을 맞춰준다. 각 레이어의 입력이 unit gaussian(approximately하다)이길 원한다면 이런류의 초기화 기법을 이용해 볼 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205595563-fe2595ef-6292-4671-90e4-8993ffe233ef.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205595563-fe2595ef-6292-4671-90e4-8993ffe233ef.png" width="80%" style="border: 1px solid black;" /></p>
 
 <p>모든 Layer의 분포가 gaussian을 따르는 것을 확인할 수 있다.</p>
 
-<h3 id="문제">문제</h3>
+<h3 id="3-1-문제">3-1) 문제</h3>
 
 <p>그러나, Xavier Initialization은 ReLU를 쓰면 잘 동작하지 않는다. ReLU는 출력의 절반을 죽이고 그 절반은 매번 0이되기 때문에, 출력의 분산을 반토막내버린다. 따라서 이전과 같은 가정을 하면 ReLU에서 값이 너무 작어져 잘 작동하지 않는다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205596073-3bb8e8d7-6d40-4126-ab08-f59cec17c50d.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205596073-3bb8e8d7-6d40-4126-ab08-f59cec17c50d.png" width="80%" style="border: 1px solid black;" /></p>
 
 <p>분포 그래프를 보면, 뒷단으로 갈수록 분포가 줄어들기 시작하여 점점 더 많은 값들이 0이 되고, 결국에는 비활성 되는 모습이다.</p>
 
-<h3 id="해결법-by-kaiming-he">해결법 by Kaiming He</h3>
+<h3 id="3-2-해결법-kaiming-he-2015">3-2) 해결법 (Kaiming He, 2015)</h3>
 
 \[W = \frac {np.random.randn(D, H)}{\sqrt{D/2}}\]
 
 <p>뉴런 중 절반이 없어진다는 사실을 고려, Xavier의 수식에 추가적으로 2를 더 나눠줌으로서 해당 문제를 해결하였다. ReLU에 최적인 weight 초기화 방법이라고 할 수 있다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205596600-0ff08f10-b4b8-45be-b0b2-869c2e2eeda5.png" alt="image" />
-<img src="https://user-images.githubusercontent.com/84084372/205596623-90d607a0-9e05-41db-bfed-3229afc69984.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205596600-0ff08f10-b4b8-45be-b0b2-869c2e2eeda5.png" width="80%" style="border: 1px solid black;" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205596623-90d607a0-9e05-41db-bfed-3229afc69984.png" width="60%" style="border: 1px solid black;" /></p>
 
 <p>위에서도 잠시 언급하였지만, 적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 그렇다면, weight initialization에 의존하지 않고 vanishing gradient 문제를 막을 수 있는 방법은 없을까?</p>
 
-<h2 id="batch-normalization-ioffe-and-szegedy-2015">Batch Normalization (Ioffe and Szegedy, 2015)</h2>
+<p><br /></p>
+
+<h2 id="4-batch-normalization-ioffe-and-szegedy-2015">4. Batch Normalization (Ioffe and Szegedy, 2015)</h2>
 
 <p>앞서 살펴보았던 방법들은, vanishing gradient 문제를 해결하기 위해 activation function을 조작한다거나 가중치 조작을 신중하게 하는 방법 등 간접적인 방법을 사용하였다. 그러나 Batch Normalization은 학습하는 과정에 직접적으로 개입하여 정규화를 시켜준다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205667590-fb72a754-2f8f-4dd7-a6f1-92615bd2153e.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205667590-fb72a754-2f8f-4dd7-a6f1-92615bd2153e.png" width="60%" style="border: 1px solid black;" /></p>
 
 <p>Ioffe와 Szegedy는 위에서 발생했던 문제점이, 각 layer를 지나면서 입력값의 분포가 달라지기 때문에 발생하는 것이라고 생각하였다. 따라서 layer를 지날때마다 분포를 맞춰주자는 것이 Batch Normalization의 기본 idea이다. 각 Layer마다 mini batch를 뽑아서 이 batch에 대한 표본 평균/분산으로 정규화 시켜주며, 해당 정규화 식은 여전히 미분 가능한 함수이기 때문에 forward, backward pass가 가능하다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/84084372/205675034-ebf07b96-7398-41b9-93c8-42a652abc08c.png" alt="image" /></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205675034-ebf07b96-7398-41b9-93c8-42a652abc08c.png" width="20%" style="border: 1px solid black;" /></p>
 
 <p>일반적으로 FC(or Conv)와 Activation Function 사이에 위치한다. Layer의 연산 결과를 정규화 시킨 뒤, activation function으로 넘겨주는 것이다. 그러나 종종 Batch Normalization을 통한 unit gaussian을 Activation Function에 넘겨주는 게 적합하지 않은 상황이 있을 수도 있다. BN은 Normalization이 적합한가?에 대한 판단 조차도 학습에 의해 가능하게 만들었다.</p>
 
@@ -908,132 +936,131 @@ y^{(k)} &amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
 
 <p>BN은 위에서 설명한 Normalization 단계를 거친 후, 정규화 된 것을 조정할 수 있는 단계를 거치게된다. Normalize된 정도(scale)를 조정할 수 있는 파라미터 $\gamma$ 와 이를 shift시켜주는 파라미터 $\beta$ 를 학습 가능하게 하여, 모델이 activation func에 얼마나 saturation 시킬지를 학습시킨다. 이를 통해 유연성 얻을 수 있으며, saturation 정도를 조정할 수도 있다.</p>
 
-<h3 id="요약">요약</h3>
+<h3 id="4-1-요약">4-1) 요약</h3>
+
+<h4 id="4-1-1-bn-과정">4-1-1) BN 과정</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205675697-85f994a3-ee76-4ef3-8ab3-5bc8ad1e4b79.png" width="60%" style="border: 1px solid black;" /></p>
+
+<ol>
+  <li>
+    <p>각 Layer input의 mini-bach에서의 평균과 분산을 계산한다.</p>
+  </li>
+  <li>
+    <p>평균과 분산으로 normalize 한다.</p>
+  </li>
+  <li>
+    <p>추가적인 scaling/shifting factor를 사용한다.</p>
+  </li>
+</ol>
+
+<h4 id="4-1-2-장점">4-1-2) 장점</h4>
 
 <ul>
   <li>
-    <p><strong>BN 과정</strong></p>
-
-    <p><img src="https://user-images.githubusercontent.com/84084372/205675697-85f994a3-ee76-4ef3-8ab3-5bc8ad1e4b79.png" alt="image" /></p>
-
-    <ol>
-      <li>
-        <p>각 Layer input의 mini-bach에서의 평균과 분산을 계산한다.</p>
-      </li>
-      <li>
-        <p>평균과 분산으로 normalize 한다.</p>
-      </li>
-      <li>
-        <p>추가적인 scaling/shifting factor를 사용한다.</p>
-      </li>
-    </ol>
+    <p>gradient의 흐름을 보다 원활하게 해주어, 학습이 더 잘되게(robust) 해준다.</p>
   </li>
   <li>
-    <p><strong>장점</strong></p>
-
-    <ul>
-      <li>
-        <p>gradient의 흐름을 보다 원활하게 해주어, 학습이 더 잘되게(robust) 해준다.</p>
-      </li>
-      <li>
-        <p>따라서 BN을 사용하면, learning rates를 더 키울 수도 있고, 다양한 초기화 기법들도 사용해 볼 수 있다.</p>
-      </li>
-      <li>
-        <p>결과적으로, BN을 쓰면 학습이 더 쉬워진다.</p>
-      </li>
-    </ul>
+    <p>따라서 BN을 사용하면, learning rates를 더 키울 수도 있고, 다양한 초기화 기법들도 사용해 볼 수 있다.</p>
+  </li>
+  <li>
+    <p>결과적으로, BN을 쓰면 학습이 더 쉬워진다.</p>
   </li>
 </ul>
 
 <p>위에서 설명한 장점 외에도, BN은 regularization 기능도 한다. 왜냐하면, 각 레이어의 입력은 해당 배치의 표본 평균으로 normalize되는데, 이 레이어의 출력은 오직 하나의 샘플에 대한 deterministic한 값이 아니게 되기 때문이다. 즉, batch 내의 모든 데이터가 입력으로 한데 모이게 되며, 이는 regularization effect를 준다.</p>
 
-<h1 id="babysitting-the-learning-process">Babysitting the Learning Process</h1>
+<p><br />
+<br /></p>
 
-<h2 id="1-preprocess-the-data">1. preprocess the data</h2>
+<h1 id="ⅳ-babysitting-the-learning-process">Ⅳ. Babysitting the Learning Process</h1>
 
-<p>zero-mean을 사용</p>
+<ul>
+  <li>
+    <p><strong>1. preprocess the data</strong></p>
 
-<h2 id="2-choose-the-architecture">2. Choose the architecture</h2>
+    <p>zero-mean을 사용</p>
+  </li>
+  <li>
+    <p><strong>2. Choose the architecture</strong></p>
 
-<p>우선, 하나의 hidden layer와 50개의 뉴런을 가진 모델로 해보자
-그 밖에 어떤 모델을 사용해도 상관 없음</p>
+    <p>학습하고자 하는 모델을 선택한다.</p>
+  </li>
+  <li>
+    <p><strong>3. 초기 loss가 정상인지 확인</strong></p>
 
-<h2 id="3-initialize-network">3. Initialize network</h2>
+    <p>forward pass를 하고난 후에 loss가 그럴듯 해야 한다. 가령 우리가 softmax를 사용하고자 한다면, 가중치가 작은 값일 때 Loss는 negative log likelihood가 되어야 한다(loc(C) = -log(1/c)). 가령 10개의 클래스라면 loss는 -log(1/10). 그렇지 않으면 잘못된 모델이다.</p>
+  </li>
+  <li>
+    <p><strong>4. regularization 추가</strong></p>
 
-<h3 id="sanity-check">sanity check</h3>
+    <p>regularization term을 추가해봐서 Loss가 증가하는지 확인해본다. 손실함수에 regularization term이 추가되면, Loss도 증가해야 한다.</p>
+  </li>
+  <li>
+    <p><strong>5. 우선 학습</strong></p>
 
-<h4 id="초기-loss가-정상인지-확인">초기 loss가 정상인지 확인</h4>
+    <p>우선, 데이터의 일부만 학습 시켜 본다. 데이터가 적으므로 당연히 overfit이 생길 것이고 loss가 많이 줄어들 것이다. 이 때, regularization term을 사용하지 않고, Loss가 내려가는지를 확인하여 Epoch마다 Loss가 0을 향해 꾸준히 잘 내려가는지 확인한다. 데이터가 작은 경우라면 모델이 완벽하게 데이터를 overfit할 수 있어야 하며, 이를 확인하는 단계이다.</p>
+  </li>
+  <li>
+    <p><strong>6. 학습</strong></p>
 
-<p>forward pass를 하고난 후에 loss가 그럴듯 해야 함
-가령 우리가 softmax를 사용하고자 한다면, 가중치가 작은 값일 때 Loss는 negative log likelihood가 되어야 함(loc(C) = -log(1/c)).
-가령 10개의 클래스라면 loss는 -log(1/10)이 될 것임</p>
+    <p>전체 데이터 셋 사용을 사용하여 학습한다. 초기에는, regularization을 약간만 주면서 적절한 learning rate를 찾는다. 이 때, Loss가 잘 줄어들지 않는다면 Learning rate가 지나치게 작은 것이고, 반대로 Loss(cost)가 NaN(발산)이면, Learning rate가 지나치게 큰 것이다. 보통은 1e-3 ~ 1e-5 사이의 값을 사용한다.</p>
+  </li>
+</ul>
 
-<h4 id="regularization-추가">regularization 추가</h4>
+<p><br />
+<br /></p>
 
-<p>Loss가 증가한다(손실함수에 reg term이 추가되기 떄문)
-Loss가 증가하는지 확인</p>
+<h1 id="ⅴ-hyperparameter-optimization">Ⅴ. Hyperparameter Optimization</h1>
 
-<h4 id="우선-학습">우선 학습</h4>
+<h2 id="1-과정">1. 과정</h2>
 
-<p>우선 데이터의 일부만 우선 학습 시켜 본다,.
-데이터가 적으므로 당연히 overfit이 생길 것이고 loss가 많이 줄어들 것임
-이 때는 regularization을 사용하지 않고, Loss가 내려가는지를 확인함
-Epoch마다 Loss가 0을 향해 꾸준히 잘 내려가는지 확인
-데이터가 작은 경우라면 모델이 완벽하게 데이터를 overfit할 수 있어야 함</p>
+<p>하이파 파라미터 튜닝은 넓은 범위에서 값을 골라내는 coarse stage 이후, 더 좁은 범위에서 값을 골라내는 fine stage를 거친다.</p>
 
-<h2 id="4-학습">4. 학습</h2>
+<ul>
+  <li>
+    <p><strong>1. coarse stage</strong></p>
 
-<p>전체 데이터 셋 사용
-reg를 약간만 주면서 적절한 learning rete를 찾는다.
-learning rate : 가장 중요한 하이퍼 파라미터이고, 가장 먼저 정해야 함</p>
+    <p>넓은 범위에서 값을 골라냄. epoch 몇 번 만으로도 현재 값이 잘 동작하는지 알 수 있음. nan이 뜨거나 혹은 loss가 줄지 않거나 하는 것을 보면서, 어느 범위에서 잘 동작하겠다를 대충 알게 됨.</p>
+  </li>
+  <li>
+    <p><strong>2. fine stage</strong></p>
 
-<p>l.r.을 몇가지로 정하고 실험해봄 (예제에서는 1e -6 으로 설정)
-Loss가 잘 줄어들지 않는다면, learning rate가 지나치게 작기 떄문임.
-_&gt; gradient 업데이트가 충분히 일어나지 않게 되고 cost가 변하지 않음</p>
+    <p>좀 더 좁은 범위를 설정하고 학습을 좀 더 길게 시켜보면서 최적의 값을 찾는다. train 동안 cost가 어떻게 변하는지를 살펴봄. cost가 NaN으로 발산하고 있다면, loop를 멈춰버리고 다른 하이퍼 파라미터를 선택</p>
+  </li>
+</ul>
 
-<p>but, 본 예제에서는 loss는 잘 변하지 않음에도 train vlicatoin accuartcyt가 20%까지 증가하였다. 그 이유는?
-accuarcy는 가장 큰 값만 취하기 떄문에 갑자기 값이 크게 뛸 수도 있음</p>
+<p><br /></p>
 
-<p>lr을 1e6으로 바꿔봄
--&gt; cost가 nan이 됨 (nan이라는 것은 cost가 발산한 것임)</p>
+<h2 id="2-grid-search-vs-random-search">2. grid search vs random search</h2>
 
-<p>보통은 1e-3에서 1e05 사이의 값을 사용
-이 범위의 값을 사용해서 crsos svalidation 해줌</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205795298-b55f3308-e0ce-4944-be95-e5cbf4bfc9e3.png" width="60%" style="border: 1px solid black;" /></p>
 
-<h1 id="hyperparameter-ooptimization">hyperparameter ooptimization</h1>
+<p>실제로는 grid search 보다는 random search를 하는 것이 더 좋다. 만약 모델이 어떤 특정 파라미터의 변화에 더 민감하게 반응하고 있다고 생각해보면(노랑 &lt; 초록), Grid Search가 더 비효율적인 움직임을 보인다고 할 수 있다. 위 그림에서 grid는 search 기회 3번, random은 search 기회가 9번 주어진다.</p>
 
-<p>cross-valication 전략</p>
+<h2 id="3-visualization">3. Visualization</h2>
 
-<p>trainset으로 핛브 시키고 valid로 평가하는 방법임</p>
+<h3 id="3-1-learning-rate">3-1) Learning Rate</h3>
 
-<ol>
-  <li>coarse stage</li>
-</ol>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205795622-73ccab2e-5740-4690-87f5-95a0eed5f448.png" width="60%" style="border: 1px solid black;" /></p>
 
-<p>넓은 범위에서 값을 골라냄. epoch 몇 번 만으로도 현재 값이 잘 동작하는지 알 수 있음
-nan이 뜨거나 혹은 loss가 줄지 않거나 하는 것을 보면서 이에 따라 적절히 잘 조절
--&gt; 어느 범위에서 잘 동작하겠다를 대충 알게 됨</p>
+<p>Learning rate가 크면, 최적해를 찾지 못하고 건너 뛰는 경우가 생기기 때문에 Loss가 일정 수준 이하로 줄지 않거나, 발산한다. 반대로 Learning rate가 너무 낮으면 Loss가 제대로 줄어들지 않는 모습이다. 따라서 Loss가 부드러운 곡선을 그리는 것이 바람직하다고 할 수 있다. 실제로는 Loss가 아래 파란 그래프처럼 나오는 것이 바람직하다.</p>
 
-<ol>
-  <li>fine stage</li>
-</ol>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205810670-8754048c-4e9d-4b04-9b55-c00e383dfcb4.png" width="60%" style="border: 1px solid black;" /></p>
 
-<p>좀 더 좁은 범위를 설정하고 학습을 좀 더 길게 시켜보면서 최적의 값을 찾는다
-train 동안 cost가 어떻게 변하는지를 살펴봄으로서 non으로 발산하는 것을 미리 감지 (cost가 엄청 크고 빠르게 오르고 있다면) -&gt; loop를 멈춰버리고 다른 하이퍼파라미터 선택</p>
+<h3 id="3-2-weight-initialization">3-2) Weight Initialization</h3>
 
-<p>주목해야할 점)
-하이퍼 파라미터 최적화 시에는 log scale로 값을 주는 것이 좋음
-파라미터 값을 샘플링 할 댸 10^-3 ~ 10^-6을 샘플링 하지 말고, 10의차수 값만 샘플링 한느것이 좋다(-3~-6)
-lr은 gradient와 곱해지기 떄문에 lr의 선택범위를 log scale을 사용하는 편이 좋다
-따라서 차수(roders of magnitude)를 이용하는 편이 좋다</p>
+<p>또한 아래 그래프처럼 Loss가 줄지 않다가 갑자기 줄어드는 경우가 있을 수 있다.</p>
 
-<p>최적의 값ㅇ이 내가 정한 범위의 중앙쯤에 위치하도록 범위를 잘 설정해줘야 함</p>
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205795671-e53ceb25-da9a-4699-9886-f9b175dd1a1d.png" width="60%" style="border: 1px solid black;" /></p>
 
-<h2 id="grid-search-vs-random-search">grid search vs random search</h2>
+<p>이런 경우는, gradient의 bakcpropagation이 초기에는 잘 되지 않다가 학습하며 회복되는 것이다. 따라서 Initialization을 다시 해줘야한다.</p>
 
-<p>실제로는 grid search 보단느 random search를 하는 것이 더 좋다.’
-만약 내 모델이 어떤 특정 파라미터의 변화에 더 민감하게 반응하고 있따고 생각해보면(노랑 &lt; 초록)
-이 함수가 더 비효율적인 dimentionality를 보인다고 할 수 있음</p>
+<h3 id="3-3-regularization-term">3-3) Regularization Term</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/205795725-11aefb8f-1e77-4398-857d-1b3422416938.png" width="60%" style="border: 1px solid black;" /></p>
+
+<p>train accuracy와 validation accuracy가 큰 차이를 보인다면 overfitting을 의심해 볼 수 있다. 이런 경우, regularization term을 추가하면 된다.</p>
 
         
           
