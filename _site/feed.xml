@@ -1,1012 +1,332 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-06T13:48:07+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Training Neural Networks, Part I(초안)</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part I(초안)" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"></content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 6</summary></entry><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-08T16:00:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/">&lt;h1 id=&quot;optimization&quot;&gt;Optimization&lt;/h1&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
+&lt;p&gt;Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.&lt;/p&gt;
 
-&lt;span class=&quot;n&quot;&gt;PATH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;C:/Users/USER/Desktop/자료/excel_50_row_온정완&apos;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;SAVE_PATH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;C:/Users/USER/Desktop/자료/result&apos;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;file_dir_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206093883-3be0f259-49f9-4dfe-8c59-8498612931d4.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;walk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_excel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;p&gt;위 그림에서도 알 수 있듯이, Normalization이 되지 않은 그래프는 Classifier가 조금만 움직여도 제대로 분류가 되지 않는다. 즉, Loss가 파라미터의 변화에 매우 민감하기 때문에 동일한 함수를 써도 학습시키기 어렵다. 반면, variance가 unit variance로 맞춰져 있고 zero-centered한 데이터는, 파라미터 변화에 덜 민감하기 때문에 최적화가 쉽고 학습이 잘 된다. Neural Network 내부에도 다수의 Linear Classifier가 있다고 생각할 수 있기 때문에, 적절한 Normalization 과정은 매우 중요하다.&lt;/p&gt;
 
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;51&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;row_tmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]):&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;row_tmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+&lt;h2 id=&quot;1-sthochastic-gradient-descent-sgd&quot;&gt;1. Sthochastic Gradient Descent (SGD)&lt;/h2&gt;
 
-                &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;row_tmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+\[x_{t+1} = x_t - \alpha \nabla f(x_t)\]
 
-            &lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row_tmp&lt;/span&gt;  
-
-        &lt;span class=&quot;n&quot;&gt;tmp_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_excel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SAVE_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part I(초안)</title><link href="http://localhost:4000/dl/cs231n_6/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part I(초안)" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_6</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_6/">&lt;h1 id=&quot;ⅰ-activation-functions&quot;&gt;Ⅰ. activation functions&lt;/h1&gt;
-
-&lt;p&gt;FC, CNN 등등의 Layer는, 데이터 입력이 들어오면 가중치와 곱하는 연산을 마친 뒤, 활성함수(비선형 연산)를 거치게 된다. 지금부터는 활성 함수의 종류와 장단점에 대하여 소개한다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-sigmoid&quot;&gt;1. sigmoid&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205562519-723d85a3-7a55-46d4-aa6a-a3efc8149d0b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-\[\sigma(x) = \frac{1}{1+e^{-x}}\]
-
-&lt;p&gt;각 입력을 받아서 그 입력을 0~1 사이의 값이 되도록 해준다. 입력값이 크면 출력은 1에 가까울 것이고, 그렇지 않으면 0에 가까울 것이다. 뉴런의 firing rate를 saturation 시키는 것으로 해석시킬 수 있어서 인기가 많았다고 한다(= 0~1 범위의 값을 가질 수 있어서 인기가 많았다).&lt;/p&gt;
+&lt;p&gt;가장 간단한 Optimizer로서, Layer에서 mini-batch를 뽑아 Loss를 계산하고, gradient의 반대 방향으로 계속 파라미터 벡터를 업데이트 한다. Loss가 낮은 쪽으로 이동해야하기 때문에 gradient의 반대 방향으로 내려가야 함을 유의하자. 위 과정을 계속 반복하면 Loss가 줄어들게 되는데, 이것이 바로 SGD이다.&lt;/p&gt;
 
 &lt;h3 id=&quot;1-1-문제점&quot;&gt;1-1) 문제점&lt;/h3&gt;
 
-&lt;h4 id=&quot;1-1-1-vanishing-gradient-문제&quot;&gt;1-1-1) Vanishing Gradient 문제&lt;/h4&gt;
+&lt;h4 id=&quot;1-1-1-poor-conditioning&quot;&gt;1-1-1) Poor conditioning&lt;/h4&gt;
 
-&lt;p&gt;sigmoid의 양 끝값은 saturation 되어있는 것을 확인할 수 있는데, 이러한 sigmoid의 특성이 gradient를 없애는 문제가 발생한다. sigmoid를 activation function으로 사용했을 때, backprop 과정에서 일어날 수 있는 상황을 생각해보자.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206098726-c0b8b8bb-674f-4c66-8a1b-63cd4a1d8e95.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205565518-254a91cb-4b04-4df3-bddb-d12e51fd909d.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;만약 Loss 함수가 $f(x, y) = x^2 + y^2$와 같은 그래프라면, 아래로 볼록한 형태의 공간 그래프가 만들어진다. 이 때, 수평 방향으로는 기울기 변화가 작지만(등고선을 조금 통과), 수직 방향으로는 기울기 변화가 가파르기 때문에(등고선을 더 많이 통과), 두 벡터의 기울기 차로 인해 대각 방향으로 Loss가 줄어들게 된다. 따라서, Loss는 기울기가 가파른 방향으로 바로 내려가지 못하고, 사선으로 지그재그 하면서 minima에 도달하게 된다.&lt;/p&gt;
 
-&lt;p&gt;우선, sigmoid gate의 gradient는 $\frac{\partial L}{\partial x} = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial x}$이며, 이 gradient는 앞단으로 계속 전파된다. 이 때, 만약 x가 -10이라면, $\frac{\partial \sigma}{\partial x}=0$(x=-10에서 sigmoid가 flat하기 때문에)이므로 gradient가 0이 된다. 따라서 이 부분에서 gradient가 죽어버리게 되고 밑으로 0이 계속 전달되게 된다. 반대로, x가 10인 경우에도 동일하게 sigmoid가 flat하므로 gradient가 다 죽게된다. 따라서 sigmoid가 flat하지 않은 x=0 근처에서만 잘 동작하고 나머지 구간에서는 이러한 기울기 소실문제가 발생한다.&lt;/p&gt;
+&lt;h4 id=&quot;1-1-2-local-minima&quot;&gt;1-1-2) Local minima&lt;/h4&gt;
 
-&lt;h4 id=&quot;1-1-2-no-zero-centered&quot;&gt;1-1-2) No zero-centered&lt;/h4&gt;
+&lt;p&gt;Loss function이 다음과 같은 Local Minima를 가지고 있다고 생각해보자.&lt;/p&gt;
 
-&lt;p&gt;sigmoid의 output은 0~1사이의 값으로, 항상 양수이며 zero-centered하지 않다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206099361-5ef676b6-5630-4bfa-914c-7b46beedbc51.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;또한, sigmoid는 $\sum_{i}w_i x_i + b$ 를 input으로 받으므로, 이를 수식으로 $ f( \sum_{i}w_i x_i + b) $ 와 같이 표현할 수 있다. 여기서, W에 대한 $gradient = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial w}$ 인데, $\frac{\partial f}{\partial w}$는 w가 모두 소거되므로 x에 관한 식임을 알 수 있다. 여기서, sigmoid는 항상 양수이기 때문에 x(local gradient)도 항상 양수이다. 따라서 sigmoid의 gradient는 x값에 상관없이 항상 upstream gradient의 부호와 동일하다는 것을 알 수 있다. 즉, W가 모두 같은 방향(파라미터 업데이트 시, 다 같이 증가 or 다 같이 감소)으로 움직이게 될 것이다. 이렇게 되면 다음과 같은 문제가 발생할 수 있다.&lt;/p&gt;
+&lt;p&gt;SGD는 위와 같은 Local minima를 만나게 되면, 그대로 학습이 영원히 중단된다. SGD는 local gradient를 찾아 그 반대방향으로 계속 나아가는 식으로 동작하는데, 한번 gradient가 0인 부분을 만나면 그 부분을 영원히 벗어나지 못하게 된다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205574470-6548883f-7947-41e1-a1c5-3e86c9e6fa04.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;1-1-3-saddle-point-안장점&quot;&gt;1-1-3) Saddle point (안장점)&lt;/h4&gt;
 
-&lt;p&gt;그래프와 같이 4분면 중 gradient가 이동할 수 있는 방향은 2개 사분면밖에 없다(부호가 동일한 사분면은 1,3 사분면). 만약 이론적으로 가장 최적의 W 업데이트가 저 파란색 화살표이고, 빨간 화살표의 시작부분부터 가중치를 업데이트한다고 하면, gradient를 여러번 업데이트 해야하는 문제가 생길 수 있다. 파란색 방향으로 gradient가 내려갈 수 없으므로 gradient 가동범위 내에서 여러번 업데이트 해야하는데, 이는 매우 비효율적이다. 이러한 이유로, output이 zero-mean인 function을 원하는 것이다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206107388-91d111bb-6221-4aa1-89a9-082eadf6221b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;1-1-3-exp-계선비용-문제&quot;&gt;1-1-3) exp() 계선비용 문제&lt;/h4&gt;
-
-&lt;p&gt;exp() 함수는 다른 함수에 비해 계산 비용이 크다. 그리 큰 문제는 아니지만, 굳이 문제로 뽑자면 포함될 수 있다.&lt;/p&gt;
+&lt;p&gt;또한 SGD는, 위 그림과 같은 안장점에서 학습이 매우 더디게 진행되는 문제가 존재한다. 안장점에서는 gradient가 완전히 0은 아니지만, 0에 가까운 값을 가지기 때문에 업데이트가 매우 느리게 진행된다. 안장점은 차원이 높아질수록 매우 빈번하게 발생하므로, 이러한 굴곡을 벗어날 수 있는 힘이 필요하다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-tanh&quot;&gt;2. tanh&lt;/h2&gt;
+&lt;h2 id=&quot;2-sgd--momentum&quot;&gt;2. SGD + Momentum&lt;/h2&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205575925-65bd6b09-4503-4fd5-b8d5-0edaa6da8c38.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;sigmoid와 유사하지만 output의 범위를 -1~1로 늘렸다. 범위를 -1까지 확장함으로써 output이 zero-centered하게 되었다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-문제점&quot;&gt;2-1) 문제점&lt;/h3&gt;
-
-&lt;p&gt;여전히 양 끝 값에서 평평해지는 구간 존재한다. 따라서 여전히 Vanishing Gradient 문제가 발생한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-relu&quot;&gt;3. ReLU&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205576984-df88e0d8-b614-42d5-abd3-771f14c6a459.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-\[f(x) = max(0,x)\]
-
-&lt;p&gt;ReLU는 딥러닝 분야에서 상당히 자주 쓰이는 activation function으로, 입력값이 음수면 0을 출력, 양수면 입력값 그대로를 출력한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-장점&quot;&gt;3-1) 장점&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Vanishing Gradient 문제가 없다.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;ReLU의 가장 큰 장점은, 양의 값에서 완만해지는 부분이 없기 때문에 saturation 되지 않는다는 것이다. 따라서 Vanishing Gradient 문제가 없다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;지수항이 없고, 단순 max연산만 하기 떄문에 계산이 매우 빠르다.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;그 속도는 sigmoid나 tanh보다 6배정도 더 빠르다고 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;생물학적 타당성또한 relu가 sigmoid보다 더 크다.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;실제 뉴런의 입/출력값은 sigmoid보다 ReLU스럽다고 한다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;3-2-문제점&quot;&gt;3-2) 문제점&lt;/h3&gt;
-
-&lt;h4 id=&quot;3-2-1-zero-centered가-아님&quot;&gt;3-2-1) zero-centered가 아님&lt;/h4&gt;
-
-&lt;p&gt;ReLU도 마찬가지로 output이 항상 양수이기 때문에 zero-centered하지 않다. ReLU가 가진 이슈이기도 하다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-2-2-음의-경우-saturation&quot;&gt;3-2-2) 음의 경우 saturation&lt;/h4&gt;
-
-&lt;p&gt;x가 음수이면 gradient는 0이 된다. 따라서 ReLU는 기본적으로 gradient의 절반을 죽여버리는 셈이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-3-3-dead-relu&quot;&gt;3-3-3) Dead ReLU&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580039-30b945e9-3fb3-42d2-a2ed-9c005753ed11.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;w의 시작점이 data cloud(train data)에서 너무 멀리 떨어져있는 경우&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;어떤 데이터 입력에 대해서도 activate되지 않고, backprop이 일어나지 않는다. (activate되지도, update되지도 않음)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;learning late가 너무 큰 경우&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;가중치가 날뛰어서 ReLU가 데이터의 mainfold를 벗어나게 된다. (처음에는 학습이 잘 되다가 갑자기 죽어버림)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;실제로 학습을 다 시켜놓은 네트워크를 보면 10~20% 가량은 dead relu가 되어있다. relu를 사용하고 있다면 대부분의 네트워크가 이 문제를 겪는다고 할 수 있다. 10%~20%가량이면 네트워크 학습에 크게 지장이 없긴 하지만, dead relu의 비율이 그 이상으로 올라가지 않도록 주의할 필요는 있을 것 같다.&lt;/p&gt;
-
-&lt;p&gt;이를 해결하기 위해, relu 초기화 시 positive biases를 추가해주는 경우가 있다. 이렇게 되면, gradient update 시에 active relu가 될 가능성을 높여줄 수 있다고 하지만, 실제로는 도움이 안된다는 의견도 있다. 대부분은 zero-biases로 세팅한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-leaky-relu&quot;&gt;4. Leaky ReLU&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580106-87c702f0-6d30-4266-b9b2-27da038fba4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-\[f(x) = max(0.01x, x)\]
-
-&lt;p&gt;negative regime에도 기울기를 살짝 줘서, ReLU의 Vanishing Gradient 문제를 해결하였다. sigmoid, tanh보다 계산도 빠르며, dead relu현상도 없다고 한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-parametric-rectifierprelu&quot;&gt;5. parametric rectifier(PReLU)&lt;/h2&gt;
-
-\[f(x) = max(\alpha x, x)\]
-
-&lt;p&gt;negative regime에서 기울기가 존재함은 leaky relu와 비슷하지만, prelu는 기울기를 $\alpha$라는 파라미터로 정할 수 있게 하였다. 여기서 $\alpha$는 backprop으로 학습시킬 수 있으며, 활성함수가 좀 더 유연해지게 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;6-elu&quot;&gt;6. ELU&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580685-c3b13bf9-5f02-4e8f-89e8-ceff9f8b7934.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-\[f(x) = \begin{cases}
-x \quad \quad \quad \quad \quad \quad \quad if \; x&amp;gt;0  \\
-\alpha ( exp(x) - 1 ) \quad \; \ if \; x \le 0 
-\end{cases}\]
-
-&lt;p&gt;ReLU의 장점을 가져오며 zero-mean에 가까운 출력을 보인다. saturation을 갖긴 하지만, 이러한 saturation과 deactivation이 모델을 좀 더 noise에 강해지게 한다고 주장한다. leaky relu처럼 zero-mean의 출력을 내지만 saturation의 관점에서 relu와 닮아있는 모습이다. 따라서 ReLU와 leaky relu의 중간정도라고 보면 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;7-maxout-neuron&quot;&gt;7. Maxout Neuron&lt;/h2&gt;
-
-\[max(w_1^Tx+b1, w_2^Tx+b2)\]
-
-&lt;p&gt;입력을 받아들이는 특정한 기본형식을 미리 정의하지 않는 대신에, w1와 x내적한 값 + b1, w2와 x내적한 값 + b2의 최대값을 input으로 사용한다. relu와 leakey relu의 일반화 된 형태라고 할 수 있다. maxout은 이 두개의 선형 함수를 취하기 때문에, saturation되지 않으며 gradient가 죽지 않는다고 한다. 그러나 w1, w2를 지니고 있어야 하기 때문에 뉴런당 파라미터 수가 두배가 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;8-정리&quot;&gt;8. 정리&lt;/h2&gt;
-
-&lt;p&gt;실제로 가장 많이 쓰이고, 대부분의 상황에서 잘 동작하는건 ReLU이다. 하지만 Dead ReLU의 비율을 줄이기 위해서는 Learning Rate를 아주 조심스럽게 결정해야 한다. 이외의 LU계열 activation fucntion들은 아직 실험단계이므로, 참고만 하도록 하자. 또한, sigmoid나 tanh같은 경우는 구식이므로 웬만하면 LU계열 function을 사용하는 것을 추천한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;ⅱ-data-preprocessing&quot;&gt;Ⅱ. data preprocessing&lt;/h1&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205588455-d819f761-f2c5-4dda-b98e-578759244038.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;데이터 전처리는 대표적으로 zero-centered scaling, Normalize등이 있다. 이미지는 이미 각 차원간에 스케일이 어느정도 맞춰져있기 때문에 zero-centered scaling정도만 해주며, 스케일이 다양한 ML 문제에서는 normalization까지 해준다. zero-centered scaling은 모든 특징들이 동일한 범위에 있도록 데이터를 정규화해서 그 특징들이 결과에 동등하게 기여할 수 있도록하는 것이다. training data에서 평균 이미지 채널 계산하고, 이것을 각 이미지 채널에서 빼는 방식이다. 해당 내용은 위에서 소개했으므로 여기까지만 설명하겠다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-sigmoid-zero-centered-scaling&quot;&gt;1. Sigmoid zero-centered scaling?&lt;/h2&gt;
-
-&lt;p&gt;그렇다면 sigmoid의 zero-mean문제를 전처리로 해결 가능할까?&lt;/p&gt;
-
-&lt;p&gt;첫 번째 레이어에 대해서는 부분적으로 해결할 수 있다. 그러나, “전처리”라는 것은 input 이미지에 대해서만 영향을 미칠 수 있기 때문에, 그 다음 layer부터는 동일한 문제를 겪게 될 것이다. 더 깊은 네트워크일 수록 이 문제는 더 심해진다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;ⅲ-weight-initialization&quot;&gt;Ⅲ. weight initialization&lt;/h1&gt;
-
-&lt;p&gt;가중치를 적절한 값으로 초기화하는 것은 중요하다. 만약 모든 파라미터를 0으로 세팅(모든 가중치가 0)한다면, 모든 뉴런이 전부 똑같은 일을 하게될 것이다. 모든 뉴런은 모두 다 같은 연산을 하게되므로, 출력도 모두 같을 것이고 gradient도 같을 것이다. 따라서 모든 가중치가 똑같은 값으로 업데이트 되며, 결국 모든 뉴런이 모두 똑같이 생기게 될 것이다. 이렇게 되면, Symmetry breaking이 일어날 수 없기 때문에 모델이 적절한 추론을 하지 못하게 된다.&lt;/p&gt;
-
-&lt;p&gt;따라서 가중치를 임의의 작은 값으로 초기화 해야한다. 그렇다면, 우리는 다음과 같은 아이디어를 떠올릴 수 있을 것이다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-small-random-numbers&quot;&gt;1. Small random numbers&lt;/h2&gt;
-
-\[W = 0.1 \times np.random.randn(D, H)\]
-
-&lt;p&gt;초기 W를 standard gaussian에서 랜덤 샘플링 하고 좀 더 작은 값을 위해 0.01을 곱해, 표준 편차를 0.01로 만들어주는 방법이다.&lt;/p&gt;
-
-&lt;p&gt;이 방법은 작은 네트워크에서는 symmetry breaking에 충분하지만, 깊은 네트워크에서는 잘 작동하지 않을수도 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-문제점-1&quot;&gt;1-1) 문제점&lt;/h3&gt;
-
-&lt;p&gt;아래 그래프는 이 가중치로 forward pass 했을 때, 각 레이어별 activations의 평균과 표준편차를 나타낸 것이다. 이 때, activation function으로는 tanh를 사용하였다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205591112-f8b80c62-8b85-4704-b78d-90d1e48cad2f.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;activation 값은 x와 W를 내적한 값에 tanh를 취한 것이다. 따라서, activation의 평균은 tanh 특성상 항상 0 근처에 있는 것을 확인할 수 있다(tanh의 zero-centered한 특성 반영). 그러나, 표준편차는 가파르게 줄어서 4번째 레이어부터는 거의 0에 수렴하는 것을 볼 수 있다.&lt;/p&gt;
-
-&lt;p&gt;아래 그래프는 위에서 얻은 mean, std를 바탕으로 분포로 표현한 것이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205591127-8dbc896d-6bcb-48b6-823d-9a77884d8f94.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;첫번재 레이어에서는 gaussian스럽게 생긴 좋은 분포를 형성하는 것을 확인할 수 있으나, w를 곱하면 곱할수록 출력값이 급격히 줄어드는 것을 확인할 수 있다. 이는 w가 너무 작은 값들이기 때문에 Wx가 결국 0이 되어 모든 활성함수 결과가 0이 되었기 때문이다. 이는 우리가 원하는 결과가 아니다.&lt;/p&gt;
-
-&lt;p&gt;backward pass의 경우도 살펴보자. Chain rule에 의해서 gradient는 upstream gradient $\times$ local gradient이다. $\frac {\partial Wx}{\partial W} = x$이므로 $gradient = upstream \; gradient \times x$ 가 된다. 여기서, $x$는 매우 작기 떄문에 gradient도 매우 작을 것이고, 결국 upstream gradient는 0에 수렴하여 업데이트가 잘 일어나지 않게 된다.&lt;/p&gt;
-
-&lt;p&gt;cf) forward pass의 형태를 살펴보고 이런 경우 gradient가 어떤 식으로 전파되는지 짐작할 수 있어야 한다&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-big-random-numbers&quot;&gt;2. Big random numbers&lt;/h2&gt;
-
-&lt;p&gt;만약 다음과 같이 가중치를 좀 더 큰 값으로 초기화 하는 경우는 어떨까?&lt;/p&gt;
-
-\[W = 1.0 \times np.random.randn(D, H)\]
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205663565-049a757f-4c95-4ab7-9a75-d21febf525e4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이런 경우, activation function(tanh)의 특성에 따라 값들이 saturation 될 것이다. tanh의 양 끝의 output은 기울기가 완만하므로 그 때의 gradient는 0이 된다. 따라서 가중치가 업데이트되지 않기 때문에, 출력은 항상 -1이거나 +1이 된다.&lt;/p&gt;
-
-&lt;p&gt;적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 적절한 가중치를 얻을 수 있는 좋은 방법은 없을까?&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-xavier-initializationglorot-2010&quot;&gt;3. Xavier Initialization(Glorot, 2010)&lt;/h2&gt;
-
-&lt;p&gt;초기 가중치 설정 과정에서 선택할 수 있는 가장 최선의 방법이다. Standard Gaussian에서 임의로 추출한 값을 “입력의 수”로 스케일링 해줌으로써, 입/출력의 분산을 맞춰준다.&lt;/p&gt;
-
-\[W = \frac {np.random.randn(D, H)}{\sqrt{D}}\]
-
-&lt;p&gt;위 수식을 통해 직관적으로 이해할 수 있는 것은, 입력의 수가 작으면 그만큼 작은 값으로 나누어 좀 더 큰 값을 얻는다는 것이다. 즉, 입력의 수가 작은 경우 큰 가중치를 곱하고, 반대로 입력의 수가 큰 경우 작은 가중치를 곱해 입/출력의 분산을 맞춰준다. 각 레이어의 입력이 unit gaussian(approximately하다)이길 원한다면 이런류의 초기화 기법을 이용해 볼 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205595563-fe2595ef-6292-4671-90e4-8993ffe233ef.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;모든 Layer의 분포가 gaussian을 따르는 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-문제&quot;&gt;3-1) 문제&lt;/h3&gt;
-
-&lt;p&gt;그러나, Xavier Initialization은 ReLU를 쓰면 잘 동작하지 않는다. ReLU는 출력의 절반을 죽이고 그 절반은 매번 0이되기 때문에, 출력의 분산을 반토막내버린다. 따라서 이전과 같은 가정을 하면 ReLU에서 값이 너무 작어져 잘 작동하지 않는다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596073-3bb8e8d7-6d40-4126-ab08-f59cec17c50d.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;분포 그래프를 보면, 뒷단으로 갈수록 분포가 줄어들기 시작하여 점점 더 많은 값들이 0이 되고, 결국에는 비활성 되는 모습이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-해결법-kaiming-he-2015&quot;&gt;3-2) 해결법 (Kaiming He, 2015)&lt;/h3&gt;
-
-\[W = \frac {np.random.randn(D, H)}{\sqrt{D/2}}\]
-
-&lt;p&gt;뉴런 중 절반이 없어진다는 사실을 고려, Xavier의 수식에 추가적으로 2를 더 나눠줌으로서 해당 문제를 해결하였다. ReLU에 최적인 weight 초기화 방법이라고 할 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596600-0ff08f10-b4b8-45be-b0b2-869c2e2eeda5.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596623-90d607a0-9e05-41db-bfed-3229afc69984.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위에서도 잠시 언급하였지만, 적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 그렇다면, weight initialization에 의존하지 않고 vanishing gradient 문제를 막을 수 있는 방법은 없을까?&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-batch-normalization-ioffe-and-szegedy-2015&quot;&gt;4. Batch Normalization (Ioffe and Szegedy, 2015)&lt;/h2&gt;
-
-&lt;p&gt;앞서 살펴보았던 방법들은, vanishing gradient 문제를 해결하기 위해 activation function을 조작한다거나 가중치 조작을 신중하게 하는 방법 등 간접적인 방법을 사용하였다. 그러나 Batch Normalization은 학습하는 과정에 직접적으로 개입하여 정규화를 시켜준다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205667590-fb72a754-2f8f-4dd7-a6f1-92615bd2153e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Ioffe와 Szegedy는 위에서 발생했던 문제점이, 각 layer를 지나면서 입력값의 분포가 달라지기 때문에 발생하는 것이라고 생각하였다. 따라서 layer를 지날때마다 분포를 맞춰주자는 것이 Batch Normalization의 기본 idea이다. 각 Layer마다 mini batch를 뽑아서 이 batch에 대한 표본 평균/분산으로 정규화 시켜주며, 해당 정규화 식은 여전히 미분 가능한 함수이기 때문에 forward, backward pass가 가능하다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205675034-ebf07b96-7398-41b9-93c8-42a652abc08c.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;일반적으로 FC(or Conv)와 Activation Function 사이에 위치한다. Layer의 연산 결과를 정규화 시킨 뒤, activation function으로 넘겨주는 것이다. 그러나 종종 Batch Normalization을 통한 unit gaussian을 Activation Function에 넘겨주는 게 적합하지 않은 상황이 있을 수도 있다. BN은 Normalization이 적합한가?에 대한 판단 조차도 학습에 의해 가능하게 만들었다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206110916-f566827d-b697-4fd7-b395-6432eddd70a5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
 \[\begin{align}
-y^{(k)} &amp;amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
+v_{t+1} &amp;amp;= \rho v_t + \nabla f(x_t) \\
+x_{t+1} &amp;amp;= x_t - \alpha v_{t+1}
+\end{align}\]
 
+&lt;p&gt;위 SGD의 문제를 해결하기 위해, gradient 방향 뿐만 아니라 velocity까지 고려한 Optimizer이다. 이때, velocity의 초기값 $v_0$는 0으로 두고, velocity의 영향력은 파라미터 $\rho$를 도입하여 맞춰준다. $\rho$는 보통 0.9나 0.99와 같은 높은 값을 사용한다. 여기에 gradient를 더하여, gradient vector 그대로의 방향이 아닌 velocity vector 방향으로 나아간다.&lt;/p&gt;
 
-\gamma &amp;amp;= \sqrt{Var[x^{(k)}]}\\
-\beta &amp;amp;= E[x^{(k)}]
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206109994-96484e69-d27d-4c9b-9930-154ba8c4328a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;가령, local minima나 saddle point에 도달하더라도 momentum이 아직 살아있기 때문에, 탈출하여 global minima에 도달할 수 있게 된다. 높은 곳에서 떨어지는 공의 움직임을 생각하면 된다. 또한, poor conditioning의 상황에서도, momentum이 지그재그로 움직이려는 변동을 상쇄시켜버린다. 이를 통해 loss에 민감한 수직 방향 변동을 줄여주고 수평 방향 움직임을 가속화 시키게 된다(Vanila SGD가 구불구불 움직이는 것에 비해 momentum은 global minima를 향해 더 부드럽게 움직인다).&lt;/p&gt;
+
+&lt;h3 id=&quot;2-1-learning-rate-decay&quot;&gt;2-1) Learning rate decay&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206358845-3f73cd46-eea9-4d39-a592-c631a2f20c4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;학습에 있어서 가장 중요한 파라미터인 Learning rate를 잘 고르는 것은 매우 어렵다. 이런 경우, Learning rate decay라는 전략을 사용해 볼 수 있다. Learning rate decay란, 처음에는 Learning rate를 높게 설정한 다음, 학습이 진행될 수록 Learning rate를 점점 낮추는 방법이다. 위 그래프에서 Loss가 평평해지다가 다시 내려가는 구간이 바로 Learning rate decay를 적용한 구간이다. 위 그래프에서도 확인할 수 있듯이, Loss가 일정수준 감소하면 감소폭이 점점 줄어들다가 어느 순간 특정 값에 수렴한다. 이는, Learning rate가 너무 높아서 더 깊게 들어가지 못해 발생하는 현상이다. 따라서 이 때 Learning rate를 더 줄여주면, 지속해서 Loss를 감소시킬 수 있다.&lt;/p&gt;
+
+&lt;p&gt;학습과정 동안에 꾸준히 Learning rate를 낮추는 exponential decay 방법을 사용할 수도 있고, 특정 반복(ex. 100,000iter)마다 Learning rate를 낮추는 방법도 있다. 상황에 맞게 사용하면 될 것 같다. Learning rate decay는 자주 사용하는 기법은 아니고, SGD Momentum을 Optimizer로 사용할 때 주로 적용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-nesterov-momentum&quot;&gt;3. Nesterov momentum&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206111012-63b6edf9-70b2-4c69-9bc7-63a1e095ac84.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+\[\begin{align}
+v_{t+1} &amp;amp;= \rho v_t + \nabla f(x_t + \rho v_t) \\
+x_{t+1} &amp;amp;= x_t - \alpha v_{t+1}
+\end{align}\]
+
+&lt;p&gt;Momentum은 Gradient vector의 방향과 Velocity vector 방향을 가중평균한 방향으로 업데이트되는 것을 확인할 수 있었다. Nesterov momentum은 기존 방식에 비해 조금 더 업그레이드 된 버전으로, 일단 Velocity의 방향으로 움직인 후, 그 곳에서의 Gradient를 계산하여 다시 원점으로 돌아와 가중평균한다. 수식을 살펴보면, $x_t$ 에 추가적으로 velocity 값인 $\rho v_t$ 가 더해진 지점에서 gradient를 구하는 것을 확인할 수 있다. 그러나 위 식을 코드로 나타낼 때, 이미 구성되어있는 기본 optimization algorithm의 API 코드와 구조가 달라 호환성이 떨어지므로, 실제로는 아래와 같이 변형된 식을 사용한다.&lt;/p&gt;
+
+\[let, \bar{x}_t = x_t + \rho v_t \\\]
+
+\[\begin{align}
+
+v_{t+1} &amp;amp;= \rho v_t + \alpha \nabla f( \bar{x}_t ) \\
+x_{t+1} &amp;amp;= x_t -  \rho v_t + (1+\rho)v_{t+1}\\
+&amp;amp;= \bar{x}_t + v_{t+1} + \rho (v_{t+1} - v_t)
 
 \end{align}\]
 
-&lt;p&gt;BN은 위에서 설명한 Normalization 단계를 거친 후, 정규화 된 것을 조정할 수 있는 단계를 거치게된다. Normalize된 정도(scale)를 조정할 수 있는 파라미터 $\gamma$ 와 이를 shift시켜주는 파라미터 $\beta$ 를 학습 가능하게 하여, 모델이 activation func에 얼마나 saturation 시킬지를 학습시킨다. 이를 통해 유연성 얻을 수 있으며, saturation 정도를 조정할 수도 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-1-요약&quot;&gt;4-1) 요약&lt;/h3&gt;
-
-&lt;h4 id=&quot;4-1-1-bn-과정&quot;&gt;4-1-1) BN 과정&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205675697-85f994a3-ee76-4ef3-8ab3-5bc8ad1e4b79.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;각 Layer input의 mini-bach에서의 평균과 분산을 계산한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;평균과 분산으로 normalize 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;추가적인 scaling/shifting factor를 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;4-1-2-장점&quot;&gt;4-1-2) 장점&lt;/h4&gt;
+&lt;p&gt;이 식을 살펴보면, 현재/이전의 velocity간의 error-correcting term이 추가된 것으로 해석할 수 있다. Nesterov momentum을 활용하면, velocity의 방향이 잘못되었을 경우 현재 gradient 방향을 좀 더 활용할 수 있으며, 방향을 미리 예측하고 가기 때문에 Momentum보다 조금 더 빠르다고 한다. 그러나, Nesterov momentum은 볼록 최적화(convex optimization)에서는 좋은 성능을 보이지만, Neural network와 같은 non-convex optimization에서는 성능이 보장되지 않아, 잘 사용하지는 않는다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;gradient의 흐름을 보다 원활하게 해주어, 학습이 더 잘되게(robust) 해준다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;따라서 BN을 사용하면, learning rates를 더 키울 수도 있고, 다양한 초기화 기법들도 사용해 볼 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;결과적으로, BN을 쓰면 학습이 더 쉬워진다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    &lt;p&gt;&lt;strong&gt;cf) minima가 좁고 깊은(Sharp) 곳에 있을 경우, momentum에 의해 minima를 건너 뛰는 경우가 생길 수 있지 않을까?&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;위에서 설명한 장점 외에도, BN은 regularization 기능도 한다. 왜냐하면, 각 레이어의 입력은 해당 배치의 표본 평균으로 normalize되는데, 이 레이어의 출력은 오직 하나의 샘플에 대한 deterministic한 값이 아니게 되기 때문이다. 즉, batch 내의 모든 데이터가 입력으로 한데 모이게 되며, 이는 regularization effect를 준다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;ⅳ-babysitting-the-learning-process&quot;&gt;Ⅳ. Babysitting the Learning Process&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;1. preprocess the data&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;zero-mean을 사용&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;2. Choose the architecture&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;학습하고자 하는 모델을 선택한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;3. 초기 loss가 정상인지 확인&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;forward pass를 하고난 후에 loss가 그럴듯 해야 한다. 가령 우리가 softmax를 사용하고자 한다면, 가중치가 작은 값일 때 Loss는 negative log likelihood가 되어야 한다(loc(C) = -log(1/c)). 가령 10개의 클래스라면 loss는 -log(1/10). 그렇지 않으면 잘못된 모델이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;4. regularization 추가&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;regularization term을 추가해봐서 Loss가 증가하는지 확인해본다. 손실함수에 regularization term이 추가되면, Loss도 증가해야 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;5. 우선 학습&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;우선, 데이터의 일부만 학습 시켜 본다. 데이터가 적으므로 당연히 overfit이 생길 것이고 loss가 많이 줄어들 것이다. 이 때, regularization term을 사용하지 않고, Loss가 내려가는지를 확인하여 Epoch마다 Loss가 0을 향해 꾸준히 잘 내려가는지 확인한다. 데이터가 작은 경우라면 모델이 완벽하게 데이터를 overfit할 수 있어야 하며, 이를 확인하는 단계이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;6. 학습&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;전체 데이터 셋 사용을 사용하여 학습한다. 초기에는, regularization을 약간만 주면서 적절한 learning rate를 찾는다. 이 때, Loss가 잘 줄어들지 않는다면 Learning rate가 지나치게 작은 것이고, 반대로 Loss(cost)가 NaN(발산)이면, Learning rate가 지나치게 큰 것이다. 보통은 1e-3 ~ 1e-5 사이의 값을 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;ⅴ-hyperparameter-optimization&quot;&gt;Ⅴ. Hyperparameter Optimization&lt;/h1&gt;
-
-&lt;h2 id=&quot;1-과정&quot;&gt;1. 과정&lt;/h2&gt;
-
-&lt;p&gt;하이파 파라미터 튜닝은 넓은 범위에서 값을 골라내는 coarse stage 이후, 더 좁은 범위에서 값을 골라내는 fine stage를 거친다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;1. coarse stage&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;넓은 범위에서 값을 골라냄. epoch 몇 번 만으로도 현재 값이 잘 동작하는지 알 수 있음. nan이 뜨거나 혹은 loss가 줄지 않거나 하는 것을 보면서, 어느 범위에서 잘 동작하겠다를 대충 알게 됨.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;2. fine stage&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;좀 더 좁은 범위를 설정하고 학습을 좀 더 길게 시켜보면서 최적의 값을 찾는다. train 동안 cost가 어떻게 변하는지를 살펴봄. cost가 NaN으로 발산하고 있다면, loop를 멈춰버리고 다른 하이퍼 파라미터를 선택&lt;/p&gt;
+    &lt;p&gt;우선, sharp한 minima는 좋은 minima가 아니다. 이러한 minima는 그만큼 특정 데이터에 overfitting 될 확률이 매우 높다. 하지만 데이터가 많아질수록 대부분의 경우 minima가 평평해지며, 이렇게 아주 평평한 minima는 training data의 변화에 좀 더 유연하게 대처할 수 있다. 따라서 양질의 좋은 데이터를 사용할 경우, Sharp한 minima에 대해서는 걱정하지 않아도 된다.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-grid-search-vs-random-search&quot;&gt;2. grid search vs random search&lt;/h2&gt;
+&lt;h2 id=&quot;4-adagrad&quot;&gt;4. AdaGrad&lt;/h2&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795298-b55f3308-e0ce-4944-be95-e5cbf4bfc9e3.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+\[\begin{align}
+g(t+1) &amp;amp;= g(t) + \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}\]
 
-&lt;p&gt;실제로는 grid search 보다는 random search를 하는 것이 더 좋다. 만약 모델이 어떤 특정 파라미터의 변화에 더 민감하게 반응하고 있다고 생각해보면(노랑 &amp;lt; 초록), Grid Search가 더 비효율적인 움직임을 보인다고 할 수 있다. 위 그림에서 grid는 search 기회 3번, random은 search 기회가 9번 주어진다.&lt;/p&gt;
+&lt;p&gt;훈련 도중 계산되는 gradient를 활용하는 방법이다. velocity term 대신에 각 gradient의 제곱합인 gradient squared term을 이용한다. 학습 도중에 계산되는 gradient에 제곱을 해서 계속 더해 $g()$에 저장하며, update시에 앞서 계산한 $g()$로 update term을 나눠준다. 이 때, 분모가 0이되는 상황을 방지하기 위해 분모에 작은 $\epsilon$값을 넣어준다(보통 1e-7, 1e-8).&lt;/p&gt;
 
-&lt;h2 id=&quot;3-visualization&quot;&gt;3. Visualization&lt;/h2&gt;
+&lt;p&gt;small dimension에서는 gradient가 작은 값이므로 큰 값으로 나눠져, 속도가 점점 빨라진다. 반대로, Large dimension에서는 gradient가 큰 값이므로 속도가 점점 줄어든다. 이를 통해, 파라미터 x마다 맞춤형 학습률을 제공하게 된다.&lt;/p&gt;
 
-&lt;h3 id=&quot;3-1-learning-rate&quot;&gt;3-1) Learning Rate&lt;/h3&gt;
+&lt;h3 id=&quot;4-1-문제점&quot;&gt;4-1) 문제점&lt;/h3&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795622-73ccab2e-5740-4690-87f5-95a0eed5f448.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Learning rate가 크면, 최적해를 찾지 못하고 건너 뛰는 경우가 생기기 때문에 Loss가 일정 수준 이하로 줄지 않거나, 발산한다. 반대로 Learning rate가 너무 낮으면 Loss가 제대로 줄어들지 않는 모습이다. 따라서 Loss가 부드러운 곡선을 그리는 것이 바람직하다고 할 수 있다. 실제로는 Loss가 아래 파란 그래프처럼 나오는 것이 바람직하다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205810670-8754048c-4e9d-4b04-9b55-c00e383dfcb4.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-weight-initialization&quot;&gt;3-2) Weight Initialization&lt;/h3&gt;
-
-&lt;p&gt;또한 아래 그래프처럼 Loss가 줄지 않다가 갑자기 줄어드는 경우가 있을 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795671-e53ceb25-da9a-4699-9886-f9b175dd1a1d.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이런 경우는, gradient의 bakcpropagation이 초기에는 잘 되지 않다가 학습하며 회복되는 것이다. 따라서 Initialization을 다시 해줘야한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-3-regularization-term&quot;&gt;3-3) Regularization Term&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795725-11aefb8f-1e77-4398-857d-1b3422416938.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;train accuracy와 validation accuracy가 큰 차이를 보인다면 overfitting을 의심해 볼 수 있다. 이런 경우, regularization term을 추가하면 된다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 6</summary></entry><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/">&lt;h1 id=&quot;-학습내용-정리&quot;&gt;✍ 학습내용 정리&lt;/h1&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;-til&quot;&gt;🕮 TIL&lt;/h1&gt;
-&lt;h2 id=&quot;1주차&quot;&gt;&amp;lt;1주차&amp;gt;&lt;/h2&gt;
-&lt;h3 id=&quot;1201&quot;&gt;12/01&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_6/&quot;&gt;1) [CS231n]Training Neural Networks, Part I&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1202&quot;&gt;12/02&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/toy_project/auto_raw/&quot;&gt;1) [업무 자동화] 행 생성 업무 자동화&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/til/TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-11</id><content type="html" xml:base="http://localhost:4000/til/TIL-11/">&lt;h1 id=&quot;-학습내용-정리&quot;&gt;✍ 학습내용 정리&lt;/h1&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;-til&quot;&gt;🕮 TIL&lt;/h1&gt;
-&lt;h2 id=&quot;1주차&quot;&gt;&amp;lt;1주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : 이번주는 web 퍼블리싱이 아직 덜 되어서 별 작업 없이 일주일을 보냈다. 차장님께 문의드린 결과, web 퍼블리싱이 완료될 때까지 대기라하고만 하셔서 11월 1일에 있는 경진대회 준비를 하였다. 퇴근 후에도 열심히 준비했고 결과는 1등!&lt;/p&gt;
-
-&lt;h3 id=&quot;1101&quot;&gt;11/01&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bj_update2/&quot;&gt;1) [뻐정] 프로젝트 개선사항(수정중)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1102&quot;&gt;11/02&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/bbeojung/bbeojung/&quot;&gt;1) [뻐정] 프로젝트 최종 요약&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1103&quot;&gt;11/03&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/edit_navibar/&quot;&gt;1) [Github_Io]상단 네비게이션 바 수정&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;학습을 계속 진행할수록 gradient의 제곱이 더해져 $g()$의 값은 커지고, 분모가 커지므로 step size는 점점 작아진다. convex case에서는 minimum에 근접하면 서서히 속도를 줄여서 수렴하는 게 도움이 될 수 있지만, non-convex case에서는 saddle point에 걸렸을 때 학습이 멈출 수 있다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2주차&quot;&gt;&amp;lt;2주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : 웹에 관련해서 정말 많은 것들을 배운 주이다. Django의 웬만한 기능들은 다 사용하고 있다고 생각했는데, 내가 몰랐던 기능들이 생각보다 많아서 놀랐다. Django에 이런 편리한 기능들이 있었다니.. 다시 한 번 겸손의 중요성을 깨달았고, 역시 개발자는 평생 공부해야하는 직업이라는 걸 깨달았다.&lt;/p&gt;
+&lt;h2 id=&quot;5-rmsprop&quot;&gt;5. RMSProp&lt;/h2&gt;
 
-&lt;h3 id=&quot;1107&quot;&gt;11/07&lt;/h3&gt;
+&lt;p&gt;Adagrad의 step size 문제를 해결한 것이 바로 RMSProp이다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+\[\begin{align}
+g(t+1) &amp;amp;= \gamma  g(t) + (1- \gamma) \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}\]
 
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/css_text/&quot;&gt;1) [CSS] 폰트 관련 속성 정리&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1108&quot;&gt;11/08&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1108&quot;&gt;11/08 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/split/&quot;&gt;1) [Django] Views.py 분리&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/test/&quot;&gt;2) [HTML, JavaScript]Input 태그 유효성 검사&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1109&quot;&gt;11/09&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1109&quot;&gt;11/09 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/secret/&quot;&gt;1) [Django]secret 관리&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/inspectdb/&quot;&gt;2) [Django] 이미 존재하는 DB 연동 by inspectdb&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1110&quot;&gt;11/10&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1110&quot;&gt;11/10 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/ajax/&quot;&gt;1) [JQuery]AJAX를 활용한 비동기적 데이터 교환&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/liquid/&quot;&gt;2) [Github_Io]포스팅 시 Liquid 문법 사용하는 법&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/export/&quot;&gt;3) 배포용 requirements.txt 생성 및 설치&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;AdaGrad의 gradient 제곱항을 그대로 사용하지만, 그저 누적만 시키는 것이 아니라 기존 누적값에 decay_rate인 $\gamma$를 곱해준다. decay rate는 보통 0.9 ,0.99와 같은 높은 값을 사용한다. gradient의 제곱을 계속 나눠주어 step size를 조절한다는 점에서 AdaGrad와 비슷하지만, RMSProp은 step size가 점점 줄어드는 문제를 해결하였다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;3주차&quot;&gt;&amp;lt;3주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : canvas 프로젝트 관련해서 요청된 사항을 담당 과장님에게 말씀드렸다. 백앤드를 ruby로 교체해야해서 해당 코드가 도착할 때까지 다른 공부를 하면서 대기 하라고 하셨는데, 벌써 일주일이 흘렀다. 해당 작업 관련해서 문의를 드려도 코드가 올 떄까지 계속 대기하라는 말씀만 하신다. 소통도 너무 안되고 일처리가 심각하게 느려서 답답했다. 그냥 있기에는 시간이 너무 아까워서 평소 가고 싶었던 대학원 랩실에 컨택 요청을 드렸다. 다행히 성공적으로 컨택이 되어서 다음 학기부터 교류 학생으로 해당 학교를 다니며 랩실 인턴을 하기로 하였다. 다음 주에는 좀 제대로 된 업무를 받았으면 좋겠다.&lt;/p&gt;
+&lt;h2 id=&quot;6-adam&quot;&gt;6. Adam&lt;/h2&gt;
 
-&lt;h3 id=&quot;1114&quot;&gt;11/14&lt;/h3&gt;
+\[Adam \; (almost)\\\]
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+\[\begin{align}
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1114&quot;&gt;11/14 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+M(t+1) &amp;amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/web/drf/&quot;&gt;1) [Django]DRF(Django Rest Framework) 듀토리얼&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+x_{t+1} &amp;amp;= x_t - \alpha \frac{M(t)}{ \sqrt{V(t) + \epsilon} }
 
-&lt;h3 id=&quot;1117&quot;&gt;11/17&lt;/h3&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+\end{align}\]
 
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Adam은 momentum 계열과 Ada 계열 Optimizer의 조합이라고 볼 수 있으며, RMSProp에서 분자의 gradient에 Momentum이 추가된 형태이다. 즉, Momentum과 RMSProp을 합친 것과 같다고 볼 수 있다. 보통 $\beta_1$ = 0.9, $\beta_2$ = 0.999로 설정하고, Laerning rate $\alpha$를 1e-3 or 1e-4정도로만 설정해 놓으면, 거의 모든 아키텍쳐에서 잘 동작한다. 또한 Adam에서도 마찬가지로, 분모가 0이 되는 경우를 방지하기 위해 분모에 $\epsilon$을 추가해주었다(1e-7 or 1e-8).&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/sticky/&quot;&gt;1) [Github_Io]상단 masthead 고정하기&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&quot;6-1-문제점&quot;&gt;6-1) 문제점&lt;/h3&gt;
 
-&lt;h3 id=&quot;1118&quot;&gt;11/18&lt;/h3&gt;
+&lt;p&gt;그러나 위 식에는 큰 문제점이 하나 존재한다. 초기 Step에서는 $V()$의 값을 0으로 Initailize하게 되는데, 이 값이 분모에 들어가게 되면 step이 매우 큰 값으로 초기화된다. 이렇게 되면 초기화가 엉망이 되어 아주 엉뚱한 곳으로 값이 이동할 것이고, 결국 minima에 수렴하지 않을 수도 있다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;6-2-해결--bias-correction-term&quot;&gt;6-2) 해결 : bias correction term&lt;/h3&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/internship/notice/#1118&quot;&gt;11/18 업무지시&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+\[\mathsf{Adam \; (Full \ Form)}\\\]
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/header/&quot;&gt;1) [Github_Io]Header Image 설정&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+\[\begin{align}
+
+M(t+1) &amp;amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+\end{align}\]
+
+\[\hat{ M }(t) = \frac{ M(t) }{ 1 - \beta_1^t  } \\
+\hat{ V }(t) = \frac{ V(t) }{ 1 - \beta_2^t } \\\]
+
+\[x_{t+1} = x_t - \alpha \frac{\hat{M}(t)}{\sqrt{\hat{V}(t) - \epsilon}}\]
+
+&lt;p&gt;따라서 실제 Adam에서는 first moments($M$, Momentum)와 second moments($V$, RMSProp)를 update하고 난 후 현재 step에 맞는 적절한 unbiased term을 계산해준다. 딥러닝 분야에서 일반적으로 가장 많이 사용하는 Optimizer이며, 별다른 계획이 없는 경우 Adam을 사용하면 대체로 좋은 성능을 보인다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4주차&quot;&gt;&amp;lt;4주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; : ICT 인턴십 기업 평가 기간이 끝나기가 무섭게 모든 업무가 뚝 끊겨버렸다. 정말 그 이후로 단 한 건의 업무 지시도 받지 못하였다. 아직 인턴 기간이 한 달 남짓 남았는데, 이대로 시간을 보낼수는 없어서 Stanford의 CS231n 강의를 듣기 시작했다. 아무리 내가 회사에서 바로 데려가지 못하는 3학년이라고 해도, 이건 좀 심한 거 아닌가싶다. ICT 인턴십 취지가 학교에서 배우지 못하는 실무를 3~4학년 학생들에게 경험시켜주는 것인데, 이럴거면 ICT 인턴십 사업에 왜 참여했는지도 모르겠고, 면접 때 날 왜 뽑았는지도 잘 모르겠다. 중소 SI에 대해서 많은 것을 느끼고 간다. 앞으로는 잡플래닛 리뷰를 절대 무시하면 안된다는 교훈을 얻었다.&lt;/p&gt;
+&lt;h2 id=&quot;7-visualization&quot;&gt;7. Visualization&lt;/h2&gt;
 
-&lt;h3 id=&quot;1121&quot;&gt;11/21&lt;/h3&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206355974-60560ff9-a46a-4fc2-a562-af08ba1aeea1.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;위 장면을 보면, Adam을 제외한 다른 Optimizer들은 모두 global minima에 도달하지 못하는 모습을 확인할 수 있다.&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/post_custom/&quot;&gt;1) [Github_Io]포스트에 특정 문구 고정&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;그러나 아래의 참고자료와 같이 다른 Optimizer만이 global minima에 도달하는 경우도 있기 때문에, 상황에 맞는 Optimizer를 사용하는 것이 중요하다고 할 수 있다.&lt;/p&gt;
 
-&lt;h3 id=&quot;1122&quot;&gt;11/22&lt;/h3&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://emiliendupont.github.io/imgs/optim_viz_rastrigin.gif&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;7-1-반응형-visualization-사이트&quot;&gt;7-1) 반응형 Visualization 사이트&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://distill.pub/2017/momentum/&quot;&gt;https://distill.pub/2017/momentum/&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_2/&quot;&gt;1) [CS231n]Image Classification&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1123&quot;&gt;11/23&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&quot;&gt;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/optim_jekyll/&quot;&gt;1) [Jekyll]빌드 속도 최적화&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1124&quot;&gt;11/24&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&quot;&gt;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_3/&quot;&gt;1) [CS231n]Loss Functions and Optimization&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5주차&quot;&gt;&amp;lt;5주차&amp;gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;느낀점 및 업무내용&lt;/strong&gt; :&lt;/p&gt;
-
-&lt;h3 id=&quot;1128&quot;&gt;11/28&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_4/&quot;&gt;1) [CS231n]Backpropagation and Neural Networks&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1130&quot;&gt;11/30&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;업무지시&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;업무지시 없음&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_5/&quot;&gt;1) [CS231n]Convolutional Neural Networks&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Convolutional Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_5/" rel="alternate" type="text/html" title="[CS231n]Convolutional Neural Networks(초안)" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_5</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_5/">&lt;h1 id=&quot;cnn&quot;&gt;CNN&lt;/h1&gt;
-
-&lt;h2 id=&quot;1-fully-connected-layer&quot;&gt;1. Fully Connected Layer&lt;/h2&gt;
-
-&lt;p&gt;FC Layer는, input 이미지를 1차원으로 쭉 펴서 Weight와 곱해주는 Layer이다. 가령, 32x32x3의 input image가 있다면, FC Layer는 이를 3072x1의 벡터로 쭉 핀 다음 W와 내적을 하여 activation map을 얻는다. 가장 간단하게 생각할 수 있는 layer이긴 하지만, Fully Connected Layer에는 치명적인 단점이 2가지 존재한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205216564-e9b1f9ae-f78a-42c9-b5c4-e350852dbecd.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;이미지의 지역적 정보 반영x&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;이미지를 1차원으로 펴서 사용하기 떄문에, 이미지의 지역적인 정보가 사라진다는 단점이 존재한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Overfitting&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;class가 많아질 경우, overfitting 문제가 발생하기 쉽다고 한다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-convolutional-layer&quot;&gt;2. Convolutional Layer&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205217939-f63c4c52-cde1-4161-8af7-e249637d951f.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;FC Layer가 input image를 쭉 펴서 연산하였다면, Conv Layer는 기존의 이미지 구조를 그대로 유지한 채 연산한다. CNN에서는 가중치를 필터라고 부르는데, 이 작은 필터가(예시에서는 5x5x3 필터) 이미지를 슬라이딩 하며 공간적으로 내적을 수행하게 된다. Conv Layer는 input 이미지의 구조를 그대로 유지한 채 필터가 움직이며 연산을 하므로, 이미지의 지역적 정보가 보존된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205229863-17e04751-a390-4d47-9f83-ab023de8cde4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;CNN은 이런식의 convolutional layer들이 연속된 형태이며, 입력 이미지는 이 Layer들을 차례로 통과한다. 그 사이사이에 ReLU와 같은 non-linaer layer(activation function)를 넣어, conv-ReLU가 반복되는 구조이며, 이미지 크기 조정을 위해 중간중간 Pooling Layer가 추가된다. 각 layer의 출력은 다음 layer의 input이 되어 뒷단으로 계속 전파되며, 제일 끝단의 FC-Layer가 정답 클래스에 맞게 1차원 벡터로 펴준다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-filter&quot;&gt;2-1) Filter&lt;/h3&gt;
-
-&lt;p&gt;필터는 CNN에서 사용하는 가중치로서, input image에서 특정 feature를 추출하는 역할을 한다. 하나의 필터를 가지고 input 이미지에 convolution을 수행하여 나온 출력값을 activation map이라고 하는데, 이 activation map들이 다음 Layer의 input으로 들어가 계속 뒷단으로 전파된다. 이게 CNN의 핵심 아이디어다. (중간에 Activation Function, Pooling Layer도 있긴 하지만, 해당 내용은 차후에 차차 소개하겠다.)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220446-0168b7ff-aa00-4d52-8253-fc4773fe0b49.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220463-24a641b4-c9b4-46b3-a74a-08cac12fe74f.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-1-연산&quot;&gt;2-1-1) 연산&lt;/h4&gt;
-
-&lt;p&gt;Filter는 이미지의 좌상단부터 시작하여, 내적을 수행하게 된다. 여기서 나온 값(단일 스칼라 값)은, 다시 output activation map의 해당 위치에 저장된다. 그리고 다시 옆으로 슬라이딩하여 위 과정을 반복한다. 이 때, 슬라이딩하는 거리나 필터의 크기에 따라서 activation map의 크기가 달라진다(activation map의 크기를 계산하는 방법은 이후에 설명한다). 이는 하이퍼 파라미터로, 데이터의 크기나 상황등에 따라 잘 조정해야한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Ffbdp1202%2Fpost%2F2c8ec5f6-a20f-4dd9-9fae-9aded7ac8fa0%2Fcs231n-05-010-convolutional_layer_cal_ex.gif&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-2-depth&quot;&gt;2-1-2) Depth&lt;/h4&gt;
-
-&lt;p&gt;하나의 필터는 input 이미지의 아주 작은 부분을 취하며(32x32 중 3x3, 5x5 등), depth는 input image의 depth를 따른다. 아래 그림과 같이 input image의 채널이 RGB 3채널이라면, filter의 depth도 3이되어 각각의 채널에서 연산을 진행한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205219315-39b88657-ba43-4dd1-8bff-9965c85f5fa0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-3-필터의-개수&quot;&gt;2-1-3) 필터의 개수&lt;/h4&gt;
-
-&lt;p&gt;또한, 보통 convolution layer에서는 여러개의 필터를 사용한다. 왜냐하면, 이미지마다 여러가지의 특징이 있을 수 있는데(ex. 고양이: 뾰족한 귀, 털, 꼬리 등등), 이러한 이미지 특성을 고려하여 다양한 필터로 다양한 특징을 추출하고 싶기 때문이다. 이렇게 되면, 각 필터마다 1개의 activation map이 추출되어, 최종적으로 필터의 총 개수만큼 activation map이 추출된다. 따라서 output activation map의 채널은 필터의 개수와 동일하다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205220928-f01117d5-0500-41b7-b5e0-27239a6cf7e5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-4-stride&quot;&gt;2-1-4) Stride&lt;/h4&gt;
-
-&lt;p&gt;만약, 다음과 같은 7x7 이미지에 3x3 필터를 적용한다고 해보자.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205230612-2bbc1176-7498-4588-9590-4ce60bfb4de2.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;filter는 다음과 같은 process로 activation map을 얻게 될 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;좌측 상단에서 시작 -&amp;gt; 필터를  씌우고, 해당 값들의 내적을 수행 -&amp;gt; 결과값은 activation map의 좌상단에 위치 -&amp;gt; 값하나 얻기 -&amp;gt; 필터를 오른쪽으로 n칸 움직임 -&amp;gt; 반복...&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;여기서 filter가 움직이는 칸의 수를 지정할 수 있는데, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stride&lt;/code&gt;라고 한다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stride = 1&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;stride가 1인 경우, 위 process를 계속 반복하면 상하좌우로 총 5번까지 수행가능하다. 따라서 최종적으로 5x5의 activation map을 얻게된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239933-5283c315-5781-4adc-9032-529d94d4d035.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stride = 2&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;stride가 2인 경우, output은 3x3이 된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239948-ec920867-d516-4ac7-a4be-308c1d9a3879.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stride = 3&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;그렇다면, stride가 3인 경우는 어떨까? 다음과 같이 이미지에 필터가 정확히 맞아떨어지지 않는다. 이럴경우, 불균형한 결과를 초래할 수 있으므로 이러한 stride는 피하는 것이 좋다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205239953-1f5d6b9b-f538-4ca4-b638-38bd585304a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-5-spatial-dimension&quot;&gt;2-1-5) Spatial Dimension&lt;/h4&gt;
-
-&lt;p&gt;위와 같은 이유로, 미리 output activation map의 사이즈를 계산하여, 정수로 나누어 떨어지는 stride를 사용하여야 한다. output의 size를 계산하는 공식은 다음과 같다.&lt;/p&gt;
-
-\[let) \quad N=이미지 사이즈, F=필터 사이즈\\\]
-
-\[ouptut \; size = \frac{N - F}{stride} + 1\]
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;stride가 3인 경우는 정확히 정수로 떨어지지 않는 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205233181-d834683f-afeb-4a6f-b8ab-da86fbf698d0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-6-주로-사용하는-size&quot;&gt;2-1-6) 주로 사용하는 size&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;filter&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;보통 filter는 3x3, 5x5, 7x7을 많이 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;stride&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;주로 stride는 filter의 사이즈에 따라서 다음과 같이 준다.&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;3x3 : 1&lt;/li&gt;
-      &lt;li&gt;5x5 : 2&lt;/li&gt;
-      &lt;li&gt;7x7 : 3&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;filter의 개수&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;필터의 개수는 32, 64, 128, 512와 같은 2의 제곱수를 사용한다&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-padding-zero-padding&quot;&gt;2-2) padding (zero-padding)&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;#2-1-5-spatial-dimension&quot;&gt;2-1-5&lt;/a&gt;에서 보았듯이, 특정한 stride를 사용하고 싶은데, filter가 이미지 가장자리까지 닿지 않는 경우에는 어떻게 하는 것이 좋을까? 그럴때는 padding이라는 기법을 사용하면 된다. padding은 이미지의 가장자리에 특정한 값을 채워넣는 기법인데, 이미지의 가장자리에 0을 채워 넣는 zero-padding을 일반적으로 많이 사용한다(mirror나 extend 등도 있음). padding을 사용하면, 모서리가 상대적으로 필터에 덜 적용되는 것을 막을 수 있으며, 위 상황처럼 필터가 가장자리까지 닿지 않는 경우의 문제도 해결할 수 있다. 또한, layer를 거치면서 입력 사이즈가 점점 줄어들게 되는데, padding을 하면 출력 사이즈와 입력 사이즈를 동일하게 유지할 수 있게된다. 만약 layer가 여러겹 쌓였는데 zero-padding을 하지 않으면, layer를 거칠수록 activation map은 점점 줄어들어 엄청 작아지게 되어 일부 정보가 손실될 우려가 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205234828-a074332e-8040-45e6-bff4-f57b0d6acab4.png&quot; width=&quot;35%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Ffbdp1202%2Fpost%2F7260f062-912f-4047-9088-b2a238df633c%2Fcs231n-05-012-convolutional_layer_padding.gif&quot; width=&quot;35%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-2-1-spatial-dimension&quot;&gt;2-2-1) Spatial Dimension&lt;/h4&gt;
-
-&lt;p&gt;padding을 하게 되면 각 모서리마다 2개의 픽셀이 증가되므로, output size는 다음과 같다.&lt;/p&gt;
-
-\[let) \quad N=이미지 사이즈, F=필터 사이즈\\\]
-
-\[ouptut \; size = \frac{N+2 - F}{stride} + 1\]
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-계층적-학습&quot;&gt;2-3) 계층적 학습&lt;/h3&gt;
-
-&lt;p&gt;각 layer는 여러개의 필터를 가지고 있으며, 각 필터마다 각각의 출력 map을 만드는데, 여러 layer를 쌓다보면 결국 각 필터들이 계층적으로 학습하게 되는 것을 알 수 있다. 다음은 이미지가 어떻게 생겨야 해당 뉴련의 활성을 최대화시킬 수 있는지를 시각화한 것이다(그리드의 각 요소는 각 뉴런의 활성을 최대화시키는 입력의 모양을 나타낸 것). 가령, 앞쪽에 있는 필터들은 edge와 같은 low-level feature를, mid-level을 보면 코너, blob등 좀 더 복잡한 특징을, high-level features를 보면 좀 더 객체와 닮은 것들이 출력으로 나온다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205230336-a0996121-7fb3-4d7a-81e8-12eae7b606f8.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;각 conv의 입력은 이전 레이어에서 나온 edge maps이며, 이것들이 전부 누적되어 복잡한 추론을 하는 것이다. 그리고 이런 정보를 가지고 FC layer를 거치게 되면, 그 정보들을 한데 모아 클래스 스코어를 계산하는 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-pooling-layer&quot;&gt;3. Pooling layer&lt;/h2&gt;
-
-&lt;p&gt;Pooling은 activation map의 크기를 downsampling 하는 과정을 말한다. Conv layer에서 했던 것처럼, pooling에도 필터 크기와 stride를 정해 특정한 계산을 마치고, 슬라이딩 한다. 대신 Pooling은 conv layer와는 다르게, 기본적으로 영역이 겹치지 않게 하며 내적을 하는 것이 아니라 최대값을 찾는다(max pooling의 경우)&lt;/p&gt;
-
-&lt;p&gt;Convolutional Layer의 깊이가 깊어지면 많은 계산 양을 요구하는데, 이때 Pooling 기법을 이용해 이미지의 크기를 줄여, 연산 속도를 높일 수 있다(파라미터의 수가 줄기 때문). 이 때 중요한 점은, depth에는 아무런 변화도 일어나지 않고, 공간적으로만 줄어든다는 것이다. 가령, 224x224x64인 입력이 있다면 이를 112x112x64로 공간적으로 줄여줌(공간적인 불변성)&lt;/p&gt;
-
-&lt;h3 id=&quot;3-1-max-pooling&quot;&gt;3-1) Max Pooling&lt;/h3&gt;
-
-&lt;p&gt;다양한 종류의 Pooling 중, max pooling이 일반적으로 사용된다. max pooling은 지정된 filter 범위 내에서 가장 큰 값을 뽑아내고 stride만큼 슬라이딩 한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205244323-d7b0f7bd-0ef6-4bf6-b72e-bfaa9da849fb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;3-1-1-단어-우월-효과&quot;&gt;3-1-1) 단어 우월 효과&lt;/h4&gt;
-
-&lt;p&gt;Max Pooling을 일반적으로 많이 사용하는 이유는, max pooling이 우리가 하는 인식과 상당부분 닮아있기 때문이다. 우리 뇌는 값들이 어떻게 분포하고 있는지 보다 그 값이 얼마나 큰지를 더 중요하게 여긴다. 그 예시로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;단어 우월 효과&lt;/code&gt;를 들 수 있겠다. 우리는 단어의 앞 뒤 순서를 바꿔도 전체적인 형태가 유사하면 동일한 단어로 인식한다. 다음의 예문을 보도록 하자.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;캠릿브지 대학의 연결구과에 따르면, 한 단어 안에서 글자가 어떤 순서로 배되열어 있는지는 중요하지 않고, 첫 번째와 마지막 글자가 올바른 위치에 있는 것이 중하요다고 한다. 나머지 글들자은 완전히 엉진망창의 순서로 되어 있라을지도 당신은 아무 문제 없이 이것을 읽을 수 있다. 왜하냐면, 인간의 두뇌는 모든 글자를 하하나나 읽는 것이 아니라 단어 하나를 전체로 인하식기 때이문다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;단어 앞뒤 순서가 뒤죽박죽으로 바뀌어도 쉽게 알아차릴 수가 없다. 사람이 단어를 인식할 때 개별 문자의 집합으로 인식하는 게 아닌 단어의 총체적 이미지로 인식하기 때문이라고 한다. max pooling도 이러한 사람의 인지 과정과 상당히 닮아있다. 우리가 다루는 값들은, 이 뉴런이 얼마나 활성되었는지, 바꿔 말하면 필터가 각 위치에서 얼마나 활성되었는지를 나타내는 값이다. 따라서 max pooling은 그 지역이 어디든 어떤 신호에 대해 얼마나 그 필터가 활성화되었는지를 알려준다고 알 수 있다.&lt;/p&gt;
-
-&lt;p&gt;따라서 이러한 이유로 max pooling을 많이 사용한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-2-spatial-dimension&quot;&gt;3-2) Spatial Dimension&lt;/h3&gt;
-
-&lt;p&gt;앞서 conv layer에서 사용했던 수식을 그대로 이용해서 design choice를 할 수 있다&lt;/p&gt;
-
-\[let) \quad N=이미지 사이즈, F=필터 사이즈\\\]
-
-\[ouptut \; size = \frac{N+2 - F}{stride} + 1\]
-
-&lt;p&gt;여기서, 한 가지 특징이 있다면 pooling layer에서는 보통 padding을 하지 않는다. pooling을 하는 이유는 downsampling을 하고 싶기 때문인데, padding을 하면 이미지의 크기가 유지된다. 또한, conv layer처럼 코너의 값을 계산하지 못하는 경우가 pooling layer에서는 존재하지 않는다. 따라서 pooling 할때 padding은 고려하지 않아도 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-3-주로-사용하는-size&quot;&gt;3-3) 주로 사용하는 size&lt;/h3&gt;
-
-&lt;p&gt;가장 널리 쓰이는 필터 사이즈는 2x2, 3x3이고 보통 stride는 2로 한다. filter가 3x3일때도 보통 stride는 2x2로 하는 편이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-4-pooling-vs-stride&quot;&gt;3-4) pooling vs stride&lt;/h3&gt;
-
-&lt;p&gt;우선, image를 다운 샘플링한다는 점에서 conv layer의 stride와 pooling layer는 비슷하다. 따라서 요즘에는 downsample할 떄 pooling보다 strdie를 더 많이 사용하고 있는 추세이다. 실제로 요즘은 stride가 더 좋은 성능을 보이고 있으며, pooling도 일종의 stride의 기법이라고 생각하면 된다. 상황에 맞게 선택하면 될 것 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;수정사항&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;관련 자료를 찾아보던 중, pooling이 stride보다 더 좋은 효율을 나타낸다는 글을 보았다. CS231n에서는 그 반대로 말하던데 어떤 말이 맞는지는 잘 모르겠다.&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&quot;&gt;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;3-예시&quot;&gt;3. 예시&lt;/h2&gt;
+&lt;h1 id=&quot;second-order-optimization&quot;&gt;Second-Order Optimization&lt;/h1&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;ex1)&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;1-newton-method&quot;&gt;1. Newton method&lt;/h2&gt;
 
-&lt;p&gt;32x32x3의 input 이미지, 10개의 5x5필터, stride 1, padding 2일때의 출력 사이즈는?
-32x32x10&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360046-a992da56-5050-402b-9f4c-f9e4b8c82192.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;f:32 padding:2x2 filter_size:-5 stride:/1 이므로
-{(32+2x2-5)/1} + 1 = 32 -&amp;gt; 32x32
-전체 필터의 갯수는 10개이므로 32x32x10의 activation map이 나옴&lt;/p&gt;
+&lt;p&gt;first-order optimization(Adam, RMSProp 등)은 어떤 한 점에서 gradient를 계산하여 손실함수를 선형 함수로 근사시킨다. 이 근사함수를 실제 손실함수라고 가정하고 step을 내려가게 되는데, 이 근사함수로는 멀리까지 갈 수 없다는 한계가 존재한다.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;ex2)&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360062-941a2845-e00a-480b-9352-f6db877c280e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;input volume : 32x32x3
-filter : 10개의 5*5 필터가 있을때,
-파라미터의 개수는 몇개일까?&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360485-23f39c66-0875-49c1-8034-d00eb3f291ae.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;5*5 필터가 입력의 depth만큼 통과 + bias
-5x5x3 + 1(bias) = 76
-따라서, 필터당 76개의 파라미터가 들어있는데,&lt;/p&gt;
+&lt;p&gt;따라서 등장하게 된 방법이 Second-Order Optimization인데, 이 optimization은 손실함수를 2차 함수로 근사시킨다. 이러한 2차 근사를 이용하면 minima에 더 잘 근접할 수 있다고 한다. 이는, 다차원으로 확창시켰을 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Newton step&lt;/code&gt;이라고 불리며, Hessian matrix(2차 미분값들로 된 행렬)의 역행렬을 이용하여 (실제 손실함수의 2차 근사를 통해) minima로 곧장 이동한다. 또한, 매 순간 minima를 향해 이동하기 때문에, 이론상 Learning rate가 필요하지 않다(실제로는 2차 근사도 완벽하지 않기 떄문에 필요하긴 함)는 장점이 있다. 그러나 파라미터가 많은 딥러닝에서는 메모리 문제떄문에 사용할 수 없고, Full Hessian을 근사시켜 사용하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;quasi-Newton methods&lt;/code&gt;를 사용한다.&lt;/p&gt;
 
-&lt;p&gt;그게 10개 있음
-76*10 = 760개&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-quasi-newton-methods-l-bfgs&quot;&gt;2. quasi-Newton methods (L-BFGS)&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362004-e24584b4-9c6f-42d2-84ab-c7517d5a2490.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위에서 잠시 설명했듯이, Newton 방법에서 Hessian의 계산을 근처 함수값을 이용하여 근사적으로 numeric하게 계산하여 사용하는 최적화 기법들을 Quasi-Newton Method(준-뉴턴 방식)라고 부른다. Hessian을 구체적으로 어떻게 근사하느냐에 따라서 여러 Quasi-Newton 방법들이 있으며 그중 가장 대표적으로 사용되는 방법이 L-BFGS (Limited memory Broyden–Fletcher–Goldfarb–Shanno) 방법이다. Full Batch Update가 가능하고 Stochasticity가 적은 경우라면, L-BFGS가 Adam보다 더 좋은 선택이 될 수 있다고 한다. stochastic case와 non-convex problems에서 2차 근사가 잘 동작하지 않기 때문에, NN(DNN 등)에서는 많이 사용되지는 않지만, stochasticity와 파라미터가 적은 Style transfer와 같은 알고리즘에서 종종 사용되는 Optimizer이다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4-정리&quot;&gt;4. 정리&lt;/h2&gt;
+&lt;h1 id=&quot;traintest의-error-gap-해소&quot;&gt;Train/Test의 Error gap 해소&lt;/h1&gt;
 
-&lt;p&gt;CNN은 기본적으로 conv layer와 pool layer를 쌓아올리다가 마지막에 FC layer에 모아준다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362142-15ace2a0-36df-47ec-8c4b-31f01ca12aab.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;전형적인 CNN 아키텍쳐는 conv layer와 relu를 n번(일반적으로 n은 5정도) 반복하고, 그 중간에 pooling도 몇 번 들어간다. 그리고 fc layer에 연산결과를 모아주는데, 한번에서 두번 또는 그 이상일 수도 있다. 그리고 clas score를 구하기 위해 softmax를 사용한다.&lt;/p&gt;
+&lt;p&gt;optimization 알고리즘들은 training error를 줄이고, 손실 함수를 최소화시키기 위한 역할을 수행한다. 그러나 우리는, training error보다는 train/test error의 격차를 줄이는 것이 진정한 목표이다. 그렇다면, 한번도 보지 못한 데이터에 대한 error를 줄이는 방법은 어떤 것들이 있을까?&lt;/p&gt;
+
+&lt;h2 id=&quot;1-model-ensemble&quot;&gt;1. Model ensemble&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362561-cd03e64c-d4fe-4b06-b185-f094bda07724.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;모델을 하나만 학습시키지 말고 n개의 모델을 독립적으로 학습 시켜, n개 모델 결과의 평균을 이용한다. 모델의 수가 늘어날수록 오버피팅이 즐어들고 성능이 조금씩 향상된다(보통 2%정도).&lt;/p&gt;
+
+&lt;p&gt;또한, 모델을 독립적으로 학습시키는 것이 아니라, 학습 도중 중간 모델들을 저장(snapshots)하고 앙상블로 사용할 수도 있다. 그리고 나서, test time에는 여러 snapshots에서 나온 예측값들을 평균 내서 사용한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362687-09681dd5-957f-44ff-bf1c-59260e2da631.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;cf) Polyak averaging&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;또한, 학습하는 동안에 파라미터의 exponentially decaying everage를 계속 계산하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Polyak averaging&lt;/code&gt;이라는 방법을 사용해 볼수도 있다. 이 방법은 학습중인 네트워크의 smooth ensemble 효과를 얻을 수 있으며, checkpoinsts에서의 파라미터를 그대로 쓰지 않고 smoothly decaying average를 사용하는 방법이다. 한번쯤 시도해 볼만한 방법이긴 하지만, 실제로 자주 사용하지는 않는다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-regularization&quot;&gt;2. Regularization&lt;/h2&gt;
+
+&lt;h3 id=&quot;2-1-dropout&quot;&gt;2-1) Dropout&lt;/h3&gt;
+
+&lt;p&gt;모델 앙상블을 하려면, N개의 모델을 돌려야 하는데 자원이나 시간 방면에서 그렇게 좋은 방법은 아니다. 따라서 단일 모델의 성능을 올리는 것이 가장 바람직한 방법이고, 그 방법이 바로 Regularization이다. regularization은 모델이 train data에 완전히 fit하는 것을 막아주어 한번도 보지 못한 데이터에서의 성능을 향상시킨다. 앞선 포스팅에서 L2 regularization에 대해 소개한 적이 있었다( 참고 : &lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_3/#2-2-regularization%EC%9D%98-%EC%A2%85%EB%A5%98&quot;&gt;[CS231n]Loss Functions and Optimization&lt;/a&gt; ). 그러나 NN에서는 L2 regularization이 잘 어울리지는 않고, dropout이라는 regularization을 가장 많이 사용한다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206363244-79b20be1-c338-477b-8274-9038e25ad0a0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;dropout은 정말 간단한데, forward pass 과정에서 임의로 일부 뉴런을 0으로 만드는 것이다. dropout은 한 레이어씩 진행하며, forward pass iteration마다 0이 되는 뉴런이 바뀐다. 이를 통해, 특징들간의 상호작용을 방지하여 어떤 일부 features에만 의존하지 못하게 하고, 다양한 geatures를 골고루 사용하게 함으로써 오버피팅을 방지한다. Dropout은 fc layer에서 흔히 사용하지만, conv layer에서도 종종 볼 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;about BN&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;BN에도 충분히 regularization 효과가 있기 때문에 BN 사용시에는 Dropout을 사용하지 않는다. 그러나 예외적으로, BN을 사용했음에도 불구하고 오버피팅이 발생하는 경우에는 Dropout과 같은 다양한 regularization 방법을 추가해로 사용해 볼 수 있다(오버피팅의 조짐이 보일 떄 하나씩 추가시켜 봄).&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;2-1-1-앙상블-효과&quot;&gt;2-1-1) 앙상블 효과&lt;/h4&gt;
+
+&lt;p&gt;Dropout을 적용한 네트워크를 살펴보면, 원본 NN의 일부만 사용하는 서브 네트워크라고 해석할 수 있다. 또한, 각 forward pass interation마다 dropout을 다르게 적용하기 때문에, 서로 파라미터를 공유하는 서브 네트워크 앙상블 모델을 동시에 학습시키는 것으로 해석할 수 있다. 즉, 단일 네트워크로 앙상블을 할 수 있는 것이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-1-2-average-out-in-test-time&quot;&gt;2-1-2) Average out in test time&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364195-ece425b0-ae00-4a07-894b-2ac579439b6b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;기존 Neural Network는 가중치 w와 입력 x에 대한 함수였다. 그러나 dropout을 사용하면 network에 random dropout mask인 z가 추가된다. 그러나 test time에서 이러한 임의성(stochastic)이 포함되는 것은 바람직하지 않다. test time에 이러한 임의성이 추가되면, 모델의 결과가 매번 바뀌게 되므로, 적분을 통해 이 임의성을 average out시킨다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364426-0d0f7f5d-1ca1-4508-b0c0-ec49b3ceaf5a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그러나, 실제로 이 적분을 계산하기는 까다롭기 때문에 dropout에서는 위 수식과 같이 locally cheap한 방법을 사용하여 해당 식을 근사시킨다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-inverted-dropout&quot;&gt;2-2) Inverted Dropout&lt;/h3&gt;
+
+&lt;p&gt;train time에서는 데이터를 마구잡이로 흔들어놓아, 모델이 데이터에 완전히 fit하지 않게 하고, test time에서는 randomness를 average out 시켜서 generalization 효과를 준다고 한다. 나중에 자세히 알아보도록 하자.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-3-data-augmentation&quot;&gt;2-3) Data augmentation&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206369628-301c5b85-f122-4c15-984e-c36c3a26d07a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이미지의 label을 바꾸지 않으면서, 이미지를 변환시킬 수 있는 방법을 말한다. 원본 이미지를 사용하지 않고, 카테고리만 유지한 채 반전시키거나 임의의 다양한 사이즈로 crop할 수도 있음(카테고리는 동일). 또는 이미지의 밝기나 contrast등을 바꿀 수도 있다. 이는 일종의 regularization이며, 다른 regularization과 동일하게 train time에는 stochasticity가 추가되고, test time에는 marginalize out 시킨다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-4-dropconnect&quot;&gt;2-4) DropConnect&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370104-19232aab-493e-4973-a92f-6cbd3577147e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;activation이 아닌 width matrix를6임의적으로 0으로 만들어줌&lt;/p&gt;
+
+&lt;h3 id=&quot;2-5-fractional-max-pooling&quot;&gt;2-5) fractional max pooling&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370190-5210a695-f004-4828-89fa-97ef55d8d3c2.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;실제로 자주 사용하지는 않지만, Justin Johnson이 추천하는 아주 좋은 regularization 기법이다. 보통 2x2 max pooling은 고정된 2x2 영역에서 pooling을 하지만, fractional max pooling은 max pooling 범위가 임의로 선정된다. test time시에는, pooling layer를 고정시키거나, 여러개의 pooling regions를 만들어 stochasticity를 averaging over시키면 된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-6-stochastic-depth&quot;&gt;2-6) stochastic depth&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370837-df7efe04-162e-462c-8c5d-23f9f60eb0ff.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에서는 전체 네트워크를 다 사용하는 방법이다. regularization 효과는 dropout과 같은 다른 방법과 비슷한 수준이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;transfer-learning&quot;&gt;Transfer learning&lt;/h1&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/181512540-12cc7327-f854-4ba3-8a54-c7990caed605.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;충분한 데이터가 없는 경우, 오버피팅의 위험성이 증가하게 되는데, 이런 경우 사용할 수 있는 방법이 Transfer learning이다. 우선, ImageNet과 같은 거대한 데이터로 학습이 된 모델의 FC Layer를 초기화 시킨다. 그리고 우리가 필요한 클래스의 개수로 맞춰주기만 하면 된다. 그리고 이 Layer 이전의 모든 Layer 가중치는 freeze시켜 더 이상 업데이트 되지 않게 하고, 마지막 레이어만 가지고 데이터를 학습시킨다. 이는 마치 Linear Classifier를 학습시키는 것과 같다(아주 작은 데이터셋에도 적용이 가능함) 만약 데이터가 조금 더 있다면 전체 네트워크를 fine-tuning하여 사용할 수 있다. 이 때, 기존의 모델이 잘 동작하는 경우, 보통 Learning rate를 기존 모델보다 낮게 설정한다. 기존 LR의 1/10정도로 초기화하면 대체로 잘 동작한다. 보다 자세한 설명은 아래 포스팅에 자세히 정리해두었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/04_Leaf_Diseases(1)/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80&quot;&gt;Pytorch를 사용한 분류문제 학습 : 전이학습이란?&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206378927-20171833-3e38-48ef-8c3a-84003fe4c167.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
@@ -1015,969 +335,86 @@ filter : 10개의 5*5 필터가 있을때,
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://codlingual.tistory.com/84&quot;&gt;CNN : Convolutional Neural Network 정리&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://twinw.tistory.com/247&quot;&gt;수식과 코드로 보는 경사하강법&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://velog.io/@fbdp1202/CS231n-%EC%A0%95%EB%A6%AC-5.-Convolutional-Neural-Networks&quot;&gt;[CS231n 정리] 5. Convolutional Neural Networks&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://emiliendupont.github.io/2018/01/24/optimization-visualization/&quot;&gt;Interactive Visualization of Optimization Algorithms in Deep Learning&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://darkpgmr.tistory.com/149&quot;&gt;최적화 기법의 직관적 이해&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://bookandmed.tistory.com/56&quot;&gt;Training Neural Networks II&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 5</summary></entry><entry><title type="html">[CS231n]Backpropagation and Neural Networks</title><link href="http://localhost:4000/dl/cs231n_4/" rel="alternate" type="text/html" title="[CS231n]Backpropagation and Neural Networks" /><published>2022-11-28T00:00:00+09:00</published><updated>2022-11-28T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_4</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_4/">&lt;h1 id=&quot;analytic-gradient&quot;&gt;Analytic gradient&lt;/h1&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204448878-5e0739ff-ebd7-4ed3-a74d-071e09252b5d.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
+```python
+import os
+import pandas as pd
+import numpy as np
+import random
 
-&lt;p&gt;지난 강의에서 Numerical gradient와 Analystic gradient에 대해서 소개했었다. Numerical gradient는 유한차분 추정을 통해 쉽게 구할 수 있었지만, 느리고 정확하지 않다는 단점이 있었다. 본 강의에서는, 유한차분 추정보다는 어렵지만, 훨씬 더 정확하고 빠르게 gradient를 구할 수 있는 Analytic gradient에 대해서 소개하고자 한다. 이를 위해 먼저 Computation graph를 소개한다.&lt;/p&gt;
+PATH = &apos;C:/Users/USER/Desktop/자료/excel_50_row_온정완&apos;
+SAVE_PATH = &apos;C:/Users/USER/Desktop/자료/result&apos;
+file_dir_list = []
 
-&lt;h2 id=&quot;1-computational-graph&quot;&gt;1. Computational graph&lt;/h2&gt;
+for _, _, files in os.walk(PATH):
+    for f in files:
+        tmp_df = pd.read_excel(os.path.join(PATH, f))
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204449312-0403d399-a358-4ff2-a6f4-16e35aab1f84.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
+        for row in range(len(tmp_df), 51):
+            row_tmp = [row]
+            for col in range(1, len(tmp_df.columns)):
+                if tmp_df.iloc[:,col].isna().sum() == len(tmp_df.iloc[:,col]):
+                    row_tmp.append(np.nan)
+                    continue
 
-&lt;p&gt;Computational graph는 매우 복잡한 형태의 함수를 node와 edge로 나타낸 그래프이며, 복잡한 함수를 이용한 작업 및 계산시 아주 유용하게 사용된다. 위 예시는 Linear Classifier가 Loss를 구하는 과정을 Computational graph로 나타낸 것이며, hinge loss와 regularization term의 합계가 최종 Loss로 구해지는 과정이 표현되어 있다.&lt;/p&gt;
+                while True:
+                    choice = random.choice(tmp_df.iloc[:,col])
+                    if choice == choice:
+                        break
+                row_tmp.append( choice )
 
-&lt;p&gt;Computational graph의 최대 장점은, 일단 우리가 Computational graph로 함수를 표현하면 backpropagation이라고 불리는 테크닉을 사용할 수 있다는 것이다. backpropagation이란, 재귀적으로 chain rule을 사용하여 computatinal graph의 모든 변수에 대해 경사를 계산하는 기법인데, 자세한 내용은 아래에서 좀 더 구체적인 예시를 가지고 설명해보겠다.&lt;/p&gt;
+            tmp_df.loc[row,:] = row_tmp  
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+        tmp_df.to_excel( os.path.join(SAVE_PATH, f) )       
+```</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"># ✍ 학습내용 정리
 
-&lt;h2 id=&quot;2-backpropagation-at-scalar&quot;&gt;2. backpropagation at scalar&lt;/h2&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-&lt;h3 id=&quot;2-1-example-1&quot;&gt;2-1) Example 1&lt;/h3&gt;
+# 🕮 TIL
+## \&lt;1주차\&gt;
+### 12/01
 
-\[f(x,y,z) = (x+y) \times z\]
+* **업무지시**
 
-&lt;p&gt;다음은 function $f(x, y, z) = (x+y) \times z$에 대한 backpropagation 예제이다. input으로는 x=-2, y=5, z=-4가 주어져있다.&lt;/p&gt;
+  업무지시 없음
 
-&lt;p&gt;여기서 우리의 목표는, f에 대한 x, y, z의 gradient를 얻어 W를 조정하는 것이다. 따라서, 우리가 최종적으로 얻고자 하는 것은, function f의 출력(Loss와 관련)에 대한 x, y, z의 Gradient값이다. 설명이 조금 rough하지만, 뒤에 다른 예제가 또 나오기 때문에, 일단은 이해가 되지 않더라도 이런게 있구나 하며 흐름만 파악하면 된다.&lt;/p&gt;
+* **학습내용**    
 
-&lt;h4 id=&quot;2-1-1-함수-f를-computational-graph로-표현하기&quot;&gt;2-1-1) 함수 f를 Computational graph로 표현하기&lt;/h4&gt;
+  [1) [CS231n]Training Neural Networks, Part I](https://on-jungwoan.github.io/dl/cs231n_6/)   
 
-&lt;p&gt;우선, gradient를 구하고자 하는 함수 f를 Computational graph로 표현해준다. 차근차근 그려나가면 어렵지 않게 그릴 수 있다.&lt;/p&gt;
+### 12/02
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204479798-d9afefca-9539-4d85-87f5-8fe3a2e0b113.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
+* **업무지시**
 
-&lt;h4 id=&quot;2-1-2-forward-propagation&quot;&gt;2-1-2) Forward propagation&lt;/h4&gt;
+  업무지시 없음
 
-&lt;p&gt;input을 계속 뒤로(오른쪽) 전달하여 각 노드의 값을 계산한다. 이를 forward pass라고 한다.**&lt;/p&gt;
+* **학습내용**    
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204480261-3ff243e3-f915-4998-b12c-f9f9f87048b2.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
+  [1) [업무 자동화] 행 생성 업무 자동화](https://on-jungwoan.github.io/toy_project/auto_raw/)     
 
-&lt;h4 id=&quot;2-1-3-local-gradient&quot;&gt;2-1-3) Local Gradient&lt;/h4&gt;
+&lt;br&gt;  
 
-&lt;p&gt;각 노드의 local gradient를 미리 구한다. 여기서 local gradient란, 해당 노드의 편미분값이라고 생각하면 된다.&lt;/p&gt;
+## \&lt;2주차\&gt;
+**느낀점 및 업무내용** : 
 
-\[q = x+y \quad\quad \frac{\partial q}{\partial x} = 1, \frac{\partial q}{\partial y} = 1\\\]
+### 12/06
 
-\[f = qz \quad\quad \frac{\partial f}{\partial q} = z, \frac{\partial f}{\partial z} = q\\\]
+* **업무지시**
 
-\[Want : \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\]
+  업무지시 없음
 
-&lt;h4 id=&quot;2-1-4-back-propagation&quot;&gt;2-1-4) Back propagation&lt;/h4&gt;
+* **학습내용**    
 
-&lt;p&gt;제일 뒷 단부터 앞 단으로 gradient를 전파시킨다. 이를 backward pass라고 한다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;우선, 바로 미분이 가능한 노드부터 미분해준다.&lt;/strong&gt;&lt;/div&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204459012-bffe1c90-77b6-489d-9a92-96d1c6b90f46.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-\[-&amp;gt; \; \frac{\partial f}{\partial f} = 1\\\]
-
-\[-&amp;gt; \; \frac{\partial f}{\partial z} = q = 3\\\]
-
-\[-&amp;gt; \; \frac{\partial f}{\partial q} = z = -4\\\]
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;
-  f와 직접적으로 연결되어있지 않은 노드들의 gradient는&lt;br /&gt;
-  간단한 수학적 trick을 사용하여 구해줄 수 있는데,&lt;br /&gt;
-  이 trick을 chain rule이라고 한다.&lt;/strong&gt;
-&lt;/div&gt;
-
-\[-&amp;gt; \; \frac{\partial f}{\partial x}\]
-
-\[= \frac{\partial f}{\partial q} \; \frac{\partial q}{\partial x}\\(upstream \; gradient \times local \; gradient)\]
-
-\[= -4 \times 1 = -4\\\]
-
-\[-&amp;gt; \; \frac{\partial f}{\partial y}\]
-
-\[= \frac{\partial f}{\partial q} \; \frac{\partial q}{\partial y}\]
-
-\[= -4 \times 1 = -4\\\]
-
-&lt;p&gt;위처럼, chain rule을 사용하면, 어려운 계산 없이 단순한 미분만으로 복잡한 함수에 대한 편미분 gradient 값을 차근차근 구해나갈 수 있다. 지금 이 예시의 함수 f는, 식이 간단해서 바로 편미분할 수 있지만, 함수가 복잡해질 경우 위 방법을 사용하는 것이 유용하다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-5-도식화&quot;&gt;2-1-5) 도식화&lt;/h4&gt;
-
-&lt;p&gt;다음은 위 예제를 간단하게 도식화한 그림이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204461793-2aed8788-4719-4519-b443-613fb3801745.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;우선, 우리는 x와 y(input)을 f에 넣어 z(output)을 얻어냈다. 이렇게 input을 받아 출력된 output을 바탕으로 Loss를 계산하는 과정을 forward pass라고 한다. 이후, z에 대한 x와 y의 gradient값을 미분을 통해 얻을 수 있는데, 이를 local gradient라고 한다. 여기서 우리가 알고 싶은건, z 값을 통해 계산한 Loss에 대한 x, y의 gradient 값이다. 이 때, 앞에서 설명한 chain rule을 이용하면 쉽게 계산할 수 있는데, Loss를 z에 대해 먼저 미분하고, $\frac{\partial L}{\partial z} \times \frac{\partial z}{\partial x \; or \; \partial y}$를 통해 Loss에 대한 x, y의 gradient 값을 계산하면 된다. 이처럼, forward pass가 끝난 후, 역으로 미분해가며 gradient값을 구하는 과정을 backward pass(backpropagation)라고 한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-6-정리&quot;&gt;2-1-6) 정리&lt;/h4&gt;
-
-&lt;p&gt;위 예제를 통해 얻을 수 있는 정보는 다음과 같다. 우선, 각 노드들은 자신과 인접한 노드에 대한 정보만 알 수 있다. 이러한 한계로 인해 고안해낸 trick이 바로 chain rule이며, 우리는 특정 노드의 gradient가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;upstream gradient * local gradient&lt;/code&gt;임을 확인하였다. 따라서 우리는, forward propagation을 통해 구한 Loss를 다시 back propagation을 통해 앞단으로 전파하여 f의 파라미터에 대한 gradient를 얻을 수 있게 되었다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-example-2&quot;&gt;2-2) Example 2&lt;/h3&gt;
-
-&lt;p&gt;다음의 함수 $f(w,x)$에 대하여 파라미터들의 gradient를 구해보자.&lt;/p&gt;
-
-\[f(w,x) = \frac{1}{1+e^-{w_0x_0+w_1x_1+w_2}}\]
-
-&lt;h4 id=&quot;2-1-1-forward-propagation&quot;&gt;2-1-1) forward propagation&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204464307-15fdd3a1-f2d1-4b00-a829-ec8c7e019bb0.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-2-local-gradient-계산&quot;&gt;2-1-2) local gradient 계산&lt;/h4&gt;
-
-\[f(x) = \frac{1}{x} \quad -&amp;gt; \quad \frac{\partial f}{\partial x} = -\frac{1}{x^2}\\\]
-
-\[f_c(x) = x + c \quad -&amp;gt; \quad \frac{\partial f}{\partial x} = 1\\\]
-
-\[f(x) = e^x \quad -&amp;gt; \quad \frac{\partial f}{\partial x} = e^x\\\]
-
-\[f_a(x) = ax \quad -&amp;gt; \quad \frac{\partial f}{\partial x} = a\\\]
-
-&lt;h4 id=&quot;2-1-3-backward-propagation&quot;&gt;2-1-3) backward propagation&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 1.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;$\frac{\partial f}{\partial x}=1$이므로 마지막 노드의 출력에 대한 gradient는 1이다.&lt;/p&gt;
-
-    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467794-47fc62d5-7c23-4e25-a244-6429cbaedff0.png&quot; width=&quot;40%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 2.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;upstream gradient : 1.00&lt;/li&gt;
-      &lt;li&gt;local gradient : $-\frac{1}{x^2}=\frac{-1}{1.37^2}=-0.53$&lt;/li&gt;
-      &lt;li&gt;gradient : (-0.53) $\times$ 1 = -0.53&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467886-24a166ee-6a27-41d9-b798-c02d97982115.png&quot; width=&quot;40%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 3.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;upstream gradient : -0.53&lt;/li&gt;
-      &lt;li&gt;local gradient : 1&lt;/li&gt;
-      &lt;li&gt;gradient : 1 $\times$ (-0.53) = -0.53&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467928-1c9c3c46-f409-4ef2-ada9-46c8cfcb41bb.png&quot; width=&quot;40%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 4.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;upstream gradient : -0.53&lt;/li&gt;
-      &lt;li&gt;local gradient : $e^x = e^{-1}$&lt;/li&gt;
-      &lt;li&gt;gradient : e^{-1} $\times$ (-0.53) = -0.20&lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204467990-8c23560b-4a94-4772-9ee7-990cb067e9ac.png&quot; width=&quot;50%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 5.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;upstream gradient : -0.20&lt;/li&gt;
-      &lt;li&gt;local gradient : $-x = -1$&lt;/li&gt;
-      &lt;li&gt;gradient : -1 $\times$ -0.20 = 0.20&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204468040-91783147-2dd6-416a-8e37-80f7dd79ed46.png&quot; width=&quot;50%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 6.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;upstream gradient : 0.20&lt;/li&gt;
-      &lt;li&gt;local gradient : 1 (both)&lt;/li&gt;
-      &lt;li&gt;gradient : 1 $\times$ 0.20 = 0.20 (both)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204468099-d5850ea9-bfe2-42b6-85df-327f0fe4a0b1.png&quot; width=&quot;80%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;step 7.&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;upstream gradient : 0.20&lt;/li&gt;
-      &lt;li&gt;local gradient : $x_0, w_0$&lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;gradient&lt;/p&gt;
-
-        &lt;p&gt;$w_0$ : -1 $\times$ 0.2 = -0.2&lt;/p&gt;
-
-        &lt;p&gt;$x_0$ : 2 $\times$ 0.2 = 0.4&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204468144-e41b62e5-437e-48ac-b55d-9266dc83ce2d.png&quot; width=&quot;80%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-4-노드의-그룹화&quot;&gt;2-1-4) 노드의 그룹화&lt;/h4&gt;
-
-&lt;p&gt;또한, 지금은 가장 작은 단위의 노드를 사용하였지만, 이 노드를 더 복잡한 그룹으로 묶을수도 있다. 그 노드에 대한 local gradient를 구할수만 있다면, 문제없이 더 간단히 gradient를 구할 수 있다(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;local gradient * upstream gradient&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204471177-1aea7f69-f744-44fb-845f-d519c316c61f.png&quot; width=&quot;80%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 그림과 같이 특정 노드 그룹의 도함수를 알고있는 경우, 그룹화시켜 그래프를 단순하게 만들 수 있는 것이다. 하지만, 계산량과 그래프의 단순함은 trade-off 관계에 있음을 유의하자!&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;그래프가 단순 -&amp;gt; gradient 계산 복잡&lt;/li&gt;
-  &lt;li&gt;그래프가 복잡 -&amp;gt; gradient 계산 단순&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-패턴&quot;&gt;2-3) 패턴&lt;/h3&gt;
-
-&lt;p&gt;우리는 앞서 살펴본 예제에서 다음과 같은 패턴을 확인할 수 있다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-3-1-덧셈-게이트&quot;&gt;2-3-1) 덧셈 게이트&lt;/h4&gt;
-
-&lt;p&gt;upstream gradient를 연결된 브랜치에 정확히 같은 값으로 나누어 준다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204472004-e107dc2c-e1ca-4117-b551-9c8a60d70d96.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-3-2-max-게이트-gradient-router&quot;&gt;2-3-2) max 게이트 (gradient router)&lt;/h4&gt;
-
-&lt;p&gt;하나에는 upstream gradient의 전체값이, 나머지 하나에는 0이 들어간다. 왜냐하면 local gradient가 1,0이기 때문이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204472072-96b6e081-987c-463f-8b6b-17c33fb04050.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-3-3-곱셈-게이트-gradient-switcher-or-scaler&quot;&gt;2-3-3) 곱셈 게이트 (gradient switcher or scaler)&lt;/h4&gt;
-
-&lt;p&gt;반대편 변수의 값이 upstream gradient와 곱해져 들어간다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204475032-57363ead-685f-459e-a270-8f0595df6be0.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-3-4-하나의-노드에서-다른-노드-두개로-이어진-경우&quot;&gt;2-3-4) 하나의 노드에서 다른 노드 두개로 이어진 경우&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204475202-a1fa2baa-e8a3-4b3d-852d-528872734f74.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;뒤의 두개의 노드에서 오는 미분 값을 더한 값이 들어간다. 반대로 앞의 노드 하나만 바뀌어도 뒤의 노드 두 개가 모두 바뀐다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-4-요약&quot;&gt;2-4) 요약&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;computational graph로 나타내기&lt;/li&gt;
-  &lt;li&gt;출력으로 이어지는 모든 계산이 무엇인지 파악(순전파)&lt;/li&gt;
-  &lt;li&gt;역방향 계산 // computational graph에서 정의한, 계산에 필요한 중간 변수에 대한 gradient 가져오기&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-backpropagation-at-vector&quot;&gt;2. backpropagation at vector&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204682000-911ab96f-880f-40f1-ae44-d8ebc5d06fc7.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;모든 흐름은 같지만 gradient는 jacobian 행렬(각 요소의 미분을 포함하는 행렬)이 될 것이다. 이 때, jacobian matrix는 input matrix의 길이를 변으로 가지는 정방형 행렬이다. 가령 input이 cnn에서 흔히 볼 수 있는 사이즈인 409x4096 벡터라면, jacobian 행렬의 사이즈는 4096x4096이 된다. 이 때, mini batch가 100이면 사이즈는 409600 * 409600으로, 매우 크다. 그러나 실제로 jacobian matrix는 diagonal matrix이기 때문에 이 거대한 값을 일일이 계산할 필요는 없다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-calculate&quot;&gt;2-1) Calculate&lt;/h3&gt;
-
-&lt;p&gt;scalar일때와 기본적인 흐름은 동일한 것을 알 수 있다. 자세한 계산 과정은 위에서 자세히 다뤘으므로 생략하겠다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204476176-773083f3-7a2b-45d5-9fa8-5eeabb983340.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-요약&quot;&gt;3. 요약&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;신경망 -&amp;gt; 매우 크고 복잡함&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;따라서 모든 파라미터에 대해 gradient를 손으로 구하고 써내려가는 것은 비현실적이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;따라서 gradient를 계산하기 위해 backpropagation을 사용(신경망의 핵심 기술)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;그리고 이것은 computational graph에서 chain rule을 재귀적으로 적용한 것임&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;vector에서, 이를 구현하는 것은 size가 매우 크다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;따라서 forward/backward API 구현하는 방법들을 도입(생략)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;neural-networks&quot;&gt;Neural Networks&lt;/h1&gt;
-&lt;p&gt;Neural Networks (인공 신경망)는 앞에서 배운 Linear Classifier을 2개 이상 쌓아올리는 형태이다. 여기서 중요한 부분은 이 사이에 Non-linear function를 사용해야 한다는 점이다(그렇지 않으면 결국 Linear function이 됨). 아래의 예시를 살펴보자. 우선, 3072개의 입력 x와 W1의 linear classification 결과로 100개의 h 값을 계산한다. 이후, 이 값에 Non-linear max 함수를 취하고, W2값을 linear classification으로 사용하여 최종적으로 10개의 결과 가지게 된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204981557-eb5908ac-9f4e-4cd0-964c-0464cea3015d.png&quot; width=&quot;60%&quot; style=&quot;border:1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;기존에는 선형 레이어 하나만 쌓아서 빨간색 자동차만을 찾을 수 있었지만, Neural Networks를 이용함으로써 빨간색, 노란색 자동차와 같이 여러 색깔(feature)의 찾을 수 있게 되었다. 이러한 방법으로 레이어를 쌓아가면서 여러 특징을 추출 할 수 있음을 확인하였다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 4</summary></entry><entry><title type="html">[CS231n]Loss Functions and Optimization</title><link href="http://localhost:4000/dl/cs231n_3/" rel="alternate" type="text/html" title="[CS231n]Loss Functions and Optimization" /><published>2022-11-24T00:00:00+09:00</published><updated>2022-11-24T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_3</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_3/">&lt;h1 id=&quot;가중치-w구하는-법&quot;&gt;가중치 W구하는 법&lt;/h1&gt;
-&lt;p&gt;가중치 W를 구하기 위해서는 해당 가중치가 좋은지 나쁜지를 정량화 할 방법이 필요하다. 따라서 가중치의 성능을 파악하기 위해 도입된 것이 바로 손실함수이다. 행렬 W가 될 수 있는 모든 가능의 수 중에서 손실함수가 가장 적은 W를 찾는 것이 가중치 W를 구하는 방법이며, 이를 최적화 과정(optimization)이라 한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;loss&quot;&gt;Loss&lt;/h1&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203778112-b5dc99c5-f9e6-42c0-9a8c-9ec54640d1af.png&quot; style=&quot;border:1px solid black&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Loss는 Data Loss Term의 평균과 Regularization Term의 합으로 이루어져있다. Data loss term은 모델이 데이터에 좀 더 fit할 수 있게 도와주며, Regularization term은 모델을 단순하게 하여 오버피팅되지 않게 한다. Data loss term은 모든 클래스의 loss에 대한 총 합계로 이루어져 있는데, 이 때 loss를 구하기 위해 사용되는 함수가 Loss function이다. Loss Function에는 대표적으로 SVM과 Softmax가 존재한다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-data-loss-term-loss-function&quot;&gt;1. Data Loss Term (Loss function)&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-1-hinge-loss-multi-class-svm&quot;&gt;1-1. Hinge Loss (Multi-class SVM)&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203700823-10f5f921-9b8c-40d1-b6d2-13ac96942ea6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이진 SVM의 일반적인 형태로서 이진 SVM과 달리 여러 클래스를 다루며, 그래프 모양이 경첩과 비슷하여 hinge loss라고 한다. hinge loss는 올바른 카테고리의 스코어(s_yi)와 그렇지 않은 카테고리의 스코어(s_j)를 비교하여, 올바른 카테고리의 스코어가 일정 수준(margin) 이상 더 크면 0을 반환한다. 그렇지 않으면, 올바르지 않은 카테고리와 올바른 카테고리의 차(sj - syi: 잘못된 경우 loss가 더 커져야하므로)에 margin을 더한 값이 반환된다. 위 과정을 나머지 클래스(정답이 아닌 클래스)에 대해서도 동일하게 순회하며 이를 모두 더한 값이 hinge loss function의 i번째 output이 된다. 이를 수식으로 나타내면, sigma{max(o, s_j-s_yi+1)}이 되며, output의 i개 카테고리에 대한 합을 N으로 나눠주면, Loss가 되는 것이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-1-1-예시&quot;&gt;1-1-1) 예시&lt;/h4&gt;
-
-&lt;p&gt;모델에 input 이미지를 넣은 결과 다음과 같은 스코어가 나왔다고 가정해보자. 내가 그냥 노트에 끄적거린거라 표가 살짝 헷갈리게 나와있는데, 첫 번째 열부터 순서대로 cat, car, frog에 대한 score이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774750-707d8c70-af9f-4b5a-8745-7e2b7e044066.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;각 카테고리에 대해서 lose들을 각각 구해준다. margin이 1일 때, loss는 각각 2.9, 0, 12.9이 나왔다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774794-28221bdd-bb30-4ceb-9ab2-ad2fc4540662.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774779-79e0fdad-43ed-4b33-b28e-dc293dcee2a8.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Loss들을 전부 더해서 클래스 수로 나누어주면 최종 Loss를 구할 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774812-49710c89-8b18-4171-bb3a-92fcf2610b2f.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;30%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;1-1-2-특징&quot;&gt;1-1-2) 특징&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Loss의 범위&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= Loss &amp;lt; positive infinity&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;정답 스코어가 그렇지 않은 스코어보다 모두 클 경우, Loss는 0이 된다. 반면, 정답이 아닌 스코어가 양의 무한대로 발산하면, Loss는 양의 무한대가 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;클래스의 수 - margin&lt;/code&gt;이 된다. C-1개의 클래스를 순회하며 스코어 비교를 하는 과정에서, 비교하는 두 스코어가 거의 비슷하니 결국 margin만 남게 되기 때문이다(s_j - s_yi ≈ 0). 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 C - margin이 아니라면 버그가 있는 것을 확인할 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;정답 스코어 조금 바꿔도 Loss 변화 없음&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;정답 스코어가 충분히 크고, 다른 클래스의 스코어가 낮은 경우, margin의 범위 내에서 정답 스코어가 조금 바뀌어도 Loss의 변화는 없다. 정답 스코어가 그렇지 않은 스코어보다 일정 수준이상 큰지만 체크하기 떄문이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;including j = y_i&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;정답 클래스도 순회에 포함한다면 어떻게 될까?&lt;br /&gt;
--&amp;gt; s_yi - s_yi + margin = margin이므로, Loss가 margin만큼 더 증가한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Loss에서 전체합이 아니라 평균을 사용한다면?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;영향을 미치지 않는다. 클래스 수는 어차피 정해져 있으니, 평균 취하는건 그냥 함수를 리스케일 할 뿐이다. 스코어 값이 몇인지는 신경쓰지 않고 단순히 얼만큼 크냐 작냐를 따지는 것이기 떄문에 스케일이 바뀌는 것은 아무 영향을 미치지 않는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;그럼 손실함수를 제곱항으로 바꾼다면?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;이를 square hinge loss라고 하며, 결과는 달라진다. 제곱항을 사용하면, Loss에 더 많은 가중치를 부여할 수 있다. loss를 얼마나 심각하게 받아들이느냐의 차이인듯 하다(제곱하면 절대값이 더 커지기 때문이다).&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-cross-entropy-loss-softmax&quot;&gt;1-2. Cross-entropy Loss (Softmax)&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203732140-d33634b5-e3ad-4d18-bd93-3d4b1648ac31.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;딥러닝에서는 Multiclass SVM loss보다 더 많이 사용한다. Multiclass SVM의 경우, 스코어 자체는 신경쓰지 않고, 정답 클래스가 정답이 아닌 클래스보다 더 높은 스코어 내기만을 원한다. 따라서 스코어 자체에는 관심 없었으나, Softmax는 스코어 자체에 추가적인 의미를 부여한다. Softmax의 Loss 계산 과정은 다음과 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;모델에서 나온 스코어 -&amp;gt; 스코어를 지수화 시킴(양수화) -&amp;gt; 합이 1이 되도록 정규화(확률값이 됨) -&amp;gt; 정답 스코어에만 -log를 붙여줌&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;지수/정규화 통해 나온 확률이 정답 클래스에서 1에 가깝게 계산되는 것이 Softmax의 목표이다. log를 붙이면 그래프가 단조 증가함수가 되므로, 그냥 확률값을 최대화 시키는 것보다 더 쉽다. 또한, 얼마나 좋은지가 아니라 얼마나 성능이 좋지 않은지를 측정하는 측도가 되어야하므로 부호가 음수가 되어야한다. 따라서 최종 확률에 -log가 붙은 것이 Cross-entropy Loss(Softmax)이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-2-1-예시&quot;&gt;1-2-1) 예시&lt;/h4&gt;
-
-&lt;p&gt;다음은 cat에 대한 Cross-entropy Loss, L_cat을 구하는 과정이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203774821-e91970df-326d-4308-83d4-9fcda28e7c85.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;각각의 스코어를 지수화 하고, 이를 정규화 시키면 각 클래스에 대한 확률값이 나오게 된다. 이 중, 정답 클래스의 확률을 뽑아 -log를 씌워주면, cat에 대한 Cross-entropy Loss를 구할 수 있게된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;1-2-2-특징&quot;&gt;1-2-2) 특징&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Loss의 범위&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 &amp;lt;= Loss &amp;lt; positive infinity&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;정답 스코어가 양의 무한대, 그 외는 음의 무한대로 발산한다면, 정답 클래스의 확률은 100%가 된다(지수/정규화 시키기 때문). 이 때 Loss는 0(-log(1) == 0)이되며 완벽한 분류가 된다. 반대로, 정답 클래스 스코어가 음의 무한대, 그 외가 양의 무한대로 발산하면, log(0) = 양의 무한대이므로 양의 무한대로 발산한다. 즉, 정답 클래스의 확률이 0%이면 loss는 무한대이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;디버깅 전략&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;모든 스코어 s가 거의 0에 가깝고 값이 서로 비슷하다면 loss는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;log(C)&lt;/code&gt;가 된다. 그 이유는 다음과 같다.&lt;/p&gt;
-
-    &lt;p&gt;우선, 모든 스코어가 비슷한 경우 지수/정규화를 마친 확률값도 비슷하게 나와야 할 것이다. 이 때, 확률의 합은 1이 되어야 하므로, 각각의 확률은 1/클래스의 개수(C)로 모두 동일할 것이다. 여기서 정답 클래스를 뽑아 -log를 씌우게 되면 -log(1/C)이 되는데, 이 값은 로그 변환에 의해 log(C)로 바꿀 수 있다. 따라서 log(C)가 최종 결과가 되는 것이다.&lt;/p&gt;
-
-    &lt;p&gt;이는, 첫 iteration에서의 디버깅 전략으로 유용하게 사용할 수 있으며, 만약 Loss가 log(c)가 아니라면 버그가 있는 것을 확인할 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Multiclass SVM Loss와의 차이점&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;svm은 정답 스코어와 그렇지 않은 스코어 간의 마진을 신경쓴다. 따라서 정답 클래스의 스코어가 충분히 높다면, 정답 스코어가 조금 바뀐다고 해서 loss가 변하진 않는다. 왜냐하면, SVM loss는 정답과 그 외 클래스의 마진이 얼마나 되는지에만 관심있기 때문이다. 반면 Softmax(Cross Entropy Loss)는 정답 클래스의 스코어가 충분히 높고 다른 클래스 스코어가 충분히 낮아도, 최대한 정답에 확률을 몰아 넣으려고 할테고 그 결과, 정답 클래스 스코어는 무한대로, 그 외의 클래스 스코어는 음의 무한대로 발산하게 된다.&lt;/p&gt;
-
-    &lt;p&gt;정리해보자면, SVM Loss는 일정 Margin을 넘으면 더이상 성능 개선에 신경쓰지 않는다. 그러나 Softmax는 더더욱 좋게 성능을 높이려 할 것이다. 두 손실함수의 성능 차이는 엄청나게 크진 않지만, 이러한 차이를 알고 있는 것이 좋다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-regularization-term&quot;&gt;2. Regularization Term&lt;/h2&gt;
-
-&lt;p&gt;Loss Function에는 우리가 앞서 살펴본 Data Loss Term 이외에도 Regularization Term이 존재하는데, 이 Regularization Term이 모델을 단순하게 만들어준다. 다시 말해, Data Loss Term에서는 분류기가 트레이닝 데이터에 fit하게 한다면, Regularization Term에서는 모델이 좀 더 단순한 W를 선택하도록 한다는 것이다. 이는 모델에 soft 패널티를 추가하여 복잡해지지 못하도록 하는 것으로 구현된다. 즉, 일반적으로 모델은 어떠한 문제를 고차 다항식으로 풀려고 하지만, regularization이 저차 다항식을 선호하도록 하며, 만약 복잡한 다항식을 쓰고 싶다면, 모델은 패널티를 감수해야 할 것이다. 만약 Regularization Term 없이 Data loss Term만 존재한다면 모델은 쉽게 오버피팅될 수 있다. 또한, Regularization은 딥러닝 뿐만 아니라 ML에서도 사용하니 기억해두자.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-오컴의-면도날-이론&quot;&gt;2-1) 오컴의 면도날 이론&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203706632-304a78d1-0ebc-4ba0-963e-569b01021acf.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;다양한 가설이 존재하고, 그 가설들이 전부 옳다면 더 단순한 것을 선택하는 것이 좋다는 이론이다. 즉, 더 단순한 가설이 미래에 일어날 현상을 잘 설명할 가능성이 높다는 것이다. 이 이론은 기계학습 분야에서도 적용된다. 만약 상단 이미지의 파란색 그래프처럼 모델이 train 데이터에 오버피팅되면, 새로운 데이터(초록색)에 전혀 대응하지 못하게 된다. 우리는 파란색 그래프가 아니라, 새로운 데이터에도 유동적으로 반응하는 초록색 그래프(강인함)를 원하므로 모델을 어느정도 단순하게 만들 필요가 있다. 이것이 바로 Regularization Term을 사용하는 이유이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-regularization의-종류&quot;&gt;2-2) Regularization의 종류&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203723217-08ef5fca-e242-45d7-a0c9-d03431148fad.png&quot; style=&quot;border:1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L2 regularization&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;weight decay. 가장 보편적이며, W에 대한 Euclidean Norm 또는 Square Norm이라고도 한다. 1/2 * Square Norm을 사용하면 미분이 더 깔끔해진다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L1 regularization&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1 Norm으로 W에 패널티를 부가하여, W가 희소행렬이 되도록 함.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Elastic net regularization&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1과 L2를 혼합시켜놓은 형태&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Max norm regularization&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1, L2 대신 Max norm을 사용함&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-l1-reg-vs-l2-reg&quot;&gt;2-3) L1 reg. vs L2 reg.&lt;/h3&gt;
-
-&lt;p&gt;[1,1,1,1]의 input 이미지가 주어졌을 때, 다음과 같은 w1과 w2라는 가중치가 있다고 가정해보자.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203728984-b6c56793-cd51-4e7e-8328-bfd8a28be4c7.png&quot; style=&quot;border:1px solid black&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Linear Classifier의 관점에서, {w1 (dot) x} == {w2 (dot) x}이므로 w1과 w2 가중치는 동일하다. 하지만 L1 regularization과 L2 regularization이 바라보는 관점은 조금 다르다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L2 regularization&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L2 reg.는 w2 가중치를 더 선호하는데 그 이유는 다음과 같다. L2 reg는 x의 모든 요소가 골고루 영향을 줬으면 한다. 즉, x의 특정 요소에만 의존하기보다 모든 요소가 골고루 영향을 미치게 하여 외부 변화에도 강인해지길 바란다. 따라서 L2 reg는 w1과 w2중 어느것이 더 상대적으로 coarse한지 측정(값이 매끄러워야 함)하여 분류기의 복잡도를 계산한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L1 regularization&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1 reg.는 L2 reg.와는 반대로 오히려 w1을 더 선호한다. L1 reg는 w에 존재하는 0의 개수에 따라 모델의 복잡도를 다루기 때문에 sparse한 solution을 선호한다. 따라서 w의 요소 중 대부분이 0이 되게 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;정리&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;어떤 문제 / 어떤 모델 / 어떤 데이터냐에 따라 복잡하다의 정의가 달라짐&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;L1 : 0이 아닌 것들은 복잡하다&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;L2 : 요소가 전체적으로 퍼져있을 떄 덜 복잡하다&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;데이터와 문제에 따라 L1, L2를 적절하게 선택하면 된다.&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-loss-총정리&quot;&gt;3. Loss 총정리&lt;/h2&gt;
-
-&lt;p&gt;데이터셋 x와 y&lt;/p&gt;
-
-&lt;p&gt;-&amp;gt; Model(Linear Classifier 등)을 통해 x로부터 스코어 얻음&lt;/p&gt;
-
-&lt;p&gt;-&amp;gt; Softmax, SVM등의 Loss function을 통해 모델의 예측값이 정답값에 비해 얼마나 좋지 않은지 측정&lt;/p&gt;
-
-&lt;p&gt;-&amp;gt; 모델의 복잡함과 단순함을 통제하기 위해 Loss function에 regularization term을 추가&lt;/p&gt;
-
-&lt;p&gt;-&amp;gt; Optimization 과정 (아래에서 설명)&lt;/p&gt;
-
-&lt;p&gt;-&amp;gt; 최종 손실함수가 최소가 되게 하는 가중치 행렬이자 파라미터 행렬인 행렬 W를 구하게 됨&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;optimization&quot;&gt;Optimization&lt;/h1&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204129151-9314ec6e-4116-4a79-b9e0-cc0b3adff1c0.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Optimization은 가능한 W의 경우의 수 중, 가장 Loss가 적은 W를 찾아 나가는 과정을 의미하며, 흔히들 산골짜기에서 내려오는 사람에 빗대어 표현하곤 한다. 산의 높이는 Loss가 되고, 우리는 골짜기에 있는 늪이나 개울을 피해 최대한 골짜기의 밑바닥까지 내려와야 하는 것이다. 밑바닥까지 바로 내려갈 수 있으면 좋겠지만, 실제로 NN을 사용하면 예측 함수, Loss func, regularizer같은 것들이 엄청 크고 복잡해진다. 따라서 어떤 명시적인 솔루션을 만들어내서 최적의 솔루션(minima)을 직접 얻어내는 건 불가능하다. 따라서 실제 Optimization은 임의의 지점에서 시작해서 점차적으로 성능 향상시키는 iterative한 방법을 쓴다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-search-방법&quot;&gt;1. Search 방법&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-1-random-search&quot;&gt;1-1) random search&lt;/h3&gt;
-
-&lt;p&gt;랜덤 샘플링한 W를 많이 모아놓고 loss를 계산해서 어떤 w가 가장 좋은지 고르는 방법이다. 매우 구린 성능의 알고리즘이므로 실제로 사용하지는 않고, 한번쯤 상상만 해볼 법한 방법이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-local-geometry-이용-경사하강법&quot;&gt;1-2) local geometry 이용 (경사하강법)&lt;/h3&gt;
-
-&lt;p&gt;특정한 지점에서의 경사(gradient)를 구해, 경사가 하강하는 방향으로 지속적으로 나아가, 최적의 loss를 찾는 방법이다. 골짜기에 빗대어 표현하자면, 어떠한 한 지점을 두 발로 느끼고 그 곳의 지형을 파악하여 땅의 경사(Slope)에 따라 어느 방향으로 가야할지 정하는 방법이다. 위 방법을 계속 반복하여 골짜기를 내려갈 수 있으며, 쉬워보이는 아이디어이지만, 정말 잘 동작한다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;경사(slope)란?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;어떤 함수에 대한 미분값(기울기)을 의미한다. 이때, x가 scalar가 아니라 벡터이므로 미분을 다변수로 확장해야 한다. 다변수 상황에서의 미분은 gradient(벡터 x의 각 요소를 편도함수들의 집합(벡터))를 구하면 되고, gradient의 shape은 x와 같다(입력 3개면 gradient도 3개). 이때 그레디언트가 알려주는 것이 바로, 우리가 그쪽으로 갈 떄 함수 f의 경사(Slope)이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;1-2-1-slope-계산&quot;&gt;1-2-1) Slope 계산&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Numerical gradient(유한 차분법)&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;W의 첫 번째 요소에 차례로 작은 값 h를 넣어 loss를 계산한다. 이 때, 변화된 loss와 원래 loss의 차(y축 증가량)를 h(x축 증가량)로 나누어주면 dW의 첫 번쨰 요소가 완성된다. 이렇게 나머지 원소도 전부 반복하면 gradient dW를 구할 수 있다. 그러나 해당 방법은 파라미터의 개수가 수천, 수만개로 늘어날 경우 끔찍하게 느려서 사용하지 않는 방법이고, 더 정확하고 빠른 Analytic gradient를 더 많이 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204171797-25a0913e-efb4-4141-82b0-5d1ef007a2b8.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204171868-334e3a9d-0e75-4eb7-8583-0bf68e632d99.png&quot; style=&quot;border: 1px solid black;&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Analytic gradient&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;우리는 파라미터 하나하나 모두 계산하는 게 아니라, 단지 W가 변화할 때의 loss를 알고싶을 뿐이다. 이는, 뉴턴과 라이프니츠가 만든 미분식을 이용하면 쉽게 해결할 수 있다. gradient를 나타내는 식이 뭔지만 먼저 찾아내고, 그걸 수식으로 나타내서 한번에 gradient dW를 계산할 수 있는 일종의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;마법의 망치&lt;/code&gt;이다. 이에 대한 자세한 설명은 Chain rule과 함께 다음장에서 설명된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204173167-385183bd-5e6f-415f-ae1a-a290da574c53.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stochastic Gradient Descent (SGD)&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;N이 엄청나게 커질 경우, Loss를 계산하는데 엄청난 시간이 필요하다. Gradient는 선형 연산자이기 떄문에 loss는 각 데이터 loss의 gradient 합이되므로, gradient를 한번 더 계산하려면 N개의 전체 트레이닝 셋을 한번 더 돌면서 계산해야 한다. 따라서 실제로는 SGD를 많이 사용한다. SGD는 전체 데이터의 Gradient와 Loss를 계산하기보다는, Mini batch라는 작은 트레이닝 샘플 집합으로 나누어 학습힌다. 이때, 미니 배치는 보통 2의 승수인 32, 64, 128을 주로 사용하며, 이를 이용해 loss 전체합의 추정치와 Gradient의 추정치를 계산한다. stochasitc 하다는 것은 monte carlo method의 실제 값 추정 방법과 유사하다고 볼 수 있으며, 거의 모든 DNN 알고리즘에 사용되는 기반적인 학습 알고리즘이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204173627-20e9bebe-d387-43bd-b484-c4fa2e015ab9.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;Numerical gradient&lt;/p&gt;
-
-        &lt;p&gt;간단하고 그럴싸하다. loss의 gradient를 계산 하는 코드를 짜고 있을 때, 디버깅 툴로는 사용 가능하다(gradient check). 단, 매우 느리므로, 파라미터의 스케일을 줄여서 사용해야 할 것이다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;Analytic gradient&lt;/p&gt;
-
-        &lt;p&gt;Numerical gradient에 비해 빠르고 정확하다. 하지만 식을 유도하기 위해 많은 수학과 미적분학을 이해해야하며, 실수하기 쉬움. 수학적 검증 필요.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;과정&lt;/p&gt;
-
-        &lt;p&gt;Gradient descent에서 우선 W를 임의의 값으로 초기화 -&amp;gt; 그리고 Loss와 Gradient 계산한 뒤에 가중치를 Gradient 반대 방향으로 업데이트(gradient가 증가하는 방향이기 떄문에 -해야 내려가는 방향이 됨) -&amp;gt; 이걸 무한 반복하면 결국 어딘가에 수렴함&lt;/p&gt;
-
-        &lt;p&gt;cf) step size(learning late) -&amp;gt; 대게 트레이닝 시작 시 가장먼저 정하는 하이퍼 파라미터이다. 학습률(걸음의 보폭)을 정하는 파라미터이며, 너무 작지도 너무 크지도 않은 적절한 값을 정해주어야한다.&lt;/p&gt;
-
-        &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204174790-05c722c5-8a9b-4edf-8fd1-920499df9c1d.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;특징-변환&quot;&gt;특징 변환&lt;/h1&gt;
-
-&lt;p&gt;Linear Classifier는 실제 raw 이미지 픽셀을 입력으로 받지만, 이는 multi-modality와 같은 문제(말머리 두개)가 있을 수 있기 때문에, 좋은 방법은 아니다. 따라서 DNN이 유행하기 전, 다음과 같이 2가지 스테이지를 거치는 방법을 주로 사용했다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204175106-99fd8ff8-082c-42e5-8ddf-f62504e83e76.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;이미지가 있으면 여러가지 특징 표현을 계산(모양새 등등)&lt;/li&gt;
-  &lt;li&gt;이러한 특징 표현들을 한데 연결시켜 하나의 특징 벡터로 만듦&lt;/li&gt;
-  &lt;li&gt;이 특징 벡터를 모델에 input으로 넣어줌&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;1-예시&quot;&gt;1. 예시&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-1-극좌표계-변환&quot;&gt;1-1) 극좌표계 변환&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204175264-433078f0-4955-4647-bda0-f3326ccb2bd2.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위와 같은 이미지는 Linear한 결정 경계를 그릴 방법이 없다. 따라서 그림의 예시는 왼쪽 이미지를 적절하게 극좌표계로 특징 변환(오른쪽 그림)하여, 복잡하던 데이터를 선형으로 분리할 수 있도록 하였다. 이미지의 경우 픽셀들을 극좌표계로 바꾸는 건 말이 안되지만, 극좌표계로 변환하는 것을 일종의 특징 변환이라 생각하면 말이 되며, 실제로 raw 이미지를 넣는것보다 좋은 성능을 보여주고 있다. 따라서 이런 기법들은 해당 이미지에 어떤 특징 변환이 필요한가를 알아내는 것이 중요하다고 할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-컬러-히스토그램&quot;&gt;1-2) 컬러 히스토그램&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204175622-0106d602-581f-4d88-910a-e0e02d82aa22.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이미지에서 hue값만 뽑아서 각 픽셀이 해당하는 색의 양동이에 넣고, 각 양동이에 들어있는 픽셀의 개수를 세는 방법이다. 이는 이미지가 전체적으로 어떤 색인지 알려주며, 실제로 사용하는 간단한 특징 벡터이다.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;ex) 개구리는 초록이 많고, 자주색이나 붉은 색이 적다.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-3-histogram-of-oriented-gradients-hog&quot;&gt;1-3) Histogram of oriented gradients (HoG)&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204176377-a5398d44-0291-4ba1-8faa-93dc04829927.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;oriented edges가 인간의 시각시스템에서 정말 중요하다고 생각한 researcher들이 개발한 특징 벡터이다. NN이 뜨기 전에 인기있었던 또 다른 특징 벡터 중 하나이며, Local orientation edges를 측정한다. 8*8로 픽셀을 나누어 지역 내 가장 지배적인 Edge의 방향을 계산하고, Edge directions를 양자화해서 양동이에 넣어 다양한 Edge orientations에 대한 히스토그램을 계산한다. 오른쪽 사진은 HoG를 시각화한 것이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-4-bag-of-words&quot;&gt;1-4) bag of words&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/204177939-cb3e063c-07ba-47f7-a632-f40bff640fb4.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;BOW 여러 문장의 단어 발생 빈도를 세어 특징 벡터로 사용하는 것에서 아이디어를 얻어 이미지에 적용한 방법이다. 시각 단어라고 하는 것을 만들었으며, 매우 많은 이미지를 가지고 그 이미지들을 임의대로 조각내고 k-means와 같은 알고리즘으로 군집화한다. 이는 이미지내의 다양한 것들을 표현할 수 잇는 군집을 만든 것이며, 군집화 단계를 거치고 나면 시각 단어는 빨강 파랑 노랑과 같은 다양한 색을 포착해냄뿐만 아니라 다양한 종류와 다양한 방향의 oriented edges또한 포착할 수 있다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 3</summary></entry><entry><title type="html">[Jekyll]빌드 속도 최적화</title><link href="http://localhost:4000/blog/optim_jekyll/" rel="alternate" type="text/html" title="[Jekyll]빌드 속도 최적화" /><published>2022-11-23T00:00:00+09:00</published><updated>2022-11-23T00:00:00+09:00</updated><id>http://localhost:4000/blog/optim_jekyll</id><content type="html" xml:base="http://localhost:4000/blog/optim_jekyll/">&lt;h2 id=&quot;1-최적화-방법&quot;&gt;1. 최적화 방법&lt;/h2&gt;
-
-&lt;p&gt;Hugo 대비 Jekyll의 가장 큰 단점은 바로 빌드 시간이 매우 느리다는 것이다. 포스팅의 개수가 늘어날수록 빌드 시간은 매우 느려져서, 혹자의 경우 빌드 시간이 10분을 초과하는 경우도 있다고 한다. 따라서 해당 포스팅에서는 Jekyll 빌드 시간을 최적화하는 방법에 대해 소개한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-liquid-c&quot;&gt;1-1) liquid-c&lt;/h3&gt;
-
-&lt;p&gt;liquid-c를 설치하면, liquid문을 C로 처리하면서 빌드 속도를 올려준다고 한다. gem install을 사용하여 쉘에서 직접 설치하거나, gemfile 작성 후 bundle install로 liquid-c를 설치해주면 끝이다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;1. 직접 설치&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;liquid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;2. gemfile 작성&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;liquid-c&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-2-incremental-옵션-변경&quot;&gt;1-2) incremental 옵션 변경&lt;/h3&gt;
-
-&lt;p&gt;기존 jekyll은 하나의 파일만 수정되어도, 전체 파일을 전부 빌드한다. 따라서 포스트 개수가 많아질수록 빌드 시간도 오래 걸린다. 필자의 경우, 포스팅 100개 기준 빌드 시간은 약 15초정도였다. 따라서 바뀐 부분만 빌드되게 하여 빌드 속도를 크게 향상시킬 수 있다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;incremental&lt;/code&gt;옵션을 true로 바꾸어주면 자동으로 적용된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-3-limit-post-설정&quot;&gt;1-3) limit post 설정&lt;/h3&gt;
-
-&lt;p&gt;jekyll 빌드 시, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--limit_posts&lt;/code&gt; 플래그를 사용하면, post 개수에 제한을 걸어 빌드할 수 있다. 가령 터미널에 다음과 같이 입력했다고 가정하면, 작성일자 기준 최신 3개의 포스팅만 볼 수 있다. 포스팅 디버깅할 떄 아주 유용하게 사용할 수 있을 것 같다.&lt;/p&gt;
-
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;bundle&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jekyll&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serve&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;limit_posts&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-속도-차이&quot;&gt;2. 속도 차이&lt;/h2&gt;
-
-&lt;p&gt;생각보다 속도 차이가 엄청나서 깜짝 놀랐다. 빨라져봤자 3~4초정도일 줄 알았는데, 거의 15배 가량의 눈부신 성능 향상을 보여주었다.&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[최적화 전]&lt;/strong&gt;&lt;/div&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203552958-6d710312-cf2b-487e-951f-10cb1ef022ad.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[최적화 후]&lt;/strong&gt;&lt;/div&gt;
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203555535-3e3e189b-ccfb-42c8-ad58-7285ddb7a2d8.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">다양한 방법을 사용하여 Jekyll 빌드 시간 개선</summary></entry><entry><title type="html">[CS231n]Image Classification</title><link href="http://localhost:4000/dl/cs231n_2/" rel="alternate" type="text/html" title="[CS231n]Image Classification" /><published>2022-11-22T00:00:00+09:00</published><updated>2022-11-22T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_2</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_2/">&lt;h1 id=&quot;구현-코드&quot;&gt;구현 코드&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/On-JungWoan/CS231n/blob/master/script/Lecture_2.ipynb&quot;&gt;https://github.com/On-JungWoan/CS231n/blob/master/script/Lecture_2.ipynb&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;image-classification&quot;&gt;Image Classification?&lt;/h1&gt;
-
-&lt;p&gt;Image Classification이란, Input image를 받아 미리 정해놓은 category 집합 중 어디에 속하는지를 알아맞추는 Computer Vision 분야이다. 이 과정은 사람에게는 매우 쉽지만 기계에게는 어려운 일이다. 왜냐하면 컴퓨터는 이미지를 거대한 숫자집합으로만 인식하기 때문이다(semantic gap). 이미지에 아주 미묘한 변화만 줘도 픽셀 값들은 모조리 달라지며, 알고리즘은 이런것들&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(조명, 화각, 객체 자세 변화, 가려짐, background clutter:배경과 비슷, 하나의 클래스에서의 다양성 등등)&lt;/code&gt;에 강인해야 한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203449094-862884d0-3a22-49f8-bd8d-c351c8086c13.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;image-classification의-방법&quot;&gt;Image Classification의 방법&lt;/h1&gt;
-&lt;h2 id=&quot;1-명시적인-규칙-집합-선언&quot;&gt;1. 명시적인 규칙 집합 선언&lt;/h2&gt;
-
-&lt;p&gt;명시적으로 모든 case에 대한 조건을 하드 코딩하는 알고리즘이다. 강인하지 않고, 또 다른 객체 인식 시, 규칙을 처음부터 다시 선언해야 하기에 확장성이 없다는 큰 문제점이 있어 CV에서는 사용하지 않는다.&lt;/p&gt;
-
-&lt;h2 id=&quot;2-data-driven-approach&quot;&gt;2. Data-Driven Approach&lt;/h2&gt;
-&lt;p&gt;해당 데이터를 매우 많이 수집하여 ML Classifier를 학습하는 방법이다. 데이터 중심 접근 방법은, 물고기는 무엇이고 고양이는 무엇이다라고 일일이 하드 코딩을 하지 않고, 고양이/물고기 사진을 매우 많이 수집하여 컴퓨터가 스스로 학습할 수 있게 한다.(본 강의는 CIFAR-10을 사용하여 설명한다.)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451073-be3dfd3b-6534-4213-a3cc-26d35021f2dc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-nearest-neighbor&quot;&gt;2-1) Nearest Neighbor&lt;/h3&gt;
-
-&lt;p&gt;모든 데이터 저장하고(train) 가장 유사한 이미지를 찾는(pred) 가장 간단한 Data-Driven Approach Classifier이다. 다양한 거리척도를 사용하여 유사성을 판단하며, train 시간보다 test 시간이 더 느리다는 특징이 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451448-6422ad0a-9412-4881-a117-473ebc3029bc.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-1-유사성-판단&quot;&gt;2-1-1) 유사성 판단&lt;/h4&gt;
-
-&lt;p&gt;NN은 유사성 판단에 사용하는 거리척도를 사용한다. 거리척도에는 대표적으로 L1(manhattan) distance, L2(Euclidean) distance가 있다. 거리척도마다 특성이 다르기 때문에, 데이터 및 target의 성질에 따라 적절한 거리척도를 사용해주는 것이 좋다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203452036-3034f012-6434-493e-ac2b-f1f6a93846cd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L2 distance&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1 distance는, test와 train 이미지 픽셀간 차이의 제곱을 계산하며, 모든 픽셀의 수행결과를 모두 더한 뒤, 제곱근을 구한다. 좌표계와 연관이 없으며 각 요소의 특성을 잘 모를때 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;L1 distance&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1 distance는, test와 train 이미지 픽셀간 차이의 절대값을 계산하며, 모든 픽셀의 수행결과를 모두 더한다. 아래와 같은 예제에서, test 이미지와 train 이미지는 L1 distance 기준 456만큼 차이가 난다고 할 수 있다. L1 distance는 어떤 좌표 시스템이냐에 따라 영향을 많이 받는다. 좌표계만 회전시켜도 distance가 변하며, 각 요소가 특별한 의미를 가지고 있을 때(봉급, 나이 등등) 사용.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203451690-c2fac68d-b52c-4831-a443-763a7045a034.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-2-구현&quot;&gt;2-1-2) 구현&lt;/h4&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;2-1-3-속도&quot;&gt;2-1-3) 속도&lt;/h4&gt;
-
-&lt;p&gt;train set의 이미지가 N개일때의 속도는 다음과 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;train&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;O(1) : 단순히 데이터를 기억하기만 하면 됨&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;pred&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;O(N) : N개의 모든 이미지와 비교하는 과정이 필요함&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;predict 속도가 train 속도보다 느리다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-4-문제점&quot;&gt;2-1-4) 문제점&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;속도 문제&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;우리는 train 속도는 느리더라도 predict 속도가 빠른 것을 원한다. train 과정은 어차피 개발 과정에서 진행되는 것이기 때문에, 속도가 느려도 개발 기간이 늘어날 뿐 큰 문제가 되지 않는다. 그러나 실제 서비스 시에는, 모델이 핸드폰이나 브라우저 같은 low power device에서 동작해야할 수도 있기 때문에, predict 속도가 어느정도 빨라야한다. NN은 이러한 우리의 기대와 정반대이기 때문에 실제 서비스 시 사용하기 어렵다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Decision Regions&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;다음은 NN의 Decision Regions를 나타낸 것이다. 2차원 평면상의 각 점은 train 데이터이며, 각 점의 색은 해당 점의 클래스를 나타낸다. 색이 칠해진 영역은 NN이 만들어낸 결정 영역이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203455284-5189918d-43c7-4ac4-a1e8-2cd45c582d2a.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 사진에서 보았듯이, NN은 최근접 이웃만을 보고 결정 영역을 생성하므로 이상치에 매우 민감하다. 따라서, 초록색 영역 한 가운데에 노란색 영역이 생기기도 하고, 파란색 영역에 빨간색과 초록색이 침범하기도 하는 등, 제대로 된 분류가 되고있지 않다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-k-nearest-neighbors&quot;&gt;2-2) k-Nearest Neighbors&lt;/h3&gt;
-
-&lt;p&gt;NN의 문제점을 일부 개선한 K-NN은, 단순히 가장 가까운 이웃을 찾기보다는 k개의 가까운 이웃을 찾고 이웃끼리 투표를 진행한다. 여기서 가장 많은 투표를 획득한 클래스를 최종 클래스로 분류한다. K는 적어도 1보다 커야 결정 경계가 더 부드러워지고 좋은 결과를 보이며, 여기서 K는 하이퍼 파라미터이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203457109-9e545353-e202-45d6-8b5d-5c9f9a0cdfe3.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이미지 분류에서 K-NN은 성능이 좋지 않지만, K-NN에 다양한 거리 척도를 사용하면 다양한 문제를 다룰 수 있음(e.g. NLP). 거리척도만 잘 정해주면 어떤 종류의 데이터도 다룰 수 있기 때문에, 새로운 문제를 접했을 때 간단히 시도해 볼만함.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-2-1-하이퍼-파라미터&quot;&gt;2-2-1) 하이퍼 파라미터&lt;/h4&gt;
-
-&lt;p&gt;K-NN의 하이퍼 파리미터에는 K와 거리척도가 있다. 학습 전 사전에 반드시 정해야 하며, 여러가지를 실험/시도해보고 최고를 찾아야 한다. 다음은 하이퍼 파라미터 튜닝의 가능한 시나리오별 정리 내용이다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;1. 학습 데이터의 정확도와 성능을 최대화하는 하이퍼 파라미터 선택&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;terrible idea&lt;/li&gt;
-      &lt;li&gt;K=1일 때, 모델은 학습 데이터를 완벽하게 분류하지만, 위 decision regions에서도 보았듯이, test 데이터에 대해서는 제대로 된 분류가 되지 않는다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458068-f57a5b93-e8ae-48e9-a9c4-ba12cd55de39.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;2. 전체 데이터 중 학습 데이터를 쪼개서 학습 데이터로 다양한 하이퍼 파라미터 값들을 학습시키고 테스트 데이터에 적용&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;조금 더 합리적이지만 여전히 terrible idea.&lt;/li&gt;
-      &lt;li&gt;한번도 보지 못했던 데이터에 대해서 성능이 잘 나와야 하지만, 그저 테스트 셋에서만 잘 동작하는 하이퍼파라미터가 됨.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458458-36766ff4-ddd6-419f-8963-5041b8cef1eb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;3. train, validation, test로 나눔&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;가장 괜찮은 시나리오이다.&lt;/li&gt;
-      &lt;li&gt;다양한 하이퍼 파라미터로 트레인 셋을 학습시키고, validation 데이터로 검증한다. 이 때, 가장 좋았던 하이퍼 파라미터를 선택하고, 해당 하이퍼 파라미터를 test에서는 오로지 한번만 수행하여 스코어를 산출한다. 이렇게 되면, test 데이터는 한번도 보지 못한 데이터가 되어 올바른 score를 계산할 수 있다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458560-1e5b8c16-5c4f-4521-b5dd-9eabf3a61d97.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;4. cross validation(교차검증)&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;작은 데이터셋일 때 사용하며 딥러닝에서는 계산량이 많아 잘 사용하지 않는다.&lt;/li&gt;
-      &lt;li&gt;이외 ML에서는 거의 표준처럼 사용한다.&lt;/li&gt;
-      &lt;li&gt;test 데이터를 정하고 validation set을 번갈아가며 지정하는 방식&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203458924-c24f7882-c2c0-4a3f-93b3-f2647d4f71fd.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-2-2-문제점&quot;&gt;2-2-2) 문제점&lt;/h4&gt;
-
-&lt;p&gt;이미지에 K-NN을 사용할 수 없는 이유는 다음과 같다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;1. 너무 느린 predict 시간&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;위에서 설명했듯이, predict 시간이 너무 느리다. train 속도는 느리더라도 predict 속도가 빠른 모델이 좋은 모델이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;2. 거리척도의 지각적 유사성 판단 불가&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;L1/L2 Distance는 이미지간의 거리를 측정하기에 유용하지 않음&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203459190-a57a08ae-6a1a-4723-8828-84582b774aa6.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 사진은 원본 이미지를 적절히 변형한 것이다. 하지만 위 사진의 L2 Distance는 모두 동일하다. 지각적 유사도를 측정하기에 적합하지 않다는 것이다. 혹자는 해당 이미지가 모두 같은 사람이므로 모두 같은 거리이면 좋은 게 아닌가?라고 생각할 수도 있다. 그러나 이 말인 즉슨, 서로 다른 이미지에 대해 적절한 변형을 통해 distance를 가깝게 만들 수도 있고, 동일 이미지에 대해서 미묘한 변화에도 제멋대로 distance가 변할 수 있다는 말과 같다. 이는, 글의 서두에서 밝힌 강인함을 모델이 만족하지 못한다는 뜻이다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;3. 차원의 저주 문제&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468262-2a19d329-1c78-45b3-8417-34182e624887.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;K-NN은 트레인 데이터를 이용하여 공간을 분할한다. 따라서 K-NN이 잘 동작하려면 전체 공간을 조밀하게 커버할 만큼의 충분한 트레이닝 샘플이 필요하며, 차원이 증가함에 따라 필요한 샘플의 수는 기하급수적으로 증가한다. 기하 급수적으로 증가하는 모든 것은 언제나 옳지 않으며, 특히 CV에 사용되는 고화질 이미지는 더더욱 데이터 확보가 어렵다는 문제가 있다.&lt;/p&gt;
-
-&lt;h2 id=&quot;3-parametric-approach&quot;&gt;3. Parametric Approach&lt;/h2&gt;
-
-&lt;h3 id=&quot;3-1-linear-classifier&quot;&gt;3-1) Linear classifier&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203469905-ae426a2c-aee7-4b94-86e0-212b85c640fb.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;아주 간단한 Neural Network과 CNN 기반 알고리즘이다. Nueral Network와 CNN은 마치 레고 블럭과 같은데, 이러한 딥러닝 알고리즘의 가장 기본이 되는 블럭이 바로 Linear classifier이다. parametric model의 가장 단순한 형태이며 입력 이미지 x와 가중치 w를 요소로 갖고, F(x,W) = Wx + (bias)의 형태로 표현된다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-1-1-속도&quot;&gt;3-1-1) 속도&lt;/h4&gt;
-
-&lt;p&gt;K-NN은 파라미터 없이 그저 전체 트레이닝 셋을 가지고 있었고, 모든 트레이닝 셋을 test time에 사용하여, predict time이 매우 오래걸렸다. 그러나, parametric approach에서는 트레이닝 데이터의 정보를 요약하여 파라미터 W에 모아주기 때문에, predict시에는 W만 있으면 된다. 트레이닝 데이터가 필요 없기 떄문에 predict time이 훨씬 빠르다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-1-2-내부-연산&quot;&gt;3-1-2) 내부 연산&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203468925-ac0e2616-2d05-4d27-bd57-5dc430618151.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Linear classifier는 x와 W를 가지고 class의 개수와 동일한 output을 출력한다. 각각의 숫자는 각 카테고리의 스코어이며, 특정 카테고리의 스코어가 높다는건, x가 해당 카테고리일 확률이 높다는 것이다.&lt;/p&gt;
-
-&lt;p&gt;CIFAR-10을 예로 들어보겠다. 입력이미지는 (32,32,3)의 shape를 가지는 array인데, 해당 array를 (32×32×3=3012, 1)의 열 벡터로 펴준다. 해당 열 벡터가 10-classes 스코어가 되어야 하므로, 10×3072가 되어야 한다. 따라서 최종적으로 W(10×3072) × X(3072×1) = 10×1짜리 스코어가 출력된다. bias term은 10-dim 열 벡터로 입력과 직접 연결되지는 않고, 데이터와 독립적으로 각 카테고리에 연결된다. 고양이가 개 데이터보다 많다면 고양이 클래스에 상응하는 bias가 더 커지는 형태이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-1-3-문제점&quot;&gt;3-1-3) 문제점&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;템플릿 관점&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470870-c5194c31-15a9-4df7-8d96-ec8e25eb1939.png&quot; style=&quot;border:1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 이미지는 가중치 행렬 W의 한 행을 뽑아서 이미지로 시각화 해본 결과이다. W의 특정 행 벡터(특정 카테고리)와 이미지의 열벡터간의 내적을 계산하는 것은, 클래스 간 템플릿의 유사도를 측정하는 것과 유사하다. 따라서 가중치 행렬 W의 각 행은 각 이미지에 대한 템플릿으로 볼 수 있다. 여기서, Linear classifier는 각 클래스에 대해서 단 하나의 템플릿만을 학습한다. 한 클래스 내에 다양한 특징이 존재할 수 있지만 모든 것을 평균화하기 때문에 horse의 경우 말 머리가 앞뒤에 존재하는 등 제대로 된 템플릿을 생성하는 데 한계가 존재한다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;결정경계 관점&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/203470910-bc0e95e3-cf16-4cea-98d4-0990473c1671.png&quot; style=&quot;border:1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이미지를 고차원 공간의 한점이라고 보면, Linear classifier는 각 클래스를 구분시켜 주는 선형 결정 경계를 그어준다. 하지만 선이 하나(템플릿이 하나)이기 때문에, 선 하나로 분류할 수 없는 문제가 생길 수 있다. 가령, 홀/짝수를 분류하는 것과 같은 parity problem은 Linear Classifier로 풀기 힘들다.&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 2</summary></entry></feed>
+  [1) [CS231n]Training Neural Networks, Part Ⅱ](https://on-jungwoan.github.io/dl/cs231n_7/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry></feed>
