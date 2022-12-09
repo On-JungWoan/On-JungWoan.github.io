@@ -1,5 +1,5 @@
 ---
-title:  "[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법"
+title:  "[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)"
 excerpt: "How to Automate the Indexing Process on Google Search Console"
 
 categories:
@@ -157,3 +157,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
 ```
+
+https://jlhernando.com/blog/url-inspector-automator-node/
+https://www.hahwul.com/2021/07/25/automation-seo-with-google-indexing/
+https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
+https://zzsza.github.io/development/2020/06/06/github-action/
+https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&supportedpurview=project
