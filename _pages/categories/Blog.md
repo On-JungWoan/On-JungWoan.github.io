@@ -1,5 +1,5 @@
 ---
-title: "Blog dev"
+title: "Jekyll dev"
 layout: archive
 permalink: categories/Blog
 author_profile: true
