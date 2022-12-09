@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-09T13:36:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-09T17:56:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
 
 ![image](https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png)
 
@@ -142,7 +142,215 @@ https://jlhernando.com/blog/url-inspector-automator-node/
 https://www.hahwul.com/2021/07/25/automation-seo-with-google-indexing/
 https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
 https://zzsza.github.io/development/2020/06/06/github-action/
-https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
+https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]CNN Architectures(초안)</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">&lt;h2 id=&quot;lenet&quot;&gt;LeNet&lt;/h2&gt;
+
+&lt;p&gt;industry에 아주 성공적으로 적용된 최초의 ConvNet이다. 
+LeNet은 이미지를 입력으로 받아, stride=1인 5x5 필터를 가지고 몇 개의 conv layer와 pooling layer를 거침. 그리고 끝단에는 FC LAyer가 붙음. 간단하지만 매우 우수한 성능을 보임&lt;/p&gt;
+
+&lt;h2 id=&quot;2012--alexnet&quot;&gt;2012 : AlexNet&lt;/h2&gt;
+
+&lt;p&gt;최초의 Larg scale CNN이며, ImageNet Classification Task에서 놀라운 성능을 보여 2012년 Image Classification Benchmark에서 우승한 모델이다. 2012년에 등장한 non-딥러닝 모델을 능가하는 성능을 보여줘 ConvNEt 연구의 부흥을 일으킨 장본인임. CNN기반 최초의 우승 모델이며 이후 수년동안 대부분 CNN 아키텍쳐의 베이스 모델로 사용됨.&lt;/p&gt;
+
+&lt;p&gt;기본적으로 conv-pool-normalization 구조가 2번 반복됨. 그 후에 conv layer가 조금 더 붙고 그 뒤에 pooling layer가 있따. 마지막에는 FC-layer가 몇개 있는 구조. 생긴 것만 봐서는 LeNet과 상당히 유사하고 레이어만 더 많아진 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;크기&quot;&gt;크기&lt;/h3&gt;
+
+&lt;p&gt;ImageNet 기준 input image 크기 : 227x227x3임
+AlexNEt의 첫 레이어는 11x11 필터가 stride=4로 96개 존재한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;첫-번째-layer-conv1&quot;&gt;첫 번째 Layer CONV1&lt;/h4&gt;
+
+&lt;p&gt;출력 사이즈 : (227-11)/4 + 1 -&amp;gt; 55x55x96
+-&amp;gt; 이유 적어보기 (필터 사이즈. 개수 연관해서)&lt;/p&gt;
+
+&lt;p&gt;전체 파라미터 수
+(11x11x3 -&amp;gt; 필터 하나)x96 = 35K&lt;/p&gt;
+
+&lt;h4 id=&quot;두-번째-layer-pool1&quot;&gt;두 번째 Layer POOL1&lt;/h4&gt;
+
+&lt;p&gt;stride=2인 3x3 filter가 있다고 했을 때&lt;/p&gt;
+
+&lt;p&gt;출력 사이즈 : (55-3)/2 + 1 -&amp;gt; 27x27x96
+pooling Layer는 이미지의 사이즈는 줄이지만, depth는 일정하게 유지&lt;/p&gt;
+
+&lt;p&gt;전체 파라미터 수
+Pooling Layer에는 파라미터가 없다 -&amp;gt; 헷갈림 주의
+파라미터는 우리가 학습시켜야 할 파라미터인데, Pooling layer는 단순히 down sampling의 용도로만 사용되므로 파라미터 필요 없음&lt;/p&gt;
+
+&lt;p&gt;나머지 AlexNet Layer도 계산해보기 (도움 많이될 것임)
+마지막 FC-Layer는 Softmax를 통과&lt;/p&gt;
+
+&lt;h3 id=&quot;특징&quot;&gt;특징&lt;/h3&gt;
+
+&lt;p&gt;Activation function으로는 ReLU를 사용
+Local response normalization layer는 요즘은 잘 사용하지는 앟음(큰 효과 없는 것으로 알려짐)&lt;/p&gt;
+
+&lt;p&gt;flipping, jittering, cropping, color norm 등의 data augmentation을 엄청 함
+Dropout을 사용했으며, Batch size는 128, SGD Momentum을 optimizer로 사용.
+초기 Learning rate는 1e-2로 initialize했으며, val accuracy가 올라가지 않는 지점에서는 학습이 종료되는 시점까지 lr을 1e-10까지 줄였다.(learning rate decay?)
+weight decay를 사용했고, 마지막에는 여러개의 모델을 앙상블하여 성능을 향상시킴.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;cf) weight decay란?&lt;/p&gt;
+
+    &lt;p&gt;Overfitting 문제를 해결하기 위해서 여러가지 방법이 쓰일 수 있는데, 그 중 한가지가 Weight decay이다. Loss function이 작아지는 방향으로만 단순하게 학습을 진행하면 특정 가중치 값들이 커지면서 위 첫번째 그림처럼 오히려 결과가 나빠질 수 있다. Weight decay는 학습된 모델의 복잡도를 줄이기 위해서 학습 중 weight가 너무 큰 값을 가지지 않도록 Loss function에 Weight가 커질경우에 대한 패널티 항목을 집어넣는다. 이 패널티 항목으로 많이 쓰이는 것이 L1 Regularization과 L2 Regularization이다. Weight decay 를 적용할 경우 위 두번째 그림처럼 Overfitting에서 벗어날 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;다른-conv-net과의-차이점&quot;&gt;다른 conv net과의 차이점&lt;/h3&gt;
+
+&lt;p&gt;첫 Layer에서 모델이 두 개로 나눠져서 서로 교차하는 것을 확인할 수 있는데, 이는 당시 GPU 메모리의 한계로 인해 레이어를 나눠서 넣었기 때문이다(55x55x96 -&amp;gt; 55x55x48 2개).&lt;/p&gt;
+
+&lt;p&gt;conv 1,2,4,5는 같은 GPU내의 Feature Map만 사용하여 48개의 Feature만 사용.
+conv 3과 FC 6,7,8은 전체 feature map과 연결되어 있음 -&amp;gt; GPU간의 통신을 하여 이전 레이어의 전체 depth를 가져올 수 있음&lt;/p&gt;
+
+&lt;h3 id=&quot;issue&quot;&gt;issue&lt;/h3&gt;
+
+&lt;p&gt;논문의 그림에서는 첫 레이어가 224x224로 되어있지만 실제 입력은 227x227이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;2013--zfnet&quot;&gt;2013 : ZFNet&lt;/h2&gt;
+
+&lt;p&gt;AlexNet의 하이퍼 파라미터를 개선한 모델이다. AlexNet과 같은 레이어 수이고 기존적인 구조도 같지만, stide size 필터 수 같은 하이퍼 파라미터를 조절해서 an의 error rate를 개선시킴. alex net과 기존 아이디어는 동일하다.&lt;/p&gt;
+
+&lt;h2 id=&quot;2014--googlenetgoogle-vggnetoxford&quot;&gt;2014 : GoogLenet(Google), VGGNet(Oxford)&lt;/h2&gt;
+
+&lt;p&gt;아키텍쳐도 많이 변했고 성능이 향상되었으며, 네트워크가 훨씬 깊어지기 시작한 시기. 
+2013년까지는 8개 레이어였다가 2014년에는 19~22레이어로 늘어났다.&lt;/p&gt;
+
+&lt;h2 id=&quot;vggnet&quot;&gt;VGGNet&lt;/h2&gt;
+
+&lt;h3 id=&quot;특징-1&quot;&gt;특징&lt;/h3&gt;
+
+&lt;p&gt;훨씬 깊어졌고, 더 작은 필터를 사용함. -&amp;gt; alex(8), vgg(16~19)
+vggnet은 항상 3x3의 아주 작은 필터만 사용한다. 그리고 이는 이웃 픽셀을 포함할 수 있는 가장 작은 필터이다.
+이렇게 작은 필터를 유지하며 주기적으로 pooling을 수행하며 전체 네트워크를 구성함.
+imagenet에서 7.3%의 top 5 error를 기록함&lt;/p&gt;
+
+&lt;h3 id=&quot;작은-필터를-사용한-이유&quot;&gt;작은 필터를 사용한 이유?&lt;/h3&gt;
+
+&lt;p&gt;필터의 크기가 작으면 파라미터의 수가 더 작기 때문에, 레이어를 더 많이 쌓을 수 있다.(depth를 더 키울 수 있다). 3x3 필터를 여러개 쌓은 것은 결국 7x7 필터를 사용하는 것과 실질적으로 동일한 receptive field(filter가 한번에 볼 수 있는 입력의 spatial area) 갖는것임.&lt;/p&gt;
+
+&lt;p&gt;https://bookandmed.tistory.com/58 여기 설명 읽어보기&lt;/p&gt;
+
+&lt;p&gt;-&amp;gt; 7x7 필터와 실질적으로 동일한 receptive field를 가지면서도 파라미터 수는 더 줄일 수 있음 -&amp;gt; 따라서 더 깊은 레이어를 쌓을 수 있게 됨으로써 Non-Linearity를 더 추가할 수도 있게됨&lt;/p&gt;
+
+&lt;h3 id=&quot;전체-파라미터의-갯수&quot;&gt;전체 파라미터의 갯수&lt;/h3&gt;
+
+&lt;p&gt;각 레이어 당 (3x3xCxC), 레이어가 3개이므로 (3x3xCxC)x3?
+7x7 필터는 7x7xCxC?????
+AlexNet 전체 파라미터 수 세보기&lt;/p&gt;
+
+&lt;p&gt;###&lt;/p&gt;
+
+&lt;p&gt;VGG16의 Layer 수는 16개
+VGG19는 유사한 아키텍쳐이지만, Conv Layer가 조금 더 추가되었다.
+각 노드가 4byte를 차지하므로 Forward Pass만 해도 약 100MB의 메모리가 필요함.
+backward pass까지 고려하면 메모리가 더 맣ㄴ이 필요함
+만약, 메모리가 5GB라면, 50장의 이미지밖에 처리 못하는 것임&lt;/p&gt;
+
+&lt;p&gt;또한 전체 파라미터 개수는 138M개로 alexnet(68M)의 2배이다.
+특히 FC-Layer에서 엄청난 양의 파라미터를 사용한다.
+따라서 최근 일부 네트워크는 파라미터를 줄이기 위해 FC Layer를 없애기도 한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;cf) 명칭&lt;/p&gt;
+
+    &lt;p&gt;conv3-64 : 64개의 필터를 가진 3x3 conv 필터&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;특징-2&quot;&gt;특징&lt;/h3&gt;
+
+&lt;p&gt;VGG16과 VGG19는 매우 유사하며, VGG19가 조금 더 깊음. VGG19가 성능은 아주 조금 더 좋고, 메모리 사용량도 조금 더 맣ㄴ다. 보통은 16을 더 많이 사용함. 
+alex처럼 앙상블 기법을 사용하였음.&lt;/p&gt;
+
+&lt;h2 id=&quot;googlenet--inceptionnet&quot;&gt;GoogLeNet == InceptionNet&lt;/h2&gt;
+
+&lt;p&gt;2014년 classfication challenge에서 우승함
+22개의 레이어를 가지고 있고, 매우 깊은 네트워크임.
+효율적인 계싼을 하도록 네트워크를 디자인 하였으며, inception module을 여러개 쌓아서 만듦
+파라미터를 줄이기 위해 fc-layer를 제거하였음.
+파라미터 수는 5M으로, 60M인 alex보다도 적음
+그럼에도 불구하고 훨씬 깊음&lt;/p&gt;
+
+&lt;h3 id=&quot;inception-module&quot;&gt;inception module&lt;/h3&gt;
+
+&lt;p&gt;inception module 내부에는 동일한 입력을 받는 서로다른 다양한 필터들이 병렬로 존재함.
+이전 레이어의 입력을 받아 다양한 ocnv 연산을 수행하는 것임
+각 레이어에서 각각의 출력이 나오게 되는데, 그 출력들을 모두 depth 방향으로 합침
+이렇게 합치면 하나의 tensor로 출력이 결정되고, 이 하나의 출력을 다음 레어이로 전달하는 것&lt;/p&gt;
+
+&lt;h4 id=&quot;계산비용의-문제점&quot;&gt;계산비용의 문제점&lt;/h4&gt;
+
+&lt;p&gt;예를 들어, input으로 28x28x256을 받는 inception module을 생각해보자.
+각 Layer의 계산 비용을 합치게 되는데, 28x28은 동일하고(spatial dimention을 동일하게 맞춰주기 위해 zero-padding을 해줬음) depth가 점점 쌓이게 된다.
+최종적으로 28x28x672가 됨.
+inception module의 input은 28x28x256이었으나, output은 28x28x672가 된 것임
+spatial dimention이 변하진 않았지만, dimention이 엄청나게 늘어남.
+계산량을 전부 더해보면, inception module에서의 전체 연산량은 854M이 된다. -&amp;gt; 매우 많은 연산량
+layer를 거칠 떄마다 depth가 점점 늘어나게 됨(256-&amp;gt;672-&amp;gt;…).&lt;/p&gt;
+
+&lt;h4 id=&quot;해결--bottleneck-layer&quot;&gt;해결 : bottleneck layer&lt;/h4&gt;
+
+&lt;p&gt;conv 연산을 수행하기에 앞서 입력을 더 낮은 차원으로 보내는 방법임.
+낮은 차원으로 보낸다?&lt;/p&gt;
+
+&lt;p&gt;만약 56x56x64의 input img에 1x1 CONV with 32 filters를 사용하면, 
+이미지 크기는 그대로 유지한 채 depth를 32로 줄일 수 있다.
+-&amp;gt; spatial locatin은 유지한 채 입력의 차원을 더 낮은 차원ㅇ로 projection
+-&amp;gt; 이는 input feature map들간의 linear combination(선형결합)이라고 할 수 있음
+왜냐? 각 필터는 input image의 channel과 동일한 depth를 가지고 각 채널의 연산 결과를 하나로 합침&lt;/p&gt;
+
+&lt;p&gt;주요 아이디어 : 1x1 conv를 사용하여 입력의 depth를 줄인다.&lt;/p&gt;
+
+&lt;p&gt;CONV 이전에 1x1 conv가, POOL 이후에 1x1 conv가 추가된 것을 확인할 수 있음
+1x1 conv가 bottleneck layers의 역할로 추가되는 것이다.&lt;/p&gt;
+
+&lt;p&gt;[계산]
+input : 28x28x256 -&amp;gt; 28x28x480
+계산량:  854M(no bottle) -&amp;gt; 358M(use bottle)&lt;/p&gt;
+
+&lt;p&gt;=&amp;gt; 이를 통해 배울 수 잇는 점 : 1x1 CONV를 사용하면 계산량이 줄어든다.&lt;/p&gt;
+
+&lt;p&gt;googlenet은 이러한 inception model을 쌓아올린 것임&lt;/p&gt;
+
+&lt;h3 id=&quot;구조&quot;&gt;구조&lt;/h3&gt;
+
+&lt;p&gt;가중치를 가진 레이어는 총 22개이며, inception moudul은 1x1/3x3/5x5 conv layer를 병렬적으로 가지고 있음.&lt;/p&gt;
+
+&lt;p&gt;앞단(stem) : 일반적인 네트워크 구조처럼 conv-pool을 반복
+중간 : 조금씩 다른 inception module을 쌓음.
+-특이한 점&lt;/p&gt;
+
+&lt;p&gt;중간에 보조 분류기(auxiliary classifier)가 존재
+  avgpool, conv, fc등으로 이루어져 있으며, softmax로 1000개의 imagenet class를 구분함
+  -&amp;gt; 네트워크의 끝에서 뿐만 아니라 이 두 곳에서도 loss를 계산한다(네트워크가 깊기 때문)
+  보조 분류기를 중간 레이어에 달아주면 추가적인 그레디언트를 얻을 수 있고, 중간 레이어의 학습을 도울 수 있음&lt;/p&gt;
+
+&lt;p&gt;끝단 : classifier 결과를 출력&lt;/p&gt;
+
+&lt;p&gt;FC-Layer를 대부분 걷어냈으나, 성능이 그래도 잘 나오는 것을 확인할 수 있었음.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://twinw.tistory.com/247&quot;&gt;수식과 코드로 보는 경사하강법&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://emiliendupont.github.io/2018/01/24/optimization-visualization/&quot;&gt;Interactive Visualization of Optimization Algorithms in Deep Learning&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://darkpgmr.tistory.com/149&quot;&gt;최적화 기법의 직관적 이해&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://bookandmed.tistory.com/56&quot;&gt;Training Neural Networks II&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
 
 Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.
 
@@ -496,36 +704,4 @@ train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에�
 
   [Training Neural Networks II](https://bookandmed.tistory.com/56)
 
-  A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
-
-```python
-import os
-import pandas as pd
-import numpy as np
-import random
-
-PATH = &apos;C:/Users/USER/Desktop/자료/excel_50_row_온정완&apos;
-SAVE_PATH = &apos;C:/Users/USER/Desktop/자료/result&apos;
-file_dir_list = []
-
-for _, _, files in os.walk(PATH):
-    for f in files:
-        tmp_df = pd.read_excel(os.path.join(PATH, f))
-
-        for row in range(len(tmp_df), 51):
-            row_tmp = [row]
-            for col in range(1, len(tmp_df.columns)):
-                if tmp_df.iloc[:,col].isna().sum() == len(tmp_df.iloc[:,col]):
-                    row_tmp.append(np.nan)
-                    continue
-
-                while True:
-                    choice = random.choice(tmp_df.iloc[:,col])
-                    if choice == choice:
-                        break
-                row_tmp.append( choice )
-
-            tmp_df.loc[row,:] = row_tmp  
-
-        tmp_df.to_excel( os.path.join(SAVE_PATH, f) )       
-```</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry></feed>
+  A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry></feed>
