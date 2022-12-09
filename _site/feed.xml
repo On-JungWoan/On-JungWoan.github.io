@@ -1,351 +1,500 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-08T16:00:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/">&lt;h1 id=&quot;optimization&quot;&gt;Optimization&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-09T13:33:49+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">&lt;h2 id=&quot;1-기존의-페이지-색인-생성-방식-문제점&quot;&gt;1. 기존의 페이지 색인 생성 방식 문제점&lt;/h2&gt;
 
-&lt;p&gt;Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206093883-3be0f259-49f9-4dfe-8c59-8498612931d4.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 그림에서도 알 수 있듯이, Normalization이 되지 않은 그래프는 Classifier가 조금만 움직여도 제대로 분류가 되지 않는다. 즉, Loss가 파라미터의 변화에 매우 민감하기 때문에 동일한 함수를 써도 학습시키기 어렵다. 반면, variance가 unit variance로 맞춰져 있고 zero-centered한 데이터는, 파라미터 변화에 덜 민감하기 때문에 최적화가 쉽고 학습이 잘 된다. Neural Network 내부에도 다수의 Linear Classifier가 있다고 생각할 수 있기 때문에, 적절한 Normalization 과정은 매우 중요하다.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-sthochastic-gradient-descent-sgd&quot;&gt;1. Sthochastic Gradient Descent (SGD)&lt;/h2&gt;
-
-\[x_{t+1} = x_t - \alpha \nabla f(x_t)\]
-
-&lt;p&gt;가장 간단한 Optimizer로서, Layer에서 mini-batch를 뽑아 Loss를 계산하고, gradient의 반대 방향으로 계속 파라미터 벡터를 업데이트 한다. Loss가 낮은 쪽으로 이동해야하기 때문에 gradient의 반대 방향으로 내려가야 함을 유의하자. 위 과정을 계속 반복하면 Loss가 줄어들게 되는데, 이것이 바로 SGD이다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-문제점&quot;&gt;1-1) 문제점&lt;/h3&gt;
-
-&lt;h4 id=&quot;1-1-1-poor-conditioning&quot;&gt;1-1-1) Poor conditioning&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206098726-c0b8b8bb-674f-4c66-8a1b-63cd4a1d8e95.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;만약 Loss 함수가 $f(x, y) = x^2 + y^2$와 같은 그래프라면, 아래로 볼록한 형태의 공간 그래프가 만들어진다. 이 때, 수평 방향으로는 기울기 변화가 작지만(등고선을 조금 통과), 수직 방향으로는 기울기 변화가 가파르기 때문에(등고선을 더 많이 통과), 두 벡터의 기울기 차로 인해 대각 방향으로 Loss가 줄어들게 된다. 따라서, Loss는 기울기가 가파른 방향으로 바로 내려가지 못하고, 사선으로 지그재그 하면서 minima에 도달하게 된다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-1-2-local-minima&quot;&gt;1-1-2) Local minima&lt;/h4&gt;
-
-&lt;p&gt;Loss function이 다음과 같은 Local Minima를 가지고 있다고 생각해보자.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206099361-5ef676b6-5630-4bfa-914c-7b46beedbc51.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;SGD는 위와 같은 Local minima를 만나게 되면, 그대로 학습이 영원히 중단된다. SGD는 local gradient를 찾아 그 반대방향으로 계속 나아가는 식으로 동작하는데, 한번 gradient가 0인 부분을 만나면 그 부분을 영원히 벗어나지 못하게 된다.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-1-3-saddle-point-안장점&quot;&gt;1-1-3) Saddle point (안장점)&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206107388-91d111bb-6221-4aa1-89a9-082eadf6221b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;또한 SGD는, 위 그림과 같은 안장점에서 학습이 매우 더디게 진행되는 문제가 존재한다. 안장점에서는 gradient가 완전히 0은 아니지만, 0에 가까운 값을 가지기 때문에 업데이트가 매우 느리게 진행된다. 안장점은 차원이 높아질수록 매우 빈번하게 발생하므로, 이러한 굴곡을 벗어날 수 있는 힘이 필요하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-sgd--momentum&quot;&gt;2. SGD + Momentum&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206110916-f566827d-b697-4fd7-b395-6432eddd70a5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-\[\begin{align}
-v_{t+1} &amp;amp;= \rho v_t + \nabla f(x_t) \\
-x_{t+1} &amp;amp;= x_t - \alpha v_{t+1}
-\end{align}\]
-
-&lt;p&gt;위 SGD의 문제를 해결하기 위해, gradient 방향 뿐만 아니라 velocity까지 고려한 Optimizer이다. 이때, velocity의 초기값 $v_0$는 0으로 두고, velocity의 영향력은 파라미터 $\rho$를 도입하여 맞춰준다. $\rho$는 보통 0.9나 0.99와 같은 높은 값을 사용한다. 여기에 gradient를 더하여, gradient vector 그대로의 방향이 아닌 velocity vector 방향으로 나아간다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206109994-96484e69-d27d-4c9b-9930-154ba8c4328a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;가령, local minima나 saddle point에 도달하더라도 momentum이 아직 살아있기 때문에, 탈출하여 global minima에 도달할 수 있게 된다. 높은 곳에서 떨어지는 공의 움직임을 생각하면 된다. 또한, poor conditioning의 상황에서도, momentum이 지그재그로 움직이려는 변동을 상쇄시켜버린다. 이를 통해 loss에 민감한 수직 방향 변동을 줄여주고 수평 방향 움직임을 가속화 시키게 된다(Vanila SGD가 구불구불 움직이는 것에 비해 momentum은 global minima를 향해 더 부드럽게 움직인다).&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-learning-rate-decay&quot;&gt;2-1) Learning rate decay&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206358845-3f73cd46-eea9-4d39-a592-c631a2f20c4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;학습에 있어서 가장 중요한 파라미터인 Learning rate를 잘 고르는 것은 매우 어렵다. 이런 경우, Learning rate decay라는 전략을 사용해 볼 수 있다. Learning rate decay란, 처음에는 Learning rate를 높게 설정한 다음, 학습이 진행될 수록 Learning rate를 점점 낮추는 방법이다. 위 그래프에서 Loss가 평평해지다가 다시 내려가는 구간이 바로 Learning rate decay를 적용한 구간이다. 위 그래프에서도 확인할 수 있듯이, Loss가 일정수준 감소하면 감소폭이 점점 줄어들다가 어느 순간 특정 값에 수렴한다. 이는, Learning rate가 너무 높아서 더 깊게 들어가지 못해 발생하는 현상이다. 따라서 이 때 Learning rate를 더 줄여주면, 지속해서 Loss를 감소시킬 수 있다.&lt;/p&gt;
-
-&lt;p&gt;학습과정 동안에 꾸준히 Learning rate를 낮추는 exponential decay 방법을 사용할 수도 있고, 특정 반복(ex. 100,000iter)마다 Learning rate를 낮추는 방법도 있다. 상황에 맞게 사용하면 될 것 같다. Learning rate decay는 자주 사용하는 기법은 아니고, SGD Momentum을 Optimizer로 사용할 때 주로 적용한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-nesterov-momentum&quot;&gt;3. Nesterov momentum&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206111012-63b6edf9-70b2-4c69-9bc7-63a1e095ac84.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-\[\begin{align}
-v_{t+1} &amp;amp;= \rho v_t + \nabla f(x_t + \rho v_t) \\
-x_{t+1} &amp;amp;= x_t - \alpha v_{t+1}
-\end{align}\]
-
-&lt;p&gt;Momentum은 Gradient vector의 방향과 Velocity vector 방향을 가중평균한 방향으로 업데이트되는 것을 확인할 수 있었다. Nesterov momentum은 기존 방식에 비해 조금 더 업그레이드 된 버전으로, 일단 Velocity의 방향으로 움직인 후, 그 곳에서의 Gradient를 계산하여 다시 원점으로 돌아와 가중평균한다. 수식을 살펴보면, $x_t$ 에 추가적으로 velocity 값인 $\rho v_t$ 가 더해진 지점에서 gradient를 구하는 것을 확인할 수 있다. 그러나 위 식을 코드로 나타낼 때, 이미 구성되어있는 기본 optimization algorithm의 API 코드와 구조가 달라 호환성이 떨어지므로, 실제로는 아래와 같이 변형된 식을 사용한다.&lt;/p&gt;
-
-\[let, \bar{x}_t = x_t + \rho v_t \\\]
-
-\[\begin{align}
-
-v_{t+1} &amp;amp;= \rho v_t + \alpha \nabla f( \bar{x}_t ) \\
-x_{t+1} &amp;amp;= x_t -  \rho v_t + (1+\rho)v_{t+1}\\
-&amp;amp;= \bar{x}_t + v_{t+1} + \rho (v_{t+1} - v_t)
-
-\end{align}\]
-
-&lt;p&gt;이 식을 살펴보면, 현재/이전의 velocity간의 error-correcting term이 추가된 것으로 해석할 수 있다. Nesterov momentum을 활용하면, velocity의 방향이 잘못되었을 경우 현재 gradient 방향을 좀 더 활용할 수 있으며, 방향을 미리 예측하고 가기 때문에 Momentum보다 조금 더 빠르다고 한다. 그러나, Nesterov momentum은 볼록 최적화(convex optimization)에서는 좋은 성능을 보이지만, Neural network와 같은 non-convex optimization에서는 성능이 보장되지 않아, 잘 사용하지는 않는다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;cf) minima가 좁고 깊은(Sharp) 곳에 있을 경우, momentum에 의해 minima를 건너 뛰는 경우가 생길 수 있지 않을까?&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;우선, sharp한 minima는 좋은 minima가 아니다. 이러한 minima는 그만큼 특정 데이터에 overfitting 될 확률이 매우 높다. 하지만 데이터가 많아질수록 대부분의 경우 minima가 평평해지며, 이렇게 아주 평평한 minima는 training data의 변화에 좀 더 유연하게 대처할 수 있다. 따라서 양질의 좋은 데이터를 사용할 경우, Sharp한 minima에 대해서는 걱정하지 않아도 된다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-adagrad&quot;&gt;4. AdaGrad&lt;/h2&gt;
-
-\[\begin{align}
-g(t+1) &amp;amp;= g(t) + \{\nabla f(x_t)\}^2 \\
-x_{t+1} &amp;amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
-\end{align}\]
-
-&lt;p&gt;훈련 도중 계산되는 gradient를 활용하는 방법이다. velocity term 대신에 각 gradient의 제곱합인 gradient squared term을 이용한다. 학습 도중에 계산되는 gradient에 제곱을 해서 계속 더해 $g()$에 저장하며, update시에 앞서 계산한 $g()$로 update term을 나눠준다. 이 때, 분모가 0이되는 상황을 방지하기 위해 분모에 작은 $\epsilon$값을 넣어준다(보통 1e-7, 1e-8).&lt;/p&gt;
-
-&lt;p&gt;small dimension에서는 gradient가 작은 값이므로 큰 값으로 나눠져, 속도가 점점 빨라진다. 반대로, Large dimension에서는 gradient가 큰 값이므로 속도가 점점 줄어든다. 이를 통해, 파라미터 x마다 맞춤형 학습률을 제공하게 된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-1-문제점&quot;&gt;4-1) 문제점&lt;/h3&gt;
-
-&lt;p&gt;학습을 계속 진행할수록 gradient의 제곱이 더해져 $g()$의 값은 커지고, 분모가 커지므로 step size는 점점 작아진다. convex case에서는 minimum에 근접하면 서서히 속도를 줄여서 수렴하는 게 도움이 될 수 있지만, non-convex case에서는 saddle point에 걸렸을 때 학습이 멈출 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-rmsprop&quot;&gt;5. RMSProp&lt;/h2&gt;
-
-&lt;p&gt;Adagrad의 step size 문제를 해결한 것이 바로 RMSProp이다.&lt;/p&gt;
-
-\[\begin{align}
-g(t+1) &amp;amp;= \gamma  g(t) + (1- \gamma) \{\nabla f(x_t)\}^2 \\
-x_{t+1} &amp;amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
-\end{align}\]
-
-&lt;p&gt;AdaGrad의 gradient 제곱항을 그대로 사용하지만, 그저 누적만 시키는 것이 아니라 기존 누적값에 decay_rate인 $\gamma$를 곱해준다. decay rate는 보통 0.9 ,0.99와 같은 높은 값을 사용한다. gradient의 제곱을 계속 나눠주어 step size를 조절한다는 점에서 AdaGrad와 비슷하지만, RMSProp은 step size가 점점 줄어드는 문제를 해결하였다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;6-adam&quot;&gt;6. Adam&lt;/h2&gt;
-
-\[Adam \; (almost)\\\]
-
-\[\begin{align}
-
-M(t+1) &amp;amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
-V(t+1) &amp;amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
-
-x_{t+1} &amp;amp;= x_t - \alpha \frac{M(t)}{ \sqrt{V(t) + \epsilon} }
-
-
-\end{align}\]
-
-&lt;p&gt;Adam은 momentum 계열과 Ada 계열 Optimizer의 조합이라고 볼 수 있으며, RMSProp에서 분자의 gradient에 Momentum이 추가된 형태이다. 즉, Momentum과 RMSProp을 합친 것과 같다고 볼 수 있다. 보통 $\beta_1$ = 0.9, $\beta_2$ = 0.999로 설정하고, Laerning rate $\alpha$를 1e-3 or 1e-4정도로만 설정해 놓으면, 거의 모든 아키텍쳐에서 잘 동작한다. 또한 Adam에서도 마찬가지로, 분모가 0이 되는 경우를 방지하기 위해 분모에 $\epsilon$을 추가해주었다(1e-7 or 1e-8).&lt;/p&gt;
-
-&lt;h3 id=&quot;6-1-문제점&quot;&gt;6-1) 문제점&lt;/h3&gt;
-
-&lt;p&gt;그러나 위 식에는 큰 문제점이 하나 존재한다. 초기 Step에서는 $V()$의 값을 0으로 Initailize하게 되는데, 이 값이 분모에 들어가게 되면 step이 매우 큰 값으로 초기화된다. 이렇게 되면 초기화가 엉망이 되어 아주 엉뚱한 곳으로 값이 이동할 것이고, 결국 minima에 수렴하지 않을 수도 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;6-2-해결--bias-correction-term&quot;&gt;6-2) 해결 : bias correction term&lt;/h3&gt;
-
-\[\mathsf{Adam \; (Full \ Form)}\\\]
-
-\[\begin{align}
-
-M(t+1) &amp;amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
-V(t+1) &amp;amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
-
-\end{align}\]
-
-\[\hat{ M }(t) = \frac{ M(t) }{ 1 - \beta_1^t  } \\
-\hat{ V }(t) = \frac{ V(t) }{ 1 - \beta_2^t } \\\]
-
-\[x_{t+1} = x_t - \alpha \frac{\hat{M}(t)}{\sqrt{\hat{V}(t) - \epsilon}}\]
-
-&lt;p&gt;따라서 실제 Adam에서는 first moments($M$, Momentum)와 second moments($V$, RMSProp)를 update하고 난 후 현재 step에 맞는 적절한 unbiased term을 계산해준다. 딥러닝 분야에서 일반적으로 가장 많이 사용하는 Optimizer이며, 별다른 계획이 없는 경우 Adam을 사용하면 대체로 좋은 성능을 보인다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;7-visualization&quot;&gt;7. Visualization&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206355974-60560ff9-a46a-4fc2-a562-af08ba1aeea1.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 장면을 보면, Adam을 제외한 다른 Optimizer들은 모두 global minima에 도달하지 못하는 모습을 확인할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;그러나 아래의 참고자료와 같이 다른 Optimizer만이 global minima에 도달하는 경우도 있기 때문에, 상황에 맞는 Optimizer를 사용하는 것이 중요하다고 할 수 있다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://emiliendupont.github.io/imgs/optim_viz_rastrigin.gif&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;7-1-반응형-visualization-사이트&quot;&gt;7-1) 반응형 Visualization 사이트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://distill.pub/2017/momentum/&quot;&gt;https://distill.pub/2017/momentum/&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&quot;&gt;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&quot;&gt;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&quot;&gt;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;기존에는 페이지 색인을 생성하기 위해, Google Search Console에 들어가서 일일이 URL을 입력하고, 색인 생성 요청을 누른 뒤, 1~2분을 기다려야 했다. 매번 포스팅을 작성할 때마다 이런 번거로운 일을 하기도 귀찮고, 한동안 까먹고 밀리기라도 하면, 매우 끔찍하다… 블로그 조회수와도 직결되는 중요한 작업이기 때문에 안할수도 없어서, 이 귀찮은 과정을 자동화하는 방법에 대해 소개한다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;second-order-optimization&quot;&gt;Second-Order Optimization&lt;/h1&gt;
+&lt;h2 id=&quot;2-google-indexing-api&quot;&gt;2. Google Indexing API&lt;/h2&gt;
 
-&lt;h2 id=&quot;1-newton-method&quot;&gt;1. Newton method&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Indexing API를 사용하면 페이지가 추가되거나 삭제된 경우 사이트 소유자가 Google에 직접 알릴 수 있습니다. 이렇게 하면 Google에서 페이지를 새로 크롤링하도록 예약하여 사용자 트래픽의 질이 향상될 가능성이 있습니다. &lt;br /&gt;&lt;br /&gt; - Google Indexing API&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360046-a992da56-5050-402b-9f4c-f9e4b8c82192.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Google Indexing API 소개글의 일부이다. 위 소개글에서도 알 수 있듯이 Google Indexing API는 페이지가 새로 추가되거나 삭제된 경우, Search Console을 사용하지 않고도 간편하게 색인 생성을 요청할 수 있다.&lt;/p&gt;
 
-&lt;p&gt;first-order optimization(Adam, RMSProp 등)은 어떤 한 점에서 gradient를 계산하여 손실함수를 선형 함수로 근사시킨다. 이 근사함수를 실제 손실함수라고 가정하고 step을 내려가게 되는데, 이 근사함수로는 멀리까지 갈 수 없다는 한계가 존재한다.&lt;/p&gt;
+&lt;h3 id=&quot;2-1-초기-세팅&quot;&gt;2-1) 초기 세팅&lt;/h3&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360062-941a2845-e00a-480b-9352-f6db877c280e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;2-1-1-서비스-계정-생성-후-사이트-소유자로-추가&quot;&gt;2-1-1) 서비스 계정 생성 후 사이트 소유자로 추가&lt;/h4&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360485-23f39c66-0875-49c1-8034-d00eb3f291ae.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;따라서 등장하게 된 방법이 Second-Order Optimization인데, 이 optimization은 손실함수를 2차 함수로 근사시킨다. 이러한 2차 근사를 이용하면 minima에 더 잘 근접할 수 있다고 한다. 이는, 다차원으로 확창시켰을 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Newton step&lt;/code&gt;이라고 불리며, Hessian matrix(2차 미분값들로 된 행렬)의 역행렬을 이용하여 (실제 손실함수의 2차 근사를 통해) minima로 곧장 이동한다. 또한, 매 순간 minima를 향해 이동하기 때문에, 이론상 Learning rate가 필요하지 않다(실제로는 2차 근사도 완벽하지 않기 떄문에 필요하긴 함)는 장점이 있다. 그러나 파라미터가 많은 딥러닝에서는 메모리 문제떄문에 사용할 수 없고, Full Hessian을 근사시켜 사용하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;quasi-Newton methods&lt;/code&gt;를 사용한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-quasi-newton-methods-l-bfgs&quot;&gt;2. quasi-Newton methods (L-BFGS)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362004-e24584b4-9c6f-42d2-84ab-c7517d5a2490.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위에서 잠시 설명했듯이, Newton 방법에서 Hessian의 계산을 근처 함수값을 이용하여 근사적으로 numeric하게 계산하여 사용하는 최적화 기법들을 Quasi-Newton Method(준-뉴턴 방식)라고 부른다. Hessian을 구체적으로 어떻게 근사하느냐에 따라서 여러 Quasi-Newton 방법들이 있으며 그중 가장 대표적으로 사용되는 방법이 L-BFGS (Limited memory Broyden–Fletcher–Goldfarb–Shanno) 방법이다. Full Batch Update가 가능하고 Stochasticity가 적은 경우라면, L-BFGS가 Adam보다 더 좋은 선택이 될 수 있다고 한다. stochastic case와 non-convex problems에서 2차 근사가 잘 동작하지 않기 때문에, NN(DNN 등)에서는 많이 사용되지는 않지만, stochasticity와 파라미터가 적은 Style transfer와 같은 알고리즘에서 종종 사용되는 Optimizer이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;traintest의-error-gap-해소&quot;&gt;Train/Test의 Error gap 해소&lt;/h1&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362142-15ace2a0-36df-47ec-8c4b-31f01ca12aab.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;optimization 알고리즘들은 training error를 줄이고, 손실 함수를 최소화시키기 위한 역할을 수행한다. 그러나 우리는, training error보다는 train/test error의 격차를 줄이는 것이 진정한 목표이다. 그렇다면, 한번도 보지 못한 데이터에 대한 error를 줄이는 방법은 어떤 것들이 있을까?&lt;/p&gt;
-
-&lt;h2 id=&quot;1-model-ensemble&quot;&gt;1. Model ensemble&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362561-cd03e64c-d4fe-4b06-b185-f094bda07724.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;모델을 하나만 학습시키지 말고 n개의 모델을 독립적으로 학습 시켜, n개 모델 결과의 평균을 이용한다. 모델의 수가 늘어날수록 오버피팅이 즐어들고 성능이 조금씩 향상된다(보통 2%정도).&lt;/p&gt;
-
-&lt;p&gt;또한, 모델을 독립적으로 학습시키는 것이 아니라, 학습 도중 중간 모델들을 저장(snapshots)하고 앙상블로 사용할 수도 있다. 그리고 나서, test time에는 여러 snapshots에서 나온 예측값들을 평균 내서 사용한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362687-09681dd5-957f-44ff-bf1c-59260e2da631.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;cf) Polyak averaging&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;또한, 학습하는 동안에 파라미터의 exponentially decaying everage를 계속 계산하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Polyak averaging&lt;/code&gt;이라는 방법을 사용해 볼수도 있다. 이 방법은 학습중인 네트워크의 smooth ensemble 효과를 얻을 수 있으며, checkpoinsts에서의 파라미터를 그대로 쓰지 않고 smoothly decaying average를 사용하는 방법이다. 한번쯤 시도해 볼만한 방법이긴 하지만, 실제로 자주 사용하지는 않는다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-regularization&quot;&gt;2. Regularization&lt;/h2&gt;
-
-&lt;h3 id=&quot;2-1-dropout&quot;&gt;2-1) Dropout&lt;/h3&gt;
-
-&lt;p&gt;모델 앙상블을 하려면, N개의 모델을 돌려야 하는데 자원이나 시간 방면에서 그렇게 좋은 방법은 아니다. 따라서 단일 모델의 성능을 올리는 것이 가장 바람직한 방법이고, 그 방법이 바로 Regularization이다. regularization은 모델이 train data에 완전히 fit하는 것을 막아주어 한번도 보지 못한 데이터에서의 성능을 향상시킨다. 앞선 포스팅에서 L2 regularization에 대해 소개한 적이 있었다( 참고 : &lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_3/#2-2-regularization%EC%9D%98-%EC%A2%85%EB%A5%98&quot;&gt;[CS231n]Loss Functions and Optimization&lt;/a&gt; ). 그러나 NN에서는 L2 regularization이 잘 어울리지는 않고, dropout이라는 regularization을 가장 많이 사용한다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206363244-79b20be1-c338-477b-8274-9038e25ad0a0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;dropout은 정말 간단한데, forward pass 과정에서 임의로 일부 뉴런을 0으로 만드는 것이다. dropout은 한 레이어씩 진행하며, forward pass iteration마다 0이 되는 뉴런이 바뀐다. 이를 통해, 특징들간의 상호작용을 방지하여 어떤 일부 features에만 의존하지 못하게 하고, 다양한 geatures를 골고루 사용하게 함으로써 오버피팅을 방지한다. Dropout은 fc layer에서 흔히 사용하지만, conv layer에서도 종종 볼 수 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;about BN&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;BN에도 충분히 regularization 효과가 있기 때문에 BN 사용시에는 Dropout을 사용하지 않는다. 그러나 예외적으로, BN을 사용했음에도 불구하고 오버피팅이 발생하는 경우에는 Dropout과 같은 다양한 regularization 방법을 추가해로 사용해 볼 수 있다(오버피팅의 조짐이 보일 떄 하나씩 추가시켜 봄).&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;2-1-1-앙상블-효과&quot;&gt;2-1-1) 앙상블 효과&lt;/h4&gt;
-
-&lt;p&gt;Dropout을 적용한 네트워크를 살펴보면, 원본 NN의 일부만 사용하는 서브 네트워크라고 해석할 수 있다. 또한, 각 forward pass interation마다 dropout을 다르게 적용하기 때문에, 서로 파라미터를 공유하는 서브 네트워크 앙상블 모델을 동시에 학습시키는 것으로 해석할 수 있다. 즉, 단일 네트워크로 앙상블을 할 수 있는 것이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-1-2-average-out-in-test-time&quot;&gt;2-1-2) Average out in test time&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364195-ece425b0-ae00-4a07-894b-2ac579439b6b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;기존 Neural Network는 가중치 w와 입력 x에 대한 함수였다. 그러나 dropout을 사용하면 network에 random dropout mask인 z가 추가된다. 그러나 test time에서 이러한 임의성(stochastic)이 포함되는 것은 바람직하지 않다. test time에 이러한 임의성이 추가되면, 모델의 결과가 매번 바뀌게 되므로, 적분을 통해 이 임의성을 average out시킨다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364426-0d0f7f5d-1ca1-4508-b0c0-ec49b3ceaf5a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;그러나, 실제로 이 적분을 계산하기는 까다롭기 때문에 dropout에서는 위 수식과 같이 locally cheap한 방법을 사용하여 해당 식을 근사시킨다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-2-inverted-dropout&quot;&gt;2-2) Inverted Dropout&lt;/h3&gt;
-
-&lt;p&gt;train time에서는 데이터를 마구잡이로 흔들어놓아, 모델이 데이터에 완전히 fit하지 않게 하고, test time에서는 randomness를 average out 시켜서 generalization 효과를 준다고 한다. 나중에 자세히 알아보도록 하자.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-data-augmentation&quot;&gt;2-3) Data augmentation&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206369628-301c5b85-f122-4c15-984e-c36c3a26d07a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이미지의 label을 바꾸지 않으면서, 이미지를 변환시킬 수 있는 방법을 말한다. 원본 이미지를 사용하지 않고, 카테고리만 유지한 채 반전시키거나 임의의 다양한 사이즈로 crop할 수도 있음(카테고리는 동일). 또는 이미지의 밝기나 contrast등을 바꿀 수도 있다. 이는 일종의 regularization이며, 다른 regularization과 동일하게 train time에는 stochasticity가 추가되고, test time에는 marginalize out 시킨다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-4-dropconnect&quot;&gt;2-4) DropConnect&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370104-19232aab-493e-4973-a92f-6cbd3577147e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;activation이 아닌 width matrix를6임의적으로 0으로 만들어줌&lt;/p&gt;
-
-&lt;h3 id=&quot;2-5-fractional-max-pooling&quot;&gt;2-5) fractional max pooling&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370190-5210a695-f004-4828-89fa-97ef55d8d3c2.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;실제로 자주 사용하지는 않지만, Justin Johnson이 추천하는 아주 좋은 regularization 기법이다. 보통 2x2 max pooling은 고정된 2x2 영역에서 pooling을 하지만, fractional max pooling은 max pooling 범위가 임의로 선정된다. test time시에는, pooling layer를 고정시키거나, 여러개의 pooling regions를 만들어 stochasticity를 averaging over시키면 된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-6-stochastic-depth&quot;&gt;2-6) stochastic depth&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370837-df7efe04-162e-462c-8c5d-23f9f60eb0ff.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에서는 전체 네트워크를 다 사용하는 방법이다. regularization 효과는 dropout과 같은 다른 방법과 비슷한 수준이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;transfer-learning&quot;&gt;Transfer learning&lt;/h1&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/181512540-12cc7327-f854-4ba3-8a54-c7990caed605.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;충분한 데이터가 없는 경우, 오버피팅의 위험성이 증가하게 되는데, 이런 경우 사용할 수 있는 방법이 Transfer learning이다. 우선, ImageNet과 같은 거대한 데이터로 학습이 된 모델의 FC Layer를 초기화 시킨다. 그리고 우리가 필요한 클래스의 개수로 맞춰주기만 하면 된다. 그리고 이 Layer 이전의 모든 Layer 가중치는 freeze시켜 더 이상 업데이트 되지 않게 하고, 마지막 레이어만 가지고 데이터를 학습시킨다. 이는 마치 Linear Classifier를 학습시키는 것과 같다(아주 작은 데이터셋에도 적용이 가능함) 만약 데이터가 조금 더 있다면 전체 네트워크를 fine-tuning하여 사용할 수 있다. 이 때, 기존의 모델이 잘 동작하는 경우, 보통 Learning rate를 기존 모델보다 낮게 설정한다. 기존 LR의 1/10정도로 초기화하면 대체로 잘 동작한다. 보다 자세한 설명은 아래 포스팅에 자세히 정리해두었다.&lt;/p&gt;
+&lt;p&gt;위 API를 사용하기 위해서는 몇 가지의 초기 세팅이 필요하다. 초기 세팅 방법은 아래 가이드북에 자세히 나와있다. 우선, 아래 링크를 클릭하여, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2. 서비스 계정에 소유자 상태 부여&lt;/code&gt; 과정까지 따라하도록 하자. 어렵지 않으니, 차근차근 따라하면 된다. 중간에 json 파일을 열어서 client_email을 찾아야하는데, 마땅한 뷰어가 없을 경우 메모장으로 열면 된다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/04_Leaf_Diseases(1)/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80&quot;&gt;Pytorch를 사용한 분류문제 학습 : 전이학습이란?&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://developers.google.com/search/apis/indexing-api/v3/prereqs&quot;&gt;https://developers.google.com/search/apis/indexing-api/v3/prereqs&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206378927-20171833-3e38-48ef-8c3a-84003fe4c167.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206623473-7cc6189f-e1a8-4b6d-a500-2e4c81232466.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;2-1-2-api-활성화&quot;&gt;2-1-2) API 활성화&lt;/h4&gt;
+
+&lt;p&gt;서비스 계정을 사이트 소유자로 추가했으면, API 사용 설정을 해야한다. 우선, 아래 링크를 클릭하여 Google Cloud에 접속해준다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Link&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://twinw.tistory.com/247&quot;&gt;수식과 코드로 보는 경사하강법&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://emiliendupont.github.io/2018/01/24/optimization-visualization/&quot;&gt;Interactive Visualization of Optimization Algorithms in Deep Learning&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://darkpgmr.tistory.com/149&quot;&gt;최적화 기법의 직관적 이해&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://bookandmed.tistory.com/56&quot;&gt;Training Neural Networks II&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://console.cloud.google.com/&quot;&gt;https://console.cloud.google.com/&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;검색창에 Google Indexing API를 검색하여, 가장 상단에 노출되는 Indexing API를 클릭해준다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206622461-68aa4fc6-8217-43b0-9391-107b9d01154d.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;API 사용해 보기&lt;/code&gt;옆의 파란색 버튼을 눌러, API를 사용 설정해주면 된다. 본인은 이미 API를 사용 설정 했기 때문에 화면이 조금 다르게 보일 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206622508-613938f1-1d2e-4e3f-b49e-706e1a79207c.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기까지 따라한다면, API를 사용하기 위한 초기세팅은 모두 끝났다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-indexing-api-사용&quot;&gt;2-2) Indexing API 사용&lt;/h3&gt;
+
+&lt;h4 id=&quot;2-2-1-install-oauth2client&quot;&gt;2-2-1) Install oauth2client&lt;/h4&gt;
+
+&lt;p&gt;우선, 액세스 토큰을 가져오기 위해 oauth2client를 설치해야 한다. pip이나 conda를 사용하여 설치해주도록 하자.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; pip install oauth2client
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-2-2-스크립트-작성&quot;&gt;2-2-2) 스크립트 작성&lt;/h4&gt;
+
+&lt;p&gt;oauth2client 설치가 끝났으면, 다음과 같은 스크립트를 작성한다. 우선,&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;oauth2client.service_account&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ServiceAccountCredentials&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;httplib2&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;############################
+# 실제 사용시 이 부분만 수정 #
+############################
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;JSON_KEY_FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;C:/Users/USER/Downloads/jekyll-blog-371100-5977418fcddb.json&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;https://on-jungwoan.githb.io/dl/cs231n_52/&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;TYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;URL_UPDATED&quot;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# TYPE = &quot;URL_DELETED&quot;
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#############################
+#############################
+&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;SCOPES&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;https://www.googleapis.com/auth/indexing&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ENDPOINT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ServiceAccountCredentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from_json_keyfile_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSON_KEY_FILE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scopes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SCOPES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;credentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authorize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;httplib2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Define contents here as a JSON string.
+# This example shows a simple update request.
+# Other types of requests are described in the next step.
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;{
+  &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;,
+  &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;
+}&quot;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ENDPOINT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;content_dict&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;utf-8&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;status&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;200&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;status&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;error&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;message&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sep&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;github-actions&quot;&gt;Github Actions&lt;/h2&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Python package&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;main&quot;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;pull_request&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;main&quot;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;fail-fast&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;matrix&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;python-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.8&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.9&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.10&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v3&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Set up Python $&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/setup-python@v3&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;python-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Install dependencies&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;python -m pip install --upgrade pip&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;python -m pip install flake8 pytest&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;if [ -f requirements.txt ]; then pip install -r requirements.txt; fi&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
+
+Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206093883-3be0f259-49f9-4dfe-8c59-8498612931d4.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+위 그림에서도 알 수 있듯이, Normalization이 되지 않은 그래프는 Classifier가 조금만 움직여도 제대로 분류가 되지 않는다. 즉, Loss가 파라미터의 변화에 매우 민감하기 때문에 동일한 함수를 써도 학습시키기 어렵다. 반면, variance가 unit variance로 맞춰져 있고 zero-centered한 데이터는, 파라미터 변화에 덜 민감하기 때문에 최적화가 쉽고 학습이 잘 된다. Neural Network 내부에도 다수의 Linear Classifier가 있다고 생각할 수 있기 때문에, 적절한 Normalization 과정은 매우 중요하다.
+
+## 1. Sthochastic Gradient Descent (SGD)
+
+$$
+x_{t+1} = x_t - \alpha \nabla f(x_t)
+$$
+
+가장 간단한 Optimizer로서, Layer에서 mini-batch를 뽑아 Loss를 계산하고, gradient의 반대 방향으로 계속 파라미터 벡터를 업데이트 한다. Loss가 낮은 쪽으로 이동해야하기 때문에 gradient의 반대 방향으로 내려가야 함을 유의하자. 위 과정을 계속 반복하면 Loss가 줄어들게 되는데, 이것이 바로 SGD이다.
+
+### 1-1) 문제점
+
+#### 1-1-1) Poor conditioning
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206098726-c0b8b8bb-674f-4c66-8a1b-63cd4a1d8e95.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+만약 Loss 함수가 $f(x, y) = x^2 + y^2$와 같은 그래프라면, 아래로 볼록한 형태의 공간 그래프가 만들어진다. 이 때, 수평 방향으로는 기울기 변화가 작지만(등고선을 조금 통과), 수직 방향으로는 기울기 변화가 가파르기 때문에(등고선을 더 많이 통과), 두 벡터의 기울기 차로 인해 대각 방향으로 Loss가 줄어들게 된다. 따라서, Loss는 기울기가 가파른 방향으로 바로 내려가지 못하고, 사선으로 지그재그 하면서 minima에 도달하게 된다.
+
+#### 1-1-2) Local minima
+
+Loss function이 다음과 같은 Local Minima를 가지고 있다고 생각해보자.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206099361-5ef676b6-5630-4bfa-914c-7b46beedbc51.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+SGD는 위와 같은 Local minima를 만나게 되면, 그대로 학습이 영원히 중단된다. SGD는 local gradient를 찾아 그 반대방향으로 계속 나아가는 식으로 동작하는데, 한번 gradient가 0인 부분을 만나면 그 부분을 영원히 벗어나지 못하게 된다.
+
+#### 1-1-3) Saddle point (안장점)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206107388-91d111bb-6221-4aa1-89a9-082eadf6221b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+또한 SGD는, 위 그림과 같은 안장점에서 학습이 매우 더디게 진행되는 문제가 존재한다. 안장점에서는 gradient가 완전히 0은 아니지만, 0에 가까운 값을 가지기 때문에 업데이트가 매우 느리게 진행된다. 안장점은 차원이 높아질수록 매우 빈번하게 발생하므로, 이러한 굴곡을 벗어날 수 있는 힘이 필요하다.
+
+&lt;br&gt;
+
+## 2. SGD + Momentum
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206110916-f566827d-b697-4fd7-b395-6432eddd70a5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+$$
+\begin{align}
+v_{t+1} &amp;= \rho v_t + \nabla f(x_t) \\
+x_{t+1} &amp;= x_t - \alpha v_{t+1}
+\end{align}
+$$
+
+위 SGD의 문제를 해결하기 위해, gradient 방향 뿐만 아니라 velocity까지 고려한 Optimizer이다. 이때, velocity의 초기값 $v_0$는 0으로 두고, velocity의 영향력은 파라미터 $\rho$를 도입하여 맞춰준다. $\rho$는 보통 0.9나 0.99와 같은 높은 값을 사용한다. 여기에 gradient를 더하여, gradient vector 그대로의 방향이 아닌 velocity vector 방향으로 나아간다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206109994-96484e69-d27d-4c9b-9930-154ba8c4328a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+가령, local minima나 saddle point에 도달하더라도 momentum이 아직 살아있기 때문에, 탈출하여 global minima에 도달할 수 있게 된다. 높은 곳에서 떨어지는 공의 움직임을 생각하면 된다. 또한, poor conditioning의 상황에서도, momentum이 지그재그로 움직이려는 변동을 상쇄시켜버린다. 이를 통해 loss에 민감한 수직 방향 변동을 줄여주고 수평 방향 움직임을 가속화 시키게 된다(Vanila SGD가 구불구불 움직이는 것에 비해 momentum은 global minima를 향해 더 부드럽게 움직인다).
+
+### 2-1) Learning rate decay
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206358845-3f73cd46-eea9-4d39-a592-c631a2f20c4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+학습에 있어서 가장 중요한 파라미터인 Learning rate를 잘 고르는 것은 매우 어렵다. 이런 경우, Learning rate decay라는 전략을 사용해 볼 수 있다. Learning rate decay란, 처음에는 Learning rate를 높게 설정한 다음, 학습이 진행될 수록 Learning rate를 점점 낮추는 방법이다. 위 그래프에서 Loss가 평평해지다가 다시 내려가는 구간이 바로 Learning rate decay를 적용한 구간이다. 위 그래프에서도 확인할 수 있듯이, Loss가 일정수준 감소하면 감소폭이 점점 줄어들다가 어느 순간 특정 값에 수렴한다. 이는, Learning rate가 너무 높아서 더 깊게 들어가지 못해 발생하는 현상이다. 따라서 이 때 Learning rate를 더 줄여주면, 지속해서 Loss를 감소시킬 수 있다.
+
+
+학습과정 동안에 꾸준히 Learning rate를 낮추는 exponential decay 방법을 사용할 수도 있고, 특정 반복(ex. 100,000iter)마다 Learning rate를 낮추는 방법도 있다. 상황에 맞게 사용하면 될 것 같다. Learning rate decay는 자주 사용하는 기법은 아니고, SGD Momentum을 Optimizer로 사용할 때 주로 적용한다.
+
+&lt;br&gt;
+
+## 3. Nesterov momentum
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206111012-63b6edf9-70b2-4c69-9bc7-63a1e095ac84.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+$$
+\begin{align}
+v_{t+1} &amp;= \rho v_t + \nabla f(x_t + \rho v_t) \\
+x_{t+1} &amp;= x_t - \alpha v_{t+1}
+\end{align}
+$$
+
+Momentum은 Gradient vector의 방향과 Velocity vector 방향을 가중평균한 방향으로 업데이트되는 것을 확인할 수 있었다. Nesterov momentum은 기존 방식에 비해 조금 더 업그레이드 된 버전으로, 일단 Velocity의 방향으로 움직인 후, 그 곳에서의 Gradient를 계산하여 다시 원점으로 돌아와 가중평균한다. 수식을 살펴보면, $x_t$ 에 추가적으로 velocity 값인 $\rho v_t$ 가 더해진 지점에서 gradient를 구하는 것을 확인할 수 있다. 그러나 위 식을 코드로 나타낼 때, 이미 구성되어있는 기본 optimization algorithm의 API 코드와 구조가 달라 호환성이 떨어지므로, 실제로는 아래와 같이 변형된 식을 사용한다.
+
+$$
+let, \bar{x}_t = x_t + \rho v_t \\
+$$
+
+$$
+\begin{align}
+
+v_{t+1} &amp;= \rho v_t + \alpha \nabla f( \bar{x}_t ) \\
+x_{t+1} &amp;= x_t -  \rho v_t + (1+\rho)v_{t+1}\\
+&amp;= \bar{x}_t + v_{t+1} + \rho (v_{t+1} - v_t)
+
+\end{align}
+$$
+
+이 식을 살펴보면, 현재/이전의 velocity간의 error-correcting term이 추가된 것으로 해석할 수 있다. Nesterov momentum을 활용하면, velocity의 방향이 잘못되었을 경우 현재 gradient 방향을 좀 더 활용할 수 있으며, 방향을 미리 예측하고 가기 때문에 Momentum보다 조금 더 빠르다고 한다. 그러나, Nesterov momentum은 볼록 최적화(convex optimization)에서는 좋은 성능을 보이지만, Neural network와 같은 non-convex optimization에서는 성능이 보장되지 않아, 잘 사용하지는 않는다.
+
+- **cf) minima가 좁고 깊은(Sharp) 곳에 있을 경우, momentum에 의해 minima를 건너 뛰는 경우가 생길 수 있지 않을까?**
+
+  우선, sharp한 minima는 좋은 minima가 아니다. 이러한 minima는 그만큼 특정 데이터에 overfitting 될 확률이 매우 높다. 하지만 데이터가 많아질수록 대부분의 경우 minima가 평평해지며, 이렇게 아주 평평한 minima는 training data의 변화에 좀 더 유연하게 대처할 수 있다. 따라서 양질의 좋은 데이터를 사용할 경우, Sharp한 minima에 대해서는 걱정하지 않아도 된다.
+
+&lt;br&gt;
+
+## 4. AdaGrad
+
+$$
+\begin{align}
+g(t+1) &amp;= g(t) + \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}
+$$
+
+훈련 도중 계산되는 gradient를 활용하는 방법이다. velocity term 대신에 각 gradient의 제곱합인 gradient squared term을 이용한다. 학습 도중에 계산되는 gradient에 제곱을 해서 계속 더해 $g()$에 저장하며, update시에 앞서 계산한 $g()$로 update term을 나눠준다. 이 때, 분모가 0이되는 상황을 방지하기 위해 분모에 작은 $\epsilon$값을 넣어준다(보통 1e-7, 1e-8).
+
+small dimension에서는 gradient가 작은 값이므로 큰 값으로 나눠져, 속도가 점점 빨라진다. 반대로, Large dimension에서는 gradient가 큰 값이므로 속도가 점점 줄어든다. 이를 통해, 파라미터 x마다 맞춤형 학습률을 제공하게 된다.
+
+### 4-1) 문제점
+
+학습을 계속 진행할수록 gradient의 제곱이 더해져 $g()$의 값은 커지고, 분모가 커지므로 step size는 점점 작아진다. convex case에서는 minimum에 근접하면 서서히 속도를 줄여서 수렴하는 게 도움이 될 수 있지만, non-convex case에서는 saddle point에 걸렸을 때 학습이 멈출 수 있다.
+
+&lt;br&gt;
+
+## 5. RMSProp
+
+Adagrad의 step size 문제를 해결한 것이 바로 RMSProp이다.
+
+$$
+\begin{align}
+g(t+1) &amp;= \gamma  g(t) + (1- \gamma) \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}
+$$
+
+AdaGrad의 gradient 제곱항을 그대로 사용하지만, 그저 누적만 시키는 것이 아니라 기존 누적값에 decay_rate인 $\gamma$를 곱해준다. decay rate는 보통 0.9 ,0.99와 같은 높은 값을 사용한다. gradient의 제곱을 계속 나눠주어 step size를 조절한다는 점에서 AdaGrad와 비슷하지만, RMSProp은 step size가 점점 줄어드는 문제를 해결하였다.
+
+&lt;br&gt;
+
+## 6. Adam
+
+$$
+Adam \; (almost)\\
+$$
+
+$$
+\begin{align}
+
+M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+x_{t+1} &amp;= x_t - \alpha \frac{M(t)}{ \sqrt{V(t) + \epsilon} }
+
+
+\end{align}
+$$
+
+Adam은 momentum 계열과 Ada 계열 Optimizer의 조합이라고 볼 수 있으며, RMSProp에서 분자의 gradient에 Momentum이 추가된 형태이다. 즉, Momentum과 RMSProp을 합친 것과 같다고 볼 수 있다. 보통 $\beta_1$ = 0.9, $\beta_2$ = 0.999로 설정하고, Laerning rate $\alpha$를 1e-3 or 1e-4정도로만 설정해 놓으면, 거의 모든 아키텍쳐에서 잘 동작한다. 또한 Adam에서도 마찬가지로, 분모가 0이 되는 경우를 방지하기 위해 분모에 $\epsilon$을 추가해주었다(1e-7 or 1e-8). 
+
+### 6-1) 문제점
+
+그러나 위 식에는 큰 문제점이 하나 존재한다. 초기 Step에서는 $V()$의 값을 0으로 Initailize하게 되는데, 이 값이 분모에 들어가게 되면 step이 매우 큰 값으로 초기화된다. 이렇게 되면 초기화가 엉망이 되어 아주 엉뚱한 곳으로 값이 이동할 것이고, 결국 minima에 수렴하지 않을 수도 있다.
+
+### 6-2) 해결 : bias correction term
+
+$$
+\mathsf{Adam \; (Full \ Form)}\\
+$$
+
+$$
+\begin{align}
+
+M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+\end{align}
+$$
+
+$$
+\hat{ M }(t) = \frac{ M(t) }{ 1 - \beta_1^t  } \\
+\hat{ V }(t) = \frac{ V(t) }{ 1 - \beta_2^t } \\
+$$
+
+$$
+x_{t+1} = x_t - \alpha \frac{\hat{M}(t)}{\sqrt{\hat{V}(t) - \epsilon}}
+$$
+
+따라서 실제 Adam에서는 first moments($M$, Momentum)와 second moments($V$, RMSProp)를 update하고 난 후 현재 step에 맞는 적절한 unbiased term을 계산해준다. 딥러닝 분야에서 일반적으로 가장 많이 사용하는 Optimizer이며, 별다른 계획이 없는 경우 Adam을 사용하면 대체로 좋은 성능을 보인다.
+
+&lt;br&gt;
+
+## 7. Visualization
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206355974-60560ff9-a46a-4fc2-a562-af08ba1aeea1.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+위 장면을 보면, Adam을 제외한 다른 Optimizer들은 모두 global minima에 도달하지 못하는 모습을 확인할 수 있다.
+
+그러나 아래의 참고자료와 같이 다른 Optimizer만이 global minima에 도달하는 경우도 있기 때문에, 상황에 맞는 Optimizer를 사용하는 것이 중요하다고 할 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://emiliendupont.github.io/imgs/optim_viz_rastrigin.gif&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+### 7-1) 반응형 Visualization 사이트
+
+- &lt;https://distill.pub/2017/momentum/&gt;
+
+- &lt;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&gt;
+
+- &lt;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&gt;
+
+- &lt;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Second-Order Optimization
+
+## 1. Newton method
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360046-a992da56-5050-402b-9f4c-f9e4b8c82192.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+first-order optimization(Adam, RMSProp 등)은 어떤 한 점에서 gradient를 계산하여 손실함수를 선형 함수로 근사시킨다. 이 근사함수를 실제 손실함수라고 가정하고 step을 내려가게 되는데, 이 근사함수로는 멀리까지 갈 수 없다는 한계가 존재한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360062-941a2845-e00a-480b-9352-f6db877c280e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360485-23f39c66-0875-49c1-8034-d00eb3f291ae.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+따라서 등장하게 된 방법이 Second-Order Optimization인데, 이 optimization은 손실함수를 2차 함수로 근사시킨다. 이러한 2차 근사를 이용하면 minima에 더 잘 근접할 수 있다고 한다. 이는, 다차원으로 확창시켰을 때 `Newton step`이라고 불리며, Hessian matrix(2차 미분값들로 된 행렬)의 역행렬을 이용하여 (실제 손실함수의 2차 근사를 통해) minima로 곧장 이동한다. 또한, 매 순간 minima를 향해 이동하기 때문에, 이론상 Learning rate가 필요하지 않다(실제로는 2차 근사도 완벽하지 않기 떄문에 필요하긴 함)는 장점이 있다. 그러나 파라미터가 많은 딥러닝에서는 메모리 문제떄문에 사용할 수 없고, Full Hessian을 근사시켜 사용하는 `quasi-Newton methods`를 사용한다.
+
+&lt;br&gt;
+
+## 2. quasi-Newton methods (L-BFGS)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362004-e24584b4-9c6f-42d2-84ab-c7517d5a2490.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+위에서 잠시 설명했듯이, Newton 방법에서 Hessian의 계산을 근처 함수값을 이용하여 근사적으로 numeric하게 계산하여 사용하는 최적화 기법들을 Quasi-Newton Method(준-뉴턴 방식)라고 부른다. Hessian을 구체적으로 어떻게 근사하느냐에 따라서 여러 Quasi-Newton 방법들이 있으며 그중 가장 대표적으로 사용되는 방법이 L-BFGS (Limited memory Broyden–Fletcher–Goldfarb–Shanno) 방법이다. Full Batch Update가 가능하고 Stochasticity가 적은 경우라면, L-BFGS가 Adam보다 더 좋은 선택이 될 수 있다고 한다. stochastic case와 non-convex problems에서 2차 근사가 잘 동작하지 않기 때문에, NN(DNN 등)에서는 많이 사용되지는 않지만, stochasticity와 파라미터가 적은 Style transfer와 같은 알고리즘에서 종종 사용되는 Optimizer이다. 
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Train/Test의 Error gap 해소
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362142-15ace2a0-36df-47ec-8c4b-31f01ca12aab.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+optimization 알고리즘들은 training error를 줄이고, 손실 함수를 최소화시키기 위한 역할을 수행한다. 그러나 우리는, training error보다는 train/test error의 격차를 줄이는 것이 진정한 목표이다. 그렇다면, 한번도 보지 못한 데이터에 대한 error를 줄이는 방법은 어떤 것들이 있을까? 
+
+## 1. Model ensemble
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362561-cd03e64c-d4fe-4b06-b185-f094bda07724.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+모델을 하나만 학습시키지 말고 n개의 모델을 독립적으로 학습 시켜, n개 모델 결과의 평균을 이용한다. 모델의 수가 늘어날수록 오버피팅이 즐어들고 성능이 조금씩 향상된다(보통 2%정도).
+
+또한, 모델을 독립적으로 학습시키는 것이 아니라, 학습 도중 중간 모델들을 저장(snapshots)하고 앙상블로 사용할 수도 있다. 그리고 나서, test time에는 여러 snapshots에서 나온 예측값들을 평균 내서 사용한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362687-09681dd5-957f-44ff-bf1c-59260e2da631.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+- **cf) Polyak averaging**
+
+  또한, 학습하는 동안에 파라미터의 exponentially decaying everage를 계속 계산하는 `Polyak averaging`이라는 방법을 사용해 볼수도 있다. 이 방법은 학습중인 네트워크의 smooth ensemble 효과를 얻을 수 있으며, checkpoinsts에서의 파라미터를 그대로 쓰지 않고 smoothly decaying average를 사용하는 방법이다. 한번쯤 시도해 볼만한 방법이긴 하지만, 실제로 자주 사용하지는 않는다.
+
+&lt;br&gt;
+
+## 2. Regularization 
+
+### 2-1) Dropout
+
+모델 앙상블을 하려면, N개의 모델을 돌려야 하는데 자원이나 시간 방면에서 그렇게 좋은 방법은 아니다. 따라서 단일 모델의 성능을 올리는 것이 가장 바람직한 방법이고, 그 방법이 바로 Regularization이다. regularization은 모델이 train data에 완전히 fit하는 것을 막아주어 한번도 보지 못한 데이터에서의 성능을 향상시킨다. 앞선 포스팅에서 L2 regularization에 대해 소개한 적이 있었다( 참고 : [[CS231n]Loss Functions and Optimization](https://on-jungwoan.github.io/dl/cs231n_3/#2-2-regularization%EC%9D%98-%EC%A2%85%EB%A5%98) ). 그러나 NN에서는 L2 regularization이 잘 어울리지는 않고, dropout이라는 regularization을 가장 많이 사용한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206363244-79b20be1-c338-477b-8274-9038e25ad0a0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+dropout은 정말 간단한데, forward pass 과정에서 임의로 일부 뉴런을 0으로 만드는 것이다. dropout은 한 레이어씩 진행하며, forward pass iteration마다 0이 되는 뉴런이 바뀐다. 이를 통해, 특징들간의 상호작용을 방지하여 어떤 일부 features에만 의존하지 못하게 하고, 다양한 geatures를 골고루 사용하게 함으로써 오버피팅을 방지한다. Dropout은 fc layer에서 흔히 사용하지만, conv layer에서도 종종 볼 수 있다.
+
+- **about BN**
+
+  BN에도 충분히 regularization 효과가 있기 때문에 BN 사용시에는 Dropout을 사용하지 않는다. 그러나 예외적으로, BN을 사용했음에도 불구하고 오버피팅이 발생하는 경우에는 Dropout과 같은 다양한 regularization 방법을 추가해로 사용해 볼 수 있다(오버피팅의 조짐이 보일 떄 하나씩 추가시켜 봄).
+
+#### 2-1-1) 앙상블 효과
+
+Dropout을 적용한 네트워크를 살펴보면, 원본 NN의 일부만 사용하는 서브 네트워크라고 해석할 수 있다. 또한, 각 forward pass interation마다 dropout을 다르게 적용하기 때문에, 서로 파라미터를 공유하는 서브 네트워크 앙상블 모델을 동시에 학습시키는 것으로 해석할 수 있다. 즉, 단일 네트워크로 앙상블을 할 수 있는 것이다.
+
+#### 2-1-2) Average out in test time
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364195-ece425b0-ae00-4a07-894b-2ac579439b6b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+기존 Neural Network는 가중치 w와 입력 x에 대한 함수였다. 그러나 dropout을 사용하면 network에 random dropout mask인 z가 추가된다. 그러나 test time에서 이러한 임의성(stochastic)이 포함되는 것은 바람직하지 않다. test time에 이러한 임의성이 추가되면, 모델의 결과가 매번 바뀌게 되므로, 적분을 통해 이 임의성을 average out시킨다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364426-0d0f7f5d-1ca1-4508-b0c0-ec49b3ceaf5a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+그러나, 실제로 이 적분을 계산하기는 까다롭기 때문에 dropout에서는 위 수식과 같이 locally cheap한 방법을 사용하여 해당 식을 근사시킨다.
+
+
+### 2-2) Inverted Dropout
+
+train time에서는 데이터를 마구잡이로 흔들어놓아, 모델이 데이터에 완전히 fit하지 않게 하고, test time에서는 randomness를 average out 시켜서 generalization 효과를 준다고 한다. 나중에 자세히 알아보도록 하자.
+
+### 2-3) Data augmentation
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206369628-301c5b85-f122-4c15-984e-c36c3a26d07a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+이미지의 label을 바꾸지 않으면서, 이미지를 변환시킬 수 있는 방법을 말한다. 원본 이미지를 사용하지 않고, 카테고리만 유지한 채 반전시키거나 임의의 다양한 사이즈로 crop할 수도 있음(카테고리는 동일). 또는 이미지의 밝기나 contrast등을 바꿀 수도 있다. 이는 일종의 regularization이며, 다른 regularization과 동일하게 train time에는 stochasticity가 추가되고, test time에는 marginalize out 시킨다.
+
+### 2-4) DropConnect
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370104-19232aab-493e-4973-a92f-6cbd3577147e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+activation이 아닌 width matrix를6임의적으로 0으로 만들어줌
+
+### 2-5) fractional max pooling
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370190-5210a695-f004-4828-89fa-97ef55d8d3c2.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+실제로 자주 사용하지는 않지만, Justin Johnson이 추천하는 아주 좋은 regularization 기법이다. 보통 2x2 max pooling은 고정된 2x2 영역에서 pooling을 하지만, fractional max pooling은 max pooling 범위가 임의로 선정된다. test time시에는, pooling layer를 고정시키거나, 여러개의 pooling regions를 만들어 stochasticity를 averaging over시키면 된다.
+
+### 2-6) stochastic depth
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370837-df7efe04-162e-462c-8c5d-23f9f60eb0ff.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에서는 전체 네트워크를 다 사용하는 방법이다. regularization 효과는 dropout과 같은 다른 방법과 비슷한 수준이다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Transfer learning
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/181512540-12cc7327-f854-4ba3-8a54-c7990caed605.png&quot;&gt;&lt;/p&gt;
+
+
+충분한 데이터가 없는 경우, 오버피팅의 위험성이 증가하게 되는데, 이런 경우 사용할 수 있는 방법이 Transfer learning이다. 우선, ImageNet과 같은 거대한 데이터로 학습이 된 모델의 FC Layer를 초기화 시킨다. 그리고 우리가 필요한 클래스의 개수로 맞춰주기만 하면 된다. 그리고 이 Layer 이전의 모든 Layer 가중치는 freeze시켜 더 이상 업데이트 되지 않게 하고, 마지막 레이어만 가지고 데이터를 학습시킨다. 이는 마치 Linear Classifier를 학습시키는 것과 같다(아주 작은 데이터셋에도 적용이 가능함) 만약 데이터가 조금 더 있다면 전체 네트워크를 fine-tuning하여 사용할 수 있다. 이 때, 기존의 모델이 잘 동작하는 경우, 보통 Learning rate를 기존 모델보다 낮게 설정한다. 기존 LR의 1/10정도로 초기화하면 대체로 잘 동작한다. 보다 자세한 설명은 아래 포스팅에 자세히 정리해두었다.
+
+- **Link**
+
+  [Pytorch를 사용한 분류문제 학습 : 전이학습이란?](https://on-jungwoan.github.io/dl/04_Leaf_Diseases(1)/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206378927-20171833-3e38-48ef-8c3a-84003fe4c167.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+- **Reference**
+
+  [수식과 코드로 보는 경사하강법](https://twinw.tistory.com/247)
+
+  [Interactive Visualization of Optimization Algorithms in Deep Learning](https://emiliendupont.github.io/2018/01/24/optimization-visualization/)
+
+  [최적화 기법의 직관적 이해](https://darkpgmr.tistory.com/149)
+
+  [Training Neural Networks II](https://bookandmed.tistory.com/56)
+
+  A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
 
 ```python
 import os
@@ -377,44 +526,4 @@ for _, _, files in os.walk(PATH):
             tmp_df.loc[row,:] = row_tmp  
 
         tmp_df.to_excel( os.path.join(SAVE_PATH, f) )       
-```</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"># ✍ 학습내용 정리
-
-&lt;br&gt;
-&lt;br&gt;
-
-# 🕮 TIL
-## \&lt;1주차\&gt;
-### 12/01
-
-* **업무지시**
-
-  업무지시 없음
-
-* **학습내용**    
-
-  [1) [CS231n]Training Neural Networks, Part I](https://on-jungwoan.github.io/dl/cs231n_6/)   
-
-### 12/02
-
-* **업무지시**
-
-  업무지시 없음
-
-* **학습내용**    
-
-  [1) [업무 자동화] 행 생성 업무 자동화](https://on-jungwoan.github.io/toy_project/auto_raw/)     
-
-&lt;br&gt;  
-
-## \&lt;2주차\&gt;
-**느낀점 및 업무내용** : 
-
-### 12/06
-
-* **업무지시**
-
-  업무지시 없음
-
-* **학습내용**    
-
-  [1) [CS231n]Training Neural Networks, Part Ⅱ](https://on-jungwoan.github.io/dl/cs231n_7/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry></feed>
+```</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry></feed>
