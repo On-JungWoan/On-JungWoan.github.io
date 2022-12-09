@@ -23,7 +23,7 @@ main:
         sublinks:
           - title: "Full-Stack Dev"
             url: /categories/web        
-          - title: "Blog Dev"
+          - title: "Jekyll"
             url: /categories/Blog
           - title: "Tools"
             url: /categories/tools
