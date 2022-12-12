@@ -21,4 +21,4 @@ jobs:
       
     - name: run script
       run: |
-        print("test")
+        python test.py
