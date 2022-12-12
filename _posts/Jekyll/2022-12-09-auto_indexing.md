@@ -78,7 +78,19 @@ Google Indexing API 소개글의 일부이다. 위 소개글에서도 알 수 �
 
 #### 2-2-2) 스크립트 작성
 
-oauth2client 설치가 끝났으면, 다음과 같은 스크립트를 작성한다. 우선,  
+oauth2client 설치가 끝났으면, 아래 코드를 복사하여 python 파일을 만들어준다. 실제 사용시에는 JSON_KEY_FILE, URL, TYPE만 바꾸어주면 된다.
+
+- **JSON_KEY_FILE**
+
+  - 2-1에서 다운받은 json 파일의 경로를 적어준다.
+
+- **URL**  
+
+  - 색인을 등록하고자 하는 URL의 주소를 입력한다.
+
+- **TYPE**  
+
+  - 색인을 생성하고 싶으면 URL_UPDATED, 지우고 싶으면 URL_DELETED를 입력한다.
 
 ```python
 from oauth2client.service_account import ServiceAccountCredentials
@@ -89,8 +101,8 @@ import json
 # 실제 사용시 이 부분만 수정 #
 ############################
 
-JSON_KEY_FILE = "C:/Users/USER/Downloads/jekyll-blog-371100-5977418fcddb.json"
-URL = "https://on-jungwoan.githb.io/dl/cs231n_52/"
+JSON_KEY_FILE = "C:/Users/USER/Downloads/본인파일명.json"
+URL = "https://on-jungwoan.github.io/dl/cs231n_52/"
 TYPE = "URL_UPDATED"
 # TYPE = "URL_DELETED"
 
@@ -121,9 +133,25 @@ if response['status'] != '200':
   print(response['status'], content_dict['error']['message'], sep="\n")
 ```
 
+#### 2-2-3) 실행 및 디버깅
+
+Indexing API의 호출이 정상적으로 이루어진 경우, response로 HTTP 200이 반환된다. 그렇지 않은 경우 에러 코드와 메시지가 출력되게하였다. 
+
+![image](https://user-images.githubusercontent.com/84084372/206960780-d81e9310-37a7-4aa8-be8c-1d4a03de8542.png)
+
+
+에러 코드에 대한 설명은 아래 링크에서 확인할 수 있다.
+
+- **Link**
+
+  <https://developers.google.com/search/apis/indexing-api/v3/core-errors#Global_Errors>
+
+
 
 
 ## Github Actions
+
+### Workflow 정의
 
 ```yaml
 
@@ -158,8 +186,12 @@ jobs:
 
 ```
 
+https://developers.google.com/search/apis/indexing-api/v3/quickstart
+
 https://jlhernando.com/blog/url-inspector-automator-node/
-https://www.hahwul.com/2021/07/25/automation-seo-with-google-indexing/
+
 https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
+
 https://zzsza.github.io/development/2020/06/06/github-action/
+
 https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&supportedpurview=project
