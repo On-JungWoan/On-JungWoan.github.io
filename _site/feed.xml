@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-09T17:57:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-13T17:59:38+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
 
 ![image](https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png)
 
@@ -58,7 +58,19 @@ Google Indexing API 소개글의 일부이다. 위 소개글에서도 알 수 �
 
 #### 2-2-2) 스크립트 작성
 
-oauth2client 설치가 끝났으면, 다음과 같은 스크립트를 작성한다. 우선,  
+oauth2client 설치가 끝났으면, 아래 코드를 복사하여 python 파일을 만들어준다. 실제 사용시에는 JSON_KEY_FILE, URL, TYPE만 바꾸어주면 된다.
+
+- **JSON_KEY_FILE**
+
+  - 2-1에서 다운받은 json 파일의 경로를 적어준다.
+
+- **URL**  
+
+  - 색인을 등록하고자 하는 URL의 주소를 입력한다.
+
+- **TYPE**  
+
+  - 색인을 생성하고 싶으면 URL_UPDATED, 지우고 싶으면 URL_DELETED를 입력한다.
 
 ```python
 from oauth2client.service_account import ServiceAccountCredentials
@@ -69,8 +81,8 @@ import json
 # 실제 사용시 이 부분만 수정 #
 ############################
 
-JSON_KEY_FILE = &quot;C:/Users/USER/Downloads/jekyll-blog-371100-5977418fcddb.json&quot;
-URL = &quot;https://on-jungwoan.githb.io/dl/cs231n_52/&quot;
+JSON_KEY_FILE = &quot;C:/Users/USER/Downloads/본인파일명.json&quot;
+URL = &quot;https://on-jungwoan.github.io/dl/cs231n_52/&quot;
 TYPE = &quot;URL_UPDATED&quot;
 # TYPE = &quot;URL_DELETED&quot;
 
@@ -101,9 +113,25 @@ if response[&apos;status&apos;] != &apos;200&apos;:
   print(response[&apos;status&apos;], content_dict[&apos;error&apos;][&apos;message&apos;], sep=&quot;\n&quot;)
 ```
 
+#### 2-2-3) 실행 및 디버깅
+
+Indexing API의 호출이 정상적으로 이루어진 경우, response로 HTTP 200이 반환된다. 그렇지 않은 경우 에러 코드와 메시지가 출력되게하였다. 
+
+![image](https://user-images.githubusercontent.com/84084372/206960780-d81e9310-37a7-4aa8-be8c-1d4a03de8542.png)
+
+
+에러 코드에 대한 설명은 아래 링크에서 확인할 수 있다.
+
+- **Link**
+
+  &lt;https://developers.google.com/search/apis/indexing-api/v3/core-errors#Global_Errors&gt;
+
+
 
 
 ## Github Actions
+
+### Workflow 정의
 
 ```yaml
 
@@ -138,230 +166,470 @@ jobs:
 
 ```
 
+https://developers.google.com/search/apis/indexing-api/v3/quickstart
+
 https://jlhernando.com/blog/url-inspector-automator-node/
-https://www.hahwul.com/2021/07/25/automation-seo-with-google-indexing/
+
 https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
+
 https://zzsza.github.io/development/2020/06/06/github-action/
-https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]CNN Architectures(초안)</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">## LeNet
 
-industry에 아주 성공적으로 적용된 최초의 ConvNet이다. 
-LeNet은 이미지를 입력으로 받아, stride=1인 5x5 필터를 가지고 몇 개의 conv layer와 pooling layer를 거침. 그리고 끝단에는 FC LAyer가 붙음. 간단하지만 매우 우수한 성능을 보임
+https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]CNN Architectures(초안)</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">&lt;h2 id=&quot;1-lenet-lecun-1998&quot;&gt;1. LeNet (LeCun, 1998)&lt;/h2&gt;
 
-## 2012 : AlexNet
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207188293-f9dd2754-a9e8-4035-bc26-147c20cc712a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-최초의 Larg scale CNN이며, ImageNet Classification Task에서 놀라운 성능을 보여 2012년 Image Classification Benchmark에서 우승한 모델이다. 2012년에 등장한 non-딥러닝 모델을 능가하는 성능을 보여줘 ConvNEt 연구의 부흥을 일으킨 장본인임. CNN기반 최초의 우승 모델이며 이후 수년동안 대부분 CNN 아키텍쳐의 베이스 모델로 사용됨.
+&lt;h3 id=&quot;1-1-구조&quot;&gt;1-1) 구조&lt;/h3&gt;
 
-기본적으로 conv-pool-normalization 구조가 2번 반복됨. 그 후에 conv layer가 조금 더 붙고 그 뒤에 pooling layer가 있따. 마지막에는 FC-layer가 몇개 있는 구조. 생긴 것만 봐서는 LeNet과 상당히 유사하고 레이어만 더 많아진 것을 확인할 수 있다.
+&lt;p&gt;LeNet은 industry에 아주 성공적으로 적용된 최초의 Convolution Network이다. [CONV - POOL] 구조가 2번 반복되고, filter는 strdie=1의 5x5 filter를 사용하며 끝단에는 2개의 FC Layer를 쌓았다. 매우 간단한 구조이지만, 꽤 우수한 성능을 보이는 CNN의 조상이다.&lt;/p&gt;
 
-### 크기
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-ImageNet 기준 input image 크기 : 227x227x3임
-AlexNEt의 첫 레이어는 11x11 필터가 stride=4로 96개 존재한다.
+&lt;h2 id=&quot;2-alexnet-krizhevsky-2012&quot;&gt;2. AlexNet (Krizhevsky, 2012)&lt;/h2&gt;
 
-#### 첫 번째 Layer CONV1
+&lt;p&gt;최초의 Larg scale CNN이며, ImageNet Classification Task에서 놀라운 성능을 보여 2012년 Image Classification Benchmark에서 우승한 모델이다. 2012년에 등장한 다른 non-딥러닝 모델을 능가하는 성능을 보여줘, Convolution Net 연구의 부흥을 일으킨 장본인이다. CNN기반 최초의 우승 모델이며, 이후 수년동안 AlexNet은 대부분 CNN 아키텍쳐의 베이스 모델로 사용된다.&lt;/p&gt;
 
-출력 사이즈 : (227-11)/4 + 1 -&gt; 55x55x96
--&gt; 이유 적어보기 (필터 사이즈. 개수 연관해서)
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196722-059736b8-2dad-4ea2-bd16-31fdb530dfe4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-전체 파라미터 수
-(11x11x3 -&gt; 필터 하나)x96 = 35K
+&lt;h3 id=&quot;2-1-구조&quot;&gt;2-1) 구조&lt;/h3&gt;
 
-#### 두 번째 Layer POOL1
+&lt;p&gt;기본적으로 [conv-pool-normalization] 구조가 2번 반복된다. 그 후에 CONV layer가 조금 더 붙고 Max Pooling Layer를 거친 뒤, 3개의 FC-Layer를 통과하는 구조이다. CONV Layer에서는 stride=4인 11x11 filter를 96개 사용하며, POOL Layer에서는 strdie=2인 3x3 filter를 사용한다. 생긴 것만 봐서는 LeNet과 상당히 유사하고 레이어만 더 많아진 것을 확인할 수 있다.&lt;/p&gt;
 
-stride=2인 3x3 filter가 있다고 했을 때
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;cf) Size 계산해보기&lt;/strong&gt;&lt;/p&gt;
 
-출력 사이즈 : (55-3)/2 + 1 -&gt; 27x27x96
-pooling Layer는 이미지의 사이즈는 줄이지만, depth는 일정하게 유지
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Input Image Size&lt;/p&gt;
 
-전체 파라미터 수
-Pooling Layer에는 파라미터가 없다 -&gt; 헷갈림 주의
-파라미터는 우리가 학습시켜야 할 파라미터인데, Pooling layer는 단순히 down sampling의 용도로만 사용되므로 파라미터 필요 없음
+        &lt;p&gt;ImageNet 기준 input image 크기는 227x227x3이다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;CONV1 Layer&lt;/p&gt;
 
-나머지 AlexNet Layer도 계산해보기 (도움 많이될 것임)
-마지막 FC-Layer는 Softmax를 통과
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;출력 사이즈&lt;/p&gt;
 
-### 특징
+            &lt;p&gt;$(227-11)/4 + 1 = 55$ 이므로 activation map의 width와 height는 55x55이다. filter는 11x11 size를 사용하게 되는데, input image의 모든 channel에 대해 연산이 필요하므로 filter의 depth는 3이된다. 이러한 filter가 총 96개 있으므로, 최종 output image의 shape은 $(55,55,96)$이 된다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;전체 파라미터 수&lt;/p&gt;
 
-Activation function으로는 ReLU를 사용
-Local response normalization layer는 요즘은 잘 사용하지는 앟음(큰 효과 없는 것으로 알려짐)
+            &lt;p&gt;11x11x3의 필터가 96개 있으므로, $11 \times 11 \times 3 \times 96 = 34,848$이 CONV1의 전체 파라미터 수가 된다.&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;POOL1 Layer&lt;/p&gt;
 
-flipping, jittering, cropping, color norm 등의 data augmentation을 엄청 함
-Dropout을 사용했으며, Batch size는 128, SGD Momentum을 optimizer로 사용.
-초기 Learning rate는 1e-2로 initialize했으며, val accuracy가 올라가지 않는 지점에서는 학습이 종료되는 시점까지 lr을 1e-10까지 줄였다.(learning rate decay?)
-weight decay를 사용했고, 마지막에는 여러개의 모델을 앙상블하여 성능을 향상시킴.
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;출력 사이즈&lt;/p&gt;
 
-- cf) weight decay란?
+            &lt;p&gt;$(55-3)/2 + 1 = 27$인데, pooling layer에서는 Image의 depth가 변하지 않기 때문에 최종적으로 (27x27x96)이 Activation map의 shape이 된다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;전체 파라미터 수&lt;/p&gt;
 
-  Overfitting 문제를 해결하기 위해서 여러가지 방법이 쓰일 수 있는데, 그 중 한가지가 Weight decay이다. Loss function이 작아지는 방향으로만 단순하게 학습을 진행하면 특정 가중치 값들이 커지면서 위 첫번째 그림처럼 오히려 결과가 나빠질 수 있다. Weight decay는 학습된 모델의 복잡도를 줄이기 위해서 학습 중 weight가 너무 큰 값을 가지지 않도록 Loss function에 Weight가 커질경우에 대한 패널티 항목을 집어넣는다. 이 패널티 항목으로 많이 쓰이는 것이 L1 Regularization과 L2 Regularization이다. Weight decay 를 적용할 경우 위 두번째 그림처럼 Overfitting에서 벗어날 수 있다.
+            &lt;p&gt;Pooling Layer에는 파라미터가 없다(헷갈림 주의). Pooling layer는 단순히 down sampling의 용도로만 사용되므로 파라미터 필요 없음에 유의하자.&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-### 다른 conv net과의 차이점
+&lt;h3 id=&quot;2-2-특징&quot;&gt;2-2) 특징&lt;/h3&gt;
 
-첫 Layer에서 모델이 두 개로 나눠져서 서로 교차하는 것을 확인할 수 있는데, 이는 당시 GPU 메모리의 한계로 인해 레이어를 나눠서 넣었기 때문이다(55x55x96 -&gt; 55x55x48 2개).
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196863-8d7128dd-da8c-4ad5-b720-b51c8a51112a.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-conv 1,2,4,5는 같은 GPU내의 Feature Map만 사용하여 48개의 Feature만 사용.
-conv 3과 FC 6,7,8은 전체 feature map과 연결되어 있음 -&gt; GPU간의 통신을 하여 이전 레이어의 전체 depth를 가져올 수 있음
+&lt;p&gt;첫 Layer에서 모델이 두 개로 나눠져서 서로 교차하는 것을 확인할 수 있는데, 이는 당시 GPU 메모리의 한계로 인해 레이어를 나눠서 넣었기 때문이다(55x55x96 -&amp;gt; 55x55x48 2개). 따라서 대부분의 CONV Layer는 GPU내의 48개의 Feature만 사용하여 학습하였고, 끝단의 FC Layer와 CONV3 Layer에서는 GPU간의 통신을 바탕으로 전체 Feature Map을 가져와 합쳐주었다.&lt;/p&gt;
 
-### issue
+&lt;h3 id=&quot;2-3-details&quot;&gt;2-3) Details&lt;/h3&gt;
 
-논문의 그림에서는 첫 레이어가 224x224로 되어있지만 실제 입력은 227x227이다.
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Activation Function&lt;/strong&gt;&lt;/p&gt;
 
+    &lt;p&gt;Activation function으로는 ReLU를 사용하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Optimizer&lt;/strong&gt;&lt;/p&gt;
 
-## 2013 : ZFNet
+    &lt;p&gt;optimizer로는 SGD + Momentum을 사용하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Dropout / Batch size&lt;/strong&gt;&lt;/p&gt;
 
-AlexNet의 하이퍼 파라미터를 개선한 모델이다. AlexNet과 같은 레이어 수이고 기존적인 구조도 같지만, stide size 필터 수 같은 하이퍼 파라미터를 조절해서 an의 error rate를 개선시킴. alex net과 기존 아이디어는 동일하다.
+    &lt;p&gt;Dropout을 사용했으며, Batch size는 128로 설정하였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Data Augmentation&lt;/strong&gt;&lt;/p&gt;
 
+    &lt;p&gt;flipping, jittering, cropping, color norm 등등 매우 다양한 data augmentation을 해주었다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Learning Rate Decay&lt;/strong&gt;&lt;/p&gt;
 
-## 2014 : GoogLenet(Google), VGGNet(Oxford)
+    &lt;p&gt;초기 Learning rate는 1e-2로 initialize했으며, val accuracy가 올라가지 않는 지점에서는 학습이 종료되는 시점까지 Learning Rate를 1e-10까지 줄였다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Weight Decay&lt;/strong&gt;&lt;/p&gt;
 
-아키텍쳐도 많이 변했고 성능이 향상되었으며, 네트워크가 훨씬 깊어지기 시작한 시기. 
-2013년까지는 8개 레이어였다가 2014년에는 19~22레이어로 늘어났다.
+    &lt;p&gt;weight decay를 사용했다. weight decay는 overfitting 문제를 해결하기 위한 방법 중 하나로, 특정 weight가 너무 큰 값을 가지지 않도록 패널티 항목을 추가하는 것이다. L1/L2 Regularization을 주로 사용한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Model Ensemble&lt;/strong&gt;&lt;/p&gt;
 
-## VGGNet
+    &lt;p&gt;마지막에는 7개의 CNN 모델을 앙상블하여 error를 18.2% -&amp;gt; 15.4%까지 감소시켰다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-### 특징
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-훨씬 깊어졌고, 더 작은 필터를 사용함. -&gt; alex(8), vgg(16~19)
-vggnet은 항상 3x3의 아주 작은 필터만 사용한다. 그리고 이는 이웃 픽셀을 포함할 수 있는 가장 작은 필터이다.
-이렇게 작은 필터를 유지하며 주기적으로 pooling을 수행하며 전체 네트워크를 구성함.
-imagenet에서 7.3%의 top 5 error를 기록함
+&lt;h2 id=&quot;3-zfnet-zeiler-and-fergus-2013&quot;&gt;3. ZFNet (Zeiler and Fergus, 2013)&lt;/h2&gt;
 
-### 작은 필터를 사용한 이유?
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202021-9a2c5a1d-135c-49bf-8878-95ecb09592d9.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-필터의 크기가 작으면 파라미터의 수가 더 작기 때문에, 레이어를 더 많이 쌓을 수 있다.(depth를 더 키울 수 있다). 3x3 필터를 여러개 쌓은 것은 결국 7x7 필터를 사용하는 것과 실질적으로 동일한 receptive field(filter가 한번에 볼 수 있는 입력의 spatial area) 갖는것임.
+&lt;p&gt;AlexNet의 하이퍼 파라미터를 개선한 모델이다. AlexNet과 레이어 수도 같고 기본적인 구조도 같지만, stride size, filter 수와 같은 하이퍼 파라미터를 조절해서 AlexNet의 error rate를 개선시켰다. Alex Net과 기본 아이디어는 동일하다.&lt;/p&gt;
 
-https://bookandmed.tistory.com/58 여기 설명 읽어보기
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
--&gt; 7x7 필터와 실질적으로 동일한 receptive field를 가지면서도 파라미터 수는 더 줄일 수 있음 -&gt; 따라서 더 깊은 레이어를 쌓을 수 있게 됨으로써 Non-Linearity를 더 추가할 수도 있게됨
+&lt;h2 id=&quot;4-vggnet-oxford-2014&quot;&gt;4. VGGNet (Oxford, 2014)&lt;/h2&gt;
 
-### 전체 파라미터의 갯수
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202985-1d439ffb-48e4-4c93-a397-b25a71cd7266.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-각 레이어 당 (3x3xCxC), 레이어가 3개이므로 (3x3xCxC)x3?
-7x7 필터는 7x7xCxC?????
-AlexNet 전체 파라미터 수 세보기
+&lt;p&gt;2014년은 아키텍쳐도 많이 변했고 성능이 향상되었으며, 네트워크가 매우 깊어지기 시작한 시기이다. VGGNet은 이 시기에 GoogLeNet과 함께 우수한 성능을 기록한 CNN 아키텍쳐이다. 대표적으로 VGG16과 VGG19가 있으며, VGG19가 성능은 아주 조금 더 좋다. 그러나 VGG19는 메모리 사용량이 조금 더 많기 때문에 보통은 VGG16을 주로 사용한다. AlexNet처럼 앙상블 기법을 사용하였다.&lt;/p&gt;
 
-###
+&lt;h3 id=&quot;4-1-use-small-filter&quot;&gt;4-1) Use Small Filter&lt;/h3&gt;
 
-VGG16의 Layer 수는 16개
-VGG19는 유사한 아키텍쳐이지만, Conv Layer가 조금 더 추가되었다.
-각 노드가 4byte를 차지하므로 Forward Pass만 해도 약 100MB의 메모리가 필요함.
-backward pass까지 고려하면 메모리가 더 맣ㄴ이 필요함
-만약, 메모리가 5GB라면, 50장의 이미지밖에 처리 못하는 것임
+&lt;p&gt;VGG는 기존 CNN 아키텍쳐 대비 훨씬 깊어졌고(alex:8, vgg:16~19), 3x3 크기의 아주 작은 필터를 사용한다(3x3은 이웃 픽셀을 포함할 수 있는 가장 작은 단위임). 이렇게 작은 필터를 유지하며 주기적으로 pooling을 수행하여 전체 네트워크를 구성하였다. 또한, Layer가 깊어지는 만큼 Non-Linearity가 증가하게 되는데, 이를 통해 더 자세한 특징을 잡아낼 수 있게 되어 ImageNet에서 7.3%의 top 5 error를 기록하였다. 그렇다면 VGG에서 이렇게 작은 필터를 사용한 이유는 무엇일까? 그 이유에 대해 차근차근 알아보도록 하자.&lt;/p&gt;
 
-또한 전체 파라미터 개수는 138M개로 alexnet(68M)의 2배이다.
-특히 FC-Layer에서 엄청난 양의 파라미터를 사용한다.
-따라서 최근 일부 네트워크는 파라미터를 줄이기 위해 FC Layer를 없애기도 한다.
+&lt;h4 id=&quot;4-1-1-receptive-field-수용-영역&quot;&gt;4-1-1) Receptive Field (수용 영역)&lt;/h4&gt;
 
-- cf) 명칭
+&lt;p&gt;우선 Receptive Field란, filter가 한번에 볼 수 있는 입력의 Spatial Area를 일컫는 말이다. 다음의 간단한 예시를 통해 Receptive Field를 알아보자&lt;/p&gt;
 
-  conv3-64 : 64개의 필터를 가진 3x3 conv 필터
+&lt;p&gt;다음과 같이 3x3 filter를 사용하는 CONV1 Layer를 떠올려보자. filter는 stride만큼 움직이면서 filter 영역에 해당하는 픽셀들과 계속해서 합성곱을 계산한다. 따라서 3x3 filter가 바라본 하나의 위치는 다음 Layer의 1픽셀로 들어가게 된다.&lt;/p&gt;
 
-### 특징
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206114-29c5a5c7-f620-415d-918a-eb3f47d3c9a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-VGG16과 VGG19는 매우 유사하며, VGG19가 조금 더 깊음. VGG19가 성능은 아주 조금 더 좋고, 메모리 사용량도 조금 더 맣ㄴ다. 보통은 16을 더 많이 사용함. 
-alex처럼 앙상블 기법을 사용하였음.
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-## GoogLeNet == InceptionNet
+&lt;p&gt;또한, 마찬가지로 CONV2 Layer에서도 3x3 filter를 사용한다. CONV1의 3x3 영역이 CONV2에서는 1x1 영역으로 취급되기 때문에, CONV2 Layer의 3x3 영역은 CONV1 Layer의 5x5 영역을 바라보는 것과 동일하다.&lt;/p&gt;
 
-2014년 classfication challenge에서 우승함
-22개의 레이어를 가지고 있고, 매우 깊은 네트워크임.
-효율적인 계싼을 하도록 네트워크를 디자인 하였으며, inception module을 여러개 쌓아서 만듦
-파라미터를 줄이기 위해 fc-layer를 제거하였음.
-파라미터 수는 5M으로, 60M인 alex보다도 적음
-그럼에도 불구하고 훨씬 깊음
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206752-4490125c-3016-47c5-9a27-5fa916a394ca.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-### inception module
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-inception module 내부에는 동일한 입력을 받는 서로다른 다양한 필터들이 병렬로 존재함.
-이전 레이어의 입력을 받아 다양한 ocnv 연산을 수행하는 것임
-각 레이어에서 각각의 출력이 나오게 되는데, 그 출력들을 모두 depth 방향으로 합침
-이렇게 합치면 하나의 tensor로 출력이 결정되고, 이 하나의 출력을 다음 레어이로 전달하는 것
+&lt;p&gt;이러한 과정을 반복하게 되면, CONV4의 1x1 영역은 CONV1의 7x7영역을 바라보는 것과 동일하다. 즉, 3x3 filter를 3번 쌓는 것은 7x7 filter를 사용하는 것과 실질적으로 동일한 Receptive Field를 갖는 것이다.&lt;/p&gt;
 
-#### 계산비용의 문제점
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207208594-6c8d21ff-a21f-4579-9950-b53c18717dd9.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
-예를 들어, input으로 28x28x256을 받는 inception module을 생각해보자.
-각 Layer의 계산 비용을 합치게 되는데, 28x28은 동일하고(spatial dimention을 동일하게 맞춰주기 위해 zero-padding을 해줬음) depth가 점점 쌓이게 된다.
-최종적으로 28x28x672가 됨.
-inception module의 input은 28x28x256이었으나, output은 28x28x672가 된 것임
-spatial dimention이 변하진 않았지만, dimention이 엄청나게 늘어남.
-계산량을 전부 더해보면, inception module에서의 전체 연산량은 854M이 된다. -&gt; 매우 많은 연산량
-layer를 거칠 떄마다 depth가 점점 늘어나게 됨(256-&gt;672-&gt;...). 
+&lt;p&gt;그렇다면 왜 filter를 이렇게 작은 filter로 여러번 나눠 사용하는 것일까?&lt;/p&gt;
 
-#### 해결 : bottleneck layer
+&lt;h4 id=&quot;4-1-2-parameter-개수&quot;&gt;4-1-2) Parameter 개수&lt;/h4&gt;
 
-conv 연산을 수행하기에 앞서 입력을 더 낮은 차원으로 보내는 방법임.
-낮은 차원으로 보낸다?
+&lt;p&gt;우선 7x7 Filter의 Parameter 개수는 $7 \times 7 \times C \times N$ 이다(C=채널 수, N=필터 수). 여기서, input image의 depth와 output image의 depth를 맞춰주기 위해 filter 개수는 channel의 수와 동일하게 맞춰주었다. 따라서 7x7 filter의 parameter 개수는 $7^2 C^2$이다.&lt;/p&gt;
 
-만약 56x56x64의 input img에 1x1 CONV with 32 filters를 사용하면, 
-이미지 크기는 그대로 유지한 채 depth를 32로 줄일 수 있다.
--&gt; spatial locatin은 유지한 채 입력의 차원을 더 낮은 차원ㅇ로 projection
--&gt; 이는 input feature map들간의 linear combination(선형결합)이라고 할 수 있음
-왜냐? 각 필터는 input image의 channel과 동일한 depth를 가지고 각 채널의 연산 결과를 하나로 합침
+&lt;p&gt;3x3 Filter의 경우, 7x7 Filter와 동일한 Receptive Field를 맞추어주기 위해서는 해당 Filter를 3번 쌓아주어야 한다. 따라서, 위와 같은 맥락으로 파라미터 개수는 $3^2 C^2 \times 3$이 된다. 최종적으로 정리해보면 다음과 같다.&lt;/p&gt;
 
-주요 아이디어 : 1x1 conv를 사용하여 입력의 depth를 줄인다.
+\[\mathsf{7x7 \; Filter}\\
 
-CONV 이전에 1x1 conv가, POOL 이후에 1x1 conv가 추가된 것을 확인할 수 있음
-1x1 conv가 bottleneck layers의 역할로 추가되는 것이다.
+7^2C^2 = 49C^2\\\]
 
-[계산]
-input : 28x28x256 -&gt; 28x28x480
-계산량:  854M(no bottle) -&gt; 358M(use bottle)
+\[\mathsf{3x3 \; Filter}\\
 
+3^2C^2 \times 3 = 27C^2\]
 
-=&gt; 이를 통해 배울 수 잇는 점 : 1x1 CONV를 사용하면 계산량이 줄어든다.
+&lt;p&gt;동일한 Receptive Field에 대해, filter size를 줄임으로써 파라미터의 수를 $49C^2$에서 $27C^2$로 줄일 수 있었다. 또한, 층이 깊어지면서 Non-Linearity를 더 추가할 수 있게 되어 더 복잡한 Feature를 뽑아낼 수 있게 되었다. 이를 통해 VGG는 연산량도 줄이면서 Accuarcy도 높일 수 있게 되었다.&lt;/p&gt;
 
-googlenet은 이러한 inception model을 쌓아올린 것임
+&lt;h3 id=&quot;4-2-문제점&quot;&gt;4-2) 문제점&lt;/h3&gt;
 
-### 구조
+&lt;h4 id=&quot;4-2-1-메모리-문제&quot;&gt;4-2-1) 메모리 문제&lt;/h4&gt;
 
-가중치를 가진 레이어는 총 22개이며, inception moudul은 1x1/3x3/5x5 conv layer를 병렬적으로 가지고 있음.
+&lt;p&gt;VGG의 각 노드는 약 4byte의 메모리를 차지한다. 따라서 단순히 Forward Pass만 해도 약 100MB의 메모리가 필요하다(Backward Pass까지 고려하면 더 많은 메모리 필요). 따라서, 만약 5GB의 메모리를 사용한다면 50장의 이미지밖에 처리하지 못하는 것이다.&lt;/p&gt;
 
-앞단(stem) : 일반적인 네트워크 구조처럼 conv-pool을 반복
-중간 : 조금씩 다른 inception module을 쌓음.
--특이한 점
+&lt;h4 id=&quot;4-2-2-총-파라미터-개수&quot;&gt;4-2-2) 총 파라미터 개수&lt;/h4&gt;
 
-  중간에 보조 분류기(auxiliary classifier)가 존재
-  avgpool, conv, fc등으로 이루어져 있으며, softmax로 1000개의 imagenet class를 구분함
-  -&gt; 네트워크의 끝에서 뿐만 아니라 이 두 곳에서도 loss를 계산한다(네트워크가 깊기 때문)
-  보조 분류기를 중간 레이어에 달아주면 추가적인 그레디언트를 얻을 수 있고, 중간 레이어의 학습을 도울 수 있음
+&lt;p&gt;VGGNet의 총 파라미터 개수는 1억 3800만개인데, 이는 AlexNet(6800만)의 약 2배 수준이다. 특히 FC-Layer에 1억개가 넘는 파라미터가 있다. 따라서 최근 일부 네트워크는 파라미터를 획기적으로 줄이기 위해 FC Layer를 줄이기도 한다.&lt;/p&gt;
 
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-끝단 : classifier 결과를 출력
+&lt;h2 id=&quot;5-googlenet-google-2014&quot;&gt;5. GoogLeNet (Google, 2014)&lt;/h2&gt;
 
-FC-Layer를 대부분 걷어냈으나, 성능이 그래도 잘 나오는 것을 확인할 수 있었음.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228473-0ebc8054-4672-49f2-97cf-881188c0cede.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;InceptionNet이라고도 하며, 2014년 classfication challenge에서 우승하였다. 총 22개의 레이어를 가지고 있고, VGGNet처럼 매우 깊은 네트워크이다. 효율적인 계산에 초점을 맞춰 네트워크를 디자인 하였으며, Inception Module이라는 미니 네트워크를 여러개 쌓아서 만들었다. 또한 위에서 잠깐 언급했듯이, 파라미터를 줄이기 위해 FC-Layer를 제거하였다. 그 결과, 파라미터 수를 500만개까지 획기적으로 줄였다. AlexNet대비 약 20배 적은 파라미터를 가지고 있지만, 훨씬 더 깊다. 그렇다면 GoogLeNet의 메인 아이디어인 Inception Module이란 무엇일까?&lt;/p&gt;
 
+&lt;h3 id=&quot;5-1-inception-module&quot;&gt;5-1) Inception Module&lt;/h3&gt;
 
+&lt;h4 id=&quot;5-1-1-기본-idea&quot;&gt;5-1-1) 기본 Idea&lt;/h4&gt;
 
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228656-6d536a62-e494-4b13-9a97-52c2bc36afdd.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;기존 CONV Layer는 하나의 filter를 사용하여 Feature Map을 생성하였으나, GoogLeNet은 여러 종류의 Filter를 병렬적으로 사용하고자 하였다. 그래서 탄생한 것이 바로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Inception Module&lt;/code&gt;이다. inception module 내부에는 동일한 입력을 받는 서로 다른 다양한 필터들이 병렬로 존재한다. 이전 레이어의 입력을 받아 다양한 Convolution 연산을 수행하고, 각각의 출력들을 모두 depth 방향으로 합친다. 이렇게 합치면 하나의 tensor로 출력이 결정되고, 이 하나의 출력을 다음 Layer로 전달하게 된다.&lt;/p&gt;
 
+&lt;h4 id=&quot;5-1-2-계산비용의-문제점&quot;&gt;5-1-2) 계산비용의 문제점&lt;/h4&gt;
 
+&lt;p&gt;그러나 Inception Module에는 한 가지 문제점이 있었는데, 계산을 거듭할수록 Depth가 점점 늘어나 연산량이 매우 많아진다는 것이다. 가령, 다음과 같이 input으로 28x28x256을 받는 inception module을 생각해보자. (이 때, spatial dimension은 항상 일정하도록 stride와 padding이 적절히 설정되어 있다.)&lt;/p&gt;
 
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207229599-5dce18cb-3673-41bf-b93f-f6987c023127.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;이렇게 되면, 최종 Tensor의 Depth는 Filter의 개수만큼 점점 쌓이게 되며(128+192+96+256), 파라미터 수는 매우 커지게 된다. 위 예시의 경우, 파라미터 수는 28 x 28 x (128+192+96+256) = 526,848개이다. 즉, Inception Module의 input은 28x28x256이었으나, output은 28x28x672가 된 것이다. 또한, GoogLeNet은 이러한 Inception Module이 계속해서 쌓여있는 구조이기 떄문에 계산량은 기하급수적으로 늘어나게 된다. 그렇다면 GoogLeNet은 이러한 문제를 해결하기 위해 어떠한 방법을 사용했을까?&lt;/p&gt;
 
+&lt;h4 id=&quot;5-1-3-bottleneck-layer&quot;&gt;5-1-3) Bottleneck Layer&lt;/h4&gt;
 
+&lt;p&gt;GoogLeNet은 계산량을 줄이고 Depth를 축소하기 위해, 1x1 CONV Layer인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bootleneck Layer&lt;/code&gt;를 도입하였다. Bottlenect Layer는 연산을 수행하기에 앞서, input의 spatial dimension은 유지한 채 입력을 더 낮은 차원으로 보내는 방법이다.&lt;/p&gt;
 
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231326-0d022a15-a497-401d-b995-743b4888f46c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;가령, 56x56x64의 input img에 32개의 1x1 CONV filters를 사용하면, 이미지 크기는 그대로 유지한 채 depth를 32로 줄일 수 있다. 따라서 bottlenect layer는 input feature map들간의 linear combination을 도와주는 매개체라고 생각할 수 있으며, 주요 아이디어는 1x1 conv를 사용하여 입력의 depth를 줄인다는 것이다. 아래 그림은 Bottleneck Layer를 추가한 Full Inception Module이다.&lt;/p&gt;
 
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231952-c18b882d-25b4-4cba-9515-5dc50eb621cb.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;CONV 이전에 1x1 conv가, POOL 이후에 bottleneck layers(1x1 conv)가 추가된 것을 확인할 수 있다. 파라미터의 수는 bottleneck layer를 쓰기 전 854M에서 358M으로 2배 이상 감소하였다.&lt;/p&gt;
 
+&lt;h4 id=&quot;5-2-구조&quot;&gt;5-2) 구조&lt;/h4&gt;
 
+&lt;p&gt;가중치를 가진 레이어는 총 22개이며, inception moudule은 1x1/3x3/5x5 conv layer를 병렬적으로 가지고 있다. AlexNet 대비 12배 적은 파라미터를 가지고 있다고 한다. 전체적인 구조는 다음과 같다.&lt;/p&gt;
 
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207232567-0b2a22a1-e6bb-4772-8e78-ad05cbc8e85d.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Stem Network&lt;/strong&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+    &lt;p&gt;일반적인 네트워크 구조로 시작한다. [Conv-Pool-Conv-Conv-Pool]의 구조를 가진다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Inception Modules&lt;/strong&gt;&lt;/p&gt;
 
-- **Reference**
+    &lt;p&gt;조금씩 다른 inception module을 쌓는다. 특이한 점은, 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;보조 분류기(Auxiliary Classifier)&lt;/code&gt;가 존재한다는 것이다. 보조 분류기는 AVG POOL, CONV, FC로 이루어져 있으며 softmax로 ImageNet Class를 구분한다. GoogLeNet이 매우 깊기 때문에 Vanishing Gradient 예방 차원에서 넣어준 것이며, 추가적인 Gradient 신호를 흘려주어 중간 레이어의 학습을 돕는다. 최종 Loss를 계산할 떄는 Auxiliary Classifier의 Loss도 반영한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Classifier Output&lt;/strong&gt;&lt;/p&gt;
 
-  [수식과 코드로 보는 경사하강법](https://twinw.tistory.com/247)
+    &lt;p&gt;FC-Layer를 걷어내고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Global Average Pooling(GAP) Layer&lt;/code&gt;를 깔았다. 기존 FC-Layer는 Feature Map을 1차원 벡터로 펼쳐서 Activation Function을 거친 뒤, 원하는 클래스의 개수로 맞춰주는 방식이었다. 그러나 Global Average Pooling 방식은 Feature Map을 Depth 방향으로 각각 평균 내어 Flatten을 시켜주는 방식이다. FC layer로 활성함수를 거치지 않아도 이미 깊은 네트워크를 거치면서 효과적으로 Feature vector를 추출했기 때문에, 이렇게 해도 분류가 가능하다고 한다.&lt;/p&gt;
 
-  [Interactive Visualization of Optimization Algorithms in Deep Learning](https://emiliendupont.github.io/2018/01/24/optimization-visualization/)
+    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207234373-dd1f9fd1-8a1d-4654-be31-bbd869534b8f.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-  [최적화 기법의 직관적 이해](https://darkpgmr.tistory.com/149)
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-  [Training Neural Networks II](https://bookandmed.tistory.com/56)
+&lt;h2 id=&quot;6-resnet-kaiming-he-2015&quot;&gt;6. ResNet (Kaiming He, 2015)&lt;/h2&gt;
 
-  A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207271537-e9092ca2-b0de-4bed-a4fb-b61c59e401a8.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;ResNet은 152 레이어로 엄청나게 깊은 CNN 아키텍쳐이며, 기존의 어떤 네트워크보다도 깊다. 혹자는 이를 두고 혁명적(Revolution of Depth)으로 깊어졌다고 한다. 메인 아이디어는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Residual Connections&lt;/code&gt;이며, ResNet 하나로 ImageNet, COCO Classification/detection 등 여러 대회 우승하였다.&lt;/p&gt;
+
+&lt;h3 id=&quot;6-1-residual-connections&quot;&gt;6-1) Residual Connections&lt;/h3&gt;
+
+&lt;h4 id=&quot;6-1-1-기본-idea&quot;&gt;6-1-1) 기본 Idea&lt;/h4&gt;
+
+&lt;p&gt;ResNet의 Residual Connections는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;일반 CNN을 깊고 더 깊게 쌓게되면 어떻게 될까?&lt;/code&gt;라는 질문으로부터 출발한다. 가령, VGG에 [conv-pool] 레이어를 깊게만 쌓는다고 과연 성능이 더 좋아질까? 그에 대한 대답은 No이다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207235486-784b5921-b935-455e-99b9-1ba34e73d439.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 그래프에서 볼 수 있듯이, plain CNN을 56 Layer 쌓은 아키텍쳐의 test error가 20 Layer 쌓은 아키텍쳐보다 더 높게 나왔다. 이느 56-Layer가 Train Data에 overfitting 되었기 때문으로 예상했으나, training error도 56레이어가 더 높았다. 따라서 test에서 56-layer의 성능이 더 좋지 않은 이유가 overfitting 때문이 아니라는 것을 알게 되었다. ResNet 연구진들은 이를 Optimizer의 문제로 생각하였다. deeper model은 Optimization이 더 어렵기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;ResNet은 이를 해결하기 위해 다음과 같은 Idea를 떠올렸다. 우선 더 얕은 모델의 가중치를 깊은 모델의 일부 레이어에 복사한다. 그리고 나머지 레이어는 input을 output으로 그냥 내보내는 identity mapping을 해버린다. 즉, CNN을 깊게 쌓았을 때 성능이 저하되는 것이 Optimization의 문제라면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;얕은 네트워크의 구조를 그대로 가져와서 identity mapping을 한다면, 적어도 얕은 네트워크 만큼의 성능은 나와야될 것이다&lt;/code&gt; 라는 가정을 세웠다. 이 motivation을 우리가 만들 모델에 녹이려면 어떻게 모델 아키텍쳐를 디자인해야할까?&lt;/p&gt;
+
+&lt;h4 id=&quot;6-1-2-residual-learning-skip-connection&quot;&gt;6-1-2) Residual Learning (Skip Connection)&lt;/h4&gt;
+
+&lt;p&gt;기존 Neural Net의 학습 목표는 x를 y로 mapping하는 함수 H(x)를 찾는 것이다. 따라서 H(x)-y를 최소화 하는 방향으로 학습을 진행한다. 그러나, ResNet의 Residual Learning은 Residual Function인 $F(x) = H(x) - x$를 최소화하는 방향으로 학습한다. 즉, input과 output의 차이를 0에 가깝게 만들겠다는 것이다. 내가 개인적으로 이해한 바로는, 다음과 같이 해석할 수 있을 것 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207249624-9511523a-a6ca-4276-8121-d2718148ca0e.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Layer가 점점 깊어지고 끝단으로 갈수록, 학습이 점점 진행되기 때문에 H(x)와 x의 차이는 점점 줄어들어야 한다. 즉, x는 점점 출력값 H(x)와 가까워져 $F^{‘(n)}(x)$는 0에 수렴해야한다는 것이다. 여기서 0에 수렴시켜야 하는 값인 $F(x)=H(x)-x$를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Residual&lt;/code&gt;이라고 하며, Resnet은 이러한 Residual이 0이 되도록 학습을 진행한다. Residual을 0에 수렴시킨다는 것은 점점 학습시켜야 할 학습량이 줄어드는 방향으로 학습이 진행된다는 것으로 해석할 수도 있겠다. 힌편, residual이 그저 가설일 뿐이고 필요 없다는 주장도 있으나 실제로는 Residual Learning을 사용하면 성능이 좋아지는 것이 fact이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207241324-2dd55fdf-d347-4612-9669-68492fcad868.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이러한 Idea를 바탕으로, ResNet은 input으로 들어온 x를 그대로 보내고, Residual Block 안에서 계산된 F(x)를 학습한다. 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Skip Connection&lt;/code&gt;이라고 한다. 이렇게 Residual Block 안에서 계산된 F(x)를 학습하는 것이 CONV Layer를 거쳐온 거대한 H(x)를 학습하는 것보다 훨씬 더 효율적이고, 좋은 성능을 보였다.&lt;/p&gt;
+
+&lt;h3 id=&quot;6-2-구조&quot;&gt;6-2) 구조&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252210-ef72fa85-b4b1-4cb2-af3a-b74155abbffe.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Stem Network&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;네트워크 초반은 Conv Layer가 추가적으로 붙는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Residual Blocks&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;하나의 Residual blocks는 2개의 3x3 conv layers로 이루어져 있으며, 일반적으로 이렇게 구성해야 잘 동작하는 것으로 알려져 있다. 이 Residual blocks를 매우 깊게(150 Layer) 쌓아올린 것이 바로 ResNet이다. 그리고 주기적으로 filter를 2배씩 늘리고 stride=2를 이용하여 down sampling해준다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Classifier Output&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;네트워크 끝에는 FC-Layer가 없는 대신 GAP(Global Average Pooling) Layer를 사용하여, 하나의 Map 전체를 Average Pooling한다. 자세한 설명은 위에서 했기 때문에 생략한다. 마지막에는 ImageNet의 1000개 클래스를 맞춰주기 위한 FC Layer가 붙는다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;6-3-bottleneck-layers&quot;&gt;6-3) Bottleneck Layers&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252521-2b9312e9-e8d1-4387-9209-088138fb1b66.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;depth는 34, 50, 100까지 늘어나며 논문에서는 ImageNet 문제를 위해 152까지 늘린 것을 확인할 수 있다. 이 때, 모델 Depth가 50이상인 경우 Bottleneck Layers를 넣어주었다(GoogLeNet과 유사). 이로인해 3x3 conv Layer의 계산량을 줄이고, 다시 1x1 conv를 추가해서 depth를 다시 256으로 늘리는 구조를 취하고 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;6-4-details&quot;&gt;6-4) Details&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;모든 Conv Layer 다음 Batch Norm을 사용하며 Weight Initialization은 Xavier를 사용함&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;위 방법은 SGD+Momentum에서 좋은 초기화 성능을 보인다고 함&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Learning rate는 Learning rate 스케줄링을 통해서 validation error가 줄어들지 않는 시점에서 조금씩 줄여주었다(Learning Rate Decay).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;minibatch 사이즈는 256이며, weight decay 사용, dropout은 사용하지 않았음&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;=&amp;gt; 성능 감소 없이 깊은 네트워크를 잘 학습시킬 수 있었으며, backprop 시 네트워크의 gradient flow를 잘 가져갔다. 또한, 깊은 네트워크에서 Train error가 줄어드는 문제를 해결하여, 네트워크가 깊어질수록 Training Error는 더 줄어들게 되었다.&lt;/p&gt;
+
+&lt;h3 id=&quot;6-5-resnet의-성능-향상-관련-연구&quot;&gt;6-5) ResNet의 성능 향상 관련 연구&lt;/h3&gt;
+
+&lt;h4 id=&quot;6-5-1-wide-residual-networks-zagoruyko-2016&quot;&gt;6-5-1) Wide Residual Networks (Zagoruyko, 2016)&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207253444-9198dafb-9dbf-4e3e-9312-91395d8f2d02.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;기존의 resnet은 Layer를 깊게 쌓는 것에 집중했지만, Zagoruyko는 depth가 아닌 residual이 중요한 것이라고 주장하였음. residual connection만으로도 충분하기 떄문에, 네트워크가 굳이 더 깊어질 필요 없다는 것이 Zagoruyko의 주장이다. 따라서 residual block을 더 넓게 만들었다(conv layer의 필터를 더 많이 추가). 기존 ResNet에 block당 F개의 filter만 있었다면, 이제는 FxK개의 필터로 구성하였다. 그 결과, 50 레이어만 있어도 152레이어의 기존 resnet보다 더 좋은 성능을 보이는 것을 확인할 수 있었다. 또한 depth 대신에 filter의 width를 늘리면, 병렬화가 더 잘되기 때문에 계산 효율이 증가한다.&lt;/p&gt;
+
+&lt;h4 id=&quot;6-5-2-resnextresnet--inexeption-xie-2016&quot;&gt;6-5-2) ResNeXt(ResNet + inEXeption) (Xie, 2016)&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207260802-83220f3c-ffa2-424b-ba5d-a96dcebe1469.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;ResNeXt또한 residual block의 width를 파고들어, filter의 수를 늘리는 데 집중했다. ResNeXt는 하나의 bottleneck resnet block을 병렬로 여러개 묶은 모양을 하고 있다. 마치 ResNet과 VGG가 결합된 모습이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;6-5-3-stochastic-depth-huang-2016&quot;&gt;6-5-3) stochastic depth (Huang, 2016)&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207261711-488b8126-104f-4912-a6a8-c9d3ea50e1ec.png&quot; width=&quot;25%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;네트워크가 깊어질수록 vanishing gradient 문제가 발생한다. short network에서는 이러한 vanishing gradient의 위험성이 낮기 때문에, stochastic depth는 train시에 레이어의 일부를 제거한다(Dropout과 유사). 즉, 일부 네트워크를 골라서 identitiy connection으로 만들어버리는 것이다.. 이렇게 shrot netwrok를 만들어서 train 하면 gradient가 더 잘 전달될 수 있게된다. test time에서는 full deep 네트워크를 사용하며, 매우 효율적인 방법이 될 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;7-non-resnet&quot;&gt;7. Non-ResNet&lt;/h2&gt;
+
+&lt;h3 id=&quot;7-1-fractalnet-larsson-2017&quot;&gt;7-1) FractalNet (Larsson, 2017)&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207262529-676a0f91-370e-43f7-b79c-6a48011992a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;FractalNet residual connection이 쓸모없다고 주장하여, residual connection이 전혀 없다. 대신, shallow/deep network의 정보 모두를 잘 전달하는 것이 중요하다고 생각하였다(fractal한 모습). FractalNet에서는 shallow/deep 경로를 모두 연결하고, train에서는 일부 경로만 사용, test에서는 모든 경로를 사용한다(dropout과 유사).&lt;/p&gt;
+
+&lt;h3 id=&quot;7-2-densenetdensely-connected-convolutional-networks-huang-2017&quot;&gt;7-2) DenseNet(DENSEly Connected Convolutional NETworks) (Huang, 2017)&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263266-64d105ac-3b46-4f57-bcf7-25731a3158e2.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DenseNet의 Main idea는 Dense Block을 도입하는 것이다. 모든 레이어는 그 레이어 하위의 다른 모든 레어이와 연결되어 있으며, 레이어의 출력이 각 레이어의 출력과 concat된다. 그리고 이 값이 각 conv layer의 입력으로 들어간다(이 과정에서 dimension을 줄여주는 과정이 포함됨). 이러한 dense connection을 사용하면, 각 레이어의 출력이 다른 레이어에서 다시 쓰일 수 있기 때문에 기울기 소실문제를 해결하고, feature를 더 잘 사용할 수 있게 한다고 주장한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;7-3-squeezenet-landola-2017&quot;&gt;7-3) SqueezeNet (landola, 2017)&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263308-30e3f883-7ba1-456e-bd7f-176541962746.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;GoogLeNet과 같이 효율성을 중시한 CNN 아키텍쳐이다. squeeze layer는 1x1 필터들로 구성되고, 이 출력 값이 1x1/3x3 필터들로 구성되는 expand layer의 입력이 된다. SqueezeNet는 ImageNet에서 AlexNet 만큼의 Accuracy를 보이지만 파라미터는 50배 더 적었으며, 압축 시 AlexNet보다 500배 더 작아지게 된다. 또한 용량은 0.5Mb 밖에 안된다고 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;8-아키텍쳐-성능-요약-2017&quot;&gt;8. 아키텍쳐 성능 요약 (2017)&lt;/h2&gt;
+
+&lt;h3 id=&quot;8-1-top-1-accuracy&quot;&gt;8-1) Top-1 Accuracy&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266565-9d01b0f7-f588-42e6-a8ff-3ca470cb13a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;8-2-계산성능&quot;&gt;8-2) 계산성능&lt;/h3&gt;
+
+&lt;p&gt;아래 그림은, 각 아키텍쳐의 성능을 나타낸 것이다. Y축은 top-1 Accuarcy, X축은 연산량, 원의 크기는 메모리 사용량이다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263909-a7fd0de9-f9c1-4b9f-8771-17b3431db223.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;GoogLeNet&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;가장 효율적인 네트워크.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;x축의 가장 왼쪽에 붙어있으며 메모리 사용도 적음&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;AlexNet&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Accuracy는 매우 낮은편이다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;아키텍쳐 자체의 몸집이 작아 계산량도 낮다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;그러나 메모리 사용량은 매우 비효율적인 모습&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;ResNet&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;적당한 효율성.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;메모리 사용량, 계산량은 중간정도이다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;그러나 Accuaracy는 최상위인 모습이다.&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;8-3-forward-pass-시간&quot;&gt;8-3) forward pass 시간&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266872-7c001595-2ea7-4df7-a06b-3fd67775930c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;8-4-전력소모량&quot;&gt;8-4) 전력소모량&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207267081-15ab4b7f-6c9d-4220-b33b-c37653ca5d54.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://velog.io/@lighthouse97/ResNet%EC%9D%98-%EC%9D%B4%ED%95%B4&quot;&gt;ResNet의 이해&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://ganghee-lee.tistory.com/41&quot;&gt;(논문리뷰) ResNet 설명 및 정리&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://phil-baek.tistory.com/entry/ResNet-Deep-Residual-Learning-for-Image-Recognition-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0&quot;&gt;ResNet (Deep Residual Learning for Image Recognition) 논문 리뷰&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://bskyvision.com/539&quot;&gt;GoogLeNet(inception v1)의 구조&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://bookandmed.tistory.com/58&quot;&gt;CNN architectures&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
 
 Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.
 
