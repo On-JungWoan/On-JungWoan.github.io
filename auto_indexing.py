@@ -24,7 +24,6 @@ JSON_KEY_FILE = {
   "client_x509_cert_url": os.environ["CLIENT_X509_CERT_URL"]
 }
 
-
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(JSON_KEY_FILE, scopes=SCOPES)
 
 http = credentials.authorize(httplib2.Http())
