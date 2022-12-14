@@ -10,6 +10,8 @@ TYPE = "URL_UPDATED"
 SCOPES = [ "https://www.googleapis.com/auth/indexing" ]
 ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"
 
+print(os.environ.get("PRIVATE_KEY_ID"))
+
 # service_account_file.json is the private key that you created for your service account.
 JSON_KEY_FILE = {
   "type": "service_account",
