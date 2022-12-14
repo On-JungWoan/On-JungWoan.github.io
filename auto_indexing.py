@@ -14,7 +14,7 @@ ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"
 JSON_KEY_FILE = {
   "type": "service_account",
   "project_id": "jekyll-blog-371100",
-  "private_key_id": os.environ["PRIVATE_KEY_ID"],
+  "private_key_id": os.environ["private_key"],
   "private_key": os.environ["PRIVATE_KEY"],
   "client_email": os.environ["CLIENT_EMAIL"],
   "client_id": os.environ["CLIENT_ID"],
