@@ -1,6 +1,7 @@
 from oauth2client.service_account import ServiceAccountCredentials
 import httplib2
 import json
+import os
 
 URL = "https://on-jungwoan.github.io/dl/cs231n_52/"
 TYPE = "URL_UPDATED"
@@ -9,18 +10,20 @@ TYPE = "URL_UPDATED"
 SCOPES = [ "https://www.googleapis.com/auth/indexing" ]
 ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"
 
+print(os.environ.get("PRIVATE_KEY_ID"))
+
 # service_account_file.json is the private key that you created for your service account.
 JSON_KEY_FILE = {
   "type": "service_account",
   "project_id": "jekyll-blog-371100",
-  "private_key_id": "os.getenv(PRIVATE_KEY_ID)",
-  "private_key": "os.getenv(PRIVATE_KEY)",
-  "client_email": "os.getenv(CLIENT_EMAIL)",
-  "client_id": "os.getenv(CLIENT_ID)",
+  "private_key_id": os.environ.get("PRIVATE_KEY_ID"),
+  "private_key": os.environ.get("PRIVATE_KEY"),
+  "client_email": os.environ.get("CLIENT_EMAIL"),
+  "client_id": os.environ.get("CLIENT_ID"),
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "os.getenv(CLIENT_X509_CERT_URL)"
+  "client_x509_cert_url": os.environ.get("CLIENT_X509_CERT_URL")
 }
 
 

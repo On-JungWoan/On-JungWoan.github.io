@@ -1,4 +1,2204 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-13T17:59:38+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T16:24:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">&lt;h2 id=&quot;1-process-sequences&quot;&gt;1. Process Sequences&lt;/h2&gt;
+&lt;h3 id=&quot;1-1-vanilla-neural-network&quot;&gt;1-1) Vanilla Neural Network&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1-2-rnn&quot;&gt;1-2) RNN&lt;/h3&gt;
+
+&lt;p&gt;RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;One to Many&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Many to One&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Many to Many (diff)&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Many to Many(same)&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;div style=&quot;position:relative; padding-bottom:calc(76.67% + 44px)&quot;&gt;&lt;iframe src=&quot;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;position:absolute;top:0;left:0;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
+    &lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가변 과정(processing)&lt;/code&gt; 인 경우, RNN은 상당이 유용하다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;rnn&quot;&gt;RNN&lt;/h2&gt;
+
+&lt;p&gt;일반적으로 RNN은 작은
+“Recurrent Core Cell” 을 가지고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;입력 x가 RNN으로 들어갑니다.
+RNN에는 내부에 “hidden state” 를 가지고있습니다.&lt;/p&gt;
+
+&lt;p&gt;“hidden state”는 RNN이 새로운 입력을
+불러들일 때마다 매번 업데이트됩니다.&lt;/p&gt;
+
+&lt;p&gt;“hidden state”는 모델에 feed back되고
+이후에 또 다시 새로운 입력 x가 들어옵니다.&lt;/p&gt;
+
+&lt;p&gt;RNN이 매 단계마다 값을 출력하는 경우를 생각해 봅시다.&lt;/p&gt;
+
+&lt;p&gt;그러면 이런 식으로 진행이 됩니다.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;RNN이 입력을 받습니다.&lt;/li&gt;
+  &lt;li&gt;“hidden state”를 업데이트합니다.&lt;/li&gt;
+  &lt;li&gt;출력 값을 내보냅니다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;그렇다면 RNN 구조를 수식적으로 표현하면 어떨까요?&lt;/p&gt;
+
+&lt;h3 id=&quot;수식&quot;&gt;수식&lt;/h3&gt;
+
+&lt;p&gt;오른쪽 그림의 초록색 RNN block은 “재귀적인
+관계”를 연산할 수 있도록 설계됩니다. “함수 f” 로 말이죠&lt;/p&gt;
+
+&lt;p&gt;파라미터 W를 가진 함수 f가 있습니다.&lt;/p&gt;
+
+&lt;p&gt;함수 f는 “이전 상태의 hidden state인 h_t-1” 과
+“현재 상태의 입력인 x_t” 를 입력으로 받습니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 h_t를 출력합니다. h_t는 “다음 상태의 hidden state”
+입니다.(updated hidden state)&lt;/p&gt;
+
+&lt;p&gt;그리고 다음 단계(state)에서는
+h_t와 x_t+1가 입력이 됩니다.&lt;/p&gt;
+
+&lt;p&gt;RNN에서 출력 값(y)을 가지려면 h_t 를 입력으로 하는
+FC-Layer을 추가해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;FC-Layer는 매번 업데이트되는 Hidden state(h_t)를
+기반으로 출력 값을 결정합니다.&lt;/p&gt;
+
+&lt;p&gt;중요한 사실은 함수 f와 파라미터 W는
+매 스텝 동일하다는 것입니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;vanilla-rnn&quot;&gt;Vanilla RNN&lt;/h4&gt;
+
+&lt;p&gt;-&amp;gt; 이 부분 다시 공부&lt;/p&gt;
+
+&lt;p&gt;자, RNN을 가장 간단하게 수식적으로 나타내려면
+단순한(vanilla)  RNN부터 시작하는게 좋겠군요&lt;/p&gt;
+
+&lt;p&gt;지금 보이는 수식은 앞서 있던 수식과 동일합니다.&lt;/p&gt;
+
+&lt;p&gt;“이전 hidden state”와 “현재 입력”을 받아서
+“다음 hidden state”를 출력합니다.&lt;/p&gt;
+
+&lt;p&gt;이를 수식적으로 가장 간단하게 표현해보면,
+가중치 행렬 W_xh 와 입력 x_t의 곱으로 나타낼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;또한 가중치 행렬 W_hh도 있습니다.
+“이전 hidden state”와 곱해지는 값입니다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 두 입력(h,x) 에 대한 행렬 곱 연산이 있고
+두 결과 값을 더해줍니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 System에 non-linearity를 구현하기 위해
+tanh를 적용합니다.&lt;/p&gt;
+
+&lt;p&gt;여러분 중에 왜 다른 non-linearity가 아닌
+tanh를 쓰는지 궁금하신 분들도 계실 것입니다.&lt;/p&gt;
+
+&lt;p&gt;지난 강의 동안에는 tanh가 안좋다고만 배웠는데 말이죠&lt;/p&gt;
+
+&lt;p&gt;tanh와 관련된 문제는 lstm 배울 때
+다시한번 다뤄드리도록 하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;자 이제 우리는 매 스텝마다 출력 y를 얻고 싶습니다.&lt;/p&gt;
+
+&lt;p&gt;이를 위해서는 “hidden state”인 h_t 를
+새로운 가중치 행렬 W_hy 와 곱해줍니다.&lt;/p&gt;
+
+&lt;p&gt;가령 매 스텝에 출력 y는 class score가
+될 수 있을 것입니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;해석&quot;&gt;해석&lt;/h3&gt;
+
+&lt;h4 id=&quot;many-to-many&quot;&gt;many to many&lt;/h4&gt;
+
+&lt;p&gt;Recurrent Neural Network는 크게 두 가지
+방법으로 해석해 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;하나는 RNN이 hidden state를 가지며
+이를 “재귀적으로” feed back 한다는 점입니다.&lt;/p&gt;
+
+&lt;p&gt;RNN을 사실 이런 식으로 표현하면 많이 헷갈립니다.
+Multiple time steps을 unrolling 해서 보면 좋습니다.&lt;/p&gt;
+
+&lt;p&gt;Unrolling을 하면 hidden states, 입/출력, 가중치 행렬들
+간의 관계를 조금 더 명확히 이해할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;첫 step에서는 initial hidden state인
+ h_0 가 있습니다.&lt;/p&gt;
+
+&lt;p&gt;대부분의 경우 h_0 는 0으로 초기화시킵니다.
+그리고 입력 x_t가 있습니다.&lt;/p&gt;
+
+&lt;p&gt;h_0와 x_1 이 함수 f_w의 입력으로 들어갑니다.&lt;/p&gt;
+
+&lt;p&gt;f_w(h_0, x_1) 의 출력은 h_1 입니다. 이 과정이 반복됩니다.
+이번에는 x_2 이 다음 입력으로 들어옵니다.&lt;/p&gt;
+
+&lt;p&gt;f_w(h_1, x_2) 의 출력은 h_2가 됩니다.&lt;/p&gt;
+
+&lt;p&gt;이 과정을 반복하면서 가변 입력 x_t 를 받습니다.&lt;/p&gt;
+
+&lt;p&gt;이제는 조금 더 구체적인 이해를 위해서
+행렬 W를 그려넣어 봅시다.&lt;/p&gt;
+
+&lt;p&gt;여기에서 주목할 점은 “동일한 가중치 행렬 W”가
+매번 사용된다는 점입니다.&lt;/p&gt;
+
+&lt;p&gt;매번 h와 x는 달라지지만 W는 매번 동일합니다.&lt;/p&gt;
+
+&lt;p&gt;앞서 Computational graph에서 동일한 node를 여러번
+사용할 때 back prop gradient flow이 어떨지 배웠습니다.&lt;/p&gt;
+
+&lt;p&gt;backward pass 시 dLoss/dW 를 계산하려면
+행렬 W의 gradient를 전부 더해줬습니다.&lt;/p&gt;
+
+&lt;p&gt;따라서 이 RNN 모델의 backprop을 위한
+행렬 W의 그레디언트를 구하려면&lt;/p&gt;
+
+&lt;p&gt;각 스텝에서의 W에 대한 그레디언트를 전부 계산한 뒤에
+이 값들을 모두 더해주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;Computational graph에 y_t도 넣어볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;RNN의 출력 값 h_t가 또 다른 네트워크의 입력으로 들어가서
+ y_t를 만들어 냅니다.&lt;/p&gt;
+
+&lt;p&gt;가량 y_t는 매 스텝의 class score가 될 수 있겠죠&lt;/p&gt;
+
+&lt;p&gt;RNN의 Loss도 한번 살펴봅시다.&lt;/p&gt;
+
+&lt;p&gt;각 시퀀스마다 Ground truth label이 있다고 해봅시다. 그러면
+각 스텝마다 개별적으로 y_t에 대한 Loss를 계산할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;여기에서 Loss는 가령 softmax loss가 될 수 있겠죠&lt;/p&gt;
+
+&lt;p&gt;RNN의 최종 Loss는 각 개별 loss들의 합입니다.&lt;/p&gt;
+
+&lt;p&gt;각 단계에서 Loss가 발생하면 전부 더하여
+최종 네트워크 Loss를 계산합니다.&lt;/p&gt;
+
+&lt;p&gt;이 네트워크의 Backprop을 생각해보면
+모델을 학습시키려면 dLoss/dW를 구해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;Loss flowing은 각 스텝에서 이루어집니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우에는 각 스텝마다 가중치 W에 대한
+local gradient를 계산할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 개별로 계산된 local gradient를
+최종 gradient에 더합니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;many-to-one&quot;&gt;many to one&lt;/h4&gt;
+
+&lt;p&gt;그렇다면 “many to one” 이라면 어떨까요?
+가령 감정분석(sentiment analysis) 처럼 말입니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우에는 네트워크의 최종 hidden state에서만
+결과 값이 나올 것입니다.&lt;/p&gt;
+
+&lt;p&gt;최종 hidden state가 전체 시퀀스의 내용에 대한
+일종의 요약으로 볼 수 있기 떄문입니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;one-to-many&quot;&gt;one to many&lt;/h4&gt;
+
+&lt;p&gt;그렇다면 “one to many” 의 경우에는 어떨까요?&lt;/p&gt;
+
+&lt;p&gt;“고정 입력” 을 받지만  “가변 출력”인 네트워크입니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우에는 대게 고정 입력은 모델의 initial hidden state를
+초기화시키는 용도로 사용합니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 RNN은 모든 스텝에서
+출력 값을 가집니다.&lt;/p&gt;
+
+&lt;p&gt;이렇게 가변 출력을 가지는 경우에도 이렇게 그래프를
+Unroll 해 볼 수 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;ex-sequence-to-sequent-모델&quot;&gt;ex) sequence to sequent 모델&lt;/h4&gt;
+
+&lt;p&gt;“sequence to sequent” 모델에 대해서 알아보겠습니다.
+가령 machine tranlation 에 사용할 수 있는 모델입니다.&lt;/p&gt;
+
+&lt;p&gt;“가변 입력” 과 “가변 출력” 을 가지는 모델입니다.&lt;/p&gt;
+
+&lt;p&gt;우리는 이 모델을 “many to one” 모델과
+“one to many” 모델의 결합으로 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;두 개의 스테이지로 구성되는 것이죠.
+encoder와 decoder 구조입니다.&lt;/p&gt;
+
+&lt;p&gt;encoder는 가변 입력을 받습니다.
+가령 English sentence가 될 수 있겠죠&lt;/p&gt;
+
+&lt;p&gt;그리고 encoder의 final hidden state 를 통해
+전체 sentence를 요약합니다.&lt;/p&gt;
+
+&lt;p&gt;Encoder 에서는 “many to one” 을 수행합니다.
+“가변 입력”을 하나의 벡터로 요약합니다.&lt;/p&gt;
+
+&lt;p&gt;반면 Decoder는 “one to many”를 수행합니다.
+입력은 앞서 요약한 “하나의 벡터” 입니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 decoder는 “가변 출력”을 내뱉습니다.
+가령 다른 언어로 변역된 문장이 될 수 있겠죠&lt;/p&gt;
+
+&lt;p&gt;“가변 출력” 은 매 스텝 적절한 단어를 내뱉습니다.&lt;/p&gt;
+
+&lt;p&gt;그림처럼 전체 Computational graph를 풀어서
+전체 학습과정을 해석해보면&lt;/p&gt;
+
+&lt;p&gt;Output sentence의 각 losses를 합해서
+Backprob 을 진행합니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;구체적인-예시&quot;&gt;구체적인 예시&lt;/h3&gt;
+
+&lt;p&gt;조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
+Language modeling에서 자주 사용합니다.&lt;/p&gt;
+
+&lt;p&gt;Language modeling 문제에서 하고싶은 것은 바로
+“어떻게 자연어(natural lang)을 만들어낼지 입니다.&lt;/p&gt;
+
+&lt;p&gt;가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
+어떻게 문자를 생성해 낼지를 풀어야 합니다.&lt;/p&gt;
+
+&lt;p&gt;단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
+생성해 낼 지를 풀어야겠죠&lt;/p&gt;
+
+&lt;p&gt;우선은 간단한 예제를 위해서 character level
+language model 을 살펴보겠습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;character-level-language-model&quot;&gt;character level language model&lt;/h4&gt;
+
+&lt;p&gt;네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
+다음 문자를 예측해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
+그리고 학습시킬 문장은 “h, e, l, l, o” 입니다.&lt;/p&gt;
+
+&lt;p&gt;Train time에서는 training sequence(“hello”) 의
+각 단어들을 입력으로 넣어줘야 합니다.&lt;/p&gt;
+
+&lt;p&gt;“hello” 가 RNN의 x_t입니다.&lt;/p&gt;
+
+&lt;p&gt;우선 입력은 한 글자(letter)씩 입니다. 네트워크도
+적절한 글자들을 출력해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;일반적으로 입력을 넣어주는 방법이 있습니다.
+우선 vocabulary는 총 네 가지입니다.[h, e, l, o]&lt;/p&gt;
+
+&lt;p&gt;각 글자는 하나의 벡터로 표현할 수 있습니다.
+이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.&lt;/p&gt;
+
+&lt;p&gt;벡터에서 해당 글자 위치만 1로 표시합니다.&lt;/p&gt;
+
+&lt;p&gt;이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
+따라서 4-d 벡터로 표현할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;가령 h를 벡터로 표현하는 경우([1,0,0,0])
+h에 해당하는 자리만 1이고 나머지는 0입니다.&lt;/p&gt;
+
+&lt;p&gt;이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
+우선 첫 스텝에서는, 입력 문자 ‘h’ 가 들어옵니다.&lt;/p&gt;
+
+&lt;p&gt;첫 번째 RNN cell로는 ‘h’ 가 들어갑니다.
+그러면 네트워크는 y_t를 출력합니다.&lt;/p&gt;
+
+&lt;p&gt;y_t는 어떤 문자가 ‘h’ 다음에 나올 것
+같은지를 예측한 값입니다.&lt;/p&gt;
+
+&lt;p&gt;이 예제에서는 ‘h’  다음에는 ‘e’ 를 예측해야 정답입니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 현재 이 모델은 다음에 나올 글자가
+‘o’ 라고 예측하고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;잘못 예측한 경우입니다. softmax loss가 이 예측이
+얼마나 형편없는지 알려줄 것입니다.&lt;/p&gt;
+
+&lt;p&gt;다음 스텝에서는 두 번째 단어 ‘e’ 가 입력으로 들어갑니다.
+이런 과정이 반복됩니다.&lt;/p&gt;
+
+&lt;p&gt;우선 ‘e’ 벡터입니다. 그리고 “이전 hidden state”와 함께
+“새로운  hidden state” 를 만들어내죠&lt;/p&gt;
+
+&lt;p&gt;이제는 두번째 hidden state를 이용해서
+적절한 값을 예측해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;‘hello’ 를 예측해야 하므로 ‘e’ 가
+입력이라면 ‘l’ 을 예측해야합니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우 ‘l’ 의 예측 치가 상당히 낮기 때문에
+Loss가 높습니다.&lt;/p&gt;
+
+&lt;p&gt;이 과정을 반복합니다.
+모델을 다양한 문장으로 학습시킨다면&lt;/p&gt;
+
+&lt;p&gt;결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
+무엇일지를 학습해야 할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;그렇다면 이 모델의 Test time은 어떨까요?&lt;/p&gt;
+
+&lt;p&gt;이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
+Model로부터 Sampling 하는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;다시말해, Train time에 모델이 봤을 법한 문장을
+모델 스스로 생성해 내는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;우선 모델에게 문장의 첫 글자만 줍니다.
+이 경우에는 ‘h’ 가 되겠군요&lt;/p&gt;
+
+&lt;p&gt;RNN 의 첫 스텝의 입력은 ‘h’가 될 것입니다.&lt;/p&gt;
+
+&lt;p&gt;‘h’가 주어지면 모든 문자(h,e,l,o) 에 대한
+스코어를 얻을 수 있습니다(output layer)&lt;/p&gt;
+
+&lt;p&gt;Test time에서는 이 스코어를
+“sampling”(다음 글자 선택)에 이용 합니다.&lt;/p&gt;
+
+&lt;p&gt;스코어를 확률분포로 표현하기 위해서
+sofrmax 함수를 사용할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;문장의 두 번째 글자를 선택하기 위해서
+이 확률분포를 이용합니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우에 ‘e’가 뽑힐 확률(13%)이 엄청 낮았음에도
+아주 운좋게 ‘e’가 샘플링되었습니다.&lt;/p&gt;
+
+&lt;p&gt;이제는 확률 분포에서 운좋게 뽑힌 ‘e’ 를
+다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.&lt;/p&gt;
+
+&lt;p&gt;‘e’ 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
+넣어주면 네트워크는 두번째 출력을 만들어 냅니다.&lt;/p&gt;
+
+&lt;p&gt;이 학습된 모델만 가지고 새로운 문장을
+만들어내기 위해 이 과정을 반복합니다.&lt;/p&gt;
+
+&lt;p&gt;전체 문장을 만들어내기 위해 타임 스텝마다
+확률 분포에서 문자를 하나씩 뽑아냅니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;질문1&quot;&gt;질문1&lt;/h4&gt;
+
+&lt;p&gt;질문 있나요?&lt;/p&gt;
+
+&lt;p&gt;질문은 “가장 높은 스코어를 선택하면 그만인데
+왜 굳이 확률분포에서 샘플링하는지” 입니다.&lt;/p&gt;
+
+&lt;p&gt;이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
+올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)&lt;/p&gt;
+
+&lt;p&gt;따라서 확률분포에서 샘플링을 했기 때문에
+hello를 잘 만들 수 있었습니다.&lt;/p&gt;
+
+&lt;p&gt;실제로는 두 경우 모두 사용할 수 있습니다.
+(확률 분포에서 샘플링 or 그냥 가장 높은 값)&lt;/p&gt;
+
+&lt;p&gt;어떤 경우에는 argmax probability만 사용할 수 있습니다.
+(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 확률 분포에서 샘플링하는 방법을 사용하면
+일반적으로는 모델에서의 다양성을 얻을 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
+같은 사진이라던지를 모델 입력으로 주면&lt;/p&gt;
+
+&lt;p&gt;argmax을 하지 않고 샘플링을 하게되면 그럴듯한
+다양한 문장을 출력할 수 있게 됩니다.&lt;/p&gt;
+
+&lt;p&gt;첫 스텝에서 어떤 값이 샘플링되는지에
+따라서 출력이 다양해 질 수 있는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
+관점에서 좋은 방법이 될 수 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;질문2&quot;&gt;질문2&lt;/h4&gt;
+
+&lt;p&gt;다른 질문 있나요?&lt;/p&gt;
+
+&lt;p&gt;[학생이 질문]&lt;/p&gt;
+
+&lt;p&gt;질문은 “Test time에 sofrmax vector를
+one hot vector 대신에 넣어줄 수 있는지” 입니다.&lt;/p&gt;
+
+&lt;p&gt;두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
+입력이 Train time에서 본 입력과 달라집니다.&lt;/p&gt;
+
+&lt;p&gt;모델에게 Train time에서 보지 못한 입력값을 주게되면
+대게는 모델이 아무것도 하지 못합니다.&lt;/p&gt;
+
+&lt;p&gt;두 번째 문제는 실제로는
+vocabularies가 아주 크다는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;예제에서는 voca가 4개 뿐이 없어서
+크게 문제될 것이 없겠지만&lt;/p&gt;
+
+&lt;p&gt;한 스텝마다 단어(word)를 생성하는 모델이라고 보면
+voca 안에는 이세상의 모든 영어단어가 들어가야합니다.&lt;/p&gt;
+
+&lt;p&gt;voca는 수만개 이상의 요소를 가지게 되겠죠&lt;/p&gt;
+
+&lt;p&gt;실제론 one hot vector를 sparse vector operation
+으로 처리합니다. (dense vector가 아닌)&lt;/p&gt;
+
+&lt;p&gt;10,000dim softmax vector를 연산해야 한다면
+연산량이 어마어마 할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;Test time에서도 one hot을 사용하는 이유입니다.&lt;/p&gt;
+
+&lt;p&gt;###&lt;/p&gt;
+
+&lt;p&gt;이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.&lt;/p&gt;
+
+&lt;p&gt;이 출력값들의 Loss를 계산해 final loss를 얻는데
+이를 “backpropagation through time” 라고 합니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우, forward pass의 경우에는 전체 시퀀스가
+끝날 때 까지 출력값이 생성됩니다.&lt;/p&gt;
+
+&lt;p&gt;반대로 backward pass에서도 전체 시퀀스를
+가지고 Loss를 계산해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이 경우 시퀀스가 아주 긴 경우에는
+문제가 될 소지가 있습니다.&lt;/p&gt;
+
+&lt;p&gt;가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.&lt;/p&gt;
+
+&lt;p&gt;이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
+Wikipedia 전체 문서를 다 거쳐야 할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
+gradient update가 1회 수행됩니다.&lt;/p&gt;
+
+&lt;p&gt;이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
+메모리 사용량도 어마어마할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;실제로는 “truncated backpropagation” 를 통해서
+backprob 을 근사시키는 기법을 사용합니다.&lt;/p&gt;
+
+&lt;p&gt;이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
+길어서 무한대라고 할지라도&lt;/p&gt;
+
+&lt;p&gt;Train time에 한 스텝을 일정 단위로 자릅니다.
+대략 100 정도로 말이죠&lt;/p&gt;
+
+&lt;p&gt;100 스텝만 forward pass를 하고 이 서브스퀀스의
+Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.&lt;/p&gt;
+
+&lt;p&gt;이 과정을 반복합니다. 다만 이전 batch에서 계산한
+hidden states는 계속 유지합니다.&lt;/p&gt;
+
+&lt;p&gt;다음 Batch의 forward pass를 계산할 때는
+이전 hidden state를 이용합니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 gradient step은 현재 Batch에서만 진행합니다.&lt;/p&gt;
+
+&lt;p&gt;이 방법을 “truncated backpropagation
+through time” 이라고 합니다.&lt;/p&gt;
+
+&lt;p&gt;이 과정을 반복합니다. 이전 batch에서 hidden states를
+가져와서 foward pass를 수행하고&lt;/p&gt;
+
+&lt;p&gt;backprob은 현재 배치만큼만 진행합니다.&lt;/p&gt;
+
+&lt;p&gt;이 방법은 Stocastic gradient descent의
+시퀀스 데이터 버전이라고 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;지난 시간이 Data Sets이 엄청 큰 경우 어떻게
+학습시켜야 하는지 배웠습니다.&lt;/p&gt;
+
+&lt;p&gt;Large datasets에서는 전체 데이터로 gradients를
+계산하기에는 계산량이 너무 컸습니다.&lt;/p&gt;
+
+&lt;p&gt;그래서 대신에 mini batch를 사용해서
+small samples만 가지고 계산했습니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 mini batch만을 이용해서 gradient를 계산했습니다.
+가령 Image classification에서 그랬었죠&lt;/p&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;p&gt;질문있나요?&lt;/p&gt;
+
+&lt;p&gt;질문은 “RNN이 Markov Assumption 을 따르는지” 입니다.&lt;/p&gt;
+
+&lt;p&gt;그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
+계속해서 앞으로 가져가기 때문입니다.(영원히)&lt;/p&gt;
+
+&lt;p&gt;마르코 비아 가정을하고있다.
+숨겨진 상태를 조건으로,&lt;/p&gt;
+
+&lt;p&gt;그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
+미래를 예언하기 시퀀스의&lt;/p&gt;
+
+&lt;p&gt;하지만 그 가정은 일종의 건축입니다.
+재발 성 신경 네트워크 공식 출발점에서.&lt;/p&gt;
+
+&lt;p&gt;그리고 그것은 정말로 특별하지 않습니다.
+시간을 통한 전파를 역전 시키십시오.&lt;/p&gt;
+
+&lt;p&gt;Truncated backprop은 very large sequence
+data의 gradient를 근사시키는 방법입니다.&lt;/p&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;p&gt;RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
+사실은 그렇지 않습니다. 엄청 간결합니다.&lt;/p&gt;
+
+&lt;p&gt;Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
+112 줄의 코드로 RNN 전체 과정을 구현하였습니다.&lt;/p&gt;
+
+&lt;p&gt;vocabulary를 만들고, truncated back propagation
+을 수행하는 모델을 구현한 코드입니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;RNN을 구성하는 것이 엄청나게 어려워 보일
+수 있지만 사실은 그렇지 않습니다.&lt;/p&gt;
+
+&lt;p&gt;슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
+파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.&lt;/p&gt;
+
+&lt;p&gt;Numpy로만 작성된 dependencies가 없는
+코드입니다. 코드를 읽기에도 비교적 쉽습니다.&lt;/p&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;p&gt;RNN Language model 로 아주 재미있는 것들을
+학습시킬 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
+아무 문장이나 긁어와서 학습시킬 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;가령 셰익스피어의 작품들을 RNN으로
+학습시켜 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
+하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.&lt;/p&gt;
+
+&lt;p&gt;학습이 잘 끝나면 상당히 셰익스피어 풍의
+문장들을 만들어냅니다.&lt;/p&gt;
+
+&lt;p&gt;“Why do what that day… replied”  어쩄든
+상당히 셰익스피어의 문장 처럼 보입니다.&lt;/p&gt;
+
+&lt;p&gt;더 학습을 많이 시키면 훨씬 더 긴 문장들도
+만들어낼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;RNN을 이용하면 이런 셰익스피어 풍의 문장과
+같은 여러가지 신기한 것들을 학습시킬 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
+(예 : “VIOLA:”)&lt;/p&gt;
+
+&lt;p&gt;그리고 바로 밑에 셰익스피어풍의 문장들을
+만들어냅니다.&lt;/p&gt;
+
+&lt;p&gt;다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.&lt;/p&gt;
+
+&lt;p&gt;이건 엄청난 것입니다.
+문장의 구조를 아주 완벽하게 학습했습니다.&lt;/p&gt;
+
+&lt;p&gt;훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
+혹시 여기 수학 전공자가 있나요?&lt;/p&gt;
+
+&lt;p&gt;“algebraic topology” 수업을 들어본 분이 계신가요?
+몇 분정도 계시는군요&lt;/p&gt;
+
+&lt;p&gt;여러분이 저보다 “algebraic topology”를 더 잘 하시겠네요.
+제가 얼마전에 온라인”algebraic topology” 교과서를 찾았습니다.&lt;/p&gt;
+
+&lt;p&gt;이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 수식이 LaTex 문법으로 작성되어 있습니다.
+LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;그러면 algebraic topology 교과서의 LaTex 코드를
+우리가 만든 RNN Language Model로 학습시킬 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;자 이걸 학습시키게 되면 (웃음) 이런 식으로
+algebraic topology스러운 문장들을 만들어낼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;모델이 수식도 만들어 냅니다.&lt;/p&gt;
+
+&lt;p&gt;“To prrov study that F_sub U is a covering
+of x prime.. blah blah” (왼쪽 4번째 문단)&lt;/p&gt;
+
+&lt;p&gt;unions도 만들어내고, proofs의 끝에
+사각형도 만들어냅니다.&lt;/p&gt;
+
+&lt;p&gt;lemmas도 만들어내고
+이전 lemmas를 참조하기도 합니다.&lt;/p&gt;
+
+&lt;p&gt;bi-lemma question 라던지 R 같은 기하학적인
+내용도 모두 만들어냅니다. 엄청 대단하죠&lt;/p&gt;
+
+&lt;p&gt;diagrams을 만들어내려고도 합니다.&lt;/p&gt;
+
+&lt;p&gt;commutative diagram은 algebraic topology에서
+아주 많이 사용됩니다.&lt;/p&gt;
+
+&lt;p&gt;모델이 이 다이어그램을 열심히 만들어 내려 했지만
+물론 이 다이어그램은 아무 의미가 없습니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 또 재미있는 점 중 하나는
+모델이 “증명 생략” 도 학습합니다.&lt;/p&gt;
+
+&lt;p&gt;가끔 이런 경우가 있죠.
+“theorem : blah blah blah, proof : 생략”&lt;/p&gt;
+
+&lt;p&gt;교과서에서 증명이 생각되는 부분도 모델이
+정확하게 학습한 것입니다.&lt;/p&gt;
+
+&lt;p&gt;또 다른 재미있는 것들도 할 수 있습니다. 이번에는
+Linux Kernel의 전체 소스코드를 학습시켰습니다.&lt;/p&gt;
+
+&lt;p&gt;코드를 character level로 학습시켰습니다.&lt;/p&gt;
+
+&lt;p&gt;학습된 모델에서 샘플링을 해보면
+C 소스코드 스러운 것들이 나옵니다.&lt;/p&gt;
+
+&lt;p&gt;모델이 if 문 작성법을 알고 있습니다.
+코드 짜는 스킬이 어마어마 합니다.&lt;/p&gt;
+
+&lt;p&gt;들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.&lt;/p&gt;
+
+&lt;p&gt;주석다는 법도 알고있습니다.
+물론 뜻은 아무 의미도 없습니다.&lt;/p&gt;
+
+&lt;p&gt;이 모델의 문제점 중 하나는. 변수를 선언해 놓고
+쓰지를 않다는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;반대로 선언하지도 않은 변수를 쓰기도 합니다.
+이 코드는 컴파일되지 않습니다.&lt;/p&gt;
+
+&lt;p&gt;이 코드를 Linux에 pull request 하고싶진 않네요&lt;/p&gt;
+
+&lt;p&gt;이 모델은 GNU license를 추가하는 법도 압니다.&lt;/p&gt;
+
+&lt;p&gt;GNU license 다음에 include 가 나오고 include 가
+몇 번 나오고 소스코드가 나옵니다.&lt;/p&gt;
+
+&lt;p&gt;이 모델은 데이터의 일반적인 구조를
+아주 잘 학습했습니다.&lt;/p&gt;
+
+&lt;p&gt;다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
+그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.&lt;/p&gt;
+
+&lt;p&gt;구조에 대해서는 전혀 말해주지 않았죠&lt;/p&gt;
+
+&lt;p&gt;하지만 모델은 학습과정 동안에 시퀀스 데이터의
+숨겨진 구조(latent structure)를 알아서 학습합니다.&lt;/p&gt;
+
+&lt;p&gt;결국 알아서 코드를 작성하게 된 것입니다.
+아주 대단합니다.&lt;/p&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;p&gt;저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
+도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.&lt;/p&gt;
+
+&lt;p&gt;RNN에는 hidden vector가 있고 이 vector가
+계속 업데이트됩니다.&lt;/p&gt;
+
+&lt;p&gt;우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
+나올수도 있지 않을까 추측해 보았습니다.&lt;/p&gt;
+
+&lt;p&gt;그래서 우리는 RNN language model을
+특정 dataset으로 학습시키고,&lt;/p&gt;
+
+&lt;p&gt;그리고 hidden vector를 하나 뽑아서 어떤 값들이
+들어있는지 살펴보기로 했습니다.&lt;/p&gt;
+
+&lt;p&gt;이 서로 다른 hidden states가 도대체 어떤 것들을
+예의주시하는지 알아보기 위해서였죠&lt;/p&gt;
+
+&lt;p&gt;이 실험을 해보면, 대부분의 hidden state는
+아무 의미 없는 패턴으로 예의 주시하고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
+다시 한번 forward 시켜 보는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
+hidden vector의 값을 의미합니다.&lt;/p&gt;
+
+&lt;p&gt;RNN의 대부분의 Cell은  해석하기 어렵습니다.&lt;/p&gt;
+
+&lt;p&gt;대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
+low level language modeling 정도로밖에 보이지 않습니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 일부는 해석해볼만 합니다.&lt;/p&gt;
+
+&lt;p&gt;그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.&lt;/p&gt;
+
+&lt;p&gt;이 vector가 하는 일을 살펴보면 처음에는 계속
+off off off off … 입니다. 파란색이죠. (파란색이 off)&lt;/p&gt;
+
+&lt;p&gt;그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
+그리고 따옴표가 닫히기 전까지 유지됩니다.&lt;/p&gt;
+
+&lt;p&gt;그러다가 두 번째 따옴표를 만나면 다시
+값이 꺼집니다.&lt;/p&gt;
+
+&lt;p&gt;이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
+학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;그런 유용한 것들을 학습하기 위해서 그 Cell이
+따옴표를 감지할 수 있게 된 것입니다.&lt;/p&gt;
+
+&lt;p&gt;우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
+세는 듯해 보이는 Cell도 발견했습니다.&lt;/p&gt;
+
+&lt;p&gt;처음에는 0으로 시작했다가. 줄이 점점 길어지면
+점점 빨간색으로 변합니다.&lt;/p&gt;
+
+&lt;p&gt;점점 증가하다가 줄바꿈이 이루어지면
+다시 0으로 리셋됩니다.&lt;/p&gt;
+
+&lt;p&gt;이 Cell은 언제 모델이 new line characters을 필요로 할 지
+지속적으로 추적하는 역할을 한다고 볼 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.&lt;/p&gt;
+
+&lt;p&gt;우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
+이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이를 통해 모델이 시퀀스를 더 잘
+학습할 수 있도록 도와줍니다.&lt;/p&gt;
+
+&lt;p&gt;그 밖에도 Comments를 찾아내거나 혹은
+들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.&lt;/p&gt;
+
+&lt;p&gt;정말 놀라운 일입니다. 우리는 그저 다음 문자를
+예측하는 모델을 학습시켰을 뿐인데&lt;/p&gt;
+
+&lt;p&gt;결국 모델은 입력 데이터의 구조를
+학습하게 되었기 때문입니다.&lt;/p&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;p&gt;우리는 Computer Vision 수업이니 다시 Computer Vision
+에 관련된 예시로 돌아가 보겠습니다.&lt;/p&gt;
+
+&lt;p&gt;앞서 Image Captioning Model에 대해서
+몇 번 언급했었습니다.&lt;/p&gt;
+
+&lt;p&gt;이 모델은 입력은 이미지이고
+출력은 자연어로 된 Caption 입니다.&lt;/p&gt;
+
+&lt;p&gt;이 문제를 다루는 몇몇 논문들이 있습니다.
+다들 접근 방법은 비슷합니다.&lt;/p&gt;
+
+&lt;p&gt;이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
+아주 “공정한 기준으로?” 예시를 이 논문으로 선택헀습니다.&lt;/p&gt;
+
+&lt;p&gt;우선 Caption은 가변길이 입니다. Caption 마다
+다양한 시퀀스 길이를 가지고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;여기에 RNN Language Model가 아주 잘 어울립니다.&lt;/p&gt;
+
+&lt;p&gt;모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
+CNN은 지금까지 아주 많이 살펴봤었죠&lt;/p&gt;
+
+&lt;p&gt;CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
+이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.&lt;/p&gt;
+
+&lt;p&gt;그러면 RNN은 Caption에 사용할
+문자들을 하나씩 만들어냅니다.&lt;/p&gt;
+
+&lt;p&gt;####&lt;/p&gt;
+
+&lt;p&gt;그렇다면 이 모델을 학습시킨 후에
+Test time에 어떻게 동작하는지 알아봅시다.&lt;/p&gt;
+
+&lt;p&gt;지금까지 살펴봤던 character level languate
+model과 아주 유사합니다.&lt;/p&gt;
+
+&lt;p&gt;우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
+다만 softmax scores를 사용하지 않고&lt;/p&gt;
+
+&lt;p&gt;직전의 4,096-dim vector를 출력으로 합니다.&lt;/p&gt;
+
+&lt;p&gt;이 vector를 이용해서 전체 이미지 정보를
+요약하는데 사용할 것입니다.&lt;/p&gt;
+
+&lt;p&gt;앞서 RNN language models에서 배웠듯이 모델이 문장을
+생성해 내기에 앞서 초기 값을 넣어줘야 합니다.&lt;/p&gt;
+
+&lt;p&gt;이 경우에는 입력이 특별합니다. 모델에게 “여기 이미지 정보가
+있으니 이 조건에 맞는 문장을 만들어줘!” 라고 시작해야합니다.&lt;/p&gt;
+
+&lt;p&gt;이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
+입력으로 받았습니다. 하나는 현재 스텝의 입력이고&lt;/p&gt;
+
+&lt;p&gt;다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
+이 둘을 조합해서 다음 hidden state를 얻었습니다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이제는 이미지 정보도 더해줘야 합니다.&lt;/p&gt;
+
+&lt;p&gt;사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
+가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.&lt;/p&gt;
+
+&lt;p&gt;다음 hidden state를 계산할 때마다 모든 스텝에
+이 이미지 정보를 추가합니다.&lt;/p&gt;
+
+&lt;p&gt;자 이제는 vocabulary의 모든 스코어들에 대한
+분포를 계산할 차례입니다.&lt;/p&gt;
+
+&lt;p&gt;이 문제에서 vocabulary는 “모든 영어 단어들” 과
+같이 엄청나게 큽니다.&lt;/p&gt;
+
+&lt;p&gt;그 분포에서 샘플링을 하고 그 단어를
+다음 스텝의 입력으로 다시 넣어줄 것입니다.&lt;/p&gt;
+
+&lt;p&gt;샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
+추정하고 다음 단어를 만들어냅니다.&lt;/p&gt;
+
+&lt;p&gt;모든 스텝이 종료되면 결국 한 문장이 만들어집니다.&lt;/p&gt;
+
+&lt;p&gt;이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
+문장의 끝을 알려줍니다.&lt;/END&gt;&lt;/p&gt;
+
+&lt;END&gt; 가 샘플링되면 모델은 더이상 단어를 생성하지
+않으며 이미지에 대한 caption이 완성됩니다.
+
+Train time에는 모든 caption의 종료지점에
+&lt;END&gt; 토큰을 삽입합니다.
+
+네트워크가 학습하는 동안에 시퀀스의 끝에
+&lt;END&gt; 토큰을 넣어야 한다는 것을 알려줘야 하기 때문입니다.
+
+학습이 끝나고 Test time에는 모델이 문장 생성을
+끝마치면 &lt;END&gt; 토큰을 샘플링합니다.
+
+이 모델은 완전히 supervised learning으로 학습시킵니다.
+
+따라서 이 모델을 학습시키기 위해서는 natural
+language caption이 있는 이미지를 가지고 있어야 합니다.
+
+이 Task를 위한 가장 큰 데이터셋은 아마
+Microsoft COCO 데이터셋이 아닐까 싶습니다.
+
+이 모델을 학습시키기 위해서는 natural language model과
+CNN을 동시에 backp 시킬 수 있습니다.
+
+이 모델을 학습시키고 나면
+상당히 그럴듯한 결과를 보입니다.
+
+지금 보이는 것들이 실제 모델의 결과입니다.
+
+고양이가 여행용 가방에 앉아있습니다.
+&quot;A cat sitting on a suitcase on the floor&quot;
+
+상당히 인상적인 결과입니다.
+
+고양이가 나뭇가지에 앉아있습니다.
+&quot;A cat is sitting on a tree branch&quot;
+
+이 또한 상당히 놀랍습니다.
+
+두 사람이 서핑보드를 들고 해변을 걷고있습니다.
+&quot;Two people walking on the beach with surfbards&quot;
+
+이 모델은 상당히 파워풀하고 이미지를 묘사하기 위해
+비교적 복잡한 captions도 만들어낼 수 있습니다.
+
+하지만 그렇긴해도
+모델이 아주 완벽하진 않습니다.
+
+전부다 마법같은 일만 일어나는 것은 아닙니다.
+이 모델도 다른 Machine learning 모델들 처럼
+
+Train time에 보지 못한 데이터에 대해서는
+엄청 잘 동작하지는 않습니다.
+
+가령, 여자가 손에 고양이를 들고 있습니다.
+&quot;A woman is holding a cat in her hand&quot;
+
+하지만 이미지에 고양이는 없습니다.
+
+하지만 여자가 모피 코트를 입고있습니다. 아마도 모델이
+모피 코트의 텍스쳐를 고양이로 보고 있는 것 같습니다.
+
+여자가 해변에서 서핑보드를 들고있습니다.
+&quot;A Woman standing on a beach holding a surfboard&quot;
+
+하지만 분명 이 사람은 서핑보드를 들고있지 않습니다.
+물구나무서기를 하고 있죠
+
+모델이 물구나무서기를 하고있다는 사실을 놓쳤습니다.
+
+ 그리고 여기 나뭇가지에 쳐있는 거미줄 사진이 있습니다.
+
+하지만 모델은 나뭇가지에 새가 앉아있다고 생각했습니다.
+&quot;A bird is perched on a tree branch&quot;
+
+모델은 거미에 관한 것들을 완전히 놓쳤습니다. 하지만
+이 모델은 Train time에 거미를 보지 못했습니다.
+
+Train time에는 새가 나뭇가지에 앉는다는 사실만
+배웠을 뿐입니다.
+
+따라서 납득이 가는 실수하고 볼 수 있습니다.
+
+그리고 여기 밑에 보시면 모델은 이 사람이 공을
+던지는 중인지 받는 중인지 구분하지 못합니다.
+
+하지만 어찌됐든 야구선수와 야구공이 어떤
+연관이 있음은 모델이 알고 있습니다.
+
+다시한번 말씀드리지만 이 모델은
+완벽하지 않습니다.
+
+Train data와 유사한 이미지를 던져주면
+꾀나 잘 동작합니다.
+
+하지만 그 이상 일반적인 문제를 풀기는 조금 어렵습니다.
+
+#### attention
+
+조금 더 진보된 모델이 있습니다.
+Attention 이라는 모델입니다.
+
+이 모델은 Caption을 생성할 때 이미지의 다양한 부분을
+집중해서(attention) 볼 수 있습니다.
+
+이번 시간에는 Attention 모델을 깊게 다루지는 않겠습니다.
+
+어떻게 동작하는지 간단하게 말씀드리자면
+우선 CNN이 있습니다.
+
+CNN로 벡터 하나를 만드는게 아니라 각 벡터가 공간정보를
+가지고 있는 grid of vector를 만들어냅니다.(LxD)
+
+Forward pass시에 매 스텝 vocabulary에서
+샘플링을 할 때
+
+모델이 이미지에서 보고싶은 위치에 대한 분포 또한 만들어냅니다.
+
+이미지의 각 위치에 대한 분포는 Train time에
+모델이 어느 위치를 봐야하는지에 대한 attention이라 할 수 있습니다.
+
+첫 번째 hidden state(h0)는 이미지의 위치에 대한
+분포를 계산합니다.
+
+이 분포(a1)를 다시 벡터 집합(LxD Feature)과 연산하여
+이미지 attention(z1)을 생성합니다.
+
+이 요약된 벡터(z1)는 Neural network의
+다음 스텝의 입력으로 들어갑니다.
+
+그리고 두 개의 출력이 생성됩니다. (a2, d1)
+
+하나는 vocabulary의 각 단어들의 분포입니다(d1).
+그리고 다른 하나(a2)는 이미지 위치에 대한 분포입니다.
+
+이 과정을 반복하면 매 스텝마다
+값 두개(a, d)가 계속 만들어집니다.
+
+Train을 끝마치면, 모델이 caption을 생성하기 위해서
+이미지의 attention을 이동시키는 모습을 볼 수 있습니다.
+
+가령 여기 만들어진 caption은
+&quot;A bird flying over a body of water.&quot; 입니다.
+
+caption을 만들 때 마다 이미지 내에 다양한 곳들에
+attention을 주는 것을 볼 수 있습니다.
+
+사실 여기에는 hard/soft attention의 개념이
+있습니다만, 너무 깊게 들어가진 않겠습니다.
+
+soft attention의 경우에는 &quot;모든 특징&quot;과 &quot;모든 이미지 위치&quot;간의
+weighted combination을 취하는 경우입니다.
+
+반면 hard attention의 경우에는 모델이 각 타임 스텝마다
+단 한곳만 보도록 강제한 경우입니다.
+
+hard attention의 경우에 이미지 위치를 딱 하나만
+정해야 하는데, 사실상 하나만 정하기 까다롭습니다.
+
+따라서 Hard attention을 학습시키려면 기본 backprob 보다는
+조금 더 fancier한 방법을 써야만 합니다.
+
+이에 관련된 것들은 다음에
+reinforcement learning 시간에 더 다루겠습니다.
+
+Attention Model을 학습시키고 나서
+Caption을 생성해보면
+
+실제로 모델이 Caption을 생성할 때 의미있는 부분에
+attention을 집중한다는 것을 알 수 있습니다.
+
+여자가 공원에서 원반을 던지고 있습니다. 에서
+&quot;A woman is throwing a frisbee in a park&quot;
+
+Attention mask를 살펴보면.
+모델이 &quot;원반(frisbee)&quot; 라는 단어를 생성할 때
+
+이미지에서도 실제 원반이 위치하는 곳을
+정확하게 attention하는 것을 알 수 있습니다.
+
+엄청 대단합니다. 우리는 모델에게 매 스텝 어디를
+보라고 말해준 적이 없습니다.
+
+모델 스스로가 Train time에 알아냈습니다.
+
+모델이 그쪽(원반) 영역에 집중하는 것이
+올바른 일이라는 것을 스스로 알아낸 것입니다.
+
+모델 전체가 미분가능하기 때문에
+soft attention 또한 backprob이 가능합니다. 따라서
+이 모든 것들은 train time에서 나온 것들입니다.
+
+아주 대단합니다.
+
+RNN + Attention 조합은 Image captioning 뿐만 아니라
+더 다양한 것들을 할 수 있습니다.
+
+가령 Visual Question Answering(VQA) 같이 말이죠.
+
+이 문제에서는 입력이 두 가지 입니다. 하나는 이미지이고
+다른 하나는 이미지에 관련된 질문입니다.
+
+왼쪽과 같은 이미지에 다음과 같은 질문을 할 수 있을 것입니다.
+Q: 트럭에 그려져 있는 멸종위기 동물은 무엇입니까?
+
+모델은 네개의 보기 중에서 정답을 맞춰야 합니다.
+
+이 모델 또한 RNN과 CNN으로 만들 수 있습니다.
+
+이 경우에는 &quot;many to one&quot; 의 경우입니다.
+
+모델은 자연어 문장(질문)을 입력으로 받아야 합니다.
+
+이는 RNN을 통해 구현할 수 있습니다.
+RNN이 질문을 vector로 요약합니다.
+
+그리고 이미지 요약을 위해서는 CNN이 필요합니다.
+
+CNN/RNN에서 나온 벡터를 조합하면 질문에 대한
+분포를 예측할 수 있을 것입니다.
+
+그리고 간혹 VQA 문제를 풀기 위해서 soft special attenion
+알고리즘을 적용하는 경우도 있습니다.
+
+이 예시를 보시면 모델이 정답을 결정하기 위해서
+이미지에 대한 attention을 만들어내는 것을 볼 수 있습니다.
+
+####
+
+질문있나요?
+
+질문은 &quot;어떻게 서로 다른 입력을 조합하는지&quot; 입니다.
+(CNN output과 RNN output을 어떻게 합치는지)
+
+어떻게 요약된(encoded) 질문 벡터와, 요약된 이미지 벡터를
+조합하는지를 여쭤보시는 것인가요?
+
+질문은 &quot;encoded image와 encoded question를
+어떻게 조합할 수 있는지&quot; 입니다.
+
+가장 쉬운 방법중 하나는 concat으로 붙혀서
+FC-Layer의 입력으로 만드는 방법입니다.
+
+이 방법이 가장 흔한 방법이고.
+가장 먼저 시도해볼 수 있는 방법입니다.
+
+하지만 간혹 사람들이 더 강력한 함수를 만들기 위해서
+두 벤터간의 더 복잡한 조합을 만들어내는 경우도 있습니다.
+
+어찌됐든 Concat하는 방법도 맨 처음 시도해보기에는
+나쁘지 않은 방법입니다.
+
+####
+
+지금까지 RNN을 활용한 다양한 예제들을 살펴보았습니다.
+이 방법들 모두 대단한 방법들입니다.
+
+왜냐하면 RNN을 이용하면 CV와 NLP 문제를 조합시키는
+복잡한 문제들을 풀 수 있기 때문입니다.
+
+이 복잡한 과정들은 레고 블럭들을 쌓는 것으로 볼 수 있습니다.
+
+가령 Image Captiong이나 VQA 같은 모델들은 여러
+모듈(RNN,CNN)을 비교적 단순한 방법으로도 구현할 수 있습니다.
+
+##
+
+또 한 가지 말씀드리고 싶은 것은, 지금까지는 단일 RNN
+레이어를 사용했습니다. hidden state가 하나 뿐이었습니다.
+
+하지만 여러분이 자주 보게될 모델들은
+Multi-layer RNN입니다.
+
+3-Layer RNN이 있습니다. 입력이 첫 번째 RNN으로
+들어가서 첫 번째 hidden state를 만들어냅니다.
+
+RNN 하나를 돌리면 hidden states 스퀀스가 생깁니다.
+(밑에서 두 번째 행)
+
+이렇게 만들어진 hidden state 시퀀스를 다른 RNN의
+입력으로 넣어줄 수 있습니다.
+
+그러면 두 번째 RNN layer가 만들어내는 또 다른
+hidden states 시퀀스가 생겨납니다. (밑에서 세 번째)
+
+이런 식으로 RNN layer를 쌓아올릴 수 있을 것입니다.
+
+이렇게 하는 이유는 모델이 깊어질수록 다양한 문제들에서
+성능이 더 좋아지기 때문입니다.
+
+이 법칙(더 깊게 쌓는 방법)이 RNN에서도 적용됩니다.
+많은 경우에 3~4 layer RNN을 사용합니다.
+
+하지만 보통은 엄청나게 깊은 RNN모델을 사용하지는 않습니다.
+
+일반적으로는 2,3,4 layer RNN이 적절합니다.
+
+####
+
+RNN을 사용할 때 문제점이 있습니다.
+이는 아주 흥미롭고 중요한 주제입니다.
+
+RNN을 학습시킬 때 어떤 일이 생기는지 아주
+신중히 생각해 봐야 합니다.
+
+여기 지금까지 우리가 봐왔던
+일반적인(vanilla) RNN Cell이 있습니다.
+
+입력은 &quot;현재 입력, x_t&quot; 와 &quot;이전 hidden state h_t-1&quot;
+입니다. 그리고 이 두 입력을 쌓습니다(stack).
+
+이렇게 두 입력을 쌓고 가중치 행렬 W와 행렬 곱 연산을 하고
+tanh 를 씌워서 다음 hidden state(h_t)를 만듭니다.
+
+Vanilla RNN의 기본 수식입니다.
+
+그러면 이 아키텍쳐는 backward pass에 그레디언트를
+계산하는 과정에서 어떤 일이 발생할까요?
+
+####
+
+우선 Backward pass 시
+ h_t에 대한 loss의 미분값을 얻습니다.
+
+그 다음 Loss에 대한 h_t-1의 미분값을 계산하게 됩니다.
+
+backward pass의 전체과정은
+여기 보이시는 빨간색 통로를 따르게 됩니다.
+
+우선 그레이언트가 tanh gate를 타고 흘러갑니다.
+그 다음 &quot;Mat mul gate&quot; 를 통과합니다.
+
+여러분이 과제로 구현해 보았듯이
+Mat mul gate의 backprop은
+
+결국 이 transpose(가중치 행렬) 을 곱하게 됩니다.
+
+이는 매번 vanilla RNN cells을 하나 통과할 때 마다
+가중치 행렬의 일부를 곱하게 된다는 것을 의미합니다.
+
+RNN의 특성 상 RNN이 여러 시퀀스의 Cell을
+쌓아 올리는 사실을 고려하면
+
+그레디언트가 RNN 모델의 Layers 시퀀스를 통해
+어떤 방식으로 전달되는지 생각해 볼 수 있습니다.
+
+수상한 낌새가 보이기 시작합니다.
+
+가령 우리가 h_0에 대한 그레이언트를 구하고자 한다면
+결국에는 모든 RNN Cells을 거쳐야 합니다.
+
+cell 하나를 통과할 때 마다 각 Cell의
+행렬 W transpose factors가 관여합니다.
+
+다시 말해 h_0 의 그레디언트를 계산하는 식을 써보면
+아주 많은 가중치 행렬들이 개입하며, 이는 안좋습니다.
+
+우선  가중치를 행렬이라고 생각하지
+말고 스칼라로 생각해봅시다.
+
+우리이게 스칼라 값들이 있고 이 값들을
+계속해서 곱한다고 했을 때
+
+여기 예제처럼 4개의 예제 뿐만 아니라
+수백 개의 스텝이 있는 경우라면
+
+값들을 수백 번 곱해줘야 합니다. 아주 안좋습니다.
+
+만약 곱해지는 값이 1보다 큰 경우라면 점점 값이 커질 것이고
+1보다 작은 경우라면 점점 작아져서 0이 될 것입니다.
+
+이 두 상황이 일어나지 않으려면
+곱해지는 값이 1인 경우밖에 없습니다.
+
+실제로 1이 되기는 상당히 드뭅니다.
+
+스칼라에서의 이 intuition은 행렬에서도 동일하게 적용됩니다.
+
+가령 행렬의 특이값(singular value)이 엄청나게
+큰 경우를 생각해 볼 수 있습니다.
+
+singular value가 엄청 큰 행렬을 계속 곱하는 경우에도 역시
+h_0의 그레디언트는 아주 커지게됩니다.
+
+이를 &quot;exploding gradient problem&quot; 라고 합니다.
+
+backprop시 레이어가 깊어질수록
+그레디언트가 기하급수적으로 증가하는 현상입니다.
+
+행렬의 특이값이 1보다 작은 경우라면 정 반대의 현상이 발생합니다.
+이제는 기하급수적으로 그레디언트가 작아집니다.
+
+이를 &quot;vanishing gradient problem&quot; 이라고 합니다.
+
+그래서 사람들은 &quot;gradient clipping&quot; 이라는
+기법을 사용하곤 합니다.
+
+&quot;gradient clipping&quot; 은 휴리스틱한 기법중 하나입니다.
+그레디언트를 계산하고
+
+그레디언트의 L2 norm이 임계값보다 큰 경우
+그레디언트가 최대 임계값을 넘지 못하도록 조정해줍니다.
+
+이 방법은 그닥 좋은 방법은 아니지만, 실제로는
+많은 사람들이 RNN 학습에 이 방법을 활용합니다.
+
+exploding gradient problem을 해결하기에는
+비교적 유용한 방법이긴 합니다.
+
+하지만 vanishing gradient problem를 다루려면
+조금더 복잡한 RNN 아키텍쳐가 필요합니다.
+
+##
+
+이는 LSTM에 관한 것입니다.
+LSTM은 Long Short Term Memory라는 뜻입니다.
+
+LSTM은 RNN의 fancier 버전입니다.
+
+LSTM은 vanishing &amp;amp; exploding gradients 문제를
+완화시키기 위해서 디자인되었습니다.
+
+&quot;gradient clipping&quot; 같은 hack 을 쓰지 말고, 그레디언트가
+잘 전달되도록 아키텍쳐 자체를 디자인한 경우입니다.
+
+기존에 배웠던 fancier CNN 아키텍쳐들과
+유사한 느낌입니다.
+
+사실 LSTM은 1997년도에 나왔습니다.
+
+LSTM 이라는 아이디어 자체를 꽤 오랫동안 존재했습니다.
+
+사람들은 90년대에 이미 LSTM을 연구하고 있었고.
+시대를 앞서갔던 연구라고 할 수 있습니다.
+
+20년이 지난 오늘날 LSTM은 어디서나 사용됩니다.
+
+LSTM은 아주 재밌게 생겼습니다.
+
+vanilla RNN은 hidden state가 있었습니다. 그리고 매 스텝
+재귀적인 방법으로 hidden state를 업데이트했습니다.
+
+LSTM에는 한 Cell 당 두 개의 Hidden state가 있습니다.
+
+하나는 h_t 입니다. vanilla RNN에 있었던
+hidden state(h_t)와 유사한 개념입니다.
+
+하지만 LSTM의 경우 &quot;Cell state&quot; 인 c_t라는
+두 번째 벡터가 있습니다.
+
+Cell state, c_t 는 LSTM 내부에만 존재하며
+밖에 노출되지 않는 변수입니다.
+
+LSTM의 Updata 식을 살펴봅시다.
+
+LSTM도 두 개의 입력을 받습니다.(h_t-1, x_t)
+
+그리고 4개의 gates를 계산합니다.
+i, f, o, 그리고 g 입니다.
+
+이 gates를 cell states, c_t를 업데이트하는데 이용합니다.
+그리고 c_t로 다음 스텝의 hidden state를 업데이트합니다.
+
+LSTM는 아주 흥미롭게 생겼습니다. 앞으로 몇 장의 슬라이드는
+LSTM이 어떻게, 왜 동작하는지 살펴보겠습니다.
+
+vanishing or exploding gradients의 관점에서 말이죠.
+
+우선 LSTM에서는 이전 hidden state인 h_t와
+현재의 입력인 x_t를 입력으로 받습니다.
+
+vanilla RNN와 동일합니다.
+
+vanilla RNN의 경우에 두 입력(h_t-1, x_t)를 Cancat하고
+행렬곱 연산으로 hidden state를 직접 구했습니다.
+
+LSTM의 경우는 조금 다릅니다. 이전 hidden state와
+입력을 받아서 쌓아 놓습니다.
+
+그리고 네 개의 gates의 값을 계산하기 위한
+커다한 가중치 행렬을 곱해줍니다.
+
+각 gates 출력은 hidden state의 크기와 동일합니다.
+
+물론 간혹 각 gate의 가중치 행렬의 크기를
+다양한 방법으로 디자인할 수도 있습니다.
+
+어떤 사람들은 모든 값들을 조합해서
+하나의 큰 가중치 행렬로 만들기도 합니다.
+
+하지만 여러 방법의 기본 아이디어는 모두 같습니다.
+
+기본적으로는, h_t-1과 x_t를 입력으로 받고
+gates 4개를 계산해야 합니다.
+
+gates 4개는 [i, f, o, g]인데.
+기억하기 쉽게 &quot;ifog&quot; 라고 부르기도 합니다.
+
+I 는 input gate입니다. I는 Cell에서의 입력
+x_t에 대한 가중치입니다.
+
+F는 forget gate입니다. F는 이전 스텝의 Cell의 정보를
+얼마가 망강(forget) 할지에 대한 가중치입니다.
+
+O는 Output gate입니다. O는 Cell state, c_t를 얼마나
+밖에 드러내 보일지에 대한 가중치입니다.
+
+G는 그닥 좋은 이름은 아니지만 저는
+&quot;gate gate&quot; 라고 부릅니다.
+
+G는 input cell을 얼마나 포함시킬지 결정하는 가중치입니다.
+
+중요한 점 중 하나는, 각 gate에서 사용하는
+nin-linearity가 각양각색 이라는 점입니다.
+
+input/forget/output gate의 경우는
+sigmoid를 샤용합니다.
+
+gate의 값이 0~1 사이라는 의미입니다.
+
+반면 gate gate는 tanh를 사용합니다.
+따라서 gate gate는 -1 ~ +1 의 값을 갖습니다.
+
+이 부분이 조금 이상해 보일 수도 있지만, 사실은
+더 이치에 맞습니다. 가령 gate값이 binary라고 생각해 봅시다.
+
+값이 binary(0,1 or -1,+1) 이라면 어떤 일이 일어날까요?
+
+밑에 수식을 살펴봅시다.
+
+이전 스텝의 Cell states(C_t-1)는 forget gate와
+element-wise multiplication 합니다.
+
+결과 vector는 (f*c_t-1) 0또는 1일 것입니다.
+
+따라서 forget gate = 0인 element는 
+이전 cell state를 잊습니다.
+
+반면 forget gate = 1이면 cell state의 
+element를 계속 기억합니다.
+
+지금까지 살펴본 forget gate는 이전 cell state의
+gate on/off 를 결정했습니다.
+
+이제 두 번째 수식을 살펴보겠습니다.
+element-wise product인 i * g 입니다.
+
+벡터 i의 경우에는 시그모이드에서
+나온 녀석이므로 0 또는 1입니다.
+
+cell state의 각 element에 대해서, 이 cell state를
+사용하고 싶으면 1 이 됩니다.
+
+반면 쓰고싶지 않으면 i = 0 이 될 것입니다.
+
+gate gate는 tanh 출력이기 때문에
+값이 -1 또는 +1 입니다.
+
+c_t 는 현재 스텝에서 사용될 수 있는 &quot;후보&quot; 라고 할 수 있습니다.
+
+Cell State(c_t)를 계산하는 전체 수식을 살펴봅시다.이 수식은 
+두 개의 독립적인 scaler 값(f, i)에 의해 조정됩니다.
+
+각 값(f, i)은 1까지 증가하거나 감소합니다.
+
+c_t의 수식을 해석해보면, 우선 이전 cell state(c_t-1)을
+계속 기억할지 말지를 결정합니다. (f * c_t-1)
+
+그런다음 각 스텝마다 1까지 cell state의 각 요소를
+증가시키거나 감소시킬 수 있습니다. (i * g)
+
+즉 cell state의 각 요소는 scaler integer counters
+처럼 값이 줄었다 늘었다 하는 것으로 볼 수 있습니다.
+
+Cell state를 계산했다면 이제는 hidden state를
+업데이트 할 차례입니다. h_t는 실제 밖으로 보여지는 값입니다.
+
+그렇게 때문에 cell state는 counters의 개념으로 해석할
+수 있습니다. 각 스텝마다 최대 1 또는 -1씩 세는 것이죠
+
+그리고 이 값은 tanh를 통과합니다. 그리고
+최종적으로 output gate와 곱해집니다.
+
+그리고 output gate 또한 sigmoid에서 나온 값입니다. 
+따라서 0 ~ 1의 값을 가집니다.
+
+output gate는 각 스텝에서 다음 hidden sate를 계산할 때
+cell state를 얼마나 노출시킬지를 결정합니다.
+
+대부분의 사람들이 자기들만 알아볼 수 있는 복잡한 LSTM 
+다이어그램을 그려놓고 남들에게 설명하려는 경향이 있습니다.
+
+그 중 이 다이어그램은 제가 만들었습니다. :D
+
+이 다이어그램을 보시면 LSTM cell이
+어떤게 동작하는지 알 수 있습니다.
+
+우선 왼쪽을 보면 이전의 cell state(c_t-1)과 hidden
+state(h_t-1) 을 입력으로 받습니다. 현재 입력 x_t도 있죠
+
+우선 이전 hidden state (h_t-1)과 
+현재 입력 x_t를 쌓습니다.
+
+그리고 가중치 행렬 W를 곱해서 
+4 개의 gates를 만듭니다.
+
+Non-Linearity에 관해서는 이전 슬라이드에서 다뤘으므로
+여기에서는 제외시켰습니다.
+
+그리고 forget gate를 
+이전 cell state(c_t-1)와 곱합니다.
+
+그리고 input/gate gate가 element wise로 곱한 후
+cell state(c_t-1 *f)와 곱해서 다음 cell 을 만듭니다.
+
+c_t는 tanh를 거친 후 output gate와 곱해져서
+다음 hidden state(h_t)를 만들어냅니다.
+
+질문있나요?
+
+(질문 내용 X) 아닙니다. 각 gate는 각 gate마다
+곱해지는 가중치 행렬을 가지고 있습니다.
+
+우선 x와 h를 쌓으면 전체 h x 1 행렬이 됩니다.
+
+그리고 가중치 행렬의 크기는
+4h x 2h 입니다.
+
+이 가중치 행렬은 행렬 4개를 합쳐 놓은 것이라고 보시면 됩니다. 
+각 4개의 행렬은 서로 가능 gate를 계산합니다.
+
+간혹 수식를 더 간단하게 쓰기 위해서 4개의 행렬을
+그저 행렬 W로 표현하는 경우도 있습니다.
+
+가중치 행렬이 합쳐있어 보이긴 해도 결국은
+4개의 가중치 행렬로 나누어져 있다고 보시면 됩니다.
+
+하지만 결국은 모두 두 개의 입력(x, h) 를 쌓고 
+행렬 곱 연산을 수행하는 것입니다.
+
+슬라이드의 그림을 살펴보겠습니다. LSTM의
+backward pass는 어떨까요?
+
+앞서 vanilla RNN의 경우에는 backward pass에서 문제점이
+있었습니다. 가중치 행렬 w가 계속해서 곱해지는 문제였죠.
+
+하지만 LSTM에서는 상황이 많이 달라졌습니다.
+
+LSTM에서 cell state의 gradient를 계산하는 backward 
+경로를 살펴보게 되면, 아주 괜찮아보입니다.
+
+자 그럼 cell state에서 내려오는 
+upsteam gradient를 살펴봅시다.
+
+우선 &quot;addition operation&quot;의 backprob이 있습니다.
+
+지난 강의에서 배웠듯이 &quot;addition&quot; 에서는 
+upstream gradient가 그저 두 갈래로 복사됩니다.
+
+따라서 &quot;element wise multply&quot; 로 직접 전달됩니다.
+
+따라서 그레디언트는 upsteam gradient와 
+forget gate의 element wise 곱입니다.
+
+결국 Cell state의 backprob은 그저 
+upstream gradient * forget gate 입니다.
+
+이 특성은 vanilla RNN에 비해 좋은점이 두 가지 있습니다.
+
+우선 forget gate와 곱해지는 연산이 matrix 
+multiplication가 아닌 element-wise라는 점입니다.
+
+full matrix multiplication 보다는 
+element wise multiplication이 더 낫습니다.
+
+두 번째는 element wise multiplication을 통해 매 스텝 
+다른 값의 forget gate와 곱해질 수 있다는 점입니다.
+
+앞서 vanilla RNN의 경우에는 동일한 
+가중치 행렬(h_t)만을 계속 곱했습니다.
+
+이는 exploding/vanishing gradient문제를 일으켰습니다.
+
+반면 LSTM에서는 forget gate가 스텝마다 계속 변합니다.
+
+따라서 LSTM은 exploding/vanishing gradient 
+문제를 더 쉽게 해결할 수 있습니다.
+
+그리고 forget gate는 sigmoid에서 나온 값이므로 
+element wise multply가 0~1 사이의 값입니다.
+
+따라서 forget gate를 반복적으로 곱한다고 했을 때
+더 좋은 수치적 특성을 보일 수 있습니다.
+
+그리고 또 한가지 명심해야 할 점은, vanilla RNN의 backward
+pass에서는 매 스탭 그래디언트가 tanh를 거쳐야 했습니다.
+
+LSTM에서도 hidden state h_t를
+출력 y_t를 계산하는 데 사용합니다.
+
+가령 LSTM의 최종 hidden state h_t를 가장 첫 
+cell state(c_0)까지 backprob하는 것을 생각해보면
+
+RNN처럼 매 스탭마다 tanh를 거치는 것이 아니라 
+tamh를 단 한번만 거치면 됩니다.
+
+LSTM을 전체적인 모습을 그려보면, Cell state를
+통한 backprob은 그레디언트를 위한 고속도로라고 볼 수 있습니다.
+
+그레디언트가 모델의 종단인 Loss에서 가장 처음
+Cell State(C_0)까지 흘러가면서 방해를 덜받는 것이죠
+
+질문있나요?
+
+질문은 &quot;궁극적으로 W를 업데이트해야 할텐데,
+ W에 대한 그레디언트는 어떻게 되는지&quot; 입니다.
+
+가중치 W에 대한 Local gradient는 해당 스텝에 해당하는 
+현재의 cell/Hidden state로부터 전달됩니다.
+
+Vanilla RNN의 경우에는 각 스텝의 가중치 
+행렬 W들이 서로 영향을 미쳤습니다.
+
+반면 LSTM의 경우에는, 가령 아주 긴 시퀀스가 있고 
+그레디언트가 맨 끝에서부터 전달되기 시작된다고 했을 때
+
+이 시퀀스의 backprob 과정에서 각 스텝마다
+w에 대한 local gradient가 있을 것입니다.
+
+그리고 W의 local gradient는 
+Cel/Hiddenl state에서 흘러옵니다.
+
+LSTM의 경우 cell state c가 
+그레디언트를 잘 전달해주기 때문에
+
+w에 대한 local gradient도 훨씬 
+더 깔끔하게 전달됩니다.
+
+질문 있나요?
+
+질문은 &quot;여전히 Non-linearities가 있으므로 (sigmoid) 
+vanishing gradient 문제에 민감할 수 있는지&quot; 입니다.
+
+그럴지도 모릅니다. 가령 forget gate의 경우 출력이 0~1 이니
+항상 1보다 작으므로 그레디언트가 점점 감소할 수 있습니다.
+
+그래서 사람들이 많이 하는 Trick 으로 forget gate의 
+biases를 양수로 초기화시키는 방법이 있습니다.
+
+이 방법을 이용해서 학습 초기에 forget gate의
+값이 1에 가깝도록 해줍니다.
+
+1에 가까운 값이기 때문에 적어도 학습 초기에는 
+그레디언트의 흐름이 비교적 원활할 것입니다.
+
+그리고 학습이 진행되면 forget gate의 biases가 
+적절한 자기 자리를 다시 찾아가겠죠
+
+LSTM에서도 vanishing gradient의 위험은 존재합니다. 
+다만 Vanilla RNN만큼 심하진 않습니다.
+
+덜 위험한 이유 중 하나는 
+매 스텝 f가 변하기 떄문이고
+
+두 번째 이유는 LSTM에서는 Full Mat-mul이 아닌
+element-wise multiplication을 수행하기 때문입니다.
+
+LSTM을 유심히 들여다보면 
+RsetNet 스럽게 생겼습니다.
+
+ResNet의 Backward pass에서 
+identity connection이 아주 유용했습니다.
+
+Identity Mapping이 ResNet 그레디언트를
+위한 고속도로 역할을 했습니다.
+
+LSTM도 동일한 intuition입니다.
+
+LSTM의 Cell state의 element-wise mult가  
+그레디언트를 위한 고속도로 역할을 하는 것이죠
+
+유사한 방법으로 &quot;Highway Networks&quot; 라는 논문도 있습니다.
+LSTM cell과 ResNet의 중간 버전입니다.
+
+사실은 Highway network는 
+ResNet보다 일찍 나온 논문입니다.
+
+highway network는 모든 레이어에서 &quot;candidate 
+activation&quot;과 &quot;gating function&quot;을 계산합니다.
+
+gating function (g)는 현재 레이어의 이전 입력과 CNN 등에서
+나온 candidate activation간의 보간 역할을 해줍니다.
+
+많은 아키텍쳐들(LSTM, ResNet)간의 유사성은
+
+사람들이 아주 깊은 CNN/RNN을 학습시키면서 얻은 영감에서 
+비롯됩니다. 이 지점에서 많은 교집합이 존재합니다.
+
+다시 말하면 실제로 아주 다양한 RNN 아키텍쳐의
+변형된 버전들이 존재합니다.
+
+그 중 LSTM 다음으로 유명한 아키텍쳐는 GRU 입니다. 
+Gated Recurrent Unit 이죠.
+
+업데이트 식은 보시는 바와 같습니다. 
+LSTM과 유사하게 생겼습니다.
+
+Vanishing gradient 문제를 회피하기 위한 
+element-wise mult gate 등이 보이는군요
+
+그리고 또 &quot;LSTM: A Search Space Odyssey&quot; 라는
+논문도 있습니다. 아주 독창적인 제목입니다.
+
+이 논문에서는 LSTM의 수식을 이리저리 바꾸고 실험을 합니다. 
+가령 non linearities를 바꿔봅니다.
+
+output gate에 꼭 tanh를 써야만 하는지
+등을 실험했습니다.
+
+그들은 다양한 질문을 만들고 이에 답할 수 있는
+여러가지 실험을 진행하였습니다.
+
+그리고 LSTM 모델을 조금씩 변형시켜보고 
+어떤 일이 발생하는지 실험하였습니다.
+
+결론은 전부 비슷비슷했다는 것입니다. 어떤 문제에서는 특정
+모델이 더 잘 될수는 있겠지만. 결국은 다 비슷했습니다.
+
+하지만 그들이 시도한 어떠한 방법들도 &quot;모든 문제들&quot; 에서 
+original LSTM보다 엄청나게 좋지는 않았습니다.
+
+이는 LSTM 업데이트 수식이 뭔진 모르겠지만 어쨋든 
+유용하고. 각자 문제에 적용해볼만하는 것을 시사합니다.
+
+몇 해 전 Google에서도 아주 재미있는 논문이 나왔습니다.
+
+이들은 evolutionary search 기법을 이용해서 아주 많은
+임의의 RNN 아키텍쳐를 실험합니다.
+
+이들은 임의로 업데이트 수식을 섞고 addition/multiplication
+non-linearities를 다양한 조합으로 섞습니다.
+
+Huge Google cluster 를 이용해서 다양한 방법들을
+모조리 실험해 버립니다.
+
+하지만 결론은 같습니다. GRU와 LSTM 보다 엄청나게
+좋은 모델을 찾아내지는 못했습니다.
+
+조금 변형된 모델이 특정 문제에는 조금 더 좋을수는 있었습니다. 
+반대로 안 좋을수도 있습니다.
+
+최종 결론으로 아셔야 할 점은 바로 LSTM과 GRU가 
+아무렇게나 만든 수식이 아니라는 것입니다.
+
+LSTM와 GRU는 Gradient Flow를 아주 적절하게 
+관리하며 추가된 gate는 아주 유용함은 사실입니다.
+
+오늘 내용을 요약 하자면 RNN은 완전 멋있습니다.
+RNN으로 다양한 새로운 문제에 도전해 볼 수 있습니다.
+
+떄로는 RNN은 vanishing/exploding gradient 
+문제에 민감할수도 있습니다.
+
+이 문제들은 weight clipping이나 다른 fancier한 
+아키텍쳐(LSTM, GRU)로 극복할 수 있었습니다.
+
+그리고 CNN/RNN 아키텍쳐 간에는 
+교집합이 아주 많았습니다.
+
+다음 시간은 중간고사합니다. 오늘 배운 RNN까지가 범위입니다.
+모두 중간고사 화이팅입니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;br /&gt;
+&lt;br /&gt;
+
+- **Reference**
+&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry><entry><title type="html">[CS231n]CNN Architectures</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">## 1. LeNet (LeCun, 1998)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207188293-f9dd2754-a9e8-4035-bc26-147c20cc712a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+### 1-1) 구조
+
+LeNet은 industry에 아주 성공적으로 적용된 최초의 Convolution Network이다. [CONV - POOL] 구조가 2번 반복되고, filter는 strdie=1의 5x5 filter를 사용하며 끝단에는 2개의 FC Layer를 쌓았다. 매우 간단한 구조이지만, 꽤 우수한 성능을 보이는 CNN의 조상이다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 2. AlexNet (Krizhevsky, 2012)
+
+최초의 Larg scale CNN이며, ImageNet Classification Task에서 놀라운 성능을 보여 2012년 Image Classification Benchmark에서 우승한 모델이다. 2012년에 등장한 다른 non-딥러닝 모델을 능가하는 성능을 보여줘, Convolution Net 연구의 부흥을 일으킨 장본인이다. CNN기반 최초의 우승 모델이며, 이후 수년동안 AlexNet은 대부분 CNN 아키텍쳐의 베이스 모델로 사용된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196722-059736b8-2dad-4ea2-bd16-31fdb530dfe4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+### 2-1) 구조
+
+기본적으로 [conv-pool-normalization] 구조가 2번 반복된다. 그 후에 CONV layer가 조금 더 붙고 Max Pooling Layer를 거친 뒤, 3개의 FC-Layer를 통과하는 구조이다. CONV Layer에서는 stride=4인 11x11 filter를 96개 사용하며, POOL Layer에서는 strdie=2인 3x3 filter를 사용한다. 생긴 것만 봐서는 LeNet과 상당히 유사하고 레이어만 더 많아진 것을 확인할 수 있다.
+
+- **cf) Size 계산해보기**
+
+  - Input Image Size
+
+      ImageNet 기준 input image 크기는 227x227x3이다.
+
+  - CONV1 Layer
+
+    - 출력 사이즈
+      
+      $(227-11)/4 + 1 = 55$ 이므로 activation map의 width와 height는 55x55이다. filter는 11x11 size를 사용하게 되는데, input image의 모든 channel에 대해 연산이 필요하므로 filter의 depth는 3이된다. 이러한 filter가 총 96개 있으므로, 최종 output image의 shape은 $(55,55,96)$이 된다.
+
+    - 전체 파라미터 수
+
+      11x11x3의 필터가 96개 있으므로, $11 \times 11 \times 3 \times 96 = 34,848$이 CONV1의 전체 파라미터 수가 된다.
+
+  - POOL1 Layer
+
+    - 출력 사이즈
+
+      $(55-3)/2 + 1 = 27$인데, pooling layer에서는 Image의 depth가 변하지 않기 때문에 최종적으로 (27x27x96)이 Activation map의 shape이 된다.
+
+    - 전체 파라미터 수
+
+      Pooling Layer에는 파라미터가 없다(헷갈림 주의). Pooling layer는 단순히 down sampling의 용도로만 사용되므로 파라미터 필요 없음에 유의하자.
+
+### 2-2) 특징
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196863-8d7128dd-da8c-4ad5-b720-b51c8a51112a.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+첫 Layer에서 모델이 두 개로 나눠져서 서로 교차하는 것을 확인할 수 있는데, 이는 당시 GPU 메모리의 한계로 인해 레이어를 나눠서 넣었기 때문이다(55x55x96 -&gt; 55x55x48 2개). 따라서 대부분의 CONV Layer는 GPU내의 48개의 Feature만 사용하여 학습하였고, 끝단의 FC Layer와 CONV3 Layer에서는 GPU간의 통신을 바탕으로 전체 Feature Map을 가져와 합쳐주었다.
+
+### 2-3) Details
+
+- **Activation Function**
+
+  Activation function으로는 ReLU를 사용하였다.
+
+- **Optimizer**
+
+  optimizer로는 SGD + Momentum을 사용하였다.  
+
+- **Dropout / Batch size**
+
+  Dropout을 사용했으며, Batch size는 128로 설정하였다.  
+
+- **Data Augmentation**
+
+  flipping, jittering, cropping, color norm 등등 매우 다양한 data augmentation을 해주었다.
+
+- **Learning Rate Decay**
+
+  초기 Learning rate는 1e-2로 initialize했으며, val accuracy가 올라가지 않는 지점에서는 학습이 종료되는 시점까지 Learning Rate를 1e-10까지 줄였다.
+
+- **Weight Decay**  
+
+  weight decay를 사용했다. weight decay는 overfitting 문제를 해결하기 위한 방법 중 하나로, 특정 weight가 너무 큰 값을 가지지 않도록 패널티 항목을 추가하는 것이다. L1/L2 Regularization을 주로 사용한다.
+
+- **Model Ensemble**
+
+  마지막에는 7개의 CNN 모델을 앙상블하여 error를 18.2% -&gt; 15.4%까지 감소시켰다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 3. ZFNet (Zeiler and Fergus, 2013)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202021-9a2c5a1d-135c-49bf-8878-95ecb09592d9.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+AlexNet의 하이퍼 파라미터를 개선한 모델이다. AlexNet과 레이어 수도 같고 기본적인 구조도 같지만, stride size, filter 수와 같은 하이퍼 파라미터를 조절해서 AlexNet의 error rate를 개선시켰다. Alex Net과 기본 아이디어는 동일하다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 4. VGGNet (Oxford, 2014)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202985-1d439ffb-48e4-4c93-a397-b25a71cd7266.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+2014년은 아키텍쳐도 많이 변했고 성능이 향상되었으며, 네트워크가 매우 깊어지기 시작한 시기이다. VGGNet은 이 시기에 GoogLeNet과 함께 우수한 성능을 기록한 CNN 아키텍쳐이다. 대표적으로 VGG16과 VGG19가 있으며, VGG19가 성능은 아주 조금 더 좋다. 그러나 VGG19는 메모리 사용량이 조금 더 많기 때문에 보통은 VGG16을 주로 사용한다. AlexNet처럼 앙상블 기법을 사용하였다.
+
+### 4-1) Use Small Filter
+
+VGG는 기존 CNN 아키텍쳐 대비 훨씬 깊어졌고(alex:8, vgg:16~19), 3x3 크기의 아주 작은 필터를 사용한다(3x3은 이웃 픽셀을 포함할 수 있는 가장 작은 단위임). 이렇게 작은 필터를 유지하며 주기적으로 pooling을 수행하여 전체 네트워크를 구성하였다. 또한, Layer가 깊어지는 만큼 Non-Linearity가 증가하게 되는데, 이를 통해 더 자세한 특징을 잡아낼 수 있게 되어 ImageNet에서 7.3%의 top 5 error를 기록하였다. 그렇다면 VGG에서 이렇게 작은 필터를 사용한 이유는 무엇일까? 그 이유에 대해 차근차근 알아보도록 하자.
+
+#### 4-1-1) Receptive Field (수용 영역)
+
+우선 Receptive Field란, filter가 한번에 볼 수 있는 입력의 Spatial Area를 일컫는 말이다. 다음의 간단한 예시를 통해 Receptive Field를 알아보자
+
+다음과 같이 3x3 filter를 사용하는 CONV1 Layer를 떠올려보자. filter는 stride만큼 움직이면서 filter 영역에 해당하는 픽셀들과 계속해서 합성곱을 계산한다. 따라서 3x3 filter가 바라본 하나의 위치는 다음 Layer의 1픽셀로 들어가게 된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206114-29c5a5c7-f620-415d-918a-eb3f47d3c9a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+
+또한, 마찬가지로 CONV2 Layer에서도 3x3 filter를 사용한다. CONV1의 3x3 영역이 CONV2에서는 1x1 영역으로 취급되기 때문에, CONV2 Layer의 3x3 영역은 CONV1 Layer의 5x5 영역을 바라보는 것과 동일하다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206752-4490125c-3016-47c5-9a27-5fa916a394ca.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+
+이러한 과정을 반복하게 되면, CONV4의 1x1 영역은 CONV1의 7x7영역을 바라보는 것과 동일하다. 즉, 3x3 filter를 3번 쌓는 것은 7x7 filter를 사용하는 것과 실질적으로 동일한 Receptive Field를 갖는 것이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207208594-6c8d21ff-a21f-4579-9950-b53c18717dd9.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+그렇다면 왜 filter를 이렇게 작은 filter로 여러번 나눠 사용하는 것일까?
+
+#### 4-1-2) Parameter 개수
+
+우선 7x7 Filter의 Parameter 개수는 $7 \times 7 \times C \times N$ 이다(C=채널 수, N=필터 수). 여기서, input image의 depth와 output image의 depth를 맞춰주기 위해 filter 개수는 channel의 수와 동일하게 맞춰주었다. 따라서 7x7 filter의 parameter 개수는 $7^2 C^2$이다.
+
+3x3 Filter의 경우, 7x7 Filter와 동일한 Receptive Field를 맞추어주기 위해서는 해당 Filter를 3번 쌓아주어야 한다. 따라서, 위와 같은 맥락으로 파라미터 개수는 $3^2 C^2 \times 3$이 된다. 최종적으로 정리해보면 다음과 같다.
+
+$$
+\mathsf{7x7 \; Filter}\\
+
+7^2C^2 = 49C^2\\
+$$
+
+$$
+\mathsf{3x3 \; Filter}\\
+
+3^2C^2 \times 3 = 27C^2
+$$
+
+동일한 Receptive Field에 대해, filter size를 줄임으로써 파라미터의 수를 $49C^2$에서 $27C^2$로 줄일 수 있었다. 또한, 층이 깊어지면서 Non-Linearity를 더 추가할 수 있게 되어 더 복잡한 Feature를 뽑아낼 수 있게 되었다. 이를 통해 VGG는 연산량도 줄이면서 Accuarcy도 높일 수 있게 되었다.
+
+### 4-2) 문제점
+
+#### 4-2-1) 메모리 문제
+
+VGG의 각 노드는 약 4byte의 메모리를 차지한다. 따라서 단순히 Forward Pass만 해도 약 100MB의 메모리가 필요하다(Backward Pass까지 고려하면 더 많은 메모리 필요). 따라서, 만약 5GB의 메모리를 사용한다면 50장의 이미지밖에 처리하지 못하는 것이다.
+
+#### 4-2-2) 총 파라미터 개수
+
+VGGNet의 총 파라미터 개수는 1억 3800만개인데, 이는 AlexNet(6800만)의 약 2배 수준이다. 특히 FC-Layer에 1억개가 넘는 파라미터가 있다. 따라서 최근 일부 네트워크는 파라미터를 획기적으로 줄이기 위해 FC Layer를 줄이기도 한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 5. GoogLeNet (Google, 2014)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228473-0ebc8054-4672-49f2-97cf-881188c0cede.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+InceptionNet이라고도 하며, 2014년 classfication challenge에서 우승하였다. 총 22개의 레이어를 가지고 있고, VGGNet처럼 매우 깊은 네트워크이다. 효율적인 계산에 초점을 맞춰 네트워크를 디자인 하였으며, Inception Module이라는 미니 네트워크를 여러개 쌓아서 만들었다. 또한 위에서 잠깐 언급했듯이, 파라미터를 줄이기 위해 FC-Layer를 제거하였다. 그 결과, 파라미터 수를 500만개까지 획기적으로 줄였다. AlexNet대비 약 20배 적은 파라미터를 가지고 있지만, 훨씬 더 깊다. 그렇다면 GoogLeNet의 메인 아이디어인 Inception Module이란 무엇일까?
+
+### 5-1) Inception Module
+
+#### 5-1-1) 기본 Idea
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228656-6d536a62-e494-4b13-9a97-52c2bc36afdd.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+기존 CONV Layer는 하나의 filter를 사용하여 Feature Map을 생성하였으나, GoogLeNet은 여러 종류의 Filter를 병렬적으로 사용하고자 하였다. 그래서 탄생한 것이 바로 `Inception Module`이다. inception module 내부에는 동일한 입력을 받는 서로 다른 다양한 필터들이 병렬로 존재한다. 이전 레이어의 입력을 받아 다양한 Convolution 연산을 수행하고, 각각의 출력들을 모두 depth 방향으로 합친다. 이렇게 합치면 하나의 tensor로 출력이 결정되고, 이 하나의 출력을 다음 Layer로 전달하게 된다.
+
+#### 5-1-2) 계산비용의 문제점
+
+그러나 Inception Module에는 한 가지 문제점이 있었는데, 계산을 거듭할수록 Depth가 점점 늘어나 연산량이 매우 많아진다는 것이다. 가령, 다음과 같이 input으로 28x28x256을 받는 inception module을 생각해보자. (이 때, spatial dimension은 항상 일정하도록 stride와 padding이 적절히 설정되어 있다.)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207229599-5dce18cb-3673-41bf-b93f-f6987c023127.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+이렇게 되면, 최종 Tensor의 Depth는 Filter의 개수만큼 점점 쌓이게 되며(128+192+96+256), 파라미터 수는 매우 커지게 된다. 위 예시의 경우, 파라미터 수는 28 x 28 x (128+192+96+256) = 526,848개이다. 즉, Inception Module의 input은 28x28x256이었으나, output은 28x28x672가 된 것이다. 또한, GoogLeNet은 이러한 Inception Module이 계속해서 쌓여있는 구조이기 떄문에 계산량은 기하급수적으로 늘어나게 된다. 그렇다면 GoogLeNet은 이러한 문제를 해결하기 위해 어떠한 방법을 사용했을까?
+
+#### 5-1-3) Bottleneck Layer
+
+GoogLeNet은 계산량을 줄이고 Depth를 축소하기 위해, 1x1 CONV Layer인 `Bootleneck Layer`를 도입하였다. Bottlenect Layer는 연산을 수행하기에 앞서, input의 spatial dimension은 유지한 채 입력을 더 낮은 차원으로 보내는 방법이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231326-0d022a15-a497-401d-b995-743b4888f46c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+가령, 56x56x64의 input img에 32개의 1x1 CONV filters를 사용하면, 이미지 크기는 그대로 유지한 채 depth를 32로 줄일 수 있다. 따라서 bottlenect layer는 input feature map들간의 linear combination을 도와주는 매개체라고 생각할 수 있으며, 주요 아이디어는 1x1 conv를 사용하여 입력의 depth를 줄인다는 것이다. 아래 그림은 Bottleneck Layer를 추가한 Full Inception Module이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231952-c18b882d-25b4-4cba-9515-5dc50eb621cb.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+CONV 이전에 1x1 conv가, POOL 이후에 bottleneck layers(1x1 conv)가 추가된 것을 확인할 수 있다. 파라미터의 수는 bottleneck layer를 쓰기 전 854M에서 358M으로 2배 이상 감소하였다.
+
+#### 5-2) 구조
+
+가중치를 가진 레이어는 총 22개이며, inception moudule은 1x1/3x3/5x5 conv layer를 병렬적으로 가지고 있다. AlexNet 대비 12배 적은 파라미터를 가지고 있다고 한다. 전체적인 구조는 다음과 같다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207232567-0b2a22a1-e6bb-4772-8e78-ad05cbc8e85d.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+- **Stem Network**
+
+  일반적인 네트워크 구조로 시작한다. [Conv-Pool-Conv-Conv-Pool]의 구조를 가진다.
+
+- **Inception Modules**  
+
+  조금씩 다른 inception module을 쌓는다. 특이한 점은, 중간에 `보조 분류기(Auxiliary Classifier)`가 존재한다는 것이다. 보조 분류기는 AVG POOL, CONV, FC로 이루어져 있으며 softmax로 ImageNet Class를 구분한다. GoogLeNet이 매우 깊기 때문에 Vanishing Gradient 예방 차원에서 넣어준 것이며, 추가적인 Gradient 신호를 흘려주어 중간 레이어의 학습을 돕는다. 최종 Loss를 계산할 떄는 Auxiliary Classifier의 Loss도 반영한다.
+
+- **Classifier Output**
+
+  FC-Layer를 걷어내고, `Global Average Pooling(GAP) Layer`를 깔았다. 기존 FC-Layer는 Feature Map을 1차원 벡터로 펼쳐서 Activation Function을 거친 뒤, 원하는 클래스의 개수로 맞춰주는 방식이었다. 그러나 Global Average Pooling 방식은 Feature Map을 Depth 방향으로 각각 평균 내어 Flatten을 시켜주는 방식이다. FC layer로 활성함수를 거치지 않아도 이미 깊은 네트워크를 거치면서 효과적으로 Feature vector를 추출했기 때문에, 이렇게 해도 분류가 가능하다고 한다.
+
+  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207234373-dd1f9fd1-8a1d-4654-be31-bbd869534b8f.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 6. ResNet (Kaiming He, 2015)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207271537-e9092ca2-b0de-4bed-a4fb-b61c59e401a8.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+ResNet은 152 레이어로 엄청나게 깊은 CNN 아키텍쳐이며, 기존의 어떤 네트워크보다도 깊다. 혹자는 이를 두고 혁명적(Revolution of Depth)으로 깊어졌다고 한다. 메인 아이디어는 `Residual Connections`이며, ResNet 하나로 ImageNet, COCO Classification/detection 등 여러 대회 우승하였다.
+
+### 6-1) Residual Connections
+
+#### 6-1-1) 기본 Idea
+
+ResNet의 Residual Connections는 `일반 CNN을 깊고 더 깊게 쌓게되면 어떻게 될까?`라는 질문으로부터 출발한다. 가령, VGG에 [conv-pool] 레이어를 깊게만 쌓는다고 과연 성능이 더 좋아질까? 그에 대한 대답은 No이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207235486-784b5921-b935-455e-99b9-1ba34e73d439.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+위 그래프에서 볼 수 있듯이, plain CNN을 56 Layer 쌓은 아키텍쳐의 test error가 20 Layer 쌓은 아키텍쳐보다 더 높게 나왔다. 이느 56-Layer가 Train Data에 overfitting 되었기 때문으로 예상했으나, training error도 56레이어가 더 높았다. 따라서 test에서 56-layer의 성능이 더 좋지 않은 이유가 overfitting 때문이 아니라는 것을 알게 되었다. ResNet 연구진들은 이를 Optimizer의 문제로 생각하였다. deeper model은 Optimization이 더 어렵기 때문이다.
+
+ResNet은 이를 해결하기 위해 다음과 같은 Idea를 떠올렸다. 우선 더 얕은 모델의 가중치를 깊은 모델의 일부 레이어에 복사한다. 그리고 나머지 레이어는 input을 output으로 그냥 내보내는 identity mapping을 해버린다. 즉, CNN을 깊게 쌓았을 때 성능이 저하되는 것이 Optimization의 문제라면, `얕은 네트워크의 구조를 그대로 가져와서 identity mapping을 한다면, 적어도 얕은 네트워크 만큼의 성능은 나와야될 것이다` 라는 가정을 세웠다. 이 motivation을 우리가 만들 모델에 녹이려면 어떻게 모델 아키텍쳐를 디자인해야할까?
+
+#### 6-1-2) Residual Learning (Skip Connection)
+
+기존 Neural Net의 학습 목표는 x를 y로 mapping하는 함수 H(x)를 찾는 것이다. 따라서 H(x)-y를 최소화 하는 방향으로 학습을 진행한다. 그러나, ResNet의 Residual Learning은 Residual Function인 $F(x) = H(x) - x$를 최소화하는 방향으로 학습한다. 즉, input과 output의 차이를 0에 가깝게 만들겠다는 것이다. 내가 개인적으로 이해한 바로는, 다음과 같이 해석할 수 있을 것 같다.
+
+&lt;br&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207249624-9511523a-a6ca-4276-8121-d2718148ca0e.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+Layer가 점점 깊어지고 끝단으로 갈수록, 학습이 점점 진행되기 때문에 H(x)와 x의 차이는 점점 줄어들어야 한다. 즉, x는 점점 출력값 H(x)와 가까워져 $F^{&apos;(n)}(x)$는 0에 수렴해야한다는 것이다. 여기서 0에 수렴시켜야 하는 값인 $F(x)=H(x)-x$를 `Residual`이라고 하며, Resnet은 이러한 Residual이 0이 되도록 학습을 진행한다. Residual을 0에 수렴시킨다는 것은 점점 학습시켜야 할 학습량이 줄어드는 방향으로 학습이 진행된다는 것으로 해석할 수도 있겠다. 힌편, residual이 그저 가설일 뿐이고 필요 없다는 주장도 있으나 실제로는 Residual Learning을 사용하면 성능이 좋아지는 것이 fact이다.
+
+&lt;br&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207241324-2dd55fdf-d347-4612-9669-68492fcad868.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+이러한 Idea를 바탕으로, ResNet은 input으로 들어온 x를 그대로 보내고, Residual Block 안에서 계산된 F(x)를 학습한다. 이를 `Skip Connection`이라고 한다. 이렇게 Residual Block 안에서 계산된 F(x)를 학습하는 것이 CONV Layer를 거쳐온 거대한 H(x)를 학습하는 것보다 훨씬 더 효율적이고, 좋은 성능을 보였다.
+
+### 6-2) 구조
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252210-ef72fa85-b4b1-4cb2-af3a-b74155abbffe.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+- **Stem Network**
+
+  네트워크 초반은 Conv Layer가 추가적으로 붙는다.
+
+- **Residual Blocks**
+
+  하나의 Residual blocks는 2개의 3x3 conv layers로 이루어져 있으며, 일반적으로 이렇게 구성해야 잘 동작하는 것으로 알려져 있다. 이 Residual blocks를 매우 깊게(150 Layer) 쌓아올린 것이 바로 ResNet이다. 그리고 주기적으로 filter를 2배씩 늘리고 stride=2를 이용하여 down sampling해준다.
+
+- **Classifier Output**
+
+  네트워크 끝에는 FC-Layer가 없는 대신 GAP(Global Average Pooling) Layer를 사용하여, 하나의 Map 전체를 Average Pooling한다. 자세한 설명은 위에서 했기 때문에 생략한다. 마지막에는 ImageNet의 1000개 클래스를 맞춰주기 위한 FC Layer가 붙는다.
+
+### 6-3) Bottleneck Layers
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252521-2b9312e9-e8d1-4387-9209-088138fb1b66.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+depth는 34, 50, 100까지 늘어나며 논문에서는 ImageNet 문제를 위해 152까지 늘린 것을 확인할 수 있다. 이 때, 모델 Depth가 50이상인 경우 Bottleneck Layers를 넣어주었다(GoogLeNet과 유사). 이로인해 3x3 conv Layer의 계산량을 줄이고, 다시 1x1 conv를 추가해서 depth를 다시 256으로 늘리는 구조를 취하고 있다.
+
+### 6-4) Details
+
+- 모든 Conv Layer 다음 Batch Norm을 사용하며 Weight Initialization은 Xavier를 사용함
+
+- 위 방법은 SGD+Momentum에서 좋은 초기화 성능을 보인다고 함
+
+- Learning rate는 Learning rate 스케줄링을 통해서 validation error가 줄어들지 않는 시점에서 조금씩 줄여주었다(Learning Rate Decay).
+
+- minibatch 사이즈는 256이며, weight decay 사용, dropout은 사용하지 않았음
+
+=&gt; 성능 감소 없이 깊은 네트워크를 잘 학습시킬 수 있었으며, backprop 시 네트워크의 gradient flow를 잘 가져갔다. 또한, 깊은 네트워크에서 Train error가 줄어드는 문제를 해결하여, 네트워크가 깊어질수록 Training Error는 더 줄어들게 되었다.
+
+### 6-5) ResNet의 성능 향상 관련 연구
+
+#### 6-5-1) Wide Residual Networks (Zagoruyko, 2016)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207253444-9198dafb-9dbf-4e3e-9312-91395d8f2d02.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+기존의 resnet은 Layer를 깊게 쌓는 것에 집중했지만, Zagoruyko는 depth가 아닌 residual이 중요한 것이라고 주장하였음. residual connection만으로도 충분하기 떄문에, 네트워크가 굳이 더 깊어질 필요 없다는 것이 Zagoruyko의 주장이다. 따라서 residual block을 더 넓게 만들었다(conv layer의 필터를 더 많이 추가). 기존 ResNet에 block당 F개의 filter만 있었다면, 이제는 FxK개의 필터로 구성하였다. 그 결과, 50 레이어만 있어도 152레이어의 기존 resnet보다 더 좋은 성능을 보이는 것을 확인할 수 있었다. 또한 depth 대신에 filter의 width를 늘리면, 병렬화가 더 잘되기 때문에 계산 효율이 증가한다.
+
+#### 6-5-2) ResNeXt(ResNet + inEXeption) (Xie, 2016)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207260802-83220f3c-ffa2-424b-ba5d-a96dcebe1469.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+ResNeXt또한 residual block의 width를 파고들어, filter의 수를 늘리는 데 집중했다. ResNeXt는 하나의 bottleneck resnet block을 병렬로 여러개 묶은 모양을 하고 있다. 마치 ResNet과 VGG가 결합된 모습이다. 
+
+#### 6-5-3) stochastic depth (Huang, 2016)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207261711-488b8126-104f-4912-a6a8-c9d3ea50e1ec.png&quot; width=&quot;25%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+네트워크가 깊어질수록 vanishing gradient 문제가 발생한다. short network에서는 이러한 vanishing gradient의 위험성이 낮기 때문에, stochastic depth는 train시에 레이어의 일부를 제거한다(Dropout과 유사). 즉, 일부 네트워크를 골라서 identitiy connection으로 만들어버리는 것이다.. 이렇게 shrot netwrok를 만들어서 train 하면 gradient가 더 잘 전달될 수 있게된다. test time에서는 full deep 네트워크를 사용하며, 매우 효율적인 방법이 될 수 있다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 7. Non-ResNet
+
+### 7-1) FractalNet (Larsson, 2017)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207262529-676a0f91-370e-43f7-b79c-6a48011992a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+FractalNet residual connection이 쓸모없다고 주장하여, residual connection이 전혀 없다. 대신, shallow/deep network의 정보 모두를 잘 전달하는 것이 중요하다고 생각하였다(fractal한 모습). FractalNet에서는 shallow/deep 경로를 모두 연결하고, train에서는 일부 경로만 사용, test에서는 모든 경로를 사용한다(dropout과 유사).
+
+### 7-2) DenseNet(DENSEly Connected Convolutional NETworks) (Huang, 2017)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263266-64d105ac-3b46-4f57-bcf7-25731a3158e2.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+DenseNet의 Main idea는 Dense Block을 도입하는 것이다. 모든 레이어는 그 레이어 하위의 다른 모든 레어이와 연결되어 있으며, 레이어의 출력이 각 레이어의 출력과 concat된다. 그리고 이 값이 각 conv layer의 입력으로 들어간다(이 과정에서 dimension을 줄여주는 과정이 포함됨). 이러한 dense connection을 사용하면, 각 레이어의 출력이 다른 레이어에서 다시 쓰일 수 있기 때문에 기울기 소실문제를 해결하고, feature를 더 잘 사용할 수 있게 한다고 주장한다. 
+
+### 7-3) SqueezeNet (landola, 2017)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263308-30e3f883-7ba1-456e-bd7f-176541962746.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+GoogLeNet과 같이 효율성을 중시한 CNN 아키텍쳐이다. squeeze layer는 1x1 필터들로 구성되고, 이 출력 값이 1x1/3x3 필터들로 구성되는 expand layer의 입력이 된다. SqueezeNet는 ImageNet에서 AlexNet 만큼의 Accuracy를 보이지만 파라미터는 50배 더 적었으며, 압축 시 AlexNet보다 500배 더 작아지게 된다. 또한 용량은 0.5Mb 밖에 안된다고 한다.
+
+## 8. 아키텍쳐 성능 요약 (2017)
+
+### 8-1) Top-1 Accuracy
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266565-9d01b0f7-f588-42e6-a8ff-3ca470cb13a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+### 8-2) 계산성능
+
+아래 그림은, 각 아키텍쳐의 성능을 나타낸 것이다. Y축은 top-1 Accuarcy, X축은 연산량, 원의 크기는 메모리 사용량이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263909-a7fd0de9-f9c1-4b9f-8771-17b3431db223.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+- **GoogLeNet**
+
+  - 가장 효율적인 네트워크.
+
+  - x축의 가장 왼쪽에 붙어있으며 메모리 사용도 적음
+
+- **AlexNet**
+
+  - Accuracy는 매우 낮은편이다.
+  
+  - 아키텍쳐 자체의 몸집이 작아 계산량도 낮다.
+
+  - 그러나 메모리 사용량은 매우 비효율적인 모습
+
+- **ResNet**
+
+  - 적당한 효율성.
+
+  - 메모리 사용량, 계산량은 중간정도이다.
+
+  - 그러나 Accuaracy는 최상위인 모습이다.
+
+### 8-3) forward pass 시간
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266872-7c001595-2ea7-4df7-a06b-3fd67775930c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+### 8-4) 전력소모량
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207267081-15ab4b7f-6c9d-4220-b33b-c37653ca5d54.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+
+- **Reference**
+
+  [ResNet의 이해](https://velog.io/@lighthouse97/ResNet%EC%9D%98-%EC%9D%B4%ED%95%B4)
+
+  [(논문리뷰) ResNet 설명 및 정리](https://ganghee-lee.tistory.com/41)
+
+  [ResNet (Deep Residual Learning for Image Recognition) 논문 리뷰](https://phil-baek.tistory.com/entry/ResNet-Deep-Residual-Learning-for-Image-Recognition-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0)
+
+  [GoogLeNet(inception v1)의 구조](https://bskyvision.com/539)
+
+  [CNN architectures](https://bookandmed.tistory.com/58)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
 
 ![image](https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png)
 
@@ -174,813 +2374,4 @@ https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows
 
 https://zzsza.github.io/development/2020/06/06/github-action/
 
-https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]CNN Architectures(초안)</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">&lt;h2 id=&quot;1-lenet-lecun-1998&quot;&gt;1. LeNet (LeCun, 1998)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207188293-f9dd2754-a9e8-4035-bc26-147c20cc712a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-1-구조&quot;&gt;1-1) 구조&lt;/h3&gt;
-
-&lt;p&gt;LeNet은 industry에 아주 성공적으로 적용된 최초의 Convolution Network이다. [CONV - POOL] 구조가 2번 반복되고, filter는 strdie=1의 5x5 filter를 사용하며 끝단에는 2개의 FC Layer를 쌓았다. 매우 간단한 구조이지만, 꽤 우수한 성능을 보이는 CNN의 조상이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-alexnet-krizhevsky-2012&quot;&gt;2. AlexNet (Krizhevsky, 2012)&lt;/h2&gt;
-
-&lt;p&gt;최초의 Larg scale CNN이며, ImageNet Classification Task에서 놀라운 성능을 보여 2012년 Image Classification Benchmark에서 우승한 모델이다. 2012년에 등장한 다른 non-딥러닝 모델을 능가하는 성능을 보여줘, Convolution Net 연구의 부흥을 일으킨 장본인이다. CNN기반 최초의 우승 모델이며, 이후 수년동안 AlexNet은 대부분 CNN 아키텍쳐의 베이스 모델로 사용된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196722-059736b8-2dad-4ea2-bd16-31fdb530dfe4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-1-구조&quot;&gt;2-1) 구조&lt;/h3&gt;
-
-&lt;p&gt;기본적으로 [conv-pool-normalization] 구조가 2번 반복된다. 그 후에 CONV layer가 조금 더 붙고 Max Pooling Layer를 거친 뒤, 3개의 FC-Layer를 통과하는 구조이다. CONV Layer에서는 stride=4인 11x11 filter를 96개 사용하며, POOL Layer에서는 strdie=2인 3x3 filter를 사용한다. 생긴 것만 봐서는 LeNet과 상당히 유사하고 레이어만 더 많아진 것을 확인할 수 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;cf) Size 계산해보기&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;Input Image Size&lt;/p&gt;
-
-        &lt;p&gt;ImageNet 기준 input image 크기는 227x227x3이다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;CONV1 Layer&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;출력 사이즈&lt;/p&gt;
-
-            &lt;p&gt;$(227-11)/4 + 1 = 55$ 이므로 activation map의 width와 height는 55x55이다. filter는 11x11 size를 사용하게 되는데, input image의 모든 channel에 대해 연산이 필요하므로 filter의 depth는 3이된다. 이러한 filter가 총 96개 있으므로, 최종 output image의 shape은 $(55,55,96)$이 된다.&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;전체 파라미터 수&lt;/p&gt;
-
-            &lt;p&gt;11x11x3의 필터가 96개 있으므로, $11 \times 11 \times 3 \times 96 = 34,848$이 CONV1의 전체 파라미터 수가 된다.&lt;/p&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;POOL1 Layer&lt;/p&gt;
-
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;출력 사이즈&lt;/p&gt;
-
-            &lt;p&gt;$(55-3)/2 + 1 = 27$인데, pooling layer에서는 Image의 depth가 변하지 않기 때문에 최종적으로 (27x27x96)이 Activation map의 shape이 된다.&lt;/p&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;p&gt;전체 파라미터 수&lt;/p&gt;
-
-            &lt;p&gt;Pooling Layer에는 파라미터가 없다(헷갈림 주의). Pooling layer는 단순히 down sampling의 용도로만 사용되므로 파라미터 필요 없음에 유의하자.&lt;/p&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-2-특징&quot;&gt;2-2) 특징&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196863-8d7128dd-da8c-4ad5-b720-b51c8a51112a.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;첫 Layer에서 모델이 두 개로 나눠져서 서로 교차하는 것을 확인할 수 있는데, 이는 당시 GPU 메모리의 한계로 인해 레이어를 나눠서 넣었기 때문이다(55x55x96 -&amp;gt; 55x55x48 2개). 따라서 대부분의 CONV Layer는 GPU내의 48개의 Feature만 사용하여 학습하였고, 끝단의 FC Layer와 CONV3 Layer에서는 GPU간의 통신을 바탕으로 전체 Feature Map을 가져와 합쳐주었다.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-3-details&quot;&gt;2-3) Details&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Activation Function&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;Activation function으로는 ReLU를 사용하였다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Optimizer&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;optimizer로는 SGD + Momentum을 사용하였다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Dropout / Batch size&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;Dropout을 사용했으며, Batch size는 128로 설정하였다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Data Augmentation&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;flipping, jittering, cropping, color norm 등등 매우 다양한 data augmentation을 해주었다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Learning Rate Decay&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;초기 Learning rate는 1e-2로 initialize했으며, val accuracy가 올라가지 않는 지점에서는 학습이 종료되는 시점까지 Learning Rate를 1e-10까지 줄였다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Weight Decay&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;weight decay를 사용했다. weight decay는 overfitting 문제를 해결하기 위한 방법 중 하나로, 특정 weight가 너무 큰 값을 가지지 않도록 패널티 항목을 추가하는 것이다. L1/L2 Regularization을 주로 사용한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Model Ensemble&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;마지막에는 7개의 CNN 모델을 앙상블하여 error를 18.2% -&amp;gt; 15.4%까지 감소시켰다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-zfnet-zeiler-and-fergus-2013&quot;&gt;3. ZFNet (Zeiler and Fergus, 2013)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202021-9a2c5a1d-135c-49bf-8878-95ecb09592d9.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;AlexNet의 하이퍼 파라미터를 개선한 모델이다. AlexNet과 레이어 수도 같고 기본적인 구조도 같지만, stride size, filter 수와 같은 하이퍼 파라미터를 조절해서 AlexNet의 error rate를 개선시켰다. Alex Net과 기본 아이디어는 동일하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-vggnet-oxford-2014&quot;&gt;4. VGGNet (Oxford, 2014)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202985-1d439ffb-48e4-4c93-a397-b25a71cd7266.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;2014년은 아키텍쳐도 많이 변했고 성능이 향상되었으며, 네트워크가 매우 깊어지기 시작한 시기이다. VGGNet은 이 시기에 GoogLeNet과 함께 우수한 성능을 기록한 CNN 아키텍쳐이다. 대표적으로 VGG16과 VGG19가 있으며, VGG19가 성능은 아주 조금 더 좋다. 그러나 VGG19는 메모리 사용량이 조금 더 많기 때문에 보통은 VGG16을 주로 사용한다. AlexNet처럼 앙상블 기법을 사용하였다.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-1-use-small-filter&quot;&gt;4-1) Use Small Filter&lt;/h3&gt;
-
-&lt;p&gt;VGG는 기존 CNN 아키텍쳐 대비 훨씬 깊어졌고(alex:8, vgg:16~19), 3x3 크기의 아주 작은 필터를 사용한다(3x3은 이웃 픽셀을 포함할 수 있는 가장 작은 단위임). 이렇게 작은 필터를 유지하며 주기적으로 pooling을 수행하여 전체 네트워크를 구성하였다. 또한, Layer가 깊어지는 만큼 Non-Linearity가 증가하게 되는데, 이를 통해 더 자세한 특징을 잡아낼 수 있게 되어 ImageNet에서 7.3%의 top 5 error를 기록하였다. 그렇다면 VGG에서 이렇게 작은 필터를 사용한 이유는 무엇일까? 그 이유에 대해 차근차근 알아보도록 하자.&lt;/p&gt;
-
-&lt;h4 id=&quot;4-1-1-receptive-field-수용-영역&quot;&gt;4-1-1) Receptive Field (수용 영역)&lt;/h4&gt;
-
-&lt;p&gt;우선 Receptive Field란, filter가 한번에 볼 수 있는 입력의 Spatial Area를 일컫는 말이다. 다음의 간단한 예시를 통해 Receptive Field를 알아보자&lt;/p&gt;
-
-&lt;p&gt;다음과 같이 3x3 filter를 사용하는 CONV1 Layer를 떠올려보자. filter는 stride만큼 움직이면서 filter 영역에 해당하는 픽셀들과 계속해서 합성곱을 계산한다. 따라서 3x3 filter가 바라본 하나의 위치는 다음 Layer의 1픽셀로 들어가게 된다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206114-29c5a5c7-f620-415d-918a-eb3f47d3c9a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;또한, 마찬가지로 CONV2 Layer에서도 3x3 filter를 사용한다. CONV1의 3x3 영역이 CONV2에서는 1x1 영역으로 취급되기 때문에, CONV2 Layer의 3x3 영역은 CONV1 Layer의 5x5 영역을 바라보는 것과 동일하다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206752-4490125c-3016-47c5-9a27-5fa916a394ca.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이러한 과정을 반복하게 되면, CONV4의 1x1 영역은 CONV1의 7x7영역을 바라보는 것과 동일하다. 즉, 3x3 filter를 3번 쌓는 것은 7x7 filter를 사용하는 것과 실질적으로 동일한 Receptive Field를 갖는 것이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207208594-6c8d21ff-a21f-4579-9950-b53c18717dd9.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;그렇다면 왜 filter를 이렇게 작은 filter로 여러번 나눠 사용하는 것일까?&lt;/p&gt;
-
-&lt;h4 id=&quot;4-1-2-parameter-개수&quot;&gt;4-1-2) Parameter 개수&lt;/h4&gt;
-
-&lt;p&gt;우선 7x7 Filter의 Parameter 개수는 $7 \times 7 \times C \times N$ 이다(C=채널 수, N=필터 수). 여기서, input image의 depth와 output image의 depth를 맞춰주기 위해 filter 개수는 channel의 수와 동일하게 맞춰주었다. 따라서 7x7 filter의 parameter 개수는 $7^2 C^2$이다.&lt;/p&gt;
-
-&lt;p&gt;3x3 Filter의 경우, 7x7 Filter와 동일한 Receptive Field를 맞추어주기 위해서는 해당 Filter를 3번 쌓아주어야 한다. 따라서, 위와 같은 맥락으로 파라미터 개수는 $3^2 C^2 \times 3$이 된다. 최종적으로 정리해보면 다음과 같다.&lt;/p&gt;
-
-\[\mathsf{7x7 \; Filter}\\
-
-7^2C^2 = 49C^2\\\]
-
-\[\mathsf{3x3 \; Filter}\\
-
-3^2C^2 \times 3 = 27C^2\]
-
-&lt;p&gt;동일한 Receptive Field에 대해, filter size를 줄임으로써 파라미터의 수를 $49C^2$에서 $27C^2$로 줄일 수 있었다. 또한, 층이 깊어지면서 Non-Linearity를 더 추가할 수 있게 되어 더 복잡한 Feature를 뽑아낼 수 있게 되었다. 이를 통해 VGG는 연산량도 줄이면서 Accuarcy도 높일 수 있게 되었다.&lt;/p&gt;
-
-&lt;h3 id=&quot;4-2-문제점&quot;&gt;4-2) 문제점&lt;/h3&gt;
-
-&lt;h4 id=&quot;4-2-1-메모리-문제&quot;&gt;4-2-1) 메모리 문제&lt;/h4&gt;
-
-&lt;p&gt;VGG의 각 노드는 약 4byte의 메모리를 차지한다. 따라서 단순히 Forward Pass만 해도 약 100MB의 메모리가 필요하다(Backward Pass까지 고려하면 더 많은 메모리 필요). 따라서, 만약 5GB의 메모리를 사용한다면 50장의 이미지밖에 처리하지 못하는 것이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;4-2-2-총-파라미터-개수&quot;&gt;4-2-2) 총 파라미터 개수&lt;/h4&gt;
-
-&lt;p&gt;VGGNet의 총 파라미터 개수는 1억 3800만개인데, 이는 AlexNet(6800만)의 약 2배 수준이다. 특히 FC-Layer에 1억개가 넘는 파라미터가 있다. 따라서 최근 일부 네트워크는 파라미터를 획기적으로 줄이기 위해 FC Layer를 줄이기도 한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-googlenet-google-2014&quot;&gt;5. GoogLeNet (Google, 2014)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228473-0ebc8054-4672-49f2-97cf-881188c0cede.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;InceptionNet이라고도 하며, 2014년 classfication challenge에서 우승하였다. 총 22개의 레이어를 가지고 있고, VGGNet처럼 매우 깊은 네트워크이다. 효율적인 계산에 초점을 맞춰 네트워크를 디자인 하였으며, Inception Module이라는 미니 네트워크를 여러개 쌓아서 만들었다. 또한 위에서 잠깐 언급했듯이, 파라미터를 줄이기 위해 FC-Layer를 제거하였다. 그 결과, 파라미터 수를 500만개까지 획기적으로 줄였다. AlexNet대비 약 20배 적은 파라미터를 가지고 있지만, 훨씬 더 깊다. 그렇다면 GoogLeNet의 메인 아이디어인 Inception Module이란 무엇일까?&lt;/p&gt;
-
-&lt;h3 id=&quot;5-1-inception-module&quot;&gt;5-1) Inception Module&lt;/h3&gt;
-
-&lt;h4 id=&quot;5-1-1-기본-idea&quot;&gt;5-1-1) 기본 Idea&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228656-6d536a62-e494-4b13-9a97-52c2bc36afdd.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;기존 CONV Layer는 하나의 filter를 사용하여 Feature Map을 생성하였으나, GoogLeNet은 여러 종류의 Filter를 병렬적으로 사용하고자 하였다. 그래서 탄생한 것이 바로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Inception Module&lt;/code&gt;이다. inception module 내부에는 동일한 입력을 받는 서로 다른 다양한 필터들이 병렬로 존재한다. 이전 레이어의 입력을 받아 다양한 Convolution 연산을 수행하고, 각각의 출력들을 모두 depth 방향으로 합친다. 이렇게 합치면 하나의 tensor로 출력이 결정되고, 이 하나의 출력을 다음 Layer로 전달하게 된다.&lt;/p&gt;
-
-&lt;h4 id=&quot;5-1-2-계산비용의-문제점&quot;&gt;5-1-2) 계산비용의 문제점&lt;/h4&gt;
-
-&lt;p&gt;그러나 Inception Module에는 한 가지 문제점이 있었는데, 계산을 거듭할수록 Depth가 점점 늘어나 연산량이 매우 많아진다는 것이다. 가령, 다음과 같이 input으로 28x28x256을 받는 inception module을 생각해보자. (이 때, spatial dimension은 항상 일정하도록 stride와 padding이 적절히 설정되어 있다.)&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207229599-5dce18cb-3673-41bf-b93f-f6987c023127.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이렇게 되면, 최종 Tensor의 Depth는 Filter의 개수만큼 점점 쌓이게 되며(128+192+96+256), 파라미터 수는 매우 커지게 된다. 위 예시의 경우, 파라미터 수는 28 x 28 x (128+192+96+256) = 526,848개이다. 즉, Inception Module의 input은 28x28x256이었으나, output은 28x28x672가 된 것이다. 또한, GoogLeNet은 이러한 Inception Module이 계속해서 쌓여있는 구조이기 떄문에 계산량은 기하급수적으로 늘어나게 된다. 그렇다면 GoogLeNet은 이러한 문제를 해결하기 위해 어떠한 방법을 사용했을까?&lt;/p&gt;
-
-&lt;h4 id=&quot;5-1-3-bottleneck-layer&quot;&gt;5-1-3) Bottleneck Layer&lt;/h4&gt;
-
-&lt;p&gt;GoogLeNet은 계산량을 줄이고 Depth를 축소하기 위해, 1x1 CONV Layer인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bootleneck Layer&lt;/code&gt;를 도입하였다. Bottlenect Layer는 연산을 수행하기에 앞서, input의 spatial dimension은 유지한 채 입력을 더 낮은 차원으로 보내는 방법이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231326-0d022a15-a497-401d-b995-743b4888f46c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;가령, 56x56x64의 input img에 32개의 1x1 CONV filters를 사용하면, 이미지 크기는 그대로 유지한 채 depth를 32로 줄일 수 있다. 따라서 bottlenect layer는 input feature map들간의 linear combination을 도와주는 매개체라고 생각할 수 있으며, 주요 아이디어는 1x1 conv를 사용하여 입력의 depth를 줄인다는 것이다. 아래 그림은 Bottleneck Layer를 추가한 Full Inception Module이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231952-c18b882d-25b4-4cba-9515-5dc50eb621cb.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;CONV 이전에 1x1 conv가, POOL 이후에 bottleneck layers(1x1 conv)가 추가된 것을 확인할 수 있다. 파라미터의 수는 bottleneck layer를 쓰기 전 854M에서 358M으로 2배 이상 감소하였다.&lt;/p&gt;
-
-&lt;h4 id=&quot;5-2-구조&quot;&gt;5-2) 구조&lt;/h4&gt;
-
-&lt;p&gt;가중치를 가진 레이어는 총 22개이며, inception moudule은 1x1/3x3/5x5 conv layer를 병렬적으로 가지고 있다. AlexNet 대비 12배 적은 파라미터를 가지고 있다고 한다. 전체적인 구조는 다음과 같다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207232567-0b2a22a1-e6bb-4772-8e78-ad05cbc8e85d.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stem Network&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;일반적인 네트워크 구조로 시작한다. [Conv-Pool-Conv-Conv-Pool]의 구조를 가진다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Inception Modules&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;조금씩 다른 inception module을 쌓는다. 특이한 점은, 중간에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;보조 분류기(Auxiliary Classifier)&lt;/code&gt;가 존재한다는 것이다. 보조 분류기는 AVG POOL, CONV, FC로 이루어져 있으며 softmax로 ImageNet Class를 구분한다. GoogLeNet이 매우 깊기 때문에 Vanishing Gradient 예방 차원에서 넣어준 것이며, 추가적인 Gradient 신호를 흘려주어 중간 레이어의 학습을 돕는다. 최종 Loss를 계산할 떄는 Auxiliary Classifier의 Loss도 반영한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Classifier Output&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;FC-Layer를 걷어내고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Global Average Pooling(GAP) Layer&lt;/code&gt;를 깔았다. 기존 FC-Layer는 Feature Map을 1차원 벡터로 펼쳐서 Activation Function을 거친 뒤, 원하는 클래스의 개수로 맞춰주는 방식이었다. 그러나 Global Average Pooling 방식은 Feature Map을 Depth 방향으로 각각 평균 내어 Flatten을 시켜주는 방식이다. FC layer로 활성함수를 거치지 않아도 이미 깊은 네트워크를 거치면서 효과적으로 Feature vector를 추출했기 때문에, 이렇게 해도 분류가 가능하다고 한다.&lt;/p&gt;
-
-    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207234373-dd1f9fd1-8a1d-4654-be31-bbd869534b8f.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;6-resnet-kaiming-he-2015&quot;&gt;6. ResNet (Kaiming He, 2015)&lt;/h2&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207271537-e9092ca2-b0de-4bed-a4fb-b61c59e401a8.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;ResNet은 152 레이어로 엄청나게 깊은 CNN 아키텍쳐이며, 기존의 어떤 네트워크보다도 깊다. 혹자는 이를 두고 혁명적(Revolution of Depth)으로 깊어졌다고 한다. 메인 아이디어는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Residual Connections&lt;/code&gt;이며, ResNet 하나로 ImageNet, COCO Classification/detection 등 여러 대회 우승하였다.&lt;/p&gt;
-
-&lt;h3 id=&quot;6-1-residual-connections&quot;&gt;6-1) Residual Connections&lt;/h3&gt;
-
-&lt;h4 id=&quot;6-1-1-기본-idea&quot;&gt;6-1-1) 기본 Idea&lt;/h4&gt;
-
-&lt;p&gt;ResNet의 Residual Connections는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;일반 CNN을 깊고 더 깊게 쌓게되면 어떻게 될까?&lt;/code&gt;라는 질문으로부터 출발한다. 가령, VGG에 [conv-pool] 레이어를 깊게만 쌓는다고 과연 성능이 더 좋아질까? 그에 대한 대답은 No이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207235486-784b5921-b935-455e-99b9-1ba34e73d439.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;위 그래프에서 볼 수 있듯이, plain CNN을 56 Layer 쌓은 아키텍쳐의 test error가 20 Layer 쌓은 아키텍쳐보다 더 높게 나왔다. 이느 56-Layer가 Train Data에 overfitting 되었기 때문으로 예상했으나, training error도 56레이어가 더 높았다. 따라서 test에서 56-layer의 성능이 더 좋지 않은 이유가 overfitting 때문이 아니라는 것을 알게 되었다. ResNet 연구진들은 이를 Optimizer의 문제로 생각하였다. deeper model은 Optimization이 더 어렵기 때문이다.&lt;/p&gt;
-
-&lt;p&gt;ResNet은 이를 해결하기 위해 다음과 같은 Idea를 떠올렸다. 우선 더 얕은 모델의 가중치를 깊은 모델의 일부 레이어에 복사한다. 그리고 나머지 레이어는 input을 output으로 그냥 내보내는 identity mapping을 해버린다. 즉, CNN을 깊게 쌓았을 때 성능이 저하되는 것이 Optimization의 문제라면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;얕은 네트워크의 구조를 그대로 가져와서 identity mapping을 한다면, 적어도 얕은 네트워크 만큼의 성능은 나와야될 것이다&lt;/code&gt; 라는 가정을 세웠다. 이 motivation을 우리가 만들 모델에 녹이려면 어떻게 모델 아키텍쳐를 디자인해야할까?&lt;/p&gt;
-
-&lt;h4 id=&quot;6-1-2-residual-learning-skip-connection&quot;&gt;6-1-2) Residual Learning (Skip Connection)&lt;/h4&gt;
-
-&lt;p&gt;기존 Neural Net의 학습 목표는 x를 y로 mapping하는 함수 H(x)를 찾는 것이다. 따라서 H(x)-y를 최소화 하는 방향으로 학습을 진행한다. 그러나, ResNet의 Residual Learning은 Residual Function인 $F(x) = H(x) - x$를 최소화하는 방향으로 학습한다. 즉, input과 output의 차이를 0에 가깝게 만들겠다는 것이다. 내가 개인적으로 이해한 바로는, 다음과 같이 해석할 수 있을 것 같다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207249624-9511523a-a6ca-4276-8121-d2718148ca0e.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Layer가 점점 깊어지고 끝단으로 갈수록, 학습이 점점 진행되기 때문에 H(x)와 x의 차이는 점점 줄어들어야 한다. 즉, x는 점점 출력값 H(x)와 가까워져 $F^{‘(n)}(x)$는 0에 수렴해야한다는 것이다. 여기서 0에 수렴시켜야 하는 값인 $F(x)=H(x)-x$를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Residual&lt;/code&gt;이라고 하며, Resnet은 이러한 Residual이 0이 되도록 학습을 진행한다. Residual을 0에 수렴시킨다는 것은 점점 학습시켜야 할 학습량이 줄어드는 방향으로 학습이 진행된다는 것으로 해석할 수도 있겠다. 힌편, residual이 그저 가설일 뿐이고 필요 없다는 주장도 있으나 실제로는 Residual Learning을 사용하면 성능이 좋아지는 것이 fact이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207241324-2dd55fdf-d347-4612-9669-68492fcad868.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이러한 Idea를 바탕으로, ResNet은 input으로 들어온 x를 그대로 보내고, Residual Block 안에서 계산된 F(x)를 학습한다. 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Skip Connection&lt;/code&gt;이라고 한다. 이렇게 Residual Block 안에서 계산된 F(x)를 학습하는 것이 CONV Layer를 거쳐온 거대한 H(x)를 학습하는 것보다 훨씬 더 효율적이고, 좋은 성능을 보였다.&lt;/p&gt;
-
-&lt;h3 id=&quot;6-2-구조&quot;&gt;6-2) 구조&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252210-ef72fa85-b4b1-4cb2-af3a-b74155abbffe.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Stem Network&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;네트워크 초반은 Conv Layer가 추가적으로 붙는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Residual Blocks&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;하나의 Residual blocks는 2개의 3x3 conv layers로 이루어져 있으며, 일반적으로 이렇게 구성해야 잘 동작하는 것으로 알려져 있다. 이 Residual blocks를 매우 깊게(150 Layer) 쌓아올린 것이 바로 ResNet이다. 그리고 주기적으로 filter를 2배씩 늘리고 stride=2를 이용하여 down sampling해준다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Classifier Output&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;네트워크 끝에는 FC-Layer가 없는 대신 GAP(Global Average Pooling) Layer를 사용하여, 하나의 Map 전체를 Average Pooling한다. 자세한 설명은 위에서 했기 때문에 생략한다. 마지막에는 ImageNet의 1000개 클래스를 맞춰주기 위한 FC Layer가 붙는다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;6-3-bottleneck-layers&quot;&gt;6-3) Bottleneck Layers&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252521-2b9312e9-e8d1-4387-9209-088138fb1b66.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;depth는 34, 50, 100까지 늘어나며 논문에서는 ImageNet 문제를 위해 152까지 늘린 것을 확인할 수 있다. 이 때, 모델 Depth가 50이상인 경우 Bottleneck Layers를 넣어주었다(GoogLeNet과 유사). 이로인해 3x3 conv Layer의 계산량을 줄이고, 다시 1x1 conv를 추가해서 depth를 다시 256으로 늘리는 구조를 취하고 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;6-4-details&quot;&gt;6-4) Details&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;모든 Conv Layer 다음 Batch Norm을 사용하며 Weight Initialization은 Xavier를 사용함&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;위 방법은 SGD+Momentum에서 좋은 초기화 성능을 보인다고 함&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Learning rate는 Learning rate 스케줄링을 통해서 validation error가 줄어들지 않는 시점에서 조금씩 줄여주었다(Learning Rate Decay).&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;minibatch 사이즈는 256이며, weight decay 사용, dropout은 사용하지 않았음&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;=&amp;gt; 성능 감소 없이 깊은 네트워크를 잘 학습시킬 수 있었으며, backprop 시 네트워크의 gradient flow를 잘 가져갔다. 또한, 깊은 네트워크에서 Train error가 줄어드는 문제를 해결하여, 네트워크가 깊어질수록 Training Error는 더 줄어들게 되었다.&lt;/p&gt;
-
-&lt;h3 id=&quot;6-5-resnet의-성능-향상-관련-연구&quot;&gt;6-5) ResNet의 성능 향상 관련 연구&lt;/h3&gt;
-
-&lt;h4 id=&quot;6-5-1-wide-residual-networks-zagoruyko-2016&quot;&gt;6-5-1) Wide Residual Networks (Zagoruyko, 2016)&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207253444-9198dafb-9dbf-4e3e-9312-91395d8f2d02.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;기존의 resnet은 Layer를 깊게 쌓는 것에 집중했지만, Zagoruyko는 depth가 아닌 residual이 중요한 것이라고 주장하였음. residual connection만으로도 충분하기 떄문에, 네트워크가 굳이 더 깊어질 필요 없다는 것이 Zagoruyko의 주장이다. 따라서 residual block을 더 넓게 만들었다(conv layer의 필터를 더 많이 추가). 기존 ResNet에 block당 F개의 filter만 있었다면, 이제는 FxK개의 필터로 구성하였다. 그 결과, 50 레이어만 있어도 152레이어의 기존 resnet보다 더 좋은 성능을 보이는 것을 확인할 수 있었다. 또한 depth 대신에 filter의 width를 늘리면, 병렬화가 더 잘되기 때문에 계산 효율이 증가한다.&lt;/p&gt;
-
-&lt;h4 id=&quot;6-5-2-resnextresnet--inexeption-xie-2016&quot;&gt;6-5-2) ResNeXt(ResNet + inEXeption) (Xie, 2016)&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207260802-83220f3c-ffa2-424b-ba5d-a96dcebe1469.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;ResNeXt또한 residual block의 width를 파고들어, filter의 수를 늘리는 데 집중했다. ResNeXt는 하나의 bottleneck resnet block을 병렬로 여러개 묶은 모양을 하고 있다. 마치 ResNet과 VGG가 결합된 모습이다.&lt;/p&gt;
-
-&lt;h4 id=&quot;6-5-3-stochastic-depth-huang-2016&quot;&gt;6-5-3) stochastic depth (Huang, 2016)&lt;/h4&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207261711-488b8126-104f-4912-a6a8-c9d3ea50e1ec.png&quot; width=&quot;25%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;네트워크가 깊어질수록 vanishing gradient 문제가 발생한다. short network에서는 이러한 vanishing gradient의 위험성이 낮기 때문에, stochastic depth는 train시에 레이어의 일부를 제거한다(Dropout과 유사). 즉, 일부 네트워크를 골라서 identitiy connection으로 만들어버리는 것이다.. 이렇게 shrot netwrok를 만들어서 train 하면 gradient가 더 잘 전달될 수 있게된다. test time에서는 full deep 네트워크를 사용하며, 매우 효율적인 방법이 될 수 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;7-non-resnet&quot;&gt;7. Non-ResNet&lt;/h2&gt;
-
-&lt;h3 id=&quot;7-1-fractalnet-larsson-2017&quot;&gt;7-1) FractalNet (Larsson, 2017)&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207262529-676a0f91-370e-43f7-b79c-6a48011992a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;FractalNet residual connection이 쓸모없다고 주장하여, residual connection이 전혀 없다. 대신, shallow/deep network의 정보 모두를 잘 전달하는 것이 중요하다고 생각하였다(fractal한 모습). FractalNet에서는 shallow/deep 경로를 모두 연결하고, train에서는 일부 경로만 사용, test에서는 모든 경로를 사용한다(dropout과 유사).&lt;/p&gt;
-
-&lt;h3 id=&quot;7-2-densenetdensely-connected-convolutional-networks-huang-2017&quot;&gt;7-2) DenseNet(DENSEly Connected Convolutional NETworks) (Huang, 2017)&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263266-64d105ac-3b46-4f57-bcf7-25731a3158e2.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;DenseNet의 Main idea는 Dense Block을 도입하는 것이다. 모든 레이어는 그 레이어 하위의 다른 모든 레어이와 연결되어 있으며, 레이어의 출력이 각 레이어의 출력과 concat된다. 그리고 이 값이 각 conv layer의 입력으로 들어간다(이 과정에서 dimension을 줄여주는 과정이 포함됨). 이러한 dense connection을 사용하면, 각 레이어의 출력이 다른 레이어에서 다시 쓰일 수 있기 때문에 기울기 소실문제를 해결하고, feature를 더 잘 사용할 수 있게 한다고 주장한다.&lt;/p&gt;
-
-&lt;h3 id=&quot;7-3-squeezenet-landola-2017&quot;&gt;7-3) SqueezeNet (landola, 2017)&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263308-30e3f883-7ba1-456e-bd7f-176541962746.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;GoogLeNet과 같이 효율성을 중시한 CNN 아키텍쳐이다. squeeze layer는 1x1 필터들로 구성되고, 이 출력 값이 1x1/3x3 필터들로 구성되는 expand layer의 입력이 된다. SqueezeNet는 ImageNet에서 AlexNet 만큼의 Accuracy를 보이지만 파라미터는 50배 더 적었으며, 압축 시 AlexNet보다 500배 더 작아지게 된다. 또한 용량은 0.5Mb 밖에 안된다고 한다.&lt;/p&gt;
-
-&lt;h2 id=&quot;8-아키텍쳐-성능-요약-2017&quot;&gt;8. 아키텍쳐 성능 요약 (2017)&lt;/h2&gt;
-
-&lt;h3 id=&quot;8-1-top-1-accuracy&quot;&gt;8-1) Top-1 Accuracy&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266565-9d01b0f7-f588-42e6-a8ff-3ca470cb13a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;8-2-계산성능&quot;&gt;8-2) 계산성능&lt;/h3&gt;
-
-&lt;p&gt;아래 그림은, 각 아키텍쳐의 성능을 나타낸 것이다. Y축은 top-1 Accuarcy, X축은 연산량, 원의 크기는 메모리 사용량이다.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263909-a7fd0de9-f9c1-4b9f-8771-17b3431db223.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;GoogLeNet&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;가장 효율적인 네트워크.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;x축의 가장 왼쪽에 붙어있으며 메모리 사용도 적음&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;AlexNet&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;Accuracy는 매우 낮은편이다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;아키텍쳐 자체의 몸집이 작아 계산량도 낮다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;그러나 메모리 사용량은 매우 비효율적인 모습&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;ResNet&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;적당한 효율성.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;메모리 사용량, 계산량은 중간정도이다.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;그러나 Accuaracy는 최상위인 모습이다.&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;8-3-forward-pass-시간&quot;&gt;8-3) forward pass 시간&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266872-7c001595-2ea7-4df7-a06b-3fd67775930c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;8-4-전력소모량&quot;&gt;8-4) 전력소모량&lt;/h3&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207267081-15ab4b7f-6c9d-4220-b33b-c37653ca5d54.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://velog.io/@lighthouse97/ResNet%EC%9D%98-%EC%9D%B4%ED%95%B4&quot;&gt;ResNet의 이해&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://ganghee-lee.tistory.com/41&quot;&gt;(논문리뷰) ResNet 설명 및 정리&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://phil-baek.tistory.com/entry/ResNet-Deep-Residual-Learning-for-Image-Recognition-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0&quot;&gt;ResNet (Deep Residual Learning for Image Recognition) 논문 리뷰&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://bskyvision.com/539&quot;&gt;GoogLeNet(inception v1)의 구조&lt;/a&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;https://bookandmed.tistory.com/58&quot;&gt;CNN architectures&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
-
-Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206093883-3be0f259-49f9-4dfe-8c59-8498612931d4.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-위 그림에서도 알 수 있듯이, Normalization이 되지 않은 그래프는 Classifier가 조금만 움직여도 제대로 분류가 되지 않는다. 즉, Loss가 파라미터의 변화에 매우 민감하기 때문에 동일한 함수를 써도 학습시키기 어렵다. 반면, variance가 unit variance로 맞춰져 있고 zero-centered한 데이터는, 파라미터 변화에 덜 민감하기 때문에 최적화가 쉽고 학습이 잘 된다. Neural Network 내부에도 다수의 Linear Classifier가 있다고 생각할 수 있기 때문에, 적절한 Normalization 과정은 매우 중요하다.
-
-## 1. Sthochastic Gradient Descent (SGD)
-
-$$
-x_{t+1} = x_t - \alpha \nabla f(x_t)
-$$
-
-가장 간단한 Optimizer로서, Layer에서 mini-batch를 뽑아 Loss를 계산하고, gradient의 반대 방향으로 계속 파라미터 벡터를 업데이트 한다. Loss가 낮은 쪽으로 이동해야하기 때문에 gradient의 반대 방향으로 내려가야 함을 유의하자. 위 과정을 계속 반복하면 Loss가 줄어들게 되는데, 이것이 바로 SGD이다.
-
-### 1-1) 문제점
-
-#### 1-1-1) Poor conditioning
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206098726-c0b8b8bb-674f-4c66-8a1b-63cd4a1d8e95.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-만약 Loss 함수가 $f(x, y) = x^2 + y^2$와 같은 그래프라면, 아래로 볼록한 형태의 공간 그래프가 만들어진다. 이 때, 수평 방향으로는 기울기 변화가 작지만(등고선을 조금 통과), 수직 방향으로는 기울기 변화가 가파르기 때문에(등고선을 더 많이 통과), 두 벡터의 기울기 차로 인해 대각 방향으로 Loss가 줄어들게 된다. 따라서, Loss는 기울기가 가파른 방향으로 바로 내려가지 못하고, 사선으로 지그재그 하면서 minima에 도달하게 된다.
-
-#### 1-1-2) Local minima
-
-Loss function이 다음과 같은 Local Minima를 가지고 있다고 생각해보자.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206099361-5ef676b6-5630-4bfa-914c-7b46beedbc51.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-SGD는 위와 같은 Local minima를 만나게 되면, 그대로 학습이 영원히 중단된다. SGD는 local gradient를 찾아 그 반대방향으로 계속 나아가는 식으로 동작하는데, 한번 gradient가 0인 부분을 만나면 그 부분을 영원히 벗어나지 못하게 된다.
-
-#### 1-1-3) Saddle point (안장점)
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206107388-91d111bb-6221-4aa1-89a9-082eadf6221b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-또한 SGD는, 위 그림과 같은 안장점에서 학습이 매우 더디게 진행되는 문제가 존재한다. 안장점에서는 gradient가 완전히 0은 아니지만, 0에 가까운 값을 가지기 때문에 업데이트가 매우 느리게 진행된다. 안장점은 차원이 높아질수록 매우 빈번하게 발생하므로, 이러한 굴곡을 벗어날 수 있는 힘이 필요하다.
-
-&lt;br&gt;
-
-## 2. SGD + Momentum
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206110916-f566827d-b697-4fd7-b395-6432eddd70a5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-
-$$
-\begin{align}
-v_{t+1} &amp;= \rho v_t + \nabla f(x_t) \\
-x_{t+1} &amp;= x_t - \alpha v_{t+1}
-\end{align}
-$$
-
-위 SGD의 문제를 해결하기 위해, gradient 방향 뿐만 아니라 velocity까지 고려한 Optimizer이다. 이때, velocity의 초기값 $v_0$는 0으로 두고, velocity의 영향력은 파라미터 $\rho$를 도입하여 맞춰준다. $\rho$는 보통 0.9나 0.99와 같은 높은 값을 사용한다. 여기에 gradient를 더하여, gradient vector 그대로의 방향이 아닌 velocity vector 방향으로 나아간다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206109994-96484e69-d27d-4c9b-9930-154ba8c4328a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-가령, local minima나 saddle point에 도달하더라도 momentum이 아직 살아있기 때문에, 탈출하여 global minima에 도달할 수 있게 된다. 높은 곳에서 떨어지는 공의 움직임을 생각하면 된다. 또한, poor conditioning의 상황에서도, momentum이 지그재그로 움직이려는 변동을 상쇄시켜버린다. 이를 통해 loss에 민감한 수직 방향 변동을 줄여주고 수평 방향 움직임을 가속화 시키게 된다(Vanila SGD가 구불구불 움직이는 것에 비해 momentum은 global minima를 향해 더 부드럽게 움직인다).
-
-### 2-1) Learning rate decay
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206358845-3f73cd46-eea9-4d39-a592-c631a2f20c4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-학습에 있어서 가장 중요한 파라미터인 Learning rate를 잘 고르는 것은 매우 어렵다. 이런 경우, Learning rate decay라는 전략을 사용해 볼 수 있다. Learning rate decay란, 처음에는 Learning rate를 높게 설정한 다음, 학습이 진행될 수록 Learning rate를 점점 낮추는 방법이다. 위 그래프에서 Loss가 평평해지다가 다시 내려가는 구간이 바로 Learning rate decay를 적용한 구간이다. 위 그래프에서도 확인할 수 있듯이, Loss가 일정수준 감소하면 감소폭이 점점 줄어들다가 어느 순간 특정 값에 수렴한다. 이는, Learning rate가 너무 높아서 더 깊게 들어가지 못해 발생하는 현상이다. 따라서 이 때 Learning rate를 더 줄여주면, 지속해서 Loss를 감소시킬 수 있다.
-
-
-학습과정 동안에 꾸준히 Learning rate를 낮추는 exponential decay 방법을 사용할 수도 있고, 특정 반복(ex. 100,000iter)마다 Learning rate를 낮추는 방법도 있다. 상황에 맞게 사용하면 될 것 같다. Learning rate decay는 자주 사용하는 기법은 아니고, SGD Momentum을 Optimizer로 사용할 때 주로 적용한다.
-
-&lt;br&gt;
-
-## 3. Nesterov momentum
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206111012-63b6edf9-70b2-4c69-9bc7-63a1e095ac84.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-$$
-\begin{align}
-v_{t+1} &amp;= \rho v_t + \nabla f(x_t + \rho v_t) \\
-x_{t+1} &amp;= x_t - \alpha v_{t+1}
-\end{align}
-$$
-
-Momentum은 Gradient vector의 방향과 Velocity vector 방향을 가중평균한 방향으로 업데이트되는 것을 확인할 수 있었다. Nesterov momentum은 기존 방식에 비해 조금 더 업그레이드 된 버전으로, 일단 Velocity의 방향으로 움직인 후, 그 곳에서의 Gradient를 계산하여 다시 원점으로 돌아와 가중평균한다. 수식을 살펴보면, $x_t$ 에 추가적으로 velocity 값인 $\rho v_t$ 가 더해진 지점에서 gradient를 구하는 것을 확인할 수 있다. 그러나 위 식을 코드로 나타낼 때, 이미 구성되어있는 기본 optimization algorithm의 API 코드와 구조가 달라 호환성이 떨어지므로, 실제로는 아래와 같이 변형된 식을 사용한다.
-
-$$
-let, \bar{x}_t = x_t + \rho v_t \\
-$$
-
-$$
-\begin{align}
-
-v_{t+1} &amp;= \rho v_t + \alpha \nabla f( \bar{x}_t ) \\
-x_{t+1} &amp;= x_t -  \rho v_t + (1+\rho)v_{t+1}\\
-&amp;= \bar{x}_t + v_{t+1} + \rho (v_{t+1} - v_t)
-
-\end{align}
-$$
-
-이 식을 살펴보면, 현재/이전의 velocity간의 error-correcting term이 추가된 것으로 해석할 수 있다. Nesterov momentum을 활용하면, velocity의 방향이 잘못되었을 경우 현재 gradient 방향을 좀 더 활용할 수 있으며, 방향을 미리 예측하고 가기 때문에 Momentum보다 조금 더 빠르다고 한다. 그러나, Nesterov momentum은 볼록 최적화(convex optimization)에서는 좋은 성능을 보이지만, Neural network와 같은 non-convex optimization에서는 성능이 보장되지 않아, 잘 사용하지는 않는다.
-
-- **cf) minima가 좁고 깊은(Sharp) 곳에 있을 경우, momentum에 의해 minima를 건너 뛰는 경우가 생길 수 있지 않을까?**
-
-  우선, sharp한 minima는 좋은 minima가 아니다. 이러한 minima는 그만큼 특정 데이터에 overfitting 될 확률이 매우 높다. 하지만 데이터가 많아질수록 대부분의 경우 minima가 평평해지며, 이렇게 아주 평평한 minima는 training data의 변화에 좀 더 유연하게 대처할 수 있다. 따라서 양질의 좋은 데이터를 사용할 경우, Sharp한 minima에 대해서는 걱정하지 않아도 된다.
-
-&lt;br&gt;
-
-## 4. AdaGrad
-
-$$
-\begin{align}
-g(t+1) &amp;= g(t) + \{\nabla f(x_t)\}^2 \\
-x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
-\end{align}
-$$
-
-훈련 도중 계산되는 gradient를 활용하는 방법이다. velocity term 대신에 각 gradient의 제곱합인 gradient squared term을 이용한다. 학습 도중에 계산되는 gradient에 제곱을 해서 계속 더해 $g()$에 저장하며, update시에 앞서 계산한 $g()$로 update term을 나눠준다. 이 때, 분모가 0이되는 상황을 방지하기 위해 분모에 작은 $\epsilon$값을 넣어준다(보통 1e-7, 1e-8).
-
-small dimension에서는 gradient가 작은 값이므로 큰 값으로 나눠져, 속도가 점점 빨라진다. 반대로, Large dimension에서는 gradient가 큰 값이므로 속도가 점점 줄어든다. 이를 통해, 파라미터 x마다 맞춤형 학습률을 제공하게 된다.
-
-### 4-1) 문제점
-
-학습을 계속 진행할수록 gradient의 제곱이 더해져 $g()$의 값은 커지고, 분모가 커지므로 step size는 점점 작아진다. convex case에서는 minimum에 근접하면 서서히 속도를 줄여서 수렴하는 게 도움이 될 수 있지만, non-convex case에서는 saddle point에 걸렸을 때 학습이 멈출 수 있다.
-
-&lt;br&gt;
-
-## 5. RMSProp
-
-Adagrad의 step size 문제를 해결한 것이 바로 RMSProp이다.
-
-$$
-\begin{align}
-g(t+1) &amp;= \gamma  g(t) + (1- \gamma) \{\nabla f(x_t)\}^2 \\
-x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
-\end{align}
-$$
-
-AdaGrad의 gradient 제곱항을 그대로 사용하지만, 그저 누적만 시키는 것이 아니라 기존 누적값에 decay_rate인 $\gamma$를 곱해준다. decay rate는 보통 0.9 ,0.99와 같은 높은 값을 사용한다. gradient의 제곱을 계속 나눠주어 step size를 조절한다는 점에서 AdaGrad와 비슷하지만, RMSProp은 step size가 점점 줄어드는 문제를 해결하였다.
-
-&lt;br&gt;
-
-## 6. Adam
-
-$$
-Adam \; (almost)\\
-$$
-
-$$
-\begin{align}
-
-M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
-V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
-
-x_{t+1} &amp;= x_t - \alpha \frac{M(t)}{ \sqrt{V(t) + \epsilon} }
-
-
-\end{align}
-$$
-
-Adam은 momentum 계열과 Ada 계열 Optimizer의 조합이라고 볼 수 있으며, RMSProp에서 분자의 gradient에 Momentum이 추가된 형태이다. 즉, Momentum과 RMSProp을 합친 것과 같다고 볼 수 있다. 보통 $\beta_1$ = 0.9, $\beta_2$ = 0.999로 설정하고, Laerning rate $\alpha$를 1e-3 or 1e-4정도로만 설정해 놓으면, 거의 모든 아키텍쳐에서 잘 동작한다. 또한 Adam에서도 마찬가지로, 분모가 0이 되는 경우를 방지하기 위해 분모에 $\epsilon$을 추가해주었다(1e-7 or 1e-8). 
-
-### 6-1) 문제점
-
-그러나 위 식에는 큰 문제점이 하나 존재한다. 초기 Step에서는 $V()$의 값을 0으로 Initailize하게 되는데, 이 값이 분모에 들어가게 되면 step이 매우 큰 값으로 초기화된다. 이렇게 되면 초기화가 엉망이 되어 아주 엉뚱한 곳으로 값이 이동할 것이고, 결국 minima에 수렴하지 않을 수도 있다.
-
-### 6-2) 해결 : bias correction term
-
-$$
-\mathsf{Adam \; (Full \ Form)}\\
-$$
-
-$$
-\begin{align}
-
-M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
-V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
-
-\end{align}
-$$
-
-$$
-\hat{ M }(t) = \frac{ M(t) }{ 1 - \beta_1^t  } \\
-\hat{ V }(t) = \frac{ V(t) }{ 1 - \beta_2^t } \\
-$$
-
-$$
-x_{t+1} = x_t - \alpha \frac{\hat{M}(t)}{\sqrt{\hat{V}(t) - \epsilon}}
-$$
-
-따라서 실제 Adam에서는 first moments($M$, Momentum)와 second moments($V$, RMSProp)를 update하고 난 후 현재 step에 맞는 적절한 unbiased term을 계산해준다. 딥러닝 분야에서 일반적으로 가장 많이 사용하는 Optimizer이며, 별다른 계획이 없는 경우 Adam을 사용하면 대체로 좋은 성능을 보인다.
-
-&lt;br&gt;
-
-## 7. Visualization
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206355974-60560ff9-a46a-4fc2-a562-af08ba1aeea1.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-위 장면을 보면, Adam을 제외한 다른 Optimizer들은 모두 global minima에 도달하지 못하는 모습을 확인할 수 있다.
-
-그러나 아래의 참고자료와 같이 다른 Optimizer만이 global minima에 도달하는 경우도 있기 때문에, 상황에 맞는 Optimizer를 사용하는 것이 중요하다고 할 수 있다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://emiliendupont.github.io/imgs/optim_viz_rastrigin.gif&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-### 7-1) 반응형 Visualization 사이트
-
-- &lt;https://distill.pub/2017/momentum/&gt;
-
-- &lt;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&gt;
-
-- &lt;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&gt;
-
-- &lt;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&gt;
-
-&lt;br&gt;
-&lt;br&gt;
-
-# Second-Order Optimization
-
-## 1. Newton method
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360046-a992da56-5050-402b-9f4c-f9e4b8c82192.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-first-order optimization(Adam, RMSProp 등)은 어떤 한 점에서 gradient를 계산하여 손실함수를 선형 함수로 근사시킨다. 이 근사함수를 실제 손실함수라고 가정하고 step을 내려가게 되는데, 이 근사함수로는 멀리까지 갈 수 없다는 한계가 존재한다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360062-941a2845-e00a-480b-9352-f6db877c280e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360485-23f39c66-0875-49c1-8034-d00eb3f291ae.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-따라서 등장하게 된 방법이 Second-Order Optimization인데, 이 optimization은 손실함수를 2차 함수로 근사시킨다. 이러한 2차 근사를 이용하면 minima에 더 잘 근접할 수 있다고 한다. 이는, 다차원으로 확창시켰을 때 `Newton step`이라고 불리며, Hessian matrix(2차 미분값들로 된 행렬)의 역행렬을 이용하여 (실제 손실함수의 2차 근사를 통해) minima로 곧장 이동한다. 또한, 매 순간 minima를 향해 이동하기 때문에, 이론상 Learning rate가 필요하지 않다(실제로는 2차 근사도 완벽하지 않기 떄문에 필요하긴 함)는 장점이 있다. 그러나 파라미터가 많은 딥러닝에서는 메모리 문제떄문에 사용할 수 없고, Full Hessian을 근사시켜 사용하는 `quasi-Newton methods`를 사용한다.
-
-&lt;br&gt;
-
-## 2. quasi-Newton methods (L-BFGS)
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362004-e24584b4-9c6f-42d2-84ab-c7517d5a2490.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-위에서 잠시 설명했듯이, Newton 방법에서 Hessian의 계산을 근처 함수값을 이용하여 근사적으로 numeric하게 계산하여 사용하는 최적화 기법들을 Quasi-Newton Method(준-뉴턴 방식)라고 부른다. Hessian을 구체적으로 어떻게 근사하느냐에 따라서 여러 Quasi-Newton 방법들이 있으며 그중 가장 대표적으로 사용되는 방법이 L-BFGS (Limited memory Broyden–Fletcher–Goldfarb–Shanno) 방법이다. Full Batch Update가 가능하고 Stochasticity가 적은 경우라면, L-BFGS가 Adam보다 더 좋은 선택이 될 수 있다고 한다. stochastic case와 non-convex problems에서 2차 근사가 잘 동작하지 않기 때문에, NN(DNN 등)에서는 많이 사용되지는 않지만, stochasticity와 파라미터가 적은 Style transfer와 같은 알고리즘에서 종종 사용되는 Optimizer이다. 
-
-&lt;br&gt;
-&lt;br&gt;
-
-# Train/Test의 Error gap 해소
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362142-15ace2a0-36df-47ec-8c4b-31f01ca12aab.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-optimization 알고리즘들은 training error를 줄이고, 손실 함수를 최소화시키기 위한 역할을 수행한다. 그러나 우리는, training error보다는 train/test error의 격차를 줄이는 것이 진정한 목표이다. 그렇다면, 한번도 보지 못한 데이터에 대한 error를 줄이는 방법은 어떤 것들이 있을까? 
-
-## 1. Model ensemble
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362561-cd03e64c-d4fe-4b06-b185-f094bda07724.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-
-모델을 하나만 학습시키지 말고 n개의 모델을 독립적으로 학습 시켜, n개 모델 결과의 평균을 이용한다. 모델의 수가 늘어날수록 오버피팅이 즐어들고 성능이 조금씩 향상된다(보통 2%정도).
-
-또한, 모델을 독립적으로 학습시키는 것이 아니라, 학습 도중 중간 모델들을 저장(snapshots)하고 앙상블로 사용할 수도 있다. 그리고 나서, test time에는 여러 snapshots에서 나온 예측값들을 평균 내서 사용한다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362687-09681dd5-957f-44ff-bf1c-59260e2da631.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-
-- **cf) Polyak averaging**
-
-  또한, 학습하는 동안에 파라미터의 exponentially decaying everage를 계속 계산하는 `Polyak averaging`이라는 방법을 사용해 볼수도 있다. 이 방법은 학습중인 네트워크의 smooth ensemble 효과를 얻을 수 있으며, checkpoinsts에서의 파라미터를 그대로 쓰지 않고 smoothly decaying average를 사용하는 방법이다. 한번쯤 시도해 볼만한 방법이긴 하지만, 실제로 자주 사용하지는 않는다.
-
-&lt;br&gt;
-
-## 2. Regularization 
-
-### 2-1) Dropout
-
-모델 앙상블을 하려면, N개의 모델을 돌려야 하는데 자원이나 시간 방면에서 그렇게 좋은 방법은 아니다. 따라서 단일 모델의 성능을 올리는 것이 가장 바람직한 방법이고, 그 방법이 바로 Regularization이다. regularization은 모델이 train data에 완전히 fit하는 것을 막아주어 한번도 보지 못한 데이터에서의 성능을 향상시킨다. 앞선 포스팅에서 L2 regularization에 대해 소개한 적이 있었다( 참고 : [[CS231n]Loss Functions and Optimization](https://on-jungwoan.github.io/dl/cs231n_3/#2-2-regularization%EC%9D%98-%EC%A2%85%EB%A5%98) ). 그러나 NN에서는 L2 regularization이 잘 어울리지는 않고, dropout이라는 regularization을 가장 많이 사용한다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206363244-79b20be1-c338-477b-8274-9038e25ad0a0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-dropout은 정말 간단한데, forward pass 과정에서 임의로 일부 뉴런을 0으로 만드는 것이다. dropout은 한 레이어씩 진행하며, forward pass iteration마다 0이 되는 뉴런이 바뀐다. 이를 통해, 특징들간의 상호작용을 방지하여 어떤 일부 features에만 의존하지 못하게 하고, 다양한 geatures를 골고루 사용하게 함으로써 오버피팅을 방지한다. Dropout은 fc layer에서 흔히 사용하지만, conv layer에서도 종종 볼 수 있다.
-
-- **about BN**
-
-  BN에도 충분히 regularization 효과가 있기 때문에 BN 사용시에는 Dropout을 사용하지 않는다. 그러나 예외적으로, BN을 사용했음에도 불구하고 오버피팅이 발생하는 경우에는 Dropout과 같은 다양한 regularization 방법을 추가해로 사용해 볼 수 있다(오버피팅의 조짐이 보일 떄 하나씩 추가시켜 봄).
-
-#### 2-1-1) 앙상블 효과
-
-Dropout을 적용한 네트워크를 살펴보면, 원본 NN의 일부만 사용하는 서브 네트워크라고 해석할 수 있다. 또한, 각 forward pass interation마다 dropout을 다르게 적용하기 때문에, 서로 파라미터를 공유하는 서브 네트워크 앙상블 모델을 동시에 학습시키는 것으로 해석할 수 있다. 즉, 단일 네트워크로 앙상블을 할 수 있는 것이다.
-
-#### 2-1-2) Average out in test time
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364195-ece425b0-ae00-4a07-894b-2ac579439b6b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-
-기존 Neural Network는 가중치 w와 입력 x에 대한 함수였다. 그러나 dropout을 사용하면 network에 random dropout mask인 z가 추가된다. 그러나 test time에서 이러한 임의성(stochastic)이 포함되는 것은 바람직하지 않다. test time에 이러한 임의성이 추가되면, 모델의 결과가 매번 바뀌게 되므로, 적분을 통해 이 임의성을 average out시킨다.
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364426-0d0f7f5d-1ca1-4508-b0c0-ec49b3ceaf5a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-
-그러나, 실제로 이 적분을 계산하기는 까다롭기 때문에 dropout에서는 위 수식과 같이 locally cheap한 방법을 사용하여 해당 식을 근사시킨다.
-
-
-### 2-2) Inverted Dropout
-
-train time에서는 데이터를 마구잡이로 흔들어놓아, 모델이 데이터에 완전히 fit하지 않게 하고, test time에서는 randomness를 average out 시켜서 generalization 효과를 준다고 한다. 나중에 자세히 알아보도록 하자.
-
-### 2-3) Data augmentation
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206369628-301c5b85-f122-4c15-984e-c36c3a26d07a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-이미지의 label을 바꾸지 않으면서, 이미지를 변환시킬 수 있는 방법을 말한다. 원본 이미지를 사용하지 않고, 카테고리만 유지한 채 반전시키거나 임의의 다양한 사이즈로 crop할 수도 있음(카테고리는 동일). 또는 이미지의 밝기나 contrast등을 바꿀 수도 있다. 이는 일종의 regularization이며, 다른 regularization과 동일하게 train time에는 stochasticity가 추가되고, test time에는 marginalize out 시킨다.
-
-### 2-4) DropConnect
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370104-19232aab-493e-4973-a92f-6cbd3577147e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-activation이 아닌 width matrix를6임의적으로 0으로 만들어줌
-
-### 2-5) fractional max pooling
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370190-5210a695-f004-4828-89fa-97ef55d8d3c2.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-실제로 자주 사용하지는 않지만, Justin Johnson이 추천하는 아주 좋은 regularization 기법이다. 보통 2x2 max pooling은 고정된 2x2 영역에서 pooling을 하지만, fractional max pooling은 max pooling 범위가 임의로 선정된다. test time시에는, pooling layer를 고정시키거나, 여러개의 pooling regions를 만들어 stochasticity를 averaging over시키면 된다.
-
-### 2-6) stochastic depth
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370837-df7efe04-162e-462c-8c5d-23f9f60eb0ff.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에서는 전체 네트워크를 다 사용하는 방법이다. regularization 효과는 dropout과 같은 다른 방법과 비슷한 수준이다.
-
-&lt;br&gt;
-&lt;br&gt;
-
-# Transfer learning
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/181512540-12cc7327-f854-4ba3-8a54-c7990caed605.png&quot;&gt;&lt;/p&gt;
-
-
-충분한 데이터가 없는 경우, 오버피팅의 위험성이 증가하게 되는데, 이런 경우 사용할 수 있는 방법이 Transfer learning이다. 우선, ImageNet과 같은 거대한 데이터로 학습이 된 모델의 FC Layer를 초기화 시킨다. 그리고 우리가 필요한 클래스의 개수로 맞춰주기만 하면 된다. 그리고 이 Layer 이전의 모든 Layer 가중치는 freeze시켜 더 이상 업데이트 되지 않게 하고, 마지막 레이어만 가지고 데이터를 학습시킨다. 이는 마치 Linear Classifier를 학습시키는 것과 같다(아주 작은 데이터셋에도 적용이 가능함) 만약 데이터가 조금 더 있다면 전체 네트워크를 fine-tuning하여 사용할 수 있다. 이 때, 기존의 모델이 잘 동작하는 경우, 보통 Learning rate를 기존 모델보다 낮게 설정한다. 기존 LR의 1/10정도로 초기화하면 대체로 잘 동작한다. 보다 자세한 설명은 아래 포스팅에 자세히 정리해두었다.
-
-- **Link**
-
-  [Pytorch를 사용한 분류문제 학습 : 전이학습이란?](https://on-jungwoan.github.io/dl/04_Leaf_Diseases(1)/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80)
-
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206378927-20171833-3e38-48ef-8c3a-84003fe4c167.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
-
-&lt;br&gt;
-&lt;br&gt;
-
-- **Reference**
-
-  [수식과 코드로 보는 경사하강법](https://twinw.tistory.com/247)
-
-  [Interactive Visualization of Optimization Algorithms in Deep Learning](https://emiliendupont.github.io/2018/01/24/optimization-visualization/)
-
-  [최적화 기법의 직관적 이해](https://darkpgmr.tistory.com/149)
-
-  [Training Neural Networks II](https://bookandmed.tistory.com/56)
-
-  A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry></feed>
+https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry></feed>
