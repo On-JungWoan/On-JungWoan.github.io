@@ -1,0 +1,53 @@
+<style>
+    div .link{
+        font-size: 1.5rem;
+        font-style: italic;
+        color: inherit;
+        font-weight: 300;
+    }
+
+    p.quote-left{
+        font-size:1.4rem;
+        font-style:italic;
+        padding:1rem 2.5rem;
+        text-align:left
+    }    
+</style>
+
+{% assign layout = target.layout %}
+
+{% if target.layout == right or target.layout == left %}
+    {% capture quote_layout %}col-sm-8 col-md-9 col-print-12{% endcapture %}
+{% else %}
+    {% capture quote_layout %}col-print-12{% endcapture %}
+{% endif %}
+
+<div class="row clearfix layout layout-{{layout}}">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
+    {%- if target.name -%}<h4>{{ target.name }}</h4>{%- endif -%}
+    {%- if target.company -%}<h4>{{ target.company }}</h4>{%- endif -%}
+    {%- if target.link -%}
+        {% include portpolio/a.html href=target.link class="link" %}{{ target.link }}</a>
+    {%- endif -%}
+    {%- if target.job_title -%}<p><b>{{ target.job_title }}</b></p>{%- endif -%}
+    {%- if target.qualification -%}<p><b>{{ target.qualification }}</b></p>{%- endif -%}
+    {%- if target.dates -%}<p>{{ target.dates }}</p>{%- endif -%}
+    {% for job in target.jobs %}
+        <p><b>{{ job.title }}</b></p>
+        <p>{{ job.dates }}</p>
+    {% endfor %}
+    {%- if target.github -%}
+        <p class="no-print">
+        <a href="https://github.com/{{ target.github }}" target="_blank">
+            <i class="fa fa-github" title="{{ target.name }} Github link"></i>
+        </a>
+        </p>
+    {%- endif -%}
+    </div>
+    <div class="col-xs-12 {{ quote_layout }}">
+    {%- if target.quote -%}
+        <p class="{{ target.quote-align | default:'quote' }}">{{ target.quote }}</p>
+    {%- endif -%}
+    {{ target.description | strip | markdownify }}
+    </div>
+</div>

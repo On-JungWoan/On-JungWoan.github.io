@@ -1,0 +1,25 @@
+- layout: left
+  company: 유클리드소프트
+  link: https://euclidsoft.co.kr/
+  job_title: 개발팀 인턴
+  dates: Sep. 2022 ~ Dev. 2022
+  quote: >
+    IT 서비스 플랫폼개발, 빅데이터 분석, 인공지능 모델 및 응용서비스 개발회사
+  quote-align: quote-left
+  description: | # this will include new lines to allow paragraphs
+    * 실시간 객체 탐지모델 최적화 (SSD Network, TensorRT, CUDA Stream)
+    * LMS 로그인 페이지 개발 및 DB 연동 (Django, Ruby)
+    * SQL 자연어 질의문 생성 및 [자동화](https://on-jungwoan.github.io/toy_project/auto/)
+
+- layout: left
+  company: 농업빅데이터연구실
+  link: https://stat.jnu.ac.kr/
+  job_title: 학부연구생
+  dates: Mar.2022 ~ Sep.2022
+  quote: >
+   전남대학교 통계학과 나명환 교수 연구실
+  quote-align: quote-left
+  description: | # this will include new lines to allow paragraphs
+     * Django 환경에서의 통계 API 웹 개발
+     * (Xbar-R 관리도, mini SPSS, 설문조사 관리 등)
+     * 데이터 라벨링

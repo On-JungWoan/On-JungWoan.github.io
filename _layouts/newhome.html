@@ -1,69 +1,111 @@
-<!doctype html>
-<html lang="{{ site.locale | slice: 0,2 | default: "en" }}" class="no-js">
-	<head>
-		{% include head.html %}
-		{% include head/custom.html %}
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "ko" }}">
+    <meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/2237674457FB7EA215">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <style>
+        .grid__item .archive__item-title{
+            margin-top: 0.5em;
+            font-size: 1.5em;
+        }
+        .grid__item .page__meta, .grid__item .comment__date{
+            margin: 0 0 4px;
+            font-size: 1.2em;
+        }
+        .grid__item .archive__item-excerpt{
+            display: block;
+            font-size: 1.1em;
+        }
+    </style>
 
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- include_cached portpolio/head.html -%}
+<body>
+	{% include_cached skip-links.html %}
+	{% include_cached masthead.html %}
+	
+    
+    <!--header-->
+    <div class="container header-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8 header-left">
+                <h1>온정완</h1>
+                <h2>AI / WEB 엔지니어</h2>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 header-right">
+                <ul class="icons no-print">
+                    <li>
+                        <a target="_blank" href="https://www.instagram.com/dog_woan" class="button button--sacnite button--round-l">
+                            <i class="fab fa-instagram" title="Facebook link"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://github.com/on-jungwoan" class="button button--sacnite button--round-l">
+                            <i class="fab fa-github" title="Github link"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.youtube.com/slalghsrm1" class="button button--sacnite button--round-l">
+                            <i class="fab fa-youtube" title="Youtube link"></i>
+                        </a>
+                    </li>
+                </ul>
+                <p>Email: <a href="mailto:slalfpdl16@naver.com" target="_blank">slalfpdl16@naver.com</a></p>
+                <p>Phone: <a href="https://on-jungwoan.github.io" target="_blank" class="">+82)10-9882-3782</a></p>
+            </div>
+        </div>
+    </div>
+    <!--end header-->
 
-		{% seo %}
-		<!-- terminal -->
-		<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/terminal.css">
+    <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+
+            <div class="container intro-container">
+                <h3 id="about-me">About Me</h3>
+                <div class="row clearfix">
+                    <div align="center" class="col-xs-12 col-sm-4 col-md-3 no-print">
+                        <img src="/assets/images/증명사진.jpg" style="padding-bottom:40px" width="200px" alt="banner image">
+                        {% comment %} <span class="profile-img" style="background-image: url(/assets/images/증명사진.jpg)"></span> {% endcomment %}
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-9 col-print-12">
+                        <p>전남대학교에서 <mark>통계학</mark>과 <mark>소프트웨어 공학</mark>을 공부하고 있는 온정완입니다.</p>
+
+                        <p>
+                        전공 지식을 살려 다양한 프로젝트를 기획해보고 있으며, <mark>컴퓨터 비전/머신러닝</mark>과 <mark>웹 개발</mark>을 중심적으로 공부하고 있습니다. 
+                        사회 발전에 기여할 수 있는 개발자로 성장하고자, <strong>광주 광역시의 실시간 버스 수요를 예측</strong>하는 프로젝트를 진행하고 있습니다.<br>
+
+                        모델 개발부터 웹 구축까지 모두 <strong>1인 개발</strong>한 프로젝트이며, 단발성에 그치지 않고 꾸준히 코드 개선에 힘쓰고 있습니다. 
+                        서버와 DB를 구축하고, 광주광역시 대중교통과에 제안을 신청하는 등 <strong>실제로 프로젝트가 사용</strong>될 수 있도록 계속 노력하고 있습니다.<br>
+                        </p>
+
+                        <p>항상 배우고자 하는 자세로 해당 기술들을 더 고도화하여, <mark>사회에 도움이 되는 개발자</mark>로 도약하고자 합니다. </p>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            
+            {%- include portpolio/education.html -%}<br><br>
+            {%- include portpolio/experience.html -%}<br><br>
+            {%- include portpolio/projects.html -%}<br><br>
+            {%- include portpolio/activity.html -%} <br><br>
+            {%- include portpolio/award.html -%}<br><br>
+            {%- include portpolio/certificant.html -%}<br><br>
+        </div>
+
+        <div class="container education-container">
+            <h3 style="text-align:center;">Recent Posts </h3>
+
+            <div class="posts">
+                {% for post in paginator.posts limit:4 %}
+                    {% include recent-posts.html type="grid" %}
+                {% endfor %}
+            </div>
+
+        </div>
 
 
-		<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/screen.css">
-		<link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/sitelogo.png" sizes="32x32">
-		<link href="https://fonts.googleapis.com/css2?family=Fira+Mono" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300" rel="stylesheet">
+    </main>
 
-		{% if jekyll.environment == 'production' and site.google_analytics_key != '' %}
-			<script>
-				window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-				ga('create', '{{ site.google_analytics_key }}', 'auto');
-				ga('send', 'pageview');
-			</script>
-			<script async src='https://www.google-analytics.com/analytics.js'></script>
-		{% endif %}
+    {%- include portpolio/footer.html -%}
+</body>
 
-		<!-- google search console -->
-		<meta name="google-site-verification" content="xAUeIt95gyVt5GeBZzONF5lFcO4QCaFKTioGEuUiBQE" />
-	</head>
-
-
-	<body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
-		{% include_cached skip-links.html %}
-		{% include_cached masthead.html %}
-
-		<div class="initial-content">
-			{{ content }}
-		</div>
-
-		{% if site.search == true %}
-			<div class="search-content">
-				{% include_cached search/search_form.html %}
-			</div>
-		{% endif %}
-
-	<!-- footer section -->
-	<div id="footer" class="page__footer">
-		<footer>
-			{% include_cached footer.html %}
-		</footer>
-	</div>
-
-		{% include scripts.html %}
-
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script type="text/javascript">
-		$('a[href*=\\#]').on('click', function(event){
-			var el = $(this.hash);
-			if (el.length > 0) {
-				event.preventDefault();
-				$('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
-			}
-		});
-	</script> -->
-
-	</body>
 </html>

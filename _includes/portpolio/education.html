@@ -1,0 +1,32 @@
+{% capture description1 %}
+* Major in Statistics (Mar. 2018 ~)
+
+  * GPA : 4.33 / 4.5
+{% endcapture %}  
+
+{% capture description2 %}
+* Minor in Software Engineering (Sep. 2021 ~)
+
+  * GPA : 4.17 / 4.5
+{% endcapture %}
+
+<div class="container education-container">  
+  <h3>{{ site.education_title | default: "Education" }}</h3>
+
+  <hr>
+
+  <div class="row clearfix layout layout-left">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
+        <h4>Chonnam National University</h4>
+        <h4>{{ target.company }}</h4>
+        <div class="link">Bachleor Student</div>
+      </div>
+      <div class="col-xs-12 col-print-12"> 
+        {{ description1 | strip | markdownify }}
+        {{ description2 | strip | markdownify }}
+      </div>
+  </div>  
+
+  <hr>
+
+</div>

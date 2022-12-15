@@ -1,0 +1,26 @@
+- layout: left
+  name: 3학년
+  description: | # this will include new lines to allow paragraphs
+    * 2021 통계학과 빅데이터 경진대회 참여 (1등 수상)
+    * 2022 하반기 ICT 인턴십 참여 (유클리드소프트)
+    * 광주광역시 버스정보 제공 시스템 “뻐정” 개발
+    * 광주 ICT 이노베이션 스퀘어 AI 온라인 코딩교육
+- layout: left
+  name: 2학년
+  description: | # this will include new lines to allow paragraphs
+    * 전남대학교 농업빅데이터 연구실 학부 연구생 (2021~2022)
+    * 통계학과 학술동아리 HAEVA 회장 (2021~2022)
+    * 전남대학교 중앙 밴드동아리 BISON 회장 (2021~2022)    
+    * 대한상공회의소 부감독 (2021~2022)    
+    * 2021 통계학과 빅데이터 경진대회 참여 (3등 수상)
+    * 대학혁신선도 사업 학습동아리 JOLY 팀장 (5등 수상)
+    * 2021 통계학과 학생회 (기획부)    
+    * 한국장학재단 멘토링 멘티 팀장
+    * Dacon 주차 수요예측 경진대회 팀장
+    * 코딩 동아리 FLEX 활동
+- layout: left
+  name: 1학년
+  description: | # this will include new lines to allow paragraphs
+    * 자연대 도서관 위원회
+    * 호스피스 병동 기금 마련 연주회 봉사활동
+    * ccc / 포키 / 카이 동아리 활동

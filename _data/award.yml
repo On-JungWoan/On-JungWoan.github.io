@@ -1,0 +1,14 @@
+- layout: left
+  name: Award
+  description: | # this will include new lines to allow paragraphs
+    * 2022 통계학과 빅데이터 경진대회 1등, Chonnam National University, Korea (Oct. 2022)
+    * 2021 통계학과 빅데이터 경진대회 3등, Chonnam National University, Korea (Oct. 2021)
+- layout: left
+  name: Scholarship
+  description: | # this will include new lines to allow paragraphs
+    * Received KW2,050,000 from Korea Student Aid Foundation, 2018-1
+    * Received KW2,050,000 from Korea Student Aid Foundation, 2018-2
+    * Received KW2,050,500 from Chonnam National University, 2019-1
+    * Received KW2,050,500 from Chonnam National University, 2021-2
+    * Received KW1,215,000 from Chonnam National University, 2022-1
+    * Received KW1,215,500 from Chonnam National University, 2022-2

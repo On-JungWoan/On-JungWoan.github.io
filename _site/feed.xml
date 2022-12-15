@@ -1,899 +1,887 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-14T16:24:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">&lt;h2 id=&quot;1-process-sequences&quot;&gt;1. Process Sequences&lt;/h2&gt;
-&lt;h3 id=&quot;1-1-vanilla-neural-network&quot;&gt;1-1) Vanilla Neural Network&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T14:21:56+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">## 1. Process Sequences
+### 1-1) Vanilla Neural Network
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
+- **One to One**
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png)
 
-    &lt;p&gt;지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.
 
-&lt;h3 id=&quot;1-2-rnn&quot;&gt;1-2) RNN&lt;/h3&gt;
+### 1-2) RNN
 
-&lt;p&gt;RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.&lt;/p&gt;
+RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;One to Many&lt;/strong&gt;&lt;/p&gt;
+- **One to Many**
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png)
 
-    &lt;p&gt;Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Many to One&lt;/strong&gt;&lt;/p&gt;
+    Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+- **Many to One**
 
-    &lt;p&gt;문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Many to Many (diff)&lt;/strong&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png)
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.
 
-    &lt;p&gt;기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Many to Many(same)&lt;/strong&gt;&lt;/p&gt;
+- **Many to Many (diff)**
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png)
 
-    &lt;p&gt;비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
+    기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.
 
-    &lt;div style=&quot;position:relative; padding-bottom:calc(76.67% + 44px)&quot;&gt;&lt;iframe src=&quot;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;position:absolute;top:0;left:0;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
-    &lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
+- **Many to Many(same)**
 
-    &lt;p&gt;그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가변 과정(processing)&lt;/code&gt; 인 경우, RNN은 상당이 유용하다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png)
 
-&lt;h2 id=&quot;rnn&quot;&gt;RNN&lt;/h2&gt;
+    비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.
 
-&lt;p&gt;일반적으로 RNN은 작은
-“Recurrent Core Cell” 을 가지고 있습니다.&lt;/p&gt;
+- **One to One**
 
-&lt;p&gt;입력 x가 RNN으로 들어갑니다.
-RNN에는 내부에 “hidden state” 를 가지고있습니다.&lt;/p&gt;
+    &lt;div style=&apos;position:relative; padding-bottom:calc(76.67% + 44px)&apos;&gt;&lt;iframe src=&apos;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&apos; frameborder=&apos;0&apos; scrolling=&apos;no&apos; width=&apos;100%&apos; height=&apos;100%&apos; style=&apos;position:absolute;top:0;left:0;&apos; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;“hidden state”는 RNN이 새로운 입력을
-불러들일 때마다 매번 업데이트됩니다.&lt;/p&gt;
+    그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 `가변 과정(processing)` 인 경우, RNN은 상당이 유용하다.
 
-&lt;p&gt;“hidden state”는 모델에 feed back되고
-이후에 또 다시 새로운 입력 x가 들어옵니다.&lt;/p&gt;
 
-&lt;p&gt;RNN이 매 단계마다 값을 출력하는 경우를 생각해 봅시다.&lt;/p&gt;
+## RNN
 
-&lt;p&gt;그러면 이런 식으로 진행이 됩니다.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;RNN이 입력을 받습니다.&lt;/li&gt;
-  &lt;li&gt;“hidden state”를 업데이트합니다.&lt;/li&gt;
-  &lt;li&gt;출력 값을 내보냅니다.&lt;/li&gt;
-&lt;/ol&gt;
+일반적으로 RNN은 작은
+&quot;Recurrent Core Cell&quot; 을 가지고 있습니다.
 
-&lt;p&gt;그렇다면 RNN 구조를 수식적으로 표현하면 어떨까요?&lt;/p&gt;
+입력 x가 RNN으로 들어갑니다.
+RNN에는 내부에 &quot;hidden state&quot; 를 가지고있습니다.
 
-&lt;h3 id=&quot;수식&quot;&gt;수식&lt;/h3&gt;
+&quot;hidden state&quot;는 RNN이 새로운 입력을
+불러들일 때마다 매번 업데이트됩니다.
 
-&lt;p&gt;오른쪽 그림의 초록색 RNN block은 “재귀적인
-관계”를 연산할 수 있도록 설계됩니다. “함수 f” 로 말이죠&lt;/p&gt;
+&quot;hidden state&quot;는 모델에 feed back되고
+이후에 또 다시 새로운 입력 x가 들어옵니다.
 
-&lt;p&gt;파라미터 W를 가진 함수 f가 있습니다.&lt;/p&gt;
+RNN이 매 단계마다 값을 출력하는 경우를 생각해 봅시다.
 
-&lt;p&gt;함수 f는 “이전 상태의 hidden state인 h_t-1” 과
-“현재 상태의 입력인 x_t” 를 입력으로 받습니다.&lt;/p&gt;
+그러면 이런 식으로 진행이 됩니다.
+1. RNN이 입력을 받습니다.
+2. &quot;hidden state&quot;를 업데이트합니다.
+3. 출력 값을 내보냅니다.
 
-&lt;p&gt;그리고 h_t를 출력합니다. h_t는 “다음 상태의 hidden state”
-입니다.(updated hidden state)&lt;/p&gt;
+그렇다면 RNN 구조를 수식적으로 표현하면 어떨까요?
 
-&lt;p&gt;그리고 다음 단계(state)에서는
-h_t와 x_t+1가 입력이 됩니다.&lt;/p&gt;
+### 수식
 
-&lt;p&gt;RNN에서 출력 값(y)을 가지려면 h_t 를 입력으로 하는
-FC-Layer을 추가해야 합니다.&lt;/p&gt;
+오른쪽 그림의 초록색 RNN block은 &quot;재귀적인
+관계&quot;를 연산할 수 있도록 설계됩니다. &quot;함수 f&quot; 로 말이죠
 
-&lt;p&gt;FC-Layer는 매번 업데이트되는 Hidden state(h_t)를
-기반으로 출력 값을 결정합니다.&lt;/p&gt;
+파라미터 W를 가진 함수 f가 있습니다.
 
-&lt;p&gt;중요한 사실은 함수 f와 파라미터 W는
-매 스텝 동일하다는 것입니다.&lt;/p&gt;
+함수 f는 &quot;이전 상태의 hidden state인 h_t-1&quot; 과
+&quot;현재 상태의 입력인 x_t&quot; 를 입력으로 받습니다.
 
-&lt;h4 id=&quot;vanilla-rnn&quot;&gt;Vanilla RNN&lt;/h4&gt;
+그리고 h_t를 출력합니다. h_t는 &quot;다음 상태의 hidden state&quot;
+입니다.(updated hidden state)
 
-&lt;p&gt;-&amp;gt; 이 부분 다시 공부&lt;/p&gt;
+그리고 다음 단계(state)에서는
+h_t와 x_t+1가 입력이 됩니다.
 
-&lt;p&gt;자, RNN을 가장 간단하게 수식적으로 나타내려면
-단순한(vanilla)  RNN부터 시작하는게 좋겠군요&lt;/p&gt;
+RNN에서 출력 값(y)을 가지려면 h_t 를 입력으로 하는
+FC-Layer을 추가해야 합니다.
 
-&lt;p&gt;지금 보이는 수식은 앞서 있던 수식과 동일합니다.&lt;/p&gt;
+FC-Layer는 매번 업데이트되는 Hidden state(h_t)를
+기반으로 출력 값을 결정합니다.
 
-&lt;p&gt;“이전 hidden state”와 “현재 입력”을 받아서
-“다음 hidden state”를 출력합니다.&lt;/p&gt;
+중요한 사실은 함수 f와 파라미터 W는
+매 스텝 동일하다는 것입니다.
 
-&lt;p&gt;이를 수식적으로 가장 간단하게 표현해보면,
-가중치 행렬 W_xh 와 입력 x_t의 곱으로 나타낼 수 있습니다.&lt;/p&gt;
+#### Vanilla RNN
 
-&lt;p&gt;또한 가중치 행렬 W_hh도 있습니다.
-“이전 hidden state”와 곱해지는 값입니다.&lt;/p&gt;
+-&gt; 이 부분 다시 공부
 
-&lt;p&gt;이렇게 두 입력(h,x) 에 대한 행렬 곱 연산이 있고
-두 결과 값을 더해줍니다.&lt;/p&gt;
+자, RNN을 가장 간단하게 수식적으로 나타내려면
+단순한(vanilla)  RNN부터 시작하는게 좋겠군요
 
-&lt;p&gt;그리고 System에 non-linearity를 구현하기 위해
-tanh를 적용합니다.&lt;/p&gt;
+지금 보이는 수식은 앞서 있던 수식과 동일합니다.
 
-&lt;p&gt;여러분 중에 왜 다른 non-linearity가 아닌
-tanh를 쓰는지 궁금하신 분들도 계실 것입니다.&lt;/p&gt;
+&quot;이전 hidden state&quot;와 &quot;현재 입력&quot;을 받아서
+&quot;다음 hidden state&quot;를 출력합니다.
 
-&lt;p&gt;지난 강의 동안에는 tanh가 안좋다고만 배웠는데 말이죠&lt;/p&gt;
+이를 수식적으로 가장 간단하게 표현해보면,
+가중치 행렬 W_xh 와 입력 x_t의 곱으로 나타낼 수 있습니다.
 
-&lt;p&gt;tanh와 관련된 문제는 lstm 배울 때
-다시한번 다뤄드리도록 하겠습니다.&lt;/p&gt;
+또한 가중치 행렬 W_hh도 있습니다.
+&quot;이전 hidden state&quot;와 곱해지는 값입니다.
 
-&lt;p&gt;자 이제 우리는 매 스텝마다 출력 y를 얻고 싶습니다.&lt;/p&gt;
+이렇게 두 입력(h,x) 에 대한 행렬 곱 연산이 있고
+두 결과 값을 더해줍니다.
 
-&lt;p&gt;이를 위해서는 “hidden state”인 h_t 를
-새로운 가중치 행렬 W_hy 와 곱해줍니다.&lt;/p&gt;
+그리고 System에 non-linearity를 구현하기 위해
+tanh를 적용합니다.
 
-&lt;p&gt;가령 매 스텝에 출력 y는 class score가
-될 수 있을 것입니다.&lt;/p&gt;
+여러분 중에 왜 다른 non-linearity가 아닌
+tanh를 쓰는지 궁금하신 분들도 계실 것입니다.
 
-&lt;h3 id=&quot;해석&quot;&gt;해석&lt;/h3&gt;
+지난 강의 동안에는 tanh가 안좋다고만 배웠는데 말이죠
 
-&lt;h4 id=&quot;many-to-many&quot;&gt;many to many&lt;/h4&gt;
+tanh와 관련된 문제는 lstm 배울 때
+다시한번 다뤄드리도록 하겠습니다.
 
-&lt;p&gt;Recurrent Neural Network는 크게 두 가지
-방법으로 해석해 볼 수 있습니다.&lt;/p&gt;
+자 이제 우리는 매 스텝마다 출력 y를 얻고 싶습니다.
 
-&lt;p&gt;하나는 RNN이 hidden state를 가지며
-이를 “재귀적으로” feed back 한다는 점입니다.&lt;/p&gt;
+이를 위해서는 &quot;hidden state&quot;인 h_t 를
+새로운 가중치 행렬 W_hy 와 곱해줍니다.
 
-&lt;p&gt;RNN을 사실 이런 식으로 표현하면 많이 헷갈립니다.
-Multiple time steps을 unrolling 해서 보면 좋습니다.&lt;/p&gt;
+가령 매 스텝에 출력 y는 class score가
+될 수 있을 것입니다.
 
-&lt;p&gt;Unrolling을 하면 hidden states, 입/출력, 가중치 행렬들
-간의 관계를 조금 더 명확히 이해할 수 있습니다.&lt;/p&gt;
+### 해석
 
-&lt;p&gt;첫 step에서는 initial hidden state인
- h_0 가 있습니다.&lt;/p&gt;
+#### many to many
 
-&lt;p&gt;대부분의 경우 h_0 는 0으로 초기화시킵니다.
-그리고 입력 x_t가 있습니다.&lt;/p&gt;
+Recurrent Neural Network는 크게 두 가지
+방법으로 해석해 볼 수 있습니다.
 
-&lt;p&gt;h_0와 x_1 이 함수 f_w의 입력으로 들어갑니다.&lt;/p&gt;
+하나는 RNN이 hidden state를 가지며
+이를 &quot;재귀적으로&quot; feed back 한다는 점입니다.
 
-&lt;p&gt;f_w(h_0, x_1) 의 출력은 h_1 입니다. 이 과정이 반복됩니다.
-이번에는 x_2 이 다음 입력으로 들어옵니다.&lt;/p&gt;
+RNN을 사실 이런 식으로 표현하면 많이 헷갈립니다.
+Multiple time steps을 unrolling 해서 보면 좋습니다.
 
-&lt;p&gt;f_w(h_1, x_2) 의 출력은 h_2가 됩니다.&lt;/p&gt;
+Unrolling을 하면 hidden states, 입/출력, 가중치 행렬들
+간의 관계를 조금 더 명확히 이해할 수 있습니다.
 
-&lt;p&gt;이 과정을 반복하면서 가변 입력 x_t 를 받습니다.&lt;/p&gt;
+첫 step에서는 initial hidden state인
+ h_0 가 있습니다.
 
-&lt;p&gt;이제는 조금 더 구체적인 이해를 위해서
-행렬 W를 그려넣어 봅시다.&lt;/p&gt;
+대부분의 경우 h_0 는 0으로 초기화시킵니다.
+그리고 입력 x_t가 있습니다.
 
-&lt;p&gt;여기에서 주목할 점은 “동일한 가중치 행렬 W”가
-매번 사용된다는 점입니다.&lt;/p&gt;
+h_0와 x_1 이 함수 f_w의 입력으로 들어갑니다.
 
-&lt;p&gt;매번 h와 x는 달라지지만 W는 매번 동일합니다.&lt;/p&gt;
+f_w(h_0, x_1) 의 출력은 h_1 입니다. 이 과정이 반복됩니다.
+이번에는 x_2 이 다음 입력으로 들어옵니다.
 
-&lt;p&gt;앞서 Computational graph에서 동일한 node를 여러번
-사용할 때 back prop gradient flow이 어떨지 배웠습니다.&lt;/p&gt;
+f_w(h_1, x_2) 의 출력은 h_2가 됩니다.
 
-&lt;p&gt;backward pass 시 dLoss/dW 를 계산하려면
-행렬 W의 gradient를 전부 더해줬습니다.&lt;/p&gt;
+이 과정을 반복하면서 가변 입력 x_t 를 받습니다.
 
-&lt;p&gt;따라서 이 RNN 모델의 backprop을 위한
-행렬 W의 그레디언트를 구하려면&lt;/p&gt;
+이제는 조금 더 구체적인 이해를 위해서
+행렬 W를 그려넣어 봅시다.
 
-&lt;p&gt;각 스텝에서의 W에 대한 그레디언트를 전부 계산한 뒤에
-이 값들을 모두 더해주면 됩니다.&lt;/p&gt;
+여기에서 주목할 점은 &quot;동일한 가중치 행렬 W&quot;가
+매번 사용된다는 점입니다.
 
-&lt;p&gt;Computational graph에 y_t도 넣어볼 수 있습니다.&lt;/p&gt;
+매번 h와 x는 달라지지만 W는 매번 동일합니다.
 
-&lt;p&gt;RNN의 출력 값 h_t가 또 다른 네트워크의 입력으로 들어가서
- y_t를 만들어 냅니다.&lt;/p&gt;
+앞서 Computational graph에서 동일한 node를 여러번
+사용할 때 back prop gradient flow이 어떨지 배웠습니다.
 
-&lt;p&gt;가량 y_t는 매 스텝의 class score가 될 수 있겠죠&lt;/p&gt;
+backward pass 시 dLoss/dW 를 계산하려면
+행렬 W의 gradient를 전부 더해줬습니다.
 
-&lt;p&gt;RNN의 Loss도 한번 살펴봅시다.&lt;/p&gt;
+따라서 이 RNN 모델의 backprop을 위한
+행렬 W의 그레디언트를 구하려면
 
-&lt;p&gt;각 시퀀스마다 Ground truth label이 있다고 해봅시다. 그러면
-각 스텝마다 개별적으로 y_t에 대한 Loss를 계산할 수 있습니다.&lt;/p&gt;
+각 스텝에서의 W에 대한 그레디언트를 전부 계산한 뒤에
+이 값들을 모두 더해주면 됩니다.
 
-&lt;p&gt;여기에서 Loss는 가령 softmax loss가 될 수 있겠죠&lt;/p&gt;
+Computational graph에 y_t도 넣어볼 수 있습니다.
 
-&lt;p&gt;RNN의 최종 Loss는 각 개별 loss들의 합입니다.&lt;/p&gt;
+RNN의 출력 값 h_t가 또 다른 네트워크의 입력으로 들어가서
+ y_t를 만들어 냅니다.
 
-&lt;p&gt;각 단계에서 Loss가 발생하면 전부 더하여
-최종 네트워크 Loss를 계산합니다.&lt;/p&gt;
+가량 y_t는 매 스텝의 class score가 될 수 있겠죠
 
-&lt;p&gt;이 네트워크의 Backprop을 생각해보면
-모델을 학습시키려면 dLoss/dW를 구해야 합니다.&lt;/p&gt;
+RNN의 Loss도 한번 살펴봅시다.
 
-&lt;p&gt;Loss flowing은 각 스텝에서 이루어집니다.&lt;/p&gt;
+각 시퀀스마다 Ground truth label이 있다고 해봅시다. 그러면
+각 스텝마다 개별적으로 y_t에 대한 Loss를 계산할 수 있습니다.
 
-&lt;p&gt;이 경우에는 각 스텝마다 가중치 W에 대한
-local gradient를 계산할 수 있습니다.&lt;/p&gt;
+여기에서 Loss는 가령 softmax loss가 될 수 있겠죠
 
-&lt;p&gt;이렇게 개별로 계산된 local gradient를
-최종 gradient에 더합니다.&lt;/p&gt;
+RNN의 최종 Loss는 각 개별 loss들의 합입니다.
 
-&lt;h4 id=&quot;many-to-one&quot;&gt;many to one&lt;/h4&gt;
+각 단계에서 Loss가 발생하면 전부 더하여
+최종 네트워크 Loss를 계산합니다.
 
-&lt;p&gt;그렇다면 “many to one” 이라면 어떨까요?
-가령 감정분석(sentiment analysis) 처럼 말입니다.&lt;/p&gt;
+이 네트워크의 Backprop을 생각해보면
+모델을 학습시키려면 dLoss/dW를 구해야 합니다.
 
-&lt;p&gt;이 경우에는 네트워크의 최종 hidden state에서만
-결과 값이 나올 것입니다.&lt;/p&gt;
+Loss flowing은 각 스텝에서 이루어집니다.
 
-&lt;p&gt;최종 hidden state가 전체 시퀀스의 내용에 대한
-일종의 요약으로 볼 수 있기 떄문입니다.&lt;/p&gt;
+이 경우에는 각 스텝마다 가중치 W에 대한
+local gradient를 계산할 수 있습니다.
 
-&lt;h4 id=&quot;one-to-many&quot;&gt;one to many&lt;/h4&gt;
+이렇게 개별로 계산된 local gradient를
+최종 gradient에 더합니다.
 
-&lt;p&gt;그렇다면 “one to many” 의 경우에는 어떨까요?&lt;/p&gt;
+#### many to one
 
-&lt;p&gt;“고정 입력” 을 받지만  “가변 출력”인 네트워크입니다.&lt;/p&gt;
+그렇다면 &quot;many to one&quot; 이라면 어떨까요?
+가령 감정분석(sentiment analysis) 처럼 말입니다.
 
-&lt;p&gt;이 경우에는 대게 고정 입력은 모델의 initial hidden state를
-초기화시키는 용도로 사용합니다.&lt;/p&gt;
+이 경우에는 네트워크의 최종 hidden state에서만
+결과 값이 나올 것입니다.
 
-&lt;p&gt;그리고 RNN은 모든 스텝에서
-출력 값을 가집니다.&lt;/p&gt;
+최종 hidden state가 전체 시퀀스의 내용에 대한
+일종의 요약으로 볼 수 있기 떄문입니다.
 
-&lt;p&gt;이렇게 가변 출력을 가지는 경우에도 이렇게 그래프를
-Unroll 해 볼 수 있습니다.&lt;/p&gt;
+#### one to many
 
-&lt;h4 id=&quot;ex-sequence-to-sequent-모델&quot;&gt;ex) sequence to sequent 모델&lt;/h4&gt;
+그렇다면 &quot;one to many&quot; 의 경우에는 어떨까요?
 
-&lt;p&gt;“sequence to sequent” 모델에 대해서 알아보겠습니다.
-가령 machine tranlation 에 사용할 수 있는 모델입니다.&lt;/p&gt;
+&quot;고정 입력&quot; 을 받지만  &quot;가변 출력&quot;인 네트워크입니다.
 
-&lt;p&gt;“가변 입력” 과 “가변 출력” 을 가지는 모델입니다.&lt;/p&gt;
+이 경우에는 대게 고정 입력은 모델의 initial hidden state를
+초기화시키는 용도로 사용합니다.
 
-&lt;p&gt;우리는 이 모델을 “many to one” 모델과
-“one to many” 모델의 결합으로 볼 수 있습니다.&lt;/p&gt;
+그리고 RNN은 모든 스텝에서
+출력 값을 가집니다.
 
-&lt;p&gt;두 개의 스테이지로 구성되는 것이죠.
-encoder와 decoder 구조입니다.&lt;/p&gt;
+이렇게 가변 출력을 가지는 경우에도 이렇게 그래프를
+Unroll 해 볼 수 있습니다.
 
-&lt;p&gt;encoder는 가변 입력을 받습니다.
-가령 English sentence가 될 수 있겠죠&lt;/p&gt;
+#### ex) sequence to sequent 모델
 
-&lt;p&gt;그리고 encoder의 final hidden state 를 통해
-전체 sentence를 요약합니다.&lt;/p&gt;
+&quot;sequence to sequent&quot; 모델에 대해서 알아보겠습니다.
+가령 machine tranlation 에 사용할 수 있는 모델입니다.
 
-&lt;p&gt;Encoder 에서는 “many to one” 을 수행합니다.
-“가변 입력”을 하나의 벡터로 요약합니다.&lt;/p&gt;
+&quot;가변 입력&quot; 과 &quot;가변 출력&quot; 을 가지는 모델입니다.
 
-&lt;p&gt;반면 Decoder는 “one to many”를 수행합니다.
-입력은 앞서 요약한 “하나의 벡터” 입니다.&lt;/p&gt;
+우리는 이 모델을 &quot;many to one&quot; 모델과
+&quot;one to many&quot; 모델의 결합으로 볼 수 있습니다.
 
-&lt;p&gt;그리고 decoder는 “가변 출력”을 내뱉습니다.
-가령 다른 언어로 변역된 문장이 될 수 있겠죠&lt;/p&gt;
+두 개의 스테이지로 구성되는 것이죠.
+encoder와 decoder 구조입니다.
 
-&lt;p&gt;“가변 출력” 은 매 스텝 적절한 단어를 내뱉습니다.&lt;/p&gt;
+encoder는 가변 입력을 받습니다.
+가령 English sentence가 될 수 있겠죠
 
-&lt;p&gt;그림처럼 전체 Computational graph를 풀어서
-전체 학습과정을 해석해보면&lt;/p&gt;
+그리고 encoder의 final hidden state 를 통해
+전체 sentence를 요약합니다.
 
-&lt;p&gt;Output sentence의 각 losses를 합해서
-Backprob 을 진행합니다.&lt;/p&gt;
+Encoder 에서는 &quot;many to one&quot; 을 수행합니다.
+&quot;가변 입력&quot;을 하나의 벡터로 요약합니다.
 
-&lt;h3 id=&quot;구체적인-예시&quot;&gt;구체적인 예시&lt;/h3&gt;
+반면 Decoder는 &quot;one to many&quot;를 수행합니다.
+입력은 앞서 요약한 &quot;하나의 벡터&quot; 입니다.
 
-&lt;p&gt;조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
-Language modeling에서 자주 사용합니다.&lt;/p&gt;
+그리고 decoder는 &quot;가변 출력&quot;을 내뱉습니다.
+가령 다른 언어로 변역된 문장이 될 수 있겠죠
 
-&lt;p&gt;Language modeling 문제에서 하고싶은 것은 바로
-“어떻게 자연어(natural lang)을 만들어낼지 입니다.&lt;/p&gt;
+&quot;가변 출력&quot; 은 매 스텝 적절한 단어를 내뱉습니다.
 
-&lt;p&gt;가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
-어떻게 문자를 생성해 낼지를 풀어야 합니다.&lt;/p&gt;
+그림처럼 전체 Computational graph를 풀어서
+전체 학습과정을 해석해보면
 
-&lt;p&gt;단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
-생성해 낼 지를 풀어야겠죠&lt;/p&gt;
+Output sentence의 각 losses를 합해서
+Backprob 을 진행합니다.
 
-&lt;p&gt;우선은 간단한 예제를 위해서 character level
-language model 을 살펴보겠습니다.&lt;/p&gt;
+### 구체적인 예시
 
-&lt;h4 id=&quot;character-level-language-model&quot;&gt;character level language model&lt;/h4&gt;
+조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
+Language modeling에서 자주 사용합니다.
 
-&lt;p&gt;네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
-다음 문자를 예측해야 합니다.&lt;/p&gt;
+Language modeling 문제에서 하고싶은 것은 바로
+&quot;어떻게 자연어(natural lang)을 만들어낼지 입니다.
 
-&lt;p&gt;이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
-그리고 학습시킬 문장은 “h, e, l, l, o” 입니다.&lt;/p&gt;
+가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
+어떻게 문자를 생성해 낼지를 풀어야 합니다.
 
-&lt;p&gt;Train time에서는 training sequence(“hello”) 의
-각 단어들을 입력으로 넣어줘야 합니다.&lt;/p&gt;
+단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
+생성해 낼 지를 풀어야겠죠
 
-&lt;p&gt;“hello” 가 RNN의 x_t입니다.&lt;/p&gt;
+우선은 간단한 예제를 위해서 character level
+language model 을 살펴보겠습니다.
 
-&lt;p&gt;우선 입력은 한 글자(letter)씩 입니다. 네트워크도
-적절한 글자들을 출력해야 합니다.&lt;/p&gt;
+#### character level language model
 
-&lt;p&gt;일반적으로 입력을 넣어주는 방법이 있습니다.
-우선 vocabulary는 총 네 가지입니다.[h, e, l, o]&lt;/p&gt;
+네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
+다음 문자를 예측해야 합니다.
 
-&lt;p&gt;각 글자는 하나의 벡터로 표현할 수 있습니다.
-이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.&lt;/p&gt;
+이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
+그리고 학습시킬 문장은 &quot;h, e, l, l, o&quot; 입니다.
 
-&lt;p&gt;벡터에서 해당 글자 위치만 1로 표시합니다.&lt;/p&gt;
+Train time에서는 training sequence(&quot;hello&quot;) 의
+각 단어들을 입력으로 넣어줘야 합니다.
 
-&lt;p&gt;이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
-따라서 4-d 벡터로 표현할 수 있습니다.&lt;/p&gt;
+&quot;hello&quot; 가 RNN의 x_t입니다.
 
-&lt;p&gt;가령 h를 벡터로 표현하는 경우([1,0,0,0])
-h에 해당하는 자리만 1이고 나머지는 0입니다.&lt;/p&gt;
+우선 입력은 한 글자(letter)씩 입니다. 네트워크도
+적절한 글자들을 출력해야 합니다.
 
-&lt;p&gt;이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.&lt;/p&gt;
+일반적으로 입력을 넣어주는 방법이 있습니다.
+우선 vocabulary는 총 네 가지입니다.[h, e, l, o]
 
-&lt;p&gt;Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
-우선 첫 스텝에서는, 입력 문자 ‘h’ 가 들어옵니다.&lt;/p&gt;
+각 글자는 하나의 벡터로 표현할 수 있습니다.
+이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.
 
-&lt;p&gt;첫 번째 RNN cell로는 ‘h’ 가 들어갑니다.
-그러면 네트워크는 y_t를 출력합니다.&lt;/p&gt;
+벡터에서 해당 글자 위치만 1로 표시합니다.
 
-&lt;p&gt;y_t는 어떤 문자가 ‘h’ 다음에 나올 것
-같은지를 예측한 값입니다.&lt;/p&gt;
+이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
+따라서 4-d 벡터로 표현할 수 있습니다.
 
-&lt;p&gt;이 예제에서는 ‘h’  다음에는 ‘e’ 를 예측해야 정답입니다.&lt;/p&gt;
+가령 h를 벡터로 표현하는 경우([1,0,0,0])
+h에 해당하는 자리만 1이고 나머지는 0입니다.
 
-&lt;p&gt;하지만 현재 이 모델은 다음에 나올 글자가
-‘o’ 라고 예측하고 있습니다.&lt;/p&gt;
+이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.
 
-&lt;p&gt;잘못 예측한 경우입니다. softmax loss가 이 예측이
-얼마나 형편없는지 알려줄 것입니다.&lt;/p&gt;
+Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
+우선 첫 스텝에서는, 입력 문자 &apos;h&apos; 가 들어옵니다.
 
-&lt;p&gt;다음 스텝에서는 두 번째 단어 ‘e’ 가 입력으로 들어갑니다.
-이런 과정이 반복됩니다.&lt;/p&gt;
+첫 번째 RNN cell로는 &apos;h&apos; 가 들어갑니다.
+그러면 네트워크는 y_t를 출력합니다.
 
-&lt;p&gt;우선 ‘e’ 벡터입니다. 그리고 “이전 hidden state”와 함께
-“새로운  hidden state” 를 만들어내죠&lt;/p&gt;
+y_t는 어떤 문자가 &apos;h&apos; 다음에 나올 것
+같은지를 예측한 값입니다.
 
-&lt;p&gt;이제는 두번째 hidden state를 이용해서
-적절한 값을 예측해야 합니다.&lt;/p&gt;
+이 예제에서는 &apos;h&apos;  다음에는 &apos;e&apos; 를 예측해야 정답입니다.
 
-&lt;p&gt;‘hello’ 를 예측해야 하므로 ‘e’ 가
-입력이라면 ‘l’ 을 예측해야합니다.&lt;/p&gt;
+하지만 현재 이 모델은 다음에 나올 글자가
+&apos;o&apos; 라고 예측하고 있습니다.
 
-&lt;p&gt;이 경우 ‘l’ 의 예측 치가 상당히 낮기 때문에
-Loss가 높습니다.&lt;/p&gt;
+잘못 예측한 경우입니다. softmax loss가 이 예측이
+얼마나 형편없는지 알려줄 것입니다.
 
-&lt;p&gt;이 과정을 반복합니다.
-모델을 다양한 문장으로 학습시킨다면&lt;/p&gt;
+다음 스텝에서는 두 번째 단어 &apos;e&apos; 가 입력으로 들어갑니다.
+이런 과정이 반복됩니다.
 
-&lt;p&gt;결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
-무엇일지를 학습해야 할 것입니다.&lt;/p&gt;
+우선 &apos;e&apos; 벡터입니다. 그리고 &quot;이전 hidden state&quot;와 함께
+&quot;새로운  hidden state&quot; 를 만들어내죠
 
-&lt;p&gt;그렇다면 이 모델의 Test time은 어떨까요?&lt;/p&gt;
+이제는 두번째 hidden state를 이용해서
+적절한 값을 예측해야 합니다.
 
-&lt;p&gt;이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
-Model로부터 Sampling 하는 것입니다.&lt;/p&gt;
+&apos;hello&apos; 를 예측해야 하므로 &apos;e&apos; 가
+입력이라면 &apos;l&apos; 을 예측해야합니다.
 
-&lt;p&gt;다시말해, Train time에 모델이 봤을 법한 문장을
-모델 스스로 생성해 내는 것입니다.&lt;/p&gt;
+이 경우 &apos;l&apos; 의 예측 치가 상당히 낮기 때문에
+Loss가 높습니다.
 
-&lt;p&gt;우선 모델에게 문장의 첫 글자만 줍니다.
-이 경우에는 ‘h’ 가 되겠군요&lt;/p&gt;
 
-&lt;p&gt;RNN 의 첫 스텝의 입력은 ‘h’가 될 것입니다.&lt;/p&gt;
+이 과정을 반복합니다.
+모델을 다양한 문장으로 학습시킨다면
 
-&lt;p&gt;‘h’가 주어지면 모든 문자(h,e,l,o) 에 대한
-스코어를 얻을 수 있습니다(output layer)&lt;/p&gt;
+결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
+무엇일지를 학습해야 할 것입니다.
 
-&lt;p&gt;Test time에서는 이 스코어를
-“sampling”(다음 글자 선택)에 이용 합니다.&lt;/p&gt;
+그렇다면 이 모델의 Test time은 어떨까요?
 
-&lt;p&gt;스코어를 확률분포로 표현하기 위해서
-sofrmax 함수를 사용할 수 있습니다.&lt;/p&gt;
+이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
+Model로부터 Sampling 하는 것입니다.
 
-&lt;p&gt;문장의 두 번째 글자를 선택하기 위해서
-이 확률분포를 이용합니다.&lt;/p&gt;
+다시말해, Train time에 모델이 봤을 법한 문장을
+모델 스스로 생성해 내는 것입니다.
 
-&lt;p&gt;이 경우에 ‘e’가 뽑힐 확률(13%)이 엄청 낮았음에도
-아주 운좋게 ‘e’가 샘플링되었습니다.&lt;/p&gt;
+우선 모델에게 문장의 첫 글자만 줍니다.
+이 경우에는 &apos;h&apos; 가 되겠군요
 
-&lt;p&gt;이제는 확률 분포에서 운좋게 뽑힌 ‘e’ 를
-다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.&lt;/p&gt;
+RNN 의 첫 스텝의 입력은 &apos;h&apos;가 될 것입니다.
 
-&lt;p&gt;‘e’ 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
-넣어주면 네트워크는 두번째 출력을 만들어 냅니다.&lt;/p&gt;
+&apos;h&apos;가 주어지면 모든 문자(h,e,l,o) 에 대한
+스코어를 얻을 수 있습니다(output layer)
 
-&lt;p&gt;이 학습된 모델만 가지고 새로운 문장을
-만들어내기 위해 이 과정을 반복합니다.&lt;/p&gt;
+Test time에서는 이 스코어를
+&quot;sampling&quot;(다음 글자 선택)에 이용 합니다.
 
-&lt;p&gt;전체 문장을 만들어내기 위해 타임 스텝마다
-확률 분포에서 문자를 하나씩 뽑아냅니다.&lt;/p&gt;
+스코어를 확률분포로 표현하기 위해서
+sofrmax 함수를 사용할 수 있습니다.
 
-&lt;h4 id=&quot;질문1&quot;&gt;질문1&lt;/h4&gt;
+문장의 두 번째 글자를 선택하기 위해서
+이 확률분포를 이용합니다.
 
-&lt;p&gt;질문 있나요?&lt;/p&gt;
+이 경우에 &apos;e&apos;가 뽑힐 확률(13%)이 엄청 낮았음에도
+아주 운좋게 &apos;e&apos;가 샘플링되었습니다.
 
-&lt;p&gt;질문은 “가장 높은 스코어를 선택하면 그만인데
-왜 굳이 확률분포에서 샘플링하는지” 입니다.&lt;/p&gt;
+이제는 확률 분포에서 운좋게 뽑힌 &apos;e&apos; 를
+다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.
 
-&lt;p&gt;이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
-올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)&lt;/p&gt;
+&apos;e&apos; 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
+넣어주면 네트워크는 두번째 출력을 만들어 냅니다.
 
-&lt;p&gt;따라서 확률분포에서 샘플링을 했기 때문에
-hello를 잘 만들 수 있었습니다.&lt;/p&gt;
+이 학습된 모델만 가지고 새로운 문장을
+만들어내기 위해 이 과정을 반복합니다.
 
-&lt;p&gt;실제로는 두 경우 모두 사용할 수 있습니다.
-(확률 분포에서 샘플링 or 그냥 가장 높은 값)&lt;/p&gt;
+전체 문장을 만들어내기 위해 타임 스텝마다
+확률 분포에서 문자를 하나씩 뽑아냅니다.
 
-&lt;p&gt;어떤 경우에는 argmax probability만 사용할 수 있습니다.
-(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.&lt;/p&gt;
+#### 질문1
 
-&lt;p&gt;하지만 확률 분포에서 샘플링하는 방법을 사용하면
-일반적으로는 모델에서의 다양성을 얻을 수 있습니다.&lt;/p&gt;
+질문 있나요?
 
-&lt;p&gt;만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
-같은 사진이라던지를 모델 입력으로 주면&lt;/p&gt;
+질문은 &quot;가장 높은 스코어를 선택하면 그만인데
+왜 굳이 확률분포에서 샘플링하는지&quot; 입니다.
 
-&lt;p&gt;argmax을 하지 않고 샘플링을 하게되면 그럴듯한
-다양한 문장을 출력할 수 있게 됩니다.&lt;/p&gt;
+이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
+올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)
 
-&lt;p&gt;첫 스텝에서 어떤 값이 샘플링되는지에
-따라서 출력이 다양해 질 수 있는 것입니다.&lt;/p&gt;
+따라서 확률분포에서 샘플링을 했기 때문에
+hello를 잘 만들 수 있었습니다.
 
-&lt;p&gt;샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
-관점에서 좋은 방법이 될 수 있습니다.&lt;/p&gt;
+실제로는 두 경우 모두 사용할 수 있습니다.
+(확률 분포에서 샘플링 or 그냥 가장 높은 값)
 
-&lt;h4 id=&quot;질문2&quot;&gt;질문2&lt;/h4&gt;
+어떤 경우에는 argmax probability만 사용할 수 있습니다.
+(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.
 
-&lt;p&gt;다른 질문 있나요?&lt;/p&gt;
+하지만 확률 분포에서 샘플링하는 방법을 사용하면
+일반적으로는 모델에서의 다양성을 얻을 수 있습니다.
 
-&lt;p&gt;[학생이 질문]&lt;/p&gt;
+만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
+같은 사진이라던지를 모델 입력으로 주면
 
-&lt;p&gt;질문은 “Test time에 sofrmax vector를
-one hot vector 대신에 넣어줄 수 있는지” 입니다.&lt;/p&gt;
+argmax을 하지 않고 샘플링을 하게되면 그럴듯한
+다양한 문장을 출력할 수 있게 됩니다.
 
-&lt;p&gt;두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
-입력이 Train time에서 본 입력과 달라집니다.&lt;/p&gt;
+첫 스텝에서 어떤 값이 샘플링되는지에
+따라서 출력이 다양해 질 수 있는 것입니다.
 
-&lt;p&gt;모델에게 Train time에서 보지 못한 입력값을 주게되면
-대게는 모델이 아무것도 하지 못합니다.&lt;/p&gt;
+샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
+관점에서 좋은 방법이 될 수 있습니다.
 
-&lt;p&gt;두 번째 문제는 실제로는
-vocabularies가 아주 크다는 것입니다.&lt;/p&gt;
+#### 질문2
 
-&lt;p&gt;예제에서는 voca가 4개 뿐이 없어서
-크게 문제될 것이 없겠지만&lt;/p&gt;
+다른 질문 있나요?
 
-&lt;p&gt;한 스텝마다 단어(word)를 생성하는 모델이라고 보면
-voca 안에는 이세상의 모든 영어단어가 들어가야합니다.&lt;/p&gt;
+[학생이 질문]
 
-&lt;p&gt;voca는 수만개 이상의 요소를 가지게 되겠죠&lt;/p&gt;
+질문은 &quot;Test time에 sofrmax vector를
+one hot vector 대신에 넣어줄 수 있는지&quot; 입니다.
 
-&lt;p&gt;실제론 one hot vector를 sparse vector operation
-으로 처리합니다. (dense vector가 아닌)&lt;/p&gt;
+두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
+입력이 Train time에서 본 입력과 달라집니다.
 
-&lt;p&gt;10,000dim softmax vector를 연산해야 한다면
-연산량이 어마어마 할 것입니다.&lt;/p&gt;
+모델에게 Train time에서 보지 못한 입력값을 주게되면
+대게는 모델이 아무것도 하지 못합니다.
 
-&lt;p&gt;Test time에서도 one hot을 사용하는 이유입니다.&lt;/p&gt;
+두 번째 문제는 실제로는
+vocabularies가 아주 크다는 것입니다.
 
-&lt;p&gt;###&lt;/p&gt;
+예제에서는 voca가 4개 뿐이 없어서
+크게 문제될 것이 없겠지만
 
-&lt;p&gt;이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.&lt;/p&gt;
+한 스텝마다 단어(word)를 생성하는 모델이라고 보면
+voca 안에는 이세상의 모든 영어단어가 들어가야합니다.
 
-&lt;p&gt;이 출력값들의 Loss를 계산해 final loss를 얻는데
-이를 “backpropagation through time” 라고 합니다.&lt;/p&gt;
+voca는 수만개 이상의 요소를 가지게 되겠죠
 
-&lt;p&gt;이 경우, forward pass의 경우에는 전체 시퀀스가
-끝날 때 까지 출력값이 생성됩니다.&lt;/p&gt;
+실제론 one hot vector를 sparse vector operation
+으로 처리합니다. (dense vector가 아닌)
 
-&lt;p&gt;반대로 backward pass에서도 전체 시퀀스를
-가지고 Loss를 계산해야 합니다.&lt;/p&gt;
+10,000dim softmax vector를 연산해야 한다면
+연산량이 어마어마 할 것입니다.
 
-&lt;p&gt;하지만 이 경우 시퀀스가 아주 긴 경우에는
-문제가 될 소지가 있습니다.&lt;/p&gt;
+Test time에서도 one hot을 사용하는 이유입니다.
 
-&lt;p&gt;가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.&lt;/p&gt;
+###
 
-&lt;p&gt;이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
-Wikipedia 전체 문서를 다 거쳐야 할 것입니다.&lt;/p&gt;
+이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.
 
-&lt;p&gt;Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
-gradient update가 1회 수행됩니다.&lt;/p&gt;
+이 출력값들의 Loss를 계산해 final loss를 얻는데
+이를 &quot;backpropagation through time&quot; 라고 합니다.
 
-&lt;p&gt;이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
-메모리 사용량도 어마어마할 것입니다.&lt;/p&gt;
+이 경우, forward pass의 경우에는 전체 시퀀스가
+끝날 때 까지 출력값이 생성됩니다.
 
-&lt;p&gt;실제로는 “truncated backpropagation” 를 통해서
-backprob 을 근사시키는 기법을 사용합니다.&lt;/p&gt;
+반대로 backward pass에서도 전체 시퀀스를
+가지고 Loss를 계산해야 합니다.
 
-&lt;p&gt;이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
-길어서 무한대라고 할지라도&lt;/p&gt;
+하지만 이 경우 시퀀스가 아주 긴 경우에는
+문제가 될 소지가 있습니다.
 
-&lt;p&gt;Train time에 한 스텝을 일정 단위로 자릅니다.
-대략 100 정도로 말이죠&lt;/p&gt;
+가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.
 
-&lt;p&gt;100 스텝만 forward pass를 하고 이 서브스퀀스의
-Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.&lt;/p&gt;
+이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
+Wikipedia 전체 문서를 다 거쳐야 할 것입니다.
 
-&lt;p&gt;이 과정을 반복합니다. 다만 이전 batch에서 계산한
-hidden states는 계속 유지합니다.&lt;/p&gt;
+Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
+gradient update가 1회 수행됩니다.
 
-&lt;p&gt;다음 Batch의 forward pass를 계산할 때는
-이전 hidden state를 이용합니다.&lt;/p&gt;
+이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
+메모리 사용량도 어마어마할 것입니다.
 
-&lt;p&gt;그리고 gradient step은 현재 Batch에서만 진행합니다.&lt;/p&gt;
+실제로는 &quot;truncated backpropagation&quot; 를 통해서
+backprob 을 근사시키는 기법을 사용합니다.
 
-&lt;p&gt;이 방법을 “truncated backpropagation
-through time” 이라고 합니다.&lt;/p&gt;
+이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
+길어서 무한대라고 할지라도
 
-&lt;p&gt;이 과정을 반복합니다. 이전 batch에서 hidden states를
-가져와서 foward pass를 수행하고&lt;/p&gt;
+Train time에 한 스텝을 일정 단위로 자릅니다.
+대략 100 정도로 말이죠
 
-&lt;p&gt;backprob은 현재 배치만큼만 진행합니다.&lt;/p&gt;
+100 스텝만 forward pass를 하고 이 서브스퀀스의
+Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.
 
-&lt;p&gt;이 방법은 Stocastic gradient descent의
-시퀀스 데이터 버전이라고 볼 수 있습니다.&lt;/p&gt;
+이 과정을 반복합니다. 다만 이전 batch에서 계산한
+hidden states는 계속 유지합니다.
 
-&lt;p&gt;지난 시간이 Data Sets이 엄청 큰 경우 어떻게
-학습시켜야 하는지 배웠습니다.&lt;/p&gt;
+다음 Batch의 forward pass를 계산할 때는
+이전 hidden state를 이용합니다.
 
-&lt;p&gt;Large datasets에서는 전체 데이터로 gradients를
-계산하기에는 계산량이 너무 컸습니다.&lt;/p&gt;
+그리고 gradient step은 현재 Batch에서만 진행합니다.
 
-&lt;p&gt;그래서 대신에 mini batch를 사용해서
-small samples만 가지고 계산했습니다.&lt;/p&gt;
+이 방법을 &quot;truncated backpropagation
+through time&quot; 이라고 합니다.
 
-&lt;p&gt;그리고 mini batch만을 이용해서 gradient를 계산했습니다.
-가령 Image classification에서 그랬었죠&lt;/p&gt;
+이 과정을 반복합니다. 이전 batch에서 hidden states를
+가져와서 foward pass를 수행하고
 
-&lt;p&gt;####&lt;/p&gt;
+backprob은 현재 배치만큼만 진행합니다.
 
-&lt;p&gt;질문있나요?&lt;/p&gt;
+이 방법은 Stocastic gradient descent의
+시퀀스 데이터 버전이라고 볼 수 있습니다.
 
-&lt;p&gt;질문은 “RNN이 Markov Assumption 을 따르는지” 입니다.&lt;/p&gt;
+지난 시간이 Data Sets이 엄청 큰 경우 어떻게
+학습시켜야 하는지 배웠습니다.
 
-&lt;p&gt;그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
-계속해서 앞으로 가져가기 때문입니다.(영원히)&lt;/p&gt;
+Large datasets에서는 전체 데이터로 gradients를
+계산하기에는 계산량이 너무 컸습니다.
 
-&lt;p&gt;마르코 비아 가정을하고있다.
-숨겨진 상태를 조건으로,&lt;/p&gt;
+그래서 대신에 mini batch를 사용해서
+small samples만 가지고 계산했습니다.
 
-&lt;p&gt;그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
-미래를 예언하기 시퀀스의&lt;/p&gt;
+그리고 mini batch만을 이용해서 gradient를 계산했습니다.
+가령 Image classification에서 그랬었죠
 
-&lt;p&gt;하지만 그 가정은 일종의 건축입니다.
-재발 성 신경 네트워크 공식 출발점에서.&lt;/p&gt;
+####
 
-&lt;p&gt;그리고 그것은 정말로 특별하지 않습니다.
-시간을 통한 전파를 역전 시키십시오.&lt;/p&gt;
+질문있나요?
 
-&lt;p&gt;Truncated backprop은 very large sequence
-data의 gradient를 근사시키는 방법입니다.&lt;/p&gt;
+질문은 &quot;RNN이 Markov Assumption 을 따르는지&quot; 입니다.
 
-&lt;p&gt;####&lt;/p&gt;
+그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
+계속해서 앞으로 가져가기 때문입니다.(영원히)
 
-&lt;p&gt;RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
-사실은 그렇지 않습니다. 엄청 간결합니다.&lt;/p&gt;
+마르코 비아 가정을하고있다.
+숨겨진 상태를 조건으로,
 
-&lt;p&gt;Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
-112 줄의 코드로 RNN 전체 과정을 구현하였습니다.&lt;/p&gt;
+그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
+미래를 예언하기 시퀀스의
 
-&lt;p&gt;vocabulary를 만들고, truncated back propagation
-을 수행하는 모델을 구현한 코드입니다.&lt;/p&gt;
+하지만 그 가정은 일종의 건축입니다.
+재발 성 신경 네트워크 공식 출발점에서.
 
-&lt;p&gt;그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.&lt;/p&gt;
+그리고 그것은 정말로 특별하지 않습니다.
+시간을 통한 전파를 역전 시키십시오.
 
-&lt;p&gt;RNN을 구성하는 것이 엄청나게 어려워 보일
-수 있지만 사실은 그렇지 않습니다.&lt;/p&gt;
+Truncated backprop은 very large sequence
+data의 gradient를 근사시키는 방법입니다.
 
-&lt;p&gt;슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
-파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.&lt;/p&gt;
 
-&lt;p&gt;Numpy로만 작성된 dependencies가 없는
-코드입니다. 코드를 읽기에도 비교적 쉽습니다.&lt;/p&gt;
+####
 
-&lt;p&gt;####&lt;/p&gt;
+RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
+사실은 그렇지 않습니다. 엄청 간결합니다.
 
-&lt;p&gt;RNN Language model 로 아주 재미있는 것들을
-학습시킬 수 있습니다.&lt;/p&gt;
+Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
+112 줄의 코드로 RNN 전체 과정을 구현하였습니다.
 
-&lt;p&gt;RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
-아무 문장이나 긁어와서 학습시킬 수 있습니다.&lt;/p&gt;
+vocabulary를 만들고, truncated back propagation
+을 수행하는 모델을 구현한 코드입니다.
 
-&lt;p&gt;가령 셰익스피어의 작품들을 RNN으로
-학습시켜 볼 수 있습니다.&lt;/p&gt;
+그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.
 
-&lt;p&gt;학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
-하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.&lt;/p&gt;
+RNN을 구성하는 것이 엄청나게 어려워 보일
+수 있지만 사실은 그렇지 않습니다.
 
-&lt;p&gt;학습이 잘 끝나면 상당히 셰익스피어 풍의
-문장들을 만들어냅니다.&lt;/p&gt;
+슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
+파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.
 
-&lt;p&gt;“Why do what that day… replied”  어쩄든
-상당히 셰익스피어의 문장 처럼 보입니다.&lt;/p&gt;
+Numpy로만 작성된 dependencies가 없는
+코드입니다. 코드를 읽기에도 비교적 쉽습니다.
 
-&lt;p&gt;더 학습을 많이 시키면 훨씬 더 긴 문장들도
-만들어낼 수 있습니다.&lt;/p&gt;
+####
 
-&lt;p&gt;RNN을 이용하면 이런 셰익스피어 풍의 문장과
-같은 여러가지 신기한 것들을 학습시킬 수 있습니다.&lt;/p&gt;
+RNN Language model 로 아주 재미있는 것들을
+학습시킬 수 있습니다.
 
-&lt;p&gt;모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
-(예 : “VIOLA:”)&lt;/p&gt;
+RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
+아무 문장이나 긁어와서 학습시킬 수 있습니다.
 
-&lt;p&gt;그리고 바로 밑에 셰익스피어풍의 문장들을
-만들어냅니다.&lt;/p&gt;
+가령 셰익스피어의 작품들을 RNN으로
+학습시켜 볼 수 있습니다.
 
-&lt;p&gt;다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.&lt;/p&gt;
+학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
+하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.
 
-&lt;p&gt;이건 엄청난 것입니다.
-문장의 구조를 아주 완벽하게 학습했습니다.&lt;/p&gt;
+학습이 잘 끝나면 상당히 셰익스피어 풍의
+문장들을 만들어냅니다.
 
-&lt;p&gt;훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
-혹시 여기 수학 전공자가 있나요?&lt;/p&gt;
+&quot;Why do what that day... replied&quot;  어쩄든
+상당히 셰익스피어의 문장 처럼 보입니다.
 
-&lt;p&gt;“algebraic topology” 수업을 들어본 분이 계신가요?
-몇 분정도 계시는군요&lt;/p&gt;
+더 학습을 많이 시키면 훨씬 더 긴 문장들도
+만들어낼 수 있습니다.
 
-&lt;p&gt;여러분이 저보다 “algebraic topology”를 더 잘 하시겠네요.
-제가 얼마전에 온라인”algebraic topology” 교과서를 찾았습니다.&lt;/p&gt;
+RNN을 이용하면 이런 셰익스피어 풍의 문장과
+같은 여러가지 신기한 것들을 학습시킬 수 있습니다.
 
-&lt;p&gt;이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.&lt;/p&gt;
+모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
+(예 : &quot;VIOLA:&quot;)
 
-&lt;p&gt;그리고 수식이 LaTex 문법으로 작성되어 있습니다.
-LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.&lt;/p&gt;
+그리고 바로 밑에 셰익스피어풍의 문장들을
+만들어냅니다.
 
-&lt;p&gt;그러면 algebraic topology 교과서의 LaTex 코드를
-우리가 만든 RNN Language Model로 학습시킬 수 있습니다.&lt;/p&gt;
+다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.
 
-&lt;p&gt;자 이걸 학습시키게 되면 (웃음) 이런 식으로
-algebraic topology스러운 문장들을 만들어낼 수 있습니다.&lt;/p&gt;
+이건 엄청난 것입니다.
+문장의 구조를 아주 완벽하게 학습했습니다.
 
-&lt;p&gt;모델이 수식도 만들어 냅니다.&lt;/p&gt;
+훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
+혹시 여기 수학 전공자가 있나요?
 
-&lt;p&gt;“To prrov study that F_sub U is a covering
-of x prime.. blah blah” (왼쪽 4번째 문단)&lt;/p&gt;
+&quot;algebraic topology&quot; 수업을 들어본 분이 계신가요?
+몇 분정도 계시는군요
 
-&lt;p&gt;unions도 만들어내고, proofs의 끝에
-사각형도 만들어냅니다.&lt;/p&gt;
+여러분이 저보다 &quot;algebraic topology&quot;를 더 잘 하시겠네요.
+제가 얼마전에 온라인&quot;algebraic topology&quot; 교과서를 찾았습니다.
 
-&lt;p&gt;lemmas도 만들어내고
-이전 lemmas를 참조하기도 합니다.&lt;/p&gt;
+이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.
 
-&lt;p&gt;bi-lemma question 라던지 R 같은 기하학적인
-내용도 모두 만들어냅니다. 엄청 대단하죠&lt;/p&gt;
+그리고 수식이 LaTex 문법으로 작성되어 있습니다.
+LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.
 
-&lt;p&gt;diagrams을 만들어내려고도 합니다.&lt;/p&gt;
+그러면 algebraic topology 교과서의 LaTex 코드를
+우리가 만든 RNN Language Model로 학습시킬 수 있습니다.
 
-&lt;p&gt;commutative diagram은 algebraic topology에서
-아주 많이 사용됩니다.&lt;/p&gt;
+자 이걸 학습시키게 되면 (웃음) 이런 식으로
+algebraic topology스러운 문장들을 만들어낼 수 있습니다.
 
-&lt;p&gt;모델이 이 다이어그램을 열심히 만들어 내려 했지만
-물론 이 다이어그램은 아무 의미가 없습니다.&lt;/p&gt;
+모델이 수식도 만들어 냅니다.
 
-&lt;p&gt;그리고 또 재미있는 점 중 하나는
-모델이 “증명 생략” 도 학습합니다.&lt;/p&gt;
+&quot;To prrov study that F_sub U is a covering
+of x prime.. blah blah&quot; (왼쪽 4번째 문단)
 
-&lt;p&gt;가끔 이런 경우가 있죠.
-“theorem : blah blah blah, proof : 생략”&lt;/p&gt;
+unions도 만들어내고, proofs의 끝에
+사각형도 만들어냅니다.
 
-&lt;p&gt;교과서에서 증명이 생각되는 부분도 모델이
-정확하게 학습한 것입니다.&lt;/p&gt;
+lemmas도 만들어내고
+이전 lemmas를 참조하기도 합니다.
 
-&lt;p&gt;또 다른 재미있는 것들도 할 수 있습니다. 이번에는
-Linux Kernel의 전체 소스코드를 학습시켰습니다.&lt;/p&gt;
+ bi-lemma question 라던지 R 같은 기하학적인
+내용도 모두 만들어냅니다. 엄청 대단하죠
 
-&lt;p&gt;코드를 character level로 학습시켰습니다.&lt;/p&gt;
+diagrams을 만들어내려고도 합니다.
 
-&lt;p&gt;학습된 모델에서 샘플링을 해보면
-C 소스코드 스러운 것들이 나옵니다.&lt;/p&gt;
+commutative diagram은 algebraic topology에서
+아주 많이 사용됩니다.
 
-&lt;p&gt;모델이 if 문 작성법을 알고 있습니다.
-코드 짜는 스킬이 어마어마 합니다.&lt;/p&gt;
+모델이 이 다이어그램을 열심히 만들어 내려 했지만
+물론 이 다이어그램은 아무 의미가 없습니다.
 
-&lt;p&gt;들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.&lt;/p&gt;
+그리고 또 재미있는 점 중 하나는
+모델이 &quot;증명 생략&quot; 도 학습합니다.
 
-&lt;p&gt;주석다는 법도 알고있습니다.
-물론 뜻은 아무 의미도 없습니다.&lt;/p&gt;
+가끔 이런 경우가 있죠.
+&quot;theorem : blah blah blah, proof : 생략&quot;
 
-&lt;p&gt;이 모델의 문제점 중 하나는. 변수를 선언해 놓고
-쓰지를 않다는 것입니다.&lt;/p&gt;
+교과서에서 증명이 생각되는 부분도 모델이
+정확하게 학습한 것입니다.
 
-&lt;p&gt;반대로 선언하지도 않은 변수를 쓰기도 합니다.
-이 코드는 컴파일되지 않습니다.&lt;/p&gt;
+또 다른 재미있는 것들도 할 수 있습니다. 이번에는
+Linux Kernel의 전체 소스코드를 학습시켰습니다.
 
-&lt;p&gt;이 코드를 Linux에 pull request 하고싶진 않네요&lt;/p&gt;
+코드를 character level로 학습시켰습니다.
 
-&lt;p&gt;이 모델은 GNU license를 추가하는 법도 압니다.&lt;/p&gt;
+학습된 모델에서 샘플링을 해보면
+C 소스코드 스러운 것들이 나옵니다.
 
-&lt;p&gt;GNU license 다음에 include 가 나오고 include 가
-몇 번 나오고 소스코드가 나옵니다.&lt;/p&gt;
+모델이 if 문 작성법을 알고 있습니다.
+코드 짜는 스킬이 어마어마 합니다.
 
-&lt;p&gt;이 모델은 데이터의 일반적인 구조를
-아주 잘 학습했습니다.&lt;/p&gt;
+들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.
 
-&lt;p&gt;다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
-그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.&lt;/p&gt;
+주석다는 법도 알고있습니다.
+물론 뜻은 아무 의미도 없습니다.
 
-&lt;p&gt;구조에 대해서는 전혀 말해주지 않았죠&lt;/p&gt;
+이 모델의 문제점 중 하나는. 변수를 선언해 놓고
+쓰지를 않다는 것입니다.
 
-&lt;p&gt;하지만 모델은 학습과정 동안에 시퀀스 데이터의
-숨겨진 구조(latent structure)를 알아서 학습합니다.&lt;/p&gt;
+반대로 선언하지도 않은 변수를 쓰기도 합니다.
+이 코드는 컴파일되지 않습니다.
 
-&lt;p&gt;결국 알아서 코드를 작성하게 된 것입니다.
-아주 대단합니다.&lt;/p&gt;
+이 코드를 Linux에 pull request 하고싶진 않네요
 
-&lt;p&gt;####&lt;/p&gt;
+이 모델은 GNU license를 추가하는 법도 압니다.
 
-&lt;p&gt;저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
-도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.&lt;/p&gt;
+GNU license 다음에 include 가 나오고 include 가
+몇 번 나오고 소스코드가 나옵니다.
 
-&lt;p&gt;RNN에는 hidden vector가 있고 이 vector가
-계속 업데이트됩니다.&lt;/p&gt;
+이 모델은 데이터의 일반적인 구조를
+아주 잘 학습했습니다.
 
-&lt;p&gt;우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
-나올수도 있지 않을까 추측해 보았습니다.&lt;/p&gt;
+다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
+그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.
 
-&lt;p&gt;그래서 우리는 RNN language model을
-특정 dataset으로 학습시키고,&lt;/p&gt;
+구조에 대해서는 전혀 말해주지 않았죠
 
-&lt;p&gt;그리고 hidden vector를 하나 뽑아서 어떤 값들이
-들어있는지 살펴보기로 했습니다.&lt;/p&gt;
+하지만 모델은 학습과정 동안에 시퀀스 데이터의
+숨겨진 구조(latent structure)를 알아서 학습합니다.
 
-&lt;p&gt;이 서로 다른 hidden states가 도대체 어떤 것들을
-예의주시하는지 알아보기 위해서였죠&lt;/p&gt;
+결국 알아서 코드를 작성하게 된 것입니다.
+아주 대단합니다.
 
-&lt;p&gt;이 실험을 해보면, 대부분의 hidden state는
-아무 의미 없는 패턴으로 예의 주시하고 있습니다.&lt;/p&gt;
+####
 
-&lt;p&gt;여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
-다시 한번 forward 시켜 보는 것입니다.&lt;/p&gt;
+저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
+도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.
 
-&lt;p&gt;여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
-hidden vector의 값을 의미합니다.&lt;/p&gt;
+RNN에는 hidden vector가 있고 이 vector가
+계속 업데이트됩니다.
 
-&lt;p&gt;RNN의 대부분의 Cell은  해석하기 어렵습니다.&lt;/p&gt;
+우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
+나올수도 있지 않을까 추측해 보았습니다.
 
-&lt;p&gt;대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
-low level language modeling 정도로밖에 보이지 않습니다.&lt;/p&gt;
+그래서 우리는 RNN language model을
+특정 dataset으로 학습시키고,
 
-&lt;p&gt;하지만 일부는 해석해볼만 합니다.&lt;/p&gt;
+그리고 hidden vector를 하나 뽑아서 어떤 값들이
+들어있는지 살펴보기로 했습니다.
 
-&lt;p&gt;그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.&lt;/p&gt;
+이 서로 다른 hidden states가 도대체 어떤 것들을
+예의주시하는지 알아보기 위해서였죠
 
-&lt;p&gt;이 vector가 하는 일을 살펴보면 처음에는 계속
-off off off off … 입니다. 파란색이죠. (파란색이 off)&lt;/p&gt;
+이 실험을 해보면, 대부분의 hidden state는
+아무 의미 없는 패턴으로 예의 주시하고 있습니다.
 
-&lt;p&gt;그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
-그리고 따옴표가 닫히기 전까지 유지됩니다.&lt;/p&gt;
+여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
+다시 한번 forward 시켜 보는 것입니다.
 
-&lt;p&gt;그러다가 두 번째 따옴표를 만나면 다시
-값이 꺼집니다.&lt;/p&gt;
+여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
+hidden vector의 값을 의미합니다.
 
-&lt;p&gt;이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
-학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.&lt;/p&gt;
+RNN의 대부분의 Cell은  해석하기 어렵습니다.
 
-&lt;p&gt;그런 유용한 것들을 학습하기 위해서 그 Cell이
-따옴표를 감지할 수 있게 된 것입니다.&lt;/p&gt;
+대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
+low level language modeling 정도로밖에 보이지 않습니다.
 
-&lt;p&gt;우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
-세는 듯해 보이는 Cell도 발견했습니다.&lt;/p&gt;
+하지만 일부는 해석해볼만 합니다.
 
-&lt;p&gt;처음에는 0으로 시작했다가. 줄이 점점 길어지면
-점점 빨간색으로 변합니다.&lt;/p&gt;
+그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.
 
-&lt;p&gt;점점 증가하다가 줄바꿈이 이루어지면
-다시 0으로 리셋됩니다.&lt;/p&gt;
+이 vector가 하는 일을 살펴보면 처음에는 계속
+off off off off ... 입니다. 파란색이죠. (파란색이 off)
 
-&lt;p&gt;이 Cell은 언제 모델이 new line characters을 필요로 할 지
-지속적으로 추적하는 역할을 한다고 볼 수 있습니다.&lt;/p&gt;
+그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
+그리고 따옴표가 닫히기 전까지 유지됩니다.
 
-&lt;p&gt;그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.&lt;/p&gt;
+그러다가 두 번째 따옴표를 만나면 다시
+값이 꺼집니다.
 
-&lt;p&gt;우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
-이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.&lt;/p&gt;
+이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
+학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.
 
-&lt;p&gt;이를 통해 모델이 시퀀스를 더 잘
-학습할 수 있도록 도와줍니다.&lt;/p&gt;
+그런 유용한 것들을 학습하기 위해서 그 Cell이
+따옴표를 감지할 수 있게 된 것입니다.
 
-&lt;p&gt;그 밖에도 Comments를 찾아내거나 혹은
-들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.&lt;/p&gt;
+우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
+세는 듯해 보이는 Cell도 발견했습니다.
 
-&lt;p&gt;정말 놀라운 일입니다. 우리는 그저 다음 문자를
-예측하는 모델을 학습시켰을 뿐인데&lt;/p&gt;
+처음에는 0으로 시작했다가. 줄이 점점 길어지면
+점점 빨간색으로 변합니다.
 
-&lt;p&gt;결국 모델은 입력 데이터의 구조를
-학습하게 되었기 때문입니다.&lt;/p&gt;
+점점 증가하다가 줄바꿈이 이루어지면
+다시 0으로 리셋됩니다.
 
-&lt;p&gt;####&lt;/p&gt;
+이 Cell은 언제 모델이 new line characters을 필요로 할 지
+지속적으로 추적하는 역할을 한다고 볼 수 있습니다.
 
-&lt;p&gt;우리는 Computer Vision 수업이니 다시 Computer Vision
-에 관련된 예시로 돌아가 보겠습니다.&lt;/p&gt;
+그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.
 
-&lt;p&gt;앞서 Image Captioning Model에 대해서
-몇 번 언급했었습니다.&lt;/p&gt;
+우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
+이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.
 
-&lt;p&gt;이 모델은 입력은 이미지이고
-출력은 자연어로 된 Caption 입니다.&lt;/p&gt;
+이를 통해 모델이 시퀀스를 더 잘
+학습할 수 있도록 도와줍니다.
 
-&lt;p&gt;이 문제를 다루는 몇몇 논문들이 있습니다.
-다들 접근 방법은 비슷합니다.&lt;/p&gt;
+그 밖에도 Comments를 찾아내거나 혹은
+들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.
 
-&lt;p&gt;이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
-아주 “공정한 기준으로?” 예시를 이 논문으로 선택헀습니다.&lt;/p&gt;
+정말 놀라운 일입니다. 우리는 그저 다음 문자를
+예측하는 모델을 학습시켰을 뿐인데
 
-&lt;p&gt;우선 Caption은 가변길이 입니다. Caption 마다
-다양한 시퀀스 길이를 가지고 있습니다.&lt;/p&gt;
+결국 모델은 입력 데이터의 구조를
+학습하게 되었기 때문입니다.
 
-&lt;p&gt;여기에 RNN Language Model가 아주 잘 어울립니다.&lt;/p&gt;
+####
 
-&lt;p&gt;모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
-CNN은 지금까지 아주 많이 살펴봤었죠&lt;/p&gt;
+우리는 Computer Vision 수업이니 다시 Computer Vision
+에 관련된 예시로 돌아가 보겠습니다.
 
-&lt;p&gt;CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
-이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.&lt;/p&gt;
+앞서 Image Captioning Model에 대해서
+몇 번 언급했었습니다.
 
-&lt;p&gt;그러면 RNN은 Caption에 사용할
-문자들을 하나씩 만들어냅니다.&lt;/p&gt;
+이 모델은 입력은 이미지이고
+출력은 자연어로 된 Caption 입니다.
 
-&lt;p&gt;####&lt;/p&gt;
+이 문제를 다루는 몇몇 논문들이 있습니다.
+다들 접근 방법은 비슷합니다.
 
-&lt;p&gt;그렇다면 이 모델을 학습시킨 후에
-Test time에 어떻게 동작하는지 알아봅시다.&lt;/p&gt;
+이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
+아주 &quot;공정한 기준으로?&quot; 예시를 이 논문으로 선택헀습니다.
 
-&lt;p&gt;지금까지 살펴봤던 character level languate
-model과 아주 유사합니다.&lt;/p&gt;
+우선 Caption은 가변길이 입니다. Caption 마다
+다양한 시퀀스 길이를 가지고 있습니다.
 
-&lt;p&gt;우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
-다만 softmax scores를 사용하지 않고&lt;/p&gt;
+여기에 RNN Language Model가 아주 잘 어울립니다.
 
-&lt;p&gt;직전의 4,096-dim vector를 출력으로 합니다.&lt;/p&gt;
+모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
+CNN은 지금까지 아주 많이 살펴봤었죠
 
-&lt;p&gt;이 vector를 이용해서 전체 이미지 정보를
-요약하는데 사용할 것입니다.&lt;/p&gt;
+CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
+이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.
 
-&lt;p&gt;앞서 RNN language models에서 배웠듯이 모델이 문장을
-생성해 내기에 앞서 초기 값을 넣어줘야 합니다.&lt;/p&gt;
+그러면 RNN은 Caption에 사용할
+문자들을 하나씩 만들어냅니다.
 
-&lt;p&gt;이 경우에는 입력이 특별합니다. 모델에게 “여기 이미지 정보가
-있으니 이 조건에 맞는 문장을 만들어줘!” 라고 시작해야합니다.&lt;/p&gt;
+####
 
-&lt;p&gt;이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
-입력으로 받았습니다. 하나는 현재 스텝의 입력이고&lt;/p&gt;
+그렇다면 이 모델을 학습시킨 후에
+Test time에 어떻게 동작하는지 알아봅시다.
 
-&lt;p&gt;다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
-이 둘을 조합해서 다음 hidden state를 얻었습니다.&lt;/p&gt;
+지금까지 살펴봤던 character level languate
+model과 아주 유사합니다.
 
-&lt;p&gt;하지만 이제는 이미지 정보도 더해줘야 합니다.&lt;/p&gt;
+우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
+다만 softmax scores를 사용하지 않고
 
-&lt;p&gt;사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
-가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.&lt;/p&gt;
+직전의 4,096-dim vector를 출력으로 합니다.
 
-&lt;p&gt;다음 hidden state를 계산할 때마다 모든 스텝에
-이 이미지 정보를 추가합니다.&lt;/p&gt;
+이 vector를 이용해서 전체 이미지 정보를
+요약하는데 사용할 것입니다.
 
-&lt;p&gt;자 이제는 vocabulary의 모든 스코어들에 대한
-분포를 계산할 차례입니다.&lt;/p&gt;
+앞서 RNN language models에서 배웠듯이 모델이 문장을
+생성해 내기에 앞서 초기 값을 넣어줘야 합니다.
 
-&lt;p&gt;이 문제에서 vocabulary는 “모든 영어 단어들” 과
-같이 엄청나게 큽니다.&lt;/p&gt;
+이 경우에는 입력이 특별합니다. 모델에게 &quot;여기 이미지 정보가
+있으니 이 조건에 맞는 문장을 만들어줘!&quot; 라고 시작해야합니다.
 
-&lt;p&gt;그 분포에서 샘플링을 하고 그 단어를
-다음 스텝의 입력으로 다시 넣어줄 것입니다.&lt;/p&gt;
+이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
+입력으로 받았습니다. 하나는 현재 스텝의 입력이고
 
-&lt;p&gt;샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
-추정하고 다음 단어를 만들어냅니다.&lt;/p&gt;
+다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
+이 둘을 조합해서 다음 hidden state를 얻었습니다.
 
-&lt;p&gt;모든 스텝이 종료되면 결국 한 문장이 만들어집니다.&lt;/p&gt;
+하지만 이제는 이미지 정보도 더해줘야 합니다.
 
-&lt;p&gt;이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
-문장의 끝을 알려줍니다.&lt;/END&gt;&lt;/p&gt;
+사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
+가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.
+
+다음 hidden state를 계산할 때마다 모든 스텝에
+이 이미지 정보를 추가합니다.
+
+자 이제는 vocabulary의 모든 스코어들에 대한
+분포를 계산할 차례입니다.
+
+이 문제에서 vocabulary는 &quot;모든 영어 단어들&quot; 과
+같이 엄청나게 큽니다.
+
+그 분포에서 샘플링을 하고 그 단어를
+다음 스텝의 입력으로 다시 넣어줄 것입니다.
+
+샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
+추정하고 다음 단어를 만들어냅니다.
+
+모든 스텝이 종료되면 결국 한 문장이 만들어집니다.
+
+이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
+문장의 끝을 알려줍니다.
 
 &lt;END&gt; 가 샘플링되면 모델은 더이상 단어를 생성하지
 않으며 이미지에 대한 caption이 완성됩니다.
@@ -1313,7 +1301,7 @@ LSTM은 Long Short Term Memory라는 뜻입니다.
 
 LSTM은 RNN의 fancier 버전입니다.
 
-LSTM은 vanishing &amp;amp; exploding gradients 문제를
+LSTM은 vanishing &amp; exploding gradients 문제를
 완화시키기 위해서 디자인되었습니다.
 
 &quot;gradient clipping&quot; 같은 hack 을 쓰지 말고, 그레디언트가
@@ -1805,11 +1793,186 @@ RNN으로 다양한 새로운 문제에 도전해 볼 수 있습니다.
 
 
 
-&lt;br /&gt;
-&lt;br /&gt;
+&lt;br&gt;
+&lt;br&gt;
 
-- **Reference**
-&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry><entry><title type="html">[CS231n]CNN Architectures</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">## 1. LeNet (LeCun, 1998)
+- **Reference**</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
+
+![image](https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png)
+
+기존에는 페이지 색인을 생성하기 위해, Google Search Console에 들어가서 일일이 URL을 입력하고, 색인 생성 요청을 누른 뒤, 1~2분을 기다려야 했다. 매번 포스팅을 작성할 때마다 이런 번거로운 일을 하기도 귀찮고, 한동안 까먹고 밀리기라도 하면, 매우 끔찍하다... 블로그 조회수와도 직결되는 중요한 작업이기 때문에 안할수도 없어서, 이 귀찮은 과정을 자동화하는 방법에 대해 소개한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 2. Google Indexing API
+
+&gt; Indexing API를 사용하면 페이지가 추가되거나 삭제된 경우 사이트 소유자가 Google에 직접 알릴 수 있습니다. 이렇게 하면 Google에서 페이지를 새로 크롤링하도록 예약하여 사용자 트래픽의 질이 향상될 가능성이 있습니다. &lt;br&gt;&lt;br&gt; - Google Indexing API
+
+Google Indexing API 소개글의 일부이다. 위 소개글에서도 알 수 있듯이 Google Indexing API는 페이지가 새로 추가되거나 삭제된 경우, Search Console을 사용하지 않고도 간편하게 색인 생성을 요청할 수 있다.
+
+### 2-1) 초기 세팅
+
+#### 2-1-1) 서비스 계정 생성 후 사이트 소유자로 추가
+
+위 API를 사용하기 위해서는 몇 가지의 초기 세팅이 필요하다. 초기 세팅 방법은 아래 가이드북에 자세히 나와있다. 우선, 아래 링크를 클릭하여, `2. 서비스 계정에 소유자 상태 부여` 과정까지 따라하도록 하자. 어렵지 않으니, 차근차근 따라하면 된다. 중간에 json 파일을 열어서 client_email을 찾아야하는데, 마땅한 뷰어가 없을 경우 메모장으로 열면 된다.
+
+- **Link**
+
+  &lt;https://developers.google.com/search/apis/indexing-api/v3/prereqs&gt;
+
+![image](https://user-images.githubusercontent.com/84084372/206623473-7cc6189f-e1a8-4b6d-a500-2e4c81232466.png)
+
+
+#### 2-1-2) API 활성화
+
+서비스 계정을 사이트 소유자로 추가했으면, API 사용 설정을 해야한다. 우선, 아래 링크를 클릭하여 Google Cloud에 접속해준다.
+
+- **Link**
+
+  &lt;https://console.cloud.google.com/&gt;
+
+검색창에 Google Indexing API를 검색하여, 가장 상단에 노출되는 Indexing API를 클릭해준다.
+
+![image](https://user-images.githubusercontent.com/84084372/206622461-68aa4fc6-8217-43b0-9391-107b9d01154d.png)
+
+`API 사용해 보기`옆의 파란색 버튼을 눌러, API를 사용 설정해주면 된다. 본인은 이미 API를 사용 설정 했기 때문에 화면이 조금 다르게 보일 수 있다.
+
+![image](https://user-images.githubusercontent.com/84084372/206622508-613938f1-1d2e-4e3f-b49e-706e1a79207c.png)
+
+여기까지 따라한다면, API를 사용하기 위한 초기세팅은 모두 끝났다.
+
+&lt;br&gt;
+
+### 2-2) Indexing API 사용
+
+#### 2-2-1) Install oauth2client
+
+우선, 액세스 토큰을 가져오기 위해 oauth2client를 설치해야 한다. pip이나 conda를 사용하여 설치해주도록 하자.
+
+```
+&gt;&gt;&gt; pip install oauth2client
+```
+
+#### 2-2-2) 스크립트 작성
+
+oauth2client 설치가 끝났으면, 아래 코드를 복사하여 python 파일을 만들어준다. 실제 사용시에는 JSON_KEY_FILE, URL, TYPE만 바꾸어주면 된다.
+
+- **JSON_KEY_FILE**
+
+  - 2-1에서 다운받은 json 파일의 경로를 적어준다.
+
+- **URL**  
+
+  - 색인을 등록하고자 하는 URL의 주소를 입력한다.
+
+- **TYPE**  
+
+  - 색인을 생성하고 싶으면 URL_UPDATED, 지우고 싶으면 URL_DELETED를 입력한다.
+
+```python
+from oauth2client.service_account import ServiceAccountCredentials
+import httplib2
+import json
+
+############################
+# 실제 사용시 이 부분만 수정 #
+############################
+
+JSON_KEY_FILE = &quot;C:/Users/USER/Downloads/본인파일명.json&quot;
+URL = &quot;https://on-jungwoan.github.io/dl/cs231n_52/&quot;
+TYPE = &quot;URL_UPDATED&quot;
+# TYPE = &quot;URL_DELETED&quot;
+
+#############################
+#############################
+
+
+SCOPES = [ &quot;https://www.googleapis.com/auth/indexing&quot; ]
+ENDPOINT = &quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;
+
+credentials = ServiceAccountCredentials.from_json_keyfile_name(JSON_KEY_FILE, scopes=SCOPES)
+
+http = credentials.authorize(httplib2.Http())
+
+# Define contents here as a JSON string.
+# This example shows a simple update request.
+# Other types of requests are described in the next step.
+
+content = &quot;&quot;&quot;{
+  \&quot;url\&quot;: \&quot;&quot;&quot;&quot; + URL + &quot;&quot;&quot;\&quot;,
+  \&quot;type\&quot;: \&quot;&quot;&quot;&quot; + TYPE + &quot;&quot;&quot;\&quot;
+}&quot;&quot;&quot;
+
+response, content = http.request(ENDPOINT, method=&quot;POST&quot;, body=content)
+content_dict = json.loads( content.decode(&apos;utf-8&apos;) )
+
+if response[&apos;status&apos;] != &apos;200&apos;:
+  print(response[&apos;status&apos;], content_dict[&apos;error&apos;][&apos;message&apos;], sep=&quot;\n&quot;)
+```
+
+#### 2-2-3) 실행 및 디버깅
+
+Indexing API의 호출이 정상적으로 이루어진 경우, response로 HTTP 200이 반환된다. 그렇지 않은 경우 에러 코드와 메시지가 출력되게하였다. 
+
+![image](https://user-images.githubusercontent.com/84084372/206960780-d81e9310-37a7-4aa8-be8c-1d4a03de8542.png)
+
+
+에러 코드에 대한 설명은 아래 링크에서 확인할 수 있다.
+
+- **Link**
+
+  &lt;https://developers.google.com/search/apis/indexing-api/v3/core-errors#Global_Errors&gt;
+
+
+
+
+## Github Actions
+
+### Workflow 정의
+
+```yaml
+
+name: Python package
+
+on:
+  push:
+    branches: [ &quot;main&quot; ]
+  pull_request:
+    branches: [ &quot;main&quot; ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [&quot;3.8&quot;, &quot;3.9&quot;, &quot;3.10&quot;]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+```
+
+https://developers.google.com/search/apis/indexing-api/v3/quickstart
+
+https://jlhernando.com/blog/url-inspector-automator-node/
+
+https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
+
+https://zzsza.github.io/development/2020/06/06/github-action/
+
+https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry><entry><title type="html">[CS231n]CNN Architectures</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">## 1. LeNet (LeCun, 1998)
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207188293-f9dd2754-a9e8-4035-bc26-147c20cc712a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
 
@@ -2198,180 +2361,1064 @@ GoogLeNet과 같이 효율성을 중시한 CNN 아키텍쳐이다. squeeze layer
 
   [GoogLeNet(inception v1)의 구조](https://bskyvision.com/539)
 
-  [CNN architectures](https://bookandmed.tistory.com/58)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
+  [CNN architectures](https://bookandmed.tistory.com/58)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part Ⅱ</title><link href="http://localhost:4000/dl/cs231n_7/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part Ⅱ" /><published>2022-12-06T00:00:00+09:00</published><updated>2022-12-06T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_7</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_7/"># Optimization
 
-![image](https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png)
+Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.
 
-기존에는 페이지 색인을 생성하기 위해, Google Search Console에 들어가서 일일이 URL을 입력하고, 색인 생성 요청을 누른 뒤, 1~2분을 기다려야 했다. 매번 포스팅을 작성할 때마다 이런 번거로운 일을 하기도 귀찮고, 한동안 까먹고 밀리기라도 하면, 매우 끔찍하다... 블로그 조회수와도 직결되는 중요한 작업이기 때문에 안할수도 없어서, 이 귀찮은 과정을 자동화하는 방법에 대해 소개한다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206093883-3be0f259-49f9-4dfe-8c59-8498612931d4.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+위 그림에서도 알 수 있듯이, Normalization이 되지 않은 그래프는 Classifier가 조금만 움직여도 제대로 분류가 되지 않는다. 즉, Loss가 파라미터의 변화에 매우 민감하기 때문에 동일한 함수를 써도 학습시키기 어렵다. 반면, variance가 unit variance로 맞춰져 있고 zero-centered한 데이터는, 파라미터 변화에 덜 민감하기 때문에 최적화가 쉽고 학습이 잘 된다. Neural Network 내부에도 다수의 Linear Classifier가 있다고 생각할 수 있기 때문에, 적절한 Normalization 과정은 매우 중요하다.
+
+## 1. Sthochastic Gradient Descent (SGD)
+
+$$
+x_{t+1} = x_t - \alpha \nabla f(x_t)
+$$
+
+가장 간단한 Optimizer로서, Layer에서 mini-batch를 뽑아 Loss를 계산하고, gradient의 반대 방향으로 계속 파라미터 벡터를 업데이트 한다. Loss가 낮은 쪽으로 이동해야하기 때문에 gradient의 반대 방향으로 내려가야 함을 유의하자. 위 과정을 계속 반복하면 Loss가 줄어들게 되는데, 이것이 바로 SGD이다.
+
+### 1-1) 문제점
+
+#### 1-1-1) Poor conditioning
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206098726-c0b8b8bb-674f-4c66-8a1b-63cd4a1d8e95.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+만약 Loss 함수가 $f(x, y) = x^2 + y^2$와 같은 그래프라면, 아래로 볼록한 형태의 공간 그래프가 만들어진다. 이 때, 수평 방향으로는 기울기 변화가 작지만(등고선을 조금 통과), 수직 방향으로는 기울기 변화가 가파르기 때문에(등고선을 더 많이 통과), 두 벡터의 기울기 차로 인해 대각 방향으로 Loss가 줄어들게 된다. 따라서, Loss는 기울기가 가파른 방향으로 바로 내려가지 못하고, 사선으로 지그재그 하면서 minima에 도달하게 된다.
+
+#### 1-1-2) Local minima
+
+Loss function이 다음과 같은 Local Minima를 가지고 있다고 생각해보자.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206099361-5ef676b6-5630-4bfa-914c-7b46beedbc51.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+SGD는 위와 같은 Local minima를 만나게 되면, 그대로 학습이 영원히 중단된다. SGD는 local gradient를 찾아 그 반대방향으로 계속 나아가는 식으로 동작하는데, 한번 gradient가 0인 부분을 만나면 그 부분을 영원히 벗어나지 못하게 된다.
+
+#### 1-1-3) Saddle point (안장점)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206107388-91d111bb-6221-4aa1-89a9-082eadf6221b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+또한 SGD는, 위 그림과 같은 안장점에서 학습이 매우 더디게 진행되는 문제가 존재한다. 안장점에서는 gradient가 완전히 0은 아니지만, 0에 가까운 값을 가지기 때문에 업데이트가 매우 느리게 진행된다. 안장점은 차원이 높아질수록 매우 빈번하게 발생하므로, 이러한 굴곡을 벗어날 수 있는 힘이 필요하다.
+
+&lt;br&gt;
+
+## 2. SGD + Momentum
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206110916-f566827d-b697-4fd7-b395-6432eddd70a5.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+$$
+\begin{align}
+v_{t+1} &amp;= \rho v_t + \nabla f(x_t) \\
+x_{t+1} &amp;= x_t - \alpha v_{t+1}
+\end{align}
+$$
+
+위 SGD의 문제를 해결하기 위해, gradient 방향 뿐만 아니라 velocity까지 고려한 Optimizer이다. 이때, velocity의 초기값 $v_0$는 0으로 두고, velocity의 영향력은 파라미터 $\rho$를 도입하여 맞춰준다. $\rho$는 보통 0.9나 0.99와 같은 높은 값을 사용한다. 여기에 gradient를 더하여, gradient vector 그대로의 방향이 아닌 velocity vector 방향으로 나아간다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206109994-96484e69-d27d-4c9b-9930-154ba8c4328a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+가령, local minima나 saddle point에 도달하더라도 momentum이 아직 살아있기 때문에, 탈출하여 global minima에 도달할 수 있게 된다. 높은 곳에서 떨어지는 공의 움직임을 생각하면 된다. 또한, poor conditioning의 상황에서도, momentum이 지그재그로 움직이려는 변동을 상쇄시켜버린다. 이를 통해 loss에 민감한 수직 방향 변동을 줄여주고 수평 방향 움직임을 가속화 시키게 된다(Vanila SGD가 구불구불 움직이는 것에 비해 momentum은 global minima를 향해 더 부드럽게 움직인다).
+
+### 2-1) Learning rate decay
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206358845-3f73cd46-eea9-4d39-a592-c631a2f20c4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+학습에 있어서 가장 중요한 파라미터인 Learning rate를 잘 고르는 것은 매우 어렵다. 이런 경우, Learning rate decay라는 전략을 사용해 볼 수 있다. Learning rate decay란, 처음에는 Learning rate를 높게 설정한 다음, 학습이 진행될 수록 Learning rate를 점점 낮추는 방법이다. 위 그래프에서 Loss가 평평해지다가 다시 내려가는 구간이 바로 Learning rate decay를 적용한 구간이다. 위 그래프에서도 확인할 수 있듯이, Loss가 일정수준 감소하면 감소폭이 점점 줄어들다가 어느 순간 특정 값에 수렴한다. 이는, Learning rate가 너무 높아서 더 깊게 들어가지 못해 발생하는 현상이다. 따라서 이 때 Learning rate를 더 줄여주면, 지속해서 Loss를 감소시킬 수 있다.
+
+
+학습과정 동안에 꾸준히 Learning rate를 낮추는 exponential decay 방법을 사용할 수도 있고, 특정 반복(ex. 100,000iter)마다 Learning rate를 낮추는 방법도 있다. 상황에 맞게 사용하면 될 것 같다. Learning rate decay는 자주 사용하는 기법은 아니고, SGD Momentum을 Optimizer로 사용할 때 주로 적용한다.
+
+&lt;br&gt;
+
+## 3. Nesterov momentum
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206111012-63b6edf9-70b2-4c69-9bc7-63a1e095ac84.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+$$
+\begin{align}
+v_{t+1} &amp;= \rho v_t + \nabla f(x_t + \rho v_t) \\
+x_{t+1} &amp;= x_t - \alpha v_{t+1}
+\end{align}
+$$
+
+Momentum은 Gradient vector의 방향과 Velocity vector 방향을 가중평균한 방향으로 업데이트되는 것을 확인할 수 있었다. Nesterov momentum은 기존 방식에 비해 조금 더 업그레이드 된 버전으로, 일단 Velocity의 방향으로 움직인 후, 그 곳에서의 Gradient를 계산하여 다시 원점으로 돌아와 가중평균한다. 수식을 살펴보면, $x_t$ 에 추가적으로 velocity 값인 $\rho v_t$ 가 더해진 지점에서 gradient를 구하는 것을 확인할 수 있다. 그러나 위 식을 코드로 나타낼 때, 이미 구성되어있는 기본 optimization algorithm의 API 코드와 구조가 달라 호환성이 떨어지므로, 실제로는 아래와 같이 변형된 식을 사용한다.
+
+$$
+let, \bar{x}_t = x_t + \rho v_t \\
+$$
+
+$$
+\begin{align}
+
+v_{t+1} &amp;= \rho v_t + \alpha \nabla f( \bar{x}_t ) \\
+x_{t+1} &amp;= x_t -  \rho v_t + (1+\rho)v_{t+1}\\
+&amp;= \bar{x}_t + v_{t+1} + \rho (v_{t+1} - v_t)
+
+\end{align}
+$$
+
+이 식을 살펴보면, 현재/이전의 velocity간의 error-correcting term이 추가된 것으로 해석할 수 있다. Nesterov momentum을 활용하면, velocity의 방향이 잘못되었을 경우 현재 gradient 방향을 좀 더 활용할 수 있으며, 방향을 미리 예측하고 가기 때문에 Momentum보다 조금 더 빠르다고 한다. 그러나, Nesterov momentum은 볼록 최적화(convex optimization)에서는 좋은 성능을 보이지만, Neural network와 같은 non-convex optimization에서는 성능이 보장되지 않아, 잘 사용하지는 않는다.
+
+- **cf) minima가 좁고 깊은(Sharp) 곳에 있을 경우, momentum에 의해 minima를 건너 뛰는 경우가 생길 수 있지 않을까?**
+
+  우선, sharp한 minima는 좋은 minima가 아니다. 이러한 minima는 그만큼 특정 데이터에 overfitting 될 확률이 매우 높다. 하지만 데이터가 많아질수록 대부분의 경우 minima가 평평해지며, 이렇게 아주 평평한 minima는 training data의 변화에 좀 더 유연하게 대처할 수 있다. 따라서 양질의 좋은 데이터를 사용할 경우, Sharp한 minima에 대해서는 걱정하지 않아도 된다.
+
+&lt;br&gt;
+
+## 4. AdaGrad
+
+$$
+\begin{align}
+g(t+1) &amp;= g(t) + \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}
+$$
+
+훈련 도중 계산되는 gradient를 활용하는 방법이다. velocity term 대신에 각 gradient의 제곱합인 gradient squared term을 이용한다. 학습 도중에 계산되는 gradient에 제곱을 해서 계속 더해 $g()$에 저장하며, update시에 앞서 계산한 $g()$로 update term을 나눠준다. 이 때, 분모가 0이되는 상황을 방지하기 위해 분모에 작은 $\epsilon$값을 넣어준다(보통 1e-7, 1e-8).
+
+small dimension에서는 gradient가 작은 값이므로 큰 값으로 나눠져, 속도가 점점 빨라진다. 반대로, Large dimension에서는 gradient가 큰 값이므로 속도가 점점 줄어든다. 이를 통해, 파라미터 x마다 맞춤형 학습률을 제공하게 된다.
+
+### 4-1) 문제점
+
+학습을 계속 진행할수록 gradient의 제곱이 더해져 $g()$의 값은 커지고, 분모가 커지므로 step size는 점점 작아진다. convex case에서는 minimum에 근접하면 서서히 속도를 줄여서 수렴하는 게 도움이 될 수 있지만, non-convex case에서는 saddle point에 걸렸을 때 학습이 멈출 수 있다.
+
+&lt;br&gt;
+
+## 5. RMSProp
+
+Adagrad의 step size 문제를 해결한 것이 바로 RMSProp이다.
+
+$$
+\begin{align}
+g(t+1) &amp;= \gamma  g(t) + (1- \gamma) \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}
+$$
+
+AdaGrad의 gradient 제곱항을 그대로 사용하지만, 그저 누적만 시키는 것이 아니라 기존 누적값에 decay_rate인 $\gamma$를 곱해준다. decay rate는 보통 0.9 ,0.99와 같은 높은 값을 사용한다. gradient의 제곱을 계속 나눠주어 step size를 조절한다는 점에서 AdaGrad와 비슷하지만, RMSProp은 step size가 점점 줄어드는 문제를 해결하였다.
+
+&lt;br&gt;
+
+## 6. Adam
+
+$$
+Adam \; (almost)\\
+$$
+
+$$
+\begin{align}
+
+M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+x_{t+1} &amp;= x_t - \alpha \frac{M(t)}{ \sqrt{V(t) + \epsilon} }
+
+
+\end{align}
+$$
+
+Adam은 momentum 계열과 Ada 계열 Optimizer의 조합이라고 볼 수 있으며, RMSProp에서 분자의 gradient에 Momentum이 추가된 형태이다. 즉, Momentum과 RMSProp을 합친 것과 같다고 볼 수 있다. 보통 $\beta_1$ = 0.9, $\beta_2$ = 0.999로 설정하고, Laerning rate $\alpha$를 1e-3 or 1e-4정도로만 설정해 놓으면, 거의 모든 아키텍쳐에서 잘 동작한다. 또한 Adam에서도 마찬가지로, 분모가 0이 되는 경우를 방지하기 위해 분모에 $\epsilon$을 추가해주었다(1e-7 or 1e-8). 
+
+### 6-1) 문제점
+
+그러나 위 식에는 큰 문제점이 하나 존재한다. 초기 Step에서는 $V()$의 값을 0으로 Initailize하게 되는데, 이 값이 분모에 들어가게 되면 step이 매우 큰 값으로 초기화된다. 이렇게 되면 초기화가 엉망이 되어 아주 엉뚱한 곳으로 값이 이동할 것이고, 결국 minima에 수렴하지 않을 수도 있다.
+
+### 6-2) 해결 : bias correction term
+
+$$
+\mathsf{Adam \; (Full \ Form)}\\
+$$
+
+$$
+\begin{align}
+
+M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+\end{align}
+$$
+
+$$
+\hat{ M }(t) = \frac{ M(t) }{ 1 - \beta_1^t  } \\
+\hat{ V }(t) = \frac{ V(t) }{ 1 - \beta_2^t } \\
+$$
+
+$$
+x_{t+1} = x_t - \alpha \frac{\hat{M}(t)}{\sqrt{\hat{V}(t) - \epsilon}}
+$$
+
+따라서 실제 Adam에서는 first moments($M$, Momentum)와 second moments($V$, RMSProp)를 update하고 난 후 현재 step에 맞는 적절한 unbiased term을 계산해준다. 딥러닝 분야에서 일반적으로 가장 많이 사용하는 Optimizer이며, 별다른 계획이 없는 경우 Adam을 사용하면 대체로 좋은 성능을 보인다.
+
+&lt;br&gt;
+
+## 7. Visualization
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206355974-60560ff9-a46a-4fc2-a562-af08ba1aeea1.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+위 장면을 보면, Adam을 제외한 다른 Optimizer들은 모두 global minima에 도달하지 못하는 모습을 확인할 수 있다.
+
+그러나 아래의 참고자료와 같이 다른 Optimizer만이 global minima에 도달하는 경우도 있기 때문에, 상황에 맞는 Optimizer를 사용하는 것이 중요하다고 할 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://emiliendupont.github.io/imgs/optim_viz_rastrigin.gif&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+### 7-1) 반응형 Visualization 사이트
+
+- &lt;https://distill.pub/2017/momentum/&gt;
+
+- &lt;https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true&gt;
+
+- &lt;https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function&gt;
+
+- &lt;https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function&gt;
 
 &lt;br&gt;
 &lt;br&gt;
 
-## 2. Google Indexing API
+# Second-Order Optimization
 
-&gt; Indexing API를 사용하면 페이지가 추가되거나 삭제된 경우 사이트 소유자가 Google에 직접 알릴 수 있습니다. 이렇게 하면 Google에서 페이지를 새로 크롤링하도록 예약하여 사용자 트래픽의 질이 향상될 가능성이 있습니다. &lt;br&gt;&lt;br&gt; - Google Indexing API
+## 1. Newton method
 
-Google Indexing API 소개글의 일부이다. 위 소개글에서도 알 수 있듯이 Google Indexing API는 페이지가 새로 추가되거나 삭제된 경우, Search Console을 사용하지 않고도 간편하게 색인 생성을 요청할 수 있다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360046-a992da56-5050-402b-9f4c-f9e4b8c82192.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
 
-### 2-1) 초기 세팅
+first-order optimization(Adam, RMSProp 등)은 어떤 한 점에서 gradient를 계산하여 손실함수를 선형 함수로 근사시킨다. 이 근사함수를 실제 손실함수라고 가정하고 step을 내려가게 되는데, 이 근사함수로는 멀리까지 갈 수 없다는 한계가 존재한다.
 
-#### 2-1-1) 서비스 계정 생성 후 사이트 소유자로 추가
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360062-941a2845-e00a-480b-9352-f6db877c280e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
 
-위 API를 사용하기 위해서는 몇 가지의 초기 세팅이 필요하다. 초기 세팅 방법은 아래 가이드북에 자세히 나와있다. 우선, 아래 링크를 클릭하여, `2. 서비스 계정에 소유자 상태 부여` 과정까지 따라하도록 하자. 어렵지 않으니, 차근차근 따라하면 된다. 중간에 json 파일을 열어서 client_email을 찾아야하는데, 마땅한 뷰어가 없을 경우 메모장으로 열면 된다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206360485-23f39c66-0875-49c1-8034-d00eb3f291ae.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+따라서 등장하게 된 방법이 Second-Order Optimization인데, 이 optimization은 손실함수를 2차 함수로 근사시킨다. 이러한 2차 근사를 이용하면 minima에 더 잘 근접할 수 있다고 한다. 이는, 다차원으로 확창시켰을 때 `Newton step`이라고 불리며, Hessian matrix(2차 미분값들로 된 행렬)의 역행렬을 이용하여 (실제 손실함수의 2차 근사를 통해) minima로 곧장 이동한다. 또한, 매 순간 minima를 향해 이동하기 때문에, 이론상 Learning rate가 필요하지 않다(실제로는 2차 근사도 완벽하지 않기 떄문에 필요하긴 함)는 장점이 있다. 그러나 파라미터가 많은 딥러닝에서는 메모리 문제떄문에 사용할 수 없고, Full Hessian을 근사시켜 사용하는 `quasi-Newton methods`를 사용한다.
+
+&lt;br&gt;
+
+## 2. quasi-Newton methods (L-BFGS)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362004-e24584b4-9c6f-42d2-84ab-c7517d5a2490.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+위에서 잠시 설명했듯이, Newton 방법에서 Hessian의 계산을 근처 함수값을 이용하여 근사적으로 numeric하게 계산하여 사용하는 최적화 기법들을 Quasi-Newton Method(준-뉴턴 방식)라고 부른다. Hessian을 구체적으로 어떻게 근사하느냐에 따라서 여러 Quasi-Newton 방법들이 있으며 그중 가장 대표적으로 사용되는 방법이 L-BFGS (Limited memory Broyden–Fletcher–Goldfarb–Shanno) 방법이다. Full Batch Update가 가능하고 Stochasticity가 적은 경우라면, L-BFGS가 Adam보다 더 좋은 선택이 될 수 있다고 한다. stochastic case와 non-convex problems에서 2차 근사가 잘 동작하지 않기 때문에, NN(DNN 등)에서는 많이 사용되지는 않지만, stochasticity와 파라미터가 적은 Style transfer와 같은 알고리즘에서 종종 사용되는 Optimizer이다. 
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Train/Test의 Error gap 해소
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362142-15ace2a0-36df-47ec-8c4b-31f01ca12aab.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+optimization 알고리즘들은 training error를 줄이고, 손실 함수를 최소화시키기 위한 역할을 수행한다. 그러나 우리는, training error보다는 train/test error의 격차를 줄이는 것이 진정한 목표이다. 그렇다면, 한번도 보지 못한 데이터에 대한 error를 줄이는 방법은 어떤 것들이 있을까? 
+
+## 1. Model ensemble
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362561-cd03e64c-d4fe-4b06-b185-f094bda07724.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+모델을 하나만 학습시키지 말고 n개의 모델을 독립적으로 학습 시켜, n개 모델 결과의 평균을 이용한다. 모델의 수가 늘어날수록 오버피팅이 즐어들고 성능이 조금씩 향상된다(보통 2%정도).
+
+또한, 모델을 독립적으로 학습시키는 것이 아니라, 학습 도중 중간 모델들을 저장(snapshots)하고 앙상블로 사용할 수도 있다. 그리고 나서, test time에는 여러 snapshots에서 나온 예측값들을 평균 내서 사용한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206362687-09681dd5-957f-44ff-bf1c-59260e2da631.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+- **cf) Polyak averaging**
+
+  또한, 학습하는 동안에 파라미터의 exponentially decaying everage를 계속 계산하는 `Polyak averaging`이라는 방법을 사용해 볼수도 있다. 이 방법은 학습중인 네트워크의 smooth ensemble 효과를 얻을 수 있으며, checkpoinsts에서의 파라미터를 그대로 쓰지 않고 smoothly decaying average를 사용하는 방법이다. 한번쯤 시도해 볼만한 방법이긴 하지만, 실제로 자주 사용하지는 않는다.
+
+&lt;br&gt;
+
+## 2. Regularization 
+
+### 2-1) Dropout
+
+모델 앙상블을 하려면, N개의 모델을 돌려야 하는데 자원이나 시간 방면에서 그렇게 좋은 방법은 아니다. 따라서 단일 모델의 성능을 올리는 것이 가장 바람직한 방법이고, 그 방법이 바로 Regularization이다. regularization은 모델이 train data에 완전히 fit하는 것을 막아주어 한번도 보지 못한 데이터에서의 성능을 향상시킨다. 앞선 포스팅에서 L2 regularization에 대해 소개한 적이 있었다( 참고 : [[CS231n]Loss Functions and Optimization](https://on-jungwoan.github.io/dl/cs231n_3/#2-2-regularization%EC%9D%98-%EC%A2%85%EB%A5%98) ). 그러나 NN에서는 L2 regularization이 잘 어울리지는 않고, dropout이라는 regularization을 가장 많이 사용한다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206363244-79b20be1-c338-477b-8274-9038e25ad0a0.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+dropout은 정말 간단한데, forward pass 과정에서 임의로 일부 뉴런을 0으로 만드는 것이다. dropout은 한 레이어씩 진행하며, forward pass iteration마다 0이 되는 뉴런이 바뀐다. 이를 통해, 특징들간의 상호작용을 방지하여 어떤 일부 features에만 의존하지 못하게 하고, 다양한 geatures를 골고루 사용하게 함으로써 오버피팅을 방지한다. Dropout은 fc layer에서 흔히 사용하지만, conv layer에서도 종종 볼 수 있다.
+
+- **about BN**
+
+  BN에도 충분히 regularization 효과가 있기 때문에 BN 사용시에는 Dropout을 사용하지 않는다. 그러나 예외적으로, BN을 사용했음에도 불구하고 오버피팅이 발생하는 경우에는 Dropout과 같은 다양한 regularization 방법을 추가해로 사용해 볼 수 있다(오버피팅의 조짐이 보일 떄 하나씩 추가시켜 봄).
+
+#### 2-1-1) 앙상블 효과
+
+Dropout을 적용한 네트워크를 살펴보면, 원본 NN의 일부만 사용하는 서브 네트워크라고 해석할 수 있다. 또한, 각 forward pass interation마다 dropout을 다르게 적용하기 때문에, 서로 파라미터를 공유하는 서브 네트워크 앙상블 모델을 동시에 학습시키는 것으로 해석할 수 있다. 즉, 단일 네트워크로 앙상블을 할 수 있는 것이다.
+
+#### 2-1-2) Average out in test time
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364195-ece425b0-ae00-4a07-894b-2ac579439b6b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+기존 Neural Network는 가중치 w와 입력 x에 대한 함수였다. 그러나 dropout을 사용하면 network에 random dropout mask인 z가 추가된다. 그러나 test time에서 이러한 임의성(stochastic)이 포함되는 것은 바람직하지 않다. test time에 이러한 임의성이 추가되면, 모델의 결과가 매번 바뀌게 되므로, 적분을 통해 이 임의성을 average out시킨다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206364426-0d0f7f5d-1ca1-4508-b0c0-ec49b3ceaf5a.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+
+그러나, 실제로 이 적분을 계산하기는 까다롭기 때문에 dropout에서는 위 수식과 같이 locally cheap한 방법을 사용하여 해당 식을 근사시킨다.
+
+
+### 2-2) Inverted Dropout
+
+train time에서는 데이터를 마구잡이로 흔들어놓아, 모델이 데이터에 완전히 fit하지 않게 하고, test time에서는 randomness를 average out 시켜서 generalization 효과를 준다고 한다. 나중에 자세히 알아보도록 하자.
+
+### 2-3) Data augmentation
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206369628-301c5b85-f122-4c15-984e-c36c3a26d07a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+이미지의 label을 바꾸지 않으면서, 이미지를 변환시킬 수 있는 방법을 말한다. 원본 이미지를 사용하지 않고, 카테고리만 유지한 채 반전시키거나 임의의 다양한 사이즈로 crop할 수도 있음(카테고리는 동일). 또는 이미지의 밝기나 contrast등을 바꿀 수도 있다. 이는 일종의 regularization이며, 다른 regularization과 동일하게 train time에는 stochasticity가 추가되고, test time에는 marginalize out 시킨다.
+
+### 2-4) DropConnect
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370104-19232aab-493e-4973-a92f-6cbd3577147e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+activation이 아닌 width matrix를6임의적으로 0으로 만들어줌
+
+### 2-5) fractional max pooling
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370190-5210a695-f004-4828-89fa-97ef55d8d3c2.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+실제로 자주 사용하지는 않지만, Justin Johnson이 추천하는 아주 좋은 regularization 기법이다. 보통 2x2 max pooling은 고정된 2x2 영역에서 pooling을 하지만, fractional max pooling은 max pooling 범위가 임의로 선정된다. test time시에는, pooling layer를 고정시키거나, 여러개의 pooling regions를 만들어 stochasticity를 averaging over시키면 된다.
+
+### 2-6) stochastic depth
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206370837-df7efe04-162e-462c-8c5d-23f9f60eb0ff.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+
+train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에서는 전체 네트워크를 다 사용하는 방법이다. regularization 효과는 dropout과 같은 다른 방법과 비슷한 수준이다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Transfer learning
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/181512540-12cc7327-f854-4ba3-8a54-c7990caed605.png&quot;&gt;&lt;/p&gt;
+
+
+충분한 데이터가 없는 경우, 오버피팅의 위험성이 증가하게 되는데, 이런 경우 사용할 수 있는 방법이 Transfer learning이다. 우선, ImageNet과 같은 거대한 데이터로 학습이 된 모델의 FC Layer를 초기화 시킨다. 그리고 우리가 필요한 클래스의 개수로 맞춰주기만 하면 된다. 그리고 이 Layer 이전의 모든 Layer 가중치는 freeze시켜 더 이상 업데이트 되지 않게 하고, 마지막 레이어만 가지고 데이터를 학습시킨다. 이는 마치 Linear Classifier를 학습시키는 것과 같다(아주 작은 데이터셋에도 적용이 가능함) 만약 데이터가 조금 더 있다면 전체 네트워크를 fine-tuning하여 사용할 수 있다. 이 때, 기존의 모델이 잘 동작하는 경우, 보통 Learning rate를 기존 모델보다 낮게 설정한다. 기존 LR의 1/10정도로 초기화하면 대체로 잘 동작한다. 보다 자세한 설명은 아래 포스팅에 자세히 정리해두었다.
 
 - **Link**
 
-  &lt;https://developers.google.com/search/apis/indexing-api/v3/prereqs&gt;
+  [Pytorch를 사용한 분류문제 학습 : 전이학습이란?](https://on-jungwoan.github.io/dl/04_Leaf_Diseases(1)/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80)
 
-![image](https://user-images.githubusercontent.com/84084372/206623473-7cc6189f-e1a8-4b6d-a500-2e4c81232466.png)
-
-
-#### 2-1-2) API 활성화
-
-서비스 계정을 사이트 소유자로 추가했으면, API 사용 설정을 해야한다. 우선, 아래 링크를 클릭하여 Google Cloud에 접속해준다.
-
-- **Link**
-
-  &lt;https://console.cloud.google.com/&gt;
-
-검색창에 Google Indexing API를 검색하여, 가장 상단에 노출되는 Indexing API를 클릭해준다.
-
-![image](https://user-images.githubusercontent.com/84084372/206622461-68aa4fc6-8217-43b0-9391-107b9d01154d.png)
-
-`API 사용해 보기`옆의 파란색 버튼을 눌러, API를 사용 설정해주면 된다. 본인은 이미 API를 사용 설정 했기 때문에 화면이 조금 다르게 보일 수 있다.
-
-![image](https://user-images.githubusercontent.com/84084372/206622508-613938f1-1d2e-4e3f-b49e-706e1a79207c.png)
-
-여기까지 따라한다면, API를 사용하기 위한 초기세팅은 모두 끝났다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/206378927-20171833-3e38-48ef-8c3a-84003fe4c167.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
 
 &lt;br&gt;
+&lt;br&gt;
 
-### 2-2) Indexing API 사용
+- **Reference**
 
-#### 2-2-1) Install oauth2client
+  [수식과 코드로 보는 경사하강법](https://twinw.tistory.com/247)
 
-우선, 액세스 토큰을 가져오기 위해 oauth2client를 설치해야 한다. pip이나 conda를 사용하여 설치해주도록 하자.
+  [Interactive Visualization of Optimization Algorithms in Deep Learning](https://emiliendupont.github.io/2018/01/24/optimization-visualization/)
 
-```
-&gt;&gt;&gt; pip install oauth2client
-```
+  [최적화 기법의 직관적 이해](https://darkpgmr.tistory.com/149)
 
-#### 2-2-2) 스크립트 작성
+  [Training Neural Networks II](https://bookandmed.tistory.com/56)
 
-oauth2client 설치가 끝났으면, 아래 코드를 복사하여 python 파일을 만들어준다. 실제 사용시에는 JSON_KEY_FILE, URL, TYPE만 바꾸어주면 된다.
-
-- **JSON_KEY_FILE**
-
-  - 2-1에서 다운받은 json 파일의 경로를 적어준다.
-
-- **URL**  
-
-  - 색인을 등록하고자 하는 URL의 주소를 입력한다.
-
-- **TYPE**  
-
-  - 색인을 생성하고 싶으면 URL_UPDATED, 지우고 싶으면 URL_DELETED를 입력한다.
+  A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 7</summary></entry><entry><title type="html">[업무 자동화] 행 생성 업무 자동화(초안)</title><link href="http://localhost:4000/toy_project/auto_raw/" rel="alternate" type="text/html" title="[업무 자동화] 행 생성 업무 자동화(초안)" /><published>2022-12-02T00:00:00+09:00</published><updated>2022-12-02T00:00:00+09:00</updated><id>http://localhost:4000/toy_project/auto_raw</id><content type="html" xml:base="http://localhost:4000/toy_project/auto_raw/">&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[auto_raw_make.py]&lt;/strong&gt;&lt;/div&gt;
 
 ```python
-from oauth2client.service_account import ServiceAccountCredentials
-import httplib2
-import json
+import os
+import pandas as pd
+import numpy as np
+import random
 
-############################
-# 실제 사용시 이 부분만 수정 #
-############################
+PATH = &apos;C:/Users/USER/Desktop/자료/excel_50_row_온정완&apos;
+SAVE_PATH = &apos;C:/Users/USER/Desktop/자료/result&apos;
+file_dir_list = []
 
-JSON_KEY_FILE = &quot;C:/Users/USER/Downloads/본인파일명.json&quot;
-URL = &quot;https://on-jungwoan.github.io/dl/cs231n_52/&quot;
-TYPE = &quot;URL_UPDATED&quot;
-# TYPE = &quot;URL_DELETED&quot;
+for _, _, files in os.walk(PATH):
+    for f in files:
+        tmp_df = pd.read_excel(os.path.join(PATH, f))
 
-#############################
-#############################
+        for row in range(len(tmp_df), 51):
+            row_tmp = [row]
+            for col in range(1, len(tmp_df.columns)):
+                if tmp_df.iloc[:,col].isna().sum() == len(tmp_df.iloc[:,col]):
+                    row_tmp.append(np.nan)
+                    continue
 
+                while True:
+                    choice = random.choice(tmp_df.iloc[:,col])
+                    if choice == choice:
+                        break
+                row_tmp.append( choice )
 
-SCOPES = [ &quot;https://www.googleapis.com/auth/indexing&quot; ]
-ENDPOINT = &quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;
+            tmp_df.loc[row,:] = row_tmp  
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(JSON_KEY_FILE, scopes=SCOPES)
+        tmp_df.to_excel( os.path.join(SAVE_PATH, f) )       
+```</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="toy_project" /><category term="python" /><category term="ICT인턴십" /><summary type="html">업무 자동화 초안</summary></entry><entry><title type="html">[CS231n]Training Neural Networks, Part I</title><link href="http://localhost:4000/dl/cs231n_6/" rel="alternate" type="text/html" title="[CS231n]Training Neural Networks, Part I" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_6</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_6/"># Ⅰ. activation functions
 
-http = credentials.authorize(httplib2.Http())
+FC, CNN 등등의 Layer는, 데이터 입력이 들어오면 가중치와 곱하는 연산을 마친 뒤, 활성함수(비선형 연산)를 거치게 된다. 지금부터는 활성 함수의 종류와 장단점에 대하여 소개한다.
 
-# Define contents here as a JSON string.
-# This example shows a simple update request.
-# Other types of requests are described in the next step.
+## 1. sigmoid
 
-content = &quot;&quot;&quot;{
-  \&quot;url\&quot;: \&quot;&quot;&quot;&quot; + URL + &quot;&quot;&quot;\&quot;,
-  \&quot;type\&quot;: \&quot;&quot;&quot;&quot; + TYPE + &quot;&quot;&quot;\&quot;
-}&quot;&quot;&quot;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205562519-723d85a3-7a55-46d4-aa6a-a3efc8149d0b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
 
-response, content = http.request(ENDPOINT, method=&quot;POST&quot;, body=content)
-content_dict = json.loads( content.decode(&apos;utf-8&apos;) )
+$$
+\sigma(x) = \frac{1}{1+e^{-x}}
+$$
 
-if response[&apos;status&apos;] != &apos;200&apos;:
-  print(response[&apos;status&apos;], content_dict[&apos;error&apos;][&apos;message&apos;], sep=&quot;\n&quot;)
-```
+각 입력을 받아서 그 입력을 0~1 사이의 값이 되도록 해준다. 입력값이 크면 출력은 1에 가까울 것이고, 그렇지 않으면 0에 가까울 것이다. 뉴런의 firing rate를 saturation 시키는 것으로 해석시킬 수 있어서 인기가 많았다고 한다(= 0~1 범위의 값을 가질 수 있어서 인기가 많았다).
 
-#### 2-2-3) 실행 및 디버깅
+### 1-1) 문제점
 
-Indexing API의 호출이 정상적으로 이루어진 경우, response로 HTTP 200이 반환된다. 그렇지 않은 경우 에러 코드와 메시지가 출력되게하였다. 
+#### 1-1-1) Gradient Vanishing 문제
 
-![image](https://user-images.githubusercontent.com/84084372/206960780-d81e9310-37a7-4aa8-be8c-1d4a03de8542.png)
+sigmoid의 양 끝값은 saturation 되어있는 것을 확인할 수 있는데, 이러한 sigmoid의 특성이 gradient를 없애는 문제가 발생한다. sigmoid를 activation function으로 사용했을 때, backprop 과정에서 일어날 수 있는 상황을 생각해보자.
 
-
-에러 코드에 대한 설명은 아래 링크에서 확인할 수 있다.
-
-- **Link**
-
-  &lt;https://developers.google.com/search/apis/indexing-api/v3/core-errors#Global_Errors&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205565518-254a91cb-4b04-4df3-bddb-d12e51fd909d.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
 
 
+우선, sigmoid gate의 gradient는 $\frac{\partial L}{\partial x} = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial x}$이며, 이 gradient는 앞단으로 계속 전파된다. 이 때, 만약 x가 -10이라면, $\frac{\partial \sigma}{\partial x}=0$(x=-10에서 sigmoid가 flat하기 때문에)이므로 gradient가 0이 된다. 따라서 이 부분에서 gradient가 죽어버리게 되고 밑으로 0이 계속 전달되게 된다. 반대로, x가 10인 경우에도 동일하게 sigmoid가 flat하므로 gradient가 다 죽게된다. 따라서 sigmoid가 flat하지 않은 x=0 근처에서만 잘 동작하고 나머지 구간에서는 이러한 기울기 소실문제가 발생한다.
+
+#### 1-1-2) No zero-centered
+
+sigmoid의 output은 0~1사이의 값으로, 항상 양수이며 zero-centered하지 않다. 
+
+또한, sigmoid는 $\sum_{i}w_i x_i + b$ 를 input으로 받으므로, 이를 수식으로 $ f( \sum_{i}w_i x_i + b) $ 와 같이 표현할 수 있다. 여기서, W에 대한 $gradient = \frac{\partial L}{\partial \sigma} \frac{\partial \sigma}{\partial w}$ 인데, $\frac{\partial f}{\partial w}$는 w가 모두 소거되므로 x에 관한 식임을 알 수 있다. 여기서, sigmoid는 항상 양수이기 때문에 x(local gradient)도 항상 양수이다. 따라서 sigmoid의 gradient는 x값에 상관없이 항상 upstream gradient의 부호와 동일하다는 것을 알 수 있다. 즉, W가 모두 같은 방향(파라미터 업데이트 시, 다 같이 증가 or 다 같이 감소)으로 움직이게 될 것이다. 이렇게 되면 다음과 같은 문제가 발생할 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205574470-6548883f-7947-41e1-a1c5-3e86c9e6fa04.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+그래프와 같이 4분면 중 gradient가 이동할 수 있는 방향은 2개 사분면밖에 없다(부호가 동일한 사분면은 1,3 사분면). 만약 이론적으로 가장 최적의 W 업데이트가 저 파란색 화살표이고, 빨간 화살표의 시작부분부터 가중치를 업데이트한다고 하면, gradient를 여러번 업데이트 해야하는 문제가 생길 수 있다. 파란색 방향으로 gradient가 내려갈 수 없으므로 gradient 가동범위 내에서 여러번 업데이트 해야하는데, 이는 매우 비효율적이다. 이러한 이유로, output이 zero-mean인 function을 원하는 것이다.
+
+#### 1-1-3) exp() 계선비용 문제
+
+exp() 함수는 다른 함수에 비해 계산 비용이 크다. 그리 큰 문제는 아니지만, 굳이 문제로 뽑자면 포함될 수 있다.
+
+&lt;br&gt;
+
+## 2. tanh
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205575925-65bd6b09-4503-4fd5-b8d5-0edaa6da8c38.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+sigmoid와 유사하지만 output의 범위를 -1~1로 늘렸다. 범위를 -1까지 확장함으로써 output이 zero-centered하게 되었다.
+
+### 2-1) 문제점
+
+여전히 양 끝 값에서 평평해지는 구간 존재한다. 따라서 여전히 Gradient Vanishing 문제가 발생한다.
+
+&lt;br&gt;
+
+## 3. ReLU
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205576984-df88e0d8-b614-42d5-abd3-771f14c6a459.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+$$
+f(x) = max(0,x)
+$$
+
+ReLU는 딥러닝 분야에서 상당히 자주 쓰이는 activation function으로, 입력값이 음수면 0을 출력, 양수면 입력값 그대로를 출력한다.
+
+### 3-1) 장점
+
+1. **Gradient Vanishing 문제가 없다.**
+
+    ReLU의 가장 큰 장점은, 양의 값에서 완만해지는 부분이 없기 때문에 saturation 되지 않는다는 것이다. 따라서 Gradient Vanishing 문제가 없다.
+ 
+2. **지수항이 없고, 단순 max연산만 하기 떄문에 계산이 매우 빠르다.**
+
+    그 속도는 sigmoid나 tanh보다 6배정도 더 빠르다고 한다.
+ 
+3. **생물학적 타당성또한 relu가 sigmoid보다 더 크다.**
+
+    실제 뉴런의 입/출력값은 sigmoid보다 ReLU스럽다고 한다.
+
+### 3-2) 문제점
+
+#### 3-2-1) zero-centered가 아님
+
+  ReLU도 마찬가지로 output이 항상 양수이기 때문에 zero-centered하지 않다. ReLU가 가진 이슈이기도 하다.
+
+#### 3-2-2) 음의 경우 saturation
+
+  x가 음수이면 gradient는 0이 된다. 따라서 ReLU는 기본적으로 gradient의 절반을 죽여버리는 셈이다.
+
+#### 3-3-3) Dead ReLU
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580039-30b945e9-3fb3-42d2-a2ed-9c005753ed11.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
 
 
-## Github Actions
+1. **w의 시작점이 data cloud(train data)에서 너무 멀리 떨어져있는 경우**
 
-### Workflow 정의
+    어떤 데이터 입력에 대해서도 activate되지 않고, backprop이 일어나지 않는다. (activate되지도, update되지도 않음)
 
-```yaml
+2. **learning late가 너무 큰 경우**
 
-name: Python package
+    가중치가 날뛰어서 ReLU가 데이터의 mainfold를 벗어나게 된다. (처음에는 학습이 잘 되다가 갑자기 죽어버림)
 
-on:
-  push:
-    branches: [ &quot;main&quot; ]
-  pull_request:
-    branches: [ &quot;main&quot; ]
+실제로 학습을 다 시켜놓은 네트워크를 보면 10~20% 가량은 dead relu가 되어있다. relu를 사용하고 있다면 대부분의 네트워크가 이 문제를 겪는다고 할 수 있다. 10%~20%가량이면 네트워크 학습에 크게 지장이 없긴 하지만, dead relu의 비율이 그 이상으로 올라가지 않도록 주의할 필요는 있을 것 같다.
 
-jobs:
-  build:
+이를 해결하기 위해, relu 초기화 시 positive biases를 추가해주는 경우가 있다. 이렇게 되면, gradient update 시에 active relu가 될 가능성을 높여줄 수 있다고 하지만, 실제로는 도움이 안된다는 의견도 있다. 대부분은 zero-biases로 세팅한다.
 
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [&quot;3.8&quot;, &quot;3.9&quot;, &quot;3.10&quot;]
+&lt;br&gt;
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+## 4. Leaky ReLU
 
-```
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580106-87c702f0-6d30-4266-b9b2-27da038fba4b.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
 
-https://developers.google.com/search/apis/indexing-api/v3/quickstart
+$$
+f(x) = max(0.01x, x)
+$$
 
-https://jlhernando.com/blog/url-inspector-automator-node/
+negative regime에도 기울기를 살짝 줘서, ReLU의 Gradient Vanishing 문제를 해결하였다. sigmoid, tanh보다 계산도 빠르며, dead relu현상도 없다고 한다.
 
-https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
+&lt;br&gt;
 
-https://zzsza.github.io/development/2020/06/06/github-action/
+## 5. parametric rectifier(PReLU)
 
-https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry></feed>
+$$
+f(x) = max(\alpha x, x)
+$$
+
+negative regime에서 기울기가 존재함은 leaky relu와 비슷하지만, prelu는 기울기를 $\alpha$라는 파라미터로 정할 수 있게 하였다. 여기서 $\alpha$는 backprop으로 학습시킬 수 있으며, 활성함수가 좀 더 유연해지게 된다.
+
+&lt;br&gt;
+
+## 6. ELU
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205580685-c3b13bf9-5f02-4e8f-89e8-ceff9f8b7934.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+$$
+f(x) = \begin{cases}
+x \quad \quad \quad \quad \quad \quad \quad if \; x&gt;0  \\
+\alpha ( exp(x) - 1 ) \quad \; \ if \; x \le 0 
+\end{cases}
+$$
+
+ReLU의 장점을 가져오며 zero-mean에 가까운 출력을 보인다. saturation을 갖긴 하지만, 이러한 saturation과 deactivation이 모델을 좀 더 noise에 강해지게 한다고 주장한다. leaky relu처럼 zero-mean의 출력을 내지만 saturation의 관점에서 relu와 닮아있는 모습이다. 따라서 ReLU와 leaky relu의 중간정도라고 보면 된다.
+
+&lt;br&gt;
+
+## 7. Maxout Neuron
+
+$$
+max(w_1^Tx+b1, w_2^Tx+b2)
+$$
+
+입력을 받아들이는 특정한 기본형식을 미리 정의하지 않는 대신에, w1와 x내적한 값 + b1, w2와 x내적한 값 + b2의 최대값을 input으로 사용한다. relu와 leakey relu의 일반화 된 형태라고 할 수 있다. maxout은 이 두개의 선형 함수를 취하기 때문에, saturation되지 않으며 gradient가 죽지 않는다고 한다. 그러나 w1, w2를 지니고 있어야 하기 때문에 뉴런당 파라미터 수가 두배가 된다.
+
+&lt;br&gt;
+
+## 8. 정리
+
+실제로 가장 많이 쓰이고, 대부분의 상황에서 잘 동작하는건 ReLU이다. 하지만 Dead ReLU의 비율을 줄이기 위해서는 Learning Rate를 아주 조심스럽게 결정해야 한다. 이외의 LU계열 activation fucntion들은 아직 실험단계이므로, 참고만 하도록 하자. 또한, sigmoid나 tanh같은 경우는 구식이므로 웬만하면 LU계열 function을 사용하는 것을 추천한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Ⅱ. data preprocessing
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205588455-d819f761-f2c5-4dda-b98e-578759244038.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+데이터 전처리는 대표적으로 zero-centered scaling, Normalize등이 있다. 이미지는 이미 각 차원간에 스케일이 어느정도 맞춰져있기 때문에 zero-centered scaling정도만 해주며, 스케일이 다양한 ML 문제에서는 normalization까지 해준다. zero-centered scaling은 모든 특징들이 동일한 범위에 있도록 데이터를 정규화해서 그 특징들이 결과에 동등하게 기여할 수 있도록하는 것이다. training data에서 평균 이미지 채널 계산하고, 이것을 각 이미지 채널에서 빼는 방식이다. 해당 내용은 위에서 소개했으므로 여기까지만 설명하겠다.
+
+## 1. Sigmoid zero-centered scaling?
+
+그렇다면 sigmoid의 zero-mean문제를 전처리로 해결 가능할까? 
+
+첫 번째 레이어에 대해서는 부분적으로 해결할 수 있다. 그러나, &quot;전처리&quot;라는 것은 input 이미지에 대해서만 영향을 미칠 수 있기 때문에, 그 다음 layer부터는 동일한 문제를 겪게 될 것이다. 더 깊은 네트워크일 수록 이 문제는 더 심해진다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Ⅲ. weight initialization
+
+가중치를 적절한 값으로 초기화하는 것은 중요하다. 만약 모든 파라미터를 0으로 세팅(모든 가중치가 0)한다면, 모든 뉴런이 전부 똑같은 일을 하게될 것이다. 모든 뉴런은 모두 다 같은 연산을 하게되므로, 출력도 모두 같을 것이고 gradient도 같을 것이다. 따라서 모든 가중치가 똑같은 값으로 업데이트 되며, 결국 모든 뉴런이 모두 똑같이 생기게 될 것이다. 이렇게 되면, Symmetry breaking이 일어날 수 없기 때문에 모델이 적절한 추론을 하지 못하게 된다.
+
+따라서 가중치를 임의의 작은 값으로 초기화 해야한다. 그렇다면, 우리는 다음과 같은 아이디어를 떠올릴 수 있을 것이다.
+
+## 1. Small random numbers
+
+$$
+W = 0.1 \times np.random.randn(D, H)
+$$
+
+초기 W를 standard gaussian에서 랜덤 샘플링 하고 좀 더 작은 값을 위해 0.01을 곱해, 표준 편차를 0.01로 만들어주는 방법이다.
+
+이 방법은 작은 네트워크에서는 symmetry breaking에 충분하지만, 깊은 네트워크에서는 잘 작동하지 않을수도 있다.
+
+### 1-1) 문제점
+
+아래 그래프는 이 가중치로 forward pass 했을 때, 각 레이어별 activations의 평균과 표준편차를 나타낸 것이다. 이 때, activation function으로는 tanh를 사용하였다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205591112-f8b80c62-8b85-4704-b78d-90d1e48cad2f.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+activation 값은 x와 W를 내적한 값에 tanh를 취한 것이다. 따라서, activation의 평균은 tanh 특성상 항상 0 근처에 있는 것을 확인할 수 있다(tanh의 zero-centered한 특성 반영). 그러나, 표준편차는 가파르게 줄어서 4번째 레이어부터는 거의 0에 수렴하는 것을 볼 수 있다.
+
+아래 그래프는 위에서 얻은 mean, std를 바탕으로 분포로 표현한 것이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205591127-8dbc896d-6bcb-48b6-823d-9a77884d8f94.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+첫번재 레이어에서는 gaussian스럽게 생긴 좋은 분포를 형성하는 것을 확인할 수 있으나, w를 곱하면 곱할수록 출력값이 급격히 줄어드는 것을 확인할 수 있다. 이는 w가 너무 작은 값들이기 때문에 Wx가 결국 0이 되어 모든 활성함수 결과가 0이 되었기 때문이다. 이는 우리가 원하는 결과가 아니다.
+
+backward pass의 경우도 살펴보자. Chain rule에 의해서 gradient는 upstream gradient $\times$ local gradient이다. $\frac {\partial Wx}{\partial W} = x$이므로 $gradient = upstream \; gradient \times x$ 가 된다. 여기서, $x$는 매우 작기 떄문에 gradient도 매우 작을 것이고, 결국 upstream gradient는 0에 수렴하여 업데이트가 잘 일어나지 않게 된다.
+
+cf) forward pass의 형태를 살펴보고 이런 경우 gradient가 어떤 식으로 전파되는지 짐작할 수 있어야 한다
+
+&lt;br&gt;
+
+## 2. Big random numbers
+
+만약 다음과 같이 가중치를 좀 더 큰 값으로 초기화 하는 경우는 어떨까?
+
+$$
+W = 1.0 \times np.random.randn(D, H)
+$$
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205663565-049a757f-4c95-4ab7-9a75-d21febf525e4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+이런 경우, activation function(tanh)의 특성에 따라 값들이 saturation 될 것이다. tanh의 양 끝의 output은 기울기가 완만하므로 그 때의 gradient는 0이 된다. 따라서 가중치가 업데이트되지 않기 때문에, 출력은 항상 -1이거나 +1이 된다.
+
+적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 적절한 가중치를 얻을 수 있는 좋은 방법은 없을까?
+
+&lt;br&gt;
+
+## 3. Xavier Initialization(Glorot, 2010)
+
+초기 가중치 설정 과정에서 선택할 수 있는 가장 최선의 방법이다. Standard Gaussian에서 임의로 추출한 값을 &quot;입력의 수&quot;로 스케일링 해줌으로써, 입/출력의 분산을 맞춰준다.
+
+$$
+W = \frac {np.random.randn(D, H)}{\sqrt{D}}
+$$
+
+위 수식을 통해 직관적으로 이해할 수 있는 것은, 입력의 수가 작으면 그만큼 작은 값으로 나누어 좀 더 큰 값을 얻는다는 것이다. 즉, 입력의 수가 작은 경우 큰 가중치를 곱하고, 반대로 입력의 수가 큰 경우 작은 가중치를 곱해 입/출력의 분산을 맞춰준다. 각 레이어의 입력이 unit gaussian(approximately하다)이길 원한다면 이런류의 초기화 기법을 이용해 볼 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205595563-fe2595ef-6292-4671-90e4-8993ffe233ef.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+모든 Layer의 분포가 gaussian을 따르는 것을 확인할 수 있다.
+
+### 3-1) 문제
+
+그러나, Xavier Initialization은 ReLU를 쓰면 잘 동작하지 않는다. ReLU는 출력의 절반을 죽이고 그 절반은 매번 0이되기 때문에, 출력의 분산을 반토막내버린다. 따라서 이전과 같은 가정을 하면 ReLU에서 값이 너무 작어져 잘 작동하지 않는다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596073-3bb8e8d7-6d40-4126-ab08-f59cec17c50d.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+분포 그래프를 보면, 뒷단으로 갈수록 분포가 줄어들기 시작하여 점점 더 많은 값들이 0이 되고, 결국에는 비활성 되는 모습이다.
+
+### 3-2) 해결법 : MSRA Initialization (Kaiming He, 2015)
+
+$$
+W = \frac {np.random.randn(D, H)}{\sqrt{D/2}}
+$$
+
+뉴런 중 절반이 없어진다는 사실을 고려, Xavier의 수식에 추가적으로 2를 더 나눠줌으로서 해당 문제를 해결하였다. ReLU에 최적인 weight 초기화 방법이라고 할 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596600-0ff08f10-b4b8-45be-b0b2-869c2e2eeda5.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205596623-90d607a0-9e05-41db-bfed-3229afc69984.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+위에서도 잠시 언급하였지만, 적절한 가중치를 얻는 것은 너무 어렵다. 너무 작으면 사라져버리고, 너무 크면 saturation되어 버린다. 그렇다면, weight initialization에 의존하지 않고 Gradient Vanishing 문제를 막을 수 있는 방법은 없을까?
+
+&lt;br&gt;
+
+## 4. Batch Normalization (Ioffe and Szegedy, 2015)
+
+앞서 살펴보았던 방법들은, Gradient Vanishing 문제를 해결하기 위해 activation function을 조작한다거나 가중치 조작을 신중하게 하는 방법 등 간접적인 방법을 사용하였다. 그러나 Batch Normalization은 학습하는 과정에 직접적으로 개입하여 정규화를 시켜준다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205667590-fb72a754-2f8f-4dd7-a6f1-92615bd2153e.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+Ioffe와 Szegedy는 위에서 발생했던 문제점이, 각 layer를 지나면서 입력값의 분포가 달라지기 때문에 발생하는 것이라고 생각하였다. 따라서 layer를 지날때마다 분포를 맞춰주자는 것이 Batch Normalization의 기본 idea이다. 각 Layer마다 mini batch를 뽑아서 이 batch에 대한 표본 평균/분산으로 정규화 시켜주며, 해당 정규화 식은 여전히 미분 가능한 함수이기 때문에 forward, backward pass가 가능하다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205675034-ebf07b96-7398-41b9-93c8-42a652abc08c.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+일반적으로 FC(or Conv)와 Activation Function 사이에 위치한다. Layer의 연산 결과를 정규화 시킨 뒤, activation function으로 넘겨주는 것이다. 그러나 종종 Batch Normalization을 통한 unit gaussian을 Activation Function에 넘겨주는 게 적합하지 않은 상황이 있을 수도 있다. BN은 Normalization이 적합한가?에 대한 판단 조차도 학습에 의해 가능하게 만들었다.
+
+$$
+\begin{align}
+y^{(k)} &amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
+
+
+\gamma &amp;= \sqrt{Var[x^{(k)}]}\\
+\beta &amp;= E[x^{(k)}]
+
+\end{align}
+$$
+
+
+BN은 위에서 설명한 Normalization 단계를 거친 후, 정규화 된 것을 조정할 수 있는 단계를 거치게된다. Normalize된 정도(scale)를 조정할 수 있는 파라미터 $\gamma$ 와 이를 shift시켜주는 파라미터 $\beta$ 를 학습 가능하게 하여, 모델이 activation func에 얼마나 saturation 시킬지를 학습시킨다. 이를 통해 유연성 얻을 수 있으며, saturation 정도를 조정할 수도 있다.
+
+### 4-1) 요약
+
+#### 4-1-1) BN 과정
+
+  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205675697-85f994a3-ee76-4ef3-8ab3-5bc8ad1e4b79.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+  1. 각 Layer input의 mini-bach에서의 평균과 분산을 계산한다.
+
+  2. 평균과 분산으로 normalize 한다.
+
+  3. 추가적인 scaling/shifting factor를 사용한다.
+
+#### 4-1-2) 장점
+
+  -  gradient의 흐름을 보다 원활하게 해주어, 학습이 더 잘되게(robust) 해준다.
+
+  - 따라서 BN을 사용하면, learning rates를 더 키울 수도 있고, 다양한 초기화 기법들도 사용해 볼 수 있다.
+
+  - 결과적으로, BN을 쓰면 학습이 더 쉬워진다.
+
+위에서 설명한 장점 외에도, BN은 regularization 기능도 한다. 왜냐하면, 각 레이어의 입력은 해당 배치의 표본 평균으로 normalize되는데, 이 레이어의 출력은 오직 하나의 샘플에 대한 deterministic한 값이 아니게 되기 때문이다. 즉, batch 내의 모든 데이터가 입력으로 한데 모이게 되며, 이는 regularization effect를 준다. 
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Ⅳ. Babysitting the Learning Process
+
+- **1. preprocess the data**
+
+  zero-mean을 사용
+
+- **2. Choose the architecture**
+
+  학습하고자 하는 모델을 선택한다.
+
+- **3. 초기 loss가 정상인지 확인**
+
+  forward pass를 하고난 후에 loss가 그럴듯 해야 한다. 가령 우리가 softmax를 사용하고자 한다면, 가중치가 작은 값일 때 Loss는 negative log likelihood가 되어야 한다(loc(C) = -log(1/c)). 가령 10개의 클래스라면 loss는 -log(1/10). 그렇지 않으면 잘못된 모델이다.
+
+- **4. regularization 추가**
+
+  regularization term을 추가해봐서 Loss가 증가하는지 확인해본다. 손실함수에 regularization term이 추가되면, Loss도 증가해야 한다.
+
+- **5. 우선 학습**
+
+  우선, 데이터의 일부만 학습 시켜 본다. 데이터가 적으므로 당연히 overfit이 생길 것이고 loss가 많이 줄어들 것이다. 이 때, regularization term을 사용하지 않고, Loss가 내려가는지를 확인하여 Epoch마다 Loss가 0을 향해 꾸준히 잘 내려가는지 확인한다. 데이터가 작은 경우라면 모델이 완벽하게 데이터를 overfit할 수 있어야 하며, 이를 확인하는 단계이다.
+
+- **6. 학습**
+
+  전체 데이터 셋 사용을 사용하여 학습한다. 초기에는, regularization을 약간만 주면서 적절한 learning rate를 찾는다. 이 때, Loss가 잘 줄어들지 않는다면 Learning rate가 지나치게 작은 것이고, 반대로 Loss(cost)가 NaN(발산)이면, Learning rate가 지나치게 큰 것이다. 보통은 1e-3 ~ 1e-5 사이의 값을 사용한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+# Ⅴ. Hyperparameter Optimization
+
+## 1. 과정
+
+하이파 파라미터 튜닝은 넓은 범위에서 값을 골라내는 coarse stage 이후, 더 좁은 범위에서 값을 골라내는 fine stage를 거친다.
+
+- **1. coarse stage**
+
+  넓은 범위에서 값을 골라냄. epoch 몇 번 만으로도 현재 값이 잘 동작하는지 알 수 있음. nan이 뜨거나 혹은 loss가 줄지 않거나 하는 것을 보면서, 어느 범위에서 잘 동작하겠다를 대충 알게 됨.
+
+- **2. fine stage**
+
+  좀 더 좁은 범위를 설정하고 학습을 좀 더 길게 시켜보면서 최적의 값을 찾는다. train 동안 cost가 어떻게 변하는지를 살펴봄. cost가 NaN으로 발산하고 있다면, loop를 멈춰버리고 다른 하이퍼 파라미터를 선택
+
+&lt;br&gt;
+
+## 2. grid search vs random search 
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795298-b55f3308-e0ce-4944-be95-e5cbf4bfc9e3.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+실제로는 grid search 보다는 random search를 하는 것이 더 좋다. 만약 모델이 어떤 특정 파라미터의 변화에 더 민감하게 반응하고 있다고 생각해보면(노랑 &lt; 초록), Grid Search가 더 비효율적인 움직임을 보인다고 할 수 있다. 위 그림에서 grid는 search 기회 3번, random은 search 기회가 9번 주어진다.
+
+## 3. Visualization
+
+### 3-1) Learning Rate
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795622-73ccab2e-5740-4690-87f5-95a0eed5f448.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+Learning rate가 크면, 최적해를 찾지 못하고 건너 뛰는 경우가 생기기 때문에 Loss가 일정 수준 이하로 줄지 않거나, 발산한다. 반대로 Learning rate가 너무 낮으면 Loss가 제대로 줄어들지 않는 모습이다. 따라서 Loss가 부드러운 곡선을 그리는 것이 바람직하다고 할 수 있다. 실제로는 Loss가 아래 파란 그래프처럼 나오는 것이 바람직하다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205810670-8754048c-4e9d-4b04-9b55-c00e383dfcb4.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+### 3-2) Weight Initialization
+
+또한 아래 그래프처럼 Loss가 줄지 않다가 갑자기 줄어드는 경우가 있을 수 있다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795671-e53ceb25-da9a-4699-9886-f9b175dd1a1d.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+이런 경우는, gradient의 bakcpropagation이 초기에는 잘 되지 않다가 학습하며 회복되는 것이다. 따라서 Initialization을 다시 해줘야한다.
+
+### 3-3) Regularization Term
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/205795725-11aefb8f-1e77-4398-857d-1b3422416938.png&quot; width=&quot;60%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+train accuracy와 validation accuracy가 큰 차이를 보인다면 overfitting을 의심해 볼 수 있다. 이런 경우, regularization term을 추가하면 된다.</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 6</summary></entry><entry><title type="html">[ICT 인턴십]2022년 12월 TIL</title><link href="http://localhost:4000/til/TIL-12/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 12월 TIL" /><published>2022-12-01T00:00:00+09:00</published><updated>2022-12-01T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-12</id><content type="html" xml:base="http://localhost:4000/til/TIL-12/"># ✍ 학습내용 정리
+
+&lt;br&gt;
+&lt;br&gt;
+
+# 🕮 TIL
+## \&lt;1주차\&gt;
+### 12/01
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Training Neural Networks, Part I](https://on-jungwoan.github.io/dl/cs231n_6/)   
+
+### 12/02
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [업무 자동화] 행 생성 업무 자동화](https://on-jungwoan.github.io/toy_project/auto_raw/)     
+
+&lt;br&gt;  
+
+## \&lt;2주차\&gt;
+
+### 12/06
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Training Neural Networks, Part Ⅱ](https://on-jungwoan.github.io/dl/cs231n_7/)       
+
+### 12/09
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법](https://on-jungwoan.github.io/blog/auto_indexing/)         
+
+  [2) [CS231n]CNN Architectures](https://on-jungwoan.github.io/dl/cs231n_9/)       
+
+&lt;br&gt;  
+
+## \&lt;3주차\&gt;
+
+### 12/14
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Recurrent Neural Networks](https://on-jungwoan.github.io/dl/cs231n_10/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[ICT 인턴십]2022년 11월 TIL</title><link href="http://localhost:4000/til/TIL-11/" rel="alternate" type="text/html" title="[ICT 인턴십]2022년 11월 TIL" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/til/TIL-11</id><content type="html" xml:base="http://localhost:4000/til/TIL-11/"># ✍ 학습내용 정리
+
+## Computer Vision
+
+* [[CS231n]Image Classification](https://on-jungwoan.github.io/dl/cs231n_2/)    
+* [[CS231n]Loss Functions and Optimization](https://on-jungwoan.github.io/dl/cs231n_3/)              
+* [[CS231n]Backpropagation and Neural Networks](https://on-jungwoan.github.io/dl/cs231n_4/)     
+* [[CS231n]Convolutional Neural Networks](https://on-jungwoan.github.io/dl/cs231n_5/)   
+
+## Web
+
+* [[JQuery]AJAX를 활용한 비동기적 데이터 교환](https://on-jungwoan.github.io/web/ajax/)
+* [[HTML, JavaScript]Input 태그 유효성 검사](https://on-jungwoan.github.io/web/test/)  
+* [[CSS] 폰트 관련 속성 정리](https://on-jungwoan.github.io/web/css_text/)
+* [[Django] Views.py 분리](https://on-jungwoan.github.io/web/split/)  
+* [[Django]secret 관리](https://on-jungwoan.github.io/web/secret/)
+* [[Django] 이미 존재하는 DB 연동 by inspectdb](https://on-jungwoan.github.io/web/inspectdb/)  
+* [[Django]DRF(Django Rest Framework) 듀토리얼](https://on-jungwoan.github.io/web/drf/)  
+* [[Github_Io]포스팅 시 Liquid 문법 사용하는 법](https://on-jungwoan.github.io/blog/liquid/)
+* [[Github_Io]상단 네비게이션 바 수정](https://on-jungwoan.github.io/blog/edit_navibar/)
+* [[Github_Io]상단 masthead 고정하기](https://on-jungwoan.github.io/blog/sticky/)    
+* [[Github_Io]Header Image 설정](https://on-jungwoan.github.io/blog/header/)   
+* [[Github_Io]포스트에 특정 문구 고정](https://on-jungwoan.github.io/blog/post_custom/)    
+* [[Jekyll]빌드 속도 최적화](https://on-jungwoan.github.io/blog/optim_jekyll/)        
+* [배포용 requirements.txt 생성 및 설치](https://on-jungwoan.github.io/web/export/)
+
+## Project
+
+* [[뻐정] 프로젝트 개선사항(수정중)](https://on-jungwoan.github.io/bbeojung/bj_update2/)
+* [[뻐정] 프로젝트 최종 요약](https://on-jungwoan.github.io/bbeojung/bbeojung/)  
+
+&lt;br&gt;
+&lt;br&gt;
+
+# 🕮 TIL
+## \&lt;1주차\&gt;
+  
+### 11/01
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [뻐정] 프로젝트 개선사항(수정중)](https://on-jungwoan.github.io/bbeojung/bj_update2/)
+
+### 11/02
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [뻐정] 프로젝트 최종 요약](https://on-jungwoan.github.io/bbeojung/bbeojung/)  
+
+### 11/03
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Github_Io]상단 네비게이션 바 수정](https://on-jungwoan.github.io/blog/edit_navibar/)
+
+&lt;br&gt;  
+
+## \&lt;2주차\&gt;
+
+### 11/07
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [CSS] 폰트 관련 속성 정리](https://on-jungwoan.github.io/web/css_text/)
+
+### 11/08
+
+* **업무지시**
+
+  [11/08 업무지시](https://on-jungwoan.github.io/internship/notice/#1108)
+
+* **학습내용**
+
+  [1) [Django] Views.py 분리](https://on-jungwoan.github.io/web/split/)  
+
+  [2) [HTML, JavaScript]Input 태그 유효성 검사](https://on-jungwoan.github.io/web/test/)  
+
+### 11/09
+
+* **업무지시**
+
+  [11/09 업무지시](https://on-jungwoan.github.io/internship/notice/#1109)
+
+* **학습내용**
+
+  [1) [Django]secret 관리](https://on-jungwoan.github.io/web/secret/)
+
+  [2) [Django] 이미 존재하는 DB 연동 by inspectdb](https://on-jungwoan.github.io/web/inspectdb/)  
+
+
+### 11/10
+
+* **업무지시**
+
+  [11/10 업무지시](https://on-jungwoan.github.io/internship/notice/#1110)
+
+* **학습내용**
+
+  [1) [JQuery]AJAX를 활용한 비동기적 데이터 교환](https://on-jungwoan.github.io/web/ajax/)
+
+  [2) [Github_Io]포스팅 시 Liquid 문법 사용하는 법](https://on-jungwoan.github.io/blog/liquid/)
+
+  [3) 배포용 requirements.txt 생성 및 설치](https://on-jungwoan.github.io/web/export/)
+
+&lt;br&gt;  
+
+## \&lt;3주차\&gt;
+
+### 11/14
+
+* **업무지시**
+
+  [11/14 업무지시](https://on-jungwoan.github.io/internship/notice/#1114)
+
+* **학습내용**
+
+  [1) [Django]DRF(Django Rest Framework) 듀토리얼](https://on-jungwoan.github.io/web/drf/)  
+
+### 11/17
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Github_Io]상단 masthead 고정하기](https://on-jungwoan.github.io/blog/sticky/)    
+
+### 11/18
+
+* **업무지시**
+
+  [11/18 업무지시](https://on-jungwoan.github.io/internship/notice/#1118)
+
+* **학습내용**
+
+  [1) [Github_Io]Header Image 설정](https://on-jungwoan.github.io/blog/header/)      
+
+&lt;br&gt;  
+
+## \&lt;4주차\&gt;
+
+### 11/21
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Github_Io]포스트에 특정 문구 고정](https://on-jungwoan.github.io/blog/post_custom/)    
+
+### 11/22
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [CS231n]Image Classification](https://on-jungwoan.github.io/dl/cs231n_2/)      
+
+### 11/23
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [Jekyll]빌드 속도 최적화](https://on-jungwoan.github.io/blog/optim_jekyll/)        
+
+### 11/24
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**
+
+  [1) [CS231n]Loss Functions and Optimization](https://on-jungwoan.github.io/dl/cs231n_3/)              
+
+&lt;br&gt;  
+
+## \&lt;5주차\&gt;
+
+### 11/28
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Backpropagation and Neural Networks](https://on-jungwoan.github.io/dl/cs231n_4/)     
+
+### 11/30
+
+* **업무지시**
+
+  업무지시 없음
+
+* **학습내용**    
+
+  [1) [CS231n]Convolutional Neural Networks](https://on-jungwoan.github.io/dl/cs231n_5/)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry></feed>

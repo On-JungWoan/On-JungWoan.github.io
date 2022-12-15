@@ -1,0 +1,14 @@
+- layout: left
+  name: 2022
+  description: | # this will include new lines to allow paragraphs
+    * 통계학과 학술동아리 HAEVA 회장 
+    * 전남대학교 중앙밴드동아리 BISON 회장
+    * 대한상공회의소 부감독 
+- layout: left
+  name: 2021
+  description: | # this will include new lines to allow paragraphs
+    * 대학혁신선도사업 학습동아리 JOLY 팀장  
+    * 한국장학재단 제12기 사회리더 대학생 멘토링 멘티 팀장
+    * 2021 통계학과 학생회 (기획부)
+    * 2021 통계학과 남학우장  
+    * Dacon 주차수요예측 경진대회 팀장

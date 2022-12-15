@@ -1,0 +1,9 @@
+<div class="container education-container">
+  <h3>{{ site.education_title | default: "Awards & Scholarship" }}</h3>
+
+  <hr>
+  {% for target in site.data.award %}
+    {% include portpolio/gird.html %}
+  {% endfor %}
+  <hr>
+</div>

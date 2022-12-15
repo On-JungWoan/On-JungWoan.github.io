@@ -1,0 +1,9 @@
+<div class="container projects-container">
+  <h3>{{ site.projects_title | default: "Certificant" }}</h3>
+
+  <hr>
+  {% for target in site.data.certificant %}
+    {% include portpolio/gird.html %}
+  {% endfor %}
+  <hr>
+</div>

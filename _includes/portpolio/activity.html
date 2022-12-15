@@ -1,0 +1,19 @@
+<div class="container education-container">
+  <h3>{{ site.education_title | default: "외부활동" }}</h3>
+  <hr>
+  <div align="center"><h4><strong>Readership</strong></h4></div>
+
+  {% for target in site.data.readership %}
+    {% include portpolio/gird.html %}
+  {% endfor %}
+
+  <br>
+  <br>
+
+  <div align="center"><h4><strong>대외활동</strong></h4></div>
+
+  {% for target in site.data.activity %}
+    {% include portpolio/gird.html %}
+  {% endfor %}  
+  <hr>
+</div>
