@@ -1,834 +1,840 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T15:51:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">## 1. Process Sequences
-### 1-1) Vanilla Neural Network
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T15:58:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">&lt;h2 id=&quot;1-process-sequences&quot;&gt;1. Process Sequences&lt;/h2&gt;
+&lt;h3 id=&quot;1-1-vanilla-neural-network&quot;&gt;1-1) Vanilla Neural Network&lt;/h3&gt;
 
-- **One to One**
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
 
-    ![image](https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png)
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-    지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.
+    &lt;p&gt;지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-### 1-2) RNN
+&lt;h3 id=&quot;1-2-rnn&quot;&gt;1-2) RNN&lt;/h3&gt;
 
-RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.
+&lt;p&gt;RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.&lt;/p&gt;
 
-- **One to Many**
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;One to Many&lt;/strong&gt;&lt;/p&gt;
 
-    ![image](https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png)
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-    Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.
+    &lt;p&gt;Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Many to One&lt;/strong&gt;&lt;/p&gt;
 
-- **Many to One**
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-    ![image](https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png)
+    &lt;p&gt;문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Many to Many (diff)&lt;/strong&gt;&lt;/p&gt;
 
-    문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-- **Many to Many (diff)**
+    &lt;p&gt;기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Many to Many(same)&lt;/strong&gt;&lt;/p&gt;
 
-    ![image](https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png)
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-    기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.
+    &lt;p&gt;비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
 
-- **Many to Many(same)**
+    &lt;div style=&quot;position:relative; padding-bottom:calc(76.67% + 44px)&quot;&gt;&lt;iframe src=&quot;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;position:absolute;top:0;left:0;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
+    &lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
 
-    ![image](https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png)
+    &lt;p&gt;그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가변 과정(processing)&lt;/code&gt; 인 경우, RNN은 상당이 유용하다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-    비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.
+&lt;h2 id=&quot;rnn&quot;&gt;RNN&lt;/h2&gt;
 
-- **One to One**
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207782916-ddcbb283-2151-40a5-9e50-c7409b36a27b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-    &lt;div style=&apos;position:relative; padding-bottom:calc(76.67% + 44px)&apos;&gt;&lt;iframe src=&apos;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&apos; frameborder=&apos;0&apos; scrolling=&apos;no&apos; width=&apos;100%&apos; height=&apos;100%&apos; style=&apos;position:absolute;top:0;left:0;&apos; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;RNN은 일반적으로 “Recurrent Core Cell”이라고 불리는 작은 Layer를 가지고 있다. 이때, input x가 RNN으로 들어가게 되면, RNN 내부의 “hidden state”를 업데이트하고 가중치와 곱해 y를 출력한다. 이후, 또 다시 새로운 입력 x가 들어오면, “hidden state”가 다시 업데이트 되고 새로운 y가 출력되는 것이다.&lt;/p&gt;
 
-    그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 `가변 과정(processing)` 인 경우, RNN은 상당이 유용하다.
+&lt;h3 id=&quot;수식&quot;&gt;수식&lt;/h3&gt;
 
+&lt;p&gt;이러한 RNN 구조를 수식적으로 표현하면 다음과 같다.&lt;/p&gt;
 
-## RNN
+\[h_t = f_w ( h_{t-1}, x_t )\]
 
-![image](https://user-images.githubusercontent.com/84084372/207782916-ddcbb283-2151-40a5-9e50-c7409b36a27b.png)
+&lt;p&gt;위에서 본 초록색의 RNN Block은 함수 f로 정의되며, 파라미터 W를 갖는다. f는, 이전 상태의 hidden state인 $h_{t-1}$과 현재 상태의 입력인 $x_t$ 를 input으로 받아 $h_t$를 출력한다. 이때, $h_t$는 다음 상태의 hidden state이다(updated hidden state). 이렇게 계산된 $h_t$는 FC-Layer의 input으로 들어가, 최종 출력값 y를 출력한다. 그리고 다음 단계(state)로 넘어가서 h_t와 x_t+1가 입력이 되어, 앞서 말했던 과정을 반복한다. 여기서 중요한 사실은, 함수 f와 파라미터 W가 매 스텝 동일하다는 것임을 기억하자.&lt;/p&gt;
 
-RNN은 일반적으로 &quot;Recurrent Core Cell&quot;이라고 불리는 작은 Layer를 가지고 있다. 이때, input x가 RNN으로 들어가게 되면, RNN 내부의 &quot;hidden state&quot;를 업데이트하고 가중치와 곱해 y를 출력한다. 이후, 또 다시 새로운 입력 x가 들어오면, &quot;hidden state&quot;가 다시 업데이트 되고 새로운 y가 출력되는 것이다.
+&lt;p&gt;위 일반화된 수식을 바탕으로, Vanilla RNN을 수식으로 표현하면 다음과 같다.&lt;/p&gt;
 
-### 수식
+\[h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)\\
+y_t = W_{hy}h_t\]
 
-이러한 RNN 구조를 수식적으로 표현하면 다음과 같다.
+&lt;p&gt;가중치 행렬 $W_{hh}$는 이전 hidden state와 곱해지며, 가중치 행렬 $W_{xh}$는 입력 $x_t$와 곱해 다음 hidden state를 출력한다. 이러한 두 입력(h, x)를 더하고, non-linearity를 얻기위해 tanh로 적용해 준 식&lt;/p&gt;
 
-$$
-h_t = f_w ( h_{t-1}, x_t )
-$$
+&lt;h4 id=&quot;vanilla-rnn&quot;&gt;Vanilla RNN&lt;/h4&gt;
 
-위에서 본 초록색의 RNN Block은 함수 f로 정의되며, 파라미터 W를 갖는다. f는, 이전 상태의 hidden state인 $h_{t-1}$과 현재 상태의 입력인 $x_t$ 를 input으로 받아 $h_t$를 출력한다. 이때, $h_t$는 다음 상태의 hidden state이다(updated hidden state). 이렇게 계산된 $h_t$는 FC-Layer의 input으로 들어가, 최종 출력값 y를 출력한다. 그리고 다음 단계(state)로 넘어가서 h_t와 x_t+1가 입력이 되어, 앞서 말했던 과정을 반복한다. 여기서 중요한 사실은, 함수 f와 파라미터 W가 매 스텝 동일하다는 것임을 기억하자.
+&lt;p&gt;자 이제 우리는 매 스텝마다 출력 y를 얻고 싶습니다.&lt;/p&gt;
 
-위 일반화된 수식을 바탕으로, Vanilla RNN을 수식으로 표현하면 다음과 같다.
+&lt;p&gt;이를 위해서는 “hidden state”인 h_t 를
+새로운 가중치 행렬 W_hy 와 곱해줍니다.&lt;/p&gt;
 
-$$
-h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)\\
-y_t = W_{hy}h_t
-$$
+&lt;p&gt;가령 매 스텝에 출력 y는 class score가
+될 수 있을 것입니다.&lt;/p&gt;
 
-가중치 행렬 $W_{hh}$는 이전 hidden state와 곱해지며, 가중치 행렬 $W_{xh}$는 입력 $x_t$와 곱해 다음 hidden state를 출력한다. 이러한 두 입력(h, x)를 더하고, non-linearity를 얻기위해 tanh로 적용해 준 식
+&lt;h3 id=&quot;해석&quot;&gt;해석&lt;/h3&gt;
 
-#### Vanilla RNN
+&lt;h4 id=&quot;many-to-many&quot;&gt;many to many&lt;/h4&gt;
 
-자 이제 우리는 매 스텝마다 출력 y를 얻고 싶습니다.
+&lt;p&gt;Recurrent Neural Network는 크게 두 가지
+방법으로 해석해 볼 수 있습니다.&lt;/p&gt;
 
-이를 위해서는 &quot;hidden state&quot;인 h_t 를
-새로운 가중치 행렬 W_hy 와 곱해줍니다.
+&lt;p&gt;하나는 RNN이 hidden state를 가지며
+이를 “재귀적으로” feed back 한다는 점입니다.&lt;/p&gt;
 
-가령 매 스텝에 출력 y는 class score가
-될 수 있을 것입니다.
+&lt;p&gt;RNN을 사실 이런 식으로 표현하면 많이 헷갈립니다.
+Multiple time steps을 unrolling 해서 보면 좋습니다.&lt;/p&gt;
 
-### 해석
+&lt;p&gt;Unrolling을 하면 hidden states, 입/출력, 가중치 행렬들
+간의 관계를 조금 더 명확히 이해할 수 있습니다.&lt;/p&gt;
 
-#### many to many
+&lt;p&gt;첫 step에서는 initial hidden state인
+ h_0 가 있습니다.&lt;/p&gt;
 
-Recurrent Neural Network는 크게 두 가지
-방법으로 해석해 볼 수 있습니다.
+&lt;p&gt;대부분의 경우 h_0 는 0으로 초기화시킵니다.
+그리고 입력 x_t가 있습니다.&lt;/p&gt;
 
-하나는 RNN이 hidden state를 가지며
-이를 &quot;재귀적으로&quot; feed back 한다는 점입니다.
+&lt;p&gt;h_0와 x_1 이 함수 f_w의 입력으로 들어갑니다.&lt;/p&gt;
 
-RNN을 사실 이런 식으로 표현하면 많이 헷갈립니다.
-Multiple time steps을 unrolling 해서 보면 좋습니다.
+&lt;p&gt;f_w(h_0, x_1) 의 출력은 h_1 입니다. 이 과정이 반복됩니다.
+이번에는 x_2 이 다음 입력으로 들어옵니다.&lt;/p&gt;
 
-Unrolling을 하면 hidden states, 입/출력, 가중치 행렬들
-간의 관계를 조금 더 명확히 이해할 수 있습니다.
+&lt;p&gt;f_w(h_1, x_2) 의 출력은 h_2가 됩니다.&lt;/p&gt;
 
-첫 step에서는 initial hidden state인
- h_0 가 있습니다.
+&lt;p&gt;이 과정을 반복하면서 가변 입력 x_t 를 받습니다.&lt;/p&gt;
 
-대부분의 경우 h_0 는 0으로 초기화시킵니다.
-그리고 입력 x_t가 있습니다.
+&lt;p&gt;이제는 조금 더 구체적인 이해를 위해서
+행렬 W를 그려넣어 봅시다.&lt;/p&gt;
 
-h_0와 x_1 이 함수 f_w의 입력으로 들어갑니다.
+&lt;p&gt;여기에서 주목할 점은 “동일한 가중치 행렬 W”가
+매번 사용된다는 점입니다.&lt;/p&gt;
 
-f_w(h_0, x_1) 의 출력은 h_1 입니다. 이 과정이 반복됩니다.
-이번에는 x_2 이 다음 입력으로 들어옵니다.
+&lt;p&gt;매번 h와 x는 달라지지만 W는 매번 동일합니다.&lt;/p&gt;
 
-f_w(h_1, x_2) 의 출력은 h_2가 됩니다.
+&lt;p&gt;앞서 Computational graph에서 동일한 node를 여러번
+사용할 때 back prop gradient flow이 어떨지 배웠습니다.&lt;/p&gt;
 
-이 과정을 반복하면서 가변 입력 x_t 를 받습니다.
+&lt;p&gt;backward pass 시 dLoss/dW 를 계산하려면
+행렬 W의 gradient를 전부 더해줬습니다.&lt;/p&gt;
 
-이제는 조금 더 구체적인 이해를 위해서
-행렬 W를 그려넣어 봅시다.
+&lt;p&gt;따라서 이 RNN 모델의 backprop을 위한
+행렬 W의 그레디언트를 구하려면&lt;/p&gt;
 
-여기에서 주목할 점은 &quot;동일한 가중치 행렬 W&quot;가
-매번 사용된다는 점입니다.
+&lt;p&gt;각 스텝에서의 W에 대한 그레디언트를 전부 계산한 뒤에
+이 값들을 모두 더해주면 됩니다.&lt;/p&gt;
 
-매번 h와 x는 달라지지만 W는 매번 동일합니다.
+&lt;p&gt;Computational graph에 y_t도 넣어볼 수 있습니다.&lt;/p&gt;
 
-앞서 Computational graph에서 동일한 node를 여러번
-사용할 때 back prop gradient flow이 어떨지 배웠습니다.
+&lt;p&gt;RNN의 출력 값 h_t가 또 다른 네트워크의 입력으로 들어가서
+ y_t를 만들어 냅니다.&lt;/p&gt;
 
-backward pass 시 dLoss/dW 를 계산하려면
-행렬 W의 gradient를 전부 더해줬습니다.
+&lt;p&gt;가량 y_t는 매 스텝의 class score가 될 수 있겠죠&lt;/p&gt;
 
-따라서 이 RNN 모델의 backprop을 위한
-행렬 W의 그레디언트를 구하려면
+&lt;p&gt;RNN의 Loss도 한번 살펴봅시다.&lt;/p&gt;
 
-각 스텝에서의 W에 대한 그레디언트를 전부 계산한 뒤에
-이 값들을 모두 더해주면 됩니다.
+&lt;p&gt;각 시퀀스마다 Ground truth label이 있다고 해봅시다. 그러면
+각 스텝마다 개별적으로 y_t에 대한 Loss를 계산할 수 있습니다.&lt;/p&gt;
 
-Computational graph에 y_t도 넣어볼 수 있습니다.
+&lt;p&gt;여기에서 Loss는 가령 softmax loss가 될 수 있겠죠&lt;/p&gt;
 
-RNN의 출력 값 h_t가 또 다른 네트워크의 입력으로 들어가서
- y_t를 만들어 냅니다.
+&lt;p&gt;RNN의 최종 Loss는 각 개별 loss들의 합입니다.&lt;/p&gt;
 
-가량 y_t는 매 스텝의 class score가 될 수 있겠죠
+&lt;p&gt;각 단계에서 Loss가 발생하면 전부 더하여
+최종 네트워크 Loss를 계산합니다.&lt;/p&gt;
 
-RNN의 Loss도 한번 살펴봅시다.
+&lt;p&gt;이 네트워크의 Backprop을 생각해보면
+모델을 학습시키려면 dLoss/dW를 구해야 합니다.&lt;/p&gt;
 
-각 시퀀스마다 Ground truth label이 있다고 해봅시다. 그러면
-각 스텝마다 개별적으로 y_t에 대한 Loss를 계산할 수 있습니다.
+&lt;p&gt;Loss flowing은 각 스텝에서 이루어집니다.&lt;/p&gt;
 
-여기에서 Loss는 가령 softmax loss가 될 수 있겠죠
+&lt;p&gt;이 경우에는 각 스텝마다 가중치 W에 대한
+local gradient를 계산할 수 있습니다.&lt;/p&gt;
 
-RNN의 최종 Loss는 각 개별 loss들의 합입니다.
+&lt;p&gt;이렇게 개별로 계산된 local gradient를
+최종 gradient에 더합니다.&lt;/p&gt;
 
-각 단계에서 Loss가 발생하면 전부 더하여
-최종 네트워크 Loss를 계산합니다.
+&lt;h4 id=&quot;many-to-one&quot;&gt;many to one&lt;/h4&gt;
 
-이 네트워크의 Backprop을 생각해보면
-모델을 학습시키려면 dLoss/dW를 구해야 합니다.
+&lt;p&gt;그렇다면 “many to one” 이라면 어떨까요?
+가령 감정분석(sentiment analysis) 처럼 말입니다.&lt;/p&gt;
 
-Loss flowing은 각 스텝에서 이루어집니다.
+&lt;p&gt;이 경우에는 네트워크의 최종 hidden state에서만
+결과 값이 나올 것입니다.&lt;/p&gt;
 
-이 경우에는 각 스텝마다 가중치 W에 대한
-local gradient를 계산할 수 있습니다.
+&lt;p&gt;최종 hidden state가 전체 시퀀스의 내용에 대한
+일종의 요약으로 볼 수 있기 떄문입니다.&lt;/p&gt;
 
-이렇게 개별로 계산된 local gradient를
-최종 gradient에 더합니다.
+&lt;h4 id=&quot;one-to-many&quot;&gt;one to many&lt;/h4&gt;
 
-#### many to one
+&lt;p&gt;그렇다면 “one to many” 의 경우에는 어떨까요?&lt;/p&gt;
 
-그렇다면 &quot;many to one&quot; 이라면 어떨까요?
-가령 감정분석(sentiment analysis) 처럼 말입니다.
+&lt;p&gt;“고정 입력” 을 받지만  “가변 출력”인 네트워크입니다.&lt;/p&gt;
 
-이 경우에는 네트워크의 최종 hidden state에서만
-결과 값이 나올 것입니다.
+&lt;p&gt;이 경우에는 대게 고정 입력은 모델의 initial hidden state를
+초기화시키는 용도로 사용합니다.&lt;/p&gt;
 
-최종 hidden state가 전체 시퀀스의 내용에 대한
-일종의 요약으로 볼 수 있기 떄문입니다.
+&lt;p&gt;그리고 RNN은 모든 스텝에서
+출력 값을 가집니다.&lt;/p&gt;
 
-#### one to many
+&lt;p&gt;이렇게 가변 출력을 가지는 경우에도 이렇게 그래프를
+Unroll 해 볼 수 있습니다.&lt;/p&gt;
 
-그렇다면 &quot;one to many&quot; 의 경우에는 어떨까요?
+&lt;h4 id=&quot;ex-sequence-to-sequent-모델&quot;&gt;ex) sequence to sequent 모델&lt;/h4&gt;
 
-&quot;고정 입력&quot; 을 받지만  &quot;가변 출력&quot;인 네트워크입니다.
+&lt;p&gt;“sequence to sequent” 모델에 대해서 알아보겠습니다.
+가령 machine tranlation 에 사용할 수 있는 모델입니다.&lt;/p&gt;
 
-이 경우에는 대게 고정 입력은 모델의 initial hidden state를
-초기화시키는 용도로 사용합니다.
+&lt;p&gt;“가변 입력” 과 “가변 출력” 을 가지는 모델입니다.&lt;/p&gt;
 
-그리고 RNN은 모든 스텝에서
-출력 값을 가집니다.
+&lt;p&gt;우리는 이 모델을 “many to one” 모델과
+“one to many” 모델의 결합으로 볼 수 있습니다.&lt;/p&gt;
 
-이렇게 가변 출력을 가지는 경우에도 이렇게 그래프를
-Unroll 해 볼 수 있습니다.
+&lt;p&gt;두 개의 스테이지로 구성되는 것이죠.
+encoder와 decoder 구조입니다.&lt;/p&gt;
 
-#### ex) sequence to sequent 모델
+&lt;p&gt;encoder는 가변 입력을 받습니다.
+가령 English sentence가 될 수 있겠죠&lt;/p&gt;
 
-&quot;sequence to sequent&quot; 모델에 대해서 알아보겠습니다.
-가령 machine tranlation 에 사용할 수 있는 모델입니다.
+&lt;p&gt;그리고 encoder의 final hidden state 를 통해
+전체 sentence를 요약합니다.&lt;/p&gt;
 
-&quot;가변 입력&quot; 과 &quot;가변 출력&quot; 을 가지는 모델입니다.
+&lt;p&gt;Encoder 에서는 “many to one” 을 수행합니다.
+“가변 입력”을 하나의 벡터로 요약합니다.&lt;/p&gt;
 
-우리는 이 모델을 &quot;many to one&quot; 모델과
-&quot;one to many&quot; 모델의 결합으로 볼 수 있습니다.
+&lt;p&gt;반면 Decoder는 “one to many”를 수행합니다.
+입력은 앞서 요약한 “하나의 벡터” 입니다.&lt;/p&gt;
 
-두 개의 스테이지로 구성되는 것이죠.
-encoder와 decoder 구조입니다.
+&lt;p&gt;그리고 decoder는 “가변 출력”을 내뱉습니다.
+가령 다른 언어로 변역된 문장이 될 수 있겠죠&lt;/p&gt;
 
-encoder는 가변 입력을 받습니다.
-가령 English sentence가 될 수 있겠죠
+&lt;p&gt;“가변 출력” 은 매 스텝 적절한 단어를 내뱉습니다.&lt;/p&gt;
 
-그리고 encoder의 final hidden state 를 통해
-전체 sentence를 요약합니다.
+&lt;p&gt;그림처럼 전체 Computational graph를 풀어서
+전체 학습과정을 해석해보면&lt;/p&gt;
 
-Encoder 에서는 &quot;many to one&quot; 을 수행합니다.
-&quot;가변 입력&quot;을 하나의 벡터로 요약합니다.
+&lt;p&gt;Output sentence의 각 losses를 합해서
+Backprob 을 진행합니다.&lt;/p&gt;
 
-반면 Decoder는 &quot;one to many&quot;를 수행합니다.
-입력은 앞서 요약한 &quot;하나의 벡터&quot; 입니다.
+&lt;h3 id=&quot;구체적인-예시&quot;&gt;구체적인 예시&lt;/h3&gt;
 
-그리고 decoder는 &quot;가변 출력&quot;을 내뱉습니다.
-가령 다른 언어로 변역된 문장이 될 수 있겠죠
+&lt;p&gt;조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
+Language modeling에서 자주 사용합니다.&lt;/p&gt;
 
-&quot;가변 출력&quot; 은 매 스텝 적절한 단어를 내뱉습니다.
+&lt;p&gt;Language modeling 문제에서 하고싶은 것은 바로
+“어떻게 자연어(natural lang)을 만들어낼지 입니다.&lt;/p&gt;
 
-그림처럼 전체 Computational graph를 풀어서
-전체 학습과정을 해석해보면
+&lt;p&gt;가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
+어떻게 문자를 생성해 낼지를 풀어야 합니다.&lt;/p&gt;
 
-Output sentence의 각 losses를 합해서
-Backprob 을 진행합니다.
+&lt;p&gt;단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
+생성해 낼 지를 풀어야겠죠&lt;/p&gt;
 
-### 구체적인 예시
+&lt;p&gt;우선은 간단한 예제를 위해서 character level
+language model 을 살펴보겠습니다.&lt;/p&gt;
 
-조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
-Language modeling에서 자주 사용합니다.
+&lt;h4 id=&quot;character-level-language-model&quot;&gt;character level language model&lt;/h4&gt;
 
-Language modeling 문제에서 하고싶은 것은 바로
-&quot;어떻게 자연어(natural lang)을 만들어낼지 입니다.
+&lt;p&gt;네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
+다음 문자를 예측해야 합니다.&lt;/p&gt;
 
-가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
-어떻게 문자를 생성해 낼지를 풀어야 합니다.
+&lt;p&gt;이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
+그리고 학습시킬 문장은 “h, e, l, l, o” 입니다.&lt;/p&gt;
 
-단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
-생성해 낼 지를 풀어야겠죠
+&lt;p&gt;Train time에서는 training sequence(“hello”) 의
+각 단어들을 입력으로 넣어줘야 합니다.&lt;/p&gt;
 
-우선은 간단한 예제를 위해서 character level
-language model 을 살펴보겠습니다.
+&lt;p&gt;“hello” 가 RNN의 x_t입니다.&lt;/p&gt;
 
-#### character level language model
+&lt;p&gt;우선 입력은 한 글자(letter)씩 입니다. 네트워크도
+적절한 글자들을 출력해야 합니다.&lt;/p&gt;
 
-네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
-다음 문자를 예측해야 합니다.
+&lt;p&gt;일반적으로 입력을 넣어주는 방법이 있습니다.
+우선 vocabulary는 총 네 가지입니다.[h, e, l, o]&lt;/p&gt;
 
-이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
-그리고 학습시킬 문장은 &quot;h, e, l, l, o&quot; 입니다.
+&lt;p&gt;각 글자는 하나의 벡터로 표현할 수 있습니다.
+이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.&lt;/p&gt;
 
-Train time에서는 training sequence(&quot;hello&quot;) 의
-각 단어들을 입력으로 넣어줘야 합니다.
+&lt;p&gt;벡터에서 해당 글자 위치만 1로 표시합니다.&lt;/p&gt;
 
-&quot;hello&quot; 가 RNN의 x_t입니다.
+&lt;p&gt;이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
+따라서 4-d 벡터로 표현할 수 있습니다.&lt;/p&gt;
 
-우선 입력은 한 글자(letter)씩 입니다. 네트워크도
-적절한 글자들을 출력해야 합니다.
+&lt;p&gt;가령 h를 벡터로 표현하는 경우([1,0,0,0])
+h에 해당하는 자리만 1이고 나머지는 0입니다.&lt;/p&gt;
 
-일반적으로 입력을 넣어주는 방법이 있습니다.
-우선 vocabulary는 총 네 가지입니다.[h, e, l, o]
+&lt;p&gt;이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.&lt;/p&gt;
 
-각 글자는 하나의 벡터로 표현할 수 있습니다.
-이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.
+&lt;p&gt;Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
+우선 첫 스텝에서는, 입력 문자 ‘h’ 가 들어옵니다.&lt;/p&gt;
 
-벡터에서 해당 글자 위치만 1로 표시합니다.
+&lt;p&gt;첫 번째 RNN cell로는 ‘h’ 가 들어갑니다.
+그러면 네트워크는 y_t를 출력합니다.&lt;/p&gt;
 
-이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
-따라서 4-d 벡터로 표현할 수 있습니다.
+&lt;p&gt;y_t는 어떤 문자가 ‘h’ 다음에 나올 것
+같은지를 예측한 값입니다.&lt;/p&gt;
 
-가령 h를 벡터로 표현하는 경우([1,0,0,0])
-h에 해당하는 자리만 1이고 나머지는 0입니다.
+&lt;p&gt;이 예제에서는 ‘h’  다음에는 ‘e’ 를 예측해야 정답입니다.&lt;/p&gt;
 
-이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.
+&lt;p&gt;하지만 현재 이 모델은 다음에 나올 글자가
+‘o’ 라고 예측하고 있습니다.&lt;/p&gt;
 
-Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
-우선 첫 스텝에서는, 입력 문자 &apos;h&apos; 가 들어옵니다.
+&lt;p&gt;잘못 예측한 경우입니다. softmax loss가 이 예측이
+얼마나 형편없는지 알려줄 것입니다.&lt;/p&gt;
 
-첫 번째 RNN cell로는 &apos;h&apos; 가 들어갑니다.
-그러면 네트워크는 y_t를 출력합니다.
+&lt;p&gt;다음 스텝에서는 두 번째 단어 ‘e’ 가 입력으로 들어갑니다.
+이런 과정이 반복됩니다.&lt;/p&gt;
 
-y_t는 어떤 문자가 &apos;h&apos; 다음에 나올 것
-같은지를 예측한 값입니다.
+&lt;p&gt;우선 ‘e’ 벡터입니다. 그리고 “이전 hidden state”와 함께
+“새로운  hidden state” 를 만들어내죠&lt;/p&gt;
 
-이 예제에서는 &apos;h&apos;  다음에는 &apos;e&apos; 를 예측해야 정답입니다.
+&lt;p&gt;이제는 두번째 hidden state를 이용해서
+적절한 값을 예측해야 합니다.&lt;/p&gt;
 
-하지만 현재 이 모델은 다음에 나올 글자가
-&apos;o&apos; 라고 예측하고 있습니다.
+&lt;p&gt;‘hello’ 를 예측해야 하므로 ‘e’ 가
+입력이라면 ‘l’ 을 예측해야합니다.&lt;/p&gt;
 
-잘못 예측한 경우입니다. softmax loss가 이 예측이
-얼마나 형편없는지 알려줄 것입니다.
+&lt;p&gt;이 경우 ‘l’ 의 예측 치가 상당히 낮기 때문에
+Loss가 높습니다.&lt;/p&gt;
 
-다음 스텝에서는 두 번째 단어 &apos;e&apos; 가 입력으로 들어갑니다.
-이런 과정이 반복됩니다.
+&lt;p&gt;이 과정을 반복합니다.
+모델을 다양한 문장으로 학습시킨다면&lt;/p&gt;
 
-우선 &apos;e&apos; 벡터입니다. 그리고 &quot;이전 hidden state&quot;와 함께
-&quot;새로운  hidden state&quot; 를 만들어내죠
+&lt;p&gt;결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
+무엇일지를 학습해야 할 것입니다.&lt;/p&gt;
 
-이제는 두번째 hidden state를 이용해서
-적절한 값을 예측해야 합니다.
+&lt;p&gt;그렇다면 이 모델의 Test time은 어떨까요?&lt;/p&gt;
 
-&apos;hello&apos; 를 예측해야 하므로 &apos;e&apos; 가
-입력이라면 &apos;l&apos; 을 예측해야합니다.
+&lt;p&gt;이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
+Model로부터 Sampling 하는 것입니다.&lt;/p&gt;
 
-이 경우 &apos;l&apos; 의 예측 치가 상당히 낮기 때문에
-Loss가 높습니다.
+&lt;p&gt;다시말해, Train time에 모델이 봤을 법한 문장을
+모델 스스로 생성해 내는 것입니다.&lt;/p&gt;
 
+&lt;p&gt;우선 모델에게 문장의 첫 글자만 줍니다.
+이 경우에는 ‘h’ 가 되겠군요&lt;/p&gt;
 
-이 과정을 반복합니다.
-모델을 다양한 문장으로 학습시킨다면
+&lt;p&gt;RNN 의 첫 스텝의 입력은 ‘h’가 될 것입니다.&lt;/p&gt;
 
-결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
-무엇일지를 학습해야 할 것입니다.
+&lt;p&gt;‘h’가 주어지면 모든 문자(h,e,l,o) 에 대한
+스코어를 얻을 수 있습니다(output layer)&lt;/p&gt;
 
-그렇다면 이 모델의 Test time은 어떨까요?
+&lt;p&gt;Test time에서는 이 스코어를
+“sampling”(다음 글자 선택)에 이용 합니다.&lt;/p&gt;
 
-이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
-Model로부터 Sampling 하는 것입니다.
+&lt;p&gt;스코어를 확률분포로 표현하기 위해서
+sofrmax 함수를 사용할 수 있습니다.&lt;/p&gt;
 
-다시말해, Train time에 모델이 봤을 법한 문장을
-모델 스스로 생성해 내는 것입니다.
+&lt;p&gt;문장의 두 번째 글자를 선택하기 위해서
+이 확률분포를 이용합니다.&lt;/p&gt;
 
-우선 모델에게 문장의 첫 글자만 줍니다.
-이 경우에는 &apos;h&apos; 가 되겠군요
+&lt;p&gt;이 경우에 ‘e’가 뽑힐 확률(13%)이 엄청 낮았음에도
+아주 운좋게 ‘e’가 샘플링되었습니다.&lt;/p&gt;
 
-RNN 의 첫 스텝의 입력은 &apos;h&apos;가 될 것입니다.
+&lt;p&gt;이제는 확률 분포에서 운좋게 뽑힌 ‘e’ 를
+다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.&lt;/p&gt;
 
-&apos;h&apos;가 주어지면 모든 문자(h,e,l,o) 에 대한
-스코어를 얻을 수 있습니다(output layer)
+&lt;p&gt;‘e’ 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
+넣어주면 네트워크는 두번째 출력을 만들어 냅니다.&lt;/p&gt;
 
-Test time에서는 이 스코어를
-&quot;sampling&quot;(다음 글자 선택)에 이용 합니다.
+&lt;p&gt;이 학습된 모델만 가지고 새로운 문장을
+만들어내기 위해 이 과정을 반복합니다.&lt;/p&gt;
 
-스코어를 확률분포로 표현하기 위해서
-sofrmax 함수를 사용할 수 있습니다.
+&lt;p&gt;전체 문장을 만들어내기 위해 타임 스텝마다
+확률 분포에서 문자를 하나씩 뽑아냅니다.&lt;/p&gt;
 
-문장의 두 번째 글자를 선택하기 위해서
-이 확률분포를 이용합니다.
+&lt;h4 id=&quot;질문1&quot;&gt;질문1&lt;/h4&gt;
 
-이 경우에 &apos;e&apos;가 뽑힐 확률(13%)이 엄청 낮았음에도
-아주 운좋게 &apos;e&apos;가 샘플링되었습니다.
+&lt;p&gt;질문 있나요?&lt;/p&gt;
 
-이제는 확률 분포에서 운좋게 뽑힌 &apos;e&apos; 를
-다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.
+&lt;p&gt;질문은 “가장 높은 스코어를 선택하면 그만인데
+왜 굳이 확률분포에서 샘플링하는지” 입니다.&lt;/p&gt;
 
-&apos;e&apos; 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
-넣어주면 네트워크는 두번째 출력을 만들어 냅니다.
+&lt;p&gt;이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
+올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)&lt;/p&gt;
 
-이 학습된 모델만 가지고 새로운 문장을
-만들어내기 위해 이 과정을 반복합니다.
+&lt;p&gt;따라서 확률분포에서 샘플링을 했기 때문에
+hello를 잘 만들 수 있었습니다.&lt;/p&gt;
 
-전체 문장을 만들어내기 위해 타임 스텝마다
-확률 분포에서 문자를 하나씩 뽑아냅니다.
+&lt;p&gt;실제로는 두 경우 모두 사용할 수 있습니다.
+(확률 분포에서 샘플링 or 그냥 가장 높은 값)&lt;/p&gt;
 
-#### 질문1
+&lt;p&gt;어떤 경우에는 argmax probability만 사용할 수 있습니다.
+(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.&lt;/p&gt;
 
-질문 있나요?
+&lt;p&gt;하지만 확률 분포에서 샘플링하는 방법을 사용하면
+일반적으로는 모델에서의 다양성을 얻을 수 있습니다.&lt;/p&gt;
 
-질문은 &quot;가장 높은 스코어를 선택하면 그만인데
-왜 굳이 확률분포에서 샘플링하는지&quot; 입니다.
+&lt;p&gt;만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
+같은 사진이라던지를 모델 입력으로 주면&lt;/p&gt;
 
-이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
-올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)
+&lt;p&gt;argmax을 하지 않고 샘플링을 하게되면 그럴듯한
+다양한 문장을 출력할 수 있게 됩니다.&lt;/p&gt;
 
-따라서 확률분포에서 샘플링을 했기 때문에
-hello를 잘 만들 수 있었습니다.
+&lt;p&gt;첫 스텝에서 어떤 값이 샘플링되는지에
+따라서 출력이 다양해 질 수 있는 것입니다.&lt;/p&gt;
 
-실제로는 두 경우 모두 사용할 수 있습니다.
-(확률 분포에서 샘플링 or 그냥 가장 높은 값)
+&lt;p&gt;샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
+관점에서 좋은 방법이 될 수 있습니다.&lt;/p&gt;
 
-어떤 경우에는 argmax probability만 사용할 수 있습니다.
-(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.
+&lt;h4 id=&quot;질문2&quot;&gt;질문2&lt;/h4&gt;
 
-하지만 확률 분포에서 샘플링하는 방법을 사용하면
-일반적으로는 모델에서의 다양성을 얻을 수 있습니다.
+&lt;p&gt;다른 질문 있나요?&lt;/p&gt;
 
-만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
-같은 사진이라던지를 모델 입력으로 주면
+&lt;p&gt;[학생이 질문]&lt;/p&gt;
 
-argmax을 하지 않고 샘플링을 하게되면 그럴듯한
-다양한 문장을 출력할 수 있게 됩니다.
+&lt;p&gt;질문은 “Test time에 sofrmax vector를
+one hot vector 대신에 넣어줄 수 있는지” 입니다.&lt;/p&gt;
 
-첫 스텝에서 어떤 값이 샘플링되는지에
-따라서 출력이 다양해 질 수 있는 것입니다.
+&lt;p&gt;두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
+입력이 Train time에서 본 입력과 달라집니다.&lt;/p&gt;
 
-샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
-관점에서 좋은 방법이 될 수 있습니다.
+&lt;p&gt;모델에게 Train time에서 보지 못한 입력값을 주게되면
+대게는 모델이 아무것도 하지 못합니다.&lt;/p&gt;
 
-#### 질문2
+&lt;p&gt;두 번째 문제는 실제로는
+vocabularies가 아주 크다는 것입니다.&lt;/p&gt;
 
-다른 질문 있나요?
+&lt;p&gt;예제에서는 voca가 4개 뿐이 없어서
+크게 문제될 것이 없겠지만&lt;/p&gt;
 
-[학생이 질문]
+&lt;p&gt;한 스텝마다 단어(word)를 생성하는 모델이라고 보면
+voca 안에는 이세상의 모든 영어단어가 들어가야합니다.&lt;/p&gt;
 
-질문은 &quot;Test time에 sofrmax vector를
-one hot vector 대신에 넣어줄 수 있는지&quot; 입니다.
+&lt;p&gt;voca는 수만개 이상의 요소를 가지게 되겠죠&lt;/p&gt;
 
-두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
-입력이 Train time에서 본 입력과 달라집니다.
+&lt;p&gt;실제론 one hot vector를 sparse vector operation
+으로 처리합니다. (dense vector가 아닌)&lt;/p&gt;
 
-모델에게 Train time에서 보지 못한 입력값을 주게되면
-대게는 모델이 아무것도 하지 못합니다.
+&lt;p&gt;10,000dim softmax vector를 연산해야 한다면
+연산량이 어마어마 할 것입니다.&lt;/p&gt;
 
-두 번째 문제는 실제로는
-vocabularies가 아주 크다는 것입니다.
+&lt;p&gt;Test time에서도 one hot을 사용하는 이유입니다.&lt;/p&gt;
 
-예제에서는 voca가 4개 뿐이 없어서
-크게 문제될 것이 없겠지만
+&lt;p&gt;###&lt;/p&gt;
 
-한 스텝마다 단어(word)를 생성하는 모델이라고 보면
-voca 안에는 이세상의 모든 영어단어가 들어가야합니다.
+&lt;p&gt;이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.&lt;/p&gt;
 
-voca는 수만개 이상의 요소를 가지게 되겠죠
+&lt;p&gt;이 출력값들의 Loss를 계산해 final loss를 얻는데
+이를 “backpropagation through time” 라고 합니다.&lt;/p&gt;
 
-실제론 one hot vector를 sparse vector operation
-으로 처리합니다. (dense vector가 아닌)
+&lt;p&gt;이 경우, forward pass의 경우에는 전체 시퀀스가
+끝날 때 까지 출력값이 생성됩니다.&lt;/p&gt;
 
-10,000dim softmax vector를 연산해야 한다면
-연산량이 어마어마 할 것입니다.
+&lt;p&gt;반대로 backward pass에서도 전체 시퀀스를
+가지고 Loss를 계산해야 합니다.&lt;/p&gt;
 
-Test time에서도 one hot을 사용하는 이유입니다.
+&lt;p&gt;하지만 이 경우 시퀀스가 아주 긴 경우에는
+문제가 될 소지가 있습니다.&lt;/p&gt;
 
-###
+&lt;p&gt;가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.&lt;/p&gt;
 
-이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.
+&lt;p&gt;이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
+Wikipedia 전체 문서를 다 거쳐야 할 것입니다.&lt;/p&gt;
 
-이 출력값들의 Loss를 계산해 final loss를 얻는데
-이를 &quot;backpropagation through time&quot; 라고 합니다.
+&lt;p&gt;Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
+gradient update가 1회 수행됩니다.&lt;/p&gt;
 
-이 경우, forward pass의 경우에는 전체 시퀀스가
-끝날 때 까지 출력값이 생성됩니다.
+&lt;p&gt;이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
+메모리 사용량도 어마어마할 것입니다.&lt;/p&gt;
 
-반대로 backward pass에서도 전체 시퀀스를
-가지고 Loss를 계산해야 합니다.
+&lt;p&gt;실제로는 “truncated backpropagation” 를 통해서
+backprob 을 근사시키는 기법을 사용합니다.&lt;/p&gt;
 
-하지만 이 경우 시퀀스가 아주 긴 경우에는
-문제가 될 소지가 있습니다.
+&lt;p&gt;이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
+길어서 무한대라고 할지라도&lt;/p&gt;
 
-가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.
+&lt;p&gt;Train time에 한 스텝을 일정 단위로 자릅니다.
+대략 100 정도로 말이죠&lt;/p&gt;
 
-이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
-Wikipedia 전체 문서를 다 거쳐야 할 것입니다.
+&lt;p&gt;100 스텝만 forward pass를 하고 이 서브스퀀스의
+Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.&lt;/p&gt;
 
-Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
-gradient update가 1회 수행됩니다.
+&lt;p&gt;이 과정을 반복합니다. 다만 이전 batch에서 계산한
+hidden states는 계속 유지합니다.&lt;/p&gt;
 
-이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
-메모리 사용량도 어마어마할 것입니다.
+&lt;p&gt;다음 Batch의 forward pass를 계산할 때는
+이전 hidden state를 이용합니다.&lt;/p&gt;
 
-실제로는 &quot;truncated backpropagation&quot; 를 통해서
-backprob 을 근사시키는 기법을 사용합니다.
+&lt;p&gt;그리고 gradient step은 현재 Batch에서만 진행합니다.&lt;/p&gt;
 
-이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
-길어서 무한대라고 할지라도
+&lt;p&gt;이 방법을 “truncated backpropagation
+through time” 이라고 합니다.&lt;/p&gt;
 
-Train time에 한 스텝을 일정 단위로 자릅니다.
-대략 100 정도로 말이죠
+&lt;p&gt;이 과정을 반복합니다. 이전 batch에서 hidden states를
+가져와서 foward pass를 수행하고&lt;/p&gt;
 
-100 스텝만 forward pass를 하고 이 서브스퀀스의
-Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.
+&lt;p&gt;backprob은 현재 배치만큼만 진행합니다.&lt;/p&gt;
 
-이 과정을 반복합니다. 다만 이전 batch에서 계산한
-hidden states는 계속 유지합니다.
+&lt;p&gt;이 방법은 Stocastic gradient descent의
+시퀀스 데이터 버전이라고 볼 수 있습니다.&lt;/p&gt;
 
-다음 Batch의 forward pass를 계산할 때는
-이전 hidden state를 이용합니다.
+&lt;p&gt;지난 시간이 Data Sets이 엄청 큰 경우 어떻게
+학습시켜야 하는지 배웠습니다.&lt;/p&gt;
 
-그리고 gradient step은 현재 Batch에서만 진행합니다.
+&lt;p&gt;Large datasets에서는 전체 데이터로 gradients를
+계산하기에는 계산량이 너무 컸습니다.&lt;/p&gt;
 
-이 방법을 &quot;truncated backpropagation
-through time&quot; 이라고 합니다.
+&lt;p&gt;그래서 대신에 mini batch를 사용해서
+small samples만 가지고 계산했습니다.&lt;/p&gt;
 
-이 과정을 반복합니다. 이전 batch에서 hidden states를
-가져와서 foward pass를 수행하고
+&lt;p&gt;그리고 mini batch만을 이용해서 gradient를 계산했습니다.
+가령 Image classification에서 그랬었죠&lt;/p&gt;
 
-backprob은 현재 배치만큼만 진행합니다.
+&lt;p&gt;####&lt;/p&gt;
 
-이 방법은 Stocastic gradient descent의
-시퀀스 데이터 버전이라고 볼 수 있습니다.
+&lt;p&gt;질문있나요?&lt;/p&gt;
 
-지난 시간이 Data Sets이 엄청 큰 경우 어떻게
-학습시켜야 하는지 배웠습니다.
+&lt;p&gt;질문은 “RNN이 Markov Assumption 을 따르는지” 입니다.&lt;/p&gt;
 
-Large datasets에서는 전체 데이터로 gradients를
-계산하기에는 계산량이 너무 컸습니다.
+&lt;p&gt;그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
+계속해서 앞으로 가져가기 때문입니다.(영원히)&lt;/p&gt;
 
-그래서 대신에 mini batch를 사용해서
-small samples만 가지고 계산했습니다.
+&lt;p&gt;마르코 비아 가정을하고있다.
+숨겨진 상태를 조건으로,&lt;/p&gt;
 
-그리고 mini batch만을 이용해서 gradient를 계산했습니다.
-가령 Image classification에서 그랬었죠
+&lt;p&gt;그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
+미래를 예언하기 시퀀스의&lt;/p&gt;
 
-####
+&lt;p&gt;하지만 그 가정은 일종의 건축입니다.
+재발 성 신경 네트워크 공식 출발점에서.&lt;/p&gt;
 
-질문있나요?
+&lt;p&gt;그리고 그것은 정말로 특별하지 않습니다.
+시간을 통한 전파를 역전 시키십시오.&lt;/p&gt;
 
-질문은 &quot;RNN이 Markov Assumption 을 따르는지&quot; 입니다.
+&lt;p&gt;Truncated backprop은 very large sequence
+data의 gradient를 근사시키는 방법입니다.&lt;/p&gt;
 
-그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
-계속해서 앞으로 가져가기 때문입니다.(영원히)
+&lt;p&gt;####&lt;/p&gt;
 
-마르코 비아 가정을하고있다.
-숨겨진 상태를 조건으로,
+&lt;p&gt;RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
+사실은 그렇지 않습니다. 엄청 간결합니다.&lt;/p&gt;
 
-그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
-미래를 예언하기 시퀀스의
+&lt;p&gt;Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
+112 줄의 코드로 RNN 전체 과정을 구현하였습니다.&lt;/p&gt;
 
-하지만 그 가정은 일종의 건축입니다.
-재발 성 신경 네트워크 공식 출발점에서.
+&lt;p&gt;vocabulary를 만들고, truncated back propagation
+을 수행하는 모델을 구현한 코드입니다.&lt;/p&gt;
 
-그리고 그것은 정말로 특별하지 않습니다.
-시간을 통한 전파를 역전 시키십시오.
+&lt;p&gt;그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.&lt;/p&gt;
 
-Truncated backprop은 very large sequence
-data의 gradient를 근사시키는 방법입니다.
+&lt;p&gt;RNN을 구성하는 것이 엄청나게 어려워 보일
+수 있지만 사실은 그렇지 않습니다.&lt;/p&gt;
 
+&lt;p&gt;슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
+파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.&lt;/p&gt;
 
-####
+&lt;p&gt;Numpy로만 작성된 dependencies가 없는
+코드입니다. 코드를 읽기에도 비교적 쉽습니다.&lt;/p&gt;
 
-RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
-사실은 그렇지 않습니다. 엄청 간결합니다.
+&lt;p&gt;####&lt;/p&gt;
 
-Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
-112 줄의 코드로 RNN 전체 과정을 구현하였습니다.
+&lt;p&gt;RNN Language model 로 아주 재미있는 것들을
+학습시킬 수 있습니다.&lt;/p&gt;
 
-vocabulary를 만들고, truncated back propagation
-을 수행하는 모델을 구현한 코드입니다.
+&lt;p&gt;RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
+아무 문장이나 긁어와서 학습시킬 수 있습니다.&lt;/p&gt;
 
-그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.
+&lt;p&gt;가령 셰익스피어의 작품들을 RNN으로
+학습시켜 볼 수 있습니다.&lt;/p&gt;
 
-RNN을 구성하는 것이 엄청나게 어려워 보일
-수 있지만 사실은 그렇지 않습니다.
+&lt;p&gt;학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
+하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.&lt;/p&gt;
 
-슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
-파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.
+&lt;p&gt;학습이 잘 끝나면 상당히 셰익스피어 풍의
+문장들을 만들어냅니다.&lt;/p&gt;
 
-Numpy로만 작성된 dependencies가 없는
-코드입니다. 코드를 읽기에도 비교적 쉽습니다.
+&lt;p&gt;“Why do what that day… replied”  어쩄든
+상당히 셰익스피어의 문장 처럼 보입니다.&lt;/p&gt;
 
-####
+&lt;p&gt;더 학습을 많이 시키면 훨씬 더 긴 문장들도
+만들어낼 수 있습니다.&lt;/p&gt;
 
-RNN Language model 로 아주 재미있는 것들을
-학습시킬 수 있습니다.
+&lt;p&gt;RNN을 이용하면 이런 셰익스피어 풍의 문장과
+같은 여러가지 신기한 것들을 학습시킬 수 있습니다.&lt;/p&gt;
 
-RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
-아무 문장이나 긁어와서 학습시킬 수 있습니다.
+&lt;p&gt;모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
+(예 : “VIOLA:”)&lt;/p&gt;
 
-가령 셰익스피어의 작품들을 RNN으로
-학습시켜 볼 수 있습니다.
+&lt;p&gt;그리고 바로 밑에 셰익스피어풍의 문장들을
+만들어냅니다.&lt;/p&gt;
 
-학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
-하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.
+&lt;p&gt;다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.&lt;/p&gt;
 
-학습이 잘 끝나면 상당히 셰익스피어 풍의
-문장들을 만들어냅니다.
+&lt;p&gt;이건 엄청난 것입니다.
+문장의 구조를 아주 완벽하게 학습했습니다.&lt;/p&gt;
 
-&quot;Why do what that day... replied&quot;  어쩄든
-상당히 셰익스피어의 문장 처럼 보입니다.
+&lt;p&gt;훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
+혹시 여기 수학 전공자가 있나요?&lt;/p&gt;
 
-더 학습을 많이 시키면 훨씬 더 긴 문장들도
-만들어낼 수 있습니다.
+&lt;p&gt;“algebraic topology” 수업을 들어본 분이 계신가요?
+몇 분정도 계시는군요&lt;/p&gt;
 
-RNN을 이용하면 이런 셰익스피어 풍의 문장과
-같은 여러가지 신기한 것들을 학습시킬 수 있습니다.
+&lt;p&gt;여러분이 저보다 “algebraic topology”를 더 잘 하시겠네요.
+제가 얼마전에 온라인”algebraic topology” 교과서를 찾았습니다.&lt;/p&gt;
 
-모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
-(예 : &quot;VIOLA:&quot;)
+&lt;p&gt;이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.&lt;/p&gt;
 
-그리고 바로 밑에 셰익스피어풍의 문장들을
-만들어냅니다.
+&lt;p&gt;그리고 수식이 LaTex 문법으로 작성되어 있습니다.
+LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.&lt;/p&gt;
 
-다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.
+&lt;p&gt;그러면 algebraic topology 교과서의 LaTex 코드를
+우리가 만든 RNN Language Model로 학습시킬 수 있습니다.&lt;/p&gt;
 
-이건 엄청난 것입니다.
-문장의 구조를 아주 완벽하게 학습했습니다.
+&lt;p&gt;자 이걸 학습시키게 되면 (웃음) 이런 식으로
+algebraic topology스러운 문장들을 만들어낼 수 있습니다.&lt;/p&gt;
 
-훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
-혹시 여기 수학 전공자가 있나요?
+&lt;p&gt;모델이 수식도 만들어 냅니다.&lt;/p&gt;
 
-&quot;algebraic topology&quot; 수업을 들어본 분이 계신가요?
-몇 분정도 계시는군요
+&lt;p&gt;“To prrov study that F_sub U is a covering
+of x prime.. blah blah” (왼쪽 4번째 문단)&lt;/p&gt;
 
-여러분이 저보다 &quot;algebraic topology&quot;를 더 잘 하시겠네요.
-제가 얼마전에 온라인&quot;algebraic topology&quot; 교과서를 찾았습니다.
+&lt;p&gt;unions도 만들어내고, proofs의 끝에
+사각형도 만들어냅니다.&lt;/p&gt;
 
-이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.
+&lt;p&gt;lemmas도 만들어내고
+이전 lemmas를 참조하기도 합니다.&lt;/p&gt;
 
-그리고 수식이 LaTex 문법으로 작성되어 있습니다.
-LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.
+&lt;p&gt;bi-lemma question 라던지 R 같은 기하학적인
+내용도 모두 만들어냅니다. 엄청 대단하죠&lt;/p&gt;
 
-그러면 algebraic topology 교과서의 LaTex 코드를
-우리가 만든 RNN Language Model로 학습시킬 수 있습니다.
+&lt;p&gt;diagrams을 만들어내려고도 합니다.&lt;/p&gt;
 
-자 이걸 학습시키게 되면 (웃음) 이런 식으로
-algebraic topology스러운 문장들을 만들어낼 수 있습니다.
+&lt;p&gt;commutative diagram은 algebraic topology에서
+아주 많이 사용됩니다.&lt;/p&gt;
 
-모델이 수식도 만들어 냅니다.
+&lt;p&gt;모델이 이 다이어그램을 열심히 만들어 내려 했지만
+물론 이 다이어그램은 아무 의미가 없습니다.&lt;/p&gt;
 
-&quot;To prrov study that F_sub U is a covering
-of x prime.. blah blah&quot; (왼쪽 4번째 문단)
+&lt;p&gt;그리고 또 재미있는 점 중 하나는
+모델이 “증명 생략” 도 학습합니다.&lt;/p&gt;
 
-unions도 만들어내고, proofs의 끝에
-사각형도 만들어냅니다.
+&lt;p&gt;가끔 이런 경우가 있죠.
+“theorem : blah blah blah, proof : 생략”&lt;/p&gt;
 
-lemmas도 만들어내고
-이전 lemmas를 참조하기도 합니다.
+&lt;p&gt;교과서에서 증명이 생각되는 부분도 모델이
+정확하게 학습한 것입니다.&lt;/p&gt;
 
- bi-lemma question 라던지 R 같은 기하학적인
-내용도 모두 만들어냅니다. 엄청 대단하죠
+&lt;p&gt;또 다른 재미있는 것들도 할 수 있습니다. 이번에는
+Linux Kernel의 전체 소스코드를 학습시켰습니다.&lt;/p&gt;
 
-diagrams을 만들어내려고도 합니다.
+&lt;p&gt;코드를 character level로 학습시켰습니다.&lt;/p&gt;
 
-commutative diagram은 algebraic topology에서
-아주 많이 사용됩니다.
+&lt;p&gt;학습된 모델에서 샘플링을 해보면
+C 소스코드 스러운 것들이 나옵니다.&lt;/p&gt;
 
-모델이 이 다이어그램을 열심히 만들어 내려 했지만
-물론 이 다이어그램은 아무 의미가 없습니다.
+&lt;p&gt;모델이 if 문 작성법을 알고 있습니다.
+코드 짜는 스킬이 어마어마 합니다.&lt;/p&gt;
 
-그리고 또 재미있는 점 중 하나는
-모델이 &quot;증명 생략&quot; 도 학습합니다.
+&lt;p&gt;들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.&lt;/p&gt;
 
-가끔 이런 경우가 있죠.
-&quot;theorem : blah blah blah, proof : 생략&quot;
+&lt;p&gt;주석다는 법도 알고있습니다.
+물론 뜻은 아무 의미도 없습니다.&lt;/p&gt;
 
-교과서에서 증명이 생각되는 부분도 모델이
-정확하게 학습한 것입니다.
+&lt;p&gt;이 모델의 문제점 중 하나는. 변수를 선언해 놓고
+쓰지를 않다는 것입니다.&lt;/p&gt;
 
-또 다른 재미있는 것들도 할 수 있습니다. 이번에는
-Linux Kernel의 전체 소스코드를 학습시켰습니다.
+&lt;p&gt;반대로 선언하지도 않은 변수를 쓰기도 합니다.
+이 코드는 컴파일되지 않습니다.&lt;/p&gt;
 
-코드를 character level로 학습시켰습니다.
+&lt;p&gt;이 코드를 Linux에 pull request 하고싶진 않네요&lt;/p&gt;
 
-학습된 모델에서 샘플링을 해보면
-C 소스코드 스러운 것들이 나옵니다.
+&lt;p&gt;이 모델은 GNU license를 추가하는 법도 압니다.&lt;/p&gt;
 
-모델이 if 문 작성법을 알고 있습니다.
-코드 짜는 스킬이 어마어마 합니다.
+&lt;p&gt;GNU license 다음에 include 가 나오고 include 가
+몇 번 나오고 소스코드가 나옵니다.&lt;/p&gt;
 
-들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.
+&lt;p&gt;이 모델은 데이터의 일반적인 구조를
+아주 잘 학습했습니다.&lt;/p&gt;
 
-주석다는 법도 알고있습니다.
-물론 뜻은 아무 의미도 없습니다.
+&lt;p&gt;다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
+그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.&lt;/p&gt;
 
-이 모델의 문제점 중 하나는. 변수를 선언해 놓고
-쓰지를 않다는 것입니다.
+&lt;p&gt;구조에 대해서는 전혀 말해주지 않았죠&lt;/p&gt;
 
-반대로 선언하지도 않은 변수를 쓰기도 합니다.
-이 코드는 컴파일되지 않습니다.
+&lt;p&gt;하지만 모델은 학습과정 동안에 시퀀스 데이터의
+숨겨진 구조(latent structure)를 알아서 학습합니다.&lt;/p&gt;
 
-이 코드를 Linux에 pull request 하고싶진 않네요
+&lt;p&gt;결국 알아서 코드를 작성하게 된 것입니다.
+아주 대단합니다.&lt;/p&gt;
 
-이 모델은 GNU license를 추가하는 법도 압니다.
+&lt;p&gt;####&lt;/p&gt;
 
-GNU license 다음에 include 가 나오고 include 가
-몇 번 나오고 소스코드가 나옵니다.
+&lt;p&gt;저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
+도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.&lt;/p&gt;
 
-이 모델은 데이터의 일반적인 구조를
-아주 잘 학습했습니다.
+&lt;p&gt;RNN에는 hidden vector가 있고 이 vector가
+계속 업데이트됩니다.&lt;/p&gt;
 
-다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
-그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.
+&lt;p&gt;우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
+나올수도 있지 않을까 추측해 보았습니다.&lt;/p&gt;
 
-구조에 대해서는 전혀 말해주지 않았죠
+&lt;p&gt;그래서 우리는 RNN language model을
+특정 dataset으로 학습시키고,&lt;/p&gt;
 
-하지만 모델은 학습과정 동안에 시퀀스 데이터의
-숨겨진 구조(latent structure)를 알아서 학습합니다.
+&lt;p&gt;그리고 hidden vector를 하나 뽑아서 어떤 값들이
+들어있는지 살펴보기로 했습니다.&lt;/p&gt;
 
-결국 알아서 코드를 작성하게 된 것입니다.
-아주 대단합니다.
+&lt;p&gt;이 서로 다른 hidden states가 도대체 어떤 것들을
+예의주시하는지 알아보기 위해서였죠&lt;/p&gt;
 
-####
+&lt;p&gt;이 실험을 해보면, 대부분의 hidden state는
+아무 의미 없는 패턴으로 예의 주시하고 있습니다.&lt;/p&gt;
 
-저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
-도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.
+&lt;p&gt;여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
+다시 한번 forward 시켜 보는 것입니다.&lt;/p&gt;
 
-RNN에는 hidden vector가 있고 이 vector가
-계속 업데이트됩니다.
+&lt;p&gt;여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
+hidden vector의 값을 의미합니다.&lt;/p&gt;
 
-우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
-나올수도 있지 않을까 추측해 보았습니다.
+&lt;p&gt;RNN의 대부분의 Cell은  해석하기 어렵습니다.&lt;/p&gt;
 
-그래서 우리는 RNN language model을
-특정 dataset으로 학습시키고,
+&lt;p&gt;대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
+low level language modeling 정도로밖에 보이지 않습니다.&lt;/p&gt;
 
-그리고 hidden vector를 하나 뽑아서 어떤 값들이
-들어있는지 살펴보기로 했습니다.
+&lt;p&gt;하지만 일부는 해석해볼만 합니다.&lt;/p&gt;
 
-이 서로 다른 hidden states가 도대체 어떤 것들을
-예의주시하는지 알아보기 위해서였죠
+&lt;p&gt;그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.&lt;/p&gt;
 
-이 실험을 해보면, 대부분의 hidden state는
-아무 의미 없는 패턴으로 예의 주시하고 있습니다.
+&lt;p&gt;이 vector가 하는 일을 살펴보면 처음에는 계속
+off off off off … 입니다. 파란색이죠. (파란색이 off)&lt;/p&gt;
 
-여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
-다시 한번 forward 시켜 보는 것입니다.
+&lt;p&gt;그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
+그리고 따옴표가 닫히기 전까지 유지됩니다.&lt;/p&gt;
 
-여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
-hidden vector의 값을 의미합니다.
+&lt;p&gt;그러다가 두 번째 따옴표를 만나면 다시
+값이 꺼집니다.&lt;/p&gt;
 
-RNN의 대부분의 Cell은  해석하기 어렵습니다.
+&lt;p&gt;이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
+학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.&lt;/p&gt;
 
-대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
-low level language modeling 정도로밖에 보이지 않습니다.
+&lt;p&gt;그런 유용한 것들을 학습하기 위해서 그 Cell이
+따옴표를 감지할 수 있게 된 것입니다.&lt;/p&gt;
 
-하지만 일부는 해석해볼만 합니다.
+&lt;p&gt;우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
+세는 듯해 보이는 Cell도 발견했습니다.&lt;/p&gt;
 
-그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.
+&lt;p&gt;처음에는 0으로 시작했다가. 줄이 점점 길어지면
+점점 빨간색으로 변합니다.&lt;/p&gt;
 
-이 vector가 하는 일을 살펴보면 처음에는 계속
-off off off off ... 입니다. 파란색이죠. (파란색이 off)
+&lt;p&gt;점점 증가하다가 줄바꿈이 이루어지면
+다시 0으로 리셋됩니다.&lt;/p&gt;
 
-그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
-그리고 따옴표가 닫히기 전까지 유지됩니다.
+&lt;p&gt;이 Cell은 언제 모델이 new line characters을 필요로 할 지
+지속적으로 추적하는 역할을 한다고 볼 수 있습니다.&lt;/p&gt;
 
-그러다가 두 번째 따옴표를 만나면 다시
-값이 꺼집니다.
+&lt;p&gt;그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.&lt;/p&gt;
 
-이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
-학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.
+&lt;p&gt;우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
+이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.&lt;/p&gt;
 
-그런 유용한 것들을 학습하기 위해서 그 Cell이
-따옴표를 감지할 수 있게 된 것입니다.
+&lt;p&gt;이를 통해 모델이 시퀀스를 더 잘
+학습할 수 있도록 도와줍니다.&lt;/p&gt;
 
-우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
-세는 듯해 보이는 Cell도 발견했습니다.
+&lt;p&gt;그 밖에도 Comments를 찾아내거나 혹은
+들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.&lt;/p&gt;
 
-처음에는 0으로 시작했다가. 줄이 점점 길어지면
-점점 빨간색으로 변합니다.
+&lt;p&gt;정말 놀라운 일입니다. 우리는 그저 다음 문자를
+예측하는 모델을 학습시켰을 뿐인데&lt;/p&gt;
 
-점점 증가하다가 줄바꿈이 이루어지면
-다시 0으로 리셋됩니다.
+&lt;p&gt;결국 모델은 입력 데이터의 구조를
+학습하게 되었기 때문입니다.&lt;/p&gt;
 
-이 Cell은 언제 모델이 new line characters을 필요로 할 지
-지속적으로 추적하는 역할을 한다고 볼 수 있습니다.
+&lt;p&gt;####&lt;/p&gt;
 
-그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.
+&lt;p&gt;우리는 Computer Vision 수업이니 다시 Computer Vision
+에 관련된 예시로 돌아가 보겠습니다.&lt;/p&gt;
 
-우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
-이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.
+&lt;p&gt;앞서 Image Captioning Model에 대해서
+몇 번 언급했었습니다.&lt;/p&gt;
 
-이를 통해 모델이 시퀀스를 더 잘
-학습할 수 있도록 도와줍니다.
+&lt;p&gt;이 모델은 입력은 이미지이고
+출력은 자연어로 된 Caption 입니다.&lt;/p&gt;
 
-그 밖에도 Comments를 찾아내거나 혹은
-들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.
+&lt;p&gt;이 문제를 다루는 몇몇 논문들이 있습니다.
+다들 접근 방법은 비슷합니다.&lt;/p&gt;
 
-정말 놀라운 일입니다. 우리는 그저 다음 문자를
-예측하는 모델을 학습시켰을 뿐인데
+&lt;p&gt;이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
+아주 “공정한 기준으로?” 예시를 이 논문으로 선택헀습니다.&lt;/p&gt;
 
-결국 모델은 입력 데이터의 구조를
-학습하게 되었기 때문입니다.
+&lt;p&gt;우선 Caption은 가변길이 입니다. Caption 마다
+다양한 시퀀스 길이를 가지고 있습니다.&lt;/p&gt;
 
-####
+&lt;p&gt;여기에 RNN Language Model가 아주 잘 어울립니다.&lt;/p&gt;
 
-우리는 Computer Vision 수업이니 다시 Computer Vision
-에 관련된 예시로 돌아가 보겠습니다.
+&lt;p&gt;모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
+CNN은 지금까지 아주 많이 살펴봤었죠&lt;/p&gt;
 
-앞서 Image Captioning Model에 대해서
-몇 번 언급했었습니다.
+&lt;p&gt;CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
+이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.&lt;/p&gt;
 
-이 모델은 입력은 이미지이고
-출력은 자연어로 된 Caption 입니다.
+&lt;p&gt;그러면 RNN은 Caption에 사용할
+문자들을 하나씩 만들어냅니다.&lt;/p&gt;
 
-이 문제를 다루는 몇몇 논문들이 있습니다.
-다들 접근 방법은 비슷합니다.
+&lt;p&gt;####&lt;/p&gt;
 
-이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
-아주 &quot;공정한 기준으로?&quot; 예시를 이 논문으로 선택헀습니다.
+&lt;p&gt;그렇다면 이 모델을 학습시킨 후에
+Test time에 어떻게 동작하는지 알아봅시다.&lt;/p&gt;
 
-우선 Caption은 가변길이 입니다. Caption 마다
-다양한 시퀀스 길이를 가지고 있습니다.
+&lt;p&gt;지금까지 살펴봤던 character level languate
+model과 아주 유사합니다.&lt;/p&gt;
 
-여기에 RNN Language Model가 아주 잘 어울립니다.
+&lt;p&gt;우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
+다만 softmax scores를 사용하지 않고&lt;/p&gt;
 
-모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
-CNN은 지금까지 아주 많이 살펴봤었죠
+&lt;p&gt;직전의 4,096-dim vector를 출력으로 합니다.&lt;/p&gt;
 
-CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
-이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.
+&lt;p&gt;이 vector를 이용해서 전체 이미지 정보를
+요약하는데 사용할 것입니다.&lt;/p&gt;
 
-그러면 RNN은 Caption에 사용할
-문자들을 하나씩 만들어냅니다.
+&lt;p&gt;앞서 RNN language models에서 배웠듯이 모델이 문장을
+생성해 내기에 앞서 초기 값을 넣어줘야 합니다.&lt;/p&gt;
 
-####
+&lt;p&gt;이 경우에는 입력이 특별합니다. 모델에게 “여기 이미지 정보가
+있으니 이 조건에 맞는 문장을 만들어줘!” 라고 시작해야합니다.&lt;/p&gt;
 
-그렇다면 이 모델을 학습시킨 후에
-Test time에 어떻게 동작하는지 알아봅시다.
+&lt;p&gt;이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
+입력으로 받았습니다. 하나는 현재 스텝의 입력이고&lt;/p&gt;
 
-지금까지 살펴봤던 character level languate
-model과 아주 유사합니다.
+&lt;p&gt;다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
+이 둘을 조합해서 다음 hidden state를 얻었습니다.&lt;/p&gt;
 
-우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
-다만 softmax scores를 사용하지 않고
+&lt;p&gt;하지만 이제는 이미지 정보도 더해줘야 합니다.&lt;/p&gt;
 
-직전의 4,096-dim vector를 출력으로 합니다.
+&lt;p&gt;사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
+가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.&lt;/p&gt;
 
-이 vector를 이용해서 전체 이미지 정보를
-요약하는데 사용할 것입니다.
+&lt;p&gt;다음 hidden state를 계산할 때마다 모든 스텝에
+이 이미지 정보를 추가합니다.&lt;/p&gt;
 
-앞서 RNN language models에서 배웠듯이 모델이 문장을
-생성해 내기에 앞서 초기 값을 넣어줘야 합니다.
+&lt;p&gt;자 이제는 vocabulary의 모든 스코어들에 대한
+분포를 계산할 차례입니다.&lt;/p&gt;
 
-이 경우에는 입력이 특별합니다. 모델에게 &quot;여기 이미지 정보가
-있으니 이 조건에 맞는 문장을 만들어줘!&quot; 라고 시작해야합니다.
+&lt;p&gt;이 문제에서 vocabulary는 “모든 영어 단어들” 과
+같이 엄청나게 큽니다.&lt;/p&gt;
 
-이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
-입력으로 받았습니다. 하나는 현재 스텝의 입력이고
+&lt;p&gt;그 분포에서 샘플링을 하고 그 단어를
+다음 스텝의 입력으로 다시 넣어줄 것입니다.&lt;/p&gt;
 
-다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
-이 둘을 조합해서 다음 hidden state를 얻었습니다.
+&lt;p&gt;샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
+추정하고 다음 단어를 만들어냅니다.&lt;/p&gt;
 
-하지만 이제는 이미지 정보도 더해줘야 합니다.
+&lt;p&gt;모든 스텝이 종료되면 결국 한 문장이 만들어집니다.&lt;/p&gt;
 
-사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
-가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.
-
-다음 hidden state를 계산할 때마다 모든 스텝에
-이 이미지 정보를 추가합니다.
-
-자 이제는 vocabulary의 모든 스코어들에 대한
-분포를 계산할 차례입니다.
-
-이 문제에서 vocabulary는 &quot;모든 영어 단어들&quot; 과
-같이 엄청나게 큽니다.
-
-그 분포에서 샘플링을 하고 그 단어를
-다음 스텝의 입력으로 다시 넣어줄 것입니다.
-
-샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
-추정하고 다음 단어를 만들어냅니다.
-
-모든 스텝이 종료되면 결국 한 문장이 만들어집니다.
-
-이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
-문장의 끝을 알려줍니다.
+&lt;p&gt;이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
+문장의 끝을 알려줍니다.&lt;/END&gt;&lt;/p&gt;
 
 &lt;END&gt; 가 샘플링되면 모델은 더이상 단어를 생성하지
 않으며 이미지에 대한 caption이 완성됩니다.
@@ -1248,7 +1254,7 @@ LSTM은 Long Short Term Memory라는 뜻입니다.
 
 LSTM은 RNN의 fancier 버전입니다.
 
-LSTM은 vanishing &amp; exploding gradients 문제를
+LSTM은 vanishing &amp;amp; exploding gradients 문제를
 완화시키기 위해서 디자인되었습니다.
 
 &quot;gradient clipping&quot; 같은 hack 을 쓰지 말고, 그레디언트가
@@ -1740,7 +1746,8 @@ RNN으로 다양한 새로운 문제에 도전해 볼 수 있습니다.
 
 
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;br /&gt;
+&lt;br /&gt;
 
-- **Reference**</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry></feed>
+- **Reference**
+&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry></feed>
