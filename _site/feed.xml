@@ -1,752 +1,749 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-15T18:01:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">&lt;h2 id=&quot;1-process-sequences&quot;&gt;1. Process Sequences&lt;/h2&gt;
-&lt;h3 id=&quot;1-1-vanilla-neural-network&quot;&gt;1-1) Vanilla Neural Network&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-05T23:44:13+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">[CS231n]Recurrent Neural Networks(초안)</title><link href="http://localhost:4000/dl/cs231n_10/" rel="alternate" type="text/html" title="[CS231n]Recurrent Neural Networks(초안)" /><published>2022-12-14T00:00:00+09:00</published><updated>2022-12-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_10</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_10/">## 1. Process Sequences
+### 1-1) Vanilla Neural Network
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
+- **One to One**
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207527671-5abbb9bc-0f84-4334-95e9-a6814a26222e.png)
 
-    &lt;p&gt;지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    지금까지 공부한 Vanilla Neural Network 아키텍쳐들은, 이미지(or 벡터) 하나를 입력으로 받아 Hidden Layer를 거쳐 하나의 출력을 내보낸다. 그러나 세상의 다양한 문제를 해결하기 위해서는, 입력과 출력의 개수를 유동적으로 받아들일 수 있는 모델이 필요하다. 이렇게 유동적인 입/출력을 처리해줄 수 있는 네트워크가 바로 RNN이다.
 
-&lt;h3 id=&quot;1-2-rnn&quot;&gt;1-2) RNN&lt;/h3&gt;
+### 1-2) RNN
 
-&lt;p&gt;RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.&lt;/p&gt;
+RNN을 활용할 수 있는 예시에 대해서 먼저 간략하게 소개하도록 하겠다.
 
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;One to Many&lt;/strong&gt;&lt;/p&gt;
+- **One to Many**
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528468-bea8294f-cb5a-46d9-94b2-a31347d8615e.png)
 
-    &lt;p&gt;Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Many to One&lt;/strong&gt;&lt;/p&gt;
+    Image를 입력하면, 그에 대한 설명이 출력되는 모델이 바로 대표적인 one to many 모델이라고 할 수 있다. 입력 이미지는 한 장이므로 단일 입력이고, caption에 따라서 단어의 수가 천차만별이기 때문에  출력은 가변 출력이 된다.
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+- **Many to One**
 
-    &lt;p&gt;문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Many to Many (diff)&lt;/strong&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528485-35bdf1b4-ffec-401e-ad42-a10fb67abce7.png)
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    문장을 입력하면, 그 문장의 감정을 분류하는 모델이 대표적인 Many to One 모델이라고 할 수 있다. 문장에 사용되는 단어의 수는 천차만별이므로 가변입력, 분류되는 감정의 클래스는 정해져있으므로 단일 출력이다.
 
-    &lt;p&gt;기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Many to Many(same)&lt;/strong&gt;&lt;/p&gt;
+- **Many to Many (diff)**
 
-    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528498-8c8d1fce-6aaf-4ce9-af10-e63917a2209e.png)
 
-    &lt;p&gt;비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;One to One&lt;/strong&gt;&lt;/p&gt;
+    기계 번역(Machine translation)은 대표적인 Many to Many 모델이다. 가령, English sentence를 French Sentence로 번역하는 작업을 수행한다고 했을 때, 입출력의 길이는 모두 가변이며 서로 다른 길이를 갖는다.
 
-    &lt;div style=&quot;position:relative; padding-bottom:calc(76.67% + 44px)&quot;&gt;&lt;iframe src=&quot;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;position:absolute;top:0;left:0;&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
-    &lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
+- **Many to Many(same)**
 
-    &lt;p&gt;그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가변 과정(processing)&lt;/code&gt; 인 경우, RNN은 상당이 유용하다.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
+    ![image](https://user-images.githubusercontent.com/84084372/207528515-f25a759d-39df-41d2-8482-06c52f6a8f08.png)
 
-&lt;h2 id=&quot;rnn&quot;&gt;RNN&lt;/h2&gt;
+    비디오가 입력이고 매 프레임마다 classification을 해야 하는 상황인 경우, 입출력 모두 가변이며 동일한 길이를 갖는다.
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207782916-ddcbb283-2151-40a5-9e50-c7409b36a27b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+- **One to One**
 
-&lt;p&gt;RNN은 일반적으로 “Recurrent Core Cell”이라고 불리는 작은 Layer를 가지고 있다. 이때, input x가 RNN으로 들어가게 되면, RNN 내부의 “hidden state”를 업데이트하고 가중치와 곱해 y를 출력한다. 이후, 또 다시 새로운 입력 x가 들어오면, “hidden state”가 다시 업데이트 되고 새로운 y가 출력되는 것이다.&lt;/p&gt;
+    &lt;div style=&apos;position:relative; padding-bottom:calc(76.67% + 44px)&apos;&gt;&lt;iframe src=&apos;https://gfycat.com/ifr/AchingRemoteDarklingbeetle&apos; frameborder=&apos;0&apos; scrolling=&apos;no&apos; width=&apos;100%&apos; height=&apos;100%&apos; style=&apos;position:absolute;top:0;left:0;&apos; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;p&gt; &lt;a href=&quot;https://gfycat.com/achingremotedarklingbeetle&quot;&gt;via Gfycat&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;수식&quot;&gt;수식&lt;/h3&gt;
+    그리고 고정 길이의 입/출력을 갖긴 하지만, sequential processing가 요구되는 경우에도 RNN을 유용하게 사용할 수 있다. 즉, 위 예제 MNIST와 같이 입/출력이 고정된 길이라고 해도 `가변 과정(processing)` 인 경우, RNN은 상당이 유용하다.
 
-&lt;p&gt;이러한 RNN 구조를 수식적으로 표현하면 다음과 같다.&lt;/p&gt;
 
-\[h_t = f_w ( h_{t-1}, x_t )\]
+## RNN
 
-&lt;p&gt;위에서 본 초록색의 RNN Block은 함수 f로 정의되며, 파라미터 W를 갖는다. f는, 이전 상태의 hidden state인 $h_{t-1}$과 현재 상태의 입력인 $x_t$ 를 input으로 받아 $h_t$를 출력한다. 이때, $h_t$는 다음 상태의 hidden state이다(updated hidden state). 이렇게 계산된 $h_t$는 FC-Layer의 input으로 들어가, 최종 출력값 y를 출력한다. 그리고 다음 단계(state)로 넘어가서 h_t와 x_t+1가 입력이 되어, 앞서 말했던 과정을 반복한다. 여기서 중요한 사실은, 함수 f와 파라미터 W가 매 스텝 동일하다는 것임을 기억하자.&lt;/p&gt;
+![image](https://user-images.githubusercontent.com/84084372/207782916-ddcbb283-2151-40a5-9e50-c7409b36a27b.png)
 
-&lt;p&gt;위 일반화된 수식을 바탕으로, Vanilla RNN을 수식으로 표현하면 다음과 같다.&lt;/p&gt;
+RNN은 일반적으로 &quot;Recurrent Core Cell&quot;이라고 불리는 작은 Layer를 가지고 있다. 이때, input x가 RNN으로 들어가게 되면, RNN 내부의 &quot;hidden state&quot;를 업데이트하고 가중치와 곱해 y를 출력한다. 이후, 또 다시 새로운 입력 x가 들어오면, &quot;hidden state&quot;가 다시 업데이트 되고 새로운 y가 출력되는 것이다.
 
-\[h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)\\
-y_t = W_{hy}h_t\]
+### 수식
 
-&lt;p&gt;가중치 행렬 $W_{hh}$는 이전 hidden state와 곱해지며, 가중치 행렬 $W_{xh}$는 입력 $x_t$와 곱해 다음 hidden state를 출력한다. 이러한 두 입력(h, x)를 더하고, non-linearity를 얻기위해 tanh로 적용해 준 식이다.&lt;/p&gt;
+이러한 RNN 구조를 수식적으로 표현하면 다음과 같다.
 
-&lt;h3 id=&quot;해석&quot;&gt;해석&lt;/h3&gt;
+$$
+h_t = f_w ( h_{t-1}, x_t )
+$$
 
-&lt;p&gt;RNN은 크게 두 가지 방법으로 해석해 볼 수 있다.&lt;/p&gt;
+위에서 본 초록색의 RNN Block은 함수 f로 정의되며, 파라미터 W를 갖는다. f는, 이전 상태의 hidden state인 $h_{t-1}$과 현재 상태의 입력인 $x_t$ 를 input으로 받아 $h_t$를 출력한다. 이때, $h_t$는 다음 상태의 hidden state이다(updated hidden state). 이렇게 계산된 $h_t$는 FC-Layer의 input으로 들어가, 최종 출력값 y를 출력한다. 그리고 다음 단계(state)로 넘어가서 h_t와 x_t+1가 입력이 되어, 앞서 말했던 과정을 반복한다. 여기서 중요한 사실은, 함수 f와 파라미터 W가 매 스텝 동일하다는 것임을 기억하자.
 
-&lt;h4 id=&quot;many-to-many&quot;&gt;many to many&lt;/h4&gt;
+위 일반화된 수식을 바탕으로, Vanilla RNN을 수식으로 표현하면 다음과 같다.
 
-&lt;p&gt;하나는 RNN이 hidden state를 가지며 이를 “재귀적으로” feed back 한다는 점이다. RNN의 학습 과정을 더 쉽게 이해하기 위해 다음과 같이 각 steps을 unrolling하여 표현하였다.&lt;/p&gt;
+$$
+h_t = tanh(W_{hh}h_{t-1} + W_{xh}x_t)\\
+y_t = W_{hy}h_t
+$$
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207808028-8f466303-6eea-484a-8635-5f856ea181fd.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+가중치 행렬 $W_{hh}$는 이전 hidden state와 곱해지며, 가중치 행렬 $W_{xh}$는 입력 $x_t$와 곱해 다음 hidden state를 출력한다. 이러한 두 입력(h, x)를 더하고, non-linearity를 얻기위해 tanh로 적용해 준 식이다.
 
-&lt;p&gt;우선, 첫 step의 hidden state($h_0$)를 초기화한다(대부분 0으로 초기화). 그리고 나서, $h_0와$ input $x_1$이 곱해져, 함수 $f_w$의 입력으로 들어간다. 이렇게 되면 첫 번째 step이 끝나고 $h_1$이 출력된다. RNN은 위 과정을 계속 반복하여 다음 hidden state를 출력하며, 지속적으로 가변 입력 $x_t$를 받는다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+### 해석
 
-&lt;p&gt;위 Computational Graph에 가중치 W와 최종 output y를 추가해보자.&lt;/p&gt;
+RNN은 크게 두 가지 방법으로 해석해 볼 수 있다.
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207809341-651f0d1e-a10e-4385-a1d4-fcf7957d0c07.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+#### many to many
 
-&lt;p&gt;우선, 매 step마다 h와 x는 달라지지만 가중치 W는 매번 동일하게 곱해진다는 점을 유의하자. 따라서 Backward Pass시 $\frac{\partial Loss}{\partial W}$를 계산하기 위해서는, 각 step의 gradient를 계산한 뒤 모두 더해주기만 하면 된다(가중치가 모두 동일하기 때문). 또한, RNN의 출력값 $h_t$가 또 다른 네트워크의 입력으로 들어가서 $y_t$를 만들어 낸다. y_t는 매 step의 class score로 해석해 볼 수 있다.&lt;/p&gt;
+하나는 RNN이 hidden state를 가지며 이를 &quot;재귀적으로&quot; feed back 한다는 점이다. RNN의 학습 과정을 더 쉽게 이해하기 위해 다음과 같이 각 steps을 unrolling하여 표현하였다.
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+![image](https://user-images.githubusercontent.com/84084372/207808028-8f466303-6eea-484a-8635-5f856ea181fd.png)
 
-&lt;p&gt;마지막으로, RNN의 Loss가 구해지는 과정은 다음과 같다.&lt;/p&gt;
+우선, 첫 step의 hidden state($h_0$)를 초기화한다(대부분 0으로 초기화). 그리고 나서, $h_0와$ input $x_1$이 곱해져, 함수 $f_w$의 입력으로 들어간다. 이렇게 되면 첫 번째 step이 끝나고 $h_1$이 출력된다. RNN은 위 과정을 계속 반복하여 다음 hidden state를 출력하며, 지속적으로 가변 입력 $x_t$를 받는다.
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207810960-fe92b71b-e004-4755-8aa4-db8ff577a8c7.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;br&gt;
 
-&lt;p&gt;각 시퀀스마다 Ground truth label이 있다고 가정하면, 각 step별로 $y_t$에 대한 Loss를 계산할 수 있다(Softmax 등등). 여기서, RNN의 최종 Loss는 각 개별 Loss들의 합이다. 즉, 각 단계에서 Loss가 발생하면, 이를 전부 더한 것이 최종 네트워크의 Loss가 되는 것이다. 덧붙여서, RNN의 Backprop은 위에서도 잠깐 언급했듯이, 각 step의 local gradient를 모두 더한 값이다.&lt;/p&gt;
+위 Computational Graph에 가중치 W와 최종 output y를 추가해보자.
 
-&lt;h4 id=&quot;many-to-one&quot;&gt;many to one&lt;/h4&gt;
+![image](https://user-images.githubusercontent.com/84084372/207809341-651f0d1e-a10e-4385-a1d4-fcf7957d0c07.png)
 
-&lt;p&gt;다음은, Text 감성분석(sentiment analysis)와 같은 “many to one” 모델에 대한 Computational Graph이다.&lt;/p&gt;
+우선, 매 step마다 h와 x는 달라지지만 가중치 W는 매번 동일하게 곱해진다는 점을 유의하자. 따라서 Backward Pass시 $\frac{\partial Loss}{\partial W}$를 계산하기 위해서는, 각 step의 gradient를 계산한 뒤 모두 더해주기만 하면 된다(가중치가 모두 동일하기 때문). 또한, RNN의 출력값 $h_t$가 또 다른 네트워크의 입력으로 들어가서 $y_t$를 만들어 낸다. y_t는 매 step의 class score로 해석해 볼 수 있다.
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207811918-145b7558-e2d2-43e8-b07e-4ce49d378561.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;br&gt;
 
-&lt;p&gt;이 경우에는 네트워크의 최종 hidden state에서만 결과 값이 나올 것이다. 모델 전체 시퀀스 내용을 요약하여 최종 Hidden State에 담아 출력하는 것으로 이해하면 된다.&lt;/p&gt;
+마지막으로, RNN의 Loss가 구해지는 과정은 다음과 같다.
 
-&lt;h4 id=&quot;one-to-many&quot;&gt;one to many&lt;/h4&gt;
+![image](https://user-images.githubusercontent.com/84084372/207810960-fe92b71b-e004-4755-8aa4-db8ff577a8c7.png)
 
-&lt;p&gt;다음은 “고정 입력”을 받지만 “가변 출력”인 “one to many” 모델을 Computational Graph로 나타낸 것이다.&lt;/p&gt;
+각 시퀀스마다 Ground truth label이 있다고 가정하면, 각 step별로 $y_t$에 대한 Loss를 계산할 수 있다(Softmax 등등). 여기서, RNN의 최종 Loss는 각 개별 Loss들의 합이다. 즉, 각 단계에서 Loss가 발생하면, 이를 전부 더한 것이 최종 네트워크의 Loss가 되는 것이다. 덧붙여서, RNN의 Backprop은 위에서도 잠깐 언급했듯이, 각 step의 local gradient를 모두 더한 값이다.
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207813003-c772096a-6da6-4bf1-90e7-806e6c90f43b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+#### many to one
 
-&lt;p&gt;고정 입력은 모델의 initial hidden state를 초기화시키는 용도로 사용되며, 모든 step에서
-출력 값을 가진다. 이미지에 대한 Captioning 모델을 생각하면 된다.&lt;/p&gt;
+다음은, Text 감성분석(sentiment analysis)와 같은 &quot;many to one&quot; 모델에 대한 Computational Graph이다.
 
-&lt;h4 id=&quot;sequence-to-sequence&quot;&gt;sequence to sequence&lt;/h4&gt;
+![image](https://user-images.githubusercontent.com/84084372/207811918-145b7558-e2d2-43e8-b07e-4ce49d378561.png)
 
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207813986-07a3a184-0a6e-4a51-b3cf-533a86b3325f.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+이 경우에는 네트워크의 최종 hidden state에서만 결과 값이 나올 것이다. 모델 전체 시퀀스 내용을 요약하여 최종 Hidden State에 담아 출력하는 것으로 이해하면 된다.
 
-&lt;p&gt;“sequence to sequent” 모델에 대해서 알아보겠습니다. 가령 machine tranlation 에 사용할 수 있는 모델입니다.&lt;/p&gt;
+#### one to many
 
-&lt;p&gt;“가변 입력” 과 “가변 출력” 을 가지는 모델입니다. 우리는 이 모델을 “many to one” 모델과
-“one to many” 모델의 결합으로 볼 수 있습니다.&lt;/p&gt;
+다음은 &quot;고정 입력&quot;을 받지만 &quot;가변 출력&quot;인 &quot;one to many&quot; 모델을 Computational Graph로 나타낸 것이다.
 
-&lt;p&gt;두 개의 스테이지로 구성되는 것이죠. encoder와 decoder 구조입니다.&lt;/p&gt;
+![image](https://user-images.githubusercontent.com/84084372/207813003-c772096a-6da6-4bf1-90e7-806e6c90f43b.png)
 
-&lt;p&gt;encoder는 가변 입력을 받습니다. 가령 English sentence가 될 수 있겠죠
+고정 입력은 모델의 initial hidden state를 초기화시키는 용도로 사용되며, 모든 step에서
+출력 값을 가진다. 이미지에 대한 Captioning 모델을 생각하면 된다.
+
+#### sequence to sequence
+
+![image](https://user-images.githubusercontent.com/84084372/207813986-07a3a184-0a6e-4a51-b3cf-533a86b3325f.png)
+
+
+&quot;sequence to sequent&quot; 모델에 대해서 알아보겠습니다. 가령 machine tranlation 에 사용할 수 있는 모델입니다.
+
+&quot;가변 입력&quot; 과 &quot;가변 출력&quot; 을 가지는 모델입니다. 우리는 이 모델을 &quot;many to one&quot; 모델과
+&quot;one to many&quot; 모델의 결합으로 볼 수 있습니다.
+
+두 개의 스테이지로 구성되는 것이죠. encoder와 decoder 구조입니다.
+
+encoder는 가변 입력을 받습니다. 가령 English sentence가 될 수 있겠죠
 그리고 encoder의 final hidden state 를 통해 전체 sentence를 요약합니다.
-Encoder 에서는 “many to one” 을 수행합니다. “가변 입력”을 하나의 벡터로 요약합니다.&lt;/p&gt;
+Encoder 에서는 &quot;many to one&quot; 을 수행합니다. &quot;가변 입력&quot;을 하나의 벡터로 요약합니다.
 
-&lt;p&gt;반면 Decoder는 “one to many”를 수행합니다. 입력은 앞서 요약한 “하나의 벡터” 입니다.
-그리고 decoder는 “가변 출력”을 내뱉습니다. 가령 다른 언어로 변역된 문장이 될 수 있겠죠
-“가변 출력” 은 매 스텝 적절한 단어를 내뱉습니다. 그림처럼 전체 Computational graph를 풀어서
-전체 학습과정을 해석해보면 Output sentence의 각 losses를 합해서 Backprob 을 진행합니다.&lt;/p&gt;
+반면 Decoder는 &quot;one to many&quot;를 수행합니다. 입력은 앞서 요약한 &quot;하나의 벡터&quot; 입니다.
+그리고 decoder는 &quot;가변 출력&quot;을 내뱉습니다. 가령 다른 언어로 변역된 문장이 될 수 있겠죠
+&quot;가변 출력&quot; 은 매 스텝 적절한 단어를 내뱉습니다. 그림처럼 전체 Computational graph를 풀어서
+전체 학습과정을 해석해보면 Output sentence의 각 losses를 합해서 Backprob 을 진행합니다.
 
-&lt;h3 id=&quot;구체적인-예시&quot;&gt;구체적인 예시&lt;/h3&gt;
 
-&lt;p&gt;조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
-Language modeling에서 자주 사용합니다.&lt;/p&gt;
+### 구체적인 예시
 
-&lt;p&gt;Language modeling 문제에서 하고싶은 것은 바로
-“어떻게 자연어(natural lang)을 만들어낼지 입니다.&lt;/p&gt;
+조금 더 구체적인 예를 살펴보겠습니다. 대게는 RNN 은
+Language modeling에서 자주 사용합니다.
 
-&lt;p&gt;가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
-어떻게 문자를 생성해 낼지를 풀어야 합니다.&lt;/p&gt;
+Language modeling 문제에서 하고싶은 것은 바로
+&quot;어떻게 자연어(natural lang)을 만들어낼지 입니다.
 
-&lt;p&gt;단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
-생성해 낼 지를 풀어야겠죠&lt;/p&gt;
+가령 문자(characters) 를 내뱉는 모델이라면 매 스텝
+어떻게 문자를 생성해 낼지를 풀어야 합니다.
 
-&lt;p&gt;우선은 간단한 예제를 위해서 character level
-language model 을 살펴보겠습니다.&lt;/p&gt;
+단어(word) 를 내뱉는 모델이라면 매 스텝 어떻게 단어를
+생성해 낼 지를 풀어야겠죠
 
-&lt;h4 id=&quot;character-level-language-model&quot;&gt;character level language model&lt;/h4&gt;
+우선은 간단한 예제를 위해서 character level
+language model 을 살펴보겠습니다.
 
-&lt;p&gt;네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
-다음 문자를 예측해야 합니다.&lt;/p&gt;
+#### character level language model
 
-&lt;p&gt;이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
-그리고 학습시킬 문장은 “h, e, l, l, o” 입니다.&lt;/p&gt;
+네트워크는 문자열 시퀀스를 읽어드리고, 현재 문맥에서
+다음 문자를 예측해야 합니다.
 
-&lt;p&gt;Train time에서는 training sequence(“hello”) 의
-각 단어들을 입력으로 넣어줘야 합니다.&lt;/p&gt;
+이번 예제에서는 간단하게 단어가 [h,e,l,o] 만 있습니다.
+그리고 학습시킬 문장은 &quot;h, e, l, l, o&quot; 입니다.
 
-&lt;p&gt;“hello” 가 RNN의 x_t입니다.&lt;/p&gt;
+Train time에서는 training sequence(&quot;hello&quot;) 의
+각 단어들을 입력으로 넣어줘야 합니다.
 
-&lt;p&gt;우선 입력은 한 글자(letter)씩 입니다. 네트워크도
-적절한 글자들을 출력해야 합니다.&lt;/p&gt;
+&quot;hello&quot; 가 RNN의 x_t입니다.
 
-&lt;p&gt;일반적으로 입력을 넣어주는 방법이 있습니다.
-우선 vocabulary는 총 네 가지입니다.[h, e, l, o]&lt;/p&gt;
+우선 입력은 한 글자(letter)씩 입니다. 네트워크도
+적절한 글자들을 출력해야 합니다.
 
-&lt;p&gt;각 글자는 하나의 벡터로 표현할 수 있습니다.
-이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.&lt;/p&gt;
+일반적으로 입력을 넣어주는 방법이 있습니다.
+우선 vocabulary는 총 네 가지입니다.[h, e, l, o]
 
-&lt;p&gt;벡터에서 해당 글자 위치만 1로 표시합니다.&lt;/p&gt;
+각 글자는 하나의 벡터로 표현할 수 있습니다.
+이 벡터는 1이 하나 있고 나머지는 0인 벡터입니다.
 
-&lt;p&gt;이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
-따라서 4-d 벡터로 표현할 수 있습니다.&lt;/p&gt;
+벡터에서 해당 글자 위치만 1로 표시합니다.
 
-&lt;p&gt;가령 h를 벡터로 표현하는 경우([1,0,0,0])
-h에 해당하는 자리만 1이고 나머지는 0입니다.&lt;/p&gt;
+이 단순한 예제에서는 글자가  h, e, l, o 뿐입니다.
+따라서 4-d 벡터로 표현할 수 있습니다.
 
-&lt;p&gt;이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.&lt;/p&gt;
+가령 h를 벡터로 표현하는 경우([1,0,0,0])
+h에 해당하는 자리만 1이고 나머지는 0입니다.
 
-&lt;p&gt;Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
-우선 첫 스텝에서는, 입력 문자 ‘h’ 가 들어옵니다.&lt;/p&gt;
+이런 식으로 다은 문자들도 벡터로 표현할 수 있습니다.
 
-&lt;p&gt;첫 번째 RNN cell로는 ‘h’ 가 들어갑니다.
-그러면 네트워크는 y_t를 출력합니다.&lt;/p&gt;
+Forward pass에서 네트워크가 어떻게 동작하는지 살펴봅시다.
+우선 첫 스텝에서는, 입력 문자 &apos;h&apos; 가 들어옵니다.
 
-&lt;p&gt;y_t는 어떤 문자가 ‘h’ 다음에 나올 것
-같은지를 예측한 값입니다.&lt;/p&gt;
+첫 번째 RNN cell로는 &apos;h&apos; 가 들어갑니다.
+그러면 네트워크는 y_t를 출력합니다.
 
-&lt;p&gt;이 예제에서는 ‘h’  다음에는 ‘e’ 를 예측해야 정답입니다.&lt;/p&gt;
+y_t는 어떤 문자가 &apos;h&apos; 다음에 나올 것
+같은지를 예측한 값입니다.
 
-&lt;p&gt;하지만 현재 이 모델은 다음에 나올 글자가
-‘o’ 라고 예측하고 있습니다.&lt;/p&gt;
+이 예제에서는 &apos;h&apos;  다음에는 &apos;e&apos; 를 예측해야 정답입니다.
 
-&lt;p&gt;잘못 예측한 경우입니다. softmax loss가 이 예측이
-얼마나 형편없는지 알려줄 것입니다.&lt;/p&gt;
+하지만 현재 이 모델은 다음에 나올 글자가
+&apos;o&apos; 라고 예측하고 있습니다.
 
-&lt;p&gt;다음 스텝에서는 두 번째 단어 ‘e’ 가 입력으로 들어갑니다.
-이런 과정이 반복됩니다.&lt;/p&gt;
+잘못 예측한 경우입니다. softmax loss가 이 예측이
+얼마나 형편없는지 알려줄 것입니다.
 
-&lt;p&gt;우선 ‘e’ 벡터입니다. 그리고 “이전 hidden state”와 함께
-“새로운  hidden state” 를 만들어내죠&lt;/p&gt;
+다음 스텝에서는 두 번째 단어 &apos;e&apos; 가 입력으로 들어갑니다.
+이런 과정이 반복됩니다.
 
-&lt;p&gt;이제는 두번째 hidden state를 이용해서
-적절한 값을 예측해야 합니다.&lt;/p&gt;
+우선 &apos;e&apos; 벡터입니다. 그리고 &quot;이전 hidden state&quot;와 함께
+&quot;새로운  hidden state&quot; 를 만들어내죠
 
-&lt;p&gt;‘hello’ 를 예측해야 하므로 ‘e’ 가
-입력이라면 ‘l’ 을 예측해야합니다.&lt;/p&gt;
+이제는 두번째 hidden state를 이용해서
+적절한 값을 예측해야 합니다.
 
-&lt;p&gt;이 경우 ‘l’ 의 예측 치가 상당히 낮기 때문에
-Loss가 높습니다.&lt;/p&gt;
+&apos;hello&apos; 를 예측해야 하므로 &apos;e&apos; 가
+입력이라면 &apos;l&apos; 을 예측해야합니다.
 
-&lt;p&gt;이 과정을 반복합니다.
-모델을 다양한 문장으로 학습시킨다면&lt;/p&gt;
+이 경우 &apos;l&apos; 의 예측 치가 상당히 낮기 때문에
+Loss가 높습니다.
 
-&lt;p&gt;결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
-무엇일지를 학습해야 할 것입니다.&lt;/p&gt;
 
-&lt;p&gt;그렇다면 이 모델의 Test time은 어떨까요?&lt;/p&gt;
+이 과정을 반복합니다.
+모델을 다양한 문장으로 학습시킨다면
 
-&lt;p&gt;이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
-Model로부터 Sampling 하는 것입니다.&lt;/p&gt;
+결국 모델은 이전 문장의 문맥을 참고해서 다음 문자가
+무엇일지를 학습해야 할 것입니다.
 
-&lt;p&gt;다시말해, Train time에 모델이 봤을 법한 문장을
-모델 스스로 생성해 내는 것입니다.&lt;/p&gt;
+그렇다면 이 모델의 Test time은 어떨까요?
 
-&lt;p&gt;우선 모델에게 문장의 첫 글자만 줍니다.
-이 경우에는 ‘h’ 가 되겠군요&lt;/p&gt;
+이렇게 학습시킨 모델을 활용할 수 있는 방법들 중 하나는
+Model로부터 Sampling 하는 것입니다.
 
-&lt;p&gt;RNN 의 첫 스텝의 입력은 ‘h’가 될 것입니다.&lt;/p&gt;
+다시말해, Train time에 모델이 봤을 법한 문장을
+모델 스스로 생성해 내는 것입니다.
 
-&lt;p&gt;‘h’가 주어지면 모든 문자(h,e,l,o) 에 대한
-스코어를 얻을 수 있습니다(output layer)&lt;/p&gt;
+우선 모델에게 문장의 첫 글자만 줍니다.
+이 경우에는 &apos;h&apos; 가 되겠군요
 
-&lt;p&gt;Test time에서는 이 스코어를
-“sampling”(다음 글자 선택)에 이용 합니다.&lt;/p&gt;
+RNN 의 첫 스텝의 입력은 &apos;h&apos;가 될 것입니다.
 
-&lt;p&gt;스코어를 확률분포로 표현하기 위해서
-sofrmax 함수를 사용할 수 있습니다.&lt;/p&gt;
+&apos;h&apos;가 주어지면 모든 문자(h,e,l,o) 에 대한
+스코어를 얻을 수 있습니다(output layer)
 
-&lt;p&gt;문장의 두 번째 글자를 선택하기 위해서
-이 확률분포를 이용합니다.&lt;/p&gt;
+Test time에서는 이 스코어를
+&quot;sampling&quot;(다음 글자 선택)에 이용 합니다.
 
-&lt;p&gt;이 경우에 ‘e’가 뽑힐 확률(13%)이 엄청 낮았음에도
-아주 운좋게 ‘e’가 샘플링되었습니다.&lt;/p&gt;
+스코어를 확률분포로 표현하기 위해서
+sofrmax 함수를 사용할 수 있습니다.
 
-&lt;p&gt;이제는 확률 분포에서 운좋게 뽑힌 ‘e’ 를
-다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.&lt;/p&gt;
+문장의 두 번째 글자를 선택하기 위해서
+이 확률분포를 이용합니다.
 
-&lt;p&gt;‘e’ 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
-넣어주면 네트워크는 두번째 출력을 만들어 냅니다.&lt;/p&gt;
+이 경우에 &apos;e&apos;가 뽑힐 확률(13%)이 엄청 낮았음에도
+아주 운좋게 &apos;e&apos;가 샘플링되었습니다.
 
-&lt;p&gt;이 학습된 모델만 가지고 새로운 문장을
-만들어내기 위해 이 과정을 반복합니다.&lt;/p&gt;
+이제는 확률 분포에서 운좋게 뽑힌 &apos;e&apos; 를
+다음 스텝의 네트워크 입력으로 넣어 줄 것입니다.
 
-&lt;p&gt;전체 문장을 만들어내기 위해 타임 스텝마다
-확률 분포에서 문자를 하나씩 뽑아냅니다.&lt;/p&gt;
+&apos;e&apos; 를 다시 벡터[0,1,0,0]로 만들어주고 다음 입력으로
+넣어주면 네트워크는 두번째 출력을 만들어 냅니다.
 
-&lt;h4 id=&quot;질문1&quot;&gt;질문1&lt;/h4&gt;
+이 학습된 모델만 가지고 새로운 문장을
+만들어내기 위해 이 과정을 반복합니다.
 
-&lt;p&gt;질문 있나요?&lt;/p&gt;
+전체 문장을 만들어내기 위해 타임 스텝마다
+확률 분포에서 문자를 하나씩 뽑아냅니다.
 
-&lt;p&gt;질문은 “가장 높은 스코어를 선택하면 그만인데
-왜 굳이 확률분포에서 샘플링하는지” 입니다.&lt;/p&gt;
+#### 질문1
 
-&lt;p&gt;이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
-올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)&lt;/p&gt;
+질문 있나요?
 
-&lt;p&gt;따라서 확률분포에서 샘플링을 했기 때문에
-hello를 잘 만들 수 있었습니다.&lt;/p&gt;
+질문은 &quot;가장 높은 스코어를 선택하면 그만인데
+왜 굳이 확률분포에서 샘플링하는지&quot; 입니다.
 
-&lt;p&gt;실제로는 두 경우 모두 사용할 수 있습니다.
-(확률 분포에서 샘플링 or 그냥 가장 높은 값)&lt;/p&gt;
+이 예제의 경우에는 가장 스코어가 높은 값만 사용하면
+올바른 결과를 낼 수 없었습니다. (e 스코어가 낮았음)
 
-&lt;p&gt;어떤 경우에는 argmax probability만 사용할 수 있습니다.
-(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.&lt;/p&gt;
+따라서 확률분포에서 샘플링을 했기 때문에
+hello를 잘 만들 수 있었습니다.
 
-&lt;p&gt;하지만 확률 분포에서 샘플링하는 방법을 사용하면
-일반적으로는 모델에서의 다양성을 얻을 수 있습니다.&lt;/p&gt;
+실제로는 두 경우 모두 사용할 수 있습니다.
+(확률 분포에서 샘플링 or 그냥 가장 높은 값)
 
-&lt;p&gt;만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
-같은 사진이라던지를 모델 입력으로 주면&lt;/p&gt;
+어떤 경우에는 argmax probability만 사용할 수 있습니다.
+(가장 높은 값을 취함) 더 안정적인 방법일 수 있습니다.
 
-&lt;p&gt;argmax을 하지 않고 샘플링을 하게되면 그럴듯한
-다양한 문장을 출력할 수 있게 됩니다.&lt;/p&gt;
+하지만 확률 분포에서 샘플링하는 방법을 사용하면
+일반적으로는 모델에서의 다양성을 얻을 수 있습니다.
 
-&lt;p&gt;첫 스텝에서 어떤 값이 샘플링되는지에
-따라서 출력이 다양해 질 수 있는 것입니다.&lt;/p&gt;
+만약 항상 같은 접두사(예제에서 h)라던지, 이미지라면
+같은 사진이라던지를 모델 입력으로 주면
 
-&lt;p&gt;샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
-관점에서 좋은 방법이 될 수 있습니다.&lt;/p&gt;
+argmax을 하지 않고 샘플링을 하게되면 그럴듯한
+다양한 문장을 출력할 수 있게 됩니다.
 
-&lt;h4 id=&quot;질문2&quot;&gt;질문2&lt;/h4&gt;
+첫 스텝에서 어떤 값이 샘플링되는지에
+따라서 출력이 다양해 질 수 있는 것입니다.
 
-&lt;p&gt;다른 질문 있나요?&lt;/p&gt;
+샘플링 하는 방법은 다양한 출력을 얻을 수 있다는
+관점에서 좋은 방법이 될 수 있습니다.
 
-&lt;p&gt;[학생이 질문]&lt;/p&gt;
+#### 질문2
 
-&lt;p&gt;질문은 “Test time에 sofrmax vector를
-one hot vector 대신에 넣어줄 수 있는지” 입니다.&lt;/p&gt;
+다른 질문 있나요?
 
-&lt;p&gt;두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
-입력이 Train time에서 본 입력과 달라집니다.&lt;/p&gt;
+[학생이 질문]
 
-&lt;p&gt;모델에게 Train time에서 보지 못한 입력값을 주게되면
-대게는 모델이 아무것도 하지 못합니다.&lt;/p&gt;
+질문은 &quot;Test time에 sofrmax vector를
+one hot vector 대신에 넣어줄 수 있는지&quot; 입니다.
 
-&lt;p&gt;두 번째 문제는 실제로는
-vocabularies가 아주 크다는 것입니다.&lt;/p&gt;
+두 가지 문제가 발생할 수 있습니다. 첫 째는 그렇게 되면
+입력이 Train time에서 본 입력과 달라집니다.
 
-&lt;p&gt;예제에서는 voca가 4개 뿐이 없어서
-크게 문제될 것이 없겠지만&lt;/p&gt;
+모델에게 Train time에서 보지 못한 입력값을 주게되면
+대게는 모델이 아무것도 하지 못합니다.
 
-&lt;p&gt;한 스텝마다 단어(word)를 생성하는 모델이라고 보면
-voca 안에는 이세상의 모든 영어단어가 들어가야합니다.&lt;/p&gt;
+두 번째 문제는 실제로는
+vocabularies가 아주 크다는 것입니다.
 
-&lt;p&gt;voca는 수만개 이상의 요소를 가지게 되겠죠&lt;/p&gt;
+예제에서는 voca가 4개 뿐이 없어서
+크게 문제될 것이 없겠지만
 
-&lt;p&gt;실제론 one hot vector를 sparse vector operation
-으로 처리합니다. (dense vector가 아닌)&lt;/p&gt;
+한 스텝마다 단어(word)를 생성하는 모델이라고 보면
+voca 안에는 이세상의 모든 영어단어가 들어가야합니다.
 
-&lt;p&gt;10,000dim softmax vector를 연산해야 한다면
-연산량이 어마어마 할 것입니다.&lt;/p&gt;
+voca는 수만개 이상의 요소를 가지게 되겠죠
 
-&lt;p&gt;Test time에서도 one hot을 사용하는 이유입니다.&lt;/p&gt;
+실제론 one hot vector를 sparse vector operation
+으로 처리합니다. (dense vector가 아닌)
 
-&lt;p&gt;###&lt;/p&gt;
+10,000dim softmax vector를 연산해야 한다면
+연산량이 어마어마 할 것입니다.
 
-&lt;p&gt;이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.&lt;/p&gt;
+Test time에서도 one hot을 사용하는 이유입니다.
 
-&lt;p&gt;이 출력값들의 Loss를 계산해 final loss를 얻는데
-이를 “backpropagation through time” 라고 합니다.&lt;/p&gt;
+###
 
-&lt;p&gt;이 경우, forward pass의 경우에는 전체 시퀀스가
-끝날 때 까지 출력값이 생성됩니다.&lt;/p&gt;
+이런 모델의 경우 시퀀스 스텝마다 출력값이 존재합니다.
 
-&lt;p&gt;반대로 backward pass에서도 전체 시퀀스를
-가지고 Loss를 계산해야 합니다.&lt;/p&gt;
+이 출력값들의 Loss를 계산해 final loss를 얻는데
+이를 &quot;backpropagation through time&quot; 라고 합니다.
 
-&lt;p&gt;하지만 이 경우 시퀀스가 아주 긴 경우에는
-문제가 될 소지가 있습니다.&lt;/p&gt;
+이 경우, forward pass의 경우에는 전체 시퀀스가
+끝날 때 까지 출력값이 생성됩니다.
 
-&lt;p&gt;가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.&lt;/p&gt;
+반대로 backward pass에서도 전체 시퀀스를
+가지고 Loss를 계산해야 합니다.
 
-&lt;p&gt;이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
-Wikipedia 전체 문서를 다 거쳐야 할 것입니다.&lt;/p&gt;
+하지만 이 경우 시퀀스가 아주 긴 경우에는
+문제가 될 소지가 있습니다.
 
-&lt;p&gt;Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
-gradient update가 1회 수행됩니다.&lt;/p&gt;
+가령 Wikipedia 전체 문서로 모델을 학습시킨다고 해봅시다.
 
-&lt;p&gt;이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
-메모리 사용량도 어마어마할 것입니다.&lt;/p&gt;
+이 경우 학습이 정말 느릴 것입니다. gradient를 계산하려면
+Wikipedia 전체 문서를 다 거쳐야 할 것입니다.
 
-&lt;p&gt;실제로는 “truncated backpropagation” 를 통해서
-backprob 을 근사시키는 기법을 사용합니다.&lt;/p&gt;
+Wikipedia 문서 전체에 대한 gradient를 계산하고 나면
+gradient update가 1회 수행됩니다.
 
-&lt;p&gt;이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
-길어서 무한대라고 할지라도&lt;/p&gt;
+이 과정은 아주 느릴 것입니다. 모델이 수렴될리 없겠죠.
+메모리 사용량도 어마어마할 것입니다.
 
-&lt;p&gt;Train time에 한 스텝을 일정 단위로 자릅니다.
-대략 100 정도로 말이죠&lt;/p&gt;
+실제로는 &quot;truncated backpropagation&quot; 를 통해서
+backprob 을 근사시키는 기법을 사용합니다.
 
-&lt;p&gt;100 스텝만 forward pass를 하고 이 서브스퀀스의
-Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.&lt;/p&gt;
+이 방법의 아이디어는 비록 입력 스퀀스가 엄청나게
+길어서 무한대라고 할지라도
 
-&lt;p&gt;이 과정을 반복합니다. 다만 이전 batch에서 계산한
-hidden states는 계속 유지합니다.&lt;/p&gt;
+Train time에 한 스텝을 일정 단위로 자릅니다.
+대략 100 정도로 말이죠
 
-&lt;p&gt;다음 Batch의 forward pass를 계산할 때는
-이전 hidden state를 이용합니다.&lt;/p&gt;
+100 스텝만 forward pass를 하고 이 서브스퀀스의
+Loss를 계산합니다. 그리고 gradient step을 진행하는 것이죠.
 
-&lt;p&gt;그리고 gradient step은 현재 Batch에서만 진행합니다.&lt;/p&gt;
+이 과정을 반복합니다. 다만 이전 batch에서 계산한
+hidden states는 계속 유지합니다.
 
-&lt;p&gt;이 방법을 “truncated backpropagation
-through time” 이라고 합니다.&lt;/p&gt;
+다음 Batch의 forward pass를 계산할 때는
+이전 hidden state를 이용합니다.
 
-&lt;p&gt;이 과정을 반복합니다. 이전 batch에서 hidden states를
-가져와서 foward pass를 수행하고&lt;/p&gt;
+그리고 gradient step은 현재 Batch에서만 진행합니다.
 
-&lt;p&gt;backprob은 현재 배치만큼만 진행합니다.&lt;/p&gt;
+이 방법을 &quot;truncated backpropagation
+through time&quot; 이라고 합니다.
 
-&lt;p&gt;이 방법은 Stocastic gradient descent의
-시퀀스 데이터 버전이라고 볼 수 있습니다.&lt;/p&gt;
+이 과정을 반복합니다. 이전 batch에서 hidden states를
+가져와서 foward pass를 수행하고
 
-&lt;p&gt;지난 시간이 Data Sets이 엄청 큰 경우 어떻게
-학습시켜야 하는지 배웠습니다.&lt;/p&gt;
+backprob은 현재 배치만큼만 진행합니다.
 
-&lt;p&gt;Large datasets에서는 전체 데이터로 gradients를
-계산하기에는 계산량이 너무 컸습니다.&lt;/p&gt;
+이 방법은 Stocastic gradient descent의
+시퀀스 데이터 버전이라고 볼 수 있습니다.
 
-&lt;p&gt;그래서 대신에 mini batch를 사용해서
-small samples만 가지고 계산했습니다.&lt;/p&gt;
+지난 시간이 Data Sets이 엄청 큰 경우 어떻게
+학습시켜야 하는지 배웠습니다.
 
-&lt;p&gt;그리고 mini batch만을 이용해서 gradient를 계산했습니다.
-가령 Image classification에서 그랬었죠&lt;/p&gt;
+Large datasets에서는 전체 데이터로 gradients를
+계산하기에는 계산량이 너무 컸습니다.
 
-&lt;p&gt;####&lt;/p&gt;
+그래서 대신에 mini batch를 사용해서
+small samples만 가지고 계산했습니다.
 
-&lt;p&gt;질문있나요?&lt;/p&gt;
+그리고 mini batch만을 이용해서 gradient를 계산했습니다.
+가령 Image classification에서 그랬었죠
 
-&lt;p&gt;질문은 “RNN이 Markov Assumption 을 따르는지” 입니다.&lt;/p&gt;
+####
 
-&lt;p&gt;그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
-계속해서 앞으로 가져가기 때문입니다.(영원히)&lt;/p&gt;
+질문있나요?
 
-&lt;p&gt;마르코 비아 가정을하고있다.
-숨겨진 상태를 조건으로,&lt;/p&gt;
+질문은 &quot;RNN이 Markov Assumption 을 따르는지&quot; 입니다.
 
-&lt;p&gt;그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
-미래를 예언하기 시퀀스의&lt;/p&gt;
+그렇지 않습니다. 왜냐하면 RNN은 이전 hidden state를
+계속해서 앞으로 가져가기 때문입니다.(영원히)
 
-&lt;p&gt;하지만 그 가정은 일종의 건축입니다.
-재발 성 신경 네트워크 공식 출발점에서.&lt;/p&gt;
+마르코 비아 가정을하고있다.
+숨겨진 상태를 조건으로,
 
-&lt;p&gt;그리고 그것은 정말로 특별하지 않습니다.
-시간을 통한 전파를 역전 시키십시오.&lt;/p&gt;
+그러나 숨겨진 상태가 우리가 필요로하는 모든 것입니다.
+미래를 예언하기 시퀀스의
 
-&lt;p&gt;Truncated backprop은 very large sequence
-data의 gradient를 근사시키는 방법입니다.&lt;/p&gt;
+하지만 그 가정은 일종의 건축입니다.
+재발 성 신경 네트워크 공식 출발점에서.
 
-&lt;p&gt;####&lt;/p&gt;
+그리고 그것은 정말로 특별하지 않습니다.
+시간을 통한 전파를 역전 시키십시오.
 
-&lt;p&gt;RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
-사실은 그렇지 않습니다. 엄청 간결합니다.&lt;/p&gt;
+Truncated backprop은 very large sequence
+data의 gradient를 근사시키는 방법입니다.
 
-&lt;p&gt;Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
-112 줄의 코드로 RNN 전체 과정을 구현하였습니다.&lt;/p&gt;
 
-&lt;p&gt;vocabulary를 만들고, truncated back propagation
-을 수행하는 모델을 구현한 코드입니다.&lt;/p&gt;
+####
 
-&lt;p&gt;그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.&lt;/p&gt;
+RNN을 구현하려면 코드도 엄청 복잡하고 어려울 것 같아 보이지만
+사실은 그렇지 않습니다. 엄청 간결합니다.
 
-&lt;p&gt;RNN을 구성하는 것이 엄청나게 어려워 보일
-수 있지만 사실은 그렇지 않습니다.&lt;/p&gt;
+Andrej가 min-char-rnn 이라는 코드를 만들어놨습니다.
+112 줄의 코드로 RNN 전체 과정을 구현하였습니다.
 
-&lt;p&gt;슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
-파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.&lt;/p&gt;
+vocabulary를 만들고, truncated back propagation
+을 수행하는 모델을 구현한 코드입니다.
 
-&lt;p&gt;Numpy로만 작성된 dependencies가 없는
-코드입니다. 코드를 읽기에도 비교적 쉽습니다.&lt;/p&gt;
+그리고 실제 Model을 학습시키고 샘플링도 할 수 있습니다.
 
-&lt;p&gt;####&lt;/p&gt;
+RNN을 구성하는 것이 엄청나게 어려워 보일
+수 있지만 사실은 그렇지 않습니다.
 
-&lt;p&gt;RNN Language model 로 아주 재미있는 것들을
-학습시킬 수 있습니다.&lt;/p&gt;
+슬라이드만 보면 잘 모르실 수 있습니다. 여러분이 직접
+파일을 열어서 코드를 한줄 씩 살펴보시기 바랍니다.
 
-&lt;p&gt;RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
-아무 문장이나 긁어와서 학습시킬 수 있습니다.&lt;/p&gt;
+Numpy로만 작성된 dependencies가 없는
+코드입니다. 코드를 읽기에도 비교적 쉽습니다.
 
-&lt;p&gt;가령 셰익스피어의 작품들을 RNN으로
-학습시켜 볼 수 있습니다.&lt;/p&gt;
+####
 
-&lt;p&gt;학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
-하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.&lt;/p&gt;
+RNN Language model 로 아주 재미있는 것들을
+학습시킬 수 있습니다.
 
-&lt;p&gt;학습이 잘 끝나면 상당히 셰익스피어 풍의
-문장들을 만들어냅니다.&lt;/p&gt;
+RNN으로 어떤 문장이건 학습시킬 수 있습니다. 인터넷에서
+아무 문장이나 긁어와서 학습시킬 수 있습니다.
 
-&lt;p&gt;“Why do what that day… replied”  어쩄든
-상당히 셰익스피어의 문장 처럼 보입니다.&lt;/p&gt;
+가령 셰익스피어의 작품들을 RNN으로
+학습시켜 볼 수 있습니다.
 
-&lt;p&gt;더 학습을 많이 시키면 훨씬 더 긴 문장들도
-만들어낼 수 있습니다.&lt;/p&gt;
+학습 초기에는 모델이 의미없는 문장들만 뱉어냅니다.
+하지만 학습을 시키면 시킬수록 의미있는 문장을 만들어냅니다.
 
-&lt;p&gt;RNN을 이용하면 이런 셰익스피어 풍의 문장과
-같은 여러가지 신기한 것들을 학습시킬 수 있습니다.&lt;/p&gt;
+학습이 잘 끝나면 상당히 셰익스피어 풍의
+문장들을 만들어냅니다.
 
-&lt;p&gt;모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
-(예 : “VIOLA:”)&lt;/p&gt;
+&quot;Why do what that day... replied&quot;  어쩄든
+상당히 셰익스피어의 문장 처럼 보입니다.
 
-&lt;p&gt;그리고 바로 밑에 셰익스피어풍의 문장들을
-만들어냅니다.&lt;/p&gt;
+더 학습을 많이 시키면 훨씬 더 긴 문장들도
+만들어낼 수 있습니다.
 
-&lt;p&gt;다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.&lt;/p&gt;
+RNN을 이용하면 이런 셰익스피어 풍의 문장과
+같은 여러가지 신기한 것들을 학습시킬 수 있습니다.
 
-&lt;p&gt;이건 엄청난 것입니다.
-문장의 구조를 아주 완벽하게 학습했습니다.&lt;/p&gt;
+모델이 HEAD에 발화자를 넣어야한다는 것을 압니다.
+(예 : &quot;VIOLA:&quot;)
 
-&lt;p&gt;훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
-혹시 여기 수학 전공자가 있나요?&lt;/p&gt;
+그리고 바로 밑에 셰익스피어풍의 문장들을
+만들어냅니다.
 
-&lt;p&gt;“algebraic topology” 수업을 들어본 분이 계신가요?
-몇 분정도 계시는군요&lt;/p&gt;
+다른 문장을 시작할 때 한 줄을 비워야 하는 것도 압니다.
 
-&lt;p&gt;여러분이 저보다 “algebraic topology”를 더 잘 하시겠네요.
-제가 얼마전에 온라인”algebraic topology” 교과서를 찾았습니다.&lt;/p&gt;
+이건 엄청난 것입니다.
+문장의 구조를 아주 완벽하게 학습했습니다.
 
-&lt;p&gt;이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.&lt;/p&gt;
+훨씬 더 엄청난 것도 있습니다. 인터넷에서 찾았는데요,
+혹시 여기 수학 전공자가 있나요?
 
-&lt;p&gt;그리고 수식이 LaTex 문법으로 작성되어 있습니다.
-LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.&lt;/p&gt;
+&quot;algebraic topology&quot; 수업을 들어본 분이 계신가요?
+몇 분정도 계시는군요
 
-&lt;p&gt;그러면 algebraic topology 교과서의 LaTex 코드를
-우리가 만든 RNN Language Model로 학습시킬 수 있습니다.&lt;/p&gt;
+여러분이 저보다 &quot;algebraic topology&quot;를 더 잘 하시겠네요.
+제가 얼마전에 온라인&quot;algebraic topology&quot; 교과서를 찾았습니다.
 
-&lt;p&gt;자 이걸 학습시키게 되면 (웃음) 이런 식으로
-algebraic topology스러운 문장들을 만들어낼 수 있습니다.&lt;/p&gt;
+이 교과서 파일은 수학적인 내용으로 가득 차 있습니다.
 
-&lt;p&gt;모델이 수식도 만들어 냅니다.&lt;/p&gt;
+그리고 수식이 LaTex 문법으로 작성되어 있습니다.
+LaTex을 쓰면 수식을 코드로 작성할 수 있습니다.
 
-&lt;p&gt;“To prrov study that F_sub U is a covering
-of x prime.. blah blah” (왼쪽 4번째 문단)&lt;/p&gt;
+그러면 algebraic topology 교과서의 LaTex 코드를
+우리가 만든 RNN Language Model로 학습시킬 수 있습니다.
 
-&lt;p&gt;unions도 만들어내고, proofs의 끝에
-사각형도 만들어냅니다.&lt;/p&gt;
+자 이걸 학습시키게 되면 (웃음) 이런 식으로
+algebraic topology스러운 문장들을 만들어낼 수 있습니다.
 
-&lt;p&gt;lemmas도 만들어내고
-이전 lemmas를 참조하기도 합니다.&lt;/p&gt;
+모델이 수식도 만들어 냅니다.
 
-&lt;p&gt;bi-lemma question 라던지 R 같은 기하학적인
-내용도 모두 만들어냅니다. 엄청 대단하죠&lt;/p&gt;
+&quot;To prrov study that F_sub U is a covering
+of x prime.. blah blah&quot; (왼쪽 4번째 문단)
 
-&lt;p&gt;diagrams을 만들어내려고도 합니다.&lt;/p&gt;
+unions도 만들어내고, proofs의 끝에
+사각형도 만들어냅니다.
 
-&lt;p&gt;commutative diagram은 algebraic topology에서
-아주 많이 사용됩니다.&lt;/p&gt;
+lemmas도 만들어내고
+이전 lemmas를 참조하기도 합니다.
 
-&lt;p&gt;모델이 이 다이어그램을 열심히 만들어 내려 했지만
-물론 이 다이어그램은 아무 의미가 없습니다.&lt;/p&gt;
+ bi-lemma question 라던지 R 같은 기하학적인
+내용도 모두 만들어냅니다. 엄청 대단하죠
 
-&lt;p&gt;그리고 또 재미있는 점 중 하나는
-모델이 “증명 생략” 도 학습합니다.&lt;/p&gt;
+diagrams을 만들어내려고도 합니다.
 
-&lt;p&gt;가끔 이런 경우가 있죠.
-“theorem : blah blah blah, proof : 생략”&lt;/p&gt;
+commutative diagram은 algebraic topology에서
+아주 많이 사용됩니다.
 
-&lt;p&gt;교과서에서 증명이 생각되는 부분도 모델이
-정확하게 학습한 것입니다.&lt;/p&gt;
+모델이 이 다이어그램을 열심히 만들어 내려 했지만
+물론 이 다이어그램은 아무 의미가 없습니다.
 
-&lt;p&gt;또 다른 재미있는 것들도 할 수 있습니다. 이번에는
-Linux Kernel의 전체 소스코드를 학습시켰습니다.&lt;/p&gt;
+그리고 또 재미있는 점 중 하나는
+모델이 &quot;증명 생략&quot; 도 학습합니다.
 
-&lt;p&gt;코드를 character level로 학습시켰습니다.&lt;/p&gt;
+가끔 이런 경우가 있죠.
+&quot;theorem : blah blah blah, proof : 생략&quot;
 
-&lt;p&gt;학습된 모델에서 샘플링을 해보면
-C 소스코드 스러운 것들이 나옵니다.&lt;/p&gt;
+교과서에서 증명이 생각되는 부분도 모델이
+정확하게 학습한 것입니다.
 
-&lt;p&gt;모델이 if 문 작성법을 알고 있습니다.
-코드 짜는 스킬이 어마어마 합니다.&lt;/p&gt;
+또 다른 재미있는 것들도 할 수 있습니다. 이번에는
+Linux Kernel의 전체 소스코드를 학습시켰습니다.
 
-&lt;p&gt;들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.&lt;/p&gt;
+코드를 character level로 학습시켰습니다.
 
-&lt;p&gt;주석다는 법도 알고있습니다.
-물론 뜻은 아무 의미도 없습니다.&lt;/p&gt;
+학습된 모델에서 샘플링을 해보면
+C 소스코드 스러운 것들이 나옵니다.
 
-&lt;p&gt;이 모델의 문제점 중 하나는. 변수를 선언해 놓고
-쓰지를 않다는 것입니다.&lt;/p&gt;
+모델이 if 문 작성법을 알고 있습니다.
+코드 짜는 스킬이 어마어마 합니다.
 
-&lt;p&gt;반대로 선언하지도 않은 변수를 쓰기도 합니다.
-이 코드는 컴파일되지 않습니다.&lt;/p&gt;
+들여쓰기와 중괄호를 쓰는법도 잘 알고있습니다.
 
-&lt;p&gt;이 코드를 Linux에 pull request 하고싶진 않네요&lt;/p&gt;
+주석다는 법도 알고있습니다.
+물론 뜻은 아무 의미도 없습니다.
 
-&lt;p&gt;이 모델은 GNU license를 추가하는 법도 압니다.&lt;/p&gt;
+이 모델의 문제점 중 하나는. 변수를 선언해 놓고
+쓰지를 않다는 것입니다.
 
-&lt;p&gt;GNU license 다음에 include 가 나오고 include 가
-몇 번 나오고 소스코드가 나옵니다.&lt;/p&gt;
+반대로 선언하지도 않은 변수를 쓰기도 합니다.
+이 코드는 컴파일되지 않습니다.
 
-&lt;p&gt;이 모델은 데이터의 일반적인 구조를
-아주 잘 학습했습니다.&lt;/p&gt;
+이 코드를 Linux에 pull request 하고싶진 않네요
 
-&lt;p&gt;다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
-그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.&lt;/p&gt;
+이 모델은 GNU license를 추가하는 법도 압니다.
 
-&lt;p&gt;구조에 대해서는 전혀 말해주지 않았죠&lt;/p&gt;
+GNU license 다음에 include 가 나오고 include 가
+몇 번 나오고 소스코드가 나옵니다.
 
-&lt;p&gt;하지만 모델은 학습과정 동안에 시퀀스 데이터의
-숨겨진 구조(latent structure)를 알아서 학습합니다.&lt;/p&gt;
+이 모델은 데이터의 일반적인 구조를
+아주 잘 학습했습니다.
 
-&lt;p&gt;결국 알아서 코드를 작성하게 된 것입니다.
-아주 대단합니다.&lt;/p&gt;
+다시 한번 말씀드립니다만, 우리가 모델에게 요청한 것은
+그저 시퀀스의 다음 문자를 예측하라는 것이였습니다.
 
-&lt;p&gt;####&lt;/p&gt;
+구조에 대해서는 전혀 말해주지 않았죠
 
-&lt;p&gt;저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
-도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.&lt;/p&gt;
+하지만 모델은 학습과정 동안에 시퀀스 데이터의
+숨겨진 구조(latent structure)를 알아서 학습합니다.
 
-&lt;p&gt;RNN에는 hidden vector가 있고 이 vector가
-계속 업데이트됩니다.&lt;/p&gt;
+결국 알아서 코드를 작성하게 된 것입니다.
+아주 대단합니다.
 
-&lt;p&gt;우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
-나올수도 있지 않을까 추측해 보았습니다.&lt;/p&gt;
+####
 
-&lt;p&gt;그래서 우리는 RNN language model을
-특정 dataset으로 학습시키고,&lt;/p&gt;
+저와 Andrej가 몇 년전에 낸 논문이 있습니다. 학습한 모델이
+도대체 어떤 방식으로 동작하는지 알아내고 싶었습니다.
 
-&lt;p&gt;그리고 hidden vector를 하나 뽑아서 어떤 값들이
-들어있는지 살펴보기로 했습니다.&lt;/p&gt;
+RNN에는 hidden vector가 있고 이 vector가
+계속 업데이트됩니다.
 
-&lt;p&gt;이 서로 다른 hidden states가 도대체 어떤 것들을
-예의주시하는지 알아보기 위해서였죠&lt;/p&gt;
+우리는 그 Vector를 추출해보면 해석 가능한 의미있는 것들이
+나올수도 있지 않을까 추측해 보았습니다.
 
-&lt;p&gt;이 실험을 해보면, 대부분의 hidden state는
-아무 의미 없는 패턴으로 예의 주시하고 있습니다.&lt;/p&gt;
+그래서 우리는 RNN language model을
+특정 dataset으로 학습시키고,
 
-&lt;p&gt;여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
-다시 한번 forward 시켜 보는 것입니다.&lt;/p&gt;
+그리고 hidden vector를 하나 뽑아서 어떤 값들이
+들어있는지 살펴보기로 했습니다.
 
-&lt;p&gt;여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
-hidden vector의 값을 의미합니다.&lt;/p&gt;
+이 서로 다른 hidden states가 도대체 어떤 것들을
+예의주시하는지 알아보기 위해서였죠
 
-&lt;p&gt;RNN의 대부분의 Cell은  해석하기 어렵습니다.&lt;/p&gt;
+이 실험을 해보면, 대부분의 hidden state는
+아무 의미 없는 패턴으로 예의 주시하고 있습니다.
 
-&lt;p&gt;대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
-low level language modeling 정도로밖에 보이지 않습니다.&lt;/p&gt;
+여기서 우리가 한 일은 vector 하나를 뽑은 다음에 이 시퀀스를
+다시 한번 forward 시켜 보는 것입니다.
 
-&lt;p&gt;하지만 일부는 해석해볼만 합니다.&lt;/p&gt;
+여기에서 각 색깔은, 시퀀스를 읽는 동안에 앞서 뽑은
+hidden vector의 값을 의미합니다.
 
-&lt;p&gt;그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.&lt;/p&gt;
+RNN의 대부분의 Cell은  해석하기 어렵습니다.
 
-&lt;p&gt;이 vector가 하는 일을 살펴보면 처음에는 계속
-off off off off … 입니다. 파란색이죠. (파란색이 off)&lt;/p&gt;
+대부분은 다음에 어떤 문자가 와야할 지 알아내기 위한
+low level language modeling 정도로밖에 보이지 않습니다.
 
-&lt;p&gt;그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
-그리고 따옴표가 닫히기 전까지 유지됩니다.&lt;/p&gt;
+하지만 일부는 해석해볼만 합니다.
 
-&lt;p&gt;그러다가 두 번째 따옴표를 만나면 다시
-값이 꺼집니다.&lt;/p&gt;
+그러다가 따옴표(quotes)를 찾는 벡터를 알아냈습니다.
 
-&lt;p&gt;이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
-학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.&lt;/p&gt;
+이 vector가 하는 일을 살펴보면 처음에는 계속
+off off off off ... 입니다. 파란색이죠. (파란색이 off)
 
-&lt;p&gt;그런 유용한 것들을 학습하기 위해서 그 Cell이
-따옴표를 감지할 수 있게 된 것입니다.&lt;/p&gt;
+그러다가 따옴표를 만나면 값이 켜집니다(빨간색)
+그리고 따옴표가 닫히기 전까지 유지됩니다.
 
-&lt;p&gt;우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
-세는 듯해 보이는 Cell도 발견했습니다.&lt;/p&gt;
+그러다가 두 번째 따옴표를 만나면 다시
+값이 꺼집니다.
 
-&lt;p&gt;처음에는 0으로 시작했다가. 줄이 점점 길어지면
-점점 빨간색으로 변합니다.&lt;/p&gt;
+이런 식으로, 그저 우리는 모델이 다음 문자를 예측하도록
+학습시켰을 뿐이지만 모델은 더 유용한 것들을 학습하는 것입니다.
 
-&lt;p&gt;점점 증가하다가 줄바꿈이 이루어지면
-다시 0으로 리셋됩니다.&lt;/p&gt;
+그런 유용한 것들을 학습하기 위해서 그 Cell이
+따옴표를 감지할 수 있게 된 것입니다.
 
-&lt;p&gt;이 Cell은 언제 모델이 new line characters을 필요로 할 지
-지속적으로 추적하는 역할을 한다고 볼 수 있습니다.&lt;/p&gt;
+우리는 또, 줄 바꿈을 위해서 현재 줄의 단어 갯수를
+세는 듯해 보이는 Cell도 발견했습니다.
 
-&lt;p&gt;그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.&lt;/p&gt;
+처음에는 0으로 시작했다가. 줄이 점점 길어지면
+점점 빨간색으로 변합니다.
 
-&lt;p&gt;우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
-이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.&lt;/p&gt;
+점점 증가하다가 줄바꿈이 이루어지면
+다시 0으로 리셋됩니다.
 
-&lt;p&gt;이를 통해 모델이 시퀀스를 더 잘
-학습할 수 있도록 도와줍니다.&lt;/p&gt;
+이 Cell은 언제 모델이 new line characters을 필요로 할 지
+지속적으로 추적하는 역할을 한다고 볼 수 있습니다.
 
-&lt;p&gt;그 밖에도 Comments를 찾아내거나 혹은
-들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.&lt;/p&gt;
+그리고 우리는 linux 코드를 학습시킬 때 발견한 것도 있습니다.
 
-&lt;p&gt;정말 놀라운 일입니다. 우리는 그저 다음 문자를
-예측하는 모델을 학습시켰을 뿐인데&lt;/p&gt;
+우리는 if 문의 조건부에서 값이 켜지는 Cell을 발견했습니다.
+이 Cell은 조건부의 내부와 외부를 구별할 수 있습니다.
 
-&lt;p&gt;결국 모델은 입력 데이터의 구조를
-학습하게 되었기 때문입니다.&lt;/p&gt;
+이를 통해 모델이 시퀀스를 더 잘
+학습할 수 있도록 도와줍니다.
 
-&lt;p&gt;####&lt;/p&gt;
+그 밖에도 Comments를 찾아내거나 혹은
+들여쓰기 레벨을 세는 듯한 Cell도 발견 했습니다.
 
-&lt;p&gt;우리는 Computer Vision 수업이니 다시 Computer Vision
-에 관련된 예시로 돌아가 보겠습니다.&lt;/p&gt;
+정말 놀라운 일입니다. 우리는 그저 다음 문자를
+예측하는 모델을 학습시켰을 뿐인데
 
-&lt;p&gt;앞서 Image Captioning Model에 대해서
-몇 번 언급했었습니다.&lt;/p&gt;
+결국 모델은 입력 데이터의 구조를
+학습하게 되었기 때문입니다.
 
-&lt;p&gt;이 모델은 입력은 이미지이고
-출력은 자연어로 된 Caption 입니다.&lt;/p&gt;
+####
 
-&lt;p&gt;이 문제를 다루는 몇몇 논문들이 있습니다.
-다들 접근 방법은 비슷합니다.&lt;/p&gt;
+우리는 Computer Vision 수업이니 다시 Computer Vision
+에 관련된 예시로 돌아가 보겠습니다.
 
-&lt;p&gt;이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
-아주 “공정한 기준으로?” 예시를 이 논문으로 선택헀습니다.&lt;/p&gt;
+앞서 Image Captioning Model에 대해서
+몇 번 언급했었습니다.
 
-&lt;p&gt;우선 Caption은 가변길이 입니다. Caption 마다
-다양한 시퀀스 길이를 가지고 있습니다.&lt;/p&gt;
+이 모델은 입력은 이미지이고
+출력은 자연어로 된 Caption 입니다.
 
-&lt;p&gt;여기에 RNN Language Model가 아주 잘 어울립니다.&lt;/p&gt;
+이 문제를 다루는 몇몇 논문들이 있습니다.
+다들 접근 방법은 비슷합니다.
 
-&lt;p&gt;모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
-CNN은 지금까지 아주 많이 살펴봤었죠&lt;/p&gt;
+이 그림은 그 논문들 중 저희 연구실에서 나온 논문입니다.
+아주 &quot;공정한 기준으로?&quot; 예시를 이 논문으로 선택헀습니다.
 
-&lt;p&gt;CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
-이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.&lt;/p&gt;
+우선 Caption은 가변길이 입니다. Caption 마다
+다양한 시퀀스 길이를 가지고 있습니다.
 
-&lt;p&gt;그러면 RNN은 Caption에 사용할
-문자들을 하나씩 만들어냅니다.&lt;/p&gt;
+여기에 RNN Language Model가 아주 잘 어울립니다.
 
-&lt;p&gt;####&lt;/p&gt;
+모델에는 입력 이미지를 받기 위핸 CNN이 있습니다.
+CNN은 지금까지 아주 많이 살펴봤었죠
 
-&lt;p&gt;그렇다면 이 모델을 학습시킨 후에
-Test time에 어떻게 동작하는지 알아봅시다.&lt;/p&gt;
+CNN은 요약된 이미지정보가 들어있는 Vector를 출력합니다.
+이 Vector는 RNN의 초기 Step의 입력으로 들어갑니다.
 
-&lt;p&gt;지금까지 살펴봤던 character level languate
-model과 아주 유사합니다.&lt;/p&gt;
+그러면 RNN은 Caption에 사용할
+문자들을 하나씩 만들어냅니다.
 
-&lt;p&gt;우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
-다만 softmax scores를 사용하지 않고&lt;/p&gt;
+####
 
-&lt;p&gt;직전의 4,096-dim vector를 출력으로 합니다.&lt;/p&gt;
+그렇다면 이 모델을 학습시킨 후에
+Test time에 어떻게 동작하는지 알아봅시다.
 
-&lt;p&gt;이 vector를 이용해서 전체 이미지 정보를
-요약하는데 사용할 것입니다.&lt;/p&gt;
+지금까지 살펴봤던 character level languate
+model과 아주 유사합니다.
 
-&lt;p&gt;앞서 RNN language models에서 배웠듯이 모델이 문장을
-생성해 내기에 앞서 초기 값을 넣어줘야 합니다.&lt;/p&gt;
+우선 입력 이미지를 받아서 CNN의 입력으로 넣습니다.
+다만 softmax scores를 사용하지 않고
 
-&lt;p&gt;이 경우에는 입력이 특별합니다. 모델에게 “여기 이미지 정보가
-있으니 이 조건에 맞는 문장을 만들어줘!” 라고 시작해야합니다.&lt;/p&gt;
+직전의 4,096-dim vector를 출력으로 합니다.
 
-&lt;p&gt;이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
-입력으로 받았습니다. 하나는 현재 스텝의 입력이고&lt;/p&gt;
+이 vector를 이용해서 전체 이미지 정보를
+요약하는데 사용할 것입니다.
 
-&lt;p&gt;다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
-이 둘을 조합해서 다음 hidden state를 얻었습니다.&lt;/p&gt;
+앞서 RNN language models에서 배웠듯이 모델이 문장을
+생성해 내기에 앞서 초기 값을 넣어줘야 합니다.
 
-&lt;p&gt;하지만 이제는 이미지 정보도 더해줘야 합니다.&lt;/p&gt;
+이 경우에는 입력이 특별합니다. 모델에게 &quot;여기 이미지 정보가
+있으니 이 조건에 맞는 문장을 만들어줘!&quot; 라고 시작해야합니다.
 
-&lt;p&gt;사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
-가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.&lt;/p&gt;
+이전 까지의 모델에서는 RNN 모델이 두 개의 가중치 행렬을
+입력으로 받았습니다. 하나는 현재 스텝의 입력이고
 
-&lt;p&gt;다음 hidden state를 계산할 때마다 모든 스텝에
-이 이미지 정보를 추가합니다.&lt;/p&gt;
+다른 하나는 이전 스텝의 Hidden state 이었죠. 그리고
+이 둘을 조합해서 다음 hidden state를 얻었습니다.
 
-&lt;p&gt;자 이제는 vocabulary의 모든 스코어들에 대한
-분포를 계산할 차례입니다.&lt;/p&gt;
+하지만 이제는 이미지 정보도 더해줘야 합니다.
 
-&lt;p&gt;이 문제에서 vocabulary는 “모든 영어 단어들” 과
-같이 엄청나게 큽니다.&lt;/p&gt;
+사람마다 모델에 이미지정보를 추가하는 방법이 다르겠지만
+가장 쉬운 방법은 세 번째 가중치 행렬을 추가하는 것입니다.
 
-&lt;p&gt;그 분포에서 샘플링을 하고 그 단어를
-다음 스텝의 입력으로 다시 넣어줄 것입니다.&lt;/p&gt;
+다음 hidden state를 계산할 때마다 모든 스텝에
+이 이미지 정보를 추가합니다.
 
-&lt;p&gt;샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
-추정하고 다음 단어를 만들어냅니다.&lt;/p&gt;
+자 이제는 vocabulary의 모든 스코어들에 대한
+분포를 계산할 차례입니다.
 
-&lt;p&gt;모든 스텝이 종료되면 결국 한 문장이 만들어집니다.&lt;/p&gt;
+이 문제에서 vocabulary는 &quot;모든 영어 단어들&quot; 과
+같이 엄청나게 큽니다.
 
-&lt;p&gt;이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
-문장의 끝을 알려줍니다.&lt;/END&gt;&lt;/p&gt;
+그 분포에서 샘플링을 하고 그 단어를
+다음 스텝의 입력으로 다시 넣어줄 것입니다.
+
+샘플링된 단어(y0)가 들어가면 다시 vacab에 대한 분포를
+추정하고 다음 단어를 만들어냅니다.
+
+모든 스텝이 종료되면 결국 한 문장이 만들어집니다.
+
+이 때, &lt;END&gt; 라는 특별한 토큰이 있는데 이는
+문장의 끝을 알려줍니다.
 
 &lt;END&gt; 가 샘플링되면 모델은 더이상 단어를 생성하지
 않으며 이미지에 대한 caption이 완성됩니다.
@@ -1166,7 +1163,7 @@ LSTM은 Long Short Term Memory라는 뜻입니다.
 
 LSTM은 RNN의 fancier 버전입니다.
 
-LSTM은 vanishing &amp;amp; exploding gradients 문제를
+LSTM은 vanishing &amp; exploding gradients 문제를
 완화시키기 위해서 디자인되었습니다.
 
 &quot;gradient clipping&quot; 같은 hack 을 쓰지 말고, 그레디언트가
@@ -1620,46 +1617,572 @@ RNN으로 다양한 새로운 문제에 도전해 볼 수 있습니다.
 모두 중간고사 화이팅입니다.
 
 
+&lt;br&gt;
+&lt;br&gt;
+
+- **Reference**</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry><entry><title type="html">[CS231n]CNN Architectures</title><link href="http://localhost:4000/dl/cs231n_9/" rel="alternate" type="text/html" title="[CS231n]CNN Architectures" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/dl/cs231n_9</id><content type="html" xml:base="http://localhost:4000/dl/cs231n_9/">## 1. LeNet (LeCun, 1998)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207188293-f9dd2754-a9e8-4035-bc26-147c20cc712a.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+### 1-1) 구조
+
+LeNet은 industry에 아주 성공적으로 적용된 최초의 Convolution Network이다. [CONV - POOL] 구조가 2번 반복되고, filter는 strdie=1의 5x5 filter를 사용하며 끝단에는 2개의 FC Layer를 쌓았다. 매우 간단한 구조이지만, 꽤 우수한 성능을 보이는 CNN의 조상이다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 2. AlexNet (Krizhevsky, 2012)
+
+최초의 Larg scale CNN이며, ImageNet Classification Task에서 놀라운 성능을 보여 2012년 Image Classification Benchmark에서 우승한 모델이다. 2012년에 등장한 다른 non-딥러닝 모델을 능가하는 성능을 보여줘, Convolution Net 연구의 부흥을 일으킨 장본인이다. CNN기반 최초의 우승 모델이며, 이후 수년동안 AlexNet은 대부분 CNN 아키텍쳐의 베이스 모델로 사용된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196722-059736b8-2dad-4ea2-bd16-31fdb530dfe4.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+### 2-1) 구조
+
+기본적으로 [conv-pool-normalization] 구조가 2번 반복된다. 그 후에 CONV layer가 조금 더 붙고 Max Pooling Layer를 거친 뒤, 3개의 FC-Layer를 통과하는 구조이다. CONV Layer에서는 stride=4인 11x11 filter를 96개 사용하며, POOL Layer에서는 strdie=2인 3x3 filter를 사용한다. 생긴 것만 봐서는 LeNet과 상당히 유사하고 레이어만 더 많아진 것을 확인할 수 있다.
+
+- **cf) Size 계산해보기**
+
+  - Input Image Size
+
+      ImageNet 기준 input image 크기는 227x227x3이다.
+
+  - CONV1 Layer
+
+    - 출력 사이즈
+      
+      $(227-11)/4 + 1 = 55$ 이므로 activation map의 width와 height는 55x55이다. filter는 11x11 size를 사용하게 되는데, input image의 모든 channel에 대해 연산이 필요하므로 filter의 depth는 3이된다. 이러한 filter가 총 96개 있으므로, 최종 output image의 shape은 $(55,55,96)$이 된다.
+
+    - 전체 파라미터 수
+
+      11x11x3의 필터가 96개 있으므로, $11 \times 11 \times 3 \times 96 = 34,848$이 CONV1의 전체 파라미터 수가 된다.
+
+  - POOL1 Layer
+
+    - 출력 사이즈
+
+      $(55-3)/2 + 1 = 27$인데, pooling layer에서는 Image의 depth가 변하지 않기 때문에 최종적으로 (27x27x96)이 Activation map의 shape이 된다.
+
+    - 전체 파라미터 수
+
+      Pooling Layer에는 파라미터가 없다(헷갈림 주의). Pooling layer는 단순히 down sampling의 용도로만 사용되므로 파라미터 필요 없음에 유의하자.
+
+### 2-2) 특징
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207196863-8d7128dd-da8c-4ad5-b720-b51c8a51112a.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+첫 Layer에서 모델이 두 개로 나눠져서 서로 교차하는 것을 확인할 수 있는데, 이는 당시 GPU 메모리의 한계로 인해 레이어를 나눠서 넣었기 때문이다(55x55x96 -&gt; 55x55x48 2개). 따라서 대부분의 CONV Layer는 GPU내의 48개의 Feature만 사용하여 학습하였고, 끝단의 FC Layer와 CONV3 Layer에서는 GPU간의 통신을 바탕으로 전체 Feature Map을 가져와 합쳐주었다.
+
+### 2-3) Details
+
+- **Activation Function**
+
+  Activation function으로는 ReLU를 사용하였다.
+
+- **Optimizer**
+
+  optimizer로는 SGD + Momentum을 사용하였다.  
+
+- **Dropout / Batch size**
+
+  Dropout을 사용했으며, Batch size는 128로 설정하였다.  
+
+- **Data Augmentation**
+
+  flipping, jittering, cropping, color norm 등등 매우 다양한 data augmentation을 해주었다.
+
+- **Learning Rate Decay**
+
+  초기 Learning rate는 1e-2로 initialize했으며, val accuracy가 올라가지 않는 지점에서는 학습이 종료되는 시점까지 Learning Rate를 1e-10까지 줄였다.
+
+- **Weight Decay**  
+
+  weight decay를 사용했다. weight decay는 overfitting 문제를 해결하기 위한 방법 중 하나로, 특정 weight가 너무 큰 값을 가지지 않도록 패널티 항목을 추가하는 것이다. L1/L2 Regularization을 주로 사용한다.
+
+- **Model Ensemble**
+
+  마지막에는 7개의 CNN 모델을 앙상블하여 error를 18.2% -&gt; 15.4%까지 감소시켰다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 3. ZFNet (Zeiler and Fergus, 2013)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202021-9a2c5a1d-135c-49bf-8878-95ecb09592d9.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+AlexNet의 하이퍼 파라미터를 개선한 모델이다. AlexNet과 레이어 수도 같고 기본적인 구조도 같지만, stride size, filter 수와 같은 하이퍼 파라미터를 조절해서 AlexNet의 error rate를 개선시켰다. Alex Net과 기본 아이디어는 동일하다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 4. VGGNet (Oxford, 2014)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207202985-1d439ffb-48e4-4c93-a397-b25a71cd7266.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+2014년은 아키텍쳐도 많이 변했고 성능이 향상되었으며, 네트워크가 매우 깊어지기 시작한 시기이다. VGGNet은 이 시기에 GoogLeNet과 함께 우수한 성능을 기록한 CNN 아키텍쳐이다. 대표적으로 VGG16과 VGG19가 있으며, VGG19가 성능은 아주 조금 더 좋다. 그러나 VGG19는 메모리 사용량이 조금 더 많기 때문에 보통은 VGG16을 주로 사용한다. AlexNet처럼 앙상블 기법을 사용하였다.
+
+### 4-1) Use Small Filter
+
+VGG는 기존 CNN 아키텍쳐 대비 훨씬 깊어졌고(alex:8, vgg:16~19), 3x3 크기의 아주 작은 필터를 사용한다(3x3은 이웃 픽셀을 포함할 수 있는 가장 작은 단위임). 이렇게 작은 필터를 유지하며 주기적으로 pooling을 수행하여 전체 네트워크를 구성하였다. 또한, Layer가 깊어지는 만큼 Non-Linearity가 증가하게 되는데, 이를 통해 더 자세한 특징을 잡아낼 수 있게 되어 ImageNet에서 7.3%의 top 5 error를 기록하였다. 그렇다면 VGG에서 이렇게 작은 필터를 사용한 이유는 무엇일까? 그 이유에 대해 차근차근 알아보도록 하자.
+
+#### 4-1-1) Receptive Field (수용 영역)
+
+우선 Receptive Field란, filter가 한번에 볼 수 있는 입력의 Spatial Area를 일컫는 말이다. 다음의 간단한 예시를 통해 Receptive Field를 알아보자
+
+다음과 같이 3x3 filter를 사용하는 CONV1 Layer를 떠올려보자. filter는 stride만큼 움직이면서 filter 영역에 해당하는 픽셀들과 계속해서 합성곱을 계산한다. 따라서 3x3 filter가 바라본 하나의 위치는 다음 Layer의 1픽셀로 들어가게 된다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206114-29c5a5c7-f620-415d-918a-eb3f47d3c9a8.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+
+또한, 마찬가지로 CONV2 Layer에서도 3x3 filter를 사용한다. CONV1의 3x3 영역이 CONV2에서는 1x1 영역으로 취급되기 때문에, CONV2 Layer의 3x3 영역은 CONV1 Layer의 5x5 영역을 바라보는 것과 동일하다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207206752-4490125c-3016-47c5-9a27-5fa916a394ca.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+
+이러한 과정을 반복하게 되면, CONV4의 1x1 영역은 CONV1의 7x7영역을 바라보는 것과 동일하다. 즉, 3x3 filter를 3번 쌓는 것은 7x7 filter를 사용하는 것과 실질적으로 동일한 Receptive Field를 갖는 것이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207208594-6c8d21ff-a21f-4579-9950-b53c18717dd9.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+그렇다면 왜 filter를 이렇게 작은 filter로 여러번 나눠 사용하는 것일까?
+
+#### 4-1-2) Parameter 개수
+
+우선 7x7 Filter의 Parameter 개수는 $7 \times 7 \times C \times N$ 이다(C=채널 수, N=필터 수). 여기서, input image의 depth와 output image의 depth를 맞춰주기 위해 filter 개수는 channel의 수와 동일하게 맞춰주었다. 따라서 7x7 filter의 parameter 개수는 $7^2 C^2$이다.
+
+3x3 Filter의 경우, 7x7 Filter와 동일한 Receptive Field를 맞추어주기 위해서는 해당 Filter를 3번 쌓아주어야 한다. 따라서, 위와 같은 맥락으로 파라미터 개수는 $3^2 C^2 \times 3$이 된다. 최종적으로 정리해보면 다음과 같다.
+
+$$
+\mathsf{7x7 \; Filter}\\
+
+7^2C^2 = 49C^2\\
+$$
+
+$$
+\mathsf{3x3 \; Filter}\\
+
+3^2C^2 \times 3 = 27C^2
+$$
+
+동일한 Receptive Field에 대해, filter size를 줄임으로써 파라미터의 수를 $49C^2$에서 $27C^2$로 줄일 수 있었다. 또한, 층이 깊어지면서 Non-Linearity를 더 추가할 수 있게 되어 더 복잡한 Feature를 뽑아낼 수 있게 되었다. 이를 통해 VGG는 연산량도 줄이면서 Accuarcy도 높일 수 있게 되었다.
+
+### 4-2) 문제점
+
+#### 4-2-1) 메모리 문제
+
+VGG의 각 노드는 약 4byte의 메모리를 차지한다. 따라서 단순히 Forward Pass만 해도 약 100MB의 메모리가 필요하다(Backward Pass까지 고려하면 더 많은 메모리 필요). 따라서, 만약 5GB의 메모리를 사용한다면 50장의 이미지밖에 처리하지 못하는 것이다.
+
+#### 4-2-2) 총 파라미터 개수
+
+VGGNet의 총 파라미터 개수는 1억 3800만개인데, 이는 AlexNet(6800만)의 약 2배 수준이다. 특히 FC-Layer에 1억개가 넘는 파라미터가 있다. 따라서 최근 일부 네트워크는 파라미터를 획기적으로 줄이기 위해 FC Layer를 줄이기도 한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 5. GoogLeNet (Google, 2014)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228473-0ebc8054-4672-49f2-97cf-881188c0cede.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+InceptionNet이라고도 하며, 2014년 classfication challenge에서 우승하였다. 총 22개의 레이어를 가지고 있고, VGGNet처럼 매우 깊은 네트워크이다. 효율적인 계산에 초점을 맞춰 네트워크를 디자인 하였으며, Inception Module이라는 미니 네트워크를 여러개 쌓아서 만들었다. 또한 위에서 잠깐 언급했듯이, 파라미터를 줄이기 위해 FC-Layer를 제거하였다. 그 결과, 파라미터 수를 500만개까지 획기적으로 줄였다. AlexNet대비 약 20배 적은 파라미터를 가지고 있지만, 훨씬 더 깊다. 그렇다면 GoogLeNet의 메인 아이디어인 Inception Module이란 무엇일까?
+
+### 5-1) Inception Module
+
+#### 5-1-1) 기본 Idea
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207228656-6d536a62-e494-4b13-9a97-52c2bc36afdd.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+기존 CONV Layer는 하나의 filter를 사용하여 Feature Map을 생성하였으나, GoogLeNet은 여러 종류의 Filter를 병렬적으로 사용하고자 하였다. 그래서 탄생한 것이 바로 `Inception Module`이다. inception module 내부에는 동일한 입력을 받는 서로 다른 다양한 필터들이 병렬로 존재한다. 이전 레이어의 입력을 받아 다양한 Convolution 연산을 수행하고, 각각의 출력들을 모두 depth 방향으로 합친다. 이렇게 합치면 하나의 tensor로 출력이 결정되고, 이 하나의 출력을 다음 Layer로 전달하게 된다.
+
+#### 5-1-2) 계산비용의 문제점
+
+그러나 Inception Module에는 한 가지 문제점이 있었는데, 계산을 거듭할수록 Depth가 점점 늘어나 연산량이 매우 많아진다는 것이다. 가령, 다음과 같이 input으로 28x28x256을 받는 inception module을 생각해보자. (이 때, spatial dimension은 항상 일정하도록 stride와 padding이 적절히 설정되어 있다.)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207229599-5dce18cb-3673-41bf-b93f-f6987c023127.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+이렇게 되면, 최종 Tensor의 Depth는 Filter의 개수만큼 점점 쌓이게 되며(128+192+96+256), 파라미터 수는 매우 커지게 된다. 위 예시의 경우, 파라미터 수는 28 x 28 x (128+192+96+256) = 526,848개이다. 즉, Inception Module의 input은 28x28x256이었으나, output은 28x28x672가 된 것이다. 또한, GoogLeNet은 이러한 Inception Module이 계속해서 쌓여있는 구조이기 떄문에 계산량은 기하급수적으로 늘어나게 된다. 그렇다면 GoogLeNet은 이러한 문제를 해결하기 위해 어떠한 방법을 사용했을까?
+
+#### 5-1-3) Bottleneck Layer
+
+GoogLeNet은 계산량을 줄이고 Depth를 축소하기 위해, 1x1 CONV Layer인 `Bootleneck Layer`를 도입하였다. Bottlenect Layer는 연산을 수행하기에 앞서, input의 spatial dimension은 유지한 채 입력을 더 낮은 차원으로 보내는 방법이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231326-0d022a15-a497-401d-b995-743b4888f46c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+가령, 56x56x64의 input img에 32개의 1x1 CONV filters를 사용하면, 이미지 크기는 그대로 유지한 채 depth를 32로 줄일 수 있다. 따라서 bottlenect layer는 input feature map들간의 linear combination을 도와주는 매개체라고 생각할 수 있으며, 주요 아이디어는 1x1 conv를 사용하여 입력의 depth를 줄인다는 것이다. 아래 그림은 Bottleneck Layer를 추가한 Full Inception Module이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207231952-c18b882d-25b4-4cba-9515-5dc50eb621cb.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+CONV 이전에 1x1 conv가, POOL 이후에 bottleneck layers(1x1 conv)가 추가된 것을 확인할 수 있다. 파라미터의 수는 bottleneck layer를 쓰기 전 854M에서 358M으로 2배 이상 감소하였다.
+
+#### 5-2) 구조
+
+가중치를 가진 레이어는 총 22개이며, inception moudule은 1x1/3x3/5x5 conv layer를 병렬적으로 가지고 있다. AlexNet 대비 12배 적은 파라미터를 가지고 있다고 한다. 전체적인 구조는 다음과 같다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207232567-0b2a22a1-e6bb-4772-8e78-ad05cbc8e85d.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+- **Stem Network**
+
+  일반적인 네트워크 구조로 시작한다. [Conv-Pool-Conv-Conv-Pool]의 구조를 가진다.
+
+- **Inception Modules**  
+
+  조금씩 다른 inception module을 쌓는다. 특이한 점은, 중간에 `보조 분류기(Auxiliary Classifier)`가 존재한다는 것이다. 보조 분류기는 AVG POOL, CONV, FC로 이루어져 있으며 softmax로 ImageNet Class를 구분한다. GoogLeNet이 매우 깊기 때문에 Vanishing Gradient 예방 차원에서 넣어준 것이며, 추가적인 Gradient 신호를 흘려주어 중간 레이어의 학습을 돕는다. 최종 Loss를 계산할 떄는 Auxiliary Classifier의 Loss도 반영한다.
+
+- **Classifier Output**
+
+  FC-Layer를 걷어내고, `Global Average Pooling(GAP) Layer`를 깔았다. 기존 FC-Layer는 Feature Map을 1차원 벡터로 펼쳐서 Activation Function을 거친 뒤, 원하는 클래스의 개수로 맞춰주는 방식이었다. 그러나 Global Average Pooling 방식은 Feature Map을 Depth 방향으로 각각 평균 내어 Flatten을 시켜주는 방식이다. FC layer로 활성함수를 거치지 않아도 이미 깊은 네트워크를 거치면서 효과적으로 Feature vector를 추출했기 때문에, 이렇게 해도 분류가 가능하다고 한다.
+
+  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207234373-dd1f9fd1-8a1d-4654-be31-bbd869534b8f.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 6. ResNet (Kaiming He, 2015)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207271537-e9092ca2-b0de-4bed-a4fb-b61c59e401a8.png&quot; width=&quot;20%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+ResNet은 152 레이어로 엄청나게 깊은 CNN 아키텍쳐이며, 기존의 어떤 네트워크보다도 깊다. 혹자는 이를 두고 혁명적(Revolution of Depth)으로 깊어졌다고 한다. 메인 아이디어는 `Residual Connections`이며, ResNet 하나로 ImageNet, COCO Classification/detection 등 여러 대회 우승하였다.
+
+### 6-1) Residual Connections
+
+#### 6-1-1) 기본 Idea
+
+ResNet의 Residual Connections는 `일반 CNN을 깊고 더 깊게 쌓게되면 어떻게 될까?`라는 질문으로부터 출발한다. 가령, VGG에 [conv-pool] 레이어를 깊게만 쌓는다고 과연 성능이 더 좋아질까? 그에 대한 대답은 No이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207235486-784b5921-b935-455e-99b9-1ba34e73d439.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+위 그래프에서 볼 수 있듯이, plain CNN을 56 Layer 쌓은 아키텍쳐의 test error가 20 Layer 쌓은 아키텍쳐보다 더 높게 나왔다. 이느 56-Layer가 Train Data에 overfitting 되었기 때문으로 예상했으나, training error도 56레이어가 더 높았다. 따라서 test에서 56-layer의 성능이 더 좋지 않은 이유가 overfitting 때문이 아니라는 것을 알게 되었다. ResNet 연구진들은 이를 Optimizer의 문제로 생각하였다. deeper model은 Optimization이 더 어렵기 때문이다.
+
+ResNet은 이를 해결하기 위해 다음과 같은 Idea를 떠올렸다. 우선 더 얕은 모델의 가중치를 깊은 모델의 일부 레이어에 복사한다. 그리고 나머지 레이어는 input을 output으로 그냥 내보내는 identity mapping을 해버린다. 즉, CNN을 깊게 쌓았을 때 성능이 저하되는 것이 Optimization의 문제라면, `얕은 네트워크의 구조를 그대로 가져와서 identity mapping을 한다면, 적어도 얕은 네트워크 만큼의 성능은 나와야될 것이다` 라는 가정을 세웠다. 이 motivation을 우리가 만들 모델에 녹이려면 어떻게 모델 아키텍쳐를 디자인해야할까?
+
+#### 6-1-2) Residual Learning (Skip Connection)
+
+기존 Neural Net의 학습 목표는 x를 y로 mapping하는 함수 H(x)를 찾는 것이다. 따라서 H(x)-y를 최소화 하는 방향으로 학습을 진행한다. 그러나, ResNet의 Residual Learning은 Residual Function인 $F(x) = H(x) - x$를 최소화하는 방향으로 학습한다. 즉, input과 output의 차이를 0에 가깝게 만들겠다는 것이다. 내가 개인적으로 이해한 바로는, 다음과 같이 해석할 수 있을 것 같다.
+
+&lt;br&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207249624-9511523a-a6ca-4276-8121-d2718148ca0e.png&quot; width=&quot;100%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+Layer가 점점 깊어지고 끝단으로 갈수록, 학습이 점점 진행되기 때문에 H(x)와 x의 차이는 점점 줄어들어야 한다. 즉, x는 점점 출력값 H(x)와 가까워져 $F^{&apos;(n)}(x)$는 0에 수렴해야한다는 것이다. 여기서 0에 수렴시켜야 하는 값인 $F(x)=H(x)-x$를 `Residual`이라고 하며, Resnet은 이러한 Residual이 0이 되도록 학습을 진행한다. Residual을 0에 수렴시킨다는 것은 점점 학습시켜야 할 학습량이 줄어드는 방향으로 학습이 진행된다는 것으로 해석할 수도 있겠다. 힌편, residual이 그저 가설일 뿐이고 필요 없다는 주장도 있으나 실제로는 Residual Learning을 사용하면 성능이 좋아지는 것이 fact이다.
+
+&lt;br&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207241324-2dd55fdf-d347-4612-9669-68492fcad868.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+이러한 Idea를 바탕으로, ResNet은 input으로 들어온 x를 그대로 보내고, Residual Block 안에서 계산된 F(x)를 학습한다. 이를 `Skip Connection`이라고 한다. 이렇게 Residual Block 안에서 계산된 F(x)를 학습하는 것이 CONV Layer를 거쳐온 거대한 H(x)를 학습하는 것보다 훨씬 더 효율적이고, 좋은 성능을 보였다.
+
+### 6-2) 구조
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252210-ef72fa85-b4b1-4cb2-af3a-b74155abbffe.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+- **Stem Network**
+
+  네트워크 초반은 Conv Layer가 추가적으로 붙는다.
+
+- **Residual Blocks**
+
+  하나의 Residual blocks는 2개의 3x3 conv layers로 이루어져 있으며, 일반적으로 이렇게 구성해야 잘 동작하는 것으로 알려져 있다. 이 Residual blocks를 매우 깊게(150 Layer) 쌓아올린 것이 바로 ResNet이다. 그리고 주기적으로 filter를 2배씩 늘리고 stride=2를 이용하여 down sampling해준다.
+
+- **Classifier Output**
+
+  네트워크 끝에는 FC-Layer가 없는 대신 GAP(Global Average Pooling) Layer를 사용하여, 하나의 Map 전체를 Average Pooling한다. 자세한 설명은 위에서 했기 때문에 생략한다. 마지막에는 ImageNet의 1000개 클래스를 맞춰주기 위한 FC Layer가 붙는다.
+
+### 6-3) Bottleneck Layers
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207252521-2b9312e9-e8d1-4387-9209-088138fb1b66.png&quot; width=&quot;40%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+depth는 34, 50, 100까지 늘어나며 논문에서는 ImageNet 문제를 위해 152까지 늘린 것을 확인할 수 있다. 이 때, 모델 Depth가 50이상인 경우 Bottleneck Layers를 넣어주었다(GoogLeNet과 유사). 이로인해 3x3 conv Layer의 계산량을 줄이고, 다시 1x1 conv를 추가해서 depth를 다시 256으로 늘리는 구조를 취하고 있다.
+
+### 6-4) Details
+
+- 모든 Conv Layer 다음 Batch Norm을 사용하며 Weight Initialization은 Xavier를 사용함
+
+- 위 방법은 SGD+Momentum에서 좋은 초기화 성능을 보인다고 함
+
+- Learning rate는 Learning rate 스케줄링을 통해서 validation error가 줄어들지 않는 시점에서 조금씩 줄여주었다(Learning Rate Decay).
+
+- minibatch 사이즈는 256이며, weight decay 사용, dropout은 사용하지 않았음
+
+=&gt; 성능 감소 없이 깊은 네트워크를 잘 학습시킬 수 있었으며, backprop 시 네트워크의 gradient flow를 잘 가져갔다. 또한, 깊은 네트워크에서 Train error가 줄어드는 문제를 해결하여, 네트워크가 깊어질수록 Training Error는 더 줄어들게 되었다.
+
+### 6-5) ResNet의 성능 향상 관련 연구
+
+#### 6-5-1) Wide Residual Networks (Zagoruyko, 2016)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207253444-9198dafb-9dbf-4e3e-9312-91395d8f2d02.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+기존의 resnet은 Layer를 깊게 쌓는 것에 집중했지만, Zagoruyko는 depth가 아닌 residual이 중요한 것이라고 주장하였음. residual connection만으로도 충분하기 떄문에, 네트워크가 굳이 더 깊어질 필요 없다는 것이 Zagoruyko의 주장이다. 따라서 residual block을 더 넓게 만들었다(conv layer의 필터를 더 많이 추가). 기존 ResNet에 block당 F개의 filter만 있었다면, 이제는 FxK개의 필터로 구성하였다. 그 결과, 50 레이어만 있어도 152레이어의 기존 resnet보다 더 좋은 성능을 보이는 것을 확인할 수 있었다. 또한 depth 대신에 filter의 width를 늘리면, 병렬화가 더 잘되기 때문에 계산 효율이 증가한다.
+
+#### 6-5-2) ResNeXt(ResNet + inEXeption) (Xie, 2016)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207260802-83220f3c-ffa2-424b-ba5d-a96dcebe1469.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+ResNeXt또한 residual block의 width를 파고들어, filter의 수를 늘리는 데 집중했다. ResNeXt는 하나의 bottleneck resnet block을 병렬로 여러개 묶은 모양을 하고 있다. 마치 ResNet과 VGG가 결합된 모습이다. 
+
+#### 6-5-3) stochastic depth (Huang, 2016)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207261711-488b8126-104f-4912-a6a8-c9d3ea50e1ec.png&quot; width=&quot;25%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+네트워크가 깊어질수록 vanishing gradient 문제가 발생한다. short network에서는 이러한 vanishing gradient의 위험성이 낮기 때문에, stochastic depth는 train시에 레이어의 일부를 제거한다(Dropout과 유사). 즉, 일부 네트워크를 골라서 identitiy connection으로 만들어버리는 것이다.. 이렇게 shrot netwrok를 만들어서 train 하면 gradient가 더 잘 전달될 수 있게된다. test time에서는 full deep 네트워크를 사용하며, 매우 효율적인 방법이 될 수 있다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 7. Non-ResNet
+
+### 7-1) FractalNet (Larsson, 2017)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207262529-676a0f91-370e-43f7-b79c-6a48011992a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+FractalNet residual connection이 쓸모없다고 주장하여, residual connection이 전혀 없다. 대신, shallow/deep network의 정보 모두를 잘 전달하는 것이 중요하다고 생각하였다(fractal한 모습). FractalNet에서는 shallow/deep 경로를 모두 연결하고, train에서는 일부 경로만 사용, test에서는 모든 경로를 사용한다(dropout과 유사).
+
+### 7-2) DenseNet(DENSEly Connected Convolutional NETworks) (Huang, 2017)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263266-64d105ac-3b46-4f57-bcf7-25731a3158e2.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+DenseNet의 Main idea는 Dense Block을 도입하는 것이다. 모든 레이어는 그 레이어 하위의 다른 모든 레어이와 연결되어 있으며, 레이어의 출력이 각 레이어의 출력과 concat된다. 그리고 이 값이 각 conv layer의 입력으로 들어간다(이 과정에서 dimension을 줄여주는 과정이 포함됨). 이러한 dense connection을 사용하면, 각 레이어의 출력이 다른 레이어에서 다시 쓰일 수 있기 때문에 기울기 소실문제를 해결하고, feature를 더 잘 사용할 수 있게 한다고 주장한다. 
+
+### 7-3) SqueezeNet (landola, 2017)
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263308-30e3f883-7ba1-456e-bd7f-176541962746.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+GoogLeNet과 같이 효율성을 중시한 CNN 아키텍쳐이다. squeeze layer는 1x1 필터들로 구성되고, 이 출력 값이 1x1/3x3 필터들로 구성되는 expand layer의 입력이 된다. SqueezeNet는 ImageNet에서 AlexNet 만큼의 Accuracy를 보이지만 파라미터는 50배 더 적었으며, 압축 시 AlexNet보다 500배 더 작아지게 된다. 또한 용량은 0.5Mb 밖에 안된다고 한다.
+
+## 8. 아키텍쳐 성능 요약 (2017)
+
+### 8-1) Top-1 Accuracy
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266565-9d01b0f7-f588-42e6-a8ff-3ca470cb13a7.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+### 8-2) 계산성능
+
+아래 그림은, 각 아키텍쳐의 성능을 나타낸 것이다. Y축은 top-1 Accuarcy, X축은 연산량, 원의 크기는 메모리 사용량이다.
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207263909-a7fd0de9-f9c1-4b9f-8771-17b3431db223.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+- **GoogLeNet**
+
+  - 가장 효율적인 네트워크.
+
+  - x축의 가장 왼쪽에 붙어있으며 메모리 사용도 적음
+
+- **AlexNet**
+
+  - Accuracy는 매우 낮은편이다.
+  
+  - 아키텍쳐 자체의 몸집이 작아 계산량도 낮다.
+
+  - 그러나 메모리 사용량은 매우 비효율적인 모습
+
+- **ResNet**
+
+  - 적당한 효율성.
+
+  - 메모리 사용량, 계산량은 중간정도이다.
+
+  - 그러나 Accuaracy는 최상위인 모습이다.
+
+### 8-3) forward pass 시간
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207266872-7c001595-2ea7-4df7-a06b-3fd67775930c.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
+
+
+### 8-4) 전력소모량
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/207267081-15ab4b7f-6c9d-4220-b33b-c37653ca5d54.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black;&quot;&gt;&lt;/p&gt;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lt;br /&gt;
-&lt;br /&gt;
+&lt;br&gt;
+&lt;br&gt;
 
 - **Reference**
-&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;&lt;/END&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 10</summary></entry></feed>
+
+  [ResNet의 이해](https://velog.io/@lighthouse97/ResNet%EC%9D%98-%EC%9D%B4%ED%95%B4)
+
+  [(논문리뷰) ResNet 설명 및 정리](https://ganghee-lee.tistory.com/41)
+
+  [ResNet (Deep Residual Learning for Image Recognition) 논문 리뷰](https://phil-baek.tistory.com/entry/ResNet-Deep-Residual-Learning-for-Image-Recognition-%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0)
+
+  [GoogLeNet(inception v1)의 구조](https://bskyvision.com/539)
+
+  [CNN architectures](https://bookandmed.tistory.com/58)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL" /><category term="DL" /><category term="ICT인턴십" /><summary type="html">Stanford University CS231n, Spring 2017, Lecture 9</summary></entry><entry><title type="html">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)</title><link href="http://localhost:4000/blog/auto_indexing/" rel="alternate" type="text/html" title="[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)" /><published>2022-12-09T00:00:00+09:00</published><updated>2022-12-09T00:00:00+09:00</updated><id>http://localhost:4000/blog/auto_indexing</id><content type="html" xml:base="http://localhost:4000/blog/auto_indexing/">## 1. 기존의 페이지 색인 생성 방식 문제점
+
+![image](https://user-images.githubusercontent.com/84084372/206609633-b80d2c83-ff3a-468a-ba36-a86530f6023c.png)
+
+기존에는 페이지 색인을 생성하기 위해, Google Search Console에 들어가서 일일이 URL을 입력하고, 색인 생성 요청을 누른 뒤, 1~2분을 기다려야 했다. 매번 포스팅을 작성할 때마다 이런 번거로운 일을 하기도 귀찮고, 한동안 까먹고 밀리기라도 하면, 매우 끔찍하다... 블로그 조회수와도 직결되는 중요한 작업이기 때문에 안할수도 없어서, 이 귀찮은 과정을 자동화하는 방법에 대해 소개한다.
+
+&lt;br&gt;
+&lt;br&gt;
+
+## 2. Google Indexing API
+
+&gt; Indexing API를 사용하면 페이지가 추가되거나 삭제된 경우 사이트 소유자가 Google에 직접 알릴 수 있습니다. 이렇게 하면 Google에서 페이지를 새로 크롤링하도록 예약하여 사용자 트래픽의 질이 향상될 가능성이 있습니다. &lt;br&gt;&lt;br&gt; - Google Indexing API
+
+Google Indexing API 소개글의 일부이다. 위 소개글에서도 알 수 있듯이 Google Indexing API는 페이지가 새로 추가되거나 삭제된 경우, Search Console을 사용하지 않고도 간편하게 색인 생성을 요청할 수 있다.
+
+### 2-1) 초기 세팅
+
+#### 2-1-1) 서비스 계정 생성 후 사이트 소유자로 추가
+
+위 API를 사용하기 위해서는 몇 가지의 초기 세팅이 필요하다. 초기 세팅 방법은 아래 가이드북에 자세히 나와있다. 우선, 아래 링크를 클릭하여, `2. 서비스 계정에 소유자 상태 부여` 과정까지 따라하도록 하자. 어렵지 않으니, 차근차근 따라하면 된다. 중간에 json 파일을 열어서 client_email을 찾아야하는데, 마땅한 뷰어가 없을 경우 메모장으로 열면 된다.
+
+- **Link**
+
+  &lt;https://developers.google.com/search/apis/indexing-api/v3/prereqs&gt;
+
+![image](https://user-images.githubusercontent.com/84084372/206623473-7cc6189f-e1a8-4b6d-a500-2e4c81232466.png)
+
+
+#### 2-1-2) API 활성화
+
+서비스 계정을 사이트 소유자로 추가했으면, API 사용 설정을 해야한다. 우선, 아래 링크를 클릭하여 Google Cloud에 접속해준다.
+
+- **Link**
+
+  &lt;https://console.cloud.google.com/&gt;
+
+검색창에 Google Indexing API를 검색하여, 가장 상단에 노출되는 Indexing API를 클릭해준다.
+
+![image](https://user-images.githubusercontent.com/84084372/206622461-68aa4fc6-8217-43b0-9391-107b9d01154d.png)
+
+`API 사용해 보기`옆의 파란색 버튼을 눌러, API를 사용 설정해주면 된다. 본인은 이미 API를 사용 설정 했기 때문에 화면이 조금 다르게 보일 수 있다.
+
+![image](https://user-images.githubusercontent.com/84084372/206622508-613938f1-1d2e-4e3f-b49e-706e1a79207c.png)
+
+여기까지 따라한다면, API를 사용하기 위한 초기세팅은 모두 끝났다.
+
+&lt;br&gt;
+
+### 2-2) Indexing API 사용
+
+#### 2-2-1) Install oauth2client
+
+우선, 액세스 토큰을 가져오기 위해 oauth2client를 설치해야 한다. pip이나 conda를 사용하여 설치해주도록 하자.
+
+```
+&gt;&gt;&gt; pip install oauth2client
+```
+
+#### 2-2-2) 스크립트 작성
+
+oauth2client 설치가 끝났으면, 아래 코드를 복사하여 python 파일을 만들어준다. 실제 사용시에는 JSON_KEY_FILE, URL, TYPE만 바꾸어주면 된다.
+
+- **JSON_KEY_FILE**
+
+  - 2-1에서 다운받은 json 파일의 경로를 적어준다.
+
+- **URL**  
+
+  - 색인을 등록하고자 하는 URL의 주소를 입력한다.
+
+- **TYPE**  
+
+  - 색인을 생성하고 싶으면 URL_UPDATED, 지우고 싶으면 URL_DELETED를 입력한다.
+
+```python
+from oauth2client.service_account import ServiceAccountCredentials
+import httplib2
+import json
+
+############################
+# 실제 사용시 이 부분만 수정 #
+############################
+
+JSON_KEY_FILE = &quot;C:/Users/USER/Downloads/본인파일명.json&quot;
+URL = &quot;https://on-jungwoan.github.io/dl/cs231n_52/&quot;
+TYPE = &quot;URL_UPDATED&quot;
+# TYPE = &quot;URL_DELETED&quot;
+
+#############################
+#############################
+
+
+SCOPES = [ &quot;https://www.googleapis.com/auth/indexing&quot; ]
+ENDPOINT = &quot;https://indexing.googleapis.com/v3/urlNotifications:publish&quot;
+
+credentials = ServiceAccountCredentials.from_json_keyfile_name(JSON_KEY_FILE, scopes=SCOPES)
+
+http = credentials.authorize(httplib2.Http())
+
+# Define contents here as a JSON string.
+# This example shows a simple update request.
+# Other types of requests are described in the next step.
+
+content = &quot;&quot;&quot;{
+  \&quot;url\&quot;: \&quot;&quot;&quot;&quot; + URL + &quot;&quot;&quot;\&quot;,
+  \&quot;type\&quot;: \&quot;&quot;&quot;&quot; + TYPE + &quot;&quot;&quot;\&quot;
+}&quot;&quot;&quot;
+
+response, content = http.request(ENDPOINT, method=&quot;POST&quot;, body=content)
+content_dict = json.loads( content.decode(&apos;utf-8&apos;) )
+
+if response[&apos;status&apos;] != &apos;200&apos;:
+  print(response[&apos;status&apos;], content_dict[&apos;error&apos;][&apos;message&apos;], sep=&quot;\n&quot;)
+```
+
+#### 2-2-3) 실행 및 디버깅
+
+Indexing API의 호출이 정상적으로 이루어진 경우, response로 HTTP 200이 반환된다. 그렇지 않은 경우 에러 코드와 메시지가 출력되게하였다. 
+
+![image](https://user-images.githubusercontent.com/84084372/206960780-d81e9310-37a7-4aa8-be8c-1d4a03de8542.png)
+
+
+에러 코드에 대한 설명은 아래 링크에서 확인할 수 있다.
+
+- **Link**
+
+  &lt;https://developers.google.com/search/apis/indexing-api/v3/core-errors#Global_Errors&gt;
+
+
+
+
+## Github Actions
+
+### Workflow 정의
+
+```yaml
+
+name: Python package
+
+on:
+  push:
+    branches: [ &quot;main&quot; ]
+  pull_request:
+    branches: [ &quot;main&quot; ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [&quot;3.8&quot;, &quot;3.9&quot;, &quot;3.10&quot;]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+```
+
+https://developers.google.com/search/apis/indexing-api/v3/quickstart
+
+https://jlhernando.com/blog/url-inspector-automator-node/
+
+https://github.com/zzsza/github-action-with-python/blob/master/.github/workflows/python-app.yml
+
+https://zzsza.github.io/development/2020/06/06/github-action/
+
+https://console.cloud.google.com/iam-admin/serviceaccounts?project=jekyll-blog-371100&amp;supportedpurview=project</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="Blog" /><category term="Githubio" /><category term="jekyll" /><category term="html" /><summary type="html">How to Automate the Indexing Process on Google Search Console</summary></entry></feed>
