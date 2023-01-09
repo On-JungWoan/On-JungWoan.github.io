@@ -46,7 +46,7 @@ sidebar_main: true
         <h3 style="text-align:center;">Recent Posts </h3>
 
         <div class="posts">
-            {% for post in paginator.posts limit:4 %}
+            {% for post in paginator.posts limit:8 %}
                 {% include recent-posts.html type="grid" %}
             {% endfor %}
         </div>
