@@ -29,6 +29,7 @@ remote: error: GH001: Large files detected. You may want to try Git Large File S
 이를 해결하기 위해서는 유료 github 계정을 구입해야하는데, 그렇지 않고 해결할 수 있는 방법을 소개한다.
 
 <br>
+
 <br>
 
 ## 2. 해결방법
