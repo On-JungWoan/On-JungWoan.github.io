@@ -79,6 +79,7 @@ cd ../../..
 ```
 
 <br>
+<br>
 
 ## 2. Prepare Dataset
 
@@ -113,6 +114,7 @@ rm val2017.zip
 rm annotations_trainval2017.zip
 ```
 
+<br>
 <br>
 
 ## 3. Pre-trained Model Inference
@@ -201,6 +203,17 @@ vslzr = COCOVisualizer()
 vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 ```
 
+<br>
+
 ### 3.1 결과
 
 ![output](https://user-images.githubusercontent.com/84084372/222920350-44c15ede-2d0f-4f17-bba7-0d444eca8134.png)
+
+<br>
+<br>
+
+## 4. Train Model
+
+DINO 모델 Train 관련 내용 적기
+argument 관련 디버깅
+시각화 내용들
