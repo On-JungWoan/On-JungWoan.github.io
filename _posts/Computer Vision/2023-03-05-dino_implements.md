@@ -16,3 +16,174 @@ date: 2022-03-05
 last_modified_at: 2022-03-05
 use_math: true
 ---
+
+## 1. Set Virtual Environment
+
+가상환경 세팅은 conda를 사용하였으며, 개발 환경은 ubuntu / i9-13900K CPU / GTX 4080 / 64GB Mem이다.
+
+![image](https://user-images.githubusercontent.com/84084372/222917401-9f057caf-c912-4db8-aab5-d40da1c64da0.png)
+
+### 1-1. Git Clone
+
+아래의 DINO 공식 Github 링크에 들어가서 해당 repo를 local에 clone 해준다.
+
+> link : <https://github.com/IDEA-Research/DINO>
+
+```
+git clone https://github.com/IDEA-Research/DINO.git
+cd DINO
+```
+
+<br>
+
+### 1-2. Setup Pytorch
+
+우선 그래픽 카드 버전에 맞는 pytorch를 install 해주었다. 4080은 어떤 버전을 사용해야 하는지 잘 몰라서 가장 최신 버전인 11.7 버전을 가상환경에 설치해주었다.
+
+> link : <https://pytorch.org/get-started/locally>
+
+![image](https://user-images.githubusercontent.com/84084372/222917489-cf2632cf-72ee-4a3d-88d4-0adce5df7773.png)
+
+이 때, pytorch build가 cpu로 설치되어 있다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다.
+
+![image](https://user-images.githubusercontent.com/84084372/222917546-d59620db-de5e-431e-80d8-e81673fddb2c.png)
+
+
+<br>
+
+### 1-3. requirements 설치
+
+#### 1-3-1. install requirements.txt
+
+```
+pip install -r requirements.txt
+```
+
+#### 1-3-2. Compiling CUDA operators
+```
+cd DINO/models/dino/ops
+python setup.py build install
+# unit test (should see all checking is True)
+python test.py
+cd ../../..
+```
+
+<br>
+
+## 2. Prepare Dataset
+
+Dataset은 다음과 같은 구조로 설치하면 된다.
+
+```
+COCODIR/
+  ├── train2017/
+  ├── val2017/
+  └── annotations/
+  	├── instances_train2017.json
+  	└── instances_val2017.json
+```
+
+터미널에 아래의 명령어를 차례차례 입력하면 된다. 해외 서버에서 wget으로 받아오다보니 시간이 오래 걸린다. 조금 더 빨리 받아올 수 있는 방법이 있는걸로 알고있는데 정확히 기억나지 않아서 그냥 기다렸다.
+
+```
+cd DINO
+mkdir COCODIR
+cd COCODIR
+
+wget http://images.cocodataset.org/zips/train2017.zip
+wget http://images.cocodataset.org/zips/val2017.zip
+wget http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+
+unzip train2017.zip
+unzip val2017.zip
+unzip annotations_trainval2017.zip
+
+rm train2017.zip
+rm val2017.zip
+rm annotations_trainval2017.zip
+```
+
+<br>
+
+## 3. Pre-trained Model Inference
+
+공식 github에서 Model Zoo를 제공하고 있어, 다양한 세팅에 대해 Inference 및 evaluation을 해볼 수 있었다. 현재는 간단한 inference만 해보면 되기 때문에, 4 scale feature로 12 epoch 학습(Resnet50 백본)한 모델의 체크 포인트를 사용하였다.
+
+> link : <https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing>
+
+코드는 다음과 같다.
+
+```python
+import torch
+import json
+import datasets.transforms as T
+
+from main import build_model_main
+from datasets import build_dataset
+from util.visualizer import COCOVisualizer
+from util.slconfig import SLConfig
+from PIL import Image
+from util import box_ops
+
+#
+model_config_path = "config/DINO/DINO_4scale.py"
+model_checkpoint_path = "ckpts/checkpoint0011_4scale.pth"
+
+#
+args = SLConfig.fromfile(model_config_path)
+args.device = 'cuda'
+model, criterion, postprocessors = build_model_main(args)
+checkpoint = torch.load(model_checkpoint_path, map_location='cpu')
+model.load_state_dict(checkpoint['model'])
+
+
+
+# load coco names
+with open('util/coco_id2name.json') as f:
+    id2name = json.load(f)
+    id2name = {int(k):v for k,v in id2name.items()}
+
+
+#
+args.dataset_file = 'coco'
+args.coco_path = "COCODIR/" # the path of coco
+args.fix_size = False
+
+
+# 
+image = Image.open("./figs/idea.jpg").convert("RGB")
+transform = T.Compose([
+    T.RandomResize([800], max_size=1333),
+    T.ToTensor(),
+    T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+])
+image, _ = transform(image, None)
+
+
+#
+output = model.cuda()(image[None].cuda())
+output = postprocessors['bbox'](output, torch.Tensor([[1.0, 1.0]]).cuda())[0]
+
+
+# visualize outputs
+thershold = 0.3 # set a thershold
+
+vslzr = COCOVisualizer()
+
+scores = output['scores']
+labels = output['labels']
+boxes = box_ops.box_xyxy_to_cxcywh(output['boxes'])
+select_mask = scores > thershold
+
+box_label = [id2name[int(item)] for item in labels[select_mask]]
+pred_dict = {
+    'boxes': boxes[select_mask],
+    'size': torch.Tensor([image.shape[1], image.shape[2]]),
+    'box_label': box_label
+}
+vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
+
+
+
+print()
+```
