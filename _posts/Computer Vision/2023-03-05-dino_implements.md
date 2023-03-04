@@ -111,7 +111,7 @@ rm annotations_trainval2017.zip
 
 > link : <https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing>
 
-코드는 다음과 같다.
+Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.
 
 ```python
 import torch
@@ -125,33 +125,36 @@ from util.slconfig import SLConfig
 from PIL import Image
 from util import box_ops
 
-#
+# PATH 지정
 model_config_path = "config/DINO/DINO_4scale.py"
-model_checkpoint_path = "ckpts/checkpoint0011_4scale.pth"
+model_checkpoint_path = "ckpts/checkpoint0011_4scale.pth" # 방금 다운받은 체크포인트의 경로를 입력
 
-#
+
+# Model Build
+# model을 build하고 가중치를 불러오는 과정
 args = SLConfig.fromfile(model_config_path)
 args.device = 'cuda'
-model, criterion, postprocessors = build_model_main(args)
+model, _, postprocessors = build_model_main(args)
 checkpoint = torch.load(model_checkpoint_path, map_location='cpu')
 model.load_state_dict(checkpoint['model'])
 
 
-
-# load coco names
+# Load coco names
+# id와 name을 매칭시키기 위해 json 파일을 불러오는 과정
 with open('util/coco_id2name.json') as f:
     id2name = json.load(f)
     id2name = {int(k):v for k,v in id2name.items()}
 
 
-#
+# Load Coco Dataset
 args.dataset_file = 'coco'
-args.coco_path = "COCODIR/" # the path of coco
+args.coco_path = "COCODIR/" # 본인의 COCODIR 입력
 args.fix_size = False
 
 
-# 
-image = Image.open("./figs/idea.jpg").convert("RGB")
+# Load Sample Images
+img_path = "./figs/test.jpg" # inference 하길 원하는 이미지의 경로 입력
+image = Image.open(img_path).convert("RGB")
 transform = T.Compose([
     T.RandomResize([800], max_size=1333),
     T.ToTensor(),
@@ -160,30 +163,34 @@ transform = T.Compose([
 image, _ = transform(image, None)
 
 
-#
+# Inference
 output = model.cuda()(image[None].cuda())
 output = postprocessors['bbox'](output, torch.Tensor([[1.0, 1.0]]).cuda())[0]
 
 
 # visualize outputs
+# box 좌표는 normalize 되어 있기 때문에 후처리 과정이 필요함
 thershold = 0.3 # set a thershold
 
-vslzr = COCOVisualizer()
-
+# thereshold 미만인 bbox는 걸러냄
 scores = output['scores']
 labels = output['labels']
 boxes = box_ops.box_xyxy_to_cxcywh(output['boxes'])
 select_mask = scores > thershold
 
+# id to name 변환 및 bbox de-normalize
 box_label = [id2name[int(item)] for item in labels[select_mask]]
 pred_dict = {
     'boxes': boxes[select_mask],
     'size': torch.Tensor([image.shape[1], image.shape[2]]),
     'box_label': box_label
 }
+
+# Visualization
+vslzr = COCOVisualizer()
 vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
-
-
-
-print()
 ```
+
+### 3.1 결과
+
+![output](https://user-images.githubusercontent.com/84084372/222920350-44c15ede-2d0f-4f17-bba7-0d444eca8134.png)
