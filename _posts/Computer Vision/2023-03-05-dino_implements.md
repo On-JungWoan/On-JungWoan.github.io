@@ -25,7 +25,7 @@ use_math: true
 
 ### 1-1. Git Clone
 
-아래의 DINO 공식 Github 링크에 들어가서 해당 repo를 local에 clone 해준다.
+우선, 아래의 DINO 공식 Github 링크에 들어가서 해당 repo를 local에 clone 해준다.
 
 > link : <https://github.com/IDEA-Research/DINO>
 
@@ -38,15 +38,18 @@ cd DINO
 
 ### 1-2. Setup Pytorch
 
-우선 그래픽 카드 버전에 맞는 pytorch를 install 해주었다. 4080은 어떤 버전을 사용해야 하는지 잘 몰라서 가장 최신 버전인 11.7 버전을 가상환경에 설치해주었다.
+그래픽 카드 버전에 맞는 pytorch를 install 해준다. 4080은 어떤 버전을 사용해야 하는지 잘 몰라서 가장 최신 버전인 11.7 버전을 가상환경에 설치해주었다.
 
 > link : <https://pytorch.org/get-started/locally>
 
 ![image](https://user-images.githubusercontent.com/84084372/222917489-cf2632cf-72ee-4a3d-88d4-0adce5df7773.png)
 
-이 때, pytorch build가 cpu로 설치되어 있다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다.
 
-![image](https://user-images.githubusercontent.com/84084372/222917546-d59620db-de5e-431e-80d8-e81673fddb2c.png)
+- **주의사항**
+
+  만약, pytorch build가 cpu로 설치되어 있다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다.
+
+  ![image](https://user-images.githubusercontent.com/84084372/222917546-d59620db-de5e-431e-80d8-e81673fddb2c.png)
 
 
 <br>
