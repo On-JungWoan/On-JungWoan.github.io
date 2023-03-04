@@ -44,10 +44,17 @@ cd DINO
 
 ![image](https://user-images.githubusercontent.com/84084372/222917489-cf2632cf-72ee-4a3d-88d4-0adce5df7773.png)
 
+torch.cuda.is_available()의 return값이 True이면 버전에 맞게 잘 설치된 것이다.
+
+```
+>>> import torch
+>>> torch.cuda.is_available()
+True 
+```
 
 - **주의사항**
 
-  만약, pytorch build가 cpu로 설치되어 있다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다.
+  만약, pytorch build가 cpu로 설치됐다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다. 버전이 맞지 않으면 cuda를 사용할 수 없으니 버전을 잘 맞추도록 하자
 
   ![image](https://user-images.githubusercontent.com/84084372/222917546-d59620db-de5e-431e-80d8-e81673fddb2c.png)
 
