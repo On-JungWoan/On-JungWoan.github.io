@@ -1,14 +1,20 @@
-{% capture description1 %}
+{% capture bs_jnu_major %}
 * Major in Statistics (Mar. 2018 ~)
 
   * GPA : 4.17 / 4.5
 {% endcapture %}  
 
-{% capture description2 %}
+{% capture bs_jnu_minor %}
 * Minor in Software Engineering (Sep. 2021 ~)
 
   * GPA : 4.33 / 4.5
 {% endcapture %}
+
+{% capture ex_uni_major %}
+* Major in Computer Science (Mar. 2023 ~ Jul. 2023)
+
+  * GPA : 
+{% endcapture %}  
 
 <div class="container education-container">  
   <h3>{{ site.education_title | default: "Education" }}</h3>
@@ -17,13 +23,25 @@
 
   <div class="row clearfix layout layout-left">
       <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
+        <!-- <div class="unist-h4">UNIST</div> -->
+        <h4>UNIST</h4>
+        <h4>{{ target.company }}</h4>
+        <div class="link">Exchange Student</div>
+      </div>
+      <div class="col-xs-12 col-print-12"> 
+        {{ ex_uni_major | strip | markdownify }}
+      </div>
+  </div>  
+
+  <div class="row clearfix layout layout-left">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
         <h4>Chonnam National University</h4>
         <h4>{{ target.company }}</h4>
         <div class="link">Bachleor Student</div>
       </div>
       <div class="col-xs-12 col-print-12"> 
-        {{ description1 | strip | markdownify }}
-        {{ description2 | strip | markdownify }}
+        {{ bs_jnu_major | strip | markdownify }}
+        {{ bs_jnu_minor | strip | markdownify }}
       </div>
   </div>  
 

@@ -9,30 +9,36 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Posts by Tag (grid view) - 정완이의 개발 일기장</title>
-<meta name="description" content="정완이의 개발 일기장">
+<!-- begin _includes/seo.html --><title>DINO(2022) 코드 구현 - 정완이의 개발 일기장</title>
+<meta name="description" content="DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection">
 
 
   <meta name="author" content="온정완">
   
+  <meta property="article:author" content="온정완">
+  
 
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="Posts by Tag (grid view)">
-<meta property="og:url" content="http://localhost:4000/tags-grid/">
+<meta property="og:title" content="DINO(2022) 코드 구현">
+<meta property="og:url" content="http://localhost:4000/dl/dino_implements/">
 
 
-  <meta property="og:description" content="정완이의 개발 일기장">
-
-
-
+  <meta property="og:description" content="DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection">
 
 
 
 
 
+
+
+  <meta property="article:published_time" content="2023-03-05T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2023-03-05T00:00:00+09:00">
 
 
 
@@ -41,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/tags-grid/">
+<link rel="canonical" href="http://localhost:4000/dl/dino_implements/">
 
 
 
@@ -103,7 +109,7 @@
 
   </head>
 
-  <body class="layout--tags">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -299,6 +305,41 @@
       
 
 
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          DINO(2022) 코드 구현
+
+        
+      </h1>
+      <p class="page__lead">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-03-05">March 5, 2023</time></p>
+
+      <p>
+      
+    </div>
+  </div>
+
+
+
+
+
 
 <div id="main" role="main">
   
@@ -426,78 +467,437 @@
   
 
   
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">1</style> <span style="">개</style> 
+      </li>
+      <li>
+      
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+            </ul>
+
+
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">AI</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                
+                    
+                        <li><a href="/categories/DL" class="">Computer Vision (1)</a></li>
+                    
+                
+            </ul>            
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+            </ul>    
+
+
+            <span class="nav__sub-title">Platform Dev.</span>
+            <ul>
+                
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                
+            </ul>                                                 
+            <ul>
+                
+                    
+                
+            </ul>       
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
 
   </div>
 
 
 
-  <div class="archive">
-    
-      <h1 id="page-title" class="page__title">Posts by Tag (grid view)</h1>
-    
-    
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DINO(2022) 코드 구현">
+    <meta itemprop="description" content="DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection">
+    <meta itemprop="datePublished" content="2023-03-05T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2023-03-05T00:00:00+09:00">
 
-
-
-
-
-<ul class="taxonomy__index">
-  
-    
+    <div class="page__inner-wrap">
       
-        <li>
-          <a href="#dl">
-            <strong>DL</strong> <span class="taxonomy__count">1</span>
-          </a>
-        </li>
+        <header>
+          
+          
+        </header>
       
-    
-  
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#1-set-virtual-environment">1. Set Virtual Environment</a><ul><li><a href="#1-1-git-clone">1-1. Git Clone</a></li><li><a href="#1-2-setup-pytorch">1-2. Setup Pytorch</a></li><li><a href="#1-3-requirements-설치">1-3. requirements 설치</a><ul><li><a href="#1-3-1-install-requirementstxt">1-3-1. install requirements.txt</a></li><li><a href="#1-3-2-compiling-cuda-operators">1-3-2. Compiling CUDA operators</a></li></ul></li></ul></li><li><a href="#2-prepare-dataset">2. Prepare Dataset</a></li><li><a href="#3-pre-trained-model-inference">3. Pre-trained Model Inference</a><ul><li><a href="#31-결과">3.1 결과</a></li></ul></li><li><a href="#4-train-model">4. Train Model</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="1-set-virtual-environment">1. Set Virtual Environment</h2>
+
+<p>가상환경 세팅은 conda를 사용하였으며, 개발 환경은 ubuntu / i9-13900K CPU / GTX 4080 / 64GB Mem이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/222917401-9f057caf-c912-4db8-aab5-d40da1c64da0.png" alt="image" /></p>
+
+<h3 id="1-1-git-clone">1-1. Git Clone</h3>
+
+<p>우선, 아래의 DINO 공식 Github 링크에 들어가서 해당 repo를 local에 clone 해준다.</p>
+
+<blockquote>
+  <p>link : <a href="https://github.com/IDEA-Research/DINO">https://github.com/IDEA-Research/DINO</a></p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/IDEA-Research/DINO.git
+cd DINO
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="1-2-setup-pytorch">1-2. Setup Pytorch</h3>
+
+<p>그래픽 카드 버전에 맞는 pytorch를 install 해준다. 4080은 어떤 버전을 사용해야 하는지 잘 몰라서 가장 최신 버전인 11.7 버전을 가상환경에 설치해주었다.</p>
+
+<blockquote>
+  <p>link : <a href="https://pytorch.org/get-started/locally">https://pytorch.org/get-started/locally</a></p>
+</blockquote>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/222917489-cf2632cf-72ee-4a3d-88d4-0adce5df7773.png" alt="image" /></p>
+
+<p>torch.cuda.is_available()의 return값이 True이면 버전에 맞게 잘 설치된 것이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; import torch
+&gt;&gt;&gt; torch.cuda.is_available()
+True 
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><strong>주의사항</strong></p>
+
+    <p>만약, pytorch build가 cpu로 설치됐다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다. 버전이 맞지 않으면 cuda를 사용할 수 없으니 버전을 잘 맞추도록 하자</p>
+
+    <p><img src="https://user-images.githubusercontent.com/84084372/222917546-d59620db-de5e-431e-80d8-e81673fddb2c.png" alt="image" /></p>
+  </li>
 </ul>
 
+<p><br /></p>
+
+<h3 id="1-3-requirements-설치">1-3. requirements 설치</h3>
+
+<h4 id="1-3-1-install-requirementstxt">1-3-1. install requirements.txt</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -r requirements.txt
+</code></pre></div></div>
+
+<h4 id="1-3-2-compiling-cuda-operators">1-3-2. Compiling CUDA operators</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd DINO/models/dino/ops
+python setup.py build install
+# unit test (should see all checking is True)
+python test.py
+cd ../../..
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="2-prepare-dataset">2. Prepare Dataset</h2>
+
+<p>Dataset은 다음과 같은 구조로 설치하면 된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>COCODIR/
+  ├── train2017/
+  ├── val2017/
+  └── annotations/
+  	├── instances_train2017.json
+  	└── instances_val2017.json
+</code></pre></div></div>
+
+<p>터미널에 아래의 명령어를 차례차례 입력하면 된다. 해외 서버에서 wget으로 받아오다보니 시간이 오래 걸린다. 조금 더 빨리 받아올 수 있는 방법이 있는걸로 알고있는데 정확히 기억나지 않아서 그냥 기다렸다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd DINO
+mkdir COCODIR
+cd COCODIR
+
+wget http://images.cocodataset.org/zips/train2017.zip
+wget http://images.cocodataset.org/zips/val2017.zip
+wget http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+
+unzip train2017.zip
+unzip val2017.zip
+unzip annotations_trainval2017.zip
+
+rm train2017.zip
+rm val2017.zip
+rm annotations_trainval2017.zip
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="3-pre-trained-model-inference">3. Pre-trained Model Inference</h2>
+
+<p>공식 github에서 Model Zoo를 제공하고 있어, 다양한 세팅에 대해 Inference 및 evaluation을 해볼 수 있었다. 현재는 간단한 inference만 해보면 되기 때문에, 4 scale feature로 12 epoch 학습(Resnet50 백본)한 모델의 체크 포인트를 사용하였다.</p>
+
+<blockquote>
+  <p>link : <a href="https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing">https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing</a></p>
+</blockquote>
+
+<p>Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">datasets.transforms</span> <span class="k">as</span> <span class="n">T</span>
+
+<span class="kn">from</span> <span class="nn">main</span> <span class="kn">import</span> <span class="n">build_model_main</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">build_dataset</span>
+<span class="kn">from</span> <span class="nn">util.visualizer</span> <span class="kn">import</span> <span class="n">COCOVisualizer</span>
+<span class="kn">from</span> <span class="nn">util.slconfig</span> <span class="kn">import</span> <span class="n">SLConfig</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">box_ops</span>
+
+<span class="c1"># PATH 지정
+</span><span class="n">model_config_path</span> <span class="o">=</span> <span class="s">"config/DINO/DINO_4scale.py"</span>
+<span class="n">model_checkpoint_path</span> <span class="o">=</span> <span class="s">"ckpts/checkpoint0011_4scale.pth"</span> <span class="c1"># 방금 다운받은 체크포인트의 경로를 입력
+</span>
+
+<span class="c1"># Model Build
+# model을 build하고 가중치를 불러오는 과정
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">SLConfig</span><span class="p">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">model_config_path</span><span class="p">)</span>
+<span class="n">args</span><span class="p">.</span><span class="n">device</span> <span class="o">=</span> <span class="s">'cuda'</span>
+<span class="n">model</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">postprocessors</span> <span class="o">=</span> <span class="n">build_model_main</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_checkpoint_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s">'cpu'</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s">'model'</span><span class="p">])</span>
 
 
-  
-    
-      <section id="dl" class="taxonomy__section">
-        <h2 class="archive__subtitle">DL</h2>
-        <div class="entries-grid">
-          
-            
+<span class="c1"># Load coco names
+# id와 name을 매칭시키기 위해 json 파일을 불러오는 과정
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'util/coco_id2name.json'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">id2name</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">id2name</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">):</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">id2name</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
 
 
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/dl/dino_implements/" rel="permalink">DINO(2022) 코드 구현
-</a>
-            
-    </h2>
-    <!--
+<span class="c1"># Load Coco Dataset
+</span><span class="n">args</span><span class="p">.</span><span class="n">dataset_file</span> <span class="o">=</span> <span class="s">'coco'</span>
+<span class="n">args</span><span class="p">.</span><span class="n">coco_path</span> <span class="o">=</span> <span class="s">"COCODIR/"</span> <span class="c1"># 본인의 COCODIR 입력
+</span><span class="n">args</span><span class="p">.</span><span class="n">fix_size</span> <span class="o">=</span> <span class="bp">False</span>
 
 
--->
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 05 2023</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
-</p>
-  </article>
-</div>
+<span class="c1"># Load Sample Images
+</span><span class="n">img_path</span> <span class="o">=</span> <span class="s">"./figs/test.jpg"</span> <span class="c1"># inference 하길 원하는 이미지의 경로 입력
+</span><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="n">img_path</span><span class="p">).</span><span class="n">convert</span><span class="p">(</span><span class="s">"RGB"</span><span class="p">)</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">T</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">T</span><span class="p">.</span><span class="n">RandomResize</span><span class="p">([</span><span class="mi">800</span><span class="p">],</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">1333</span><span class="p">),</span>
+    <span class="n">T</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">T</span><span class="p">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+<span class="n">image</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
-          
-        </div>
-        <a href="#page-title" class="back-to-top">맨 위로 이동 &uarr;</a>
+
+<span class="c1"># Inference
+</span><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">cuda</span><span class="p">()(</span><span class="n">image</span><span class="p">[</span><span class="bp">None</span><span class="p">].</span><span class="n">cuda</span><span class="p">())</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">postprocessors</span><span class="p">[</span><span class="s">'bbox'</span><span class="p">](</span><span class="n">output</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]).</span><span class="n">cuda</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="c1"># visualize outputs
+# box 좌표는 normalize 되어 있기 때문에 후처리 과정이 필요함
+</span><span class="n">thershold</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="c1"># set a thershold
+</span>
+<span class="c1"># thereshold 미만인 bbox는 걸러냄
+</span><span class="n">scores</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="s">'scores'</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="s">'labels'</span><span class="p">]</span>
+<span class="n">boxes</span> <span class="o">=</span> <span class="n">box_ops</span><span class="p">.</span><span class="n">box_xyxy_to_cxcywh</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s">'boxes'</span><span class="p">])</span>
+<span class="n">select_mask</span> <span class="o">=</span> <span class="n">scores</span> <span class="o">&gt;</span> <span class="n">thershold</span>
+
+<span class="c1"># id to name 변환 및 bbox de-normalize
+</span><span class="n">box_label</span> <span class="o">=</span> <span class="p">[</span><span class="n">id2name</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">[</span><span class="n">select_mask</span><span class="p">]]</span>
+<span class="n">pred_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'boxes'</span><span class="p">:</span> <span class="n">boxes</span><span class="p">[</span><span class="n">select_mask</span><span class="p">],</span>
+    <span class="s">'size'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">([</span><span class="n">image</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">image</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]),</span>
+    <span class="s">'box_label'</span><span class="p">:</span> <span class="n">box_label</span>
+<span class="p">}</span>
+
+<span class="c1"># Visualization
+</span><span class="n">vslzr</span> <span class="o">=</span> <span class="n">COCOVisualizer</span><span class="p">()</span>
+<span class="n">vslzr</span><span class="p">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pred_dict</span><span class="p">,</span> <span class="n">savedir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="31-결과">3.1 결과</h3>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/222920350-44c15ede-2d0f-4f17-bba7-0d444eca8134.png" alt="output" /></p>
+
+<p><br />
+<br /></p>
+
+<h2 id="4-train-model">4. Train Model</h2>
+
+<p>DINO 모델 Train 관련 내용 적기
+argument 관련 디버깅
+시각화 내용들</p>
+
+        
+        
       </section>
-    
+
+      <footer class="page__meta">
+        
+        
   
 
 
-  </div>
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-03-05">March 5, 2023</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DINO%282022%29+%EC%BD%94%EB%93%9C+%EA%B5%AC%ED%98%84%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdino_implements%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdino_implements%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdino_implements%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!--  -->
+
+
+
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+            
+      </div>
+    </div>
+  
 </div>
+
     </div>
 
     
@@ -551,6 +951,33 @@
 
 
 
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
 
 
 

@@ -1,4 +1,17 @@
 - layout: left
+  company: UNIST VISION & LEARNING LAB
+  link: http://vision.unist.ac.kr/
+  job_title: 인턴연구생
+  dates: Mar. 2023 ~ Jul. 2023
+  quote: >
+    울산과학기술원 인공지능대학원 백승렬 교수 연구실
+  quote-align: quote-left
+  description: | # this will include new lines to allow paragraphs
+    * DINO : detr with improved denoising anchor boxes for end-to-end object detection(2022)
+    * torch to tflite 변환작업
+    * 현재 인턴 진행 중
+
+- layout: left
   company: 유클리드소프트
   link: https://euclidsoft.co.kr/
   job_title: 개발팀 인턴
