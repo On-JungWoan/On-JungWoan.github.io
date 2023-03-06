@@ -127,6 +127,10 @@ rm annotations_trainval2017.zip
 
 Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.
 
+<details>
+
+<summary>코드 접기/펼치기</summary>
+
 ```python
 import torch
 import json
@@ -201,6 +205,8 @@ pred_dict = {
 }
 vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 ```
+
+</details>
 
 <br>
 
@@ -277,3 +283,24 @@ if args.custom_logger:
 
 > link : <https://github.com/On-JungWoan/DINO-2022-implement>
 
+### 4-1 Result
+
+![image](https://user-images.githubusercontent.com/84084372/223036898-09877e9f-78b9-4bcb-bc20-0a46ce62717d.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223036917-b2b22657-82f2-4a8f-8530-8910751523eb.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223036930-4e07697b-7e75-43eb-b3a4-6b5941dcc6ad.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223036949-d4085734-2df7-40fe-8768-222db79f5ba6.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223036966-320ac79a-3660-41dc-8213-4d2e5a73b61d.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223037065-2795ad67-70cb-4b50-8c48-4f10ffc7880b.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223037091-9cd730a3-6af9-43bb-903d-cd856751b7dc.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223037102-244e7f7d-33d3-4368-b847-80762676f9b1.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223037185-f43eddc3-7a8d-4fdc-953a-81e3d529ee39.png)
+
+![image](https://user-images.githubusercontent.com/84084372/223037201-8ab7eaaa-06be-447d-ab28-d74d6dbf28b8.png)
