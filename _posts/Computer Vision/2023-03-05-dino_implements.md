@@ -1,5 +1,5 @@
 ---
-title:  "DINO(2022) 코드 구현"
+title:  "DINO(2022) 코드 구현 : 개발환경 세팅"
 excerpt: "DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection"
 
 categories:
