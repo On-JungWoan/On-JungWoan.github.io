@@ -131,6 +131,8 @@ Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된�
 
 <summary>코드 접기/펼치기</summary>
 
+{% raw %}
+
 ```python
 import torch
 import json
@@ -205,6 +207,8 @@ pred_dict = {
 }
 vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 ```
+
+{% endraw %}
 
 </details>
 
