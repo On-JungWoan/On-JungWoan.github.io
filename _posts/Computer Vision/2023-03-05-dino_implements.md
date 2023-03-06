@@ -309,6 +309,8 @@ if args.custom_logger:
 
 #### 4-1-1. Loss in Entire Epoch
 
+우선, 한 epoch 내에서 loss가 어떻게 변하는지를 확인하기 위해, 30개의 이미지를 학습할 때마다 loss를 기록하였다. 아래 그래프는 결과의 일부를 발췌한 것이며, x축은 (학습한 이미지의 수 * 30), y축은 loss이다. epoch을 거듭할수록 전반적인 loss가 감소하는 것은 확인하였으나, 한 epoch 내에서(1 epoch 제외) loss의 감소는 관찰할 수 없었다.
+
 - **For all epoch**
 
   ![image](https://user-images.githubusercontent.com/84084372/223036898-09877e9f-78b9-4bcb-bc20-0a46ce62717d.png)
@@ -319,15 +321,22 @@ if args.custom_logger:
 
 #### 4-1-2. Loss (Mean of Epoch)
 
-![image](https://user-images.githubusercontent.com/84084372/223036930-4e07697b-7e75-43eb-b3a4-6b5941dcc6ad.png)
+x축은 epoch, y축은 loss를 의미하며 최종 12epoch에서의 train loss는 11.87, test loss는 5.64를 기록하였다. full-dataset을 사용하였을 경우, train loss는 , test loss는 이다.
+
+
+train loss보다 test loss가 더 낮게 나오는 이유는 배움이 얕아 아직 파악하지 못했다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223036930-4e07697b-7e75-43eb-b3a4-6b5941dcc6ad.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-1-3. AP
 
-![image](https://user-images.githubusercontent.com/84084372/223036949-d4085734-2df7-40fe-8768-222db79f5ba6.png)
+최종 AP은 38.1로, COCO dataset 5만개를 전부 사용하여 학습했을 때(49.0)에 비해 **-10.9AP**의 스코어 차이를 보였다. 하지만 12epoch 기준 약 30시간 정도의 시간을 절약할 수 있기 때문에, 빠르게 개요만 확인하고 싶은 경우 이 방법을 채택해도 좋을 것 같다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223036949-d4085734-2df7-40fe-8768-222db79f5ba6.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-1-4. Epoch Time
 
-![image](https://user-images.githubusercontent.com/84084372/223036966-320ac79a-3660-41dc-8213-4d2e5a73b61d.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223036966-320ac79a-3660-41dc-8213-4d2e5a73b61d.png" style="border: 1px solid black" width="70%"></p>
 
 <br>
 
@@ -335,16 +344,16 @@ if args.custom_logger:
 
 #### 4-2-1. 1 Epoch model
 
-![image](https://user-images.githubusercontent.com/84084372/223037065-2795ad67-70cb-4b50-8c48-4f10ffc7880b.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037065-2795ad67-70cb-4b50-8c48-4f10ffc7880b.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-2-2. 6 Epoch model
 
-![image](https://user-images.githubusercontent.com/84084372/223037091-9cd730a3-6af9-43bb-903d-cd856751b7dc.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037091-9cd730a3-6af9-43bb-903d-cd856751b7dc.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-2-3. 12 Epoch model
 
-![image](https://user-images.githubusercontent.com/84084372/223037102-244e7f7d-33d3-4368-b847-80762676f9b1.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037102-244e7f7d-33d3-4368-b847-80762676f9b1.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-2-4. Full Dataset model
 
-![image](https://user-images.githubusercontent.com/84084372/223037201-8ab7eaaa-06be-447d-ab28-d74d6dbf28b8.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037201-8ab7eaaa-06be-447d-ab28-d74d6dbf28b8.png" style="border: 1px solid black" width="70%"></p>
