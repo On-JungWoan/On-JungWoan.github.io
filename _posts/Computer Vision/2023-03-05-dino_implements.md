@@ -18,6 +18,16 @@ last_modified_at: 2023-03-05
 
 $test$
 
+<details>
+
+<summary>test</summary>
+
+```python
+print(test)
+```
+
+</details>
+
 ## 1. Set Virtual Environment
 
 가상환경 세팅은 conda를 사용하였으며, 개발 환경은 ubuntu / i9-13900K CPU / GTX 4080 / 64GB Mem이다.
