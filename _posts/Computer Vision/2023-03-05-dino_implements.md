@@ -321,10 +321,7 @@ if args.custom_logger:
 
 #### 4-1-2. Loss (Mean of Epoch)
 
-x축은 epoch, y축은 loss를 의미하며 최종 12epoch에서의 train loss는 11.87, test loss는 5.64를 기록하였다. full-dataset을 사용하였을 경우, train loss는 , test loss는 이다.
-
-
-train loss보다 test loss가 더 낮게 나오는 이유는 배움이 얕아 아직 파악하지 못했다.
+x축은 epoch, y축은 loss를 의미하며 최종 12epoch에서의 train loss는 11.87, test loss는 5.64(full-dataset : 4.6)를 기록하였다. train loss보다 test loss가 더 낮게 나오는 이유는 배움이 얕아 아직 파악하지 못했다.
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/223036930-4e07697b-7e75-43eb-b3a4-6b5941dcc6ad.png" style="border: 1px solid black" width="70%"></p>
 
