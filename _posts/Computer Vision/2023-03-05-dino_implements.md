@@ -119,7 +119,7 @@ rm annotations_trainval2017.zip
 
 ## 3. Pre-trained Model Inference
 
-공식 github에서 Model Zoo를 제공하고 있어, 다양한 세팅에 대해 Inference 및 evaluation을 해볼 수 있었다. 현재는 간단한 inference만 해보면 되기 때문에, 4 scale feature로 12 epoch 학습(Resnet50 백본)한 모델의 체크 포인트를 사용하였다.
+공식 github에서 Model Zoo를 제공하고 있어, 다양한 세팅에 대해 Inference 및 evaluation을 해볼 수 있었다. 현재는 간단한 inference만 해보면 되기 때문에, 4 scale feature로 12 epoch 학습(Resnet50 백본)한 모델의 체크 포인트를 사용하였다. ipynb 코드는 아래 링크를 참조하면 된다.
 
 > ckpts link : <https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing>
 
@@ -138,37 +138,33 @@ from util.visualizer import COCOVisualizer
 from util.slconfig import SLConfig
 from PIL import Image
 from util import box_ops
+import numpy as np
 
-# PATH 지정
+#
 model_config_path = "config/DINO/DINO_4scale.py"
-model_checkpoint_path = "ckpts/checkpoint0011_4scale.pth" # 방금 다운받은 체크포인트의 경로를 입력
+model_checkpoint_path = "logs/DINO/train_test/checkpoint_best_regular.pth" # your ckp path
+img_dir = "figs/idea.jpg" # your image path
 
 
-# Model Build
-# model을 build하고 가중치를 불러오는 과정
+#
 args = SLConfig.fromfile(model_config_path)
 args.device = 'cuda'
-model, _, postprocessors = build_model_main(args)
+model, criterion, postprocessors = build_model_main(args)
 checkpoint = torch.load(model_checkpoint_path, map_location='cpu')
 model.load_state_dict(checkpoint['model'])
+_ = model.eval()
 
 
-# Load coco names
-# id와 name을 매칭시키기 위해 json 파일을 불러오는 과정
+
+# load coco names
 with open('util/coco_id2name.json') as f:
     id2name = json.load(f)
     id2name = {int(k):v for k,v in id2name.items()}
 
 
-# Load Coco Dataset
-args.dataset_file = 'coco'
-args.coco_path = "COCODIR/" # 본인의 COCODIR 입력
-args.fix_size = False
 
-
-# Load Sample Images
-img_path = "./figs/test.jpg" # inference 하길 원하는 이미지의 경로 입력
-image = Image.open(img_path).convert("RGB")
+# 
+image = Image.open(img_dir).convert("RGB")
 transform = T.Compose([
     T.RandomResize([800], max_size=1333),
     T.ToTensor(),
@@ -177,37 +173,40 @@ transform = T.Compose([
 image, _ = transform(image, None)
 
 
-# Inference
+#
 output = model.cuda()(image[None].cuda())
 output = postprocessors['bbox'](output, torch.Tensor([[1.0, 1.0]]).cuda())[0]
 
 
 # visualize outputs
-# box 좌표는 normalize 되어 있기 때문에 후처리 과정이 필요함
-thershold = 0.3 # set a thershold
+if output['scores'].max() > 0.3:
+    thershold = 0.3 # set a thershold
+else:
+    thershold = float(sorted(output['scores'].cpu())[-6])
 
-# thereshold 미만인 bbox는 걸러냄
+np.array(output['scores'].cpu())
+
+vslzr = COCOVisualizer()
+
 scores = output['scores']
 labels = output['labels']
 boxes = box_ops.box_xyxy_to_cxcywh(output['boxes'])
 select_mask = scores > thershold
 
-# id to name 변환 및 bbox de-normalize
 box_label = [id2name[int(item)] for item in labels[select_mask]]
 pred_dict = {
     'boxes': boxes[select_mask],
     'size': torch.Tensor([image.shape[1], image.shape[2]]),
     'box_label': box_label
 }
-
-# Visualization
-vslzr = COCOVisualizer()
 vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 ```
 
 <br>
 
 ### 3.1 결과
+
+기존 DETR 계열의 문제점이었던 작은 obj도 잘 감지하는 모습을 확인할 수 있다. 또한, obj가 겹쳐있는 경우도 문제없이 잘 추론하고 있다.
 
 ![output](https://user-images.githubusercontent.com/84084372/222920350-44c15ede-2d0f-4f17-bba7-0d444eca8134.png)
 
@@ -216,6 +215,65 @@ vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 
 ## 4. Train Model
 
-DINO 모델 Train 관련 내용 적기
-argument 관련 디버깅
-시각화 내용들
+COCO 데이터셋을 전부 사용하여 학습하기에는 시간이 다소 오래 걸릴 것 같아서 일부만 사용하였다. 다음은 예상 학습 시간을 계산한 테이블이다(rs50 backbone, 4scale 기준). 본인의 여건에 맞춰서 선택하면 된다. 해당 시간은 train 시간만 고려하였으므로 실제 train 시간은 아래 시간보다 더 오래 소요되며, 개발 환경에 따라 달라질 수 있다. 본 포스팅에서는 1만개 train dataset을 사용하여 12 epoch 학습하였다. 또한, 한 epoch 내에서의 loss 변화를 보기 위해 이미지 30장마다 loss를 기록해주었다. 
+
+. | full dataset | 25,000 | 10,000 | 5000
+:--: | :--: | :--: | :--: | :--: |
+1epoch | 3h | 1.5h | 36m | 18m
+12epoch | 36h | 18h | 7.2h | 3.6h
+
+이를 위해 간단한 코드 custom을 해주었다.
+
+<div align="center"><strong>[Terminal]</strong></div>
+
+```
+# $1 : COCO Dir.
+# $2 : Num of train_dataset
+# $3 : Num of val_dataset
+# $4 : use custom logger
+
+bash scripts/DINO_train_custom.sh COCODIR/ 10000 5000 --custom_logger
+```
+
+<div align="center"><strong>[DINO_train_custom.sh]</strong></div>
+
+```
+coco_path=$1
+python main.py \
+    --num_train $2 --num_val $3 $4\
+	--output_dir logs/DINO/train_$2_$3_4scale_rs50_12epc \
+    -c config/DINO/DINO_4scale.py --coco_path $coco_path \
+	--options dn_scalar=100 embed_init_tgt=TRUE \
+	dn_label_coef=1.0 dn_bbox_coef=1.0 use_ema=False \
+	dn_box_noise_scale=1.0
+```
+
+<div align="center"><strong>[main.py]</strong></div>
+
+```python
+...
+
+parser.add_argument("--num_train", type=int)
+parser.add_argument("--num_val", type=int)
+parser.add_argument("--custom_logger", action='store_true')
+
+...
+```
+
+<div align="center"><strong>[engine.py]</strong></div>
+
+```python
+...
+
+if args.custom_logger:
+  if _cnt%30 == 0:
+      with open(args.output_dir + '/loss_only.txt', 'a') as f:
+          f.write(f'{_cnt} : {loss_value}\n')
+
+...          
+```
+
+자세한 코드는 아래를 참고.
+
+> link : <https://github.com/On-JungWoan/DINO-2022-implement>
+
