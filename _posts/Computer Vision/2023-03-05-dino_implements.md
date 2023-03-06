@@ -342,18 +342,28 @@ train loss보다 test loss가 더 낮게 나오는 이유는 배움이 얕아 �
 
 ### 4-2) Performance
 
+다음은 model의 각 epoch별 inference 결과를 시각화 한 것이다.
+
 #### 4-2-1. 1 Epoch model
+
+threshold를 넘는 bbox가 존재하지 않아, confidence가 가장 높은 5개의 bbox를 image 위에 그려주었다. 아직은 제대로 된 inference를 하지 못하고 있다.
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037065-2795ad67-70cb-4b50-8c48-4f10ffc7880b.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-2-2. 6 Epoch model
 
+전반적으로 detection 수준이 향상되었으나, 논문에서 언급된 duplicated prediction 문제가 일어나고 있다. CDN Training을 통해 해당 문제를 해결할 수 있을 것으로 기대된다.
+
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037091-9cd730a3-6af9-43bb-903d-cd856751b7dc.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-2-3. 12 Epoch model
 
+Duplicated Prediction 문제가 해결되었으며, 기존 DETR계열 모델이 small obj를 잘 탐지하지 못했던 문제를 해결한 것을 확인할 수 있다.
+
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037102-244e7f7d-33d3-4368-b847-80762676f9b1.png" style="border: 1px solid black" width="70%"></p>
 
 #### 4-2-4. Full Dataset model
+
+Full Dataset을 사용하여 학습한 모델과 비교하여 나쁘지 않은 performance를 보이고 있음을 확인할 수 있다.
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/223037201-8ab7eaaa-06be-447d-ab28-d74d6dbf28b8.png" style="border: 1px solid black" width="70%"></p>
