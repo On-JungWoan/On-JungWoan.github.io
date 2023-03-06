@@ -287,24 +287,48 @@ if args.custom_logger:
 
 > link : <https://github.com/On-JungWoan/DINO-2022-implement>
 
-### 4-1) Result
+<br>
 
-![image](https://user-images.githubusercontent.com/84084372/223036898-09877e9f-78b9-4bcb-bc20-0a46ce62717d.png)
+### 4-1) Effectiveness
 
-![image](https://user-images.githubusercontent.com/84084372/223036917-b2b22657-82f2-4a8f-8530-8910751523eb.png)
+#### 4-1-1. Loss in Entire Epoch
+
+- **For all epoch**
+
+  ![image](https://user-images.githubusercontent.com/84084372/223036898-09877e9f-78b9-4bcb-bc20-0a46ce62717d.png)
+
+- **Only 1, 6, 12 epoch**
+
+  ![image](https://user-images.githubusercontent.com/84084372/223036917-b2b22657-82f2-4a8f-8530-8910751523eb.png)
+
+#### 4-1-2. Loss (Mean of Epoch)
 
 ![image](https://user-images.githubusercontent.com/84084372/223036930-4e07697b-7e75-43eb-b3a4-6b5941dcc6ad.png)
 
+#### 4-1-3. AP
+
 ![image](https://user-images.githubusercontent.com/84084372/223036949-d4085734-2df7-40fe-8768-222db79f5ba6.png)
+
+#### 4-1-4. Epoch Time
 
 ![image](https://user-images.githubusercontent.com/84084372/223036966-320ac79a-3660-41dc-8213-4d2e5a73b61d.png)
 
+<br>
+
+### 4-2) Performance
+
+#### 4-2-1. 1 Epoch model
+
 ![image](https://user-images.githubusercontent.com/84084372/223037065-2795ad67-70cb-4b50-8c48-4f10ffc7880b.png)
+
+#### 4-2-2. 6 Epoch model
 
 ![image](https://user-images.githubusercontent.com/84084372/223037091-9cd730a3-6af9-43bb-903d-cd856751b7dc.png)
 
+#### 4-2-3. 12 Epoch model
+
 ![image](https://user-images.githubusercontent.com/84084372/223037102-244e7f7d-33d3-4368-b847-80762676f9b1.png)
 
-![image](https://user-images.githubusercontent.com/84084372/223037185-f43eddc3-7a8d-4fdc-953a-81e3d529ee39.png)
+#### 4-2-4. Full Dataset model
 
 ![image](https://user-images.githubusercontent.com/84084372/223037201-8ab7eaaa-06be-447d-ab28-d74d6dbf28b8.png)
