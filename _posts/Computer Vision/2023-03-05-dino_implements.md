@@ -23,7 +23,7 @@ use_math: true
 
 ![image](https://user-images.githubusercontent.com/84084372/222917401-9f057caf-c912-4db8-aab5-d40da1c64da0.png)
 
-### 1-1. Git Clone
+### 1-1) Git Clone
 
 우선, 아래의 DINO 공식 Github 링크에 들어가서 해당 repo를 local에 clone 해준다.
 
@@ -36,7 +36,7 @@ cd DINO
 
 <br>
 
-### 1-2. Setup Pytorch
+### 1-2) Setup Pytorch
 
 그래픽 카드 버전에 맞는 pytorch를 install 해준다. 4080은 어떤 버전을 사용해야 하는지 잘 몰라서 가장 최신 버전인 11.7 버전을 가상환경에 설치해주었다.
 
@@ -61,7 +61,7 @@ True
 
 <br>
 
-### 1-3. requirements 설치
+### 1-3) requirements 설치
 
 #### 1-3-1. install requirements.txt
 
@@ -210,7 +210,7 @@ vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 
 <br>
 
-### 3.1 결과
+### 3.1) 결과
 
 기존 DETR 계열의 문제점이었던 작은 obj도 잘 감지하는 모습을 확인할 수 있다. 또한, obj가 겹쳐있는 경우도 문제없이 잘 추론하고 있다.
 
@@ -229,6 +229,9 @@ COCO 데이터셋을 전부 사용하여 학습하기에는 시간이 다소 오
 12epoch | 36h | 18h | 7.2h | 3.6h
 
 이를 위해 간단한 코드 custom을 해주었다.
+
+<details>
+<summary>코드 접기/펼치기</summary>
 
 <div align="center"><strong>[Terminal]</strong></div>
 
@@ -278,12 +281,13 @@ if args.custom_logger:
 
 ...          
 ```
+</details>
 
-자세한 코드는 아래를 참고.
+<br>자세한 코드는 아래를 참고.
 
 > link : <https://github.com/On-JungWoan/DINO-2022-implement>
 
-### 4-1 Result
+### 4-1) Result
 
 ![image](https://user-images.githubusercontent.com/84084372/223036898-09877e9f-78b9-4bcb-bc20-0a46ce62717d.png)
 
