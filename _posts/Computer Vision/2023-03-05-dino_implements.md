@@ -1,5 +1,5 @@
 ---
-title:  "DINO(2022) 코드 구현 : 개발환경 세팅"
+title:  "Implementation of DINO(2022)"
 excerpt: "DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection"
 
 categories:
@@ -121,7 +121,9 @@ rm annotations_trainval2017.zip
 
 공식 github에서 Model Zoo를 제공하고 있어, 다양한 세팅에 대해 Inference 및 evaluation을 해볼 수 있었다. 현재는 간단한 inference만 해보면 되기 때문에, 4 scale feature로 12 epoch 학습(Resnet50 백본)한 모델의 체크 포인트를 사용하였다.
 
-> link : <https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing>
+> ckpts link : <https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing>
+
+> code link : <https://github.com/On-JungWoan/DINO-2022-implement/blob/main/inference_and_visualization.ipynb>
 
 Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.
 
