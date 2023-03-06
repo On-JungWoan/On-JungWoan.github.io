@@ -14,7 +14,6 @@ toc_sticky: true
  
 date: 2023-03-05
 last_modified_at: 2023-03-05
-use_math: true
 ---
 
 ## 1. Set Virtual Environment
