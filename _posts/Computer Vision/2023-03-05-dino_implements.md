@@ -3,9 +3,9 @@ title:  "Implementation of DINO(2022)"
 excerpt: "DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection"
 
 categories:
-  - DL
+  - DL_paper
 tags:
-  - [DL]
+  - [DL, computer_vision]
 
 published: true
 

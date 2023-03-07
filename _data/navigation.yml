@@ -1,24 +1,16 @@
 # main links
 main:
-  - title: "PROJECTS"
+  - title: "COMPUTER VISION"
     sublinks:
-      - title: "뻐정 : 버스정보종합시스템"
-        url: /bbeojung/bj_README/  
-      - title: "실시간 쓰레기 무단투기 탐지"
-        url: /categories/cctv
-      - title: "canvas 개발"
-        url: /categories/canvas
-      - title: "Toy Project"
-        url: /categories/toy_project
+      - title: "스터디"
+        url: /categories/DL_study
+      - title: "모델 최적화"
+        url: /categories/DL_optim
+      - title: "논문 리뷰"
+        url: /categories/DL_paper      
 
   - title: "STUDY NOTE"
     sublinks:
-      - title : 'AI'
-        sublinks:
-          - title: "Computer Vision"
-            url: /categories/DL
-          - title: "Machine Learning"
-            url: /categories/ML
       - title : 'PLATFORM DEV.'
         sublinks:
           - title: "Full-Stack Dev"
@@ -26,12 +18,28 @@ main:
           - title: "Jekyll"
             url: /categories/Blog
           - title: "Tools"
-            url: /categories/tools
-        
-  - title: "대외활동"
+            url: /categories/tools    
+      - title : 'ML'
+        sublinks:
+          - title: "Computer Vision"
+            url: /categories/DL
+            
+  - title: "PROJECTS"
     sublinks:
-      - title: "2022 하반기 ICT 인턴십"
-        url: /categories/Internship
+      - title : '프로젝트'
+        sublinks:
+          - title: "뻐정 : 버스정보종합시스템"
+            url: /bbeojung/bj_README/  
+          - title: "실시간 쓰레기 무단투기 탐지"
+            url: /categories/cctv
+          - title: "canvas 개발"
+            url: /categories/canvas
+          - title: "Toy Project"
+            url: /categories/toy_project        
+      - title: "대외활동"
+        sublinks:
+          - title: "2022 하반기 ICT 인턴십"
+            url: /categories/Internship
         
   - title: "ETC"  
     sublinks:

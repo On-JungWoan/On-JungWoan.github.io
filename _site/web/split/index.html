@@ -1,0 +1,1550 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Django] Views.py 분리 - 정완이의 개발 일기장</title>
+<meta name="description" content="Django">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="[Django] Views.py 분리">
+<meta property="og:url" content="http://localhost:4000/web/split/">
+
+
+  <meta property="og:description" content="Django">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-11-08T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-11-08T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/web/split/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		window.FontAwesomeKitConfig = {"asyncLoading":{"enabled":true},"autoA11y":{"enabled":true},"baseUrl":"https://ka-f.fontawesome.com","baseUrlKit":"https://kit.fontawesome.com","detectConflictsUntil":null,"iconUploads":{},"id":91177765,"license":"free","method":"css","minify":{"enabled":true},"token":"a076d05399","v4FontFaceShim":{"enabled":false},"v4shim":{"enabled":false},"v5FontFaceShim":{"enabled":false},"version":"5.15.4"};
+		!function(t){"function"==typeof define&&define.amd?define("kit-loader",t):t()}((function(){"use strict";function t(e){return(t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(e)}function e(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function n(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,o)}return n}function o(t){for(var o=1;o<arguments.length;o++){var r=null!=arguments[o]?arguments[o]:{};o%2?n(Object(r),!0).forEach((function(n){e(t,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):n(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],o=!0,r=!1,i=void 0;try{for(var c,a=t[Symbol.iterator]();!(o=(c=a.next()).done)&&(n.push(c.value),!e||n.length!==e);o=!0);}catch(t){r=!0,i=t}finally{try{o||null==a.return||a.return()}finally{if(r)throw i}}return n}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=new Array(e);n<e;n++)o[n]=t[n];return o}function c(t,e){var n=e&&e.addOn||"",o=e&&e.baseFilename||t.license+n,r=e&&e.minify?".min":"",i=e&&e.fileSuffix||t.method,c=e&&e.subdir||t.method;return t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/"+c+"/"+o+r+"."+i}function a(t){return t.baseUrlKit+"/"+t.token+"/"+t.id+"/kit-upload.css"}function u(t,e){var n=e||["fa"],o="."+Array.prototype.join.call(n,",."),r=t.querySelectorAll(o);Array.prototype.forEach.call(r,(function(e){var n=e.getAttribute("title");e.setAttribute("aria-hidden","true");var o=!e.nextElementSibling||!e.nextElementSibling.classList.contains("sr-only");if(n&&o){var r=t.createElement("span");r.innerHTML=n,r.classList.add("sr-only"),e.parentNode.insertBefore(r,e.nextSibling)}}))}var f,s=function(){},d="undefined"!=typeof global&&void 0!==global.process&&"function"==typeof global.process.emit,l="undefined"==typeof setImmediate?setTimeout:setImmediate,h=[];function m(){for(var t=0;t<h.length;t++)h[t][0](h[t][1]);h=[],f=!1}function p(t,e){h.push([t,e]),f||(f=!0,l(m,0))}function v(t){var e=t.owner,n=e._state,o=e._data,r=t[n],i=t.then;if("function"==typeof r){n="fulfilled";try{o=r(o)}catch(t){w(i,t)}}y(i,o)||("fulfilled"===n&&b(i,o),"rejected"===n&&w(i,o))}function y(e,n){var o;try{if(e===n)throw new TypeError("A promises callback cannot return that same promise.");if(n&&("function"==typeof n||"object"===t(n))){var r=n.then;if("function"==typeof r)return r.call(n,(function(t){o||(o=!0,n===t?g(e,t):b(e,t))}),(function(t){o||(o=!0,w(e,t))})),!0}}catch(t){return o||w(e,t),!0}return!1}function b(t,e){t!==e&&y(t,e)||g(t,e)}function g(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(S,t))}function w(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(O,t))}function A(t){t._then=t._then.forEach(v)}function S(t){t._state="fulfilled",A(t)}function O(t){t._state="rejected",A(t),!t._handled&&d&&global.process.emit("unhandledRejection",t._data,t)}function j(t){global.process.emit("rejectionHandled",t)}function E(t){if("function"!=typeof t)throw new TypeError("Promise resolver "+t+" is not a function");if(this instanceof E==!1)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this._then=[],function(t,e){function n(t){w(e,t)}try{t((function(t){b(e,t)}),n)}catch(t){n(t)}}(t,this)}E.prototype={constructor:E,_state:"pending",_then:null,_data:void 0,_handled:!1,then:function(t,e){var n={owner:this,then:new this.constructor(s),fulfilled:t,rejected:e};return!e&&!t||this._handled||(this._handled=!0,"rejected"===this._state&&d&&p(j,this)),"fulfilled"===this._state||"rejected"===this._state?p(v,n):this._then.push(n),n.then},catch:function(t){return this.then(null,t)}},E.all=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.all().");return new E((function(e,n){var o=[],r=0;function i(t){return r++,function(n){o[t]=n,--r||e(o)}}for(var c,a=0;a<t.length;a++)(c=t[a])&&"function"==typeof c.then?c.then(i(a),n):o[a]=c;r||e(o)}))},E.race=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.race().");return new E((function(e,n){for(var o,r=0;r<t.length;r++)(o=t[r])&&"function"==typeof o.then?o.then(e,n):e(o)}))},E.resolve=function(e){return e&&"object"===t(e)&&e.constructor===E?e:new E((function(t){t(e)}))},E.reject=function(t){return new E((function(e,n){n(t)}))};var _="function"==typeof Promise?Promise:E;function F(t,e){var n=e.fetch,o=e.XMLHttpRequest,r=e.token,i=t;return"URLSearchParams"in window?(i=new URL(t)).searchParams.set("token",r):i=i+"?token="+encodeURIComponent(r),i=i.toString(),new _((function(t,e){if("function"==typeof n)n(i,{mode:"cors",cache:"default"}).then((function(t){if(t.ok)return t.text();throw new Error("")})).then((function(e){t(e)})).catch(e);else if("function"==typeof o){var r=new o;r.addEventListener("loadend",(function(){this.responseText?t(this.responseText):e(new Error(""))}));["abort","error","timeout"].map((function(t){r.addEventListener(t,(function(){e(new Error(""))}))})),r.open("GET",i),r.send()}else{e(new Error(""))}}))}function P(t,e,n){var o=t;return[[/(url\("?)\.\.\/\.\.\/\.\./g,function(t,n){return"".concat(n).concat(e)}],[/(url\("?)\.\.\/webfonts/g,function(t,o){return"".concat(o).concat(e,"/releases/v").concat(n,"/webfonts")}],[/(url\("?)https:\/\/kit-free([^.])*\.fontawesome\.com/g,function(t,n){return"".concat(n).concat(e)}]].forEach((function(t){var e=r(t,2),n=e[0],i=e[1];o=o.replace(n,i)})),o}function C(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){},r=e.document||r,i=u.bind(u,r,["fa","fab","fas","far","fal","fad","fak"]),f=Object.keys(t.iconUploads||{}).length>0;t.autoA11y.enabled&&n(i);var s=[{id:"fa-main",addOn:void 0}];t.v4shim&&t.v4shim.enabled&&s.push({id:"fa-v4-shims",addOn:"-v4-shims"}),t.v5FontFaceShim&&t.v5FontFaceShim.enabled&&s.push({id:"fa-v5-font-face",addOn:"-v5-font-face"}),t.v4FontFaceShim&&t.v4FontFaceShim.enabled&&s.push({id:"fa-v4-font-face",addOn:"-v4-font-face"}),f&&s.push({id:"fa-kit-upload",customCss:!0});var d=s.map((function(n){return new _((function(r,i){F(n.customCss?a(t):c(t,{addOn:n.addOn,minify:t.minify.enabled}),e).then((function(i){r(U(i,o(o({},e),{},{baseUrl:t.baseUrl,version:t.version,id:n.id,contentFilter:function(t,e){return P(t,e.baseUrl,e.version)}})))})).catch(i)}))}));return _.all(d)}function U(t,e){var n=e.contentFilter||function(t,e){return t},o=document.createElement("style"),r=document.createTextNode(n(t,e));return o.appendChild(r),o.media="all",e.id&&o.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&o.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),o}function k(t,e){e.autoA11y=t.autoA11y.enabled,"pro"===t.license&&(e.autoFetchSvg=!0,e.fetchSvgFrom=t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/svgs",e.fetchUploadedSvgFrom=t.uploadsUrl);var n=[];return t.v4shim.enabled&&n.push(new _((function(n,r){F(c(t,{addOn:"-v4-shims",minify:t.minify.enabled}),e).then((function(t){n(I(t,o(o({},e),{},{id:"fa-v4-shims"})))})).catch(r)}))),n.push(new _((function(n,r){F(c(t,{minify:t.minify.enabled}),e).then((function(t){var r=I(t,o(o({},e),{},{id:"fa-main"}));n(function(t,e){var n=e&&void 0!==e.autoFetchSvg?e.autoFetchSvg:void 0,o=e&&void 0!==e.autoA11y?e.autoA11y:void 0;void 0!==o&&t.setAttribute("data-auto-a11y",o?"true":"false");n&&(t.setAttributeNode(document.createAttribute("data-auto-fetch-svg")),t.setAttribute("data-fetch-svg-from",e.fetchSvgFrom),t.setAttribute("data-fetch-uploaded-svg-from",e.fetchUploadedSvgFrom));return t}(r,e))})).catch(r)}))),_.all(n)}function I(t,e){var n=document.createElement("SCRIPT"),o=document.createTextNode(t);return n.appendChild(o),n.referrerPolicy="strict-origin",e.id&&n.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n}function L(t){var e,n=[],o=document,r=o.documentElement.doScroll,i=(r?/^loaded|^c/:/^loaded|^i|^c/).test(o.readyState);i||o.addEventListener("DOMContentLoaded",e=function(){for(o.removeEventListener("DOMContentLoaded",e),i=1;e=n.shift();)e()}),i?setTimeout(t,0):n.push(t)}function T(t){"undefined"!=typeof MutationObserver&&new MutationObserver(t).observe(document,{childList:!0,subtree:!0})}try{if(window.FontAwesomeKitConfig){var x=window.FontAwesomeKitConfig,M={detectingConflicts:x.detectConflictsUntil&&new Date<=new Date(x.detectConflictsUntil),detectionIgnoreAttr:"data-fa-detection-ignore",fetch:window.fetch,token:x.token,XMLHttpRequest:window.XMLHttpRequest,document:document},D=document.currentScript,N=D?D.parentElement:document.head;(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"js"===t.method?k(t,e):"css"===t.method?C(t,e,(function(t){L(t),T(t)})):void 0})(x,M).then((function(t){t.map((function(t){try{N.insertBefore(t,D?D.nextSibling:null)}catch(e){N.appendChild(t)}})),M.detectingConflicts&&D&&L((function(){D.setAttributeNode(document.createAttribute(M.detectionIgnoreAttr));var t=function(t,e){var n=document.createElement("script");return e&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n.src=c(t,{baseFilename:"conflict-detection",fileSuffix:"js",subdir:"js",minify:t.minify.enabled}),n}(x,M);document.body.appendChild(t)}))})).catch((function(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}))}}catch(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}}));	
+	</script>
+</head>
+<body>
+
+
+	
+
+
+</body>
+</html>
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
+        </a> -->
+          정완이의 개발 일기장
+          
+        </a>
+
+
+
+        <ul class="visible-links">
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">COMPUTER VISION  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_study">    스터디</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_optim">    모델 최적화</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_paper">    논문 리뷰</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Full-Stack Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Jekyll</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">ML</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/DL">    Computer Vision</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">프로젝트</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/bbeojung/bj_README/">    뻐정 : 버스정보종합시스템</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">대외활동</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Internship">    2022 하반기 ICT 인턴십</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+       </ul>
+
+       
+
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          [Django] Views.py 분리
+
+        
+      </h1>
+      <p class="page__lead">Django
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08">November 8, 2022</time></p>
+
+      <p>
+      
+        <a href="https://on-jungwoan.github.io/til/TIL-11/#1108" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>AI/플랫폼 개발을 공부합니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">106</style> <span style="">개</style> 
+      </li>
+      <li>
+
+            <!--span 태그로 카테고리들을 크게 분류-->
+            <span class="nav__sub-title">Computer Vision</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_study" class="">스터디 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_optim" class="">모델 최적화 (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_paper" class="">논문 리뷰 (2)</a></li>
+                    
+                
+            </ul>    
+           
+
+            <span class="nav__sub-title">Platform Dev.</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/web" class="">Full-Stack Dev (9)</a></li>
+                    
+                
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Jekyll (16)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                                 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/tools" class="">Tools (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+
+
+        <!--span 태그로 카테고리들을 크게 분류-->
+        <span class="nav__sub-title">ML</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+            
+            
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/toy_project" class="">Toy Project (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+   
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (10)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/etc" class="">etc (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Django] Views.py 분리">
+    <meta itemprop="description" content="Django">
+    <meta itemprop="datePublished" content="2022-11-08T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-11-08T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#0-viewspy-분리">0. views.py 분리</a><ul><li><a href="#0-1-동작-원리">0-1) 동작 원리?</a></li></ul></li><li><a href="#1-첫-번째-방법">1. 첫 번째 방법</a><ul><li><a href="#1-1-views-디렉토리-생성">1-1) Views 디렉토리 생성</a></li><li><a href="#1-2-viewspy-분리">1-2) views.py 분리</a></li><li><a href="#1-3-__init__py-생성">1-3) __init__.py 생성</a></li><li><a href="#1-4-결과">1-4) 결과</a></li><li><a href="#1-5-문제점">1-5) 문제점</a></li></ul></li><li><a href="#2-두-번째-방법">2. 두 번째 방법</a><ul><li><a href="#2-1-__init__py-제거">2-1) __init__.py 제거</a></li><li><a href="#2-2-urlspy-수정">2-2) urls.py 수정</a></li></ul></li><li><a href="#3-다른-파일modelspy-에도-적용">3. 다른 파일(Models.py …)에도 적용</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="0-viewspy-분리">0. views.py 분리</h2>
+<p>프로젝트 규모가 커지고, 이것저것 기능이 추가되다 보면, views.py의 내용이 매우 길어져서 보기 좋지 않다. 또한, 여러명이 참여하는 프로젝트이거나 해당 프로젝트를 다른 사람에게 인수인계 해야하는 경우, 문제가 더 심각해진다. 따라서 과장님께서는, views.py의 내용을 분리해주는 것이 좋다고 하셨다.</p>
+
+<h3 id="0-1-동작-원리">0-1) 동작 원리?</h3>
+<p>django가 뷰 함수를 인식할 때, 확장자는 인식하지 않고 views까지만 인식한다고 한다. 따라서 views라는 이름의 디렉토리에 뷰 함수를 넣어, views.py 대신 사용할 수 있다는 것이다. 다음은 그 방법들이다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="1-첫-번째-방법">1. 첫 번째 방법</h2>
+<h3 id="1-1-views-디렉토리-생성">1-1) Views 디렉토리 생성</h3>
+<p>우선, 앱 디렉토리 밑에 views 디렉토리를 생성해준다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200511934-87588451-01c0-4d1b-ba84-4788c54a3f55.png" /></p>
+
+<h3 id="1-2-viewspy-분리">1-2) views.py 분리</h3>
+
+<p>생성한 views 디렉토리 안에, 기존 views.py 내용들을 기능별로 나누어 저장한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200512589-66848294-b809-4a70-80e3-3bffb8851ded.png" /></p>
+
+<h3 id="1-3-__init__py-생성">1-3) <code class="language-plaintext highlighter-rouge">__init__.py</code> 생성</h3>
+
+<p>views 디렉토리 안에 <code class="language-plaintext highlighter-rouge">__init__.py</code>를 생성하고, 방금 작성한 파일들을 import 해준다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">.forgotid</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.forgotpw</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.login</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.signup</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h3 id="1-4-결과">1-4) 결과</h3>
+
+<p>최종적으로 다음과 같은 구조가 된다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200513188-743c8fc9-5375-4b5f-aafb-70644a99ea03.png" /></p>
+
+<h3 id="1-5-문제점">1-5) 문제점</h3>
+
+<p>하지만 이 방법은 단점이 있다. 해당 프로젝트를 서비스하던 중, 특정한 뷰 함수에 문제가 생겼을 시, 해당 함수가 어디에 위치해있는지 알기 어렵다는 것이다. 가령, url이 다음과 같이 정의되어 있다고 해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">...</span>
+
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">forgotpw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'forgotpw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">changepw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/modal'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">changepwmodal</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepwmodal'</span><span class="p">),</span>
+
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>만약, changepwmodal 함수에 문제가 생겨서 해당 함수를 고쳐야 할 일이 생긴다면, view 디렉토리 하위에 있는 모든 파일을 일일이 전부 확인해봐야 할 것이다. 규모가 작은 프로젝트라면 금방 찾겠지만, 그렇지 않다면 이를 찾는 것은 상당한 시간/자원낭비가 될 것이다. 따라서 과장님께서는 해당 방법은 별로 추천하지 않는다고 하셨다. 그렇다면 어떻게 하는 것이 좋을까?</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="2-두-번째-방법">2. 두 번째 방법</h2>
+<h3 id="2-1-__init__py-제거">2-1) <code class="language-plaintext highlighter-rouge">__init__.py</code> 제거</h3>
+
+<p><code class="language-plaintext highlighter-rouge">__init__.py</code>를 제거한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200514640-7b311613-b9f3-4bd5-8f1e-892d9bcfae95.png" /></p>
+
+<h3 id="2-2-urlspy-수정">2-2) urls.py 수정</h3>
+
+<p>url을 다음과 같이 수정하여 해결. 어떤 파일의 뷰 함수를 고쳐야 할지 확실하게 알 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">.views</span> <span class="kn">import</span> <span class="n">forgotpw</span><span class="p">,</span> <span class="p">...</span>
+    <span class="p">...</span>
+
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/'</span><span class="p">,</span> <span class="n">forgotpw</span><span class="p">.</span><span class="n">forgotpw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'forgotpw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/'</span><span class="p">,</span> <span class="n">forgotpw</span><span class="p">.</span><span class="n">changepw</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepw'</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">'forgotpw/changepw/modal'</span><span class="p">,</span> <span class="n">forgotpw</span><span class="p">.</span><span class="n">changepwmodal</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'changepwmodal'</span><span class="p">),</span>
+
+    <span class="p">...</span> 
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="3-다른-파일modelspy-에도-적용">3. 다른 파일(Models.py …)에도 적용</h2>
+
+<p>views 말고 models나 urls에도 적용 가능하다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/200617143-a53ea8f0-481a-4f2a-892f-7377adbf48b7.png" /></p>
+
+        
+          
+          
+                  
+          <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-11/#1108">본문으로 돌아가기</a></div>
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#backend" class="page__taxonomy-item p-category" rel="tag">backend</a><span class="sep">, </span>
+    
+      <a href="/tags/#django" class="page__taxonomy-item p-category" rel="tag">django</a><span class="sep">, </span>
+    
+      <a href="/tags/#web" class="page__taxonomy-item p-category" rel="tag">web</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#web" class="page__taxonomy-item p-category" rel="tag">web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08">November 8, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BDjango%5D+Views.py+%EB%B6%84%EB%A6%AC%20http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fsplit%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fsplit%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fweb%2Fsplit%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/web/css_text/" class="pagination--pager" title="[CSS] 폰트 관련 속성 정리
+">이전</a>
+    
+    
+      <a href="/web/test/" class="pagination--pager" title="[HTML, JavaScript]Input 태그 유효성 검사
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/web/css_text/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[CSS] 폰트 관련 속성 정리</a>
+    
+    
+      <a href="/web/test/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>[HTML, JavaScript]Input 태그 유효성 검사</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino_implements/" rel="permalink">Implementation of DINO(2022)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08">November 8, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 05 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino/" rel="permalink">DINO(2022) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08">November 8, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 02 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/auto_indexing/" rel="permalink">[Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법(초안)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08">November 8, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 09 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">How to Automate the Indexing Process on Google Search Console
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_study/cs231n_9/" rel="permalink">[CS231n]CNN Architectures
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-11-08">November 8, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 09 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Stanford University CS231n, Spring 2017, Lecture 9
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+  </body>
+</html>

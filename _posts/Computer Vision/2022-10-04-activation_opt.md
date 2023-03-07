@@ -3,9 +3,9 @@ title:  "Activation Function, Optimizer"
 excerpt: "딥러닝 개념정리"
 
 categories:
-  - DL
+  - DL_study
 tags:
-  - [딥러닝, ICT인턴십]
+  - [딥러닝, ICT인턴십, computer_vision]
 
 published: true
 

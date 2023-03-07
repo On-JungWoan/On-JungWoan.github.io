@@ -3,9 +3,9 @@ title:  "CUDA Stream"
 excerpt: "Null Stream / Non-Null Stream"
 
 categories:
-  - DL
+  - DL_optim
 tags:
-  - [DL, ICT인턴십]
+  - [DL, ICT인턴십, computer_vision]
 
 published: true
 
