@@ -17,18 +17,6 @@ last_modified_at: 2023-03-05
 use_math: false
 ---
 
-$test$
-
-<details>
-
-<summary>test</summary>
-
-```python
-print(test)
-```
-
-</details>
-
 ## 1. Set Virtual Environment
 
 가상환경 세팅은 conda를 사용하였으며, 개발 환경은 ubuntu / i9-13900K CPU / GTX 4080 / 64GB Mem이다.
@@ -139,12 +127,6 @@ rm annotations_trainval2017.zip
 
 Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.
 
-<details>
-
-<summary>코드 접기/펼치기</summary>
-
-{% raw %}
-
 ```python
 import torch
 import json
@@ -220,10 +202,6 @@ pred_dict = {
 vslzr.visualize(image, pred_dict, savedir=None, dpi=100)
 ```
 
-{% endraw %}
-
-</details>
-
 <br>
 
 ### 3.1) 결과
@@ -246,8 +224,6 @@ COCO 데이터셋을 전부 사용하여 학습하기에는 시간이 다소 오
 
 이를 위해 간단한 코드 custom을 해주었다.
 
-<details>
-<summary>코드 접기/펼치기</summary>
 
 <div align="center"><strong>[Terminal]</strong></div>
 
@@ -297,7 +273,6 @@ if args.custom_logger:
 
 ...          
 ```
-</details>
 
 <br>자세한 코드는 아래를 참고.
 
