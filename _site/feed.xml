@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-08T08:55:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">Implementation of DINO(2022)</title><link href="http://localhost:4000/dl_paper/dino_implements/" rel="alternate" type="text/html" title="Implementation of DINO(2022)" /><published>2023-03-05T00:00:00+09:00</published><updated>2023-03-05T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/dino_implements</id><content type="html" xml:base="http://localhost:4000/dl_paper/dino_implements/">&lt;h2 id=&quot;1-set-virtual-environment&quot;&gt;1. Set Virtual Environment&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-08T09:06:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">Implementation of DINO(2022)</title><link href="http://localhost:4000/dl_paper/dino_implements/" rel="alternate" type="text/html" title="Implementation of DINO(2022)" /><published>2023-03-05T00:00:00+09:00</published><updated>2023-03-05T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/dino_implements</id><content type="html" xml:base="http://localhost:4000/dl_paper/dino_implements/">&lt;h2 id=&quot;1-set-virtual-environment&quot;&gt;1. Set Virtual Environment&lt;/h2&gt;
 
 &lt;p&gt;가상환경 세팅은 conda를 사용하였으며, 개발 환경은 ubuntu / i9-13900K CPU / GTX 4080 / 64GB Mem이다.&lt;/p&gt;
 
@@ -1894,7 +1894,7 @@ y^{(k)} &amp;amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_6/&quot;&gt;1) [CS231n]Training Neural Networks, Part I&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_6/&quot;&gt;1) [CS231n]Training Neural Networks, Part I&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1928,7 +1928,7 @@ y^{(k)} &amp;amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_7/&quot;&gt;1) [CS231n]Training Neural Networks, Part Ⅱ&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_7/&quot;&gt;1) [CS231n]Training Neural Networks, Part Ⅱ&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1945,7 +1945,7 @@ y^{(k)} &amp;amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
 
     &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/blog/auto_indexing/&quot;&gt;1) [Google Indexing API, Github Actions] 구글 서치 콘솔 색인 생성 자동화 하는 법&lt;/a&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_9/&quot;&gt;2) [CS231n]CNN Architectures&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_9/&quot;&gt;2) [CS231n]CNN Architectures&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1964,7 +1964,7 @@ y^{(k)} &amp;amp;= \gamma^{(k)}\hat{x}^{(k)}+\beta^{(k)} \\
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_10/&quot;&gt;1) [CS231n]Recurrent Neural Networks&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_10/&quot;&gt;1) [CS231n]Recurrent Neural Networks&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry><entry><title type="html">[CS231n]Convolutional Neural Networks</title><link href="http://localhost:4000/dl_study/cs231n_5/" rel="alternate" type="text/html" title="[CS231n]Convolutional Neural Networks" /><published>2022-11-30T00:00:00+09:00</published><updated>2022-11-30T00:00:00+09:00</updated><id>http://localhost:4000/dl_study/cs231n_5</id><content type="html" xml:base="http://localhost:4000/dl_study/cs231n_5/">&lt;h1 id=&quot;cnn&quot;&gt;CNN&lt;/h1&gt;
 
@@ -2251,10 +2251,10 @@ filter : 10개의 5*5 필터가 있을때,
 &lt;h2 id=&quot;computer-vision&quot;&gt;Computer Vision&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_2/&quot;&gt;[CS231n]Image Classification&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_3/&quot;&gt;[CS231n]Loss Functions and Optimization&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_4/&quot;&gt;[CS231n]Backpropagation and Neural Networks&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_5/&quot;&gt;[CS231n]Convolutional Neural Networks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_2/&quot;&gt;[CS231n]Image Classification&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_3/&quot;&gt;[CS231n]Loss Functions and Optimization&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_4/&quot;&gt;[CS231n]Backpropagation and Neural Networks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_5/&quot;&gt;[CS231n]Convolutional Neural Networks&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;web&quot;&gt;Web&lt;/h2&gt;
@@ -2485,7 +2485,7 @@ filter : 10개의 5*5 필터가 있을때,
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_2/&quot;&gt;1) [CS231n]Image Classification&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_2/&quot;&gt;1) [CS231n]Image Classification&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2515,7 +2515,7 @@ filter : 10개의 5*5 필터가 있을때,
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_3/&quot;&gt;1) [CS231n]Loss Functions and Optimization&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_3/&quot;&gt;1) [CS231n]Loss Functions and Optimization&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2534,7 +2534,7 @@ filter : 10개의 5*5 필터가 있을때,
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_4/&quot;&gt;1) [CS231n]Backpropagation and Neural Networks&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_4/&quot;&gt;1) [CS231n]Backpropagation and Neural Networks&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2549,6 +2549,6 @@ filter : 10개의 5*5 필터가 있을때,
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;학습내용&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl/cs231n_5/&quot;&gt;1) [CS231n]Convolutional Neural Networks&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://on-jungwoan.github.io/dl_study/cs231n_5/&quot;&gt;1) [CS231n]Convolutional Neural Networks&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="TIL" /><category term="인턴" /><category term="ICT인턴십" /><category term="TIL" /><summary type="html">회사에서 배운 내용들 정리</summary></entry></feed>
