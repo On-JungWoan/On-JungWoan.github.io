@@ -9,23 +9,15 @@ main:
       - title: "논문 리뷰"
         url: /categories/DL_paper      
 
-  - title: "STUDY NOTE"
-    sublinks:
-      - title : 'PLATFORM DEV.'
-        sublinks:
-          - title: "Full-Stack Dev"
-            url: /categories/web        
-          - title: "Jekyll"
-            url: /categories/Blog
-          - title: "Tools"
-            url: /categories/tools    
-      - title : 'ML'
-        sublinks:
-          - title: "Computer Vision"
-            url: /categories/DL
-            
+  - title: "TIL"    
+    url: /TIL/
+
   - title: "PROJECTS"
     sublinks:
+      - title: "대외활동"
+        sublinks:
+          - title: "2022 하반기 ICT 인턴십"
+            url: /categories/Internship  
       - title : '프로젝트'
         sublinks:
           - title: "뻐정 : 버스정보종합시스템"
@@ -35,11 +27,22 @@ main:
           - title: "canvas 개발"
             url: /categories/canvas
           - title: "Toy Project"
-            url: /categories/toy_project        
-      - title: "대외활동"
+            url: /categories/toy_project          
+
+  - title: "STUDY NOTE"
+    sublinks:
+      - title : 'PLATFORM DEV.'
         sublinks:
-          - title: "2022 하반기 ICT 인턴십"
-            url: /categories/Internship
+          - title: "Web Dev"
+            url: /categories/web        
+          - title: "Jekyll"
+            url: /categories/Blog
+          - title: "Tools"
+            url: /categories/tools    
+      - title : 'ML'
+        sublinks:
+          - title: "Computer Vision"
+            url: /categories/DL
         
   - title: "ETC"  
     sublinks:
@@ -50,8 +53,6 @@ main:
       - title: "etc"
         url: /categories/etc
 
-  - title: "TIL"    
-    url: /TIL/
     
 # docs:
 #   - title: AI
