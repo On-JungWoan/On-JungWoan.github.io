@@ -123,7 +123,7 @@ rm annotations_trainval2017.zip
 
 > ckpts link : <https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing>
 
-> code link : <https://github.com/On-JungWoan/DINO-2022-implement/blob/main/inference_and_visualization.ipynb>
+> code link : <https://github.com/On-JungWoan/paper-review/blob/main/DINO/script/inference_and_visualization.ipynb>
 
 Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.
 
@@ -276,7 +276,7 @@ if args.custom_logger:
 
 <br>자세한 코드는 아래를 참고.
 
-> link : <https://github.com/On-JungWoan/DINO-2022-implement>
+> link : <https://github.com/On-JungWoan/paper-review/blob/main/DINO/script/result_visualization.ipynb>
 
 <br>
 
