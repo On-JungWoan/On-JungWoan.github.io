@@ -41,8 +41,8 @@ main:
             url: /categories/tools    
       - title : 'ML'
         sublinks:
-          - title: "Computer Vision"
-            url: /categories/DL
+          - title: "Machine Learning"
+            url: /categories/ML
         
   - title: "ETC"  
     sublinks:

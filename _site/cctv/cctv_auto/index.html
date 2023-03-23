@@ -1,0 +1,1656 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출 - 정완이의 개발 일기장</title>
+<meta name="description" content="쓰레기 무단투기 탐지 프로젝트">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출">
+<meta property="og:url" content="http://localhost:4000/cctv/cctv_auto/">
+
+
+  <meta property="og:description" content="쓰레기 무단투기 탐지 프로젝트">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-10-12T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-10-12T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/cctv/cctv_auto/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		window.FontAwesomeKitConfig = {"asyncLoading":{"enabled":true},"autoA11y":{"enabled":true},"baseUrl":"https://ka-f.fontawesome.com","baseUrlKit":"https://kit.fontawesome.com","detectConflictsUntil":null,"iconUploads":{},"id":91177765,"license":"free","method":"css","minify":{"enabled":true},"token":"a076d05399","v4FontFaceShim":{"enabled":false},"v4shim":{"enabled":false},"v5FontFaceShim":{"enabled":false},"version":"5.15.4"};
+		!function(t){"function"==typeof define&&define.amd?define("kit-loader",t):t()}((function(){"use strict";function t(e){return(t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(e)}function e(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function n(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,o)}return n}function o(t){for(var o=1;o<arguments.length;o++){var r=null!=arguments[o]?arguments[o]:{};o%2?n(Object(r),!0).forEach((function(n){e(t,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):n(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],o=!0,r=!1,i=void 0;try{for(var c,a=t[Symbol.iterator]();!(o=(c=a.next()).done)&&(n.push(c.value),!e||n.length!==e);o=!0);}catch(t){r=!0,i=t}finally{try{o||null==a.return||a.return()}finally{if(r)throw i}}return n}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=new Array(e);n<e;n++)o[n]=t[n];return o}function c(t,e){var n=e&&e.addOn||"",o=e&&e.baseFilename||t.license+n,r=e&&e.minify?".min":"",i=e&&e.fileSuffix||t.method,c=e&&e.subdir||t.method;return t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/"+c+"/"+o+r+"."+i}function a(t){return t.baseUrlKit+"/"+t.token+"/"+t.id+"/kit-upload.css"}function u(t,e){var n=e||["fa"],o="."+Array.prototype.join.call(n,",."),r=t.querySelectorAll(o);Array.prototype.forEach.call(r,(function(e){var n=e.getAttribute("title");e.setAttribute("aria-hidden","true");var o=!e.nextElementSibling||!e.nextElementSibling.classList.contains("sr-only");if(n&&o){var r=t.createElement("span");r.innerHTML=n,r.classList.add("sr-only"),e.parentNode.insertBefore(r,e.nextSibling)}}))}var f,s=function(){},d="undefined"!=typeof global&&void 0!==global.process&&"function"==typeof global.process.emit,l="undefined"==typeof setImmediate?setTimeout:setImmediate,h=[];function m(){for(var t=0;t<h.length;t++)h[t][0](h[t][1]);h=[],f=!1}function p(t,e){h.push([t,e]),f||(f=!0,l(m,0))}function v(t){var e=t.owner,n=e._state,o=e._data,r=t[n],i=t.then;if("function"==typeof r){n="fulfilled";try{o=r(o)}catch(t){w(i,t)}}y(i,o)||("fulfilled"===n&&b(i,o),"rejected"===n&&w(i,o))}function y(e,n){var o;try{if(e===n)throw new TypeError("A promises callback cannot return that same promise.");if(n&&("function"==typeof n||"object"===t(n))){var r=n.then;if("function"==typeof r)return r.call(n,(function(t){o||(o=!0,n===t?g(e,t):b(e,t))}),(function(t){o||(o=!0,w(e,t))})),!0}}catch(t){return o||w(e,t),!0}return!1}function b(t,e){t!==e&&y(t,e)||g(t,e)}function g(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(S,t))}function w(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(O,t))}function A(t){t._then=t._then.forEach(v)}function S(t){t._state="fulfilled",A(t)}function O(t){t._state="rejected",A(t),!t._handled&&d&&global.process.emit("unhandledRejection",t._data,t)}function j(t){global.process.emit("rejectionHandled",t)}function E(t){if("function"!=typeof t)throw new TypeError("Promise resolver "+t+" is not a function");if(this instanceof E==!1)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this._then=[],function(t,e){function n(t){w(e,t)}try{t((function(t){b(e,t)}),n)}catch(t){n(t)}}(t,this)}E.prototype={constructor:E,_state:"pending",_then:null,_data:void 0,_handled:!1,then:function(t,e){var n={owner:this,then:new this.constructor(s),fulfilled:t,rejected:e};return!e&&!t||this._handled||(this._handled=!0,"rejected"===this._state&&d&&p(j,this)),"fulfilled"===this._state||"rejected"===this._state?p(v,n):this._then.push(n),n.then},catch:function(t){return this.then(null,t)}},E.all=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.all().");return new E((function(e,n){var o=[],r=0;function i(t){return r++,function(n){o[t]=n,--r||e(o)}}for(var c,a=0;a<t.length;a++)(c=t[a])&&"function"==typeof c.then?c.then(i(a),n):o[a]=c;r||e(o)}))},E.race=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.race().");return new E((function(e,n){for(var o,r=0;r<t.length;r++)(o=t[r])&&"function"==typeof o.then?o.then(e,n):e(o)}))},E.resolve=function(e){return e&&"object"===t(e)&&e.constructor===E?e:new E((function(t){t(e)}))},E.reject=function(t){return new E((function(e,n){n(t)}))};var _="function"==typeof Promise?Promise:E;function F(t,e){var n=e.fetch,o=e.XMLHttpRequest,r=e.token,i=t;return"URLSearchParams"in window?(i=new URL(t)).searchParams.set("token",r):i=i+"?token="+encodeURIComponent(r),i=i.toString(),new _((function(t,e){if("function"==typeof n)n(i,{mode:"cors",cache:"default"}).then((function(t){if(t.ok)return t.text();throw new Error("")})).then((function(e){t(e)})).catch(e);else if("function"==typeof o){var r=new o;r.addEventListener("loadend",(function(){this.responseText?t(this.responseText):e(new Error(""))}));["abort","error","timeout"].map((function(t){r.addEventListener(t,(function(){e(new Error(""))}))})),r.open("GET",i),r.send()}else{e(new Error(""))}}))}function P(t,e,n){var o=t;return[[/(url\("?)\.\.\/\.\.\/\.\./g,function(t,n){return"".concat(n).concat(e)}],[/(url\("?)\.\.\/webfonts/g,function(t,o){return"".concat(o).concat(e,"/releases/v").concat(n,"/webfonts")}],[/(url\("?)https:\/\/kit-free([^.])*\.fontawesome\.com/g,function(t,n){return"".concat(n).concat(e)}]].forEach((function(t){var e=r(t,2),n=e[0],i=e[1];o=o.replace(n,i)})),o}function C(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){},r=e.document||r,i=u.bind(u,r,["fa","fab","fas","far","fal","fad","fak"]),f=Object.keys(t.iconUploads||{}).length>0;t.autoA11y.enabled&&n(i);var s=[{id:"fa-main",addOn:void 0}];t.v4shim&&t.v4shim.enabled&&s.push({id:"fa-v4-shims",addOn:"-v4-shims"}),t.v5FontFaceShim&&t.v5FontFaceShim.enabled&&s.push({id:"fa-v5-font-face",addOn:"-v5-font-face"}),t.v4FontFaceShim&&t.v4FontFaceShim.enabled&&s.push({id:"fa-v4-font-face",addOn:"-v4-font-face"}),f&&s.push({id:"fa-kit-upload",customCss:!0});var d=s.map((function(n){return new _((function(r,i){F(n.customCss?a(t):c(t,{addOn:n.addOn,minify:t.minify.enabled}),e).then((function(i){r(U(i,o(o({},e),{},{baseUrl:t.baseUrl,version:t.version,id:n.id,contentFilter:function(t,e){return P(t,e.baseUrl,e.version)}})))})).catch(i)}))}));return _.all(d)}function U(t,e){var n=e.contentFilter||function(t,e){return t},o=document.createElement("style"),r=document.createTextNode(n(t,e));return o.appendChild(r),o.media="all",e.id&&o.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&o.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),o}function k(t,e){e.autoA11y=t.autoA11y.enabled,"pro"===t.license&&(e.autoFetchSvg=!0,e.fetchSvgFrom=t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/svgs",e.fetchUploadedSvgFrom=t.uploadsUrl);var n=[];return t.v4shim.enabled&&n.push(new _((function(n,r){F(c(t,{addOn:"-v4-shims",minify:t.minify.enabled}),e).then((function(t){n(I(t,o(o({},e),{},{id:"fa-v4-shims"})))})).catch(r)}))),n.push(new _((function(n,r){F(c(t,{minify:t.minify.enabled}),e).then((function(t){var r=I(t,o(o({},e),{},{id:"fa-main"}));n(function(t,e){var n=e&&void 0!==e.autoFetchSvg?e.autoFetchSvg:void 0,o=e&&void 0!==e.autoA11y?e.autoA11y:void 0;void 0!==o&&t.setAttribute("data-auto-a11y",o?"true":"false");n&&(t.setAttributeNode(document.createAttribute("data-auto-fetch-svg")),t.setAttribute("data-fetch-svg-from",e.fetchSvgFrom),t.setAttribute("data-fetch-uploaded-svg-from",e.fetchUploadedSvgFrom));return t}(r,e))})).catch(r)}))),_.all(n)}function I(t,e){var n=document.createElement("SCRIPT"),o=document.createTextNode(t);return n.appendChild(o),n.referrerPolicy="strict-origin",e.id&&n.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n}function L(t){var e,n=[],o=document,r=o.documentElement.doScroll,i=(r?/^loaded|^c/:/^loaded|^i|^c/).test(o.readyState);i||o.addEventListener("DOMContentLoaded",e=function(){for(o.removeEventListener("DOMContentLoaded",e),i=1;e=n.shift();)e()}),i?setTimeout(t,0):n.push(t)}function T(t){"undefined"!=typeof MutationObserver&&new MutationObserver(t).observe(document,{childList:!0,subtree:!0})}try{if(window.FontAwesomeKitConfig){var x=window.FontAwesomeKitConfig,M={detectingConflicts:x.detectConflictsUntil&&new Date<=new Date(x.detectConflictsUntil),detectionIgnoreAttr:"data-fa-detection-ignore",fetch:window.fetch,token:x.token,XMLHttpRequest:window.XMLHttpRequest,document:document},D=document.currentScript,N=D?D.parentElement:document.head;(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"js"===t.method?k(t,e):"css"===t.method?C(t,e,(function(t){L(t),T(t)})):void 0})(x,M).then((function(t){t.map((function(t){try{N.insertBefore(t,D?D.nextSibling:null)}catch(e){N.appendChild(t)}})),M.detectingConflicts&&D&&L((function(){D.setAttributeNode(document.createAttribute(M.detectionIgnoreAttr));var t=function(t,e){var n=document.createElement("script");return e&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n.src=c(t,{baseFilename:"conflict-detection",fileSuffix:"js",subdir:"js",minify:t.minify.enabled}),n}(x,M);document.body.appendChild(t)}))})).catch((function(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}))}}catch(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}}));	
+	</script>
+</head>
+<body>
+
+
+	
+
+
+</body>
+</html>
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
+        </a> -->
+          정완이의 개발 일기장
+          
+        </a>
+
+
+
+        <ul class="visible-links">
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">COMPUTER VISION  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_study">    스터디</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_optim">    모델 최적화</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_paper">    논문 리뷰</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">대외활동</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Internship">    2022 하반기 ICT 인턴십</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">프로젝트</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/bbeojung/bj_README/">    뻐정 : 버스정보종합시스템</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Web Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Jekyll</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">ML</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/ML">    Machine Learning</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+       </ul>
+
+       
+
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출
+
+        
+      </h1>
+      <p class="page__lead">쓰레기 무단투기 탐지 프로젝트
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-12">October 12, 2022</time></p>
+
+      <p>
+      
+        <a href="https://on-jungwoan.github.io/til/TIL-10/#1012" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>AI/플랫폼 개발을 공부합니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">108</style> <span style="">개</style> 
+      </li>
+      <li>
+
+            <!--span 태그로 카테고리들을 크게 분류-->
+            <span class="nav__sub-title">Computer Vision</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_study" class="">스터디 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_optim" class="">모델 최적화 (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_paper" class="">논문 리뷰 (3)</a></li>
+                    
+                
+            </ul>    
+           
+
+            <span class="nav__sub-title">Study Note</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/web" class="">Web Dev (9)</a></li>
+                    
+                
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Jekyll Dev (16)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                           
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/tools" class="">ETC Tools (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+            
+            
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/toy_project" class="">Toy Project (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+   
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (10)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/etc" class="">etc (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="테스트셋 가공과정 자동화 : 사람이 탐지된 프레임만 추출">
+    <meta itemprop="description" content="쓰레기 무단투기 탐지 프로젝트">
+    <meta itemprop="datePublished" content="2022-10-12T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-10-12T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#촬영-및-가공과정">촬영 및 가공과정</a></li><li><a href="#테스트셋-가공과정-자동화">테스트셋 가공과정 자동화</a><ul><li><a href="#0-사용-library-및-상수선언">0) 사용 Library 및 상수선언</a></li><li><a href="#1-동영상에서-프레임-추출">1) 동영상에서 프레임 추출</a></li><li><a href="#2-사람이-검출된-이미지만-저장">2) 사람이 검출된 이미지만 저장</a></li><li><a href="#3-사람-검출-이미지에-대하여-투기-여부-계산">3) 사람 검출 이미지에 대하여 투기 여부 계산</a></li><li><a href="#4-전체-스크립트">4) 전체 스크립트</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="촬영-및-가공과정">촬영 및 가공과정</h2>
+<p>모델이 마무리되고, 이제 테스트셋을 구축하는 데 집중했다. 배경이나 화각을 달리 하기 위해 테스트셋 촬영 장소를 회사 밖으로 옮겼다. 현장 cctv와 화각을 비슷하게 하기 위해서 벤치 위에 올라가거나 계단 위에 올라가서 촬영을 진행하였고, 다양한 case 확보를 위해 여러 각도에서 촬영을 진행하였다. 자연스럽게 걸어가거나 쓰레기를 투기하는 행위를 동영상으로 찍고, 해당 동영상을 OpenCV를 통해 프레임별로 뽑아주었다. 그 후 사람이 나오지 않는 프레임은 제거하고 사람이 나온 프레임만 모델에 돌리는 과정으로 사전 테스트를 진행하였다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="테스트셋-가공과정-자동화">테스트셋 가공과정 자동화</h2>
+
+<p>테스트셋이 많아질 경우 위에서 언급한 가공 과정이 매우 귀찮고 지루한 반복 작업이 될 수 있기 때문에, 간단한 자동화 코드를 만들어보았다.</p>
+
+<h3 id="0-사용-library-및-상수선언">0) 사용 Library 및 상수선언</h3>
+
+<p>사람 검출을 위해서 모델이 들어있는 run_test_수정본.py 파일을 import해서 사용해주었다. 해당 파일에 있는 SSD 네트워크 모델을 사용하였으며, TensorRT를 사용하여 연산 속도를 높였다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># image handling
+</span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">run_test_수정본</span>
+
+<span class="c1"># system handle
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># visualization
+</span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</code></pre></div></div>
+
+<p>VIDEO_PATH에 저장되어 있는 video들을 전부 불러와서, FPS마다 프레임을 추출하여 FRAME_SAVE_PATH에 저장한다. FRAME_SAVE_PATH에 저장되어 있는 프레임을 다시 모델에 넣고, 사람이 감지된 프레임을 다시 HUMAN_SAVE_PATH에 저장하는 구조이다. 이 때, FRAME_SAVE_PATH를 거치지 않고 바로 모델에 프레임을 넣을 수도 있었으나, 원본 이미지 확보를 위하여 step을 하나 더 추가해 주었다. MODE에 remove를 넣으면 모든 파일이 리셋되게 하였다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VIDEO_PATH</span> <span class="o">=</span> <span class="s">'/home/cctv_lab/cctv_dumping_verification/ojw/테스트셋/video/video'</span>
+<span class="n">FRAME_SAVE_PATH</span> <span class="o">=</span> <span class="s">'/home/cctv_lab/cctv_dumping_verification/ojw/테스트셋/video/frame'</span>
+<span class="n">HUMAN_SAVE_PATH</span> <span class="o">=</span> <span class="s">'/home/cctv_lab/cctv_dumping_verification/ojw/테스트셋/test_image/human_detect'</span>
+<span class="n">MODE</span> <span class="o">=</span> <span class="s">''</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">MODE</span> <span class="o">==</span> <span class="s">'remove'</span><span class="p">:</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">):</span>
+        <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>   
+            <span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">,</span><span class="nb">file</span><span class="p">))</span>   
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">HUMAN_SAVE_PATH</span><span class="p">):</span>
+        <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">HUMAN_SAVE_PATH</span><span class="p">,</span><span class="nb">file</span><span class="p">))</span>                   
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="1-동영상에서-프레임-추출">1) 동영상에서 프레임 추출</h3>
+
+<p>동영상에서 프레임을 추출하는 과정을 함수로 만들어서 관리하였다. 동영상, 저장 파일명, 프레임 단위를 input값으로 받으며 기본적으로 10프레임씩 자른다. 가령, 1초에 30프레임이 찍히는 동영상을 해당 함수에 넣으면, file_name_n.jpg라는 이름으로 0.3초마다 프레임이 저장되는 형태이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">save_frame</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">break_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">ret</span><span class="p">,</span> <span class="n">image</span> <span class="o">=</span> <span class="n">video</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">video</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">%</span> <span class="n">fps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">break_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s">'_{}.jpg'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+                <span class="n">plt</span><span class="p">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">break_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">break_count</span> <span class="o">&gt;</span> <span class="n">fps</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">video</span><span class="p">.</span><span class="n">release</span><span class="p">()</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">VIDEO_PATH</span><span class="p">):</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span> 
+
+        <span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">VIDEO_PATH</span><span class="p">,</span> <span class="nb">file</span><span class="p">))</span>        
+        <span class="n">save_frame</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">file_name</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'_'</span><span class="p">,</span><span class="s">''</span><span class="p">),</span> <span class="n">FPS</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-사람이-검출된-이미지만-저장">2) 사람이 검출된 이미지만 저장</h3>
+
+<p>run_test_수정본의 running_process() 함수를 사용하여 model을 돌린다. 기존 running_process() 함수는 객체 탐지 모델 외에도 다른 모델도 돌리기 때문에 <code class="language-plaintext highlighter-rouge">__name__</code>이 <code class="language-plaintext highlighter-rouge">__main__</code>인 경우와 그렇지 않은 경우에 대해 다르게 선언해주었다. 자세한 코드는 보안 문제때문에 생략한다. model에서 계산된 confidence 중, threshold를 넘는 값이 하나라도 있으면 obj_yn에 True를 리턴하도록 하였고, obj_yn이 True이면 사람이 검출된 것으로 간주하여 HUMAN_SAVE_PATH에 저장해주었다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">):</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+        <span class="n">test_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">,</span> <span class="nb">file</span><span class="p">),</span> <span class="n">cv2</span><span class="p">.</span><span class="n">IMREAD_COLOR</span><span class="p">)</span>
+        <span class="n">img</span><span class="p">,</span> <span class="n">obj_yn</span> <span class="o">=</span> <span class="n">run_test_수정본</span><span class="p">.</span><span class="n">running_process</span><span class="p">(</span><span class="n">test_image</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">obj_yn</span><span class="p">:</span>
+            <span class="n">plt</span><span class="p">.</span><span class="n">imsave</span><span class="p">(</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">HUMAN_SAVE_PATH</span><span class="p">,</span> <span class="nb">file</span><span class="p">),</span> <span class="n">img</span> <span class="p">)</span>
+</code></pre></div></div>
+<p><img src="https://user-images.githubusercontent.com/84084372/195296112-64fde0c4-c5ce-4130-8a1e-4f6f4038f674.png" alt="image" /></p>
+
+<p><br /></p>
+
+<h3 id="3-사람-검출-이미지에-대하여-투기-여부-계산">3) 사람 검출 이미지에 대하여 투기 여부 계산</h3>
+<p>최종적으로 사람이 검출된 이미지에 대해서 모델을 돌려주면 모든 과정이 끝이난다.
+<img src="https://user-images.githubusercontent.com/84084372/195295999-f5c5634b-1091-4eae-8c19-535cac729c7b.png" alt="image" /></p>
+
+<h3 id="4-전체-스크립트">4) 전체 스크립트</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">run_test_수정본</span>
+
+<span class="n">VIDEO_PATH</span> <span class="o">=</span> <span class="s">'비디오_경로'</span>
+<span class="n">FRAME_SAVE_PATH</span> <span class="o">=</span> <span class="s">'frame_저장_경로'</span>
+<span class="n">HUMAN_SAVE_PATH</span> <span class="o">=</span> <span class="s">'사람_검출_이미지_저장_'</span>
+<span class="n">MODE</span> <span class="o">=</span> <span class="s">''</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">if</span> <span class="n">MODE</span> <span class="o">==</span> <span class="s">'remove'</span><span class="p">:</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">):</span>
+        <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>   
+            <span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">,</span><span class="nb">file</span><span class="p">))</span>   
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">HUMAN_SAVE_PATH</span><span class="p">):</span>
+        <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">HUMAN_SAVE_PATH</span><span class="p">,</span><span class="nb">file</span><span class="p">))</span>                   
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">save_frame</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">success_path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">break_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">ret</span><span class="p">,</span> <span class="n">image</span> <span class="o">=</span> <span class="n">video</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">video</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">%</span> <span class="n">fps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">break_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">success_path</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s">'_{}.jpg'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+                <span class="n">plt</span><span class="p">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">break_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">break_count</span> <span class="o">&gt;</span> <span class="n">fps</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">video</span><span class="p">.</span><span class="n">release</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="c1">## 프레임 저장
+</span>    <span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">VIDEO_PATH</span><span class="p">):</span>
+        <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span> 
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'_'</span><span class="p">,</span><span class="s">''</span><span class="p">)</span>
+
+            <span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">VIDEO_PATH</span><span class="p">,</span> <span class="nb">file</span><span class="p">))</span>        
+            
+            <span class="n">success_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">success_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">success_path</span><span class="p">)</span>
+
+            <span class="n">save_frame</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">success_path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'_'</span><span class="p">,</span><span class="s">''</span><span class="p">),</span> <span class="n">FPS</span><span class="p">)</span>
+            
+    <span class="c1">## 사람 검출 이미지만 저장
+</span>    <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">)):</span>
+        <span class="n">PATH</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">FRAME_SAVE_PATH</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">PATH</span><span class="p">):</span>
+            <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+                <span class="n">file_name</span><span class="p">,</span> <span class="n">file_ext</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+                <span class="n">test_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH</span><span class="p">,</span> <span class="nb">file</span><span class="p">),</span> <span class="n">cv2</span><span class="p">.</span><span class="n">IMREAD_COLOR</span><span class="p">)</span>
+                <span class="n">img</span><span class="p">,</span> <span class="n">obj_yn</span> <span class="o">=</span> <span class="n">run_test_수정본</span><span class="p">.</span><span class="n">running_process</span><span class="p">(</span><span class="n">test_image</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">obj_yn</span><span class="p">:</span>
+                    <span class="n">success_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">HUMAN_SAVE_PATH</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">success_path</span><span class="p">):</span>
+                        <span class="n">os</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">success_path</span><span class="p">)</span>
+
+                    <span class="n">plt</span><span class="p">.</span><span class="n">imsave</span><span class="p">(</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">success_path</span><span class="p">,</span> <span class="nb">file</span><span class="p">),</span> <span class="n">img</span> <span class="p">)</span>
+</code></pre></div></div>
+
+        
+          
+          
+                  
+          <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-10/#1012">본문으로 돌아가기</a></div>
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%94%A5%EB%9F%AC%EB%8B%9D" class="page__taxonomy-item p-category" rel="tag">딥러닝</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%9C%A0%ED%81%B4%EB%A6%AC%EB%93%9C%EC%86%8C%ED%94%84%ED%8A%B8" class="page__taxonomy-item p-category" rel="tag">유클리드소프트</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cctv" class="page__taxonomy-item p-category" rel="tag">cctv</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-12">October 12, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%85%8B+%EA%B0%80%EA%B3%B5%EA%B3%BC%EC%A0%95+%EC%9E%90%EB%8F%99%ED%99%94+%3A+%EC%82%AC%EB%9E%8C%EC%9D%B4+%ED%83%90%EC%A7%80%EB%90%9C+%ED%94%84%EB%A0%88%EC%9E%84%EB%A7%8C+%EC%B6%94%EC%B6%9C%20http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_auto%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_auto%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fcctv%2Fcctv_auto%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/bbeojung/bj_update/" class="pagination--pager" title="[뻐정] 프로젝트 목표 개선사항
+">이전</a>
+    
+    
+      <a href="/python/argparse/" class="pagination--pager" title="argparse 사용법
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/cctv/cctv_test3/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>투기행위 인식률 향상(3)</a>
+    
+    
+      <a href="/cctv/torch2trt/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>Pytorch to TensorRT by torch2trt</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/deform_detr/" rel="permalink">Deformable DETR(2021) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-12">October 12, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 24 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DEFORMABLE DETR: DEFORMABLE TRANSFORMERS FOR END-TO-END OBJECT DETECTION
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/tflite/" rel="permalink">Covert onnx(NCHW) to tflite(NHWC)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-12">October 12, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 10 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ONNX와 TFlite간의 format 문제 해결
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino_implements/" rel="permalink">Implementation of DINO(2022)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-12">October 12, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 05 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino/" rel="permalink">DINO(2022) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-10-12">October 12, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 02 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+  </body>
+</html>
