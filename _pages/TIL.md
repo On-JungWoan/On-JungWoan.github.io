@@ -9,7 +9,7 @@ sidebar_main: true
 <div class="list__item">
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     <h2 class="archive__item-title no_toc" itemprop="headline">
-        <a href="https://docs.google.com/document/d/1fK2cAnHG0R7F2o_4SfEdJE6wLyNQb-a5HzPtKU9r39s/edit" rel="permalink">UVLL Daily research report</a>
+        <a href="https://docs.google.com/document/d/1fK2cAnHG0R7F2o_4SfEdJE6wLyNQb-a5HzPtKU9r39s/edit" rel="permalink" target='_blank'>UVLL Daily research report</a>
     </h2>
     <!--{% include page__meta.html type=include.type %}-->
     <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ "03 24 2023" | date: "%B %d %Y" }}</p>
