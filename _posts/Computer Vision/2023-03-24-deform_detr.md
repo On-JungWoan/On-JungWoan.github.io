@@ -22,16 +22,43 @@ use_math: true
 
 DETR은 obj detection에서 좋은 performance를 보여줌과 동시에 많은 hand-desinged componets를 제거함으로써 완전한 end-to-end의 학습을 할 수 있게 되었습니다. 그러나, Trnasformer attention module의 한계로 인해 DETR에는 다음과 같은 2가지 문제가 존재합니다.
 
-1. Slow convergence
+1. **Slow convergence**
 
-2. Limited feature spatial resolution
+2. **Limited feature spatial resolution**
 
 본 저자는 이러한 문제를 해결하기 위해 Deformable DETR을 제안합니다. Deformable DETR의 attention module은 reference point를 지정하여, 해당 point 근처에서만 small key sampling을 진행합니다. 이를 통해 기존 DETR의 문제를 상당부분 개선하였으며, small object에 대한 detection performance도 많이 향상시켰다고 합니다.
 
-# Introduction
+# 1. Introduction
+
+## DETR 설명
 
 DETR 이전의 obj detection 모델은 NMS와 같은 hand-crafted components가 상당부분 존재했습니다. 그러나 2020년 등장한 DETR은, CNN과 Transformer의 encoder-decoder를 결합한 간단한 아키텍쳐를 도입하여 이러한 hand-crafted components를 모두 제거하였습니다. performance는 이전 모델들과 유사하게 유지하면서, Transformer의 강력한 relation modeling 능력을 통해 obj detection 분야에서 완전한 end-to-end를 구현한 최초의 모델이라고 할 수 있겠습니다.
 
-detr 문제점
-1) slow cpnvergence
-2) small obj x
+## DETR 문제점
+
+DETR은 Abstract에서도 잠깐 언급했듯이 2가지의 문제점을 가지고 있습니다. <br>
+
+1. **slow cpnvergence**
+
+    우선, DETR은 수렴해에 도달하기까지의 시간이 매우 오래걸립니다. DETR은 COCO dataset에 대해 converge까지 약 500 에폭정도가 필요한데, 이는 Faseter R-CNN보다 10~20배 더 느린 수치입니다.
+
+2. **small obj**
+
+    DETR은 작은 오브젝트에 대해 매우 낮은 performance를 보여줍니다. DETR 이전의 모델들은 주로 output과 가까운 고해상도 feature map에서 small obj를 detect합니다. 하지만, DETR은 이러한 복잡한 feature map을 수용할 수 있는 능력이 없습니다.
+
+정리해보자면, DETR의 attention module은 attention weight와 feature map의 모든 pixel을 cast하여 학습을 진행합니다. 따라서 긴 학습시간은 필수가결적이라고 할 수 있겠습니다. 또한, Transformer의 encoder는 모든 pixel에 대해 quadratic computation을 진행하게 되는데, 이는 매우 많은 연산량과 메모리를 필요로 합니다. 따라서 high-resolution feature map을 계산하는 데 한계가 존재하며, 이는 자연스럽게 small obj에 대한 performance 저하로 이어지게 됩니다.
+
+## Deformable DETR
+
+![image](https://user-images.githubusercontent.com/84084372/227284261-54263268-e20b-4ad8-9742-71ca87e4ca2c.png)
+
+
+본 저자는 Deformable Convolution(Dai et al., 2017)이라는 방법론을 도입함으로써 DETR의 느린 convergence issue와 high complexity issue를 해결합니다. 즉, Deformable DETR은 Transformer의 관계 모델링 능력과 deformable convolution의 soarse한 공간 샘플링 능력의 결합이라고 할 수 있겠으며, 이를 `deformable attention module`이라 명명하였습니다. Fig.1에서 확인할 수 있듯이 deformable attention module은 모든 픽셀을 attention weight와 match하지 않고, 특정 sampling location 주변의 pixel들만 사용합니다. 이를 통해 FPN의 도움 없이도 multi scale feature를 확장할 수 있었다고 합니다.
+
+## Variants
+
+본 저자는 Deformable DETR의 빠른 convergence와 memory efficiency로 인해, 다음과 같은 2가지의 variants가 가능했다고 말하고 있습니다.
+
+- iterative bounding box refinement
+
+- a two-stage Deformable DETR
