@@ -134,4 +134,4 @@ Transformer에는 다음과 같은 2가지 issue가 존재합니다.
 ![image](https://user-images.githubusercontent.com/84084372/227588961-b03a34af-fc7c-4e04-a757-a4f101983c9f.png)
 
 
-이전 연구에서 transformer를 image에 적용하고자 하는 시도는, transformer가 image feature map의 모든 pixel을 고려하기 때문에 메모리 및 학습 속도 이슈를 발생시켰습니다. 본 저자는 이러한 문제를 다루기 위해 `deformable attention module`을 도입합니다.
+이전 연구에서 transformer를 image에 적용하고자 하는 시도는, transformer가 image feature map의 모든 pixel을 고려하기 때문에 메모리 및 학습 속도 이슈를 발생시켰습니다. 본 저자는 이러한 문제를 다루기 위해 `deformable attention module`을 도입합니다. deformable attention module은 reference point 근처의 소규모 sampling point만을 사용하여 이러한 문제점들을 해결하였다.
