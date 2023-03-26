@@ -134,4 +134,39 @@ Transformer에는 다음과 같은 2가지 issue가 존재합니다.
 ![image](https://user-images.githubusercontent.com/84084372/227588961-b03a34af-fc7c-4e04-a757-a4f101983c9f.png)
 
 
-이전 연구에서 transformer를 image에 적용하고자 하는 시도는, transformer가 image feature map의 모든 pixel을 고려하기 때문에 메모리 및 학습 속도 이슈를 발생시켰습니다. 본 저자는 이러한 문제를 다루기 위해 `deformable attention module`을 도입합니다. deformable attention module은 reference point 근처의 소규모 sampling point만을 사용하여 이러한 문제점들을 해결하였다.
+이전 연구에서 transformer를 image에 적용하고자 하는 시도는, transformer가 image feature map의 모든 pixel을 고려하기 때문에 메모리 및 학습 속도 이슈를 발생시켰습니다. 본 저자는 이러한 문제를 다루기 위해 `deformable attention module`을 도입합니다. deformable attention module은 reference point 근처의 소규모 sampling point만을 사용하여 이러한 문제점들을 해결하였습니다. 아래는 feature map $x \in \mathbb{R}^{C \times H \times W}$, query element $q$와 content feature $z_q$, reference point $p_q$에 대한 DeformAttn 계산식입니다.
+
+$$
+DeformAttn(z_q , {p}_q , x)
+=\sum^{M}_{m=1}W_m[
+  \sum^K_{k=1}
+  A_{mlqk} \cdot W^{\prime}_mx
+    ( p_q + ∆p_{mqk})
+]  
+$$
+
+annotation에 대해서 먼저 간단히 소개해 드리겠습니다. 먼저, m과 k는 각각 attention head의 idex와 sampled key의 index를 의미합니다. $\Delta p_{mqk}$와 $A_{mqk}$는 m번째 head 및 k 번째 sampling point에서 추출된 sampling offset과 attention weight를 의미합니다. attention weight는 0~1사이 값을 가지며, 모든 sampling point에서의 합이 1이 되도록 normalize되어 있습니다. sampling offset은 범위 제한이 없으며, $( p_q + ∆p_{mqk})$가 분수 값을 갖기 때문에 bilinear interpolation(Dai et al. 2017)이라는 계산 기법을 사용한다고 합니다($x( p_q + ∆p_{mqk})$). $\Delta p_{mqk}$와 $A_{mqk}$는 둘 다 $z_q$에 대한 linear projection으로 얻어집니다. 실제 구현 과정에서, linear projection operator는 3MK의 채널을 가지며 첫 2MK에서는 $\Delta p_{mqk}$를, 나머지 MK에서는 sofrmax를 통해 $A_{mqk}$를 계산합니다.
+
+
+### 4-1-2) Multi-scale Deformable Attention Module
+
+대부분 최신 object detection framework들을 multi-scale feature map을 사용하는 경향을 보이고 있으며, 저자가 제안하는 Deformable attention module도 자연스럽게 multi-scale feature map으로 확장될 수 있다고 소개하고 있습니다. multi-scale deformable attention module은 앞서 소개한 single-scale과 유사한 계산식을 갖습니다.
+
+$$
+MSDeformAttn(z_q , \hat{p}_q , {x^l}^L_{l=1})
+=\sum^{M}_{m=1}W_m[
+  \sum^L_{l=1}
+  \sum^K_{k=1}
+  A_{mlqk} \cdot W^{\prime}_mx^l
+    ( φ_l (p̂_q) + ∆p_{mlqk})
+]  
+$$
+
+복잡해보이는 수식이지만, 4-1-1의 single-scale과 유사한 구조를 가지고 있습니다. 우선, 몇몇 annotation에 대해 설명드리겠습니다. 우선, reference points($\hat p_q$)의 경우 top-left를 (0,0) bottom-right를 (1,1)로 하여 normalized 되었으며, $φl (p̂q )$는 이를 denormalize하는 function입니다. nulti-scale feature map으로부터 LK개의 sample point를 추출한다는 것을 제외하면 기존 single-feature map과 계산식은 동일합니다.
+     
+
+### 4-1-3) Deformable Transformer Encoder
+
+
+
+### 4-1-4)
