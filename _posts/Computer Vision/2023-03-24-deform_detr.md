@@ -162,7 +162,7 @@ MSDeformAttn(z_q , \hat{p}_q , {x^l}^L_{l=1})
 ]  
 $$
 
-복잡해보이는 수식이지만, 4-1-1의 single-scale과 유사한 구조를 가지고 있습니다. 우선, 몇몇 annotation에 대해 설명드리겠습니다. 우선, reference points($\hat p_q$)의 경우 top-left를 (0,0) bottom-right를 (1,1)로 하여 normalized 되었으며, $φl (p̂q )$는 이를 denormalize하는 function입니다. nulti-scale feature map으로부터 LK개의 sample point를 추출한다는 것을 제외하면 기존 single-feature map과 계산식은 동일합니다.
+복잡해보이는 수식이지만, 4-1-1의 single-scale과 유사한 구조를 가지고 있습니다. 우선, 몇몇 annotation에 대해 설명드리겠습니다. 우선, reference points($\hat p_q$)의 경우 top-left를 (0,0) bottom-right를 (1,1)로 하여 normalized 되었으며, $φl (p̂q )$는 이를 denormalize하는 function입니다. nulti-scale feature map으로부터 LK개의 sample point를 추출한다는 것을 제외하면 기존 single-feature map과 계산식은 동일합니다..
      
 
 ### 4-1-3) Deformable Transformer Encoder
