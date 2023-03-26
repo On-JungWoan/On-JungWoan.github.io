@@ -26,11 +26,15 @@
                         <li><a href="/categories/DL_study" class="">스터디 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
+            </ul>
+            <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "DL_optim" %}
                         <li><a href="/categories/DL_optim" class="">모델 최적화 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
+            </ul>
+            <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "DL_paper" %}
                         <li><a href="/categories/DL_paper" class="">논문 리뷰 ({{category[1].size}})</a></li>
@@ -53,7 +57,8 @@
                         <li><a href="/categories/Blog" class="">Jekyll Dev ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>                                           
+            </ul>
+            <ul>                                        
                 {% for category in site.categories %}
                     {% if category[0] == "ML" %}
                         <li><a href="/categories/ML" class="">Machine Learning ({{category[1].size}})</a></li>

@@ -1,0 +1,1990 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #1 - 정완이의 개발 일기장</title>
+<meta name="description" content="Pytorch를 사용한 분류문제 학습">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #1">
+<meta property="og:url" content="http://localhost:4000/dl_study/04_Leaf_Diseases/">
+
+
+  <meta property="og:description" content="Pytorch를 사용한 분류문제 학습">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-07-27T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-07-27T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl_study/04_Leaf_Diseases/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		window.FontAwesomeKitConfig = {"asyncLoading":{"enabled":true},"autoA11y":{"enabled":true},"baseUrl":"https://ka-f.fontawesome.com","baseUrlKit":"https://kit.fontawesome.com","detectConflictsUntil":null,"iconUploads":{},"id":91177765,"license":"free","method":"css","minify":{"enabled":true},"token":"a076d05399","v4FontFaceShim":{"enabled":false},"v4shim":{"enabled":false},"v5FontFaceShim":{"enabled":false},"version":"5.15.4"};
+		!function(t){"function"==typeof define&&define.amd?define("kit-loader",t):t()}((function(){"use strict";function t(e){return(t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(e)}function e(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function n(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,o)}return n}function o(t){for(var o=1;o<arguments.length;o++){var r=null!=arguments[o]?arguments[o]:{};o%2?n(Object(r),!0).forEach((function(n){e(t,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):n(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],o=!0,r=!1,i=void 0;try{for(var c,a=t[Symbol.iterator]();!(o=(c=a.next()).done)&&(n.push(c.value),!e||n.length!==e);o=!0);}catch(t){r=!0,i=t}finally{try{o||null==a.return||a.return()}finally{if(r)throw i}}return n}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=new Array(e);n<e;n++)o[n]=t[n];return o}function c(t,e){var n=e&&e.addOn||"",o=e&&e.baseFilename||t.license+n,r=e&&e.minify?".min":"",i=e&&e.fileSuffix||t.method,c=e&&e.subdir||t.method;return t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/"+c+"/"+o+r+"."+i}function a(t){return t.baseUrlKit+"/"+t.token+"/"+t.id+"/kit-upload.css"}function u(t,e){var n=e||["fa"],o="."+Array.prototype.join.call(n,",."),r=t.querySelectorAll(o);Array.prototype.forEach.call(r,(function(e){var n=e.getAttribute("title");e.setAttribute("aria-hidden","true");var o=!e.nextElementSibling||!e.nextElementSibling.classList.contains("sr-only");if(n&&o){var r=t.createElement("span");r.innerHTML=n,r.classList.add("sr-only"),e.parentNode.insertBefore(r,e.nextSibling)}}))}var f,s=function(){},d="undefined"!=typeof global&&void 0!==global.process&&"function"==typeof global.process.emit,l="undefined"==typeof setImmediate?setTimeout:setImmediate,h=[];function m(){for(var t=0;t<h.length;t++)h[t][0](h[t][1]);h=[],f=!1}function p(t,e){h.push([t,e]),f||(f=!0,l(m,0))}function v(t){var e=t.owner,n=e._state,o=e._data,r=t[n],i=t.then;if("function"==typeof r){n="fulfilled";try{o=r(o)}catch(t){w(i,t)}}y(i,o)||("fulfilled"===n&&b(i,o),"rejected"===n&&w(i,o))}function y(e,n){var o;try{if(e===n)throw new TypeError("A promises callback cannot return that same promise.");if(n&&("function"==typeof n||"object"===t(n))){var r=n.then;if("function"==typeof r)return r.call(n,(function(t){o||(o=!0,n===t?g(e,t):b(e,t))}),(function(t){o||(o=!0,w(e,t))})),!0}}catch(t){return o||w(e,t),!0}return!1}function b(t,e){t!==e&&y(t,e)||g(t,e)}function g(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(S,t))}function w(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(O,t))}function A(t){t._then=t._then.forEach(v)}function S(t){t._state="fulfilled",A(t)}function O(t){t._state="rejected",A(t),!t._handled&&d&&global.process.emit("unhandledRejection",t._data,t)}function j(t){global.process.emit("rejectionHandled",t)}function E(t){if("function"!=typeof t)throw new TypeError("Promise resolver "+t+" is not a function");if(this instanceof E==!1)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this._then=[],function(t,e){function n(t){w(e,t)}try{t((function(t){b(e,t)}),n)}catch(t){n(t)}}(t,this)}E.prototype={constructor:E,_state:"pending",_then:null,_data:void 0,_handled:!1,then:function(t,e){var n={owner:this,then:new this.constructor(s),fulfilled:t,rejected:e};return!e&&!t||this._handled||(this._handled=!0,"rejected"===this._state&&d&&p(j,this)),"fulfilled"===this._state||"rejected"===this._state?p(v,n):this._then.push(n),n.then},catch:function(t){return this.then(null,t)}},E.all=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.all().");return new E((function(e,n){var o=[],r=0;function i(t){return r++,function(n){o[t]=n,--r||e(o)}}for(var c,a=0;a<t.length;a++)(c=t[a])&&"function"==typeof c.then?c.then(i(a),n):o[a]=c;r||e(o)}))},E.race=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.race().");return new E((function(e,n){for(var o,r=0;r<t.length;r++)(o=t[r])&&"function"==typeof o.then?o.then(e,n):e(o)}))},E.resolve=function(e){return e&&"object"===t(e)&&e.constructor===E?e:new E((function(t){t(e)}))},E.reject=function(t){return new E((function(e,n){n(t)}))};var _="function"==typeof Promise?Promise:E;function F(t,e){var n=e.fetch,o=e.XMLHttpRequest,r=e.token,i=t;return"URLSearchParams"in window?(i=new URL(t)).searchParams.set("token",r):i=i+"?token="+encodeURIComponent(r),i=i.toString(),new _((function(t,e){if("function"==typeof n)n(i,{mode:"cors",cache:"default"}).then((function(t){if(t.ok)return t.text();throw new Error("")})).then((function(e){t(e)})).catch(e);else if("function"==typeof o){var r=new o;r.addEventListener("loadend",(function(){this.responseText?t(this.responseText):e(new Error(""))}));["abort","error","timeout"].map((function(t){r.addEventListener(t,(function(){e(new Error(""))}))})),r.open("GET",i),r.send()}else{e(new Error(""))}}))}function P(t,e,n){var o=t;return[[/(url\("?)\.\.\/\.\.\/\.\./g,function(t,n){return"".concat(n).concat(e)}],[/(url\("?)\.\.\/webfonts/g,function(t,o){return"".concat(o).concat(e,"/releases/v").concat(n,"/webfonts")}],[/(url\("?)https:\/\/kit-free([^.])*\.fontawesome\.com/g,function(t,n){return"".concat(n).concat(e)}]].forEach((function(t){var e=r(t,2),n=e[0],i=e[1];o=o.replace(n,i)})),o}function C(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){},r=e.document||r,i=u.bind(u,r,["fa","fab","fas","far","fal","fad","fak"]),f=Object.keys(t.iconUploads||{}).length>0;t.autoA11y.enabled&&n(i);var s=[{id:"fa-main",addOn:void 0}];t.v4shim&&t.v4shim.enabled&&s.push({id:"fa-v4-shims",addOn:"-v4-shims"}),t.v5FontFaceShim&&t.v5FontFaceShim.enabled&&s.push({id:"fa-v5-font-face",addOn:"-v5-font-face"}),t.v4FontFaceShim&&t.v4FontFaceShim.enabled&&s.push({id:"fa-v4-font-face",addOn:"-v4-font-face"}),f&&s.push({id:"fa-kit-upload",customCss:!0});var d=s.map((function(n){return new _((function(r,i){F(n.customCss?a(t):c(t,{addOn:n.addOn,minify:t.minify.enabled}),e).then((function(i){r(U(i,o(o({},e),{},{baseUrl:t.baseUrl,version:t.version,id:n.id,contentFilter:function(t,e){return P(t,e.baseUrl,e.version)}})))})).catch(i)}))}));return _.all(d)}function U(t,e){var n=e.contentFilter||function(t,e){return t},o=document.createElement("style"),r=document.createTextNode(n(t,e));return o.appendChild(r),o.media="all",e.id&&o.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&o.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),o}function k(t,e){e.autoA11y=t.autoA11y.enabled,"pro"===t.license&&(e.autoFetchSvg=!0,e.fetchSvgFrom=t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/svgs",e.fetchUploadedSvgFrom=t.uploadsUrl);var n=[];return t.v4shim.enabled&&n.push(new _((function(n,r){F(c(t,{addOn:"-v4-shims",minify:t.minify.enabled}),e).then((function(t){n(I(t,o(o({},e),{},{id:"fa-v4-shims"})))})).catch(r)}))),n.push(new _((function(n,r){F(c(t,{minify:t.minify.enabled}),e).then((function(t){var r=I(t,o(o({},e),{},{id:"fa-main"}));n(function(t,e){var n=e&&void 0!==e.autoFetchSvg?e.autoFetchSvg:void 0,o=e&&void 0!==e.autoA11y?e.autoA11y:void 0;void 0!==o&&t.setAttribute("data-auto-a11y",o?"true":"false");n&&(t.setAttributeNode(document.createAttribute("data-auto-fetch-svg")),t.setAttribute("data-fetch-svg-from",e.fetchSvgFrom),t.setAttribute("data-fetch-uploaded-svg-from",e.fetchUploadedSvgFrom));return t}(r,e))})).catch(r)}))),_.all(n)}function I(t,e){var n=document.createElement("SCRIPT"),o=document.createTextNode(t);return n.appendChild(o),n.referrerPolicy="strict-origin",e.id&&n.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n}function L(t){var e,n=[],o=document,r=o.documentElement.doScroll,i=(r?/^loaded|^c/:/^loaded|^i|^c/).test(o.readyState);i||o.addEventListener("DOMContentLoaded",e=function(){for(o.removeEventListener("DOMContentLoaded",e),i=1;e=n.shift();)e()}),i?setTimeout(t,0):n.push(t)}function T(t){"undefined"!=typeof MutationObserver&&new MutationObserver(t).observe(document,{childList:!0,subtree:!0})}try{if(window.FontAwesomeKitConfig){var x=window.FontAwesomeKitConfig,M={detectingConflicts:x.detectConflictsUntil&&new Date<=new Date(x.detectConflictsUntil),detectionIgnoreAttr:"data-fa-detection-ignore",fetch:window.fetch,token:x.token,XMLHttpRequest:window.XMLHttpRequest,document:document},D=document.currentScript,N=D?D.parentElement:document.head;(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"js"===t.method?k(t,e):"css"===t.method?C(t,e,(function(t){L(t),T(t)})):void 0})(x,M).then((function(t){t.map((function(t){try{N.insertBefore(t,D?D.nextSibling:null)}catch(e){N.appendChild(t)}})),M.detectingConflicts&&D&&L((function(){D.setAttributeNode(document.createAttribute(M.detectionIgnoreAttr));var t=function(t,e){var n=document.createElement("script");return e&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n.src=c(t,{baseFilename:"conflict-detection",fileSuffix:"js",subdir:"js",minify:t.minify.enabled}),n}(x,M);document.body.appendChild(t)}))})).catch((function(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}))}}catch(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}}));	
+	</script>
+</head>
+<body>
+
+
+	
+
+
+</body>
+</html>
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
+        </a> -->
+          정완이의 개발 일기장
+          
+        </a>
+
+
+
+        <ul class="visible-links">
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">COMPUTER VISION  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_study">    스터디</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_optim">    모델 최적화</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_paper">    논문 리뷰</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">대외활동</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Internship">    2022 하반기 ICT 인턴십</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">프로젝트</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/bbeojung/bj_README/">    뻐정 : 버스정보종합시스템</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Web Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Jekyll</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">ML</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/ML">    Machine Learning</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+       </ul>
+
+       
+
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          [Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #1
+
+        
+      </h1>
+      <p class="page__lead">Pytorch를 사용한 분류문제 학습
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-27">July 27, 2022</time></p>
+
+      <p>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>AI/플랫폼 개발을 공부합니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">108</style> <span style="">개</style> 
+      </li>
+      <li>
+
+            <!--span 태그로 카테고리들을 크게 분류-->
+            <span class="nav__sub-title">Computer Vision</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_study" class="">스터디 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_optim" class="">모델 최적화 (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_paper" class="">논문 리뷰 (3)</a></li>
+                    
+                
+            </ul>    
+           
+
+            <span class="nav__sub-title">Study Note</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/web" class="">Web Dev (9)</a></li>
+                    
+                
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Jekyll Dev (16)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>                                        
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/tools" class="">ETC Tools (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+            
+            
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/toy_project" class="">Toy Project (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+   
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (10)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/etc" class="">etc (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #1">
+    <meta itemprop="description" content="Pytorch를 사용한 분류문제 학습">
+    <meta itemprop="datePublished" content="2022-07-27T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-07-27T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#0-cuda-cudnn-설치">0. CUDA, cuDNN 설치</a><ul><li><a href="#0-0-gpu-사용-가능-여부-확인">0-0. GPU 사용 가능 여부 확인</a></li><li><a href="#0-1-cuda-cudnn-설치">0-1. CUDA, cuDNN 설치</a></li><li><a href="#0-2-경로-이동">0-2. 경로 이동</a></li><li><a href="#0-3-환경변수-등록">0-3. 환경변수 등록</a></li></ul></li><li><a href="#1-데이터-분할">1. 데이터 분할</a><ul><li><a href="#1-1-데이터-구조">1-1. 데이터 구조</a></li><li><a href="#1-2-데이터-분할을-위한-폴더-생성">1-2. 데이터 분할을 위한 폴더 생성</a></li><li><a href="#1-3-데이터-분할과-클래스별-데이터-수-확인">1-3. 데이터 분할과 클래스별 데이터 수 확인</a></li></ul></li><li><a href="#2-베이스라인-모델-학습">2. 베이스라인 모델 학습</a><ul><li><a href="#2-1-베이스라인-모델-학습을-위한-준비">2-1. 베이스라인 모델 학습을 위한 준비</a></li><li><a href="#2-2-데이터-확인">2-2. 데이터 확인</a></li><li><a href="#2-3-cnn-구조-정의">2-3. CNN 구조 정의</a></li><li><a href="#2-4-cnn-구조-설계">2-4. CNN 구조 설계</a></li><li><a href="#2-5-모델-학습을-위한-함수">2-5. 모델 학습을 위한 함수</a></li><li><a href="#2-6-모델-평가를-위한-함수">2-6. 모델 평가를 위한 함수</a></li><li><a href="#2-7-모델-학습">2-7. 모델 학습</a></li></ul></li><li><a href="#정리">정리</a><ul><li><a href="#1-netnnmodule">1. Net(nn.Module)</a></li><li><a href="#2-trainmodel-batch-optimizer">2. train(model, batch, optimizer)</a></li><li><a href="#3-evaluatemodel-batch">3. evaluate(model, batch)</a></li><li><a href="#4-trainmodel-batch1-batch2-optimizer-num_epoch">4. Train(model, batch1, batch2, optimizer, num_epoch)</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<p>해당 데이터 셋의 크기가 큰 관계로, colab에서 작업시 리소스 부족의 우려가 있다. 
+따라서 로컬 환경에서 개발을 진행하여준다. 
+데이터셋 특성상, 학습 시간이 매우 느리므로 병렬 연산이 가능한 GPU를 사용하는 것이 좋다.
+로컬 환경에서 GPU를 사용하기 위해 필요한 것이 CUDA와 cuDNN이다.</p>
+
+<p><br /></p>
+
+<h2 id="0-cuda-cudnn-설치">0. CUDA, cuDNN 설치</h2>
+<h3 id="0-0-gpu-사용-가능-여부-확인">0-0. GPU 사용 가능 여부 확인</h3>
+
+<p>다음 두 줄의 코드를 입력하여 본다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.python.client</span> <span class="kn">import</span> <span class="n">device_lib</span>
+<span class="n">device_lib</span><span class="p">.</span><span class="n">list_local_devices</span><span class="p">()</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[name: "/device:CPU:0"
+ device_type: "CPU"
+ memory_limit: 268435456
+ locality {
+ }
+ incarnation: 12364090281161528455
+ xla_global_id: -1]
+</code></pre></div></div>
+<p>나는 CPU에 관한 정보만 나왔으나, GPU에 관한 정보까지 나왔다면, GPU를 사용할 수 있다는 것이니, 아래 절차에 따라 GPU를 사용한다.</p>
+
+<p><br /></p>
+
+<h3 id="0-1-cuda-cudnn-설치">0-1. CUDA, cuDNN 설치</h3>
+<p>CUDA 11.3 -&gt; cuDNN 8.2 -&gt; pytorch 설치 순으로 진행하였다. <br /></p>
+
+<blockquote>
+  <p><a href="https://developer.nvidia.com/cuda-downloads">CUDA 설치</a> <br />
+<a href="https://developer.nvidia.com/rdp/cudnn-download#a-collapse714-92">cuDNN 설치</a></p>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="0-2-경로-이동">0-2. 경로 이동</h3>
+<ul>
+  <li>앞서 CUDA 파일이 있는 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6 경로에 다시 갑니다.</li>
+  <li>그리고 cuDNN 폴더 안의 모든 파일을 복사하의 위의 위치에 붙여넣는다.</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181012376-17475437-a86c-4014-91d1-c71f15a2d8a5.png" alt="image" /></p>
+
+<p><br /></p>
+
+<h3 id="0-3-환경변수-등록">0-3. 환경변수 등록</h3>
+<p>환경변수 path에 다음과 같이 bin, include, lib 세가지의 path를 추가</p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181015230-701eb275-df8f-4936-bed1-fc62c1e6aa5d.png" alt="image" /></p>
+
+<p><br /></p>
+
+<h2 id="1-데이터-분할">1. 데이터 분할</h2>
+<h3 id="1-1-데이터-구조">1-1. 데이터 구조</h3>
+<p><img src="https://user-images.githubusercontent.com/84084372/181020674-5dd947aa-1bae-4cdd-a902-4a054fa5f397.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/84084372/181020709-ad96ae31-3ad5-467a-8fdf-38ffc6779fd7.png" alt="image" /></p>
+
+<p>원본 데이터셋은 분류 클래스가 폴더로 구분되어 있으며 Train, Test, Validation 데이터가 구분되어있지 않다. 
+각 폴더 안에는 해당 분류 클래스에 속하는 이미지 데이터들이 저장되어 있음. 
+예를 들어, 질병이 없는 Cherry의 사진 데이터는 Cherry_healthy 클래스에 해당한다. 
+정확한 학습 설계를 위해서는 학습에 앞서 이 데이터를 Train, Test, Validation 데이터로 나누어주고, 가각에 클래스에 해당하는 폴더에 저장하는 작업을 시행해야 한다.</p>
+
+<p><br /></p>
+
+<h3 id="1-2-데이터-분할을-위한-폴더-생성">1-2. 데이터 분할을 위한 폴더 생성</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="n">original_dataset_dir</span> <span class="o">=</span> <span class="s">'C:/Users/user/Downloads/dataset'</span>   
+<span class="n">classes_list</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">original_dataset_dir</span><span class="p">)</span> 
+ 
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s">'C:/Users/user/Downloads/splitted'</span> 
+<span class="c1"># os.mkdir(base_dir)                                1회만 실행
+</span> 
+<span class="n">train_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">'train'</span><span class="p">)</span> 
+<span class="c1"># os.mkdir(train_dir)                               1회만 실행
+</span><span class="n">validation_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">'val'</span><span class="p">)</span>
+<span class="c1"># os.mkdir(validation_dir)                          1회만 실행
+</span><span class="n">test_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">'test'</span><span class="p">)</span>
+<span class="c1"># os.mkdir(test_dir)                                1회만 실행
+</span>
+<span class="k">for</span> <span class="n">cls</span> <span class="ow">in</span> <span class="n">classes_list</span><span class="p">:</span>     
+    <span class="c1"># os.mkdir(os.path.join(train_dir, cls))        1회만 실행
+</span>    <span class="c1"># os.mkdir(os.path.join(validation_dir, cls))   1회만 실행
+</span>    <span class="c1"># os.mkdir(os.path.join(test_dir, cls))         1회만 실행
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181021496-1b81094d-f5e5-4fda-8df7-6c1bbc1c449a.png" alt="image" /></p>
+
+<p><br /></p>
+
+<h3 id="1-3-데이터-분할과-클래스별-데이터-수-확인">1-3. 데이터 분할과 클래스별 데이터 수 확인</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
+ 
+<span class="k">for</span> <span class="n">cls</span> <span class="ow">in</span> <span class="n">classes_list</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">original_dataset_dir</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span> <span class="c1"># dataset/~
+</span>    <span class="n">fnames</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c1"># dataset/~/~
+</span> 
+    <span class="n">train_size</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">validation_size</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">test_size</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fnames</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
+    
+    <span class="c1"># Train 데이터
+</span>    <span class="n">train_fnames</span> <span class="o">=</span> <span class="n">fnames</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Train size("</span><span class="p">,</span><span class="n">cls</span><span class="p">,</span><span class="s">"): "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_fnames</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">train_fnames</span><span class="p">:</span> 
+        <span class="n">src</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_dir</span><span class="p">,</span> <span class="n">cls</span><span class="p">),</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="p">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span> <span class="c1"># src(dataset/~/~)안에 있는 파일 내용을 dst(train 데이터 폴더) 경로로 복사
+</span>
+    <span class="c1"># Validation 데이터
+</span>    <span class="n">validation_fnames</span> <span class="o">=</span> <span class="n">fnames</span><span class="p">[</span><span class="n">train_size</span><span class="p">:(</span><span class="n">validation_size</span> <span class="o">+</span> <span class="n">train_size</span><span class="p">)]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Validation size("</span><span class="p">,</span><span class="n">cls</span><span class="p">,</span><span class="s">"): "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">validation_fnames</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">validation_fnames</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">validation_dir</span><span class="p">,</span> <span class="n">cls</span><span class="p">),</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="p">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+        
+    <span class="n">test_fnames</span> <span class="o">=</span> <span class="n">fnames</span><span class="p">[(</span><span class="n">train_size</span><span class="o">+</span><span class="n">validation_size</span><span class="p">):(</span><span class="n">validation_size</span> <span class="o">+</span> <span class="n">train_size</span> <span class="o">+</span><span class="n">test_size</span><span class="p">)]</span>
+
+    <span class="c1"># Test 데이터
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"Test size("</span><span class="p">,</span><span class="n">cls</span><span class="p">,</span><span class="s">"): "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_fnames</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">test_fnames</span><span class="p">:</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">test_dir</span><span class="p">,</span> <span class="n">cls</span><span class="p">),</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="p">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Train size( Apple___Apple_scab ):  378
+Validation size( Apple___Apple_scab ):  126
+Test size( Apple___Apple_scab ):  126
+Train size( Apple___Black_rot ):  372
+Validation size( Apple___Black_rot ):  124
+Test size( Apple___Black_rot ):  124
+Train size( Apple___Cedar_apple_rust ):  165
+Validation size( Apple___Cedar_apple_rust ):  55
+Test size( Apple___Cedar_apple_rust ):  55
+Train size( Apple___healthy ):  987
+Validation size( Apple___healthy ):  329
+Test size( Apple___healthy ):  329
+Train size( Cherry___healthy ):  512
+Validation size( Cherry___healthy ):  170
+.
+.
+.
+(생략)
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181021548-b375c6af-0634-4f49-8915-8339c4fe6fd2.png" alt="image" /></p>
+
+<p>train, test, validation 데이터가 각 클래스에 맞게 생성된 모습.</p>
+
+<h2 id="2-베이스라인-모델-학습">2. 베이스라인 모델 학습</h2>
+<h3 id="2-1-베이스라인-모델-학습을-위한-준비">2-1. 베이스라인 모델 학습을 위한 준비</h3>
+
+<p>미리 사용할 디바이스를 입력시킨다. 
+현재 내가 사용중인 로컬 pc는 gpu를 지원하지 않으므로, device에는 cpu가 입력된다. 
+batch 사이즈와 epoch 수는 각각 256과 30으로 지정하였다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+ 
+<span class="n">USE_CUDA</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="n">DEVICE</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">"cuda"</span> <span class="k">if</span> <span class="n">USE_CUDA</span> <span class="k">else</span> <span class="s">"cpu"</span><span class="p">)</span>
+
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">256</span> 
+<span class="n">EPOCH</span> <span class="o">=</span> <span class="mi">30</span> 
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">ImageFolder</span> 
+ 
+<span class="n">transform_base</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="p">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">64</span><span class="p">)),</span> <span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">()])</span> 
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">ImageFolder</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'C:/Users/user/Downloads/splitted/train'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform_base</span><span class="p">)</span> 
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">ImageFolder</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s">'C:/Users/user/Downloads/splitted/val'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform_base</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">val_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>cf) 전처리 과정에 대한 정리</strong></p>
+
+<p><strong>1. transforms 정의</strong></p>
+<blockquote>
+  <ul>
+    <li>torchvision.transforms
+      <ul>
+        <li>데이터 불러올 때, transform 옵션에 넣어줌.</li>
+      </ul>
+    </li>
+    <li>transform 옵션에 넣는 방법
+      <ul>
+        <li>transforms.ToTensor()와 같이 직접 넣어주는 방법</li>
+        <li>transforms.Compose()에 원하는 내용 넣어서 한꺼번에 묶어서 넣는 방법</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<p><br /></p>
+
+<p><strong>2. 데이터셋 불러오기</strong></p>
+<blockquote>
+  <ul>
+    <li>torchvision.datasets
+      <ul>
+        <li>torch에 저장되어있는 데이터셋을 불러올 때</li>
+      </ul>
+    </li>
+    <li>torchvision.datasets.ImageFolder
+      <ul>
+        <li>본인이 직접 만들거나 다운로드받은 데이터셋을 불러올 때</li>
+        <li>단, 일정한 구조를 만족해야 함 (하나의 폴더가 하나의 클래스에 대응)</li>
+        <li>MNIST를 예를 들면 0~9의 폴더가 존재하고 각각 폴더 안에 해당 숫자에 대응하는 이미지가 존재 (폴더 이름이 레이블이 됨)</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<p><br /></p>
+
+<p><strong>3. 미니 배치 구성</strong></p>
+<blockquote>
+  <ul>
+    <li>torch.utils.data.DataLoader
+      <ul>
+        <li>원하는 데이터와 batch_size를 넣어준다.</li>
+        <li>시계열 데이터가 아닐 경우, 딥러닝이 시간 정보는 학습하지 못하게 shuffle 옵션을 꼭 True로 해준다.</li>
+        <li>num_workers는 데이터 프로세싱에 CPU 코어를 얼마나 할당할지에 대한 옵션으로, 적당한 값을 지정해줘야 모든 프로세스에서 최적의 성능을 보인다.</li>
+        <li>일반적으로 코어 개수의 절반정도 수치가 가장 무난한 것으로 알려져 있기 때문에, num_workers 값으로 4를 지정해줬다.</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="2-2-데이터-확인">2-2. 데이터 확인</h3>
+<p>Train 데이터는 약 2만4천개, Validation 데이터는 약 8천개 정도의 관측값이 존재한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">))</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>23989 7989
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>각각의 관측치는 이미지와 레이블로 구성되어 있다. 
+이미지는 [3,64,64]의 RGB 3채널 컬러 이미지이며, Label은 classes_list(클래스명 리스트)의 인덱스 번호로 저장되어있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"0번 데이터의 0번 원소 : "</span><span class="p">,</span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"0번 데이터의 1번 원소 : "</span><span class="p">,</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"0번 데이터의 Label : "</span><span class="p">,</span> <span class="n">classes_list</span><span class="p">[</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="p">])</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0번 데이터의 0번 원소 :  torch.Size([3, 64, 64])
+0번 데이터의 1번 원소 :  0
+0번 데이터의 Label :  Apple___Apple_scab
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>다음은 이미지를 시각화 한 것이다. 
+matplotlib에서 RGB 이미지를 표현하기 위해서는 [width, height, channel]의 shape를 가지고 있어야 하는데, 
+현재 torch 데이터의 shape는 [channel, width, height]이므로, permute()를 사용해 reshape 해준다. 
+premute(1,2,0)의 의미는, [3,64,64]에서 1번 원소(64), 2번 원소(64), 3번 원소(3)의 순으로 shape를 재배치 하라는 것이다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">classes_list</span><span class="p">[</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+<p><img src="https://user-images.githubusercontent.com/84084372/181293873-5f7909ae-798f-4f63-b3bc-829ee9896ee2.png" alt="image" /></p>
+
+<p><br /></p>
+
+<p>이미지 256개가 하나의 batch이고, 총 94개의 batch가 존재한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">first_batch</span> <span class="o">=</span> <span class="n">train_loader</span><span class="p">.</span><span class="n">__iter__</span><span class="p">().</span><span class="n">__next__</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"총 batch의 수 :"</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"첫 번째 batch의 shape :"</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"첫 번째 batch의 label (중간생략) :"</span><span class="p">,</span><span class="n">first_batch</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">10</span><span class="p">])</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>총 batch의 수 : 94
+
+첫 번째 batch의 shape : torch.Size([256, 3, 64, 64])
+
+첫 번째 batch의 label (중간생략) : tensor([30, 12,  3,  0,  8, 30,  4, 32, 25, 11])
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-3-cnn-구조-정의">2-3. CNN 구조 정의</h3>
+<ul>
+  <li>입력 데이터</li>
+</ul>
+
+<p align="center">[3, 64, 64]</p>
+
+<p><br /></p>
+
+<ul>
+  <li>Tensor의 가로와 세로의 크기</li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/181292290-ffe1bbe3-25be-4957-982c-bb770688b5e8.png" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>최종 출력 클래스</li>
+</ul>
+
+<p align="center">[33]</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/181302583-632957e3-a12f-4623-ac9a-68f7c2541ec9.png" /></p>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181301539-a1bc9526-a3ba-4b1b-a6e2-025b79173be5.png" alt="image" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181301565-73543f28-cce6-43b7-8ddb-93f898bfe584.png" alt="image" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/181301586-dac76d89-1d87-45c8-8dfd-f2dbc2036507.png" alt="image" /></p>
+
+<p><br /></p>
+
+<h3 id="2-4-cnn-구조-설계">2-4. CNN 구조 설계</h3>
+<p>앞서 정의한 CNN 구조를 바탕으로 베이스라인 모델을 설계한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+ 
+<span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span> 
+  
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    
+        <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span> 
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">33</span><span class="p">)</span> 
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>  
+    
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">training</span><span class="p">)</span> 
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">training</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">training</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>  
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">training</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
+
+        <span class="k">return</span> <span class="n">F</span><span class="p">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+
+<span class="n">model_base</span> <span class="o">=</span> <span class="n">Net</span><span class="p">().</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>  
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model_base</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span> 
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-5-모델-학습을-위한-함수">2-5. 모델 학습을 위한 함수</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">train</span><span class="p">()</span>  
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">),</span> <span class="n">target</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span> 
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span> 
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> 
+        <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>  
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>  
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-6-모델-평가를-위한-함수">2-6. 모델 평가를 위한 함수</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nb">eval</span><span class="p">()</span>  
+    <span class="n">test_loss</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>   
+    
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span> 
+        <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>  
+            <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">),</span> <span class="n">target</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>  
+            <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+            
+            <span class="n">test_loss</span> <span class="o">+=</span> <span class="n">F</span><span class="p">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">target</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s">'sum'</span><span class="p">).</span><span class="n">item</span><span class="p">()</span> 
+ 
+            
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">pred</span><span class="p">)).</span><span class="nb">sum</span><span class="p">().</span><span class="n">item</span><span class="p">()</span> 
+   
+    <span class="n">test_loss</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span> 
+    <span class="n">test_accuracy</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="n">test_loss</span><span class="p">,</span> <span class="n">test_accuracy</span>  
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-7-모델-학습">2-7. 모델 학습</h3>
+<p>CPU를 사용하여 학습을 진행했기 때문에, 총 학습시간은 2시간 반정도가 걸렸습니다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+ 
+<span class="k">def</span> <span class="nf">train_baseline</span><span class="p">(</span><span class="n">model</span> <span class="p">,</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
+    <span class="n">best_acc</span> <span class="o">=</span> <span class="mf">0.0</span>  
+    <span class="n">best_model_wts</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">state_dict</span><span class="p">())</span> 
+ 
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">since</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>  
+        <span class="n">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span>
+        <span class="n">train_loss</span><span class="p">,</span> <span class="n">train_acc</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">)</span> 
+        <span class="n">val_loss</span><span class="p">,</span> <span class="n">val_acc</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">val_acc</span> <span class="o">&gt;</span> <span class="n">best_acc</span><span class="p">:</span> 
+            <span class="n">best_acc</span> <span class="o">=</span> <span class="n">val_acc</span> 
+            <span class="n">best_model_wts</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">state_dict</span><span class="p">())</span>
+        
+        <span class="n">time_elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">since</span> 
+        <span class="k">print</span><span class="p">(</span><span class="s">'-------------- epoch {} ----------------'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'train Loss: {:.4f}, Accuracy: {:.2f}%'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">train_loss</span><span class="p">,</span> <span class="n">train_acc</span><span class="p">))</span>   
+        <span class="k">print</span><span class="p">(</span><span class="s">'val Loss: {:.4f}, Accuracy: {:.2f}%'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">val_loss</span><span class="p">,</span> <span class="n">val_acc</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Completed in {:.0f}m {:.0f}s'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">time_elapsed</span> <span class="o">//</span> <span class="mi">60</span><span class="p">,</span> <span class="n">time_elapsed</span> <span class="o">%</span> <span class="mi">60</span><span class="p">))</span> 
+    <span class="n">model</span><span class="p">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">best_model_wts</span><span class="p">)</span>  
+    <span class="k">return</span> <span class="n">model</span>
+ 
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">train_baseline</span><span class="p">(</span><span class="n">model_base</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">EPOCH</span><span class="p">)</span>  	 <span class="c1">#(16)
+</span><span class="n">torch</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">base</span><span class="p">,</span><span class="s">'baseline.pt'</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-------------- epoch 1 ----------------
+train Loss: 1.6946, Accuracy: 53.35%
+val Loss: 1.7151, Accuracy: 52.90%
+Completed in 5m 59s
+-------------- epoch 2 ----------------
+train Loss: 1.0632, Accuracy: 68.19%
+val Loss: 1.1031, Accuracy: 67.37%
+Completed in 5m 18s
+
+...
+(중략)
+...
+
+-------------- epoch 29 ----------------
+train Loss: 0.0645, Accuracy: 98.43%
+val Loss: 0.2199, Accuracy: 93.08%
+Completed in 5m 57s
+-------------- epoch 30 ----------------
+train Loss: 0.0845, Accuracy: 97.58%
+val Loss: 0.2538, Accuracy: 91.95%
+Completed in 5m 53s
+</code></pre></div></div>
+
+<h2 id="정리">정리</h2>
+<h3 id="1-netnnmodule">1. Net(nn.Module)</h3>
+<p>CNN의 구조를 정의 해주었다. 
+정의한 CNN 모델 Net()의 새로운 객체를 생성하여 현재 사용중인 장비에 할당하였다. 
+해당 모델은 model_base에 저장하였다. 
+또한, optimizer는 Adam으로 설정하고, 학습률은 0.001로 설정하였다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_base</span> <span class="o">=</span> <span class="n">Net</span><span class="p">().</span><span class="n">to</span><span class="p">(</span><span class="n">DEVICE</span><span class="p">)</span>  
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model_base</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span> 
+</code></pre></div></div>
+<p><br /></p>
+
+<h3 id="2-trainmodel-batch-optimizer">2. train(model, batch, optimizer)</h3>
+<p>모델 학습을 위한 일련의 과정을 담고 있다.
+model을 학습 모드로 설정하며, data와 target을 사용중인 장비에 할당하여 손실함수를 구한다. 
+분류 문제이므로 손실함수는 Cross Entropy Loss를 사용한다. 
+손실함수를 바탕으로 Gradient를 구하여, 손실함수를 최소로 하도록 Parameter를 업데이트 해주는 함수이다.</p>
+
+<p><br /></p>
+
+<h3 id="3-evaluatemodel-batch">3. evaluate(model, batch)</h3>
+<p>모델 평가를 위한 일련의 과정을 담고있다. 
+model를 평가 모드로 설정하며, data와 target을 사용중인 장비에 해당하여 총 loss 값과 총 정답 수를 구한다. 
+해당 값을 전체 batch 수로 나누어 loss와 정확도의 평균을 구하여, 이를 반환해주는 함수이다.</p>
+
+<p><br /></p>
+
+<h3 id="4-trainmodel-batch1-batch2-optimizer-num_epoch">4. Train(model, batch1, batch2, optimizer, num_epoch)</h3>
+<p>정확도가 가장 높은 모델과 그 수치를 저장하는 변수 best_model_wts, best_acc를 각각 초기화 한다. 
+이후, Train Batch로 모델을 학습하고, Train Batch와 Val Batch의 정확도와 loss를 구한다. 
+best_acc보다 val batch의 정확도가 더 높으면 best_acc와 best_model_wts를 업데이트한다. 
+해당 과정을 epoch 수만큼 반복하여 최적의 모델을 학습하고, 학습이 완료된 모델을 저장한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">base</span> <span class="o">=</span> <span class="n">train_baseline</span><span class="p">(</span><span class="n">model_base</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">EPOCH</span><span class="p">)</span>  	 <span class="c1">#(16)
+</span><span class="n">torch</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">base</span><span class="p">,</span><span class="s">'baseline.pt'</span><span class="p">)</span>
+</code></pre></div></div>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#cnn" class="page__taxonomy-item p-category" rel="tag">CNN</a><span class="sep">, </span>
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#pytorch" class="page__taxonomy-item p-category" rel="tag">pytorch</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%94%A5%EB%9F%AC%EB%8B%9D" class="page__taxonomy-item p-category" rel="tag">딥러닝</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5" class="page__taxonomy-item p-category" rel="tag">전이학습</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl-study" class="page__taxonomy-item p-category" rel="tag">DL_study</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-27">July 27, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BComputer+Vision%5D+%EC%9E%91%EB%AC%BC+%EC%9E%8E+%EC%82%AC%EC%A7%84%EC%9C%BC%EB%A1%9C+%EC%A7%88%EB%B3%91+%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0+%EC%98%88%EC%A0%9C+%ED%92%80%EC%9D%B4+%231%20http%3A%2F%2Flocalhost%3A4000%2Fdl_study%2F04_Leaf_Diseases%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_study%2F04_Leaf_Diseases%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_study%2F04_Leaf_Diseases%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/dl_study/MNIST_example/" class="pagination--pager" title="[Computer Vision] MNIST 예제 풀이
+">이전</a>
+    
+    
+      <a href="/dl_study/04_Leaf_Diseases(1)/" class="pagination--pager" title="[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #2
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/dl_study/MNIST_example/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[Computer Vision] MNIST 예제 풀이</a>
+    
+    
+      <a href="/dl_study/04_Leaf_Diseases(1)/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 풀이 #2</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/deform_detr/" rel="permalink">Deformable DETR(2021) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-27">July 27, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 24 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DEFORMABLE DETR: DEFORMABLE TRANSFORMERS FOR END-TO-END OBJECT DETECTION
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/tflite/" rel="permalink">Covert onnx(NCHW) to tflite(NHWC)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-27">July 27, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 10 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ONNX와 TFlite간의 format 문제 해결
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino_implements/" rel="permalink">Implementation of DINO(2022)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-27">July 27, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 05 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino/" rel="permalink">DINO(2022) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-27">July 27, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 02 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+  </body>
+</html>
