@@ -1,0 +1,1796 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[CS231n]Training Neural Networks, Part Ⅱ - 정완이의 개발 일기장</title>
+<meta name="description" content="Stanford University CS231n, Spring 2017, Lecture 7">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="[CS231n]Training Neural Networks, Part Ⅱ">
+<meta property="og:url" content="http://localhost:4000/dl_study/cs231n_7/">
+
+
+  <meta property="og:description" content="Stanford University CS231n, Spring 2017, Lecture 7">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-12-06T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-12-06T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl_study/cs231n_7/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		window.FontAwesomeKitConfig = {"asyncLoading":{"enabled":true},"autoA11y":{"enabled":true},"baseUrl":"https://ka-f.fontawesome.com","baseUrlKit":"https://kit.fontawesome.com","detectConflictsUntil":null,"iconUploads":{},"id":91177765,"license":"free","method":"css","minify":{"enabled":true},"token":"a076d05399","v4FontFaceShim":{"enabled":false},"v4shim":{"enabled":false},"v5FontFaceShim":{"enabled":false},"version":"5.15.4"};
+		!function(t){"function"==typeof define&&define.amd?define("kit-loader",t):t()}((function(){"use strict";function t(e){return(t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(e)}function e(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function n(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,o)}return n}function o(t){for(var o=1;o<arguments.length;o++){var r=null!=arguments[o]?arguments[o]:{};o%2?n(Object(r),!0).forEach((function(n){e(t,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):n(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],o=!0,r=!1,i=void 0;try{for(var c,a=t[Symbol.iterator]();!(o=(c=a.next()).done)&&(n.push(c.value),!e||n.length!==e);o=!0);}catch(t){r=!0,i=t}finally{try{o||null==a.return||a.return()}finally{if(r)throw i}}return n}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=new Array(e);n<e;n++)o[n]=t[n];return o}function c(t,e){var n=e&&e.addOn||"",o=e&&e.baseFilename||t.license+n,r=e&&e.minify?".min":"",i=e&&e.fileSuffix||t.method,c=e&&e.subdir||t.method;return t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/"+c+"/"+o+r+"."+i}function a(t){return t.baseUrlKit+"/"+t.token+"/"+t.id+"/kit-upload.css"}function u(t,e){var n=e||["fa"],o="."+Array.prototype.join.call(n,",."),r=t.querySelectorAll(o);Array.prototype.forEach.call(r,(function(e){var n=e.getAttribute("title");e.setAttribute("aria-hidden","true");var o=!e.nextElementSibling||!e.nextElementSibling.classList.contains("sr-only");if(n&&o){var r=t.createElement("span");r.innerHTML=n,r.classList.add("sr-only"),e.parentNode.insertBefore(r,e.nextSibling)}}))}var f,s=function(){},d="undefined"!=typeof global&&void 0!==global.process&&"function"==typeof global.process.emit,l="undefined"==typeof setImmediate?setTimeout:setImmediate,h=[];function m(){for(var t=0;t<h.length;t++)h[t][0](h[t][1]);h=[],f=!1}function p(t,e){h.push([t,e]),f||(f=!0,l(m,0))}function v(t){var e=t.owner,n=e._state,o=e._data,r=t[n],i=t.then;if("function"==typeof r){n="fulfilled";try{o=r(o)}catch(t){w(i,t)}}y(i,o)||("fulfilled"===n&&b(i,o),"rejected"===n&&w(i,o))}function y(e,n){var o;try{if(e===n)throw new TypeError("A promises callback cannot return that same promise.");if(n&&("function"==typeof n||"object"===t(n))){var r=n.then;if("function"==typeof r)return r.call(n,(function(t){o||(o=!0,n===t?g(e,t):b(e,t))}),(function(t){o||(o=!0,w(e,t))})),!0}}catch(t){return o||w(e,t),!0}return!1}function b(t,e){t!==e&&y(t,e)||g(t,e)}function g(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(S,t))}function w(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(O,t))}function A(t){t._then=t._then.forEach(v)}function S(t){t._state="fulfilled",A(t)}function O(t){t._state="rejected",A(t),!t._handled&&d&&global.process.emit("unhandledRejection",t._data,t)}function j(t){global.process.emit("rejectionHandled",t)}function E(t){if("function"!=typeof t)throw new TypeError("Promise resolver "+t+" is not a function");if(this instanceof E==!1)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this._then=[],function(t,e){function n(t){w(e,t)}try{t((function(t){b(e,t)}),n)}catch(t){n(t)}}(t,this)}E.prototype={constructor:E,_state:"pending",_then:null,_data:void 0,_handled:!1,then:function(t,e){var n={owner:this,then:new this.constructor(s),fulfilled:t,rejected:e};return!e&&!t||this._handled||(this._handled=!0,"rejected"===this._state&&d&&p(j,this)),"fulfilled"===this._state||"rejected"===this._state?p(v,n):this._then.push(n),n.then},catch:function(t){return this.then(null,t)}},E.all=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.all().");return new E((function(e,n){var o=[],r=0;function i(t){return r++,function(n){o[t]=n,--r||e(o)}}for(var c,a=0;a<t.length;a++)(c=t[a])&&"function"==typeof c.then?c.then(i(a),n):o[a]=c;r||e(o)}))},E.race=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.race().");return new E((function(e,n){for(var o,r=0;r<t.length;r++)(o=t[r])&&"function"==typeof o.then?o.then(e,n):e(o)}))},E.resolve=function(e){return e&&"object"===t(e)&&e.constructor===E?e:new E((function(t){t(e)}))},E.reject=function(t){return new E((function(e,n){n(t)}))};var _="function"==typeof Promise?Promise:E;function F(t,e){var n=e.fetch,o=e.XMLHttpRequest,r=e.token,i=t;return"URLSearchParams"in window?(i=new URL(t)).searchParams.set("token",r):i=i+"?token="+encodeURIComponent(r),i=i.toString(),new _((function(t,e){if("function"==typeof n)n(i,{mode:"cors",cache:"default"}).then((function(t){if(t.ok)return t.text();throw new Error("")})).then((function(e){t(e)})).catch(e);else if("function"==typeof o){var r=new o;r.addEventListener("loadend",(function(){this.responseText?t(this.responseText):e(new Error(""))}));["abort","error","timeout"].map((function(t){r.addEventListener(t,(function(){e(new Error(""))}))})),r.open("GET",i),r.send()}else{e(new Error(""))}}))}function P(t,e,n){var o=t;return[[/(url\("?)\.\.\/\.\.\/\.\./g,function(t,n){return"".concat(n).concat(e)}],[/(url\("?)\.\.\/webfonts/g,function(t,o){return"".concat(o).concat(e,"/releases/v").concat(n,"/webfonts")}],[/(url\("?)https:\/\/kit-free([^.])*\.fontawesome\.com/g,function(t,n){return"".concat(n).concat(e)}]].forEach((function(t){var e=r(t,2),n=e[0],i=e[1];o=o.replace(n,i)})),o}function C(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){},r=e.document||r,i=u.bind(u,r,["fa","fab","fas","far","fal","fad","fak"]),f=Object.keys(t.iconUploads||{}).length>0;t.autoA11y.enabled&&n(i);var s=[{id:"fa-main",addOn:void 0}];t.v4shim&&t.v4shim.enabled&&s.push({id:"fa-v4-shims",addOn:"-v4-shims"}),t.v5FontFaceShim&&t.v5FontFaceShim.enabled&&s.push({id:"fa-v5-font-face",addOn:"-v5-font-face"}),t.v4FontFaceShim&&t.v4FontFaceShim.enabled&&s.push({id:"fa-v4-font-face",addOn:"-v4-font-face"}),f&&s.push({id:"fa-kit-upload",customCss:!0});var d=s.map((function(n){return new _((function(r,i){F(n.customCss?a(t):c(t,{addOn:n.addOn,minify:t.minify.enabled}),e).then((function(i){r(U(i,o(o({},e),{},{baseUrl:t.baseUrl,version:t.version,id:n.id,contentFilter:function(t,e){return P(t,e.baseUrl,e.version)}})))})).catch(i)}))}));return _.all(d)}function U(t,e){var n=e.contentFilter||function(t,e){return t},o=document.createElement("style"),r=document.createTextNode(n(t,e));return o.appendChild(r),o.media="all",e.id&&o.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&o.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),o}function k(t,e){e.autoA11y=t.autoA11y.enabled,"pro"===t.license&&(e.autoFetchSvg=!0,e.fetchSvgFrom=t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/svgs",e.fetchUploadedSvgFrom=t.uploadsUrl);var n=[];return t.v4shim.enabled&&n.push(new _((function(n,r){F(c(t,{addOn:"-v4-shims",minify:t.minify.enabled}),e).then((function(t){n(I(t,o(o({},e),{},{id:"fa-v4-shims"})))})).catch(r)}))),n.push(new _((function(n,r){F(c(t,{minify:t.minify.enabled}),e).then((function(t){var r=I(t,o(o({},e),{},{id:"fa-main"}));n(function(t,e){var n=e&&void 0!==e.autoFetchSvg?e.autoFetchSvg:void 0,o=e&&void 0!==e.autoA11y?e.autoA11y:void 0;void 0!==o&&t.setAttribute("data-auto-a11y",o?"true":"false");n&&(t.setAttributeNode(document.createAttribute("data-auto-fetch-svg")),t.setAttribute("data-fetch-svg-from",e.fetchSvgFrom),t.setAttribute("data-fetch-uploaded-svg-from",e.fetchUploadedSvgFrom));return t}(r,e))})).catch(r)}))),_.all(n)}function I(t,e){var n=document.createElement("SCRIPT"),o=document.createTextNode(t);return n.appendChild(o),n.referrerPolicy="strict-origin",e.id&&n.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n}function L(t){var e,n=[],o=document,r=o.documentElement.doScroll,i=(r?/^loaded|^c/:/^loaded|^i|^c/).test(o.readyState);i||o.addEventListener("DOMContentLoaded",e=function(){for(o.removeEventListener("DOMContentLoaded",e),i=1;e=n.shift();)e()}),i?setTimeout(t,0):n.push(t)}function T(t){"undefined"!=typeof MutationObserver&&new MutationObserver(t).observe(document,{childList:!0,subtree:!0})}try{if(window.FontAwesomeKitConfig){var x=window.FontAwesomeKitConfig,M={detectingConflicts:x.detectConflictsUntil&&new Date<=new Date(x.detectConflictsUntil),detectionIgnoreAttr:"data-fa-detection-ignore",fetch:window.fetch,token:x.token,XMLHttpRequest:window.XMLHttpRequest,document:document},D=document.currentScript,N=D?D.parentElement:document.head;(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"js"===t.method?k(t,e):"css"===t.method?C(t,e,(function(t){L(t),T(t)})):void 0})(x,M).then((function(t){t.map((function(t){try{N.insertBefore(t,D?D.nextSibling:null)}catch(e){N.appendChild(t)}})),M.detectingConflicts&&D&&L((function(){D.setAttributeNode(document.createAttribute(M.detectionIgnoreAttr));var t=function(t,e){var n=document.createElement("script");return e&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n.src=c(t,{baseFilename:"conflict-detection",fileSuffix:"js",subdir:"js",minify:t.minify.enabled}),n}(x,M);document.body.appendChild(t)}))})).catch((function(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}))}}catch(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}}));	
+	</script>
+</head>
+<body>
+
+
+	
+
+
+</body>
+</html>
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
+        </a> -->
+          정완이의 개발 일기장
+          
+        </a>
+
+
+
+        <ul class="visible-links">
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">COMPUTER VISION  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_study">    스터디</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_optim">    모델 최적화</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_paper">    논문 리뷰</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">대외활동</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Internship">    2022 하반기 ICT 인턴십</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">프로젝트</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/bbeojung/bj_README/">    뻐정 : 버스정보종합시스템</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Web Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Jekyll</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">ML</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/ML">    Machine Learning</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+       </ul>
+
+       
+
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          [CS231n]Training Neural Networks, Part Ⅱ
+
+        
+      </h1>
+      <p class="page__lead">Stanford University CS231n, Spring 2017, Lecture 7
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-12-06">December 6, 2022</time></p>
+
+      <p>
+      
+        <a href="https://on-jungwoan.github.io/til/TIL-12/#1206" class="btn btn--light-outline btn--large">TIL로 돌아가기</a>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>AI/플랫폼 개발을 공부합니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">108</style> <span style="">개</style> 
+      </li>
+      <li>
+
+            <!--span 태그로 카테고리들을 크게 분류-->
+            <span class="nav__sub-title">Computer Vision</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_study" class="">스터디 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_optim" class="">모델 최적화 (5)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_paper" class="">논문 리뷰 (3)</a></li>
+                    
+                
+            </ul>    
+           
+
+            <span class="nav__sub-title">Study Note</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/web" class="">Web Dev (9)</a></li>
+                    
+                
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Jekyll Dev (16)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                           
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/tools" class="">ETC Tools (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+            
+            
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/toy_project" class="">Toy Project (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+   
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (10)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/etc" class="">etc (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[CS231n]Training Neural Networks, Part Ⅱ">
+    <meta itemprop="description" content="Stanford University CS231n, Spring 2017, Lecture 7">
+    <meta itemprop="datePublished" content="2022-12-06T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-12-06T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#optimization">Optimization</a><ul><li><a href="#1-sthochastic-gradient-descent-sgd">1. Sthochastic Gradient Descent (SGD)</a><ul><li><a href="#1-1-문제점">1-1) 문제점</a><ul><li><a href="#1-1-1-poor-conditioning">1-1-1) Poor conditioning</a></li><li><a href="#1-1-2-local-minima">1-1-2) Local minima</a></li><li><a href="#1-1-3-saddle-point-안장점">1-1-3) Saddle point (안장점)</a></li></ul></li></ul></li><li><a href="#2-sgd--momentum">2. SGD + Momentum</a><ul><li><a href="#2-1-learning-rate-decay">2-1) Learning rate decay</a></li></ul></li><li><a href="#3-nesterov-momentum">3. Nesterov momentum</a></li><li><a href="#4-adagrad">4. AdaGrad</a><ul><li><a href="#4-1-문제점">4-1) 문제점</a></li></ul></li><li><a href="#5-rmsprop">5. RMSProp</a></li><li><a href="#6-adam">6. Adam</a><ul><li><a href="#6-1-문제점">6-1) 문제점</a></li><li><a href="#6-2-해결--bias-correction-term">6-2) 해결 : bias correction term</a></li></ul></li><li><a href="#7-visualization">7. Visualization</a><ul><li><a href="#7-1-반응형-visualization-사이트">7-1) 반응형 Visualization 사이트</a></li></ul></li></ul></li><li><a href="#second-order-optimization">Second-Order Optimization</a><ul><li><a href="#1-newton-method">1. Newton method</a></li><li><a href="#2-quasi-newton-methods-l-bfgs">2. quasi-Newton methods (L-BFGS)</a></li></ul></li><li><a href="#traintest의-error-gap-해소">Train/Test의 Error gap 해소</a><ul><li><a href="#1-model-ensemble">1. Model ensemble</a></li><li><a href="#2-regularization">2. Regularization</a><ul><li><a href="#2-1-dropout">2-1) Dropout</a><ul><li><a href="#2-1-1-앙상블-효과">2-1-1) 앙상블 효과</a></li><li><a href="#2-1-2-average-out-in-test-time">2-1-2) Average out in test time</a></li></ul></li><li><a href="#2-2-inverted-dropout">2-2) Inverted Dropout</a></li><li><a href="#2-3-data-augmentation">2-3) Data augmentation</a></li><li><a href="#2-4-dropconnect">2-4) DropConnect</a></li><li><a href="#2-5-fractional-max-pooling">2-5) fractional max pooling</a></li><li><a href="#2-6-stochastic-depth">2-6) stochastic depth</a></li></ul></li></ul></li><li><a href="#transfer-learning">Transfer learning</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="optimization">Optimization</h1>
+
+<p>Normalization 시키지 않고, zero-centered 하지 않은 데이터는 학습시키기 어렵다. 아래는 Normalization 하기 전과 후의 데이터를 classifier로 분류하는 과정을 도식화 한 것이다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206093883-3be0f259-49f9-4dfe-8c59-8498612931d4.png" width="80%" style="border: 1px solid black" /></p>
+
+<p>위 그림에서도 알 수 있듯이, Normalization이 되지 않은 그래프는 Classifier가 조금만 움직여도 제대로 분류가 되지 않는다. 즉, Loss가 파라미터의 변화에 매우 민감하기 때문에 동일한 함수를 써도 학습시키기 어렵다. 반면, variance가 unit variance로 맞춰져 있고 zero-centered한 데이터는, 파라미터 변화에 덜 민감하기 때문에 최적화가 쉽고 학습이 잘 된다. Neural Network 내부에도 다수의 Linear Classifier가 있다고 생각할 수 있기 때문에, 적절한 Normalization 과정은 매우 중요하다.</p>
+
+<h2 id="1-sthochastic-gradient-descent-sgd">1. Sthochastic Gradient Descent (SGD)</h2>
+
+\[x_{t+1} = x_t - \alpha \nabla f(x_t)\]
+
+<p>가장 간단한 Optimizer로서, Layer에서 mini-batch를 뽑아 Loss를 계산하고, gradient의 반대 방향으로 계속 파라미터 벡터를 업데이트 한다. Loss가 낮은 쪽으로 이동해야하기 때문에 gradient의 반대 방향으로 내려가야 함을 유의하자. 위 과정을 계속 반복하면 Loss가 줄어들게 되는데, 이것이 바로 SGD이다.</p>
+
+<h3 id="1-1-문제점">1-1) 문제점</h3>
+
+<h4 id="1-1-1-poor-conditioning">1-1-1) Poor conditioning</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206098726-c0b8b8bb-674f-4c66-8a1b-63cd4a1d8e95.png" width="100%" style="border: 1px solid black" /></p>
+
+<p>만약 Loss 함수가 $f(x, y) = x^2 + y^2$와 같은 그래프라면, 아래로 볼록한 형태의 공간 그래프가 만들어진다. 이 때, 수평 방향으로는 기울기 변화가 작지만(등고선을 조금 통과), 수직 방향으로는 기울기 변화가 가파르기 때문에(등고선을 더 많이 통과), 두 벡터의 기울기 차로 인해 대각 방향으로 Loss가 줄어들게 된다. 따라서, Loss는 기울기가 가파른 방향으로 바로 내려가지 못하고, 사선으로 지그재그 하면서 minima에 도달하게 된다.</p>
+
+<h4 id="1-1-2-local-minima">1-1-2) Local minima</h4>
+
+<p>Loss function이 다음과 같은 Local Minima를 가지고 있다고 생각해보자.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206099361-5ef676b6-5630-4bfa-914c-7b46beedbc51.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>SGD는 위와 같은 Local minima를 만나게 되면, 그대로 학습이 영원히 중단된다. SGD는 local gradient를 찾아 그 반대방향으로 계속 나아가는 식으로 동작하는데, 한번 gradient가 0인 부분을 만나면 그 부분을 영원히 벗어나지 못하게 된다.</p>
+
+<h4 id="1-1-3-saddle-point-안장점">1-1-3) Saddle point (안장점)</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206107388-91d111bb-6221-4aa1-89a9-082eadf6221b.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>또한 SGD는, 위 그림과 같은 안장점에서 학습이 매우 더디게 진행되는 문제가 존재한다. 안장점에서는 gradient가 완전히 0은 아니지만, 0에 가까운 값을 가지기 때문에 업데이트가 매우 느리게 진행된다. 안장점은 차원이 높아질수록 매우 빈번하게 발생하므로, 이러한 굴곡을 벗어날 수 있는 힘이 필요하다.</p>
+
+<p><br /></p>
+
+<h2 id="2-sgd--momentum">2. SGD + Momentum</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206110916-f566827d-b697-4fd7-b395-6432eddd70a5.png" width="60%" style="border: 1px solid black" /></p>
+
+\[\begin{align}
+v_{t+1} &amp;= \rho v_t + \nabla f(x_t) \\
+x_{t+1} &amp;= x_t - \alpha v_{t+1}
+\end{align}\]
+
+<p>위 SGD의 문제를 해결하기 위해, gradient 방향 뿐만 아니라 velocity까지 고려한 Optimizer이다. 이때, velocity의 초기값 $v_0$는 0으로 두고, velocity의 영향력은 파라미터 $\rho$를 도입하여 맞춰준다. $\rho$는 보통 0.9나 0.99와 같은 높은 값을 사용한다. 여기에 gradient를 더하여, gradient vector 그대로의 방향이 아닌 velocity vector 방향으로 나아간다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206109994-96484e69-d27d-4c9b-9930-154ba8c4328a.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>가령, local minima나 saddle point에 도달하더라도 momentum이 아직 살아있기 때문에, 탈출하여 global minima에 도달할 수 있게 된다. 높은 곳에서 떨어지는 공의 움직임을 생각하면 된다. 또한, poor conditioning의 상황에서도, momentum이 지그재그로 움직이려는 변동을 상쇄시켜버린다. 이를 통해 loss에 민감한 수직 방향 변동을 줄여주고 수평 방향 움직임을 가속화 시키게 된다(Vanila SGD가 구불구불 움직이는 것에 비해 momentum은 global minima를 향해 더 부드럽게 움직인다).</p>
+
+<h3 id="2-1-learning-rate-decay">2-1) Learning rate decay</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206358845-3f73cd46-eea9-4d39-a592-c631a2f20c4b.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>학습에 있어서 가장 중요한 파라미터인 Learning rate를 잘 고르는 것은 매우 어렵다. 이런 경우, Learning rate decay라는 전략을 사용해 볼 수 있다. Learning rate decay란, 처음에는 Learning rate를 높게 설정한 다음, 학습이 진행될 수록 Learning rate를 점점 낮추는 방법이다. 위 그래프에서 Loss가 평평해지다가 다시 내려가는 구간이 바로 Learning rate decay를 적용한 구간이다. 위 그래프에서도 확인할 수 있듯이, Loss가 일정수준 감소하면 감소폭이 점점 줄어들다가 어느 순간 특정 값에 수렴한다. 이는, Learning rate가 너무 높아서 더 깊게 들어가지 못해 발생하는 현상이다. 따라서 이 때 Learning rate를 더 줄여주면, 지속해서 Loss를 감소시킬 수 있다.</p>
+
+<p>학습과정 동안에 꾸준히 Learning rate를 낮추는 exponential decay 방법을 사용할 수도 있고, 특정 반복(ex. 100,000iter)마다 Learning rate를 낮추는 방법도 있다. 상황에 맞게 사용하면 될 것 같다. Learning rate decay는 자주 사용하는 기법은 아니고, SGD Momentum을 Optimizer로 사용할 때 주로 적용한다.</p>
+
+<p><br /></p>
+
+<h2 id="3-nesterov-momentum">3. Nesterov momentum</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206111012-63b6edf9-70b2-4c69-9bc7-63a1e095ac84.png" width="60%" style="border: 1px solid black" /></p>
+
+\[\begin{align}
+v_{t+1} &amp;= \rho v_t + \nabla f(x_t + \rho v_t) \\
+x_{t+1} &amp;= x_t - \alpha v_{t+1}
+\end{align}\]
+
+<p>Momentum은 Gradient vector의 방향과 Velocity vector 방향을 가중평균한 방향으로 업데이트되는 것을 확인할 수 있었다. Nesterov momentum은 기존 방식에 비해 조금 더 업그레이드 된 버전으로, 일단 Velocity의 방향으로 움직인 후, 그 곳에서의 Gradient를 계산하여 다시 원점으로 돌아와 가중평균한다. 수식을 살펴보면, $x_t$ 에 추가적으로 velocity 값인 $\rho v_t$ 가 더해진 지점에서 gradient를 구하는 것을 확인할 수 있다. 그러나 위 식을 코드로 나타낼 때, 이미 구성되어있는 기본 optimization algorithm의 API 코드와 구조가 달라 호환성이 떨어지므로, 실제로는 아래와 같이 변형된 식을 사용한다.</p>
+
+\[let, \bar{x}_t = x_t + \rho v_t \\\]
+
+\[\begin{align}
+
+v_{t+1} &amp;= \rho v_t + \alpha \nabla f( \bar{x}_t ) \\
+x_{t+1} &amp;= x_t -  \rho v_t + (1+\rho)v_{t+1}\\
+&amp;= \bar{x}_t + v_{t+1} + \rho (v_{t+1} - v_t)
+
+\end{align}\]
+
+<p>이 식을 살펴보면, 현재/이전의 velocity간의 error-correcting term이 추가된 것으로 해석할 수 있다. Nesterov momentum을 활용하면, velocity의 방향이 잘못되었을 경우 현재 gradient 방향을 좀 더 활용할 수 있으며, 방향을 미리 예측하고 가기 때문에 Momentum보다 조금 더 빠르다고 한다. 그러나, Nesterov momentum은 볼록 최적화(convex optimization)에서는 좋은 성능을 보이지만, Neural network와 같은 non-convex optimization에서는 성능이 보장되지 않아, 잘 사용하지는 않는다.</p>
+
+<ul>
+  <li>
+    <p><strong>cf) minima가 좁고 깊은(Sharp) 곳에 있을 경우, momentum에 의해 minima를 건너 뛰는 경우가 생길 수 있지 않을까?</strong></p>
+
+    <p>우선, sharp한 minima는 좋은 minima가 아니다. 이러한 minima는 그만큼 특정 데이터에 overfitting 될 확률이 매우 높다. 하지만 데이터가 많아질수록 대부분의 경우 minima가 평평해지며, 이렇게 아주 평평한 minima는 training data의 변화에 좀 더 유연하게 대처할 수 있다. 따라서 양질의 좋은 데이터를 사용할 경우, Sharp한 minima에 대해서는 걱정하지 않아도 된다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="4-adagrad">4. AdaGrad</h2>
+
+\[\begin{align}
+g(t+1) &amp;= g(t) + \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}\]
+
+<p>훈련 도중 계산되는 gradient를 활용하는 방법이다. velocity term 대신에 각 gradient의 제곱합인 gradient squared term을 이용한다. 학습 도중에 계산되는 gradient에 제곱을 해서 계속 더해 $g()$에 저장하며, update시에 앞서 계산한 $g()$로 update term을 나눠준다. 이 때, 분모가 0이되는 상황을 방지하기 위해 분모에 작은 $\epsilon$값을 넣어준다(보통 1e-7, 1e-8).</p>
+
+<p>small dimension에서는 gradient가 작은 값이므로 큰 값으로 나눠져, 속도가 점점 빨라진다. 반대로, Large dimension에서는 gradient가 큰 값이므로 속도가 점점 줄어든다. 이를 통해, 파라미터 x마다 맞춤형 학습률을 제공하게 된다.</p>
+
+<h3 id="4-1-문제점">4-1) 문제점</h3>
+
+<p>학습을 계속 진행할수록 gradient의 제곱이 더해져 $g()$의 값은 커지고, 분모가 커지므로 step size는 점점 작아진다. convex case에서는 minimum에 근접하면 서서히 속도를 줄여서 수렴하는 게 도움이 될 수 있지만, non-convex case에서는 saddle point에 걸렸을 때 학습이 멈출 수 있다.</p>
+
+<p><br /></p>
+
+<h2 id="5-rmsprop">5. RMSProp</h2>
+
+<p>Adagrad의 step size 문제를 해결한 것이 바로 RMSProp이다.</p>
+
+\[\begin{align}
+g(t+1) &amp;= \gamma  g(t) + (1- \gamma) \{\nabla f(x_t)\}^2 \\
+x_{t+1} &amp;= x_t - \alpha \frac{\nabla f(x_t)}{\sqrt{}g(t)+\epsilon}
+\end{align}\]
+
+<p>AdaGrad의 gradient 제곱항을 그대로 사용하지만, 그저 누적만 시키는 것이 아니라 기존 누적값에 decay_rate인 $\gamma$를 곱해준다. decay rate는 보통 0.9 ,0.99와 같은 높은 값을 사용한다. gradient의 제곱을 계속 나눠주어 step size를 조절한다는 점에서 AdaGrad와 비슷하지만, RMSProp은 step size가 점점 줄어드는 문제를 해결하였다.</p>
+
+<p><br /></p>
+
+<h2 id="6-adam">6. Adam</h2>
+
+\[Adam \; (almost)\\\]
+
+\[\begin{align}
+
+M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+x_{t+1} &amp;= x_t - \alpha \frac{M(t)}{ \sqrt{V(t) + \epsilon} }
+
+
+\end{align}\]
+
+<p>Adam은 momentum 계열과 Ada 계열 Optimizer의 조합이라고 볼 수 있으며, RMSProp에서 분자의 gradient에 Momentum이 추가된 형태이다. 즉, Momentum과 RMSProp을 합친 것과 같다고 볼 수 있다. 보통 $\beta_1$ = 0.9, $\beta_2$ = 0.999로 설정하고, Laerning rate $\alpha$를 1e-3 or 1e-4정도로만 설정해 놓으면, 거의 모든 아키텍쳐에서 잘 동작한다. 또한 Adam에서도 마찬가지로, 분모가 0이 되는 경우를 방지하기 위해 분모에 $\epsilon$을 추가해주었다(1e-7 or 1e-8).</p>
+
+<h3 id="6-1-문제점">6-1) 문제점</h3>
+
+<p>그러나 위 식에는 큰 문제점이 하나 존재한다. 초기 Step에서는 $V()$의 값을 0으로 Initailize하게 되는데, 이 값이 분모에 들어가게 되면 step이 매우 큰 값으로 초기화된다. 이렇게 되면 초기화가 엉망이 되어 아주 엉뚱한 곳으로 값이 이동할 것이고, 결국 minima에 수렴하지 않을 수도 있다.</p>
+
+<h3 id="6-2-해결--bias-correction-term">6-2) 해결 : bias correction term</h3>
+
+\[\mathsf{Adam \; (Full \ Form)}\\\]
+
+\[\begin{align}
+
+M(t+1) &amp;= \beta_1 M(t) + (1 - \beta_1) \nabla f(x_t) \\
+V(t+1) &amp;= \beta_2 V(t) + (1 - \beta_2) \{ \nabla f(x_t) \}^2 \\
+
+\end{align}\]
+
+\[\hat{ M }(t) = \frac{ M(t) }{ 1 - \beta_1^t  } \\
+\hat{ V }(t) = \frac{ V(t) }{ 1 - \beta_2^t } \\\]
+
+\[x_{t+1} = x_t - \alpha \frac{\hat{M}(t)}{\sqrt{\hat{V}(t) - \epsilon}}\]
+
+<p>따라서 실제 Adam에서는 first moments($M$, Momentum)와 second moments($V$, RMSProp)를 update하고 난 후 현재 step에 맞는 적절한 unbiased term을 계산해준다. 딥러닝 분야에서 일반적으로 가장 많이 사용하는 Optimizer이며, 별다른 계획이 없는 경우 Adam을 사용하면 대체로 좋은 성능을 보인다.</p>
+
+<p><br /></p>
+
+<h2 id="7-visualization">7. Visualization</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png" width="100%" style="border: 1px solid black" /></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206355974-60560ff9-a46a-4fc2-a562-af08ba1aeea1.png" width="100%" style="border: 1px solid black" /></p>
+
+<p>위 장면을 보면, Adam을 제외한 다른 Optimizer들은 모두 global minima에 도달하지 못하는 모습을 확인할 수 있다.</p>
+
+<p>그러나 아래의 참고자료와 같이 다른 Optimizer만이 global minima에 도달하는 경우도 있기 때문에, 상황에 맞는 Optimizer를 사용하는 것이 중요하다고 할 수 있다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206356653-0680f10c-50a5-44bd-8eab-f2d629242535.png" width="100%" style="border: 1px solid black" /></p>
+
+<p align="center"><img src="https://emiliendupont.github.io/imgs/optim_viz_rastrigin.gif" width="100%" style="border: 1px solid black" /></p>
+
+<h3 id="7-1-반응형-visualization-사이트">7-1) 반응형 Visualization 사이트</h3>
+
+<ul>
+  <li>
+    <p><a href="https://distill.pub/2017/momentum/">https://distill.pub/2017/momentum/</a></p>
+  </li>
+  <li>
+    <p><a href="https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true">https://bl.ocks.org/EmilienDupont/raw/aaf429be5705b219aaaf8d691e27ca87/?raw=true</a></p>
+  </li>
+  <li>
+    <p><a href="https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function">https://observablehq.com/@emiliendupont/optimization-on-rastrigin-function</a></p>
+  </li>
+  <li>
+    <p><a href="https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function">https://observablehq.com/@emiliendupont/optimization-on-rosenbrock-function</a></p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="second-order-optimization">Second-Order Optimization</h1>
+
+<h2 id="1-newton-method">1. Newton method</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206360046-a992da56-5050-402b-9f4c-f9e4b8c82192.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>first-order optimization(Adam, RMSProp 등)은 어떤 한 점에서 gradient를 계산하여 손실함수를 선형 함수로 근사시킨다. 이 근사함수를 실제 손실함수라고 가정하고 step을 내려가게 되는데, 이 근사함수로는 멀리까지 갈 수 없다는 한계가 존재한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206360062-941a2845-e00a-480b-9352-f6db877c280e.png" width="60%" style="border: 1px solid black" /></p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206360485-23f39c66-0875-49c1-8034-d00eb3f291ae.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>따라서 등장하게 된 방법이 Second-Order Optimization인데, 이 optimization은 손실함수를 2차 함수로 근사시킨다. 이러한 2차 근사를 이용하면 minima에 더 잘 근접할 수 있다고 한다. 이는, 다차원으로 확창시켰을 때 <code class="language-plaintext highlighter-rouge">Newton step</code>이라고 불리며, Hessian matrix(2차 미분값들로 된 행렬)의 역행렬을 이용하여 (실제 손실함수의 2차 근사를 통해) minima로 곧장 이동한다. 또한, 매 순간 minima를 향해 이동하기 때문에, 이론상 Learning rate가 필요하지 않다(실제로는 2차 근사도 완벽하지 않기 떄문에 필요하긴 함)는 장점이 있다. 그러나 파라미터가 많은 딥러닝에서는 메모리 문제떄문에 사용할 수 없고, Full Hessian을 근사시켜 사용하는 <code class="language-plaintext highlighter-rouge">quasi-Newton methods</code>를 사용한다.</p>
+
+<p><br /></p>
+
+<h2 id="2-quasi-newton-methods-l-bfgs">2. quasi-Newton methods (L-BFGS)</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206362004-e24584b4-9c6f-42d2-84ab-c7517d5a2490.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>위에서 잠시 설명했듯이, Newton 방법에서 Hessian의 계산을 근처 함수값을 이용하여 근사적으로 numeric하게 계산하여 사용하는 최적화 기법들을 Quasi-Newton Method(준-뉴턴 방식)라고 부른다. Hessian을 구체적으로 어떻게 근사하느냐에 따라서 여러 Quasi-Newton 방법들이 있으며 그중 가장 대표적으로 사용되는 방법이 L-BFGS (Limited memory Broyden–Fletcher–Goldfarb–Shanno) 방법이다. Full Batch Update가 가능하고 Stochasticity가 적은 경우라면, L-BFGS가 Adam보다 더 좋은 선택이 될 수 있다고 한다. stochastic case와 non-convex problems에서 2차 근사가 잘 동작하지 않기 때문에, NN(DNN 등)에서는 많이 사용되지는 않지만, stochasticity와 파라미터가 적은 Style transfer와 같은 알고리즘에서 종종 사용되는 Optimizer이다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="traintest의-error-gap-해소">Train/Test의 Error gap 해소</h1>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206362142-15ace2a0-36df-47ec-8c4b-31f01ca12aab.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>optimization 알고리즘들은 training error를 줄이고, 손실 함수를 최소화시키기 위한 역할을 수행한다. 그러나 우리는, training error보다는 train/test error의 격차를 줄이는 것이 진정한 목표이다. 그렇다면, 한번도 보지 못한 데이터에 대한 error를 줄이는 방법은 어떤 것들이 있을까?</p>
+
+<h2 id="1-model-ensemble">1. Model ensemble</h2>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206362561-cd03e64c-d4fe-4b06-b185-f094bda07724.png" width="100%" style="border: 1px solid black" /></p>
+
+<p>모델을 하나만 학습시키지 말고 n개의 모델을 독립적으로 학습 시켜, n개 모델 결과의 평균을 이용한다. 모델의 수가 늘어날수록 오버피팅이 즐어들고 성능이 조금씩 향상된다(보통 2%정도).</p>
+
+<p>또한, 모델을 독립적으로 학습시키는 것이 아니라, 학습 도중 중간 모델들을 저장(snapshots)하고 앙상블로 사용할 수도 있다. 그리고 나서, test time에는 여러 snapshots에서 나온 예측값들을 평균 내서 사용한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206362687-09681dd5-957f-44ff-bf1c-59260e2da631.png" width="60%" style="border: 1px solid black" /></p>
+
+<ul>
+  <li>
+    <p><strong>cf) Polyak averaging</strong></p>
+
+    <p>또한, 학습하는 동안에 파라미터의 exponentially decaying everage를 계속 계산하는 <code class="language-plaintext highlighter-rouge">Polyak averaging</code>이라는 방법을 사용해 볼수도 있다. 이 방법은 학습중인 네트워크의 smooth ensemble 효과를 얻을 수 있으며, checkpoinsts에서의 파라미터를 그대로 쓰지 않고 smoothly decaying average를 사용하는 방법이다. 한번쯤 시도해 볼만한 방법이긴 하지만, 실제로 자주 사용하지는 않는다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-regularization">2. Regularization</h2>
+
+<h3 id="2-1-dropout">2-1) Dropout</h3>
+
+<p>모델 앙상블을 하려면, N개의 모델을 돌려야 하는데 자원이나 시간 방면에서 그렇게 좋은 방법은 아니다. 따라서 단일 모델의 성능을 올리는 것이 가장 바람직한 방법이고, 그 방법이 바로 Regularization이다. regularization은 모델이 train data에 완전히 fit하는 것을 막아주어 한번도 보지 못한 데이터에서의 성능을 향상시킨다. 앞선 포스팅에서 L2 regularization에 대해 소개한 적이 있었다( 참고 : <a href="https://on-jungwoan.github.io/dl/cs231n_3/#2-2-regularization%EC%9D%98-%EC%A2%85%EB%A5%98">[CS231n]Loss Functions and Optimization</a> ). 그러나 NN에서는 L2 regularization이 잘 어울리지는 않고, dropout이라는 regularization을 가장 많이 사용한다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206363244-79b20be1-c338-477b-8274-9038e25ad0a0.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>dropout은 정말 간단한데, forward pass 과정에서 임의로 일부 뉴런을 0으로 만드는 것이다. dropout은 한 레이어씩 진행하며, forward pass iteration마다 0이 되는 뉴런이 바뀐다. 이를 통해, 특징들간의 상호작용을 방지하여 어떤 일부 features에만 의존하지 못하게 하고, 다양한 geatures를 골고루 사용하게 함으로써 오버피팅을 방지한다. Dropout은 fc layer에서 흔히 사용하지만, conv layer에서도 종종 볼 수 있다.</p>
+
+<ul>
+  <li>
+    <p><strong>about BN</strong></p>
+
+    <p>BN에도 충분히 regularization 효과가 있기 때문에 BN 사용시에는 Dropout을 사용하지 않는다. 그러나 예외적으로, BN을 사용했음에도 불구하고 오버피팅이 발생하는 경우에는 Dropout과 같은 다양한 regularization 방법을 추가해로 사용해 볼 수 있다(오버피팅의 조짐이 보일 떄 하나씩 추가시켜 봄).</p>
+  </li>
+</ul>
+
+<h4 id="2-1-1-앙상블-효과">2-1-1) 앙상블 효과</h4>
+
+<p>Dropout을 적용한 네트워크를 살펴보면, 원본 NN의 일부만 사용하는 서브 네트워크라고 해석할 수 있다. 또한, 각 forward pass interation마다 dropout을 다르게 적용하기 때문에, 서로 파라미터를 공유하는 서브 네트워크 앙상블 모델을 동시에 학습시키는 것으로 해석할 수 있다. 즉, 단일 네트워크로 앙상블을 할 수 있는 것이다.</p>
+
+<h4 id="2-1-2-average-out-in-test-time">2-1-2) Average out in test time</h4>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206364195-ece425b0-ae00-4a07-894b-2ac579439b6b.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>기존 Neural Network는 가중치 w와 입력 x에 대한 함수였다. 그러나 dropout을 사용하면 network에 random dropout mask인 z가 추가된다. 그러나 test time에서 이러한 임의성(stochastic)이 포함되는 것은 바람직하지 않다. test time에 이러한 임의성이 추가되면, 모델의 결과가 매번 바뀌게 되므로, 적분을 통해 이 임의성을 average out시킨다.</p>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206364426-0d0f7f5d-1ca1-4508-b0c0-ec49b3ceaf5a.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>그러나, 실제로 이 적분을 계산하기는 까다롭기 때문에 dropout에서는 위 수식과 같이 locally cheap한 방법을 사용하여 해당 식을 근사시킨다.</p>
+
+<h3 id="2-2-inverted-dropout">2-2) Inverted Dropout</h3>
+
+<p>train time에서는 데이터를 마구잡이로 흔들어놓아, 모델이 데이터에 완전히 fit하지 않게 하고, test time에서는 randomness를 average out 시켜서 generalization 효과를 준다고 한다. 나중에 자세히 알아보도록 하자.</p>
+
+<h3 id="2-3-data-augmentation">2-3) Data augmentation</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206369628-301c5b85-f122-4c15-984e-c36c3a26d07a.png" width="100%" style="border: 1px solid black" /></p>
+
+<p>이미지의 label을 바꾸지 않으면서, 이미지를 변환시킬 수 있는 방법을 말한다. 원본 이미지를 사용하지 않고, 카테고리만 유지한 채 반전시키거나 임의의 다양한 사이즈로 crop할 수도 있음(카테고리는 동일). 또는 이미지의 밝기나 contrast등을 바꿀 수도 있다. 이는 일종의 regularization이며, 다른 regularization과 동일하게 train time에는 stochasticity가 추가되고, test time에는 marginalize out 시킨다.</p>
+
+<h3 id="2-4-dropconnect">2-4) DropConnect</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206370104-19232aab-493e-4973-a92f-6cbd3577147e.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>activation이 아닌 width matrix를6임의적으로 0으로 만들어줌</p>
+
+<h3 id="2-5-fractional-max-pooling">2-5) fractional max pooling</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206370190-5210a695-f004-4828-89fa-97ef55d8d3c2.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>실제로 자주 사용하지는 않지만, Justin Johnson이 추천하는 아주 좋은 regularization 기법이다. 보통 2x2 max pooling은 고정된 2x2 영역에서 pooling을 하지만, fractional max pooling은 max pooling 범위가 임의로 선정된다. test time시에는, pooling layer를 고정시키거나, 여러개의 pooling regions를 만들어 stochasticity를 averaging over시키면 된다.</p>
+
+<h3 id="2-6-stochastic-depth">2-6) stochastic depth</h3>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206370837-df7efe04-162e-462c-8c5d-23f9f60eb0ff.png" width="60%" style="border: 1px solid black" /></p>
+
+<p>train time에서는 Layer의 일부를 건너 뛰고 학습하고, test time에서는 전체 네트워크를 다 사용하는 방법이다. regularization 효과는 dropout과 같은 다른 방법과 비슷한 수준이다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="transfer-learning">Transfer learning</h1>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/181512540-12cc7327-f854-4ba3-8a54-c7990caed605.png" /></p>
+
+<p>충분한 데이터가 없는 경우, 오버피팅의 위험성이 증가하게 되는데, 이런 경우 사용할 수 있는 방법이 Transfer learning이다. 우선, ImageNet과 같은 거대한 데이터로 학습이 된 모델의 FC Layer를 초기화 시킨다. 그리고 우리가 필요한 클래스의 개수로 맞춰주기만 하면 된다. 그리고 이 Layer 이전의 모든 Layer 가중치는 freeze시켜 더 이상 업데이트 되지 않게 하고, 마지막 레이어만 가지고 데이터를 학습시킨다. 이는 마치 Linear Classifier를 학습시키는 것과 같다(아주 작은 데이터셋에도 적용이 가능함) 만약 데이터가 조금 더 있다면 전체 네트워크를 fine-tuning하여 사용할 수 있다. 이 때, 기존의 모델이 잘 동작하는 경우, 보통 Learning rate를 기존 모델보다 낮게 설정한다. 기존 LR의 1/10정도로 초기화하면 대체로 잘 동작한다. 보다 자세한 설명은 아래 포스팅에 자세히 정리해두었다.</p>
+
+<ul>
+  <li>
+    <p><strong>Link</strong></p>
+
+    <p><a href="https://on-jungwoan.github.io/dl/04_Leaf_Diseases(1)/#%EC%A0%84%EC%9D%B4%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80">Pytorch를 사용한 분류문제 학습 : 전이학습이란?</a></p>
+  </li>
+</ul>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/206378927-20171833-3e38-48ef-8c3a-84003fe4c167.png" width="60%" style="border: 1px solid black" /></p>
+
+<p><br />
+<br /></p>
+
+<ul>
+  <li>
+    <p><strong>Reference</strong></p>
+
+    <p><a href="https://twinw.tistory.com/247">수식과 코드로 보는 경사하강법</a></p>
+
+    <p><a href="https://emiliendupont.github.io/2018/01/24/optimization-visualization/">Interactive Visualization of Optimization Algorithms in Deep Learning</a></p>
+
+    <p><a href="https://darkpgmr.tistory.com/149">최적화 기법의 직관적 이해</a></p>
+
+    <p><a href="https://bookandmed.tistory.com/56">Training Neural Networks II</a></p>
+
+    <p>A deep learning perspective of the forward and inverse problems in exploration geophysics (Jian Sun, 2019)</p>
+  </li>
+</ul>
+
+        
+          
+          
+                  
+          <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-12/#1206">본문으로 돌아가기</a></div>
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a><span class="sep">, </span>
+    
+      <a href="/tags/#ict%EC%9D%B8%ED%84%B4%EC%8B%AD" class="page__taxonomy-item p-category" rel="tag">ICT인턴십</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl-study" class="page__taxonomy-item p-category" rel="tag">DL_study</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-12-06">December 6, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BCS231n%5DTraining+Neural+Networks%2C+Part+%E2%85%A1%20http%3A%2F%2Flocalhost%3A4000%2Fdl_study%2Fcs231n_7%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_study%2Fcs231n_7%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_study%2Fcs231n_7%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/toy_project/auto_raw/" class="pagination--pager" title="[업무 자동화] 행 생성 업무 자동화(초안)
+">이전</a>
+    
+    
+      <a href="/dl_study/cs231n_9/" class="pagination--pager" title="[CS231n]CNN Architectures
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/dl_study/cs231n_6/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>[CS231n]Training Neural Networks, Part I</a>
+    
+    
+      <a href="/dl_study/cs231n_9/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>[CS231n]CNN Architectures</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/deform_detr/" rel="permalink">Deformable DETR(2021) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-12-06">December 6, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 24 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DEFORMABLE DETR: DEFORMABLE TRANSFORMERS FOR END-TO-END OBJECT DETECTION
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/tflite/" rel="permalink">Covert onnx(NCHW) to tflite(NHWC)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-12-06">December 6, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 10 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ONNX와 TFlite간의 format 문제 해결
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino_implements/" rel="permalink">Implementation of DINO(2022)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-12-06">December 6, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 05 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino/" rel="permalink">DINO(2022) 논문 정리 (진행중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-12-06">December 6, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 02 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+  </body>
+</html>

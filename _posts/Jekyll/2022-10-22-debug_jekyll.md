@@ -116,7 +116,17 @@ ruby 터미널에 다음과 같이 입력하면 된다.
 
 <br>
 
-### 5-3) 기타 대부분의 오류
+### 5-3) Could not find gem 'wdm (>= 0.1.0) x86-mingw32' in any of the gem sources listed in your Gemfile
+
+대부분 linux 환경에서 bundle install시 발생하는데, 이는 권한이 없어서 발생하는 이슈이기 때문에 super user 권한으로 접근하면 해결된다.
+
+```
+>>> sudo bundle install
+```
+
+<br>
+
+### 5-4) 기타 대부분의 오류
 
  `bundle update`를 해주면 대부분 해결된다.
 
