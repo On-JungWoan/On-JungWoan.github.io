@@ -166,9 +166,11 @@ $$
 
 ### 4-1-3) Deformable Transformer Encoder
 
-
+다음은 Multi-sacle deformable attention의 encoder에서의 적용에 대한 설명입니다. Encoder는 multi-scale deformable attention module을 사용한다는 점을 제외하면 기존 DETR의 encoder와 동일합니다. Encoder에서는 ResNet backbone 모델의 feature map을 input으로 받아 multi-scale feature map을 추출합니다. 이 때 input으로 들어가는 feature map은 input image의 $2^{-5}$~$2^{-3}$(본문에서는 $C_3$~$C_5$로 표현)의 resolution을 갖는 feature map입니다. 또한, encoder에서는 FPN을 사용하지 않고도 좋은 performance를 유지할 수 있었다고 합니다.<br>
+encoder의 input과 output은 동일한 resolution을 갖는 multi-scale feature map이며, key/query element는 multi-scale feature map으로부터 추출된 pixel 값들 입니다. 이 때, 각 query pixel에서 reference point는 자기 자신입니다. 또한 각 query pixel이 어떤 feature level에 속하는지 구별하기 위해 positional embedding 외에도 $e_l$이라는 sacle-level embedding을 추가하였으며, fixed encoding과는 다르게 학습 가능하다는 특징이 있습니다.
 
 ### 4-1-4)
+
 
 
 # background
