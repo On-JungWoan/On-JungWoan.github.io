@@ -162,11 +162,47 @@ MSDeformAttn(z_q , \hat{p}_q , {x^l}^L_{l=1})
 ]  
 $$
 
-복잡해보이는 수식이지만, 4-1-1의 single-scale과 유사한 구조를 가지고 있습니다. 우선, 몇몇 annotation에 대해 설명드리겠습니다. 우선, reference points($\hat p_q$)의 경우 top-left를 (0,0) bottom-right를 (1,1)로 하여 normalized 되었으며, $φl (p̂q )$는 이를 denormalize하는 function입니다. nulti-scale feature map으로부터 LK개의 sample point를 추출한다는 것을 제외하면 기존 single-feature map과 계산식은 동일합니다..
-     
+복잡해보이는 수식이지만, 4-1-1의 single-scale과 유사한 구조를 가지고 있습니다. 우선, 몇몇 annotation에 대해 설명드리겠습니다. 우선, reference points($\hat p_q$)의 경우 top-left를 (0,0) bottom-right를 (1,1)로 하여 normalized 되었으며, $φl (p̂q )$는 이를 denormalize하는 function입니다. nulti-scale feature map으로부터 LK개의 sample point를 추출한다는 것을 제외하면 기존 single-feature map과 계산식은 동일합니다.
 
 ### 4-1-3) Deformable Transformer Encoder
 
 
 
 ### 4-1-4)
+
+
+# background
+
+## object detection
+
+### 1/2-stage
+
+### transformer
+
+### DETR  
+
+### Deformable Convolution
+
+
+
+# Architecture
+
+## multi-scale
+
+resnet에 태워서 얻게되는 feature map의 마지막 feature맵을 사용
+resolution이 작은만큼 정교함이 적음(작은 물체 탐지 x) -> 따라서 multi-scale 사용
+
+## Deformable Attenton
+
+모든 input에 대해서 attention을 수행하는 것이 아님
+obj detection의 경우 attention weight가 한 곳에 focusing을 해야하는 데 전부 다 쓰면 오래걸릴 수밖에 없음(초기에는 uniform하기 때문)
+
+동그라미 query, key는 다른 scale 이미지를 모두 보고 정해진 개수ㅏㅁㄴ큼 샘플링
+
+디코더의 오브젝트 쿼리도 모든 이미지를 다 보는 게 아니라 샘플링 포인트로부터 추출된 피쳐값들만 사용
+
+
+
+인코더에서는 쿼리가 곧 레퍼런스 포인터가 됨 (디코더는 다름)
+
+
