@@ -1,7 +1,6 @@
 ---
-title:  "Deformable DETR(2021) 논문 정리 (진행중)"
-excerpt: "DEFORMABLE DETR: DEFORMABLE TRANSFORMERS
-FOR END-TO-END OBJECT DETECTION"
+title:  "Deformable DETR(2021) 논문 정리"
+excerpt: "Deformable DETR: Deformable Transfomers for End-to-End Object Detection"
 
 categories:
   - DL_paper
@@ -102,11 +101,14 @@ self attention과 cross attention을 마친 object query는 최종적으로 GT b
 
   bbox의 loss를 계산하는 방법에는 대표적으로 IoU, GIoU등이 있습니다. IoU는 두 bbox A, B에 대해서, A와 B의 합집합 대비 교집합이 차지하는 비율을 수치로 나타낸 loss입니다. 그러나 IoU는 A와 B의 교집합이 존재하지 않을 경우 항상 0이 되기 때문에 box loss로 사용하기에 한계가 있습니다. 따라서 DETR은 GIoU를 box loss로 사용합니다. GIoU는 bbox A, B를 모두 포함하는 최소 크기의 bbox C를 도입함으로써 기존 IoU의 문제를 해결합니다. 위에 나와있는 표는, loss에 대한 ablation table입니다. l1 loss는 AP에 큰 영향을 주지 못하지만, GIoU는 AP에 큰 영향을 주고 있는 모습을 확인할 수 있습니다.
 
+<br>
+<br>
+
+다시 bipartite matching에 대해 살펴보도록 하겠습니다. 이렇게 계산된 loss를 바탕으로 hungarian algorithm을 통해 loss가 최소가 되는 최적의 matching을 찾게 됩니다. 이 과정에서 각 object query들은 각각의 GT box 또는 no object와 일대일 매칭되며, 잘못 예측된 query의 경우 수정됩니다.
 
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229884104-c214d431-c33d-4db1-90ff-37246b401540.png" style="border: 1px solid black"></p>
 
-다시 bipartite matching에 대해 살펴보도록 하겠습니다. 이렇게 계산된 loss를 바탕으로 hungarian algorithm을 통해 loss가 최소가 되는 최적의 matching을 찾게 됩니다. 이 과정에서 각 object query들은 각각의 GT box 또는 no object와 일대일 매칭되며, 잘못 예측된 query의 경우 수정됩니다.
 
 <br>
 
