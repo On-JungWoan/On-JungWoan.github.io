@@ -7,8 +7,8 @@
     울산과학기술원 인공지능대학원 백승렬 교수 연구실
   quote-align: quote-left
   description: | # this will include new lines to allow paragraphs
-    * DINO : detr with improved denoising anchor boxes for end-to-end object detection(2022)
-    * torch to tflite 변환작업
+    * DETR 계열 model에 대한 Study
+    * 2023 LG 산학협력프로젝트(Convert Torch to ONNX to TF to TFLite)
     * 현재 인턴 진행 중
 
 - layout: left
