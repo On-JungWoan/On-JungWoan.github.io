@@ -17,7 +17,7 @@ last_modified_at: 2022-03-24
 use_math: true
 ---
 
-> 발표자료 : <https://docs.google.com/presentation/d/1G_5HbKuDhhoRWmFb5l5znt_aRF-gxJ1Y/edit#slide=id.p17>
+> 발표자료 : <https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&ouid=116507288704586191771&rtpof=true&sd=true>
 
 > 논문링크 : [Deformable DETR: Deformable Transformes for End-to-End Object Detection](https://arxiv.org/pdf/2010.04159.pdf)
 
@@ -134,7 +134,7 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 <br>
 <br>
 
-# 1. Deformable DETR
+# 2. Deformable DETR
 
 이러한 문제를 해결하기 위해 저자는 `Deformable DETR`이라는 새로운 방법론을 제시합니다. Deformable DETR에는 다음과 같은 2개의 key concept가 존재합니다.
 
@@ -146,7 +146,7 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
     `Deformable Attention`을 통해 메모리 문제를 해결함으로써 feature map에 대한 resolution 제한을 완화할 수 있었습니다. 이를 바탕으로 `다양한 Scale의 Feature map`을 사용함으로써 작은 obj에 대한 performance를 향상시킵니다.
 
-## 1-1. Architecture
+## 2-1. Architecture
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229887003-40642946-23eb-42c4-8bd6-31825242f788.png" style="border: 1px solid black"></p>
 
@@ -167,7 +167,7 @@ Deformable DETR의 경우, DETR과 전체적인 task는 크게 다르지 않습�
 <br>
 <br>
 
-## 1-2. Deformable Attention
+## 2-2. Deformable Attention
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229893183-0b2d86d8-6c68-4b97-ba0f-55b9e26c2158.png" style="border: 1px solid black" width="60%"></p>
 
@@ -179,7 +179,7 @@ Deformable DETR의 경우, DETR과 전체적인 task는 크게 다르지 않습�
 <br>
 <br>
 
-## 1-3. Multi-scale Deformable Attention
+## 2-3. Multi-scale Deformable Attention
 
 <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229963350-8b2122ca-f4f3-4136-9c95-1e110e27d22d.png" style="border: 1px solid black"></p>
 
@@ -193,25 +193,77 @@ Deformable DETR의 경우, DETR과 전체적인 task는 크게 다르지 않습�
 <br>
 <br>
 
-## 1-4. Encoder
+## 2-4. Encoder
 
 Deformable DETR의 encoder가 DETR과 다른 점은, attention weight를 계산하는 데 모든 pixel을 사용하지 않는다는 것 입니다. DETR에서는 모든 pixel을 사용하여 attention weight를 계산하였기 때문에 memory complexity 문제가 발생하였고, attention weight가 uniform 하게 initialize되어 수렴해에 도달하기까지 매우 많은 시간이 필요했습니다. 그러나 Deformable DETR의 deformable attention은 특정 `reference point` 근처의 `sampling point`에 대해서만 attention weight를 계산하게 됩니다. 아래 figure는 직접 시각화해본 sampling point와 attention weight입니다.
 
-![image](https://user-images.githubusercontent.com/84084372/229964910-47066c77-dc47-453c-9147-6cd7075fca6f.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229964910-47066c77-dc47-453c-9147-6cd7075fca6f.png" width="80%" style="border: 1px solid black"></p>
 
 reference point는 layer를 거듭할 수록 더욱 정교하게 수정되며, 이를 바탕으로 최적의 sampling offset을 학습하여 더 효율적인 sampling point를 추출하는 모습을 확인할 수 있습니다. 마지막 Layer에 가까워 질수록, model은 object의 모든 부분을 보는 게 아니라 물체의 가장자리 부분에 초점을 맞춰서 보도록 학습된다는 것을 알 수 있었습니다.
 
 <br>
 <br>
 
-## 1-5. Decoder
+## 2-5. Decoder
 
-![image](https://user-images.githubusercontent.com/84084372/229966643-b83cfc18-43ee-4ea2-8260-d373230d1c77.png)
+Decoder의 task는 DETR과 거의 동일하게 진행됩니다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229966643-b83cfc18-43ee-4ea2-8260-d373230d1c77.png" width="80%" style="border: 1px solid black"></p>
+
+random한 값으로 initialize된 object query에 대해 self-attention을 수행함으로써 최적의 매칭을 찾습니다. 이후에 Encoder에서 계산한 attention weight와 cross-attention을 수행하며 이를 바탕으로 reference point를 수정합니다. 그리고 다음 layer에서는 다시 수정된 reference point 근처에서 sampling point를 추출하여 attention weight를 계산합니다.
+
+<br>
+<br>
+
+# 3. Variants for Deformable DETR
+
+Deformable DETR은 앞서 설명드린 `Deformable attention`을 도입하여 momory의 효율성을 증대시켰습니다. 저자는 이러한 메모리 효율로 인해 deformable DETR의 다양한 변형을 시도해 볼 수 있다고 하였으며, 그 구체적인 예시로 다음과 같은 2가지 trick을 제시하였습니다.
+
+- **Iterative Bounding Box Refinement**
+
+    Bounding Box가 Decoder Layer를 거칠 때, box의 좌표를 조금씩 수정함으로써 정확도를 향상시킵니다.
+
+- **Two-stage Deformable DETR**
+
+    One-stage Deformablle DETR에서, object query는 초기에 random한 값으로 initialize 되었습니다. 그러나 two-stage Deformable DETR에서는, encoder-only의 Deformalbe DETR을 먼저 학습 시켜 region proposal을 얻습니다. 이후 이 값을 decoder의 input으로 넣어 inference를 진행함으로써 정확도를 더 높힙니다.
+
+<br>
+<br>
+
+# 4. Experiment
+
+## 4-1. With DETR
+
+Deformable DETR은 기존 DETR대비 훨씬 적은 Epoch으로 더 좋은 performance를 보여주는 모습을 확인할 수 있었습니다. DETR의 경우 AP 43.6을 달성하는 데 총 `500epoch`(7000시간)이 걸린데 반해, Deformable DETR은 AP 43.8을 달성하는 데 고작 `50epoch`(325시간)밖에 걸리지 않는 모습을 확인할 수 있습니다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/230941247-aa27ba47-6eff-4df3-b049-374325e0d8d6.png" width="80%" style="border: 1px solid black"></p>
+
+<br>
+<br>
+
+## 4-2. Ablation study of FPNs
+
+다음은 FPN에 대해서 Ablation study를 진행한 테이블입니다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/230941063-fa5bd047-910c-4be2-a9ff-9318d2d98278.png" width="80%" style="border: 1px solid black"></p>
+
+MS attention에 대해 FPN 추가하여도 큰 성능 개선이 없는 것을 확인할 수 있습니다. 이는, 여러 스케일의 feature map에 대한 attention 연산을 통해 모델이 여러 스케일의 이미지 정보를 충분히 반영하였음을 반증합니다.
 
 
+<br>
+<br>
 
+# 5. Conclusion
 
+- `DETR`은 기존 object detection 문제를 `set prediction`으로 새롭게 재정의하여 hand-craft components를 완전히 없앤 fully end-to-end detector입니다.
 
+- 그러나 `DETR`은 모든 image pixel에 대해 attention 연산을 수행하기 때문에 수렴해에 도달하기 까지 시간이 오래걸리며, low-resolution feature map을 사용하기 때문에 작은 물체에 대한 performance가 떨어집니다.
+
+- `Deformable DETR`은 이러한 문제를 해결하기 위해 `Multi-scale Deformable Attention`을 도입합니다.
+
+- 확보된 메모리 효율성 덕분에 추가적으로 `Iterative Bounding Box Refinement`, `Two-stage Deformable DETR`와 같은 trick을 도입할 수 있게되어 performance를 더 끌어올렸습니다.
+
+- 결과적으로 `Deformable DETR`은 기존 DETR의 문제를 해결함과 동시에 더 빠르게, 더 좋은 성능을 낼 수 있게 되었습니다.
 
 
 
@@ -219,6 +271,15 @@ reference point는 layer를 거듭할 수록 더욱 정교하게 수정되며, �
 
 
 <summary>Details</summary>
+
+<br>
+<br>
+<strong style="color: red;">다음은 논문의 더 자세한 내용을 담은 해석본 Markdown입니다. 아래 내용을 마크다운 에디터에 넣어서 사용하시면 조금 더 자세한 내용을 확인하실 수 있습니다.</strong>
+<br>
+<br>
+<br>
+<br>
+
 
 
 # 0. Abstract
@@ -371,9 +432,6 @@ $$
 
 다음은 Multi-sacle deformable attention의 encoder에서의 적용에 대한 설명입니다. Encoder는 multi-scale deformable attention module을 사용한다는 점을 제외하면 기존 DETR의 encoder와 동일합니다. Encoder에서는 ResNet backbone 모델의 feature map을 input으로 받아 multi-scale feature map을 추출합니다. 이 때 input으로 들어가는 feature map은 input image의 $2^{-5}$~$2^{-3}$(본문에서는 $C_3$~$C_5$로 표현)의 resolution을 갖는 feature map입니다. 또한, encoder에서는 FPN을 사용하지 않고도 좋은 performance를 유지할 수 있었다고 합니다.<br>
 encoder의 input과 output은 동일한 resolution을 갖는 multi-scale feature map이며, key/query element는 multi-scale feature map으로부터 추출된 pixel 값들 입니다. 이 때, 각 query pixel에서 reference point는 자기 자신입니다. 또한 각 query pixel이 어떤 feature level에 속하는지 구별하기 위해 positional embedding 외에도 $e_l$이라는 sacle-level embedding을 추가하였으며, fixed encoding과는 다르게 학습 가능하다는 특징이 있습니다.
-
-
-
 
 
 
