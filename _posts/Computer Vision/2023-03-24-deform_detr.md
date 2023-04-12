@@ -19,6 +19,8 @@ use_math: true
 
 > 발표자료 : <https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&ouid=116507288704586191771&rtpof=true&sd=true>
 
+> 발표영상 : [Deformable DETR: Deformable Transformers for End-to-End Object Detection 리뷰](https://youtu.be/vbYOSB7J44A)
+
 > 논문링크 : [Deformable DETR: Deformable Transformes for End-to-End Object Detection](https://arxiv.org/pdf/2010.04159.pdf)
 
 > Implementation : <https://github.com/fundamentalvision/Deformable-DETR>
