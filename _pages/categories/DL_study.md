@@ -1,6 +1,6 @@
 ---
 layout: category
-title: "Computer Vision"
+title: "개인 스터디"
 type: grid
 permalink: categories/DL_study
 author_profile: true

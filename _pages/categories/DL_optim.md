@@ -1,6 +1,6 @@
 ---
 layout: category
-title: "Computer Vision"
+title: "모델 최적화"
 type: grid
 permalink: categories/DL_optim
 author_profile: true

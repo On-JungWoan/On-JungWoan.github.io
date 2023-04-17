@@ -9,30 +9,36 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>논문 리뷰 - 정완이의 개발 일기장</title>
-<meta name="description" content="정완이의 개발 일기장">
+<!-- begin _includes/seo.html --><title>Deformable DETR for edge device - 정완이의 개발 일기장</title>
+<meta name="description" content="Convert Deformable DETR to TFLite">
 
 
   <meta name="author" content="온정완">
   
+  <meta property="article:author" content="온정완">
+  
 
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="논문 리뷰">
-<meta property="og:url" content="http://localhost:4000/categories/DL_paper">
+<meta property="og:title" content="Deformable DETR for edge device">
+<meta property="og:url" content="http://localhost:4000/dl_optim/ddetr_to_tflite/">
 
 
-  <meta property="og:description" content="정완이의 개발 일기장">
-
-
-
+  <meta property="og:description" content="Convert Deformable DETR to TFLite">
 
 
 
 
 
+
+
+  <meta property="article:published_time" content="2023-04-18T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2023-04-18T00:00:00+09:00">
 
 
 
@@ -41,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/categories/DL_paper">
+<link rel="canonical" href="http://localhost:4000/dl_optim/ddetr_to_tflite/">
 
 
 
@@ -103,7 +109,7 @@
 
   </head>
 
-  <body class="layout--category">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -315,6 +321,41 @@
 
     <div class="initial-content">
       
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Deformable DETR for edge device
+
+        
+      </h1>
+      <p class="page__lead">Convert Deformable DETR to TFLite
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+
+      <p>
+      
+    </div>
+  </div>
+
+
+
 
 
 
@@ -569,20 +610,132 @@
 
 
 
-  <div class="archive">
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Deformable DETR for edge device">
+    <meta itemprop="description" content="Convert Deformable DETR to TFLite">
+    <meta itemprop="datePublished" content="2023-04-18T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2023-04-18T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#1-conversion-process">1. Conversion process</a></li><li><a href="#1-changes-to-the-torch-model">1. Changes to the torch model</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>최근 발표된 SOTA 모델의 경우, 대부분 그 크기가 매우 크고 무겁습니다(특히 비전분야). 이러한 pre-trained 모델들을 개발 환경에서 사용할 때는 대부분 큰 문제가 되지 않습니다. 하지만 Android나 임베디드 보드와 같은 엣지 디바이스에서는 이러한 Full-size 모델을 사용하는 데 한계가 존재합니다. 따라서 torch 모델을 엣지 디바이스에서 사용하기 위해서는, 이를 최적화 된 포맷으로 변환해주는 작업이 필요합니다. 해당 포스팅에서 사용할 torch 모델은 ICLR 2021에서 발표된 <code class="language-plaintext highlighter-rouge">Deformable DETR</code>이라는 Transformer based의 Object detection 모델이며, 이 모델을 엣지 디바이스에 최적화가 아주 잘 되어있는 <code class="language-plaintext highlighter-rouge">TFLite</code>로 변환하는 과정에 대해서 소개해드리도록 하겠습니다.</p>
+
+<h1 id="1-conversion-process">1. Conversion process</h1>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/232539845-4c3c2d56-4c80-4fff-8037-31ced3fedaa3.png" alt="image" /></p>
+
+<h1 id="1-changes-to-the-torch-model">1. Changes to the torch model</h1>
+
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
     
-      <h1 id="page-title" class="page__title">논문 리뷰</h1>
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
     
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
     
+    </span>
+  </p>
 
 
 
-<div class="entries-list">
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl-optim" class="page__taxonomy-item p-category" rel="tag">DL_optim</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Deformable+DETR+for+edge+device%20http%3A%2F%2Flocalhost%3A4000%2Fdl_optim%2Fddetr_to_tflite%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_optim%2Fddetr_to_tflite%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_optim%2Fddetr_to_tflite%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!--  -->
+
+
+
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+            
+      </div>
+    </div>
   
 </div>
 
-  </div>
-</div>
     </div>
 
     
@@ -636,6 +789,33 @@
 
 
 
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
 
 
 

@@ -1,6 +1,6 @@
 ---
 layout: category
-title: "Computer Vision"
+title: "논문 리뷰"
 type: grid
 permalink: categories/DL_paper
 author_profile: true
