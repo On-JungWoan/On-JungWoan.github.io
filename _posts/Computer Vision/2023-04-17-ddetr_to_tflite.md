@@ -1,10 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-17T17:04:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">Deformable DETR for edge device</title><link href="http://localhost:4000/dl_paper/ddetr_to_tflite/" rel="alternate" type="text/html" title="Deformable DETR for edge device" /><published>2023-03-24T00:00:00+09:00</published><updated>2022-03-24T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/ddetr_to_tflite</id><content type="html" xml:base="http://localhost:4000/dl_paper/ddetr_to_tflite/">&gt; 발표자료 : &lt;https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&amp;ouid=116507288704586191771&amp;rtpof=true&amp;sd=true&gt;
+---
+title:  "Deformable DETR for edge device"
+excerpt: "Convert Deformable DETR to TFLite"
 
-&gt; 발표영상 : [Deformable DETR: Deformable Transformers for End-to-End Object Detection 리뷰](https://youtu.be/vbYOSB7J44A)
+categories:
+  - DL_paper
+tags:
+  - [DL, computer_vision]
 
-&gt; 논문링크 : [Deformable DETR: Deformable Transformes for End-to-End Object Detection](https://arxiv.org/pdf/2010.04159.pdf)
+published: true
 
-&gt; Implementation : &lt;https://github.com/fundamentalvision/Deformable-DETR&gt;
+toc: true
+toc_sticky: true
+ 
+date: 2023-03-24
+last_modified_at: 2022-03-24
+use_math: true
+---
+
+> 발표자료 : <https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&ouid=116507288704586191771&rtpof=true&sd=true>
+
+> 발표영상 : [Deformable DETR: Deformable Transformers for End-to-End Object Detection 리뷰](https://youtu.be/vbYOSB7J44A)
+
+> 논문링크 : [Deformable DETR: Deformable Transformes for End-to-End Object Detection](https://arxiv.org/pdf/2010.04159.pdf)
+
+> Implementation : <https://github.com/fundamentalvision/Deformable-DETR>
 
 
 # 1. Backgorund
@@ -13,58 +32,58 @@ Deformable DETR에 대해 소개해드리기에 앞서, 먼저 선행 연구에 
 
 ## 1-1. Transformer
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229874267-999d91d5-40d5-4933-9834-4146b7e76f8b.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229874267-999d91d5-40d5-4933-9834-4146b7e76f8b.png" style="border: 1px solid black"></p>
 
 Transformer는 Input contents와 Target contents간의 관계를 파악하여 attention weight를 계산하는 아키텍쳐이며, 기존 RNN 기반의 Encoder, Decoder 구조에서 RNN 없이 Attnetion만으로 task를 수행합니다. 원래는 NLP task만을 위해 개발되었지만, 최근에는 vision 분야에서 더 활발하게 사용되고 있는 모델입니다. Encoder는 source word(input sentence)를 input으로 받고, Decoder는 target word(output sentence)를 input으로 받아 각각 MultiHead Attention을 수행합니다. 이 때, 각 Head는 서로 다른 sample point로부터 온 source들에 대해 attention task를 수행합니다. 
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229874356-182c0dd7-8e3d-499a-a2f2-fdd9863fe22d.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229874356-182c0dd7-8e3d-499a-a2f2-fdd9863fe22d.png" style="border: 1px solid black" width="60%"></p>
 
-Multi Head Attention은 위와 같이 계산될 수 있습니다. 각 key contents(source word)는 각각 학습 가능한 weight($W^\prime_m$)를 가지며, 해당 weight는 attention weight($A_{mqk}$)와 곱해지게 됩니다. 해당 task는 모든 key contents에 대해 동일하게 수행되며, 이를 모두 더해 query weight($W_m$)와 곱함으로써 특정 Head $m$에 대한 Multi-Head Attention을 계산하게 됩니다.&lt;br&gt;
+Multi Head Attention은 위와 같이 계산될 수 있습니다. 각 key contents(source word)는 각각 학습 가능한 weight($W^\prime_m$)를 가지며, 해당 weight는 attention weight($A_{mqk}$)와 곱해지게 됩니다. 해당 task는 모든 key contents에 대해 동일하게 수행되며, 이를 모두 더해 query weight($W_m$)와 곱함으로써 특정 Head $m$에 대한 Multi-Head Attention을 계산하게 됩니다.<br>
 
 더 자세한 내용은 논문을 참고해주시기 바랍니다.
 
-&gt; Attention Is All You Need : &lt;https://arxiv.org/pdf/1706.03762.pdf&gt;
+> Attention Is All You Need : <https://arxiv.org/pdf/1706.03762.pdf>
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 ## 1-2. DETR
 
-&gt; paper link : [End-to-End Object Detection with Transformers](https://arxiv.org/pdf/2005.12872.pdf)
+> paper link : [End-to-End Object Detection with Transformers](https://arxiv.org/pdf/2005.12872.pdf)
 
-DETR은 위에서 소개한 Transformer를 Object Detection task에 최초로 적용시킨 모델입니다. 이분 매칭 기반의 새로운 Detection 구조를 가지며, 기존 Detection task를 `direct set-prediction` 문제로 접근하여, fully `end-to-end` detection을 수행합니다. 즉, DETR 이전의 모델들이 해주었던 많은 hand-crafted components(RPN, NMS ...)들이 모두 제거되었다고 할 수 있겠습니다. DETR은 Deformable DETR과 기본적인 흐름이 매우 유사하기 때문에 자세히 짚고 넘어가도록 하겠습니다.&lt;br&gt;
+DETR은 위에서 소개한 Transformer를 Object Detection task에 최초로 적용시킨 모델입니다. 이분 매칭 기반의 새로운 Detection 구조를 가지며, 기존 Detection task를 `direct set-prediction` 문제로 접근하여, fully `end-to-end` detection을 수행합니다. 즉, DETR 이전의 모델들이 해주었던 많은 hand-crafted components(RPN, NMS ...)들이 모두 제거되었다고 할 수 있겠습니다. DETR은 Deformable DETR과 기본적인 흐름이 매우 유사하기 때문에 자세히 짚고 넘어가도록 하겠습니다.<br>
 
 DETR의 전체적인 흐름은 다음과 같습니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229875616-f5a7ef82-dc26-43bf-a120-633e86ec3931.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229875616-f5a7ef82-dc26-43bf-a120-633e86ec3931.png" style="border: 1px solid black"></p>
 
 우선, input image를 CNN backbone Network(Resnet50)에 태워 Feature map을 얻습니다. 이렇게 얻어진 feature map을 transformer의 encoder-decoder에 넣어 object query를 얻은 뒤, 최종적으로 GT box와 Bipartite Matching을 진행해주게 됩니다.
 
-### 1-2-1) Encoder &amp; Decoder
+### 1-2-1) Encoder & Decoder
 
 다음은 DETR의 Encoder와 Decoder를 더 자세히 나타낸 figure입니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229877733-6eca6034-eb9b-45c2-b16e-4c1fe998b0a5.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229877733-6eca6034-eb9b-45c2-b16e-4c1fe998b0a5.png" style="border: 1px solid black"></p>
 
-backbone network에서 얻어진 Feature map은 우선 DETR의 `Encoder`로 들어가게 됩니다. input으로 들어간 Feature map은 self attention을 수행하게 되는데, 해당 과정에서 image의 pixel간 관계를 학습하게 됩니다. 이후 FFN을 통과하여 최종적으로 attention weight를 출력하게 됩니다.&lt;br&gt;
+backbone network에서 얻어진 Feature map은 우선 DETR의 `Encoder`로 들어가게 됩니다. input으로 들어간 Feature map은 self attention을 수행하게 되는데, 해당 과정에서 image의 pixel간 관계를 학습하게 됩니다. 이후 FFN을 통과하여 최종적으로 attention weight를 출력하게 됩니다.<br>
 
-`Decoder`는 Object query를 input으로 받습니다. 여기서 object query는 오브젝트와 이분 매칭을 진행하는 slot들이라고 이해하시면 될 것 같습니다. 다시 말해, 하나의 object query는 하나의 object에 대해(일대일 매칭) `Bipartite Matching`을 해주게 되며, 이 과정에서 no object와 실제 object로 최종 분류됩니다. 자세한 매칭 알고리즘에 대해서는 뒤에서 더 자세히 설명하도록 하겠습니다. 해당 object query는 초기에 random한 값으로 initialization되며, self attetion과 cross attention을 수행하게 됩니다. self attention을 통해 object query는 최적의 매칭(각 object query가 어떤 object에 매칭되어야 할지)에 대해 학습하게 되며, encoder에서 계산된 attention weight와 cross attention을 수행하게 되는데, 이 과정에서 실제 object의 위치에 대해 학습하게 됩니다.&lt;br&gt;
+`Decoder`는 Object query를 input으로 받습니다. 여기서 object query는 오브젝트와 이분 매칭을 진행하는 slot들이라고 이해하시면 될 것 같습니다. 다시 말해, 하나의 object query는 하나의 object에 대해(일대일 매칭) `Bipartite Matching`을 해주게 되며, 이 과정에서 no object와 실제 object로 최종 분류됩니다. 자세한 매칭 알고리즘에 대해서는 뒤에서 더 자세히 설명하도록 하겠습니다. 해당 object query는 초기에 random한 값으로 initialization되며, self attetion과 cross attention을 수행하게 됩니다. self attention을 통해 object query는 최적의 매칭(각 object query가 어떤 object에 매칭되어야 할지)에 대해 학습하게 되며, encoder에서 계산된 attention weight와 cross attention을 수행하게 되는데, 이 과정에서 실제 object의 위치에 대해 학습하게 됩니다.<br>
 
-&gt;여기서 초기 layer의 self attention은 object query가 random하게 initialize 되었기 때문에 사실상 의미가 없다고 합니다. 그러나 저자는 코드의 간결성을 위해 그냥 남겨두었다고 합니다.&lt;br&gt;
+>여기서 초기 layer의 self attention은 object query가 random하게 initialize 되었기 때문에 사실상 의미가 없다고 합니다. 그러나 저자는 코드의 간결성을 위해 그냥 남겨두었다고 합니다.<br>
 
 self attention과 cross attention을 마친 object query는 최종적으로 GT box에 대한 class와 bbox 좌표를 predict합니다.
 
-&lt;br&gt;
+<br>
 
 ### 1-2-2) Set prediction
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229880614-524c3284-037e-4e75-9eed-d7e1223b5c85.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229880614-524c3284-037e-4e75-9eed-d7e1223b5c85.png" style="border: 1px solid black"></p>
 
 앞서 decoder에서 object query가 예측한 임베딩 값을 바탕으로 실제 GT box와 `Set prediction`을 수행하게 됩니다. 해당 task는 DETR의 key concept으로, 조금 더 자세히 살펴보도록 하겠습니다.
 
 #### 1-2-2-1) hungarian algorithm
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229881215-589be3c5-90a6-4397-90df-c0c47862b006.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229881215-589be3c5-90a6-4397-90df-c0c47862b006.png" style="border: 1px solid black"></p>
 
 object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용됩니다. hungarian algorithm이란, 특정한 score를 기준으로 각 query들이 최적의 매칭을 할 수 있게 해주는 알고리즘입니다. DETR의 경우 hungarian algorithm의 score로 match loss를 사용합니다.
 
@@ -72,7 +91,7 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
 #### 1-2-2-2) class loss
 
-  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229881778-8e1389af-471f-401b-87ad-6a7b759fae9d.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+  <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229881778-8e1389af-471f-401b-87ad-6a7b759fae9d.png" style="border: 1px solid black"></p>
 
   match loss는 다시 2개의 항으로 나누어지게 되는데, 첫 번째 항의 $\hat{p}_{\sigma (i)}(c_i)$는 class에 prediction에 대한 cost를 의미합니다. 해당 loss는 object query가 실제 class를 얼마나 잘 예측하고 있는지에 대해 확률값으로 표현됩니다.
 
@@ -80,13 +99,13 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
 #### 1-2-2-3) box loss
 
-  &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229882659-c721edf4-4c3c-4bdb-a0b7-dd118a593779.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+  <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229882659-c721edf4-4c3c-4bdb-a0b7-dd118a593779.png" style="border: 1px solid black"></p>
 
   bbox의 loss를 계산하는 방법에는 대표적으로 IoU, GIoU등이 있습니다. `IoU`는 두 bbox A, B에 대해서, A와 B의 합집합 대비 교집합이 차지하는 비율을 수치로 나타낸 loss입니다. 그러나 IoU는 A와 B의 교집합이 존재하지 않을 경우 항상 0이 되기 때문에 box loss로 사용하기에 한계가 있습니다. 따라서 DETR은 `GIoU`를 box loss로 사용합니다. GIoU는 bbox A, B를 모두 포함하는 최소 크기의 bbox C를 도입함으로써 기존 IoU의 문제를 해결합니다. 위에 나와있는 표는, loss에 대한 ablation table입니다. l1 loss는 AP에 큰 영향을 주지 못하지만, GIoU는 AP에 큰 영향을 주고 있는 모습을 확인할 수 있습니다.
 
 #### 1-2-2-4) bipartite matching
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229884104-c214d431-c33d-4db1-90ff-37246b401540.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229884104-c214d431-c33d-4db1-90ff-37246b401540.png" style="border: 1px solid black"></p>
 
 
 다시 `bipartite matching`에 대해 살펴보도록 하겠습니다. 이렇게 계산된 loss를 바탕으로 hungarian algorithm을 통해 loss가 최소가 되는 최적의 matching을 찾게 됩니다. 이 과정에서 각 object query들은 각각의 GT box 또는 no object와 일대일 매칭되며, 잘못 예측된 query의 경우 수정됩니다.
@@ -94,7 +113,7 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
 
 
-&lt;br&gt;
+<br>
 
 ### 1-2-3) Problem
 
@@ -106,7 +125,7 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
 2. **Memory Complexity**
 
-    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229885671-924426df-25f1-49f4-acaa-fa18fb1e7813.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+    <p align="center"><img src="https://user-images.githubusercontent.com/84084372/229885671-924426df-25f1-49f4-acaa-fa18fb1e7813.png" style="border: 1px solid black"></p>
 
     위 수식(좌항)은 DETR의 시간복잡도를 수식으로 표현한 것입니다. 일반적으로 image task에서 pixel(query, key contents)의 수는 channel의 수보다 훨씬 크기 때문에 시간 복잡도는 3번째 항에 의해 지배되어 $O(N_qN_kC)$로 표현됩니다. 즉, Feature map의 scale이 증가할 수록 memory complexity는 quadratic하게 증가합니다. 이로 인해 DETR은 high-resolution feature map을 사용할 수 없다는 한계가 존재합니다.
 
@@ -114,8 +133,8 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
     위에서 언급했듯이 DETR은 Memory 문제로 인해 low resolution feature map만을 사용하게 됩니다. 따라서 small object detection에 대해서는 좋지 않은 performance를 보여줍니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 2. Deformable DETR
 
@@ -131,7 +150,7 @@ object query와 GT box간의 매칭을 위해서 `hungarian algorithm`이 사용
 
 ## 2-1. Architecture
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229887003-40642946-23eb-42c4-8bd6-31825242f788.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229887003-40642946-23eb-42c4-8bd6-31825242f788.png" style="border: 1px solid black"></p>
 
 Deformable DETR의 경우, DETR과 전체적인 task는 크게 다르지 않습니다. task는 다음과 같이 크게 3가지로 나뉩니다.
 
@@ -147,56 +166,56 @@ Deformable DETR의 경우, DETR과 전체적인 task는 크게 다르지 않습�
 
     DETR과 동일한 task를 수행합니다. object query의 `self attention`을 통해 최적의 매칭을 찾고, encoder와 `cross attention`을 통해 reference point를 수정합니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 ## 2-2. Deformable Attention
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229893183-0b2d86d8-6c68-4b97-ba0f-55b9e26c2158.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229893183-0b2d86d8-6c68-4b97-ba0f-55b9e26c2158.png" style="border: 1px solid black" width="60%"></p>
 
-위 figure는 `Deformable Attention` 과정에 대해 조금 더 자세히 나타낸 것 입니다. input으로 backbone에서 뽑아낸 feature map을 받아, reference point에 대해 sampling offset을 계산합니다. 이 때, sampling offset은 학습 가능하며 해당 offset을 바탕으로 sampling point들이 추출됩니다. 계산된 offset들은 key contents의 weight와 함께 `bilinear interpolation`(Dai et al. 2017)을 적용해줍니다. 여기까지의 과정은 위 figure에서 빨간색 부분에 해당합니다.&lt;br&gt;
+위 figure는 `Deformable Attention` 과정에 대해 조금 더 자세히 나타낸 것 입니다. input으로 backbone에서 뽑아낸 feature map을 받아, reference point에 대해 sampling offset을 계산합니다. 이 때, sampling offset은 학습 가능하며 해당 offset을 바탕으로 sampling point들이 추출됩니다. 계산된 offset들은 key contents의 weight와 함께 `bilinear interpolation`(Dai et al. 2017)을 적용해줍니다. 여기까지의 과정은 위 figure에서 빨간색 부분에 해당합니다.<br>
 
 이후 query feature에 대해 attention weight를 계산해주게 되며(파란색 부분), bilinear interpolation output과 aggregation($A_{mqk} \cdot W^ \prime _m x ( p_q+ \Delta p ) $) 해줌으로써 head m에 대한 attention weight를 계산하게 됩니다. 이 task를 각 head에 대해 동일하게 적용한 뒤 Linear layer에 태워줌으로써 최종 output을 계산합니다(노란색 부분).
 
   
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 ## 2-3. Multi-scale Deformable Attention
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229963350-8b2122ca-f4f3-4136-9c95-1e110e27d22d.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229963350-8b2122ca-f4f3-4136-9c95-1e110e27d22d.png" style="border: 1px solid black"></p>
 
 실제 Deformable DETR은 `multi-scale deformable attention`을 사용합니다. input으로 multi scale의 feature map을 사용한다는 점을 제외하면 single-scale의 task와 동일합니다. 위 figure는 coco val image에 대해 직접 시각화 해본 multi-scale feature map입니다. 다양한 resolution의 feature map이 사용되는 것을 확인할 수 있습니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229964550-c24bf644-643b-44d7-bd99-f6dda32849ac.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;85%&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229964550-c24bf644-643b-44d7-bd99-f6dda32849ac.png" style="border: 1px solid black" width="85%"></p>
 
 
 여기서 주목할 점은 각각 feature map의 resolution이 다르기 때문에 value들은 `normalize`된다는 것입니다. 따라서 multi-scale deformable attention의 계산식에는 value를 de-normalize 해주는 $\phi_l()$ 함수가 사용됩니다. 나머지 task는 single-scale과 동일합니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 ## 2-4. Encoder
 
 Deformable DETR의 encoder가 DETR과 다른 점은, attention weight를 계산하는 데 모든 pixel을 사용하지 않는다는 것 입니다. DETR에서는 모든 pixel을 사용하여 attention weight를 계산하였기 때문에 memory complexity 문제가 발생하였고, attention weight가 uniform 하게 initialize되어 수렴해에 도달하기까지 매우 많은 시간이 필요했습니다. 그러나 Deformable DETR의 deformable attention은 특정 `reference point` 근처의 `sampling point`에 대해서만 attention weight를 계산하게 됩니다. 아래 figure는 직접 시각화해본 sampling point와 attention weight입니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229964910-47066c77-dc47-453c-9147-6cd7075fca6f.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229964910-47066c77-dc47-453c-9147-6cd7075fca6f.png" width="80%" style="border: 1px solid black"></p>
 
 reference point는 layer를 거듭할 수록 더욱 정교하게 수정되며, 이를 바탕으로 최적의 sampling offset을 학습하여 더 효율적인 sampling point를 추출하는 모습을 확인할 수 있습니다. 마지막 Layer에 가까워 질수록, model은 object의 모든 부분을 보는 게 아니라 물체의 가장자리 부분에 초점을 맞춰서 보도록 학습된다는 것을 알 수 있었습니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 ## 2-5. Decoder
 
 Decoder의 task는 DETR과 거의 동일하게 진행됩니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229966643-b83cfc18-43ee-4ea2-8260-d373230d1c77.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/229966643-b83cfc18-43ee-4ea2-8260-d373230d1c77.png" width="80%" style="border: 1px solid black"></p>
 
 random한 값으로 initialize된 object query에 대해 self-attention을 수행함으로써 최적의 매칭을 찾습니다. 이후에 Encoder에서 계산한 attention weight와 cross-attention을 수행하며 이를 바탕으로 reference point를 수정합니다. 그리고 다음 layer에서는 다시 수정된 reference point 근처에서 sampling point를 추출하여 attention weight를 계산합니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 3. Variants for Deformable DETR
 
@@ -210,8 +229,8 @@ Deformable DETR은 앞서 설명드린 `Deformable attention`을 도입하여 mo
 
     One-stage Deformablle DETR에서, object query는 초기에 random한 값으로 initialize 되었습니다. 그러나 two-stage Deformable DETR에서는, encoder-only의 Deformalbe DETR을 먼저 학습 시켜 region proposal을 얻습니다. 이후 이 값을 decoder의 input으로 넣어 inference를 진행함으로써 정확도를 더 높힙니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 4. Experiment
 
@@ -219,22 +238,22 @@ Deformable DETR은 앞서 설명드린 `Deformable attention`을 도입하여 mo
 
 Deformable DETR은 기존 DETR대비 훨씬 적은 Epoch으로 더 좋은 performance를 보여주는 모습을 확인할 수 있었습니다. DETR의 경우 AP 43.6을 달성하는 데 총 `500epoch`(7000시간)이 걸린데 반해, Deformable DETR은 AP 43.8을 달성하는 데 고작 `50epoch`(325시간)밖에 걸리지 않는 모습을 확인할 수 있습니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/230941247-aa27ba47-6eff-4df3-b049-374325e0d8d6.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/230941247-aa27ba47-6eff-4df3-b049-374325e0d8d6.png" width="80%" style="border: 1px solid black"></p>
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 ## 4-2. Ablation study of FPNs
 
 다음은 FPN에 대해서 Ablation study를 진행한 테이블입니다.
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/230941063-fa5bd047-910c-4be2-a9ff-9318d2d98278.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/230941063-fa5bd047-910c-4be2-a9ff-9318d2d98278.png" width="80%" style="border: 1px solid black"></p>
 
 MS attention에 대해 FPN 추가하여도 큰 성능 개선이 없는 것을 확인할 수 있습니다. 이는, 여러 스케일의 feature map에 대한 attention 연산을 통해 모델이 여러 스케일의 이미지 정보를 충분히 반영하였음을 반증합니다.
 
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 5. Conclusion
 
@@ -250,18 +269,18 @@ MS attention에 대해 FPN 추가하여도 큰 성능 개선이 없는 것을 �
 
 
 
-&lt;details&gt;
+<details>
 
 
-&lt;summary&gt;Details&lt;/summary&gt;
+<summary>Details</summary>
 
-&lt;br&gt;
-&lt;br&gt;
-&lt;strong style=&quot;color: red;&quot;&gt;다음은 논문의 더 자세한 내용을 담은 해석본 Markdown입니다. 아래 내용을 마크다운 에디터에 넣어서 사용하시면 조금 더 자세한 내용을 확인하실 수 있습니다.&lt;/strong&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
+<strong style="color: red;">다음은 논문의 더 자세한 내용을 담은 해석본 Markdown입니다. 아래 내용을 마크다운 에디터에 넣어서 사용하시면 조금 더 자세한 내용을 확인하실 수 있습니다.</strong>
+<br>
+<br>
+<br>
+<br>
 
 
 
@@ -275,8 +294,8 @@ DETR은 obj detection에서 좋은 performance를 보여줌과 동시에 많은 
 
 본 저자는 이러한 문제를 해결하기 위해 Deformable DETR을 제안합니다. Deformable DETR의 attention module은 reference point를 지정하여, 해당 point 근처에서만 small key sampling을 진행합니다. 이를 통해 기존 DETR의 문제를 상당부분 개선하였으며, small object에 대한 detection performance도 많이 향상시켰다고 합니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 1. Introduction
 
@@ -288,7 +307,7 @@ DETR 이전의 obj detection 모델은 NMS와 같은 hand-crafted components가 
 
 ### 1-1-2) Problem of DETR
 
-DETR은 Abstract에서도 잠깐 언급했듯이 2가지의 문제점을 가지고 있습니다. &lt;br&gt;
+DETR은 Abstract에서도 잠깐 언급했듯이 2가지의 문제점을 가지고 있습니다. <br>
 
 1. **slow cpnvergence**
 
@@ -302,7 +321,7 @@ DETR은 Abstract에서도 잠깐 언급했듯이 2가지의 문제점을 가지�
 
 ## 1-2. Deformable DETR
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/227284261-54263268-e20b-4ad8-9742-71ca87e4ca2c.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/227284261-54263268-e20b-4ad8-9742-71ca87e4ca2c.png" style="border: 1px solid black"></p>
 
 
 본 저자는 Deformable Convolution(Dai et al., 2017)이라는 방법론을 도입함으로써 DETR의 느린 convergence issue와 high complexity issue를 해결합니다. 즉, Deformable DETR은 Transformer의 관계 모델링 능력과 deformable convolution의 soarse한 공간 샘플링 능력의 결합이라고 할 수 있겠으며, 이를 `deformable attention module`이라 명명하였습니다. Fig.1에서 확인할 수 있듯이 deformable attention module은 모든 픽셀을 attention weight와 match하지 않고, 특정 sampling location 주변의 pixel들만 사용합니다. 이를 통해 FPN의 도움 없이도 multi scale feature를 확장할 수 있었다고 합니다.
@@ -316,10 +335,10 @@ DETR은 Abstract에서도 잠깐 언급했듯이 2가지의 문제점을 가지�
 
 Deformable DETR은 기존 DETR보다 10배 더 적은 에폭을 사용하면서 더 좋은 performance를(특히 작은 물체에 대해서) 기록했다고 합니다. two-stage Deformable DETR을 사용하면 성능을 조금 더 향상시킬 수 있으며, 아래는 공식 깃헙 링크입니다.
 
-&gt; links : &lt;a href=&quot;https://github.com/fundamentalvision/Deformable-DETR&quot; target=&quot;_blank&quot;&gt;https://github.com/fundamentalvision/Deformable-DETR&lt;/a&gt;
+> links : <a href="https://github.com/fundamentalvision/Deformable-DETR" target="_blank">https://github.com/fundamentalvision/Deformable-DETR</a>
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 3. Revisiting Transformers and DETR
 
@@ -343,7 +362,7 @@ $$
 
     key element입니다. representation feature로 $x_k \in \mathbb{R}^C$를 가집니다.
 
-  - $\Omega_q$ &amp; $\Omega_k$
+  - $\Omega_q$ & $\Omega_k$
 
     각각 q와 k의 전체 집합을 의미합니다.
 
@@ -369,8 +388,8 @@ Transformer에는 다음과 같은 2가지 issue가 존재합니다.
 
   multi-head attention에서 시간 복잡도는 $O(N_qC^2 + N_kC^2 + N_qN_kC^2)$으로 표현될 수 있습니다. 이미지의 경우 dimension(C)에 비해 pixel 수($N_k$ = $N_q$)가 훨씬 많기 때문에 시간 복잡도는 $N_qN_kC^2$에 의해 지배됩니다. 따라서 feature map의 size가 증가함에 따라 복잡도는 quadratic하게 증가하며, 이는 계산 및 메모리 복잡도를 증가시킵니다.
 
-&lt;br&gt;
-&lt;br&gt;
+<br>
+<br>
 
 # 4. Method
 
@@ -378,7 +397,7 @@ Transformer에는 다음과 같은 2가지 issue가 존재합니다.
 
 ### 4-1-1) Deformable Attention Module
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/227588961-b03a34af-fc7c-4e04-a757-a4f101983c9f.png&quot; style=&quot;border: 1px solid black&quot;&gt;&lt;/p&gt;
+<p align="center"><img src="https://user-images.githubusercontent.com/84084372/227588961-b03a34af-fc7c-4e04-a757-a4f101983c9f.png" style="border: 1px solid black"></p>
 
 
 이전 연구에서 transformer를 image에 적용하고자 하는 시도는, transformer가 image feature map의 모든 pixel을 고려하기 때문에 메모리 및 학습 속도 이슈를 발생시켰습니다. 본 저자는 이러한 문제를 다루기 위해 `deformable attention module`을 도입합니다. deformable attention module은 reference point 근처의 소규모 sampling point만을 사용하여 이러한 문제점들을 해결하였습니다. 아래는 feature map $x \in \mathbb{R}^{C \times H \times W}$, query element $q$와 content feature $z_q$, reference point $p_q$에 대한 DeformAttn 계산식입니다.
@@ -413,9 +432,9 @@ $$
 
 ### 4-1-3) Deformable Transformer Encoder
 
-다음은 Multi-sacle deformable attention의 encoder에서의 적용에 대한 설명입니다. Encoder는 multi-scale deformable attention module을 사용한다는 점을 제외하면 기존 DETR의 encoder와 동일합니다. Encoder에서는 ResNet backbone 모델의 feature map을 input으로 받아 multi-scale feature map을 추출합니다. 이 때 input으로 들어가는 feature map은 input image의 $2^{-5}$~$2^{-3}$(본문에서는 $C_3$~$C_5$로 표현)의 resolution을 갖는 feature map입니다. 또한, encoder에서는 FPN을 사용하지 않고도 좋은 performance를 유지할 수 있었다고 합니다.&lt;br&gt;
+다음은 Multi-sacle deformable attention의 encoder에서의 적용에 대한 설명입니다. Encoder는 multi-scale deformable attention module을 사용한다는 점을 제외하면 기존 DETR의 encoder와 동일합니다. Encoder에서는 ResNet backbone 모델의 feature map을 input으로 받아 multi-scale feature map을 추출합니다. 이 때 input으로 들어가는 feature map은 input image의 $2^{-5}$~$2^{-3}$(본문에서는 $C_3$~$C_5$로 표현)의 resolution을 갖는 feature map입니다. 또한, encoder에서는 FPN을 사용하지 않고도 좋은 performance를 유지할 수 있었다고 합니다.<br>
 encoder의 input과 output은 동일한 resolution을 갖는 multi-scale feature map이며, key/query element는 multi-scale feature map으로부터 추출된 pixel 값들 입니다. 이 때, 각 query pixel에서 reference point는 자기 자신입니다. 또한 각 query pixel이 어떤 feature level에 속하는지 구별하기 위해 positional embedding 외에도 $e_l$이라는 sacle-level embedding을 추가하였으며, fixed encoding과는 다르게 학습 가능하다는 특징이 있습니다.
 
 
 
-&lt;/details&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">Convert Deformable DETR to TFLite</summary></entry></feed>
+</details>

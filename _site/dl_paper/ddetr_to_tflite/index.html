@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Deformable DETR(2021) 논문 정리 - 정완이의 개발 일기장</title>
-<meta name="description" content="Deformable DETR: Deformable Transfomers for End-to-End Object Detection">
+<!-- begin _includes/seo.html --><title>Deformable DETR for edge device - 정완이의 개발 일기장</title>
+<meta name="description" content="Convert Deformable DETR to TFLite">
 
 
   <meta name="author" content="온정완">
@@ -22,11 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="Deformable DETR(2021) 논문 정리">
-<meta property="og:url" content="http://localhost:4000/dl_paper/deform_detr/">
+<meta property="og:title" content="Deformable DETR for edge device">
+<meta property="og:url" content="http://localhost:4000/dl_paper/ddetr_to_tflite/">
 
 
-  <meta property="og:description" content="Deformable DETR: Deformable Transfomers for End-to-End Object Detection">
+  <meta property="og:description" content="Convert Deformable DETR to TFLite">
 
 
 
@@ -47,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/dl_paper/deform_detr/">
+<link rel="canonical" href="http://localhost:4000/dl_paper/ddetr_to_tflite/">
 
 
 
@@ -337,11 +337,11 @@
     <div class="wrapper">
       <h1 id="page-title" class="page__title" itemprop="headline">
         
-          Deformable DETR(2021) 논문 정리
+          Deformable DETR for edge device
 
         
       </h1>
-      <p class="page__lead">Deformable DETR: Deformable Transfomers for End-to-End Object Detection
+      <p class="page__lead">Convert Deformable DETR to TFLite
 </p>
       
 
@@ -611,8 +611,8 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Deformable DETR(2021) 논문 정리">
-    <meta itemprop="description" content="Deformable DETR: Deformable Transfomers for End-to-End Object Detection">
+    <meta itemprop="headline" content="Deformable DETR for edge device">
+    <meta itemprop="description" content="Convert Deformable DETR to TFLite">
     <meta itemprop="datePublished" content="2023-03-24T00:00:00+09:00">
     <meta itemprop="dateModified" content="2022-03-24T00:00:00+09:00">
 
@@ -636,6 +636,10 @@
         
         <blockquote>
   <p>발표자료 : <a href="https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&amp;ouid=116507288704586191771&amp;rtpof=true&amp;sd=true">https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&amp;ouid=116507288704586191771&amp;rtpof=true&amp;sd=true</a></p>
+</blockquote>
+
+<blockquote>
+  <p>발표영상 : <a href="https://youtu.be/vbYOSB7J44A">Deformable DETR: Deformable Transformers for End-to-End Object Detection 리뷰</a></p>
 </blockquote>
 
 <blockquote>
@@ -1134,11 +1138,11 @@ encoder의 input과 output은 동일한 resolution을 갖는 multi-scale feature
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Deformable+DETR%282021%29+%EB%85%BC%EB%AC%B8+%EC%A0%95%EB%A6%AC%20http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fdeform_detr%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Deformable+DETR+for+edge+device%20http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fddetr_to_tflite%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fdeform_detr%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fddetr_to_tflite%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fdeform_detr%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fddetr_to_tflite%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 

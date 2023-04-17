@@ -4,7 +4,7 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
-        <loc>http://localhost:4000/dl_paper/deform_detr/</loc>
+        <loc>http://localhost:4000/dl_paper/ddetr_to_tflite/</loc>
         
         <lastmod>2023-03-24T00:00:00+09:00</lastmod>
         
