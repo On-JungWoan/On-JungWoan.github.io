@@ -1,5 +1,5 @@
 ---
-title:  "Deformable DETR for edge device"
+title:  "Deformable DETR for edge device(초안)"
 excerpt: "Convert Deformable DETR to TFLite"
 
 categories:
