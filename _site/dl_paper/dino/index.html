@@ -9,30 +9,36 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>뻐정 : 광주광역시 버스정보 통합 플랫폼 - 정완이의 개발 일기장</title>
-<meta name="description" content="정완이의 개발 일기장">
+<!-- begin _includes/seo.html --><title>DINO(2022) 논문 리뷰 - 정완이의 개발 일기장</title>
+<meta name="description" content="DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection">
 
 
   <meta name="author" content="온정완">
   
+  <meta property="article:author" content="온정완">
+  
 
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="뻐정 : 광주광역시 버스정보 통합 플랫폼">
-<meta property="og:url" content="http://localhost:4000/categories/bbeojung">
+<meta property="og:title" content="DINO(2022) 논문 리뷰">
+<meta property="og:url" content="http://localhost:4000/dl_paper/dino/">
 
 
-  <meta property="og:description" content="정완이의 개발 일기장">
-
-
-
+  <meta property="og:description" content="DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection">
 
 
 
 
 
+
+
+  <meta property="article:published_time" content="2023-03-02T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-03-02T00:00:00+09:00">
 
 
 
@@ -41,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/categories/bbeojung">
+<link rel="canonical" href="http://localhost:4000/dl_paper/dino/">
 
 
 
@@ -103,7 +109,7 @@
 
   </head>
 
-  <body class="layout--archive">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -315,6 +321,41 @@
 
     <div class="initial-content">
       
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          DINO(2022) 논문 리뷰
+
+        
+      </h1>
+      <p class="page__lead">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-02">March 2, 2022</time></p>
+
+      <p>
+      
+    </div>
+  </div>
+
+
+
 
 
 
@@ -601,14 +642,360 @@
 
 
 
-  <div class="archive">
-    
-      <h1 id="page-title" class="page__title">뻐정 : 광주광역시 버스정보 통합 플랫폼</h1>
-    
-    
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DINO(2022) 논문 리뷰">
+    <meta itemprop="description" content="DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection">
+    <meta itemprop="datePublished" content="2023-03-02T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-03-02T00:00:00+09:00">
 
-  </div>
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#dino-detr-with-improved-denoising-anchor-boxes">DINO: DETR with Improved DeNoising Anchor Boxes</a><ul><li><a href="#31-preliminaries">3.1 Preliminaries</a></li><li><a href="#33-contrastive-denoising-trainingcdn-training">3.3 Contrastive DeNoising Training(CDN Training)</a><ul><li><a href="#331-background-of-study">3.3.1 Background of Study</a></li><li><a href="#332-implementation">3.3.2 Implementation</a></li><li><a href="#333-analysis">3.3.3 Analysis</a></li><li><a href="#334-effectiveness">3.3.4 Effectiveness</a></li></ul></li><li><a href="#34-mixed-query-selection">3.4 Mixed Query Selection</a></li><li><a href="#35-look-forward-twice">3.5 Look Forward Twice</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="dino-detr-with-improved-denoising-anchor-boxes">DINO: DETR with Improved DeNoising Anchor Boxes</h1>
+
+<h2 id="31-preliminaries">3.1 Preliminaries</h2>
+
+<p>__Conditional DETR과 DAB-DETR에서는 query를 positional part와 content part로 나누었으며, 본 논문에서는 각각을 positional query와 content query라 언급한다. 또한, DAB-DETR에서는 query를 $(x,y,w,h)$의 4D anchor box로 표현하였는데, 이는 decoder layer에서 anchor box를 refine하기 쉽게 하기 위함이다. 이 때 (x,y)는 box의 중심좌표를, (w,h)는 width와 height를 의미한다.<br />
+__DN-DETR은 기존 DETR 모델의 느린 학습 수렴 문제를 해결하기 위해, denoising(DN) training을 제시하였으며, 문제점은 이분 매칭의 불안정성에 있다고 지적하였다. 이러한 문제점을 완화하기 위해 DN-DETR은 추가적으로 noise된 GT box를 decoder에 feeding했다. noise는 $(\Delta x, \Delta y, \Delta w, \Delta h)$로 표현되며, 각각의 범위는 $|\Delta x| &lt; \frac{\lambda w}{2}, |\Delta y| &lt; \frac{\lambda h}{2}, |\Delta w| &lt; \lambda w, |\Delta h| &lt; \lambda h$로 제한된다. 여기서 $(x,y,w,h)$는 GT box의 좌표를 나타내며  $\lambda$는 noise의 스케일을 나타낸다. 즉, DN-DETR은 기존 DETR decoder input에 Noised GT box(DN part)를 추가하였고, 이 DN part는 train 속도 및 안정성을 향상하는 데 도움을 준다고 한다. 또한 이 방법론은 DETR계열 모델에 전부 사용이 가능하다고 한다.<br />
+__DETR의 수렴 속도 문제를 개선하기 위한 또다른 선행 연구가 있는데, 바로 Deformable DETR이다. 해당 연구에서는 deformable attention을 위해 reference point라는 컨셉을 도입하여, 해당 point 근처 픽셀에서만 sampling을 진행한다. 이러한 reference point라는 컨셉을 도입함으로써, DETR의 퍼포먼스를 향상시키기 위해 다음과 같은 다양한 방법론들을 사용할 수 있게 된다.</p>
+
+<ul>
+  <li>
+    <p><strong>Query Selection</strong></p>
+
+    <p>encoder의 output을 decoder에서 input으로 재사용</p>
+  </li>
+  <li>
+    <p><strong>Look Forward Once</strong></p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h2 id="33-contrastive-denoising-trainingcdn-training">3.3 Contrastive DeNoising Training(CDN Training)</h2>
+<h3 id="331-background-of-study">3.3.1 Background of Study</h3>
+<p>DN-DETR은 stabilizing training과 accelerating convergence에 매우 effective하다. DN queriy의 도움을 받아 GT box 근처에 있는 anchor에 기반한 예측을 하도록 학습한다. 하지만, DN-DETR은 근처에 obj가 없는 anchor에 대해서는 no obj라고 잘 예측하지 못한다. DINO는 이러한 문제점을 해결하기 위해 CDN Training을 도입한다.</p>
+
+<p><br /></p>
+
+<h3 id="332-implementation">3.3.2 Implementation</h3>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/222466336-58715ef5-5a2a-4068-989a-32df47dd99d6.png" alt="image" /></p>
+
+<p>DN-DETR은 noise 스케일을 컨트롤 하기 위해 하이퍼 파라미터 $\lambda$를 사용한다. 이 때, DN-DETR은 적당히 noised된 query를 통해 GT를 reconsturct하길 원하므로 생성된 노이즈는 람다보다 크지 않다. 반면, DINO는 하이퍼 파라미터로 $\lambda_1$과 $\lambda_2$를 갖는다($\lambda_1 &lt; \lambda_2$). DINO는 CDN query로 Positive Query와 Negative Query를 도입하였는데, $\lambda_1$과 $\lambda_2$가 이 쿼리들의 크기를 결정한다. fig3에 나와있는 것처럼, $\lambda_1$은 positive query의 크기를 결정하며, 해당 쿼리가 GT box를 reconstruct 하도록 학습한다. 또한, scale이 $\lambda_1$보다 크면서 $\lambda_2$보다 작은 영역은 Negative query가 되며 해당 쿼리는 “no obj.”를 predict하도록 학습된다. 이 때, negative sample이 GT box에 가까울수록 성능 향상에 도움이 되기 때문에 $\lambda_2$를 가능한 작게 설정하는 것이 좋다고 저자는 말하고 있다. 하나의 GT box마다 Positive, Negative 쿼리가 하나씩 생성되므로, GT Box의 개수 $n$에 대해 $2 \times n$개의 쿼리를 갖게되며, DN-DETR과 유사하게 mutiple CDN group을 사용한다. Positive Query의 box regression에 대해서는 GIOU loss(IOU계열 loss인듯)를 사용하며 classification에 대해서는 focal loss를 사용한다. Negative Query에서도 마찬가지로 focal loss를 사용한다.</p>
+
+<p><br /></p>
+
+<h3 id="333-analysis">3.3.3 Analysis</h3>
+
+<p>저자는 DINO가 잘 작동할 수 있는 이유가 “1. confusion 억제”, “2. 높은 퀄리티의 anchor 추출”에 있다고 설명하였다.<br /></p>
+
+<p>우선, 하나의 obj.에 많은 anchor가 존재할 경우, model이 anchor를 선택하기가 어렵기 때문에 confusion이 발생한다. 이러한 confusion은 다음 2가지의 문제를 야기한다.</p>
+
+<ol>
+  <li>
+    <p>duplicate predictions</p>
+
+    <p><img src="https://user-images.githubusercontent.com/84084372/222466172-e64b3934-4d5e-4688-8a28-db9d1f2c4f7b.png" alt="image" /></p>
+
+    <p>DETR계열 모델이 set-based loss와 self-attention을 통해 아무리 duplicate box를 잘 억제한다고 해도, 어느정도 한계는 존재한다. fig. 8의 왼쪽 사진에서 볼 수 있듯이, DN query를 사용하는 DN-DETR에서는 한 소년에 대해 3개의 duplicate prediction이 발생한다. 그러나 DINO는 CDN Query를 도입함으로써, anchor들간의 미세한 차이를 구별하기 때문에 fig. 8의 오른쪽 그림과 같이 duplicated prediction을 피할 수 있다.</p>
+  </li>
+  <li>
+    <p>unwanted anchor</p>
+
+    <p>두 번째 문제점은, model이 GT Box에서 멀리 떨어진 box를 선택할 수도 있다는 것이다. DN training에서는 이 문제를 해결하기 위해, model이 가까운 anchor를 선택하도록 하였다. CDN은 발상을 살짝 달리하여, model이 멀리 있는 anchor를 선택하지 못하도록 하였고 성능을 더욱 향상시킬 수 있었다고 한다.</p>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h3 id="334-effectiveness">3.3.4 Effectiveness</h3>
+
+<p>본 논문에서, 저자는 CDN의 성능 평가 지표로 Average Top-K Distance(ATD(k))를 정의하였다. 각각의 anchor들은 GT box 또는 background에 할당되는데, ATD는 GT box에 대해서만 관심을 가지고, GT box로부터 anchor가 얼마나 멀리 떨어져있는지를 계산한다. 다음은 ATD(k)의 수식이다.</p>
+
+\[ATD(k) = \frac{1}{k} \sum{topK(\{||b_0-a_0||_1, ||b_1-a_1||_1, ... , ||b_{N-1}-a_{N-1}||_1 \}, k)}\]
+
+<table>
+  <tbody>
+    <tr>
+      <td>이 때, $N$은 GT box의 수를 의미하며 $b_i$는 i번째 GT box를, $a_i$는 그에 해당하는 anchor를 의미한다. 또한, $</td>
+      <td> </td>
+      <td>b_i-a_i</td>
+      <td> </td>
+      <td>_1$은 $b_i$와 $a_i$ 사이의 $l_1$ distance를 의미하며, $topK(x, k)$는 x의 원소중에서 가장 큰 k개의 원소를 return하는 함수이다. GT box가 멀리 떨어진 anchor와 match될수록 ocnfusion problem이 일어날 확률이 더 높아지기 때문에 이러한 계산 방식을 채택하였다고 한다. 다음은 ATD(100)으로 계산한 DN-DETR과 DINO의 effectiveness 비교 그래프이다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/222648236-37cd3948-96aa-4166-805c-9013ccfa3b9c.png" alt="image" /></p>
+
+<p>(a)와 (b)에서 볼 수 있듯이 DN-DETR과 DINO 모두 전반적으로 좋은(GT box와 거리가 가까운) anchor를 선택하였다. 그러나 (c)에서 볼 수 있듯이, CDN을 사용한 DINO가 12 epoch을 기점으로 small obj에 대해 더 향상된 AP 기록하고 있음을 확인할 수 있다. 이로써 CDN이 기존 DN-DETR의 문제점을 어느정도 개선할 수 있음을 확인하였다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="34-mixed-query-selection">3.4 Mixed Query Selection</h2>
+
+<p>DETR과 DN-DETR에서, decoder는 학습시에 encoder의 어떠한 image feature도 활용하지 않는다. 이는 fig5의 (a)에 해당하며 static query라 명명한다. 이 경우, positional query를 train data로부터 직접 학습하고 content query는 전부 0 vector로 지정한다.</p>
+
+<p>(…)</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="35-look-forward-twice">3.5 Look Forward Twice</h2>
+
+<p><img src="https://user-images.githubusercontent.com/84084372/222671678-f9c37bc2-5a73-44a8-9fe3-5b299ef9a35c.png" alt="image" /></p>
+
+<p>DINO는 box prediction을 위한 새로운 방법으로 Look Forward Twice를 제시한다. 기존 Deformable DETR의 경우, training 안정화를 위해 gradient의 back propagation을 차단한다. 따라서 layer i의 파라미터는 box $b_i$의 loss에 의해서만 update 되며, 저자는 이를 look forard once라 명명했다. 그러나, 저자는 뒷 레이어의 개선된 box information이 앞 레이어의 box prediction에 도움이 될 것이라고 생각하였다. 따라서 DINO는 look forward twice라는 기법을 도입하였는데, 이는 i번째 layer의 파라미터를 i와 i+1번째 layer의 loss에 의해 update한다</p>
+
+<p>(…)</p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl-paper" class="page__taxonomy-item p-category" rel="tag">DL_paper</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-02">March 2, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DINO%282022%29+%EB%85%BC%EB%AC%B8+%EB%A6%AC%EB%B7%B0%20http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fdino%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fdino%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fdino%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">이전</a>
+    
+    
+      <a href="/dl_paper/dino_implements/" class="pagination--pager" title="Implementation of DINO(2022)
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+
+  
+
+  
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">첫 번째 글입니다</a>
+    
+    
+      <a href="/dl_paper/dino_implements/" class="pagination--pager"><span class="prev_next">다음 글  &nbsp  </span>Implementation of DINO(2022)</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/vibe/" rel="permalink">VIBE(2020) 논문 리뷰 (작성중)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-02">March 2, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> May 16 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">VIBE: Video Inference for Human Body Pose and Shape Estimation
+</p>
+  </article>
 </div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/ddetr_to_tflite/" rel="permalink">Deformable DETR for edge device(초안)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-02">March 2, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> April 18 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Convert Deformable DETR to TFLite
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/deform_detr/" rel="permalink">Deformable DETR(2021) 논문 리뷰
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-02">March 2, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 24 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deformable DETR: Deformable Transfomers for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/tflite/" rel="permalink">Covert onnx(NCHW) to tflite(NHWC)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-02">March 2, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 10 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ONNX와 TFlite간의 format 문제 해결
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
     </div>
 
     
@@ -662,6 +1049,33 @@
 
 
 
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
 
 
 

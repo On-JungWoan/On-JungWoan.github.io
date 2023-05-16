@@ -1,5 +1,5 @@
 ---
-title:  "Deformable DETR(2021) 논문 정리"
+title:  "Deformable DETR(2021) 논문 리뷰"
 excerpt: "Deformable DETR: Deformable Transfomers for End-to-End Object Detection"
 
 categories:
@@ -17,14 +17,19 @@ last_modified_at: 2022-03-24
 use_math: true
 ---
 
-> 발표자료 : <https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&ouid=116507288704586191771&rtpof=true&sd=true>
+{% capture paper_name %}Deformable DETR: Deformable Transformers for End-to-End Object Detection{% endcapture %}
+{% capture ppt_link %}https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&ouid=116507288704586191771&rtpof=true&sd=true{% endcapture %}
+{% capture youtube_link %}https://youtu.be/vbYOSB7J44A{% endcapture %}
+{% capture paper_link %}https://arxiv.org/pdf/2010.04159.pdf{% endcapture %}
+{% capture github_link %}https://github.com/fundamentalvision/Deformable-DETR{% endcapture %}
 
-> 발표영상 : [Deformable DETR: Deformable Transformers for End-to-End Object Detection 리뷰](https://youtu.be/vbYOSB7J44A)
+> 발표자료 :  <a href="{{ ppt_link }}" target="blank_">{{ ppt_link }}</a>
 
-> 논문링크 : [Deformable DETR: Deformable Transformes for End-to-End Object Detection](https://arxiv.org/pdf/2010.04159.pdf)
+> 발표영상 : <a href="{{ youtube_link }}" target="blank_">{{ paper_name }} 리뷰</a>
 
-> Implementation : <https://github.com/fundamentalvision/Deformable-DETR>
+> 논문링크 : <a href="{{ paper_link }}" target="blank_">{{ paper_name }}</a>
 
+> Implementation : <a href="{{ github_link }}" target="blank_">{{ github_link }}</a>
 
 # 1. Backgorund
 

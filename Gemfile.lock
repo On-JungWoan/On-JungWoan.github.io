@@ -29,6 +29,7 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
     ffi (1.15.5)
+    ffi (1.15.5-x64-mingw-ucrt)
     forwardable-extended (2.6.0)
     gemoji (3.0.1)
     github-pages (228)
@@ -212,6 +213,8 @@ GEM
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
     minitest (5.18.0)
+    nokogiri (1.14.2-x64-mingw-ucrt)
+      racc (~> 1.4)
     nokogiri (1.14.2-x64-unknown)
       racc (~> 1.4)
     nokogiri (1.14.2-x86_64-linux)
@@ -250,11 +253,13 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
+    unf_ext (0.0.8.2-x64-mingw-ucrt)
     unicode-display_width (1.8.0)
     wdm (0.1.1)
     webrick (1.8.1)
 
 PLATFORMS
+  x64-mingw-ucrt
   x64-unknown
   x86_64-linux
 
@@ -266,4 +271,4 @@ DEPENDENCIES
   webrick (~> 1.7)
 
 BUNDLED WITH
-   2.4.11
+   2.3.26

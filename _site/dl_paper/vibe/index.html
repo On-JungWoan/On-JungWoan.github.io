@@ -9,30 +9,36 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>뻐정 : 광주광역시 버스정보 통합 플랫폼 - 정완이의 개발 일기장</title>
-<meta name="description" content="정완이의 개발 일기장">
+<!-- begin _includes/seo.html --><title>VIBE(2020) 논문 리뷰 (작성중) - 정완이의 개발 일기장</title>
+<meta name="description" content="VIBE: Video Inference for Human Body Pose and Shape Estimation">
 
 
   <meta name="author" content="온정완">
   
+  <meta property="article:author" content="온정완">
+  
 
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정완이의 개발 일기장">
-<meta property="og:title" content="뻐정 : 광주광역시 버스정보 통합 플랫폼">
-<meta property="og:url" content="http://localhost:4000/categories/bbeojung">
+<meta property="og:title" content="VIBE(2020) 논문 리뷰 (작성중)">
+<meta property="og:url" content="http://localhost:4000/dl_paper/vibe/">
 
 
-  <meta property="og:description" content="정완이의 개발 일기장">
-
-
-
+  <meta property="og:description" content="VIBE: Video Inference for Human Body Pose and Shape Estimation">
 
 
 
 
 
+
+
+  <meta property="article:published_time" content="2023-05-16T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-05-16T00:00:00+09:00">
 
 
 
@@ -41,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/categories/bbeojung">
+<link rel="canonical" href="http://localhost:4000/dl_paper/vibe/">
 
 
 
@@ -103,7 +109,7 @@
 
   </head>
 
-  <body class="layout--archive">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -315,6 +321,41 @@
 
     <div class="initial-content">
       
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          VIBE(2020) 논문 리뷰 (작성중)
+
+        
+      </h1>
+      <p class="page__lead">VIBE: Video Inference for Human Body Pose and Shape Estimation
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-16">May 16, 2022</time></p>
+
+      <p>
+      
+    </div>
+  </div>
+
+
+
 
 
 
@@ -601,14 +642,348 @@
 
 
 
-  <div class="archive">
-    
-      <h1 id="page-title" class="page__title">뻐정 : 광주광역시 버스정보 통합 플랫폼</h1>
-    
-    
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="VIBE(2020) 논문 리뷰 (작성중)">
+    <meta itemprop="description" content="VIBE: Video Inference for Human Body Pose and Shape Estimation">
+    <meta itemprop="datePublished" content="2023-05-16T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-05-16T00:00:00+09:00">
 
-  </div>
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#1-backgorund">1. Backgorund</a><ul><li><a href="#1-1-smpl">1-1. SMPL</a></li><li><a href="#1-2-gan">1-2. GAN</a></li><li><a href="#1-3-hmr">1-3. HMR</a></li><li><a href="#1-4-temporal-hmr">1-4. Temporal HMR</a></li></ul></li><li><a href="#2-vibe">2. VIBE</a><ul><li><a href="#2-0-introduction">2-0. Introduction</a></li><li><a href="#2-1-architecture">2-1. Architecture</a></li><li><a href="#2-2-generator">2-2. Generator</a><ul><li><a href="#2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</a></li><li><a href="#2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</a></li><li><a href="#2-2-3-regressor">2-2-3. Regressor</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <blockquote>
+  <p>발표자료 :</p>
+</blockquote>
+
+<blockquote>
+  <p>발표영상 :</p>
+</blockquote>
+
+<blockquote>
+  <p>논문링크 : <a href="https://arxiv.org/abs/1912.05656" target="blank_">VIBE: Video Inference for Human Body Pose and Shape Estimation</a></p>
+</blockquote>
+
+<blockquote>
+  <p>Implementation : <a href="https://github.com/mkocabas/VIBE" target="blank_">https://github.com/mkocabas/VIBE</a></p>
+</blockquote>
+
+<h1 id="1-backgorund">1. Backgorund</h1>
+
+<h2 id="1-1-smpl">1-1. SMPL</h2>
+
+<p><br />
+<br /></p>
+
+<h2 id="1-2-gan">1-2. GAN</h2>
+
+<p><br />
+<br /></p>
+
+<h2 id="1-3-hmr">1-3. HMR</h2>
+
+<p><br />
+<br /></p>
+
+<h2 id="1-4-temporal-hmr">1-4. Temporal HMR</h2>
+
+<p><br />
+<br /></p>
+
+<h1 id="2-vibe">2. VIBE</h1>
+
+<h2 id="2-0-introduction">2-0. Introduction</h2>
+
+<p><br />
+<br /></p>
+
+<h2 id="2-1-architecture">2-1. Architecture</h2>
+
+<p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d" style="border: solid black 1px" /></p>
+
+<p>VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 <code class="language-plaintext highlighter-rouge">CNN</code>에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 <code class="language-plaintext highlighter-rouge">temporal encoder</code>의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 <code class="language-plaintext highlighter-rouge">regressor</code>에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.</p>
+<blockquote>
+  <p>위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.</p>
+</blockquote>
+
+<p>앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 <code class="language-plaintext highlighter-rouge">Generator</code> 파트와, 해당 이미지가 real인지 fake인지를 판단하는 <code class="language-plaintext highlighter-rouge">discriminator</code> 파트로 나누어져 있다고 볼 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+        <span class="c1"># (...)
+</span>        <span class="n">smpl_output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">regressor</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">J_regressor</span><span class="o">=</span><span class="n">J_regressor</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="2-2-generator">2-2. Generator</h2>
+
+<p>Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.</p>
+
+\[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
+\quad (t = 1, ..., T)\]
+
+<h3 id="2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</h3>
+
+<p>우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 <code class="language-plaintext highlighter-rouge">ResNet50</code>을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.</p>
+
+<p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/0c6ef20f-98ea-4731-b3f6-bd71b5c672ae" style="border: solid black 1px" /></p>
+
+<p><br /></p>
+
+<h3 id="2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</h3>
+
+<p>앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 <code class="language-plaintext highlighter-rouge">GRU</code>와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 <code class="language-plaintext highlighter-rouge">RNN</code>기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 <code class="language-plaintext highlighter-rouge">Experiment</code> 파트에서 다시 언급하도록 하겠습니다.</p>
+
+<p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/d56fc82c-ffce-4245-bf7b-848707a563b7" style="border: solid black 1px" /></p>
+
+<p>Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 <code class="language-plaintext highlighter-rouge">Temporal</code>하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.</p>
+
+<p><br /></p>
+
+<h3 id="2-2-3-regressor">2-2-3. Regressor</h3>
+
+<p>아래는 <code class="language-plaintext highlighter-rouge">Regressor</code>에 대한 Visualization 결과입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.</p>
+
+<p><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/f50862ee-60f6-4686-b758-4315b6808ec5" alt="image" /></p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl-paper" class="page__taxonomy-item p-category" rel="tag">DL_paper</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-16">May 16, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=VIBE%282020%29+%EB%85%BC%EB%AC%B8+%EB%A6%AC%EB%B7%B0+%28%EC%9E%91%EC%84%B1%EC%A4%91%29%20http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fvibe%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fvibe%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_paper%2Fvibe%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/dl_optim/ddetr_to_tflite/" class="pagination--pager" title="Deformable DETR for edge device(초안)
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/dl_paper/deform_detr/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>Deformable DETR(2021) 논문 리뷰</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/ddetr_to_tflite/" rel="permalink">Deformable DETR for edge device(초안)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-16">May 16, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> April 18 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Convert Deformable DETR to TFLite
+</p>
+  </article>
 </div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/deform_detr/" rel="permalink">Deformable DETR(2021) 논문 리뷰
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-16">May 16, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 24 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deformable DETR: Deformable Transfomers for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/tflite/" rel="permalink">Covert onnx(NCHW) to tflite(NHWC)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-16">May 16, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 10 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ONNX와 TFlite간의 format 문제 해결
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/dino_implements/" rel="permalink">Implementation of DINO(2022)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-16">May 16, 2022</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 05 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
     </div>
 
     
@@ -662,6 +1037,33 @@
 
 
 
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
 
 
 

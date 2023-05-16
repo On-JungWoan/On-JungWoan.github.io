@@ -1,7 +1,1175 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-18T00:58:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">Deformable DETR for edge device</title><link href="http://localhost:4000/dl_optim/ddetr_to_tflite/" rel="alternate" type="text/html" title="Deformable DETR for edge device" /><published>2023-04-18T00:00:00+09:00</published><updated>2023-04-18T00:00:00+09:00</updated><id>http://localhost:4000/dl_optim/ddetr_to_tflite</id><content type="html" xml:base="http://localhost:4000/dl_optim/ddetr_to_tflite/">&lt;p&gt;최근 발표된 SOTA 모델의 경우, 대부분 그 크기가 매우 크고 무겁습니다(특히 비전분야). 이러한 pre-trained 모델들을 개발 환경에서 사용할 때는 대부분 큰 문제가 되지 않습니다. 하지만 Android나 임베디드 보드와 같은 엣지 디바이스에서는 이러한 Full-size 모델을 사용하는 데 한계가 존재합니다. 따라서 torch 모델을 엣지 디바이스에서 사용하기 위해서는, 이를 최적화 된 포맷으로 변환해주는 작업이 필요합니다. 해당 포스팅에서 사용할 torch 모델은 ICLR 2021에서 발표된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable DETR&lt;/code&gt;이라는 Transformer based의 Object detection 모델이며, 이 모델을 엣지 디바이스에 최적화가 아주 잘 되어있는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TFLite&lt;/code&gt;로 변환하는 과정에 대해서 소개해드리도록 하겠습니다.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-17T02:47:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
+  &lt;p&gt;발표자료 :&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;발표영상 :&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;논문링크 : &lt;a href=&quot;https://arxiv.org/abs/1912.05656&quot; target=&quot;blank_&quot;&gt;VIBE: Video Inference for Human Body Pose and Shape Estimation&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Implementation : &lt;a href=&quot;https://github.com/mkocabas/VIBE&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;1-backgorund&quot;&gt;1. Backgorund&lt;/h1&gt;
+
+&lt;h2 id=&quot;1-1-smpl&quot;&gt;1-1. SMPL&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-2-gan&quot;&gt;1-2. GAN&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-3-hmr&quot;&gt;1-3. HMR&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-4-temporal-hmr&quot;&gt;1-4. Temporal HMR&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;2-vibe&quot;&gt;2. VIBE&lt;/h1&gt;
+
+&lt;h2 id=&quot;2-0-introduction&quot;&gt;2-0. Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-1-architecture&quot;&gt;2-1. Architecture&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNN&lt;/code&gt;에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt;의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Generator&lt;/code&gt; 파트와, 해당 이미지가 real인지 fake인지를 판단하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;discriminator&lt;/code&gt; 파트로 나누어져 있다고 볼 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encoder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# (...)
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;smpl_output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-2-generator&quot;&gt;2-2. Generator&lt;/h2&gt;
+
+&lt;p&gt;Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.&lt;/p&gt;
+
+\[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
+\quad (t = 1, ..., T)\]
+
+&lt;h3 id=&quot;2-2-1-feature-extractor-cnn&quot;&gt;2-2-1. Feature extractor (CNN)&lt;/h3&gt;
+
+&lt;p&gt;우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ResNet50&lt;/code&gt;을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/0c6ef20f-98ea-4731-b3f6-bd71b5c672ae&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-2-temporal-encoder-gru&quot;&gt;2-2-2. Temporal Encoder (GRU)&lt;/h3&gt;
+
+&lt;p&gt;앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RNN&lt;/code&gt;기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Experiment&lt;/code&gt; 파트에서 다시 언급하도록 하겠습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/d56fc82c-ffce-4245-bf7b-848707a563b7&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Temporal&lt;/code&gt;하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-3-regressor&quot;&gt;2-2-3. Regressor&lt;/h3&gt;
+
+&lt;p&gt;아래는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regressor&lt;/code&gt;에 대한 Visualization 결과입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/f50862ee-60f6-4686-b758-4315b6808ec5&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry><entry><title type="html">Deformable DETR for edge device(초안)</title><link href="http://localhost:4000/dl_optim/ddetr_to_tflite/" rel="alternate" type="text/html" title="Deformable DETR for edge device(초안)" /><published>2023-04-18T00:00:00+09:00</published><updated>2023-04-18T00:00:00+09:00</updated><id>http://localhost:4000/dl_optim/ddetr_to_tflite</id><content type="html" xml:base="http://localhost:4000/dl_optim/ddetr_to_tflite/">&lt;p&gt;최근 발표된 SOTA 모델의 경우, 대부분 그 크기가 매우 크고 무겁습니다(특히 비전분야). 이러한 pre-trained 모델들을 개발 환경에서 사용할 때는 대부분 큰 문제가 되지 않습니다. 하지만 Android나 임베디드 보드와 같은 엣지 디바이스에서는 이러한 Full-size 모델을 사용하는 데 한계가 존재합니다. 따라서 torch 모델을 엣지 디바이스에서 사용하기 위해서는, 이를 최적화 된 포맷으로 변환해주는 작업이 필요합니다. 해당 포스팅에서 사용할 torch 모델은 ICLR 2021에서 발표된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable DETR&lt;/code&gt;이라는 Transformer based의 Object detection 모델이며, 이 모델을 엣지 디바이스에 최적화가 아주 잘 되어있는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TFLite&lt;/code&gt;로 변환하는 과정에 대해서 소개해드리도록 하겠습니다.&lt;/p&gt;
 
 &lt;h1 id=&quot;1-conversion-process&quot;&gt;1. Conversion process&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/232539845-4c3c2d56-4c80-4fff-8037-31ced3fedaa3.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;1-changes-to-the-torch-model&quot;&gt;1. Changes to the torch model&lt;/h1&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_optim" /><category term="DL" /><category term="computer_vision" /><summary type="html">Convert Deformable DETR to TFLite</summary></entry></feed>
+&lt;h1 id=&quot;1-changes-to-the-torch-model&quot;&gt;1. Changes to the torch model&lt;/h1&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_optim" /><category term="DL" /><category term="computer_vision" /><summary type="html">Convert Deformable DETR to TFLite</summary></entry><entry><title type="html">Deformable DETR(2021) 논문 리뷰</title><link href="http://localhost:4000/dl_paper/deform_detr/" rel="alternate" type="text/html" title="Deformable DETR(2021) 논문 리뷰" /><published>2023-03-24T00:00:00+09:00</published><updated>2022-03-24T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/deform_detr</id><content type="html" xml:base="http://localhost:4000/dl_paper/deform_detr/">&lt;blockquote&gt;
+  &lt;p&gt;발표자료 :  &lt;a href=&quot;https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&amp;amp;ouid=116507288704586191771&amp;amp;rtpof=true&amp;amp;sd=true&quot; target=&quot;blank_&quot;&gt;https://docs.google.com/presentation/d/1KFEG02jlgbZISuvFbilvwaP8PbdQCzAA/edit?usp=sharing&amp;amp;ouid=116507288704586191771&amp;amp;rtpof=true&amp;amp;sd=true&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;발표영상 : &lt;a href=&quot;https://youtu.be/vbYOSB7J44A&quot; target=&quot;blank_&quot;&gt;Deformable DETR: Deformable Transformers for End-to-End Object Detection 리뷰&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;논문링크 : &lt;a href=&quot;https://arxiv.org/pdf/2010.04159.pdf&quot; target=&quot;blank_&quot;&gt;Deformable DETR: Deformable Transformers for End-to-End Object Detection&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Implementation : &lt;a href=&quot;https://github.com/fundamentalvision/Deformable-DETR&quot; target=&quot;blank_&quot;&gt;https://github.com/fundamentalvision/Deformable-DETR&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;1-backgorund&quot;&gt;1. Backgorund&lt;/h1&gt;
+
+&lt;p&gt;Deformable DETR에 대해 소개해드리기에 앞서, 먼저 선행 연구에 대해 소개하도록 하겠습니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-1-transformer&quot;&gt;1-1. Transformer&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229874267-999d91d5-40d5-4933-9834-4146b7e76f8b.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Transformer는 Input contents와 Target contents간의 관계를 파악하여 attention weight를 계산하는 아키텍쳐이며, 기존 RNN 기반의 Encoder, Decoder 구조에서 RNN 없이 Attnetion만으로 task를 수행합니다. 원래는 NLP task만을 위해 개발되었지만, 최근에는 vision 분야에서 더 활발하게 사용되고 있는 모델입니다. Encoder는 source word(input sentence)를 input으로 받고, Decoder는 target word(output sentence)를 input으로 받아 각각 MultiHead Attention을 수행합니다. 이 때, 각 Head는 서로 다른 sample point로부터 온 source들에 대해 attention task를 수행합니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229874356-182c0dd7-8e3d-499a-a2f2-fdd9863fe22d.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Multi Head Attention은 위와 같이 계산될 수 있습니다. 각 key contents(source word)는 각각 학습 가능한 weight($W^\prime_m$)를 가지며, 해당 weight는 attention weight($A_{mqk}$)와 곱해지게 됩니다. 해당 task는 모든 key contents에 대해 동일하게 수행되며, 이를 모두 더해 query weight($W_m$)와 곱함으로써 특정 Head $m$에 대한 Multi-Head Attention을 계산하게 됩니다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;더 자세한 내용은 논문을 참고해주시기 바랍니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Attention Is All You Need : &lt;a href=&quot;https://arxiv.org/pdf/1706.03762.pdf&quot;&gt;https://arxiv.org/pdf/1706.03762.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-2-detr&quot;&gt;1-2. DETR&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;paper link : &lt;a href=&quot;https://arxiv.org/pdf/2005.12872.pdf&quot;&gt;End-to-End Object Detection with Transformers&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;DETR은 위에서 소개한 Transformer를 Object Detection task에 최초로 적용시킨 모델입니다. 이분 매칭 기반의 새로운 Detection 구조를 가지며, 기존 Detection task를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;direct set-prediction&lt;/code&gt; 문제로 접근하여, fully &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;end-to-end&lt;/code&gt; detection을 수행합니다. 즉, DETR 이전의 모델들이 해주었던 많은 hand-crafted components(RPN, NMS …)들이 모두 제거되었다고 할 수 있겠습니다. DETR은 Deformable DETR과 기본적인 흐름이 매우 유사하기 때문에 자세히 짚고 넘어가도록 하겠습니다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;DETR의 전체적인 흐름은 다음과 같습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229875616-f5a7ef82-dc26-43bf-a120-633e86ec3931.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선, input image를 CNN backbone Network(Resnet50)에 태워 Feature map을 얻습니다. 이렇게 얻어진 feature map을 transformer의 encoder-decoder에 넣어 object query를 얻은 뒤, 최종적으로 GT box와 Bipartite Matching을 진행해주게 됩니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2-1-encoder--decoder&quot;&gt;1-2-1) Encoder &amp;amp; Decoder&lt;/h3&gt;
+
+&lt;p&gt;다음은 DETR의 Encoder와 Decoder를 더 자세히 나타낸 figure입니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229877733-6eca6034-eb9b-45c2-b16e-4c1fe998b0a5.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;backbone network에서 얻어진 Feature map은 우선 DETR의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Encoder&lt;/code&gt;로 들어가게 됩니다. input으로 들어간 Feature map은 self attention을 수행하게 되는데, 해당 과정에서 image의 pixel간 관계를 학습하게 됩니다. 이후 FFN을 통과하여 최종적으로 attention weight를 출력하게 됩니다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Decoder&lt;/code&gt;는 Object query를 input으로 받습니다. 여기서 object query는 오브젝트와 이분 매칭을 진행하는 slot들이라고 이해하시면 될 것 같습니다. 다시 말해, 하나의 object query는 하나의 object에 대해(일대일 매칭) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bipartite Matching&lt;/code&gt;을 해주게 되며, 이 과정에서 no object와 실제 object로 최종 분류됩니다. 자세한 매칭 알고리즘에 대해서는 뒤에서 더 자세히 설명하도록 하겠습니다. 해당 object query는 초기에 random한 값으로 initialization되며, self attetion과 cross attention을 수행하게 됩니다. self attention을 통해 object query는 최적의 매칭(각 object query가 어떤 object에 매칭되어야 할지)에 대해 학습하게 되며, encoder에서 계산된 attention weight와 cross attention을 수행하게 되는데, 이 과정에서 실제 object의 위치에 대해 학습하게 됩니다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;여기서 초기 layer의 self attention은 object query가 random하게 initialize 되었기 때문에 사실상 의미가 없다고 합니다. 그러나 저자는 코드의 간결성을 위해 그냥 남겨두었다고 합니다.&lt;br /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;self attention과 cross attention을 마친 object query는 최종적으로 GT box에 대한 class와 bbox 좌표를 predict합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2-2-set-prediction&quot;&gt;1-2-2) Set prediction&lt;/h3&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229880614-524c3284-037e-4e75-9eed-d7e1223b5c85.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;앞서 decoder에서 object query가 예측한 임베딩 값을 바탕으로 실제 GT box와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set prediction&lt;/code&gt;을 수행하게 됩니다. 해당 task는 DETR의 key concept으로, 조금 더 자세히 살펴보도록 하겠습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-2-1-hungarian-algorithm&quot;&gt;1-2-2-1) hungarian algorithm&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229881215-589be3c5-90a6-4397-90df-c0c47862b006.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;object query와 GT box간의 매칭을 위해서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hungarian algorithm&lt;/code&gt;이 사용됩니다. hungarian algorithm이란, 특정한 score를 기준으로 각 query들이 최적의 매칭을 할 수 있게 해주는 알고리즘입니다. DETR의 경우 hungarian algorithm의 score로 match loss를 사용합니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-2-2-class-loss&quot;&gt;1-2-2-2) class loss&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229881778-8e1389af-471f-401b-87ad-6a7b759fae9d.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;match loss는 다시 2개의 항으로 나누어지게 되는데, 첫 번째 항의 $\hat{p}_{\sigma (i)}(c_i)$는 class에 prediction에 대한 cost를 의미합니다. 해당 loss는 object query가 실제 class를 얼마나 잘 예측하고 있는지에 대해 확률값으로 표현됩니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-2-3-box-loss&quot;&gt;1-2-2-3) box loss&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229882659-c721edf4-4c3c-4bdb-a0b7-dd118a593779.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;bbox의 loss를 계산하는 방법에는 대표적으로 IoU, GIoU등이 있습니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IoU&lt;/code&gt;는 두 bbox A, B에 대해서, A와 B의 합집합 대비 교집합이 차지하는 비율을 수치로 나타낸 loss입니다. 그러나 IoU는 A와 B의 교집합이 존재하지 않을 경우 항상 0이 되기 때문에 box loss로 사용하기에 한계가 있습니다. 따라서 DETR은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GIoU&lt;/code&gt;를 box loss로 사용합니다. GIoU는 bbox A, B를 모두 포함하는 최소 크기의 bbox C를 도입함으로써 기존 IoU의 문제를 해결합니다. 위에 나와있는 표는, loss에 대한 ablation table입니다. l1 loss는 AP에 큰 영향을 주지 못하지만, GIoU는 AP에 큰 영향을 주고 있는 모습을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-2-2-4-bipartite-matching&quot;&gt;1-2-2-4) bipartite matching&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229884104-c214d431-c33d-4db1-90ff-37246b401540.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bipartite matching&lt;/code&gt;에 대해 살펴보도록 하겠습니다. 이렇게 계산된 loss를 바탕으로 hungarian algorithm을 통해 loss가 최소가 되는 최적의 matching을 찾게 됩니다. 이 과정에서 각 object query들은 각각의 GT box 또는 no object와 일대일 매칭되며, 잘못 예측된 query의 경우 수정됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2-3-problem&quot;&gt;1-2-3) Problem&lt;/h3&gt;
+
+&lt;p&gt;앞서 소개드린 DETR에는 다음과 같은 한계가 존재합니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Slow convergence&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Attention weight는, Key의 수가 많아질 수록 ${1} \over {N_k}$로 uniform하게 initialaze됩니다. 일반적으로 obj detection task에서는 key가 image의 pixel이 되므로, key의 수는 매우 커지게 되고 이로 인해 attention weight는 uniform하게 initialize됩니다. 따라서 attention weight가 특정한 object에 focusing하기까지 시간이 매우 오래걸리게 됩니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Memory Complexity&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229885671-924426df-25f1-49f4-acaa-fa18fb1e7813.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;위 수식(좌항)은 DETR의 시간복잡도를 수식으로 표현한 것입니다. 일반적으로 image task에서 pixel(query, key contents)의 수는 channel의 수보다 훨씬 크기 때문에 시간 복잡도는 3번째 항에 의해 지배되어 $O(N_qN_kC)$로 표현됩니다. 즉, Feature map의 scale이 증가할 수록 memory complexity는 quadratic하게 증가합니다. 이로 인해 DETR은 high-resolution feature map을 사용할 수 없다는 한계가 존재합니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Small obj.에 대한 preformance 저하&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;위에서 언급했듯이 DETR은 Memory 문제로 인해 low resolution feature map만을 사용하게 됩니다. 따라서 small object detection에 대해서는 좋지 않은 performance를 보여줍니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;2-deformable-detr&quot;&gt;2. Deformable DETR&lt;/h1&gt;
+
+&lt;p&gt;이러한 문제를 해결하기 위해 저자는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable DETR&lt;/code&gt;이라는 새로운 방법론을 제시합니다. Deformable DETR에는 다음과 같은 2개의 key concept가 존재합니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Deformable Attention&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;DETR의 memory complexity 문제를 해결하기 위해, Deformable DETR은 attention 시 모든 pixel을 사용하지 않습니다. 대신 특정 layer를 통해 예측된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reference point&lt;/code&gt; 근처의 sampling point들에 대해서만 attention을 수행하게 됩니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Multi-scale Feature map&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable Attention&lt;/code&gt;을 통해 메모리 문제를 해결함으로써 feature map에 대한 resolution 제한을 완화할 수 있었습니다. 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;다양한 Scale의 Feature map&lt;/code&gt;을 사용함으로써 작은 obj에 대한 performance를 향상시킵니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;2-1-architecture&quot;&gt;2-1. Architecture&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229887003-40642946-23eb-42c4-8bd6-31825242f788.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Deformable DETR의 경우, DETR과 전체적인 task는 크게 다르지 않습니다. task는 다음과 같이 크게 3가지로 나뉩니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Backbone Network&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;DETR과 유사하게 CNN backbone Network에 input image를 태워 Feature map을 뽑아냅니다. 이 때, DETR과 달리 single-scale이 아닌 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Multi-scale feature map&lt;/code&gt;을 사용하게 됩니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Encoder&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;backbone에서 뽑아낸 multi-scale feature map을 바탕으로 object가 있음직한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reference point&lt;/code&gt;를 예측합니다. 예측된 reference point 근처에서 sampling point를 추출하게 되고, 이 sampling point끼리의 attention weight를 계산합니다(self attention). 계산된 attention weight는 reference point를 개선하는 데 사용되며, 다음 layer에서는 개선된 reference point 근처에서 다시 sampling point들을 추출합니다. 이후에는 다시 위 task를 반복하게 됩니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Decoder&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;DETR과 동일한 task를 수행합니다. object query의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self attention&lt;/code&gt;을 통해 최적의 매칭을 찾고, encoder와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cross attention&lt;/code&gt;을 통해 reference point를 수정합니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-2-deformable-attention&quot;&gt;2-2. Deformable Attention&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229893183-0b2d86d8-6c68-4b97-ba0f-55b9e26c2158.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 figure는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable Attention&lt;/code&gt; 과정에 대해 조금 더 자세히 나타낸 것 입니다. input으로 backbone에서 뽑아낸 feature map을 받아, reference point에 대해 sampling offset을 계산합니다. 이 때, sampling offset은 학습 가능하며 해당 offset을 바탕으로 sampling point들이 추출됩니다. 계산된 offset들은 key contents의 weight와 함께 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bilinear interpolation&lt;/code&gt;(Dai et al. 2017)을 적용해줍니다. 여기까지의 과정은 위 figure에서 빨간색 부분에 해당합니다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;이후 query feature에 대해 attention weight를 계산해주게 되며(파란색 부분), bilinear interpolation output과 aggregation($A_{mqk} \cdot W^ \prime _m x ( p_q+ \Delta p ) $) 해줌으로써 head m에 대한 attention weight를 계산하게 됩니다. 이 task를 각 head에 대해 동일하게 적용한 뒤 Linear layer에 태워줌으로써 최종 output을 계산합니다(노란색 부분).&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-3-multi-scale-deformable-attention&quot;&gt;2-3. Multi-scale Deformable Attention&lt;/h2&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229963350-8b2122ca-f4f3-4136-9c95-1e110e27d22d.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;실제 Deformable DETR은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;multi-scale deformable attention&lt;/code&gt;을 사용합니다. input으로 multi scale의 feature map을 사용한다는 점을 제외하면 single-scale의 task와 동일합니다. 위 figure는 coco val image에 대해 직접 시각화 해본 multi-scale feature map입니다. 다양한 resolution의 feature map이 사용되는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229964550-c24bf644-643b-44d7-bd99-f6dda32849ac.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;85%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 주목할 점은 각각 feature map의 resolution이 다르기 때문에 value들은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;normalize&lt;/code&gt;된다는 것입니다. 따라서 multi-scale deformable attention의 계산식에는 value를 de-normalize 해주는 $\phi_l()$ 함수가 사용됩니다. 나머지 task는 single-scale과 동일합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-4-encoder&quot;&gt;2-4. Encoder&lt;/h2&gt;
+
+&lt;p&gt;Deformable DETR의 encoder가 DETR과 다른 점은, attention weight를 계산하는 데 모든 pixel을 사용하지 않는다는 것 입니다. DETR에서는 모든 pixel을 사용하여 attention weight를 계산하였기 때문에 memory complexity 문제가 발생하였고, attention weight가 uniform 하게 initialize되어 수렴해에 도달하기까지 매우 많은 시간이 필요했습니다. 그러나 Deformable DETR의 deformable attention은 특정 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reference point&lt;/code&gt; 근처의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sampling point&lt;/code&gt;에 대해서만 attention weight를 계산하게 됩니다. 아래 figure는 직접 시각화해본 sampling point와 attention weight입니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229964910-47066c77-dc47-453c-9147-6cd7075fca6f.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;reference point는 layer를 거듭할 수록 더욱 정교하게 수정되며, 이를 바탕으로 최적의 sampling offset을 학습하여 더 효율적인 sampling point를 추출하는 모습을 확인할 수 있습니다. 마지막 Layer에 가까워 질수록, model은 object의 모든 부분을 보는 게 아니라 물체의 가장자리 부분에 초점을 맞춰서 보도록 학습된다는 것을 알 수 있었습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-5-decoder&quot;&gt;2-5. Decoder&lt;/h2&gt;
+
+&lt;p&gt;Decoder의 task는 DETR과 거의 동일하게 진행됩니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/229966643-b83cfc18-43ee-4ea2-8260-d373230d1c77.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;random한 값으로 initialize된 object query에 대해 self-attention을 수행함으로써 최적의 매칭을 찾습니다. 이후에 Encoder에서 계산한 attention weight와 cross-attention을 수행하며 이를 바탕으로 reference point를 수정합니다. 그리고 다음 layer에서는 다시 수정된 reference point 근처에서 sampling point를 추출하여 attention weight를 계산합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;3-variants-for-deformable-detr&quot;&gt;3. Variants for Deformable DETR&lt;/h1&gt;
+
+&lt;p&gt;Deformable DETR은 앞서 설명드린 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable attention&lt;/code&gt;을 도입하여 momory의 효율성을 증대시켰습니다. 저자는 이러한 메모리 효율로 인해 deformable DETR의 다양한 변형을 시도해 볼 수 있다고 하였으며, 그 구체적인 예시로 다음과 같은 2가지 trick을 제시하였습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Iterative Bounding Box Refinement&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Bounding Box가 Decoder Layer를 거칠 때, box의 좌표를 조금씩 수정함으로써 정확도를 향상시킵니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Two-stage Deformable DETR&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;One-stage Deformablle DETR에서, object query는 초기에 random한 값으로 initialize 되었습니다. 그러나 two-stage Deformable DETR에서는, encoder-only의 Deformalbe DETR을 먼저 학습 시켜 region proposal을 얻습니다. 이후 이 값을 decoder의 input으로 넣어 inference를 진행함으로써 정확도를 더 높힙니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;4-experiment&quot;&gt;4. Experiment&lt;/h1&gt;
+
+&lt;h2 id=&quot;4-1-with-detr&quot;&gt;4-1. With DETR&lt;/h2&gt;
+
+&lt;p&gt;Deformable DETR은 기존 DETR대비 훨씬 적은 Epoch으로 더 좋은 performance를 보여주는 모습을 확인할 수 있었습니다. DETR의 경우 AP 43.6을 달성하는 데 총 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;500epoch&lt;/code&gt;(7000시간)이 걸린데 반해, Deformable DETR은 AP 43.8을 달성하는 데 고작 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;50epoch&lt;/code&gt;(325시간)밖에 걸리지 않는 모습을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/230941247-aa27ba47-6eff-4df3-b049-374325e0d8d6.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-2-ablation-study-of-fpns&quot;&gt;4-2. Ablation study of FPNs&lt;/h2&gt;
+
+&lt;p&gt;다음은 FPN에 대해서 Ablation study를 진행한 테이블입니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/230941063-fa5bd047-910c-4be2-a9ff-9318d2d98278.png&quot; width=&quot;80%&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;MS attention에 대해 FPN 추가하여도 큰 성능 개선이 없는 것을 확인할 수 있습니다. 이는, 여러 스케일의 feature map에 대한 attention 연산을 통해 모델이 여러 스케일의 이미지 정보를 충분히 반영하였음을 반증합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;5-conclusion&quot;&gt;5. Conclusion&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DETR&lt;/code&gt;은 기존 object detection 문제를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set prediction&lt;/code&gt;으로 새롭게 재정의하여 hand-craft components를 완전히 없앤 fully end-to-end detector입니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;그러나 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DETR&lt;/code&gt;은 모든 image pixel에 대해 attention 연산을 수행하기 때문에 수렴해에 도달하기 까지 시간이 오래걸리며, low-resolution feature map을 사용하기 때문에 작은 물체에 대한 performance가 떨어집니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable DETR&lt;/code&gt;은 이러한 문제를 해결하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Multi-scale Deformable Attention&lt;/code&gt;을 도입합니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;확보된 메모리 효율성 덕분에 추가적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Iterative Bounding Box Refinement&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Two-stage Deformable DETR&lt;/code&gt;와 같은 trick을 도입할 수 있게되어 performance를 더 끌어올렸습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;결과적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Deformable DETR&lt;/code&gt;은 기존 DETR의 문제를 해결함과 동시에 더 빠르게, 더 좋은 성능을 낼 수 있게 되었습니다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;details&gt;
+
+
+&lt;summary&gt;Details&lt;/summary&gt;
+
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;strong style=&quot;color: red;&quot;&gt;다음은 논문의 더 자세한 내용을 담은 해석본 Markdown입니다. 아래 내용을 마크다운 에디터에 넣어서 사용하시면 조금 더 자세한 내용을 확인하실 수 있습니다.&lt;/strong&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+
+
+
+# 0. Abstract
+
+DETR은 obj detection에서 좋은 performance를 보여줌과 동시에 많은 hand-desinged componets를 제거함으로써 완전한 end-to-end의 학습을 할 수 있게 되었습니다. 그러나, Trnasformer attention module의 한계로 인해 DETR에는 다음과 같은 2가지 문제가 존재합니다.
+
+1. **Slow convergence**
+
+2. **Limited feature spatial resolution**
+
+본 저자는 이러한 문제를 해결하기 위해 Deformable DETR을 제안합니다. Deformable DETR의 attention module은 reference point를 지정하여, 해당 point 근처에서만 small key sampling을 진행합니다. 이를 통해 기존 DETR의 문제를 상당부분 개선하였으며, small object에 대한 detection performance도 많이 향상시켰다고 합니다.
+
+&lt;br /&gt;
+&lt;br /&gt;
+
+# 1. Introduction
+
+## 1-1. DETR
+
+### 1-1-1) About DETR
+
+DETR 이전의 obj detection 모델은 NMS와 같은 hand-crafted components가 상당부분 존재했습니다. 그러나 2020년 등장한 DETR은, CNN과 Transformer의 encoder-decoder를 결합한 간단한 아키텍쳐를 도입하여 이러한 hand-crafted components를 모두 제거하였습니다. performance는 이전 모델들과 유사하게 유지하면서, Transformer의 강력한 relation modeling 능력을 통해 obj detection 분야에서 완전한 end-to-end를 구현한 최초의 모델이라고 할 수 있겠습니다.
+
+### 1-1-2) Problem of DETR
+
+DETR은 Abstract에서도 잠깐 언급했듯이 2가지의 문제점을 가지고 있습니다. &lt;br /&gt;
+
+1. **slow cpnvergence**
+
+    우선, DETR은 수렴해에 도달하기까지의 시간이 매우 오래걸립니다. DETR은 COCO dataset에 대해 converge까지 약 500 에폭정도가 필요한데, 이는 Faseter R-CNN보다 10~20배 더 느린 수치입니다.
+
+2. **small obj**
+
+    DETR은 작은 오브젝트에 대해 매우 낮은 performance를 보여줍니다. DETR 이전의 모델들은 주로 output과 가까운 고해상도 feature map에서 small obj를 detect합니다. 하지만, DETR은 이러한 복잡한 feature map을 수용할 수 있는 능력이 없습니다.
+
+정리해보자면, DETR의 attention module은 attention weight와 feature map의 모든 pixel을 cast하여 학습을 진행합니다. 따라서 긴 학습시간은 필수가결적이라고 할 수 있겠습니다. 또한, Transformer의 encoder는 모든 pixel에 대해 quadratic computation을 진행하게 되는데, 이는 매우 많은 연산량과 메모리를 필요로 합니다. 따라서 high-resolution feature map을 계산하는 데 한계가 존재하며, 이는 자연스럽게 small obj에 대한 performance 저하로 이어지게 됩니다.
+
+## 1-2. Deformable DETR
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/227284261-54263268-e20b-4ad8-9742-71ca87e4ca2c.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+
+본 저자는 Deformable Convolution(Dai et al., 2017)이라는 방법론을 도입함으로써 DETR의 느린 convergence issue와 high complexity issue를 해결합니다. 즉, Deformable DETR은 Transformer의 관계 모델링 능력과 deformable convolution의 soarse한 공간 샘플링 능력의 결합이라고 할 수 있겠으며, 이를 `deformable attention module`이라 명명하였습니다. Fig.1에서 확인할 수 있듯이 deformable attention module은 모든 픽셀을 attention weight와 match하지 않고, 특정 sampling location 주변의 pixel들만 사용합니다. 이를 통해 FPN의 도움 없이도 multi scale feature를 확장할 수 있었다고 합니다.
+
+### 1-2-1) two-stage Deformable DETR
+
+본 저자는 Deformable DETR의 빠른 convergence와 memory efficiency로 인해, `two-stage Deformable DETR`이라는 variants model을 시도해 볼 수 있었다고 말하고 있습니다. two-stage Deformable DETR은 첫 번쨰 stage에서 region proposal을 생성해내고, 이를 2번째 스테이지인 decoder에 넘겨줘서 iterative하게 bounding box refinement를 해주는 메커니즘을 가지고 있습니다. 즉, decoder에서는 region proposal을 받아 지속적으로 bounding box를 수정하면서 detection performance를 향상시킬 수 있었다고 합니다. 
+
+
+### 1-2-2) Experiments
+
+Deformable DETR은 기존 DETR보다 10배 더 적은 에폭을 사용하면서 더 좋은 performance를(특히 작은 물체에 대해서) 기록했다고 합니다. two-stage Deformable DETR을 사용하면 성능을 조금 더 향상시킬 수 있으며, 아래는 공식 깃헙 링크입니다.
+
+&amp;gt; links : &lt;a href=&quot;https://github.com/fundamentalvision/Deformable-DETR&quot; target=&quot;_blank&quot;&gt;https://github.com/fundamentalvision/Deformable-DETR&lt;/a&gt;
+
+&lt;br /&gt;
+&lt;br /&gt;
+
+# 3. Revisiting Transformers and DETR
+
+## 3-1. Multi-Head Attention in Transformers
+
+### 3-1-1) Intro
+
+Transformer는 기계번역 분야에서 주로 사용되던 attention기반의 네트워크 아키텍쳐입니다. transformer는 input으로 query elements(e.g. output sentence의 target word)와 key elements(e.g. input sentence의 source word)를 받으며, query와 key element의 유사도를 측정하여 attention weight를 계산합니다. `multi-haed attention module`은 계산된 attention weight를 바탕으로 key contents를 adaptive하게 계산합니다. 이 때 모델은 여러개의 attention head를 가지며, 각각의 attention head는 서로 다른 subspace나 position으로부터 온 contents들을 인식합니다. 이러한 attention head들은 선형 결합을 통해 계산되며, 각각 학습 가능한 가중치를 가집니다. 계산식은 다음과 같이 정의될 수 있습니다.
+
+$$
+MultiHeadAttn(z_q, x) = \sum^M_{m=1}{W_m[\sum_{k \in \Omega_k}A_{mqk} \cdot W^{\prime}_mx_k]}
+$$
+
+- **Annotation**
+
+  - $q \in \Omega_q$
+
+    query element입니다. representation feature로 $z \in \mathbb{R}^C$를 가집니다.
+
+  - $k \in \Omega_k$
+
+    key element입니다. representation feature로 $x_k \in \mathbb{R}^C$를 가집니다.
+
+  - $\Omega_q$ &amp;amp; $\Omega_k$
+
+    각각 q와 k의 전체 집합을 의미합니다.
+
+  - $m$
+
+    attention head의 index를 의미합니다.
+
+  - $Amqk$, $W_m$, $W^\prime_m$
+
+    각각 attention weight, query weight, key weight를 의미합니다.
+
+모든 key contents의 feature에 대해서 Attention weight와 key weight를 곱한 뒤 이를 전부 더하여 query weight와 곱하면, m번째 attention head에서의 feature가 계산됩니다. 또한, 위 수식에는 나와있지 않지만 query와 key elements의 feature간 공간 정보를 구별해주기 위해 position embedding을 사용합니다. 제가 attention 관련 논문을 읽어보지 않아서 key weight, query weight라는 표현이 맞는지는 모르겠는데, 각각 key와 query에 대해 고유하게 사용되는 weight이기 때문에 상기와 같이 표현하였다는 점 참고해주시면 감사하겠습니다.
+
+### 3-1-2) Issue
+
+Transformer에는 다음과 같은 2가지 issue가 존재합니다.
+
+- **long training schedules**
+
+  key의 개수($N_k$)가 매우 커지는 경우 attention weight는 $\frac{1}{N_k}$에 점점 수렴하게 되는데, 이렇게 되면 각 gradient의 차이가 모호해지기 때문에 각각 key들을 특정하기 위해 매우 긴 training time이 필요합니다. obj detection에 transformer를 사용하게 되면, key elements는 image의 pixel이 되며, 일반적으로 이미지의 픽셀 개수는 매우 많습니다 따라서 학습 시간이 길어지는 문제가 발생합니다.
+
+- **computational and memory complexity**
+
+  multi-head attention에서 시간 복잡도는 $O(N_qC^2 + N_kC^2 + N_qN_kC^2)$으로 표현될 수 있습니다. 이미지의 경우 dimension(C)에 비해 pixel 수($N_k$ = $N_q$)가 훨씬 많기 때문에 시간 복잡도는 $N_qN_kC^2$에 의해 지배됩니다. 따라서 feature map의 size가 증가함에 따라 복잡도는 quadratic하게 증가하며, 이는 계산 및 메모리 복잡도를 증가시킵니다.
+
+&lt;br /&gt;
+&lt;br /&gt;
+
+# 4. Method
+
+## 4-1. Deformable Transformers for End-to-End Object Detection
+
+### 4-1-1) Deformable Attention Module
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/227588961-b03a34af-fc7c-4e04-a757-a4f101983c9f.png&quot; style=&quot;border: 1px solid black&quot; /&gt;&lt;/p&gt;
+
+
+이전 연구에서 transformer를 image에 적용하고자 하는 시도는, transformer가 image feature map의 모든 pixel을 고려하기 때문에 메모리 및 학습 속도 이슈를 발생시켰습니다. 본 저자는 이러한 문제를 다루기 위해 `deformable attention module`을 도입합니다. deformable attention module은 reference point 근처의 소규모 sampling point만을 사용하여 이러한 문제점들을 해결하였습니다. 아래는 feature map $x \in \mathbb{R}^{C \times H \times W}$, query element $q$와 content feature $z_q$, reference point $p_q$에 대한 DeformAttn 계산식입니다.
+
+$$
+DeformAttn(z_q , {p}_q , x)
+=\sum^{M}_{m=1}W_m[
+  \sum^K_{k=1}
+  A_{mlqk} \cdot W^{\prime}_mx
+    ( p_q + ∆p_{mqk})
+]  
+$$
+
+annotation에 대해서 먼저 간단히 소개해 드리겠습니다. 먼저, m과 k는 각각 attention head의 idex와 sampled key의 index를 의미합니다. $\Delta p_{mqk}$와 $A_{mqk}$는 m번째 head 및 k 번째 sampling point에서 추출된 sampling offset과 attention weight를 의미합니다. attention weight는 0~1사이 값을 가지며, 모든 sampling point에서의 합이 1이 되도록 normalize되어 있습니다. sampling offset은 범위 제한이 없으며, $( p_q + ∆p_{mqk})$가 분수 값을 갖기 때문에 bilinear interpolation(Dai et al. 2017)이라는 계산 기법을 사용한다고 합니다($x( p_q + ∆p_{mqk})$). $\Delta p_{mqk}$와 $A_{mqk}$는 둘 다 $z_q$에 대한 linear projection으로 얻어집니다. 실제 구현 과정에서, linear projection operator는 3MK의 채널을 가지며 첫 2MK에서는 $\Delta p_{mqk}$를, 나머지 MK에서는 sofrmax를 통해 $A_{mqk}$를 계산합니다.
+
+
+### 4-1-2) Multi-scale Deformable Attention Module
+
+대부분 최신 object detection framework들을 multi-scale feature map을 사용하는 경향을 보이고 있으며, 저자가 제안하는 Deformable attention module도 자연스럽게 multi-scale feature map으로 확장될 수 있다고 소개하고 있습니다. multi-scale deformable attention module은 앞서 소개한 single-scale과 유사한 계산식을 갖습니다.
+
+$$
+MSDeformAttn(z_q , \hat{p}_q , {x^l}^L_{l=1})
+=\sum^{M}_{m=1}W_m[
+  \sum^L_{l=1}
+  \sum^K_{k=1}
+  A_{mlqk} \cdot W^{\prime}_mx^l
+    ( φ_l (p̂_q) + ∆p_{mlqk})
+]  
+$$
+
+복잡해보이는 수식이지만, 4-1-1의 single-scale과 유사한 구조를 가지고 있습니다. 우선, 몇몇 annotation에 대해 설명드리겠습니다. 우선, reference points($\hat p_q$)의 경우 top-left를 (0,0) bottom-right를 (1,1)로 하여 normalized 되었으며, $φl (p̂q )$는 이를 denormalize하는 function입니다. nulti-scale feature map으로부터 LK개의 sample point를 추출한다는 것을 제외하면 기존 single-feature map과 계산식은 동일합니다.
+
+### 4-1-3) Deformable Transformer Encoder
+
+다음은 Multi-sacle deformable attention의 encoder에서의 적용에 대한 설명입니다. Encoder는 multi-scale deformable attention module을 사용한다는 점을 제외하면 기존 DETR의 encoder와 동일합니다. Encoder에서는 ResNet backbone 모델의 feature map을 input으로 받아 multi-scale feature map을 추출합니다. 이 때 input으로 들어가는 feature map은 input image의 $2^{-5}$~$2^{-3}$(본문에서는 $C_3$~$C_5$로 표현)의 resolution을 갖는 feature map입니다. 또한, encoder에서는 FPN을 사용하지 않고도 좋은 performance를 유지할 수 있었다고 합니다.&lt;br /&gt;
+encoder의 input과 output은 동일한 resolution을 갖는 multi-scale feature map이며, key/query element는 multi-scale feature map으로부터 추출된 pixel 값들 입니다. 이 때, 각 query pixel에서 reference point는 자기 자신입니다. 또한 각 query pixel이 어떤 feature level에 속하는지 구별하기 위해 positional embedding 외에도 $e_l$이라는 sacle-level embedding을 추가하였으며, fixed encoding과는 다르게 학습 가능하다는 특징이 있습니다.
+
+
+
+&lt;/details&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">Deformable DETR: Deformable Transfomers for End-to-End Object Detection</summary></entry><entry><title type="html">Covert onnx(NCHW) to tflite(NHWC)</title><link href="http://localhost:4000/dl_optim/tflite/" rel="alternate" type="text/html" title="Covert onnx(NCHW) to tflite(NHWC)" /><published>2023-03-10T00:00:00+09:00</published><updated>2023-03-10T00:00:00+09:00</updated><id>http://localhost:4000/dl_optim/tflite</id><content type="html" xml:base="http://localhost:4000/dl_optim/tflite/">&lt;h2 id=&quot;1-onnxnchw와-tflitenhwc간의-fomat문제&quot;&gt;1. ONNX(NCHW)와 TFLite(NHWC)간의 Fomat문제&lt;/h2&gt;
+
+&lt;p&gt;ONNX는 NCHW(채널, 높이, 너비) 형식의 이미지 데이터 포맷을 사용한다. 반면, TensorFlow Lite(TFLite)는 NHWC(높이, 너비, 채널) 형식의 이미지 데이터 포맷을 사용한다. 이러한 format 차이로 인해 onnx to tflite 변환 시 format issue가 발생한다. 이런 경우 직접 문제가 발생하는 layer를 찾아 shape을 수정해줘야만 한다. 본 포스팅에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;onnx2tf&lt;/code&gt;를 사용하여 해당 문제를 해결하는 방법에 대해 소개한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-netron&quot;&gt;2. NETRON&lt;/h2&gt;
+
+&lt;p&gt;onnx2tf를 소개하기에 앞서, onnx 모델의 사각화를 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NETRON&lt;/code&gt;을 설치해준다. 본인의 컴퓨터 os에 맞는 명령어를 터미널에 입력하면 설치가 완료된다. 자세한 설치 방법은 아래 링크를 참고하면 된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;links : &lt;a href=&quot;https://github.com/lutzroeder/netron#install&quot;&gt;https://github.com/lutzroeder/netron#install&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[Linux]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; snap install netron
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[Window]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; winget install -s winget netron
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;설치가 완료되면, 다음과 같이 Netron으로 모델을 열어볼 수 있게 된다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224243749-cd77602d-2c00-4da5-8609-723ff8c5ef08.png&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-onnx2tf&quot;&gt;3. ONNX2TF&lt;/h2&gt;
+
+&lt;h3 id=&quot;3-1-install&quot;&gt;3-1. Install&lt;/h3&gt;
+
+&lt;p&gt;변환은, 위에서 언급했던 문제를 중심적으로 다루고 있는 PINTO0309의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;onnx2tf&lt;/code&gt;라는 라이브러리를 사용한다. 개발 환경을 구축하는 방법에 대해서는 아래 도큐먼트에 자세히 설명되어 있으니 참고하면 된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;link&lt;/strong&gt; : &lt;a href=&quot;https://github.com/PINTO0309/onnx2tf#environment&quot;&gt;https://github.com/PINTO0309/onnx2tf#environment&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-2-convert-onnx-to-tf-tflite&quot;&gt;3-2. Convert ONNX to TF, TFlite&lt;/h3&gt;
+
+&lt;p&gt;터미널에 아래 명령어를 입력함으로써 간단하게 변환할 수 있다. 그러나 ONNX와 TFlite간의 shape 문제때문에 높은 확률로 에러가 발생한다. 해당 라이브러리는 어떤 레이어에서 문제가 발생했는지 쉽게 확인할 수 있기 때문에, 확인하고 수정해주면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; onnx2tf -i your_model.onnx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-3-parameter-replacement&quot;&gt;3-3. Parameter Replacement&lt;/h3&gt;
+
+&lt;p&gt;다음은 error log의 일부이다. 현재 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_7271&lt;/code&gt; OP에서 shape 문제가 발생했으며, input(1, 300, 2)과 output(1,2,300)의 shape이 달라 문제가 발생하고 있다는 내용이다. 이런 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-prf&lt;/code&gt; 옵션을 사용하여 해당 shape을 강제로 replace 해줌으로써 해당 문제를 해결할 수 있다. replace 정보는 json에 작성하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-prf&lt;/code&gt;의 인자로 넣어주면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Dimensions must be equal, but are 300 and 2 for &apos;{{node tf.math.add_283/Add}} = AddV2[T=DT_FLOAT](Placeholder, tf.math.add_283/Add/y)&apos; with input shapes: [1,300,2], [1,2,300].
+
+Call arguments received by layer &quot;tf.math.add_283&quot; (type TFOpLambda):
+• x=tf.Tensor(shape=(1, 300, 2), dtype=float32)
+• y=tf.Tensor(shape=(1, 2, 300), dtype=float32)
+• name=&apos;Add_7271&apos;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;3-3-1-op-정보-파악&quot;&gt;3-3-1) OP 정보 파악&lt;/h4&gt;
+
+&lt;p&gt;해당 문제가 발생한 OP의 정보를 제대로 파악하는 것이 중요하다. 우선, format 문제가 발생한 OP는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_7271&lt;/code&gt;이며, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7831&lt;/code&gt;과 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7808&lt;/code&gt;을 input으로 받아 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7832&lt;/code&gt;를 output으로 내보낸다. 정황상 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7831&lt;/code&gt;과 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7808&lt;/code&gt;은 각각 바로 앞단의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Log&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Slice&lt;/code&gt;의 output이라는 것을 짐작할 수 있다. 따라서 바로 앞단 Slice Output의 name을 확인해준다(Log의 Output은 수정하지 않아도 됨).&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224244240-e4f504de-6155-4819-af75-76649fa38359.png&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;예상대로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Slice_7270&lt;/code&gt;의 output(x)이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_7271&lt;/code&gt;의 input(x)으로 들어가고 있었으며, 이 format이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ADD_7271&lt;/code&gt;의 output(y)과 달라 에러가 발생했던 것이다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Slice_7270&lt;/code&gt;의 output인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7831&lt;/code&gt;을 (1,2,300)으로 수정하면 된다는 것을 알 수 있다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224244511-47a8218b-3966-4c23-826e-a04212a1032c.png&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;또한, 같은 단에 동일한 문제를 일으키는 OP가 있을 경우, input과 output 정보를 모두 파악하여 수정해줘야 한다. 본 포스팅에서 변환하고자 하는 model의 경우에는, 다음과 같이 6개의 slice op에서 문제가 발생하였다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224245574-d0004a73-e5c9-4516-8fd8-a5c47c331675.png&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-3-2-json-작성&quot;&gt;3-3-2) json 작성&lt;/h4&gt;
+
+&lt;p&gt;json은 다음과 같은 양식으로 작성해주면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+  &quot;format_version&quot;: 1,
+  &quot;operations&quot;: [
+    {
+      &quot;op_name&quot;: &quot;Slice_7270&quot;,
+      &quot;param_target&quot;: &quot;outputs&quot;,
+      &quot;param_name&quot;: &quot;7831&quot;,
+      &quot;post_process_transpose_perm&quot;: [0,2,1]
+    },
+    {
+      &quot;op_name&quot;: &quot;Slice_7402&quot;,
+      &quot;param_target&quot;: &quot;outputs&quot;,
+      &quot;param_name&quot;: &quot;7965&quot;,
+      &quot;post_process_transpose_perm&quot;: [0,2,1]
+    },
+    {
+      &quot;op_name&quot;: &quot;Slice_7534&quot;,
+      &quot;param_target&quot;: &quot;outputs&quot;,
+      &quot;param_name&quot;: &quot;8099&quot;,
+      &quot;post_process_transpose_perm&quot;: [0,2,1]
+    },
+    {
+      &quot;op_name&quot;: &quot;Slice_7666&quot;,
+      &quot;param_target&quot;: &quot;outputs&quot;,
+      &quot;param_name&quot;: &quot;8233&quot;,
+      &quot;post_process_transpose_perm&quot;: [0,2,1]
+    },
+    {
+      &quot;op_name&quot;: &quot;Slice_7798&quot;,
+      &quot;param_target&quot;: &quot;outputs&quot;,
+      &quot;param_name&quot;: &quot;8367&quot;,
+      &quot;post_process_transpose_perm&quot;: [0,2,1]
+    },
+    {
+      &quot;op_name&quot;: &quot;Slice_7930&quot;,
+      &quot;param_target&quot;: &quot;outputs&quot;,
+      &quot;param_name&quot;: &quot;8501&quot;,
+      &quot;post_process_transpose_perm&quot;: [0,2,1]
+    }
+    
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;op_name&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;변환하고자 하는 op의 이름&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;param_target&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;변환하고자 하는 parameter의 종류를 입력하면 된다(inputs, outputs, attributes 등등)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;param_target&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;Netron에서 확인한 name을 입력한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;post_process_transpose_perm&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;해당 옵션은 본인의 OP type에 맞게 입력해야 하며, 관련 내용은 공식 도큐먼트(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Parameter replacement&amp;gt;Replacement Supported OPs&amp;gt;See list of replacement specifications&lt;/code&gt;)를 참고하면 된다. np.transpose처럼 바꾸고 싶은 값의 index를 입력하여 변환하면 된다.&lt;/p&gt;
+
+    &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224246477-c075b1e9-e54a-4888-849c-324587504bb3.png&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;3-3-3-convert&quot;&gt;3-3-3) convert&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; onnx2tf -i your_model.onnx -prf your_replace_json.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-4-accuracy-check&quot;&gt;3-4. Accuracy check&lt;/h3&gt;
+
+&lt;p&gt;다음 명령어로 변환된 tf와 onnx간의 output matching도 해볼 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; onnx2tf -i your_model.onnx -prf your_replace_json.json -ois input:1,3,640,640(your shape) -cotof -cotoa 1e-1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;다음과 같이 output이 변환 전후로 matching이 되는지 확인해 볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224247977-283240ba-3a1a-473a-b8e7-93a99d4c3e00.png&quot; alt=&quot;Untitled&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-5-result&quot;&gt;3-5. Result&lt;/h3&gt;
+
+&lt;p&gt;결과는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;onnx2tf/saved_model&lt;/code&gt; 하위에 저장된다. onnx -&amp;gt; tf, tflite로 한꺼번에 변환을 해주는 것 같다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/224248584-a147da0b-69c0-456f-9dcf-e9a8d726abaf.png&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_optim" /><category term="DL" /><category term="computer_vision" /><summary type="html">ONNX와 TFlite간의 format 문제 해결</summary></entry><entry><title type="html">Implementation of DINO(2022)</title><link href="http://localhost:4000/dl_paper/dino_implements/" rel="alternate" type="text/html" title="Implementation of DINO(2022)" /><published>2023-03-05T00:00:00+09:00</published><updated>2023-03-05T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/dino_implements</id><content type="html" xml:base="http://localhost:4000/dl_paper/dino_implements/">&lt;h2 id=&quot;1-set-virtual-environment&quot;&gt;1. Set Virtual Environment&lt;/h2&gt;
+
+&lt;p&gt;가상환경 세팅은 conda를 사용하였으며, 개발 환경은 ubuntu / i9-13900K CPU / GTX 4080 / 64GB Mem이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222917401-9f057caf-c912-4db8-aab5-d40da1c64da0.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-1-git-clone&quot;&gt;1-1) Git Clone&lt;/h3&gt;
+
+&lt;p&gt;우선, 아래의 DINO 공식 Github 링크에 들어가서 해당 repo를 local에 clone 해준다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;link : &lt;a href=&quot;https://github.com/IDEA-Research/DINO&quot;&gt;https://github.com/IDEA-Research/DINO&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/IDEA-Research/DINO.git
+cd DINO
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-2-setup-pytorch&quot;&gt;1-2) Setup Pytorch&lt;/h3&gt;
+
+&lt;p&gt;그래픽 카드 버전에 맞는 pytorch를 install 해준다. 4080은 어떤 버전을 사용해야 하는지 잘 몰라서 가장 최신 버전인 11.7 버전을 가상환경에 설치해주었다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;link : &lt;a href=&quot;https://pytorch.org/get-started/locally&quot;&gt;https://pytorch.org/get-started/locally&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222917489-cf2632cf-72ee-4a3d-88d4-0adce5df7773.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;torch.cuda.is_available()의 return값이 True이면 버전에 맞게 잘 설치된 것이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; import torch
+&amp;gt;&amp;gt;&amp;gt; torch.cuda.is_available()
+True 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;주의사항&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;만약, pytorch build가 cpu로 설치됐다면, 버전이 맞지 않는 것이므로 다른 버전을 찾아 설치해주면 된다. 버전이 맞지 않으면 cuda를 사용할 수 없으니 버전을 잘 맞추도록 하자&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222917546-d59620db-de5e-431e-80d8-e81673fddb2c.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-3-requirements-설치&quot;&gt;1-3) requirements 설치&lt;/h3&gt;
+
+&lt;h4 id=&quot;1-3-1-install-requirementstxt&quot;&gt;1-3-1. install requirements.txt&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;1-3-2-compiling-cuda-operators&quot;&gt;1-3-2. Compiling CUDA operators&lt;/h4&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd DINO/models/dino/ops
+python setup.py build install
+# unit test (should see all checking is True)
+python test.py
+cd ../../..
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-prepare-dataset&quot;&gt;2. Prepare Dataset&lt;/h2&gt;
+
+&lt;p&gt;Dataset은 다음과 같은 구조로 설치하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;COCODIR/
+  ├── train2017/
+  ├── val2017/
+  └── annotations/
+  	├── instances_train2017.json
+  	└── instances_val2017.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;터미널에 아래의 명령어를 차례차례 입력하면 된다. 해외 서버에서 wget으로 받아오다보니 시간이 오래 걸린다. 조금 더 빨리 받아올 수 있는 방법이 있는걸로 알고있는데 정확히 기억나지 않아서 그냥 기다렸다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd DINO
+mkdir COCODIR
+cd COCODIR
+
+wget http://images.cocodataset.org/zips/train2017.zip
+wget http://images.cocodataset.org/zips/val2017.zip
+wget http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+
+unzip train2017.zip
+unzip val2017.zip
+unzip annotations_trainval2017.zip
+
+rm train2017.zip
+rm val2017.zip
+rm annotations_trainval2017.zip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-pre-trained-model-inference&quot;&gt;3. Pre-trained Model Inference&lt;/h2&gt;
+
+&lt;p&gt;공식 github에서 Model Zoo를 제공하고 있어, 다양한 세팅에 대해 Inference 및 evaluation을 해볼 수 있었다. 현재는 간단한 inference만 해보면 되기 때문에, 4 scale feature로 12 epoch 학습(Resnet50 백본)한 모델의 체크 포인트를 사용하였다. ipynb 코드는 아래 링크를 참조하면 된다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ckpts link : &lt;a href=&quot;https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing&quot;&gt;https://drive.google.com/file/d/1eeAHgu-fzp28PGdIjeLe-pzGPMG2r2G_/view?usp=sharing&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;code link : &lt;a href=&quot;https://github.com/On-JungWoan/paper-review/blob/main/DINO/script/inference_and_visualization.ipynb&quot;&gt;https://github.com/On-JungWoan/paper-review/blob/main/DINO/script/inference_and_visualization.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Inference 코드는 다음과 같다. DINO 폴더 최상위에 작성하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;torch&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datasets.transforms&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build_model_main&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datasets&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build_dataset&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;util.visualizer&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;COCOVisualizer&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;util.slconfig&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SLConfig&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;PIL&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;util&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box_ops&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_config_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;config/DINO/DINO_4scale.py&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model_checkpoint_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;logs/DINO/train_test/checkpoint_best_regular.pth&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# your ckp path
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img_dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;figs/idea.jpg&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# your image path
+&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SLConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_config_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;device&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;cuda&apos;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;criterion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;postprocessors&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build_model_main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;checkpoint&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model_checkpoint_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;map_location&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;cpu&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_state_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;model&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+
+&lt;span class=&quot;c1&quot;&gt;# load coco names
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;util/coco_id2name.json&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id2name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id2name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id2name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()}&lt;/span&gt;
+
+
+
+&lt;span class=&quot;c1&quot;&gt;# 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img_dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;convert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;RGB&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Compose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RandomResize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1333&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToTensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.485&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.456&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.406&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.229&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.224&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.225&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;postprocessors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;bbox&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;](&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cuda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+
+&lt;span class=&quot;c1&quot;&gt;# visualize outputs
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;scores&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;thershold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# set a thershold
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;thershold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;scores&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;scores&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;vslzr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;COCOVisualizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;scores&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;labels&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;boxes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box_ops&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box_xyxy_to_cxcywh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;boxes&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;select_mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thershold&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;box_label&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id2name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select_mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pred_dict&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&apos;boxes&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boxes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select_mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&apos;size&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]),&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&apos;box_label&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;box_label&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vslzr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;visualize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;savedir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dpi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;31-결과&quot;&gt;3.1) 결과&lt;/h3&gt;
+
+&lt;p&gt;기존 DETR 계열의 문제점이었던 작은 obj도 잘 감지하는 모습을 확인할 수 있다. 또한, obj가 겹쳐있는 경우도 문제없이 잘 추론하고 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222920350-44c15ede-2d0f-4f17-bba7-0d444eca8134.png&quot; alt=&quot;output&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-train-model&quot;&gt;4. Train Model&lt;/h2&gt;
+
+&lt;p&gt;COCO 데이터셋을 전부 사용하여 학습하기에는 시간이 다소 오래 걸릴 것 같아서 일부만 사용하였다. 다음은 예상 학습 시간을 계산한 테이블이다(rs50 backbone, 4scale 기준). 본인의 여건에 맞춰서 선택하면 된다. 해당 시간은 train 시간만 고려하였으므로 실제 train 시간은 아래 시간보다 더 오래 소요되며, 개발 환경에 따라 달라질 수 있다. 본 포스팅에서는 1만개 train dataset을 사용하여 12 epoch 학습하였다. 또한, 한 epoch 내에서의 loss 변화를 보기 위해 이미지 30장마다 loss를 기록해주었다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;.&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;full dataset&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;25,000&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;10,000&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;5000&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1epoch&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3h&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.5h&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;36m&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18m&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12epoch&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;36h&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;18h&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;7.2h&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3.6h&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;이를 위해 간단한 코드 custom을 해주었다.&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[Terminal]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# $1 : COCO Dir.
+# $2 : Num of train_dataset
+# $3 : Num of val_dataset
+# $4 : use custom logger
+
+bash scripts/DINO_train_custom.sh COCODIR/ 10000 5000 --custom_logger
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[DINO_train_custom.sh]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;coco_path=$1
+python main.py \
+    --num_train $2 --num_val $3 $4\
+	--output_dir logs/DINO/train_$2_$3_4scale_rs50_12epc \
+    -c config/DINO/DINO_4scale.py --coco_path $coco_path \
+	--options dn_scalar=100 embed_init_tgt=TRUE \
+	dn_label_coef=1.0 dn_bbox_coef=1.0 use_ema=False \
+	dn_box_noise_scale=1.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[main.py]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;--num_train&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;--num_val&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;parser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;--custom_logger&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;store_true&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div align=&quot;center&quot;&gt;&lt;strong&gt;[engine.py]&lt;/strong&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;custom_logger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_cnt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output_dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;/loss_only.txt&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;a&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_cnt&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss_value&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;          
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;자세한 코드는 아래를 참고.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;link : &lt;a href=&quot;https://github.com/On-JungWoan/paper-review/blob/main/DINO/script/result_visualization.ipynb&quot;&gt;https://github.com/On-JungWoan/paper-review/blob/main/DINO/script/result_visualization.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4-1-effectiveness&quot;&gt;4-1) Effectiveness&lt;/h3&gt;
+
+&lt;h4 id=&quot;4-1-1-loss-in-entire-epoch&quot;&gt;4-1-1. Loss in Entire Epoch&lt;/h4&gt;
+
+&lt;p&gt;우선, 한 epoch 내에서 loss가 어떻게 변하는지를 확인하기 위해, 30개의 이미지를 학습할 때마다 loss를 기록하였다. 아래 그래프는 결과의 일부를 발췌한 것이며, x축은 (학습한 이미지의 수 * 30), y축은 loss이다. epoch을 거듭할수록 전반적인 loss가 감소하는 것은 확인하였으나, 한 epoch 내에서(1 epoch 제외) loss의 감소는 관찰할 수 없었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;For all epoch&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223036898-09877e9f-78b9-4bcb-bc20-0a46ce62717d.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Only 1, 6, 12 epoch&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223036917-b2b22657-82f2-4a8f-8530-8910751523eb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;4-1-2-loss-mean-of-epoch&quot;&gt;4-1-2. Loss (Mean of Epoch)&lt;/h4&gt;
+
+&lt;p&gt;x축은 epoch, y축은 loss를 의미하며 최종 12epoch에서의 train loss는 11.87, test loss는 5.64(full-dataset : 4.6)를 기록하였다. train loss보다 test loss가 더 낮게 나오는 이유는 배움이 얕아 아직 파악하지 못했다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223036930-4e07697b-7e75-43eb-b3a4-6b5941dcc6ad.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-1-3-ap&quot;&gt;4-1-3. AP&lt;/h4&gt;
+
+&lt;p&gt;최종 AP은 38.1로, COCO dataset 5만개를 전부 사용하여 학습했을 때(49.0)에 비해 &lt;strong&gt;-10.9AP&lt;/strong&gt;의 스코어 차이를 보였다. 하지만 12epoch 기준 약 30시간 정도의 시간을 절약할 수 있기 때문에, 빠르게 개요만 확인하고 싶은 경우 이 방법을 채택해도 좋을 것 같다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223036949-d4085734-2df7-40fe-8768-222db79f5ba6.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-1-4-epoch-time&quot;&gt;4-1-4. Epoch Time&lt;/h4&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223036966-320ac79a-3660-41dc-8213-4d2e5a73b61d.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4-2-performance&quot;&gt;4-2) Performance&lt;/h3&gt;
+
+&lt;p&gt;다음은 model의 각 epoch별 inference 결과를 시각화 한 것이다.&lt;/p&gt;
+
+&lt;h4 id=&quot;4-2-1-1-epoch-model&quot;&gt;4-2-1. 1 Epoch model&lt;/h4&gt;
+
+&lt;p&gt;threshold를 넘는 bbox가 존재하지 않아, confidence가 가장 높은 5개의 bbox를 image 위에 그려주었다. 아직은 제대로 된 inference를 하지 못하고 있다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223037065-2795ad67-70cb-4b50-8c48-4f10ffc7880b.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-2-2-6-epoch-model&quot;&gt;4-2-2. 6 Epoch model&lt;/h4&gt;
+
+&lt;p&gt;전반적으로 detection 수준이 향상되었으나, 논문에서 언급된 duplicated prediction 문제가 일어나고 있다. CDN Training을 통해 해당 문제를 해결할 수 있을 것으로 기대된다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223037091-9cd730a3-6af9-43bb-903d-cd856751b7dc.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-2-3-12-epoch-model&quot;&gt;4-2-3. 12 Epoch model&lt;/h4&gt;
+
+&lt;p&gt;Duplicated Prediction 문제가 해결되었으며, 기존 DETR계열 모델이 small obj를 잘 탐지하지 못했던 문제를 해결한 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223037102-244e7f7d-33d3-4368-b847-80762676f9b1.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-2-4-full-dataset-model&quot;&gt;4-2-4. Full Dataset model&lt;/h4&gt;
+
+&lt;p&gt;Full Dataset을 사용하여 학습한 모델과 비교하여 나쁘지 않은 performance를 보이고 있음을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/223037201-8ab7eaaa-06be-447d-ab28-d74d6dbf28b8.png&quot; style=&quot;border: 1px solid black&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection</summary></entry><entry><title type="html">DINO(2022) 논문 리뷰</title><link href="http://localhost:4000/dl_paper/dino/" rel="alternate" type="text/html" title="DINO(2022) 논문 리뷰" /><published>2023-03-02T00:00:00+09:00</published><updated>2022-03-02T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/dino</id><content type="html" xml:base="http://localhost:4000/dl_paper/dino/">&lt;h1 id=&quot;dino-detr-with-improved-denoising-anchor-boxes&quot;&gt;DINO: DETR with Improved DeNoising Anchor Boxes&lt;/h1&gt;
+
+&lt;h2 id=&quot;31-preliminaries&quot;&gt;3.1 Preliminaries&lt;/h2&gt;
+
+&lt;p&gt;__Conditional DETR과 DAB-DETR에서는 query를 positional part와 content part로 나누었으며, 본 논문에서는 각각을 positional query와 content query라 언급한다. 또한, DAB-DETR에서는 query를 $(x,y,w,h)$의 4D anchor box로 표현하였는데, 이는 decoder layer에서 anchor box를 refine하기 쉽게 하기 위함이다. 이 때 (x,y)는 box의 중심좌표를, (w,h)는 width와 height를 의미한다.&lt;br /&gt;
+__DN-DETR은 기존 DETR 모델의 느린 학습 수렴 문제를 해결하기 위해, denoising(DN) training을 제시하였으며, 문제점은 이분 매칭의 불안정성에 있다고 지적하였다. 이러한 문제점을 완화하기 위해 DN-DETR은 추가적으로 noise된 GT box를 decoder에 feeding했다. noise는 $(\Delta x, \Delta y, \Delta w, \Delta h)$로 표현되며, 각각의 범위는 $|\Delta x| &amp;lt; \frac{\lambda w}{2}, |\Delta y| &amp;lt; \frac{\lambda h}{2}, |\Delta w| &amp;lt; \lambda w, |\Delta h| &amp;lt; \lambda h$로 제한된다. 여기서 $(x,y,w,h)$는 GT box의 좌표를 나타내며  $\lambda$는 noise의 스케일을 나타낸다. 즉, DN-DETR은 기존 DETR decoder input에 Noised GT box(DN part)를 추가하였고, 이 DN part는 train 속도 및 안정성을 향상하는 데 도움을 준다고 한다. 또한 이 방법론은 DETR계열 모델에 전부 사용이 가능하다고 한다.&lt;br /&gt;
+__DETR의 수렴 속도 문제를 개선하기 위한 또다른 선행 연구가 있는데, 바로 Deformable DETR이다. 해당 연구에서는 deformable attention을 위해 reference point라는 컨셉을 도입하여, 해당 point 근처 픽셀에서만 sampling을 진행한다. 이러한 reference point라는 컨셉을 도입함으로써, DETR의 퍼포먼스를 향상시키기 위해 다음과 같은 다양한 방법론들을 사용할 수 있게 된다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Query Selection&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;p&gt;encoder의 output을 decoder에서 input으로 재사용&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Look Forward Once&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;33-contrastive-denoising-trainingcdn-training&quot;&gt;3.3 Contrastive DeNoising Training(CDN Training)&lt;/h2&gt;
+&lt;h3 id=&quot;331-background-of-study&quot;&gt;3.3.1 Background of Study&lt;/h3&gt;
+&lt;p&gt;DN-DETR은 stabilizing training과 accelerating convergence에 매우 effective하다. DN queriy의 도움을 받아 GT box 근처에 있는 anchor에 기반한 예측을 하도록 학습한다. 하지만, DN-DETR은 근처에 obj가 없는 anchor에 대해서는 no obj라고 잘 예측하지 못한다. DINO는 이러한 문제점을 해결하기 위해 CDN Training을 도입한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;332-implementation&quot;&gt;3.3.2 Implementation&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222466336-58715ef5-5a2a-4068-989a-32df47dd99d6.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DN-DETR은 noise 스케일을 컨트롤 하기 위해 하이퍼 파라미터 $\lambda$를 사용한다. 이 때, DN-DETR은 적당히 noised된 query를 통해 GT를 reconsturct하길 원하므로 생성된 노이즈는 람다보다 크지 않다. 반면, DINO는 하이퍼 파라미터로 $\lambda_1$과 $\lambda_2$를 갖는다($\lambda_1 &amp;lt; \lambda_2$). DINO는 CDN query로 Positive Query와 Negative Query를 도입하였는데, $\lambda_1$과 $\lambda_2$가 이 쿼리들의 크기를 결정한다. fig3에 나와있는 것처럼, $\lambda_1$은 positive query의 크기를 결정하며, 해당 쿼리가 GT box를 reconstruct 하도록 학습한다. 또한, scale이 $\lambda_1$보다 크면서 $\lambda_2$보다 작은 영역은 Negative query가 되며 해당 쿼리는 “no obj.”를 predict하도록 학습된다. 이 때, negative sample이 GT box에 가까울수록 성능 향상에 도움이 되기 때문에 $\lambda_2$를 가능한 작게 설정하는 것이 좋다고 저자는 말하고 있다. 하나의 GT box마다 Positive, Negative 쿼리가 하나씩 생성되므로, GT Box의 개수 $n$에 대해 $2 \times n$개의 쿼리를 갖게되며, DN-DETR과 유사하게 mutiple CDN group을 사용한다. Positive Query의 box regression에 대해서는 GIOU loss(IOU계열 loss인듯)를 사용하며 classification에 대해서는 focal loss를 사용한다. Negative Query에서도 마찬가지로 focal loss를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;333-analysis&quot;&gt;3.3.3 Analysis&lt;/h3&gt;
+
+&lt;p&gt;저자는 DINO가 잘 작동할 수 있는 이유가 “1. confusion 억제”, “2. 높은 퀄리티의 anchor 추출”에 있다고 설명하였다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;우선, 하나의 obj.에 많은 anchor가 존재할 경우, model이 anchor를 선택하기가 어렵기 때문에 confusion이 발생한다. 이러한 confusion은 다음 2가지의 문제를 야기한다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;duplicate predictions&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222466172-e64b3934-4d5e-4688-8a28-db9d1f2c4f7b.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;DETR계열 모델이 set-based loss와 self-attention을 통해 아무리 duplicate box를 잘 억제한다고 해도, 어느정도 한계는 존재한다. fig. 8의 왼쪽 사진에서 볼 수 있듯이, DN query를 사용하는 DN-DETR에서는 한 소년에 대해 3개의 duplicate prediction이 발생한다. 그러나 DINO는 CDN Query를 도입함으로써, anchor들간의 미세한 차이를 구별하기 때문에 fig. 8의 오른쪽 그림과 같이 duplicated prediction을 피할 수 있다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;unwanted anchor&lt;/p&gt;
+
+    &lt;p&gt;두 번째 문제점은, model이 GT Box에서 멀리 떨어진 box를 선택할 수도 있다는 것이다. DN training에서는 이 문제를 해결하기 위해, model이 가까운 anchor를 선택하도록 하였다. CDN은 발상을 살짝 달리하여, model이 멀리 있는 anchor를 선택하지 못하도록 하였고 성능을 더욱 향상시킬 수 있었다고 한다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;334-effectiveness&quot;&gt;3.3.4 Effectiveness&lt;/h3&gt;
+
+&lt;p&gt;본 논문에서, 저자는 CDN의 성능 평가 지표로 Average Top-K Distance(ATD(k))를 정의하였다. 각각의 anchor들은 GT box 또는 background에 할당되는데, ATD는 GT box에 대해서만 관심을 가지고, GT box로부터 anchor가 얼마나 멀리 떨어져있는지를 계산한다. 다음은 ATD(k)의 수식이다.&lt;/p&gt;
+
+\[ATD(k) = \frac{1}{k} \sum{topK(\{||b_0-a_0||_1, ||b_1-a_1||_1, ... , ||b_{N-1}-a_{N-1}||_1 \}, k)}\]
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;이 때, $N$은 GT box의 수를 의미하며 $b_i$는 i번째 GT box를, $a_i$는 그에 해당하는 anchor를 의미한다. 또한, $&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;b_i-a_i&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;_1$은 $b_i$와 $a_i$ 사이의 $l_1$ distance를 의미하며, $topK(x, k)$는 x의 원소중에서 가장 큰 k개의 원소를 return하는 함수이다. GT box가 멀리 떨어진 anchor와 match될수록 ocnfusion problem이 일어날 확률이 더 높아지기 때문에 이러한 계산 방식을 채택하였다고 한다. 다음은 ATD(100)으로 계산한 DN-DETR과 DINO의 effectiveness 비교 그래프이다.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222648236-37cd3948-96aa-4166-805c-9013ccfa3b9c.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(a)와 (b)에서 볼 수 있듯이 DN-DETR과 DINO 모두 전반적으로 좋은(GT box와 거리가 가까운) anchor를 선택하였다. 그러나 (c)에서 볼 수 있듯이, CDN을 사용한 DINO가 12 epoch을 기점으로 small obj에 대해 더 향상된 AP 기록하고 있음을 확인할 수 있다. 이로써 CDN이 기존 DN-DETR의 문제점을 어느정도 개선할 수 있음을 확인하였다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;34-mixed-query-selection&quot;&gt;3.4 Mixed Query Selection&lt;/h2&gt;
+
+&lt;p&gt;DETR과 DN-DETR에서, decoder는 학습시에 encoder의 어떠한 image feature도 활용하지 않는다. 이는 fig5의 (a)에 해당하며 static query라 명명한다. 이 경우, positional query를 train data로부터 직접 학습하고 content query는 전부 0 vector로 지정한다.&lt;/p&gt;
+
+&lt;p&gt;(…)&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;35-look-forward-twice&quot;&gt;3.5 Look Forward Twice&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/84084372/222671678-f9c37bc2-5a73-44a8-9fe3-5b299ef9a35c.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;DINO는 box prediction을 위한 새로운 방법으로 Look Forward Twice를 제시한다. 기존 Deformable DETR의 경우, training 안정화를 위해 gradient의 back propagation을 차단한다. 따라서 layer i의 파라미터는 box $b_i$의 loss에 의해서만 update 되며, 저자는 이를 look forard once라 명명했다. 그러나, 저자는 뒷 레이어의 개선된 box information이 앞 레이어의 box prediction에 도움이 될 것이라고 생각하였다. 따라서 DINO는 look forward twice라는 기법을 도입하였는데, 이는 i번째 layer의 파라미터를 i와 i+1번째 layer의 loss에 의해 update한다&lt;/p&gt;
+
+&lt;p&gt;(…)&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection</summary></entry></feed>
