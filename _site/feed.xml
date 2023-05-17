@@ -1,88 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-17T03:06:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&gt; 발표자료 : 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-18T04:11:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
+  &lt;p&gt;발표자료 :&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&gt; 발표영상 : 
+&lt;blockquote&gt;
+  &lt;p&gt;발표영상 :&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&gt; 논문링크 : &lt;a href=&quot;https://arxiv.org/abs/1912.05656&quot; target=&quot;blank_&quot;&gt;VIBE: Video Inference for Human Body Pose and Shape Estimation&lt;/a&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;논문링크 : &lt;a href=&quot;https://arxiv.org/abs/1912.05656&quot; target=&quot;blank_&quot;&gt;VIBE: Video Inference for Human Body Pose and Shape Estimation&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&gt; Implementation : &lt;a href=&quot;https://github.com/mkocabas/VIBE&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE&lt;/a&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Implementation : &lt;a href=&quot;https://github.com/mkocabas/VIBE&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
+&lt;h1 id=&quot;1-backgorund&quot;&gt;1. Backgorund&lt;/h1&gt;
 
-# 1. Backgorund
+&lt;h2 id=&quot;1-1-smpl&quot;&gt;1-1. SMPL&lt;/h2&gt;
 
-## 1-1. SMPL
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;h2 id=&quot;1-2-gan&quot;&gt;1-2. GAN&lt;/h2&gt;
 
-## 1-2. GAN
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;h2 id=&quot;1-3-hmr&quot;&gt;1-3. HMR&lt;/h2&gt;
 
-## 1-3. HMR
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;h2 id=&quot;1-4-temporal-hmr&quot;&gt;1-4. Temporal HMR&lt;/h2&gt;
 
-## 1-4. Temporal HMR
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;h1 id=&quot;2-vibe&quot;&gt;2. VIBE&lt;/h1&gt;
 
-# 2. VIBE
+&lt;h2 id=&quot;2-0-introduction&quot;&gt;2-0. Introduction&lt;/h2&gt;
 
-## 2-0. Introduction
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;h2 id=&quot;2-1-architecture&quot;&gt;2-1. Architecture&lt;/h2&gt;
 
-## 2-1. Architecture
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d&quot; style=&quot;border: solid black 1px&quot;&gt;&lt;/p&gt;
+&lt;p&gt;VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNN&lt;/code&gt;에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt;의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 `CNN`에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 `temporal encoder`의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 `regressor`에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.
-&gt; 위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.
+&lt;p&gt;앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Generator&lt;/code&gt; 파트와, 해당 이미지가 real인지 fake인지를 판단하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;discriminator&lt;/code&gt; 파트로 나누어져 있다고 볼 수 있습니다.&lt;/p&gt;
 
-앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 `AMASS` 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 `Generator` 파트와, 해당 이미지가 real인지 fake인지를 판단하는 `discriminator` 파트로 나누어져 있다고 볼 수 있습니다.
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encoder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# (...)
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;smpl_output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-```python
-        feature = self.encoder(feature)
-        # (...)
-        smpl_output = self.regressor(feature, J_regressor=J_regressor)
-```
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
-&lt;br&gt;
+&lt;h2 id=&quot;2-2-generator&quot;&gt;2-2. Generator&lt;/h2&gt;
 
-## 2-2. Generator
+&lt;p&gt;Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.&lt;/p&gt;
 
-Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다. 
+\[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
+\quad (t = 1, ..., T)\]
 
-$$
-I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
-\quad (t = 1, ..., T)
-$$
+&lt;h3 id=&quot;2-2-1-feature-extractor-cnn&quot;&gt;2-2-1. Feature extractor (CNN)&lt;/h3&gt;
 
-### 2-2-1. Feature extractor (CNN)
+&lt;p&gt;우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ResNet50&lt;/code&gt;을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.&lt;/p&gt;
 
-우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 `ResNet50`을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/0c6ef20f-98ea-4731-b3f6-bd71b5c672ae&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/0c6ef20f-98ea-4731-b3f6-bd71b5c672ae&quot; style=&quot;border: solid black 1px&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
+&lt;h3 id=&quot;2-2-2-temporal-encoder-gru&quot;&gt;2-2-2. Temporal Encoder (GRU)&lt;/h3&gt;
 
-### 2-2-2. Temporal Encoder (GRU)
+&lt;p&gt;앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RNN&lt;/code&gt;기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Experiment&lt;/code&gt; 파트에서 다시 언급하도록 하겠습니다.&lt;/p&gt;
 
-앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 `GRU`와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 `RNN`기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 `Experiment` 파트에서 다시 언급하도록 하겠습니다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/d56fc82c-ffce-4245-bf7b-848707a563b7&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/d56fc82c-ffce-4245-bf7b-848707a563b7&quot; style=&quot;border: solid black 1px&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Temporal&lt;/code&gt;하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.&lt;/p&gt;
 
-Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 `Temporal`하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;br&gt;
+&lt;h3 id=&quot;2-2-3-regressor&quot;&gt;2-2-3. Regressor&lt;/h3&gt;
 
-### 2-2-3. Regressor
+&lt;p&gt;공식 페이퍼에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regressor&lt;/code&gt;에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.&lt;/p&gt;
 
-아래는 `Regressor`에 대한 Visualization 결과입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/On-jungWoan/assets/84084372/0267dcb0-ad69-4d53-a2f7-5e6b856d08dd&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-![image](https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/f50862ee-60f6-4686-b758-4315b6808ec5)</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry></feed>
+&lt;p&gt;Regressor는 k개의 layer를 거치며 SMPL 파라미터를 추정합니다. input으로는 SMPL 파라미터의 추정값 $\Theta_{k}$와 이에 해당하는 latent feature vector $g_i$를 받습니다. output으로 $\Theta_{k+1}$을 출력하며, 이는 다음 layer에서 $g_i$와 함께 input으로 들어갑니다. 첫 Layer에서는 $\Theta_k$ 대신 SMPL mean $\bar{\Theta}$로 initialize됩니다. 아래는 이에 대한 official 코드입니다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;link : &lt;a href=&quot;https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;n&quot;&gt;pred_pose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_pose&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pred_shape&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_shape&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pred_cam&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_cam&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;xc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_pose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_cam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+            &lt;span class=&quot;c1&quot;&gt;# some fc layers ...
+&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;pred_pose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decpose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_pose&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;pred_shape&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_shape&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;pred_cam&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deccam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_cam&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-2-4-loss&quot;&gt;2-2-4. Loss&lt;/h3&gt;
+
+\[L_{\mathcal{G}} = L_{3D} + L_{2D} + L_{SMPL} + L_{adv}\\\\\]
+
+\[L_{3D} = \sum^{T}_{t=1}{\lVert X_t - \hat{X}_t \rVert_2} \; , \\
+L_{2D} = \sum^{T}_{t=1}{\lVert x_t - \hat{x}_t \rVert_2} \; , \\
+L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2} \; , \\\]</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry></feed>

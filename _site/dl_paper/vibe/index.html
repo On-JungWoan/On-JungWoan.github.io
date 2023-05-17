@@ -629,7 +629,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#1-backgorund">1. Backgorund</a><ul><li><a href="#1-1-smpl">1-1. SMPL</a></li><li><a href="#1-2-gan">1-2. GAN</a></li><li><a href="#1-3-hmr">1-3. HMR</a></li><li><a href="#1-4-temporal-hmr">1-4. Temporal HMR</a></li></ul></li><li><a href="#2-vibe">2. VIBE</a><ul><li><a href="#2-0-introduction">2-0. Introduction</a></li><li><a href="#2-1-architecture">2-1. Architecture</a></li><li><a href="#2-2-generator">2-2. Generator</a><ul><li><a href="#2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</a></li><li><a href="#2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</a></li><li><a href="#2-2-3-regressor">2-2-3. Regressor</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#1-backgorund">1. Backgorund</a><ul><li><a href="#1-1-smpl">1-1. SMPL</a></li><li><a href="#1-2-gan">1-2. GAN</a></li><li><a href="#1-3-hmr">1-3. HMR</a></li><li><a href="#1-4-temporal-hmr">1-4. Temporal HMR</a></li></ul></li><li><a href="#2-vibe">2. VIBE</a><ul><li><a href="#2-0-introduction">2-0. Introduction</a></li><li><a href="#2-1-architecture">2-1. Architecture</a></li><li><a href="#2-2-generator">2-2. Generator</a><ul><li><a href="#2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</a></li><li><a href="#2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</a></li><li><a href="#2-2-3-regressor">2-2-3. Regressor</a></li><li><a href="#2-2-4-loss">2-2-4. Loss</a></li></ul></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -725,9 +725,38 @@
 
 <h3 id="2-2-3-regressor">2-2-3. Regressor</h3>
 
-<p>아래는 <code class="language-plaintext highlighter-rouge">Regressor</code>에 대한 Visualization 결과입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.</p>
+<p>공식 페이퍼에는 <code class="language-plaintext highlighter-rouge">Regressor</code>에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.</p>
 
-<p><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/f50862ee-60f6-4686-b758-4315b6808ec5" alt="image" /></p>
+<p align="center"><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/0267dcb0-ad69-4d53-a2f7-5e6b856d08dd" style="border: solid black 1px" /></p>
+
+<p>Regressor는 k개의 layer를 거치며 SMPL 파라미터를 추정합니다. input으로는 SMPL 파라미터의 추정값 $\Theta_{k}$와 이에 해당하는 latent feature vector $g_i$를 받습니다. output으로 $\Theta_{k+1}$을 출력하며, 이는 다음 layer에서 $g_i$와 함께 input으로 들어갑니다. 첫 Layer에서는 $\Theta_k$ 대신 SMPL mean $\bar{\Theta}$로 initialize됩니다. 아래는 이에 대한 official 코드입니다.</p>
+
+<blockquote>
+  <p>link : <a href="https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252" target="blank_">https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252</a></p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">pred_pose</span> <span class="o">=</span> <span class="n">init_pose</span>
+        <span class="n">pred_shape</span> <span class="o">=</span> <span class="n">init_shape</span>
+        <span class="n">pred_cam</span> <span class="o">=</span> <span class="n">init_cam</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">):</span>
+            <span class="n">xc</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">pred_pose</span><span class="p">,</span> <span class="n">pred_shape</span><span class="p">,</span> <span class="n">pred_cam</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># some fc layers ...
+</span>
+            <span class="n">pred_pose</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">decpose</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span> <span class="o">+</span> <span class="n">pred_pose</span>
+            <span class="n">pred_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">decshape</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span> <span class="o">+</span> <span class="n">pred_shape</span>
+            <span class="n">pred_cam</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">deccam</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span> <span class="o">+</span> <span class="n">pred_cam</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-2-4-loss">2-2-4. Loss</h3>
+
+\[L_{\mathcal{G}} = L_{3D} + L_{2D} + L_{SMPL} + L_{adv}\\\\\]
+
+\[L_{3D} = \sum^{T}_{t=1}{\lVert X_t - \hat{X}_t \rVert_2} \; , \\
+L_{2D} = \sum^{T}_{t=1}{\lVert x_t - \hat{x}_t \rVert_2} \; , \\
+L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2} \; , \\\]
 
         
         
