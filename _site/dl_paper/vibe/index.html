@@ -629,7 +629,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#1-backgorund">1. Backgorund</a><ul><li><a href="#1-1-smpl">1-1. SMPL</a></li><li><a href="#1-2-gan">1-2. GAN</a></li><li><a href="#1-3-hmr">1-3. HMR</a></li><li><a href="#1-4-temporal-hmr">1-4. Temporal HMR</a></li></ul></li><li><a href="#2-vibe">2. VIBE</a><ul><li><a href="#2-0-introduction">2-0. Introduction</a></li><li><a href="#2-1-architecture">2-1. Architecture</a></li><li><a href="#2-2-generator">2-2. Generator</a><ul><li><a href="#2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</a></li><li><a href="#2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</a></li><li><a href="#2-2-3-regressor">2-2-3. Regressor</a></li><li><a href="#2-2-4-loss">2-2-4. Loss</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#1-backgorund">1. Backgorund</a><ul><li><a href="#1-1-smpl">1-1. SMPL</a></li><li><a href="#1-2-gan">1-2. GAN</a></li><li><a href="#1-3-hmr">1-3. HMR</a></li><li><a href="#1-4-temporal-hmr">1-4. Temporal HMR</a></li></ul></li><li><a href="#2-vibe">2. VIBE</a><ul><li><a href="#2-0-introduction">2-0. Introduction</a></li><li><a href="#2-1-architecture">2-1. Architecture</a></li><li><a href="#2-2-generator">2-2. Generator</a><ul><li><a href="#2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</a></li><li><a href="#2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</a></li><li><a href="#2-2-3-regressor">2-2-3. Regressor</a></li></ul></li><li><a href="#2-3-discriminator">2-3. Discriminator</a><ul><li><a href="#2-3-1-related-work--hmr">2-3-1. Related work : HMR</a></li><li><a href="#2-3-2-motion-discriminator">2-3-2. Motion discriminator</a></li></ul></li><li><a href="#2-4-loss">2-4. Loss</a><ul><li><a href="#2-4-1-discriminator">2-4-1. Discriminator</a></li><li><a href="#2-4-2-generator">2-4-2. Generator</a></li></ul></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -683,12 +683,12 @@
 
 <p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d" style="border: solid black 1px" /></p>
 
-<p>VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 <code class="language-plaintext highlighter-rouge">CNN</code>에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 <code class="language-plaintext highlighter-rouge">temporal encoder</code>의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 <code class="language-plaintext highlighter-rouge">regressor</code>에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.</p>
+<p>    VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 <code class="language-plaintext highlighter-rouge">CNN</code>에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 <code class="language-plaintext highlighter-rouge">temporal encoder</code>의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 <code class="language-plaintext highlighter-rouge">regressor</code>에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.</p>
 <blockquote>
   <p>위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.</p>
 </blockquote>
 
-<p>앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 <code class="language-plaintext highlighter-rouge">Generator</code> 파트와, 해당 이미지가 real인지 fake인지를 판단하는 <code class="language-plaintext highlighter-rouge">discriminator</code> 파트로 나누어져 있다고 볼 수 있습니다.</p>
+<p>    앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 <code class="language-plaintext highlighter-rouge">Generator</code> 파트와, 해당 이미지가 real인지 fake인지를 판단하는 <code class="language-plaintext highlighter-rouge">discriminator</code> 파트로 나누어져 있다고 볼 수 있습니다.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">feature</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
         <span class="c1"># (...)
@@ -700,14 +700,14 @@
 
 <h2 id="2-2-generator">2-2. Generator</h2>
 
-<p>Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.</p>
+<p>    Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.</p>
 
 \[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
 \quad (t = 1, ..., T)\]
 
 <h3 id="2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</h3>
 
-<p>우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 <code class="language-plaintext highlighter-rouge">ResNet50</code>을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.</p>
+<p>    우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 <code class="language-plaintext highlighter-rouge">ResNet50</code>을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.</p>
 
 <p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/0c6ef20f-98ea-4731-b3f6-bd71b5c672ae" style="border: solid black 1px" /></p>
 
@@ -715,21 +715,21 @@
 
 <h3 id="2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</h3>
 
-<p>앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 <code class="language-plaintext highlighter-rouge">GRU</code>와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 <code class="language-plaintext highlighter-rouge">RNN</code>기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 <code class="language-plaintext highlighter-rouge">Experiment</code> 파트에서 다시 언급하도록 하겠습니다.</p>
+<p>    앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 <code class="language-plaintext highlighter-rouge">GRU</code>와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 <code class="language-plaintext highlighter-rouge">RNN</code>기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 <code class="language-plaintext highlighter-rouge">Experiment</code> 파트에서 다시 언급하도록 하겠습니다.</p>
 
 <p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/d56fc82c-ffce-4245-bf7b-848707a563b7" style="border: solid black 1px" /></p>
 
-<p>Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 <code class="language-plaintext highlighter-rouge">Temporal</code>하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.</p>
+<p>    Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 <code class="language-plaintext highlighter-rouge">Temporal</code>하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.</p>
 
 <p><br /></p>
 
 <h3 id="2-2-3-regressor">2-2-3. Regressor</h3>
 
-<p>공식 페이퍼에는 <code class="language-plaintext highlighter-rouge">Regressor</code>에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.</p>
+<p>    공식 페이퍼에는 <code class="language-plaintext highlighter-rouge">Regressor</code>에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.</p>
 
 <p align="center"><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/0267dcb0-ad69-4d53-a2f7-5e6b856d08dd" style="border: solid black 1px" /></p>
 
-<p>Regressor는 k개의 layer를 거치며 SMPL 파라미터를 추정합니다. input으로는 SMPL 파라미터의 추정값 $\Theta_{k}$와 이에 해당하는 latent feature vector $g_i$를 받습니다. output으로 $\Theta_{k+1}$을 출력하며, 이는 다음 layer에서 $g_i$와 함께 input으로 들어갑니다. 첫 Layer에서는 $\Theta_k$ 대신 SMPL mean $\bar{\Theta}$로 initialize됩니다. 아래는 이에 대한 official 코드입니다.</p>
+<p>    Regressor는 k개의 layer를 거치며 SMPL 파라미터를 추정합니다. input으로는 SMPL 파라미터의 추정값 $\Theta_{k}$와 이에 해당하는 latent feature vector $g_i$를 받습니다. output으로 $\Theta_{k+1}$을 출력하며, 이는 다음 layer에서 $g_i$와 함께 input으로 들어갑니다. 첫 Layer에서는 $\Theta_k$ 대신 SMPL mean $\bar{\Theta}$로 initialize됩니다. 아래는 이에 대한 official 코드입니다.</p>
 
 <blockquote>
   <p>link : <a href="https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252" target="blank_">https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252</a></p>
@@ -748,15 +748,89 @@
             <span class="n">pred_cam</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">deccam</span><span class="p">(</span><span class="n">xc</span><span class="p">)</span> <span class="o">+</span> <span class="n">pred_cam</span>
 </code></pre></div></div>
 
+<p><br />
+<br /></p>
+
+<h2 id="2-3-discriminator">2-3. Discriminator</h2>
+
+<h3 id="2-3-1-related-work--hmr">2-3-1. Related work : HMR</h3>
+
+<p>    아래 figure를 보시면 생성된 3D mesh가 2D key point에는 잘 reprojection 되었지만, 정상적인 사람의 포즈는 아닌 것을 확인할 수 있습니다. HMR에서는 이러한 문제점을 해결하기 위해 reprojection loss와 더불어 Discriminator를 도입하였습니다. Discirminator를 통해 실제 GT sample과 생성된 mesh를 비교하고, Generator는 점점 더 그럴싸한 human pose를 생성하게 됩니다.</p>
+
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/6d1713d1-a926-4f90-9279-0eeb47b597c7" style="border: solid black 1px" /></p>
+
 <p><br /></p>
 
-<h3 id="2-2-4-loss">2-2-4. Loss</h3>
+<h3 id="2-3-2-motion-discriminator">2-3-2. Motion discriminator</h3>
+
+<p>    그러나 VIBE는, 이러한 single image에 대한 제약 조건만으로는 pose sequence를 다루기에는 불충분하다고 주장합니다. pose의 시퀀스를 고려하지 않은 채 단일 이미지에 대해서만 테스트를 하게 되면, 각 프레임에서의 pose는 유효할 수 있어도 시퀀스간의 포즈가 자연스럽게 연결되지 않을 수도 있게 됩니다. 따라서 VIBE는 이러한 문제를 해결하기 위해 <code class="language-plaintext highlighter-rouge">motion discriminator</code> $\mathcal{D}_M$을 도입합니다.</p>
+
+<p>    아래 figure는 motion discriminator의 구조를 도식화한 것입니다. 앞서 설명드린 Genorator와 유사하게, Motion discriminator 또한 <code class="language-plaintext highlighter-rouge">GRU</code>를 사용함으로써 모델이 시퀀스 정보를 반영할 수 있도록 합니다. input으로는 Generator에서 생성한 $\hat{\Theta}$을 받으며, 이를 multi-layer GRU $f_M$에 넘겨줌으로써 각 time step $i$에 대해 latent code $h_i$를 추정합니다. 이 때, $[h_1, …, h_T]$에 대한 aggregate를 위해 <code class="language-plaintext highlighter-rouge">self-attention</code>을 해주게 되는데, 이 과정에서 어떤 프레임이 전체 시퀀스에 있어서 중요한지에 대해 학습하게 됩니다. 최종적으로 Discriminator는 $\hat{\Theta}$이 Real인지에 대한 0~1사이의 확률값을 출력하게 됩니다.</p>
+
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/107d01cd-adff-4249-b7e9-8a45b779e24b" style="border: solid black 1px" /></p>
+
+\[\mathcal{G} \to \hat{\Theta} \to f_M(\hat{\Theta_i}) \to h_i \to attn \to p\]
+
+<p><br />
+<br /></p>
+
+<h2 id="2-4-loss">2-4. Loss</h2>
+
+<h3 id="2-4-1-discriminator">2-4-1. Discriminator</h3>
+
+<p>    Motion discriminator $D_M$은 다음과 같은 Loss를 갖습니다. 이 때, $p_R$은 <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터셋으로부터 추출한 real motion sequence의 분포이며, $p_G$는 generator가 생성한 sequence의 분포를 나타냅니다.</p>
+
+\[L_{D_M} = \mathbb{E}_{\Theta \sim p_R}[(\mathcal{D}_M(\Theta)-1)^2] + \mathbb{E}_{\Theta \sim p_G}[(\mathcal{D}_M(\hat{\Theta}))^2]\]
+
+<p><br /></p>
+
+<p>    $D_M$은 위 Loss를 최소화하는 것을 목표로 가지고 학습을 진행하게 되므로, 아래와 같이 수식을 다시 표현할 수 있게 됩니다.</p>
+
+\[\begin{matrix}
+objective &amp;=&amp; Min(L_{D_M}) \\
+          &amp;=&amp; Min[\mathcal{D}_M(\Theta)-1] + Min[\mathcal{D}_M(\hat{\Theta})] \\
+          &amp;=&amp; \mathcal{D}_M(\Theta) \to 1 \quad and \quad \mathcal{D}_M(\hat{\Theta}) \to 0
+\end{matrix}\]
+
+<p><br /></p>
+
+<p>    다시 말해, $\mathcal{D}_M$는 real 이미지에 대해서는 <code class="language-plaintext highlighter-rouge">1</code>을, fake 이미지에 대해서는 <code class="language-plaintext highlighter-rouge">0</code>을 출력하도록 학습되며, Loss는 각 분포에 대한 Expectation value의 합으로 계산됩니다. 즉, real data와 fake 데이터를 더 잘 구분하는 방향으로 학습이 된다고 이해하시면 될 것 같습니다.</p>
+
+<p><br /></p>
+
+<h3 id="2-4-2-generator">2-4-2. Generator</h3>
+
+<p>    Generator의 Loss는 다음과 같이 계산됩니다. 각 term에 대해 조금 더 자세히 살펴보도록 하겠습니다.</p>
 
 \[L_{\mathcal{G}} = L_{3D} + L_{2D} + L_{SMPL} + L_{adv}\\\\\]
 
-\[L_{3D} = \sum^{T}_{t=1}{\lVert X_t - \hat{X}_t \rVert_2} \; , \\
-L_{2D} = \sum^{T}_{t=1}{\lVert x_t - \hat{x}_t \rVert_2} \; , \\
-L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2} \; , \\\]
+<ul>
+  <li>
+    <p><strong>Adversarial Loss</strong></p>
+
+    <p>    Adversarial Loss $L_{adv}$에 대한 수식은 다음과 같습니다. <code class="language-plaintext highlighter-rouge">2-2-5-1</code>와 유사한 방식으로, 해당 Loss를 Minimize하기 위해서는 $\mathcal{D}_M(\hat{\Theta})$이 1에 수렴해야 한다는 것을 유추할 수 있습니다. 이는, Generator $\mathcal{G}$에서 생성된 fake sequence를 discriminator에 넣었을 때, discriminator가 이를 real image로 인식하게끔 학습이 된다는 것을 의미합니다. 즉, Generator는 Discriminator를 속이기 위해 더 진짜같은 이미지를 만들고, Discriminator는 이를 구별해내기 위해 더 정교해지는 것입니다.</p>
+  </li>
+</ul>
+
+\[L_{adv} = \mathbb{E}_{\Theta~p_G}[(\mathcal{D}_M(\hat{\Theta})-1)^2]\]
+
+<ul>
+  <li><strong>3D Loss</strong></li>
+</ul>
+
+\[L_{3D} = \sum^{T}_{t=1}{\lVert X_t - \hat{X}_t \rVert_2}\]
+
+<ul>
+  <li><strong>2D Loss</strong></li>
+</ul>
+
+\[L_{2D} = \sum^{T}_{t=1}{\lVert x_t - \hat{x}_t \rVert_2}\]
+
+<ul>
+  <li><strong>SMPL Loss</strong></li>
+</ul>
+
+\[L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2}\]
 
         
         
