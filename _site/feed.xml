@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-20T03:02:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-22T03:51:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
   &lt;p&gt;발표자료 :&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -14,31 +14,34 @@
   &lt;p&gt;Implementation : &lt;a href=&quot;https://github.com/mkocabas/VIBE&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;1-backgorund&quot;&gt;1. Backgorund&lt;/h1&gt;
-
-&lt;h2 id=&quot;1-1-smpl&quot;&gt;1-1. SMPL&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;1-2-gan&quot;&gt;1-2. GAN&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;1-3-hmr&quot;&gt;1-3. HMR&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;1-4-temporal-hmr&quot;&gt;1-4. Temporal HMR&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
 &lt;h1 id=&quot;2-vibe&quot;&gt;2. VIBE&lt;/h1&gt;
 
 &lt;h2 id=&quot;2-0-introduction&quot;&gt;2-0. Introduction&lt;/h2&gt;
+
+&lt;p&gt;    single image로부터 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3D human pose&lt;/code&gt;를 추정하려는 시도는 지금까지 매우 활발히 연구되어 왔습니다. 이러한 연구들은 여러 분야에서 매우 유용하게 사용될 수 있지만, 실제로 인간의 행위를 정확히 설명할 수 있는 것은 single image가 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;입니다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VIBE&lt;/code&gt;는 기존에 연구되어 왔던 single image에 대한 3D human pose estimation task를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;의 영역으로 확장하고자 등장하였습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;    사실 그동안 video에서 3D human pose를 추정하려는 시도가 없었던 것은 아닙니다. 해당 주제는 약 30년이상 논의되어 왔지만, 아래와 같은 문제점으로 인해 유의미한 성과를 내지 못하였습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Lack of 2D-3D mapping annotations&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;2D-3D mapaping annotation 데이터가 충분하지 않았으며, 심지어 single image에 대한 annotation조차 구하기 쉽지 않다는 문제가 있었습니다. 따라서 모델을 충분히 학습시킬 수 없었습니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Lack of in-the-wild datasets&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;야외에서 촬영한 데이터셋이 부족했습니다. VIBE 이전의 방식들은 실내에서 촬영한 3D dataset과 2D GT를 결합하는 방식을 채택하였는데, 실내에서 촬영한 데이터들은 다양한 주제 및 모션이나 이미지의 복잡도를 표현하기에 한계가 있었습니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/598a4cce-9e58-4e5c-9028-9e5113c4f8b9&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;    따라서 VIBE는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2D keypoint&lt;/code&gt;만을 사용하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;single-image pose estimator&lt;/code&gt;를 훈련시키고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adversarial training&lt;/code&gt;을 통해 3D human shape 및 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt;라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
@@ -47,7 +50,7 @@
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;    VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNN&lt;/code&gt;에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt;의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.&lt;/p&gt;
+&lt;p&gt;    VIBE의 Key idea는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HMR&lt;/code&gt;에서 영감을 받은 것이기 때문에, 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNN&lt;/code&gt;에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt;의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -111,6 +114,34 @@
             &lt;span class=&quot;n&quot;&gt;pred_shape&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_shape&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;pred_cam&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deccam&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pred_cam&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;최종적으로 Regressor의 output $\hat\Theta$는 다음과 같이 출력됩니다. 각 sequence에 대한 pose parameter가 각각 출력되며, 모든 sequence에 대해 body shape parameter의 average pooling를 함으로써 하나의 body shape parameter를 얻습니다.&lt;/p&gt;
+
+\[\hat{\Theta} = [(\hat{\theta_1}, ..., \hat{\theta_T}), \hat{\beta}]\]
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;cf) SMPL parameter&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;SMPL 파라미터에 대한 첨언입니다.&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;pose parameter
+        &lt;ul&gt;
+          &lt;li&gt;$\theta \in \mathbb{R}^{72}$&lt;/li&gt;
+          &lt;li&gt;72개의 pose 파라미터를 사용하며, global body rotation과 23개의 joint retation을 포함합니다.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;shape parameter
+        &lt;ul&gt;
+          &lt;li&gt;$\beta \in \mathbb{R}^{10}$&lt;/li&gt;
+          &lt;li&gt;10개의 shape parameter를 사용합니다.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
