@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-22T03:51:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
-  &lt;p&gt;발표자료 :&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-23T16:46:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
+  &lt;p&gt;발표자료 : &lt;a href=&quot;https://docs.google.com/presentation/d/1vXGcHwAJxjAXV_m76dgl7abqPDun0TY_/edit?usp=sharing&amp;amp;ouid=116507288704586191771&amp;amp;rtpof=true&amp;amp;sd=true&quot; target=&quot;blank_&quot;&gt;https://docs.google.com/presentation/d/1vXGcHwAJxjAXV_m76dgl7abqPDun0TY_/edit?usp=sharing&amp;amp;ouid=116507288704586191771&amp;amp;rtpof=true&amp;amp;sd=true&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
@@ -14,9 +14,20 @@
   &lt;p&gt;Implementation : &lt;a href=&quot;https://github.com/mkocabas/VIBE&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;2-vibe&quot;&gt;2. VIBE&lt;/h1&gt;
+&lt;h1 id=&quot;1-background&quot;&gt;1. Background&lt;/h1&gt;
 
-&lt;h2 id=&quot;2-0-introduction&quot;&gt;2-0. Introduction&lt;/h2&gt;
+&lt;p&gt;각각 간단하게 적기&lt;/p&gt;
+
+&lt;h2 id=&quot;1-1-smpl&quot;&gt;1-1. SMPL&lt;/h2&gt;
+
+&lt;h2 id=&quot;1-2-hmr&quot;&gt;1-2. HMR&lt;/h2&gt;
+
+&lt;h2 id=&quot;1-3-temporal-hmr&quot;&gt;1-3. Temporal HMR&lt;/h2&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;2-introduction&quot;&gt;2. Introduction&lt;/h1&gt;
 
 &lt;p&gt;    single image로부터 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3D human pose&lt;/code&gt;를 추정하려는 시도는 지금까지 매우 활발히 연구되어 왔습니다. 이러한 연구들은 여러 분야에서 매우 유용하게 사용될 수 있지만, 실제로 인간의 행위를 정확히 설명할 수 있는 것은 single image가 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;입니다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VIBE&lt;/code&gt;는 기존에 연구되어 왔던 single image에 대한 3D human pose estimation task를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;의 영역으로 확장하고자 등장하였습니다.&lt;/p&gt;
 
@@ -41,12 +52,12 @@
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/598a4cce-9e58-4e5c-9028-9e5113c4f8b9&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;    따라서 VIBE는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2D keypoint&lt;/code&gt;만을 사용하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;single-image pose estimator&lt;/code&gt;를 훈련시키고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adversarial training&lt;/code&gt;을 통해 3D human shape 및 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt;라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.&lt;/p&gt;
+&lt;p&gt;    따라서 VIBE는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2D keypoint&lt;/code&gt;만을 사용하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pose estimator&lt;/code&gt;를 훈련시키고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adversarial training&lt;/code&gt;을 통해 3D human shape 및 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt;라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-1-architecture&quot;&gt;2-1. Architecture&lt;/h2&gt;
+&lt;h1 id=&quot;3-architecture&quot;&gt;3. Architecture&lt;/h1&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
@@ -62,17 +73,14 @@
 &lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;smpl_output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-2-generator&quot;&gt;2-2. Generator&lt;/h2&gt;
+&lt;h2 id=&quot;3-1-generator&quot;&gt;3-1. Generator&lt;/h2&gt;
 
 &lt;p&gt;    Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.&lt;/p&gt;
 
 \[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
 \quad (t = 1, ..., T)\]
 
-&lt;h3 id=&quot;2-2-1-feature-extractor-cnn&quot;&gt;2-2-1. Feature extractor (CNN)&lt;/h3&gt;
+&lt;h3 id=&quot;3-1-1-feature-extractor-cnn&quot;&gt;3-1-1. Feature extractor (CNN)&lt;/h3&gt;
 
 &lt;p&gt;    우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ResNet50&lt;/code&gt;을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.&lt;/p&gt;
 
@@ -80,7 +88,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-2-2-temporal-encoder-gru&quot;&gt;2-2-2. Temporal Encoder (GRU)&lt;/h3&gt;
+&lt;h3 id=&quot;3-1-2-temporal-encoder-gru&quot;&gt;3-1-2. Temporal Encoder (GRU)&lt;/h3&gt;
 
 &lt;p&gt;    앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RNN&lt;/code&gt;기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Experiment&lt;/code&gt; 파트에서 다시 언급하도록 하겠습니다.&lt;/p&gt;
 
@@ -90,7 +98,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-2-3-regressor&quot;&gt;2-2-3. Regressor&lt;/h3&gt;
+&lt;h3 id=&quot;3-1-3-regressor&quot;&gt;3-1-3. Regressor&lt;/h3&gt;
 
 &lt;p&gt;    공식 페이퍼에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regressor&lt;/code&gt;에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.&lt;/p&gt;
 
@@ -146,9 +154,9 @@
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-3-discriminator&quot;&gt;2-3. Discriminator&lt;/h2&gt;
+&lt;h2 id=&quot;3-2-discriminator&quot;&gt;3-2. Discriminator&lt;/h2&gt;
 
-&lt;h3 id=&quot;2-3-1-related-work--hmr&quot;&gt;2-3-1. Related work : HMR&lt;/h3&gt;
+&lt;h3 id=&quot;3-2-1-related-work--hmr&quot;&gt;3-2-1. Related work : HMR&lt;/h3&gt;
 
 &lt;p&gt;    아래 figure를 보시면 생성된 3D mesh가 2D key point에는 잘 reprojection 되었지만, 정상적인 사람의 포즈는 아닌 것을 확인할 수 있습니다. HMR에서는 이러한 문제점을 해결하기 위해 reprojection loss와 더불어 Discriminator를 도입하였습니다. Discirminator를 통해 실제 GT sample과 생성된 mesh를 비교하고, Generator는 점점 더 그럴싸한 human pose를 생성하게 됩니다.&lt;/p&gt;
 
@@ -156,7 +164,7 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-3-2-motion-discriminator&quot;&gt;2-3-2. Motion discriminator&lt;/h3&gt;
+&lt;h3 id=&quot;3-2-2-motion-discriminator&quot;&gt;3-2-2. Motion discriminator&lt;/h3&gt;
 
 &lt;p&gt;    그러나 VIBE는, 이러한 single image에 대한 제약 조건만으로는 pose sequence를 다루기에는 불충분하다고 주장합니다. pose의 시퀀스를 고려하지 않은 채 단일 이미지에 대해서만 테스트를 하게 되면, 각 프레임에서의 pose는 유효할 수 있어도 시퀀스간의 포즈가 자연스럽게 연결되지 않을 수도 있게 됩니다. 따라서 VIBE는 이러한 문제를 해결하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;motion discriminator&lt;/code&gt; $\mathcal{D}_M$을 도입합니다.&lt;/p&gt;
 
@@ -169,9 +177,9 @@
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-4-loss&quot;&gt;2-4. Loss&lt;/h2&gt;
+&lt;h1 id=&quot;4-loss&quot;&gt;4. Loss&lt;/h1&gt;
 
-&lt;h3 id=&quot;2-4-1-discriminator&quot;&gt;2-4-1. Discriminator&lt;/h3&gt;
+&lt;h2 id=&quot;4-1-discriminator&quot;&gt;4-1. Discriminator&lt;/h2&gt;
 
 &lt;p&gt;    Motion discriminator $D_M$은 다음과 같은 Loss를 갖습니다. 이 때, $p_R$은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋으로부터 추출한 real motion sequence의 분포이며, $p_G$는 generator가 생성한 sequence의 분포를 나타냅니다.&lt;/p&gt;
 
@@ -191,9 +199,10 @@ objective &amp;amp;=&amp;amp; Min(L_{D_M}) \\
 
 &lt;p&gt;    다시 말해, $\mathcal{D}_M$는 real 이미지에 대해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;을, fake 이미지에 대해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt;을 출력하도록 학습되며, Loss는 각 분포에 대한 Expectation value의 합으로 계산됩니다. 즉, real data와 fake 데이터를 더 잘 구분하는 방향으로 학습이 된다고 이해하시면 될 것 같습니다.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;2-4-2-generator&quot;&gt;2-4-2. Generator&lt;/h3&gt;
+&lt;h2 id=&quot;4-2-generator&quot;&gt;4-2. Generator&lt;/h2&gt;
 
 &lt;p&gt;    Generator의 Loss는 다음과 같이 계산됩니다. 각 term에 대해 조금 더 자세히 살펴보도록 하겠습니다.&lt;/p&gt;
 
@@ -225,4 +234,11 @@ objective &amp;amp;=&amp;amp; Min(L_{D_M}) \\
   &lt;li&gt;&lt;strong&gt;SMPL Loss&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-\[L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2}\]</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry></feed>
+\[L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2}\]
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;5-experiments&quot;&gt;5. Experiments&lt;/h1&gt;
+
+&lt;h1 id=&quot;6-conclusion&quot;&gt;6. Conclusion&lt;/h1&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry></feed>

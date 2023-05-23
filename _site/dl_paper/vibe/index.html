@@ -629,13 +629,13 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#2-vibe">2. VIBE</a><ul><li><a href="#2-0-introduction">2-0. Introduction</a></li><li><a href="#2-1-architecture">2-1. Architecture</a></li><li><a href="#2-2-generator">2-2. Generator</a><ul><li><a href="#2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</a></li><li><a href="#2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</a></li><li><a href="#2-2-3-regressor">2-2-3. Regressor</a></li></ul></li><li><a href="#2-3-discriminator">2-3. Discriminator</a><ul><li><a href="#2-3-1-related-work--hmr">2-3-1. Related work : HMR</a></li><li><a href="#2-3-2-motion-discriminator">2-3-2. Motion discriminator</a></li></ul></li><li><a href="#2-4-loss">2-4. Loss</a><ul><li><a href="#2-4-1-discriminator">2-4-1. Discriminator</a></li><li><a href="#2-4-2-generator">2-4-2. Generator</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#1-background">1. Background</a><ul><li><a href="#1-1-smpl">1-1. SMPL</a></li><li><a href="#1-2-hmr">1-2. HMR</a></li><li><a href="#1-3-temporal-hmr">1-3. Temporal HMR</a></li></ul></li><li><a href="#2-introduction">2. Introduction</a></li><li><a href="#3-architecture">3. Architecture</a><ul><li><a href="#3-1-generator">3-1. Generator</a><ul><li><a href="#3-1-1-feature-extractor-cnn">3-1-1. Feature extractor (CNN)</a></li><li><a href="#3-1-2-temporal-encoder-gru">3-1-2. Temporal Encoder (GRU)</a></li><li><a href="#3-1-3-regressor">3-1-3. Regressor</a></li></ul></li><li><a href="#3-2-discriminator">3-2. Discriminator</a><ul><li><a href="#3-2-1-related-work--hmr">3-2-1. Related work : HMR</a></li><li><a href="#3-2-2-motion-discriminator">3-2-2. Motion discriminator</a></li></ul></li></ul></li><li><a href="#4-loss">4. Loss</a><ul><li><a href="#4-1-discriminator">4-1. Discriminator</a></li><li><a href="#4-2-generator">4-2. Generator</a></li></ul></li><li><a href="#5-experiments">5. Experiments</a></li><li><a href="#6-conclusion">6. Conclusion</a></li></ul>
 
             </nav>
           </aside>
         
         <blockquote>
-  <p>발표자료 :</p>
+  <p>발표자료 : <a href="https://docs.google.com/presentation/d/1vXGcHwAJxjAXV_m76dgl7abqPDun0TY_/edit?usp=sharing&amp;ouid=116507288704586191771&amp;rtpof=true&amp;sd=true" target="blank_">https://docs.google.com/presentation/d/1vXGcHwAJxjAXV_m76dgl7abqPDun0TY_/edit?usp=sharing&amp;ouid=116507288704586191771&amp;rtpof=true&amp;sd=true</a></p>
 </blockquote>
 
 <blockquote>
@@ -650,9 +650,20 @@
   <p>Implementation : <a href="https://github.com/mkocabas/VIBE" target="blank_">https://github.com/mkocabas/VIBE</a></p>
 </blockquote>
 
-<h1 id="2-vibe">2. VIBE</h1>
+<h1 id="1-background">1. Background</h1>
 
-<h2 id="2-0-introduction">2-0. Introduction</h2>
+<p>각각 간단하게 적기</p>
+
+<h2 id="1-1-smpl">1-1. SMPL</h2>
+
+<h2 id="1-2-hmr">1-2. HMR</h2>
+
+<h2 id="1-3-temporal-hmr">1-3. Temporal HMR</h2>
+
+<p><br />
+<br /></p>
+
+<h1 id="2-introduction">2. Introduction</h1>
 
 <p>    single image로부터 <code class="language-plaintext highlighter-rouge">3D human pose</code>를 추정하려는 시도는 지금까지 매우 활발히 연구되어 왔습니다. 이러한 연구들은 여러 분야에서 매우 유용하게 사용될 수 있지만, 실제로 인간의 행위를 정확히 설명할 수 있는 것은 single image가 아니라 <code class="language-plaintext highlighter-rouge">video</code>입니다. 따라서 <code class="language-plaintext highlighter-rouge">VIBE</code>는 기존에 연구되어 왔던 single image에 대한 3D human pose estimation task를 <code class="language-plaintext highlighter-rouge">video</code>의 영역으로 확장하고자 등장하였습니다.</p>
 
@@ -677,12 +688,12 @@
 
 <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/598a4cce-9e58-4e5c-9028-9e5113c4f8b9" style="border: solid black 1px" /></p>
 
-<p>    따라서 VIBE는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 <code class="language-plaintext highlighter-rouge">2D keypoint</code>만을 사용하여 <code class="language-plaintext highlighter-rouge">single-image pose estimator</code>를 훈련시키고, <code class="language-plaintext highlighter-rouge">adversarial training</code>을 통해 3D human shape 및 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 <code class="language-plaintext highlighter-rouge">AMASS</code>라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.</p>
+<p>    따라서 VIBE는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 <code class="language-plaintext highlighter-rouge">2D keypoint</code>만을 사용하여 <code class="language-plaintext highlighter-rouge">pose estimator</code>를 훈련시키고, <code class="language-plaintext highlighter-rouge">adversarial training</code>을 통해 3D human shape 및 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 <code class="language-plaintext highlighter-rouge">AMASS</code>라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.</p>
 
 <p><br />
 <br /></p>
 
-<h2 id="2-1-architecture">2-1. Architecture</h2>
+<h1 id="3-architecture">3. Architecture</h1>
 
 <p align="center"><img src="https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d" style="border: solid black 1px" /></p>
 
@@ -698,17 +709,14 @@
 </span>        <span class="n">smpl_output</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">regressor</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">J_regressor</span><span class="o">=</span><span class="n">J_regressor</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><br />
-<br /></p>
-
-<h2 id="2-2-generator">2-2. Generator</h2>
+<h2 id="3-1-generator">3-1. Generator</h2>
 
 <p>    Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.</p>
 
 \[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
 \quad (t = 1, ..., T)\]
 
-<h3 id="2-2-1-feature-extractor-cnn">2-2-1. Feature extractor (CNN)</h3>
+<h3 id="3-1-1-feature-extractor-cnn">3-1-1. Feature extractor (CNN)</h3>
 
 <p>    우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 <code class="language-plaintext highlighter-rouge">ResNet50</code>을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.</p>
 
@@ -716,7 +724,7 @@
 
 <p><br /></p>
 
-<h3 id="2-2-2-temporal-encoder-gru">2-2-2. Temporal Encoder (GRU)</h3>
+<h3 id="3-1-2-temporal-encoder-gru">3-1-2. Temporal Encoder (GRU)</h3>
 
 <p>    앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 <code class="language-plaintext highlighter-rouge">GRU</code>와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 <code class="language-plaintext highlighter-rouge">RNN</code>기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 <code class="language-plaintext highlighter-rouge">Experiment</code> 파트에서 다시 언급하도록 하겠습니다.</p>
 
@@ -726,7 +734,7 @@
 
 <p><br /></p>
 
-<h3 id="2-2-3-regressor">2-2-3. Regressor</h3>
+<h3 id="3-1-3-regressor">3-1-3. Regressor</h3>
 
 <p>    공식 페이퍼에는 <code class="language-plaintext highlighter-rouge">Regressor</code>에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.</p>
 
@@ -782,9 +790,9 @@
 <p><br />
 <br /></p>
 
-<h2 id="2-3-discriminator">2-3. Discriminator</h2>
+<h2 id="3-2-discriminator">3-2. Discriminator</h2>
 
-<h3 id="2-3-1-related-work--hmr">2-3-1. Related work : HMR</h3>
+<h3 id="3-2-1-related-work--hmr">3-2-1. Related work : HMR</h3>
 
 <p>    아래 figure를 보시면 생성된 3D mesh가 2D key point에는 잘 reprojection 되었지만, 정상적인 사람의 포즈는 아닌 것을 확인할 수 있습니다. HMR에서는 이러한 문제점을 해결하기 위해 reprojection loss와 더불어 Discriminator를 도입하였습니다. Discirminator를 통해 실제 GT sample과 생성된 mesh를 비교하고, Generator는 점점 더 그럴싸한 human pose를 생성하게 됩니다.</p>
 
@@ -792,7 +800,7 @@
 
 <p><br /></p>
 
-<h3 id="2-3-2-motion-discriminator">2-3-2. Motion discriminator</h3>
+<h3 id="3-2-2-motion-discriminator">3-2-2. Motion discriminator</h3>
 
 <p>    그러나 VIBE는, 이러한 single image에 대한 제약 조건만으로는 pose sequence를 다루기에는 불충분하다고 주장합니다. pose의 시퀀스를 고려하지 않은 채 단일 이미지에 대해서만 테스트를 하게 되면, 각 프레임에서의 pose는 유효할 수 있어도 시퀀스간의 포즈가 자연스럽게 연결되지 않을 수도 있게 됩니다. 따라서 VIBE는 이러한 문제를 해결하기 위해 <code class="language-plaintext highlighter-rouge">motion discriminator</code> $\mathcal{D}_M$을 도입합니다.</p>
 
@@ -805,9 +813,9 @@
 <p><br />
 <br /></p>
 
-<h2 id="2-4-loss">2-4. Loss</h2>
+<h1 id="4-loss">4. Loss</h1>
 
-<h3 id="2-4-1-discriminator">2-4-1. Discriminator</h3>
+<h2 id="4-1-discriminator">4-1. Discriminator</h2>
 
 <p>    Motion discriminator $D_M$은 다음과 같은 Loss를 갖습니다. 이 때, $p_R$은 <code class="language-plaintext highlighter-rouge">AMASS</code> 데이터셋으로부터 추출한 real motion sequence의 분포이며, $p_G$는 generator가 생성한 sequence의 분포를 나타냅니다.</p>
 
@@ -827,9 +835,10 @@ objective &amp;=&amp; Min(L_{D_M}) \\
 
 <p>    다시 말해, $\mathcal{D}_M$는 real 이미지에 대해서는 <code class="language-plaintext highlighter-rouge">1</code>을, fake 이미지에 대해서는 <code class="language-plaintext highlighter-rouge">0</code>을 출력하도록 학습되며, Loss는 각 분포에 대한 Expectation value의 합으로 계산됩니다. 즉, real data와 fake 데이터를 더 잘 구분하는 방향으로 학습이 된다고 이해하시면 될 것 같습니다.</p>
 
-<p><br /></p>
+<p><br />
+<br /></p>
 
-<h3 id="2-4-2-generator">2-4-2. Generator</h3>
+<h2 id="4-2-generator">4-2. Generator</h2>
 
 <p>    Generator의 Loss는 다음과 같이 계산됩니다. 각 term에 대해 조금 더 자세히 살펴보도록 하겠습니다.</p>
 
@@ -862,6 +871,13 @@ objective &amp;=&amp; Min(L_{D_M}) \\
 </ul>
 
 \[L_{SMPL} = \lVert \beta - \hat{\beta} \rVert_2 + \sum^{T}_{t=1}{\lVert \theta_t - \hat{\theta}_t \rVert_2}\]
+
+<p><br />
+<br /></p>
+
+<h1 id="5-experiments">5. Experiments</h1>
+
+<h1 id="6-conclusion">6. Conclusion</h1>
 
         
         
