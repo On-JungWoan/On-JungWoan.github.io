@@ -2,12 +2,12 @@
 main:
   - title: "COMPUTER VISION"
     sublinks:
+      - title: "논문 리뷰"
+        url: /categories/DL_paper          
       - title: "스터디"
         url: /categories/DL_study
       - title: "모델 최적화"
         url: /categories/DL_optim
-      - title: "논문 리뷰"
-        url: /categories/DL_paper      
 
   - title: "TIL"    
     url: /TIL/

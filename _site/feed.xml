@@ -1,9 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-23T16:46:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰 (작성중)</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰 (작성중)" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-05-16T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-06-06T00:37:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정완이의 개발 일기장</title><subtitle>정완이의 개발 일기장</subtitle><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><entry><title type="html">VIBE(2020) 논문 리뷰</title><link href="http://localhost:4000/dl_paper/vibe/" rel="alternate" type="text/html" title="VIBE(2020) 논문 리뷰" /><published>2023-05-16T00:00:00+09:00</published><updated>2022-06-05T00:00:00+09:00</updated><id>http://localhost:4000/dl_paper/vibe</id><content type="html" xml:base="http://localhost:4000/dl_paper/vibe/">&lt;blockquote&gt;
   &lt;p&gt;발표자료 : &lt;a href=&quot;https://docs.google.com/presentation/d/1vXGcHwAJxjAXV_m76dgl7abqPDun0TY_/edit?usp=sharing&amp;amp;ouid=116507288704586191771&amp;amp;rtpof=true&amp;amp;sd=true&quot; target=&quot;blank_&quot;&gt;https://docs.google.com/presentation/d/1vXGcHwAJxjAXV_m76dgl7abqPDun0TY_/edit?usp=sharing&amp;amp;ouid=116507288704586191771&amp;amp;rtpof=true&amp;amp;sd=true&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;발표영상 :&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
@@ -14,24 +10,11 @@
   &lt;p&gt;Implementation : &lt;a href=&quot;https://github.com/mkocabas/VIBE&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;1-background&quot;&gt;1. Background&lt;/h1&gt;
+&lt;h1 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h1&gt;
 
-&lt;p&gt;각각 간단하게 적기&lt;/p&gt;
+&lt;p&gt;    이번에 소개드릴 논문은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VIBE: Video Inference for Human Body Pose and Shape Estimation&lt;/code&gt;라는 paper이며, CVPR 2020에서 소개되었습니다.&lt;/p&gt;
 
-&lt;h2 id=&quot;1-1-smpl&quot;&gt;1-1. SMPL&lt;/h2&gt;
-
-&lt;h2 id=&quot;1-2-hmr&quot;&gt;1-2. HMR&lt;/h2&gt;
-
-&lt;h2 id=&quot;1-3-temporal-hmr&quot;&gt;1-3. Temporal HMR&lt;/h2&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;2-introduction&quot;&gt;2. Introduction&lt;/h1&gt;
-
-&lt;p&gt;    single image로부터 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3D human pose&lt;/code&gt;를 추정하려는 시도는 지금까지 매우 활발히 연구되어 왔습니다. 이러한 연구들은 여러 분야에서 매우 유용하게 사용될 수 있지만, 실제로 인간의 행위를 정확히 설명할 수 있는 것은 single image가 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;입니다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VIBE&lt;/code&gt;는 기존에 연구되어 왔던 single image에 대한 3D human pose estimation task를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;의 영역으로 확장하고자 등장하였습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;    먼저, VIBE가 등장하게 된 배경에 대해 설명드리도록 하겠습니다. 우선, single image로부터 3D human pose를 추정하려는 시도는 지금까지 매우 활발히 연구되어 왔습니다. 이러한 연구들은 여러 분야에서 매우 유용하게 사용될 수 있지만, 실제로 인간의 행위를 정확히 설명할 수 있는 것은 single image가 아니라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;입니다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VIBE&lt;/code&gt;는 기존에 연구되어 왔던 single image에 대한 3D human pose estimation task를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;video&lt;/code&gt;의 영역으로 확장하고자 등장하였습니다.&lt;/p&gt;
 
 &lt;p&gt;    사실 그동안 video에서 3D human pose를 추정하려는 시도가 없었던 것은 아닙니다. 해당 주제는 약 30년이상 논의되어 왔지만, 아래와 같은 문제점으로 인해 유의미한 성과를 내지 못하였습니다.&lt;/p&gt;
 
@@ -43,7 +26,7 @@
   &lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Lack of in-the-wild datasets&lt;/strong&gt;
     &lt;ul&gt;
-      &lt;li&gt;야외에서 촬영한 데이터셋이 부족했습니다. VIBE 이전의 방식들은 실내에서 촬영한 3D dataset과 2D GT를 결합하는 방식을 채택하였는데, 실내에서 촬영한 데이터들은 다양한 주제 및 모션이나 이미지의 복잡도를 표현하기에 한계가 있었습니다.&lt;/li&gt;
+      &lt;li&gt;야외에서 촬영한 데이터셋이 부족했습니다. VIBE 이전의 연구들은 실내에서 촬영한 3D dataset과 2D GT를 결합하는 방식을 채택하였는데, 실내에서 촬영한 데이터들은 다양한 주제 및 모션이나 이미지의 복잡도를 표현하기에 한계가 있었습니다.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -52,59 +35,68 @@
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/598a4cce-9e58-4e5c-9028-9e5113c4f8b9&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;    따라서 VIBE는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2D keypoint&lt;/code&gt;만을 사용하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pose estimator&lt;/code&gt;를 훈련시키고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adversarial training&lt;/code&gt;을 통해 3D human shape 및 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt;라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.&lt;/p&gt;
+&lt;p&gt;    따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VIBE&lt;/code&gt;는 이러한 기존 연구 방식의 문제점을 해결하고자, 오직 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2D keypoint&lt;/code&gt;만을 사용하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pose estimator&lt;/code&gt;를 훈련시키고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adversarial training&lt;/code&gt;을 통해 3D human shape과 pose를 생성해냅니다. 당시에, Video squence 분야에서 2D 어노테이션 데이터는 이미 충분히 존재하는 상황이었고, adversarial training을 위한 데이터셋은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt;라는 3D motion-capture 데이터셋을 사용하였다고 합니다. 이 때, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터 셋은 야외에서 촬영되었으며 사람의 움직임을 학습하기에 충분한 양이었기 때문에 VIBE가 좋은 성능을 낼 수 있었다고 합니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;3-architecture&quot;&gt;3. Architecture&lt;/h1&gt;
+&lt;h1 id=&quot;2-architecture&quot;&gt;2. Architecture&lt;/h1&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/4bc7f7b5-9b36-4918-8793-12fd5edc037d&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;    다음은 VIBE의 전체적인 모델 아키텍쳐입니다.&lt;/p&gt;
 
-&lt;p&gt;    VIBE의 Key idea는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HMR&lt;/code&gt;에서 영감을 받은 것이기 때문에, 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가 주어지면, 이를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNN&lt;/code&gt;에 통과시켜 각 frame $I_t$에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt;의 input으로 들어가 latent feature vector를 estimate하며, 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에서 최종적으로 SMPL 파라미터를 predict하게 됩니다.&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/54659523-ddee-4af9-809b-fc859313fb4a&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;    VIBE의 Key idea는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HMR&lt;/code&gt;에서 영감을 받은 것이기 때문에, 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HMR&lt;/code&gt;이나 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GAN&lt;/code&gt;같은 경우는 이전 세미나에서 이미 다루었기 때문에 따로 자세히 설명하지는 않겠습니다.&lt;/p&gt;
+
+&lt;p&gt;    VIBE는 우선, 길이 T의 input video V가 주어지면, 얘를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNN&lt;/code&gt;에 통과시켜 각 frame에 대한 feature map을 추출합니다. 이 때 추출된 feature map은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt;의 input으로 들어가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;latent feature vector&lt;/code&gt;를 추정하고, 이를 바탕으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에서 최종적으로 SMPL 파라미터를 예측하게 됩니다. 위 figure에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;regressor&lt;/code&gt;에 대한 부분이 따로 표현되어 있지 않은데, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal encoder&lt;/code&gt; 뒤에 붙어있다고 이해하시면 될 것 같습니다.&lt;/p&gt;
+
+&lt;p&gt;    앞서 말씀드린 부분까지를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Generator&lt;/code&gt;의 범위로 정의하고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Generator&lt;/code&gt;에서 생성된 사람의 pose는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋의 GT sample과 함께 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Motion discriminator&lt;/code&gt;로 들어가 real한 사람의 motion인지에 대한 여부를 판별합니다. 각 부분에 대한 설명은 뒷 부분에서 좀 더 자세히 다루도록 하겠습니다.&lt;/p&gt;
+
 &lt;blockquote&gt;
   &lt;p&gt;위 figure에서는 regressor에 대한 부분이 따로 표현되어 있지 않아서 어디에 포함되는 개념인지 살짝 혼동이 되었는데, 구현 코드와 논문에서는 regressor와 encoder를 서로 다른 개념으로 보고있기 때문에, GRU 뒤에 regressor가 숨어 있다고 이해하시면 될 것 같습니다.&lt;/p&gt;
 &lt;/blockquote&gt;
-
-&lt;p&gt;    앞서 말씀드린 부분까지를 Generator의 범위로 정의하며, Generator에서 생성된 3D mesh는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋의 GT sample과 함께 Motion discriminator로 들어가 fake/real 여부를 판별합니다. 즉, VIBE는 이미지를 생성하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Generator&lt;/code&gt; 파트와, 해당 이미지가 real인지 fake인지를 판단하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;discriminator&lt;/code&gt; 파트로 나누어져 있다고 볼 수 있습니다.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        &lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encoder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;# (...)
 &lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;smpl_output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;J_regressor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;3-1-generator&quot;&gt;3-1. Generator&lt;/h2&gt;
+&lt;h2 id=&quot;2-1-generator&quot;&gt;2-1. Generator&lt;/h2&gt;
 
 &lt;p&gt;    Generator 부분에 대해 조금 더 자세히 살펴보도록 하겠습니다. Generator는 전체적으로 다음과 같은 흐름을 갖습니다.&lt;/p&gt;
 
 \[I_t \to f(I_t) \to g(f_t) \to T \to \hat{\Theta}, 
 \quad (t = 1, ..., T)\]
 
-&lt;h3 id=&quot;3-1-1-feature-extractor-cnn&quot;&gt;3-1-1. Feature extractor (CNN)&lt;/h3&gt;
+&lt;h3 id=&quot;2-1-1-feature-extractor-cnn&quot;&gt;2-1-1. Feature extractor (CNN)&lt;/h3&gt;
 
 &lt;p&gt;    우선, t는 frame number를 의미합니다. 앞서 잠깐 소개드렸던 듯이, input video $I_t$는 convolutional network $f$의 input으로 들어가게 됩니다. 이 때, CNN 아키텍쳐로는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ResNet50&lt;/code&gt;을 사용하며, 각 frame의 feature map $f_i$를 추출합니다. 이때 $f_i$는 (시퀀스x2048)의 디멘젼을 갖습니다($f_i \in \mathbb{R^{2048}}$). 아래는 CNN layer 중간쯤에서 visualize해본 feature map입니다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/0c6ef20f-98ea-4731-b3f6-bd71b5c672ae&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/ec9a73cf-e4b6-415f-b408-6a62202222cf&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;3-1-2-temporal-encoder-gru&quot;&gt;3-1-2. Temporal Encoder (GRU)&lt;/h3&gt;
+&lt;h3 id=&quot;2-1-2-temporal-encoder-gru&quot;&gt;2-1-2. Temporal Encoder (GRU)&lt;/h3&gt;
 
-&lt;p&gt;    앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RNN&lt;/code&gt;기반 아키텍쳐를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 이에 대한 ablation study 결과는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Experiment&lt;/code&gt; 파트에서 다시 언급하도록 하겠습니다.&lt;/p&gt;
+&lt;p&gt;    앞서 CNN에서 추출한 feature map은 Temporal Encoder $g$의 input으로 들어가게 됩니다. Temporal Encoder는 RNN계열 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;와 Linear Layer(Gemm)로 이루어진 간단한 구조를 가지고 있습니다. 아래 figure는 Netron으로 visualize한 Temporal Encoder입니다(ONNX format). 여기서 주목해야할 점은 Temporal Encoder에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RNN&lt;/code&gt;기반 아키텍쳐인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;를 사용했다는 점입니다. 저자는 이에 대한 이유로, 앞 뒤 frame간의 관계에 대해 언급하였습니다. 다시 말해, human이 부분적으로 가려져 있거나 포즈가 모호한 상황에서 이전 frame의 정보가 도움이 될 수 있다는 것 입니다. 따라서 frame sequence에 대한 temporal한 정보를 고려하기 위해 GRU를 사용하였고, 이 부분이 HMR과 VIBE의 가장 큰 차이점이라고 할 수 있겠습니다.&lt;/p&gt;
 
-&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/DETR-like-models-for-edge-device/assets/84084372/d56fc82c-ffce-4245-bf7b-848707a563b7&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/d4b75385-1f78-4f8f-b8a6-25982d72d87c&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;    Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Temporal&lt;/code&gt;하게 출력된다는 점을 다시한번 짚고 넘어가시면 될 것 같습니다.&lt;/p&gt;
+&lt;p&gt;    Temporal Encoder는 위에서 기술한 과정을 거친 뒤, 각 프레임에 대한 latent feature vector $g_i$를 output으로 출력합니다. 이 때, 각 $g_i$는 이전 frame의 영향을 받아 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Temporal&lt;/code&gt;하게 출력된다는 점을 다시한번 기억해주세요!&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;3-1-3-regressor&quot;&gt;3-1-3. Regressor&lt;/h3&gt;
+&lt;h3 id=&quot;2-1-3-regressor&quot;&gt;2-1-3. Regressor&lt;/h3&gt;
 
-&lt;p&gt;    공식 페이퍼에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regressor&lt;/code&gt;에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.&lt;/p&gt;
+&lt;p&gt;    그리고 예측된 latent feature vector gi는 regressor의 input으로 들어가게 됩니다. 공식 페이퍼에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Regressor&lt;/code&gt;에 대한 부분이 자세히 언급되어 있지 않아서 따로 visualize를 해보았습니다. 아래 figure 기준 왼쪽이 original regressor이며, 오른쪽은 이를 간단히 도식화 한 것입니다. 편의상 뒷 부분의 post-processing 과정은 생략하고, 대략적인 개형만 표현한 것임을 참고해주시면 감사하겠습니다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/On-jungWoan/assets/84084372/0267dcb0-ad69-4d53-a2f7-5e6b856d08dd&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;    Regressor는 k개의 layer를 거치며 SMPL 파라미터를 추정합니다. input으로는 SMPL 파라미터의 추정값 $\Theta_{k}$와 이에 해당하는 latent feature vector $g_i$를 받습니다. output으로 $\Theta_{k+1}$을 출력하며, 이는 다음 layer에서 $g_i$와 함께 input으로 들어갑니다. 첫 Layer에서는 $\Theta_k$ 대신 SMPL mean $\bar{\Theta}$로 initialize됩니다. 아래는 이에 대한 official 코드입니다.&lt;/p&gt;
+&lt;p&gt;    Regressor는 k개의 layer를 거치며 SMPL 파라미터를 추정합니다. 이 때 input으로는 이전 Layer에서 추정한 SMPL 파라미터 $\Theta_{k}$와 이에 해당하는 latent feature vector $g_i$를 받아 $\Theta_{k+1}$을 새롭게 추정합니다. 그리고 $\Theta_{k+1}$는 다음 layer에서 $g_i$와 함께 input으로 들어가게 되고, 이 과정을 k번 반복하게 됩니다. 첫 iteration에서는 $\Theta_k$ 대신 SMPL 평균 $\bar{\Theta}$로 initialize되고, 각 Layer의 output $\hat{\Theta}$은 다음과 같이 출력됩니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/df2ff83a-7563-4704-b3ce-14f18b37cf30&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;    SMPL과 동일하게 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pose parameter&lt;/code&gt;는 72개의 dimension을 갖고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shape parameter&lt;/code&gt;는 10개를 갖습니다. 당연한 이야기지만, 하나의 사람에 대해서 여러개의 pose를 추정하는 것이기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pose parameter&lt;/code&gt;는 frame 개수 $T$만큼 나오고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;body shape parameter&lt;/code&gt;는 모든 sequence에 대해 average pooling을 해줘서 하나의 값으로 통일합니다. 아래는 이에 대한 official 코드입니다.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;link : &lt;a href=&quot;https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252&quot; target=&quot;blank_&quot;&gt;https://github.com/mkocabas/VIBE/blob/master/lib/models/spin.py#L252&lt;/a&gt;&lt;/p&gt;
@@ -125,15 +117,12 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;최종적으로 Regressor의 output $\hat\Theta$는 다음과 같이 출력됩니다. 각 sequence에 대한 pose parameter가 각각 출력되며, 모든 sequence에 대해 body shape parameter의 average pooling를 함으로써 하나의 body shape parameter를 얻습니다.&lt;/p&gt;
-
-\[\hat{\Theta} = [(\hat{\theta_1}, ..., \hat{\theta_T}), \hat{\beta}]\]
-
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;cf) SMPL parameter&lt;/strong&gt;
     &lt;ul&gt;
+      &lt;li&gt;SMPL 파라미터에 대한 첨언입니다.&lt;/li&gt;
       &lt;li&gt;
-        &lt;p&gt;SMPL 파라미터에 대한 첨언입니다.&lt;/p&gt;
+        &lt;p&gt;자세한 내용은 SMPL paper를 참고해주시면 감사하겠습니다.&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;pose parameter
         &lt;ul&gt;
@@ -154,57 +143,57 @@
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;3-2-discriminator&quot;&gt;3-2. Discriminator&lt;/h2&gt;
+&lt;h2 id=&quot;2-2-discriminator&quot;&gt;2-2. Discriminator&lt;/h2&gt;
 
-&lt;h3 id=&quot;3-2-1-related-work--hmr&quot;&gt;3-2-1. Related work : HMR&lt;/h3&gt;
+&lt;h3 id=&quot;2-2-1-related-work--hmr&quot;&gt;2-2-1. Related work : HMR&lt;/h3&gt;
 
-&lt;p&gt;    아래 figure를 보시면 생성된 3D mesh가 2D key point에는 잘 reprojection 되었지만, 정상적인 사람의 포즈는 아닌 것을 확인할 수 있습니다. HMR에서는 이러한 문제점을 해결하기 위해 reprojection loss와 더불어 Discriminator를 도입하였습니다. Discirminator를 통해 실제 GT sample과 생성된 mesh를 비교하고, Generator는 점점 더 그럴싸한 human pose를 생성하게 됩니다.&lt;/p&gt;
+&lt;p&gt;    SMLP 파라미터로 생성된 3D mesh는 다시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Motion Discriminator&lt;/code&gt;로 들어가 AMASS GT sample과 matching을 해주게 됩니다. 아래 figure는 discriminator가 없을 경우 생기는 문제를 나타내고 있습니다. generator에서 생성된 3D mesh를 바로 2D key point에 매칭시킨 것인데, 2D key point에는 잘 매핑되었지만, 정상적인 사람의 포즈에는 제대로 매핑이 되지 않은 모습을 확인할 수 있습니다. 따라서 HMR에서는 이러한 문제점을 해결하기 위해 reprojection loss와 더불어 Discriminator를 도입하였고, VIBE도 이러한 HMR의 흐름을 동일하게 가져갑니다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/6d1713d1-a926-4f90-9279-0eeb47b597c7&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;3-2-2-motion-discriminator&quot;&gt;3-2-2. Motion discriminator&lt;/h3&gt;
+&lt;h3 id=&quot;2-2-2-motion-discriminator&quot;&gt;2-2-2. Motion discriminator&lt;/h3&gt;
 
-&lt;p&gt;    그러나 VIBE는, 이러한 single image에 대한 제약 조건만으로는 pose sequence를 다루기에는 불충분하다고 주장합니다. pose의 시퀀스를 고려하지 않은 채 단일 이미지에 대해서만 테스트를 하게 되면, 각 프레임에서의 pose는 유효할 수 있어도 시퀀스간의 포즈가 자연스럽게 연결되지 않을 수도 있게 됩니다. 따라서 VIBE는 이러한 문제를 해결하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;motion discriminator&lt;/code&gt; $\mathcal{D}_M$을 도입합니다.&lt;/p&gt;
-
-&lt;p&gt;    아래 figure는 motion discriminator의 구조를 도식화한 것입니다. 앞서 설명드린 Genorator와 유사하게, Motion discriminator 또한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;를 사용함으로써 모델이 시퀀스 정보를 반영할 수 있도록 합니다. input으로는 Generator에서 생성한 $\hat{\Theta}$을 받으며, 이를 multi-layer GRU $f_M$에 넘겨줌으로써 각 time step $i$에 대해 latent code $h_i$를 추정합니다. 이 때, $[h_1, …, h_T]$에 대한 aggregate를 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self-attention&lt;/code&gt;을 해주게 되는데, 이 과정에서 어떤 프레임이 전체 시퀀스에 있어서 중요한지에 대해 학습하게 됩니다. 최종적으로 Discriminator는 $\hat{\Theta}$이 Real인지에 대한 0~1사이의 확률값을 출력하게 됩니다.&lt;/p&gt;
+&lt;p&gt;    그러나 VIBE는, HMR과는 조금 다르게 single image에 대한 matching만으로는 pose sequence를 다루기에는 불충분하다고 주장합니다. pose의 시퀀스를 고려하지 않은 채 단일 이미지에 대해서만 테스트를 하게 되면, 각 프레임에서의 pose는 유효할 수 있어도 시퀀스간의 포즈가 자연스럽게 연결되지 않을 수도 있게 됩니다. 따라서 VIBE는 이러한 문제를 해결하기 위해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;motion discriminator&lt;/code&gt; $\mathcal{D}_M$을 도입합니다.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/107d01cd-adff-4249-b7e9-8a45b779e24b&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
 
 \[\mathcal{G} \to \hat{\Theta} \to f_M(\hat{\Theta_i}) \to h_i \to attn \to p\]
 
+&lt;p&gt;    위 figure는 motion discriminator의 구조를 도식화한 것입니다. 앞서 설명드린 Genorator와 유사하게, Motion discriminator 또한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GRU&lt;/code&gt;를 사용함으로써 모델이 시퀀스 정보를 반영할 수 있도록 합니다. input으로는 Generator에서 생성한 $\hat{\Theta}$을 받으며, 이를 multi-layer GRU $f_M$에 넘겨줌으로써 각 time step i에 대해 latent code $h_i$를 추정합니다. 여기서 주목할 점은, $[h_1, …, h_T]$에 대한 aggregate를 위해 self-attention을 사용했다는 것입니다. 각 프레임끼리의 self-attention을 통해, pose matching에 있어서 각 프레임의 중요도를 학습할 수 있게 되고, 이를 바탕으로 더 중요한 프레임에 높은 가중치를 부여할 수 있게 됩니다. attention weight는 아래와 같이 계산됩니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/e47508b7-2bab-40c8-8261-b9b778b22c49&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;    계산된 latent code $h_i$hi는 attention 함수에 들어간 뒤 sigmoid function을 거쳐 attention weight로 계산됩니다. 그리고 이렇게 계산된 attention weight는 $h_i$와 다시 곱해지고, 모든 sequence에 대해 더해 최종적으로 $r$을 출력하게 됩니다. 이 때 $r$은 $\hat{\Theta}$이 Real인지에 대한 0~1사이의 확률값을 의미합니다.&lt;/p&gt;
+
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;4-loss&quot;&gt;4. Loss&lt;/h1&gt;
+&lt;h1 id=&quot;3-loss&quot;&gt;3. Loss&lt;/h1&gt;
 
-&lt;h2 id=&quot;4-1-discriminator&quot;&gt;4-1. Discriminator&lt;/h2&gt;
+&lt;h2 id=&quot;3-1-discriminator&quot;&gt;3-1. Discriminator&lt;/h2&gt;
 
-&lt;p&gt;    Motion discriminator $D_M$은 다음과 같은 Loss를 갖습니다. 이 때, $p_R$은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋으로부터 추출한 real motion sequence의 분포이며, $p_G$는 generator가 생성한 sequence의 분포를 나타냅니다.&lt;/p&gt;
+&lt;p&gt;    Motion discriminator는 다음과 같은 Loss를 갖습니다.&lt;/p&gt;
 
 \[L_{D_M} = \mathbb{E}_{\Theta \sim p_R}[(\mathcal{D}_M(\Theta)-1)^2] + \mathbb{E}_{\Theta \sim p_G}[(\mathcal{D}_M(\hat{\Theta}))^2]\]
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;    $D_M$은 위 Loss를 최소화하는 것을 목표로 가지고 학습을 진행하게 되므로, 아래와 같이 수식을 다시 표현할 수 있게 됩니다.&lt;/p&gt;
+&lt;p&gt;    여기서, $p_R$은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMASS&lt;/code&gt; 데이터셋으로부터 추출한 real motion sequence의 분포이며, $p_G$는 generator가 생성한 sequence의 분포를 나타냅니다. 따라서 discriminator의 loss는, real data에 대한 output에는 반비례하며, fake data에 대한 output에는 비례하여 커집니다. 이 부분이 처음 봤을때는 잘 와닿지 않을 수 있을 수도 있을 것 같아서 아래와 같이 간단하게 다시 표현을 해보았습니다.&lt;/p&gt;
 
 \[\begin{matrix}
-objective &amp;amp;=&amp;amp; Min(L_{D_M}) \\
-          &amp;amp;=&amp;amp; Min[\mathcal{D}_M(\Theta)-1] + Min[\mathcal{D}_M(\hat{\Theta})] \\
-          &amp;amp;=&amp;amp; \mathcal{D}_M(\Theta) \to 1 \quad and \quad \mathcal{D}_M(\hat{\Theta}) \to 0
+objective &amp;amp;= (1)&amp;amp; Min(L_{D_M}) \\
+          &amp;amp;= (2)&amp;amp; Min[\mathcal{D}_M(\Theta)-1] + Min[\mathcal{D}_M(\hat{\Theta})] \\
+          &amp;amp;= (3)&amp;amp; \mathcal{D}_M(\Theta) \to 1 \quad and \quad \mathcal{D}_M(\hat{\Theta}) \to 0
 \end{matrix}\]
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;    다시 말해, $\mathcal{D}_M$는 real 이미지에 대해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;을, fake 이미지에 대해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt;을 출력하도록 학습되며, Loss는 각 분포에 대한 Expectation value의 합으로 계산됩니다. 즉, real data와 fake 데이터를 더 잘 구분하는 방향으로 학습이 된다고 이해하시면 될 것 같습니다.&lt;/p&gt;
+&lt;p&gt;    Discriminator는 위 Loss를 최소화하는 것을 목표로 가지고 학습을 진행하게 되므로, $(2)$와 같이 수식을 다시 표현할 수 있게 됩니다. $(2)$번 수식을 최소화 하기 위해서는 real data에 대한 discriminator는 1에 가까워져야 하고, fake data에 대한 output은 0에 가까워져야 합니다. 다시 말해, DM는 real 이미지에 대해서는 1을, fake 이미지에 대해서는 0을 출력하도록 학습되며, Loss는 각 분포에 대한 Expectation value의 합으로 계산됩니다. real data는 real로, fake data는 fake로 구분할 수 있도록 학습이 된다고 이해하시면 될 것 같습니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4-2-generator&quot;&gt;4-2. Generator&lt;/h2&gt;
+&lt;h2 id=&quot;3-2-generator&quot;&gt;3-2. Generator&lt;/h2&gt;
 
-&lt;p&gt;    Generator의 Loss는 다음과 같이 계산됩니다. 각 term에 대해 조금 더 자세히 살펴보도록 하겠습니다.&lt;/p&gt;
+&lt;p&gt;    Generator의 Loss는 다음과 같이 계산됩니다. Generator의 loss는 다음과 같이 크게 4가지 loss로 나누어져 있습니다. 각 term에 대해 조금 더 자세히 살펴보도록 하겠습니다.&lt;/p&gt;
 
 \[L_{\mathcal{G}} = L_{3D} + L_{2D} + L_{SMPL} + L_{adv}\\\\\]
 
@@ -212,11 +201,13 @@ objective &amp;amp;=&amp;amp; Min(L_{D_M}) \\
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Adversarial Loss&lt;/strong&gt;&lt;/p&gt;
 
-    &lt;p&gt;    Adversarial Loss $L_{adv}$에 대한 수식은 다음과 같습니다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2-2-5-1&lt;/code&gt;와 유사한 방식으로, 해당 Loss를 Minimize하기 위해서는 $\mathcal{D}_M(\hat{\Theta})$이 1에 수렴해야 한다는 것을 유추할 수 있습니다. 이는, Generator $\mathcal{G}$에서 생성된 fake sequence를 discriminator에 넣었을 때, discriminator가 이를 real image로 인식하게끔 학습이 된다는 것을 의미합니다. 즉, Generator는 Discriminator를 속이기 위해 더 진짜같은 이미지를 만들고, Discriminator는 이를 구별해내기 위해 더 정교해지는 것입니다.&lt;/p&gt;
+    &lt;p&gt;    Adversarial Loss에 대한 수식은 다음과 같습니다. 위에서도 설명드렸듯이, 해당 Loss를 Minimize하기 위해서는 fake data에 대한 discriminator의 output이 1에 수렴해야 한다는 것을 유추할 수 있습니다. 다시 말해서, Generator에서 생성된 fake sequence를 discriminator에 넣었을 때, discriminator가 이를 real image로 인식하게끔 학습이 된다는 것을 의미합니다. 따라서, 학습이 진행될수록 Generator는 Discriminator를 속이기 위해 더 진짜같은 이미지를 만들고, Discriminator는 이를 구별해내기 위해 더 정교해진다고 할 수 있습니다.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 \[L_{adv} = \mathbb{E}_{\Theta~p_G}[(\mathcal{D}_M(\hat{\Theta})-1)^2]\]
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2D keypoint loss&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3D keypoint loss&lt;/code&gt;는 각 keypoint간의 L2 loss로 구해지며, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SMPL loss&lt;/code&gt;는 shape parameter와 pose parameter간의 L2 loss로 구해집니다. 이 때, shape parameter는 average pooling을 해주었기 때문에 하나의 값에 대해서만 loss를 구하고, pose parameter는 모든 frame에 대해 loss를 구해 전부 더해주게 됩니다.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;3D Loss&lt;/strong&gt;&lt;/li&gt;
@@ -239,6 +230,37 @@ objective &amp;amp;=&amp;amp; Min(L_{D_M}) \\
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;5-experiments&quot;&gt;5. Experiments&lt;/h1&gt;
+&lt;h1 id=&quot;4-experiments&quot;&gt;4. Experiments&lt;/h1&gt;
 
-&lt;h1 id=&quot;6-conclusion&quot;&gt;6. Conclusion&lt;/h1&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry></feed>
+&lt;p&gt;    다음은 실험 결과입니다. 먼저, 테스트에는 3개의 데이터셋이 사용되었습니다. 먼저, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3DPW&lt;/code&gt; 데이터셋은 60개의 video 시퀀스에 대해 18명의 사람이 등장하는 데이터 셋이고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MPI-INF-3DHP&lt;/code&gt; 데이터셋은 총 8명의 사람이 2개의 outfit으로 8개의 action을 하는 데이터셋입니다. 마지막으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;human 3.6 million&lt;/code&gt; 데이터셋은 이름 그대로 3.6 million개의 3d human pose를 담고 있는 데이터셋입니다.&lt;/p&gt;
+
+&lt;p&gt;    다음으로, loss의 측정은 크게 4가지의 방법을 사용하였습니다. 먼저, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MPJPE&lt;/code&gt;는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Mean Per Joint Position Error&lt;/code&gt;의 약자로써, 각 관절에 대한 오차를 mm단위로 측정한 것입니다. 다음으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PA-MPJPE&lt;/code&gt;는, joint에 먼저 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PA(Procrustes analysis)&lt;/code&gt;를 적용하여 rotation과 scale을 제거한 뒤, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MPJPE&lt;/code&gt;를 측정한 loss입니다. 다음으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PVE&lt;/code&gt;는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Per Vertex Error&lt;/code&gt;의 약자로 vertex간의 거리를 측정한 loss이며, 마지막으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accel loss&lt;/code&gt;는 position간의 acceleration을 측정하는 loss인데, 각 frame끼리 얼마나 부드럽게 연결되어있는지를 측정하는 loss입니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;4-1-in-the-wild-dataset&quot;&gt;4-1. in-the-wild dataset&lt;/h2&gt;
+
+&lt;p&gt;    여기서 주목할 점은, VIBE가 기존에 challenging task였던 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;in-the-wild&lt;/code&gt;한 데이터셋에 대해서 눈에 띄게 좋은 performance를 달성했다는 것입니다. MPJPE와 PVE Loss가 낮게 나오는 것은, 이전 sequence가 다음 sequence를 예측하는 데 도움을 줄 수 있다는 저자의 가설을 반증한다고 할 수 있겠습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/9e2e11dd-502a-4064-8d11-8aaf9a4c1035&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-2-3dpw-dataset&quot;&gt;4-2. 3DPW dataset&lt;/h2&gt;
+&lt;p&gt;    VIBE는 훈련 시 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3DPW&lt;/code&gt; dataset을 사용하였는데, 이전 연구에서는 이를 사용하지 않았습니다. 따라서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;direct comparation&lt;/code&gt;은 VIBE와 이전 연구들간의 직접적인 비교를 위해 3DPW를 사용하지 않고 훈련한 버전입니다.&lt;/p&gt;
+
+&lt;p&gt;    본 논문에서 저자는 훈련 시 3DPW를 사용하는 것이 in-the-wild performance를 증가시킬 것이라고 주장하였는데, 해당 table을 보시면 실제로 3DPW를 사용하여 추가 훈련을 하였을 때 performance가 더 좋아지는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/ef67e9fa-38fa-4225-b0d5-5ca752951952&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-3-accel-loss&quot;&gt;4-3. Accel loss&lt;/h2&gt;
+
+&lt;p&gt;    그런데 frame간 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;smoothness&lt;/code&gt;는 VIBE보다 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;temporal HMR&lt;/code&gt;이 더 높은 것을 확인할 수 있습니다. 저자는 이에 대해서 temporal HMR이 더 공격적인 smoothing 전략을 사용하였고, 이러한 smoothness와 accuracy와는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trade-off&lt;/code&gt;관계가 존재한다고 설명하였습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/e70a0008-af99-4987-a5b6-569feb5a8911&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;    다음은 Temporal HMR과 VIBE의 performance를 비교한 figure인데, 위쪽(VIBE)에 비해 아래쪽(Temporal-HMR)의 performance가 더 떨어지는 것을 확인할 수 있습니다. 이를 바탕으로 Temporal-HMR은 over-smoothing 되었으며, VIBE는 적절한 균형점을 찾았다고 해석할 수 있습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/62b8adb6-1a28-40a3-bf50-58c3658c5355&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-4-ablation-table&quot;&gt;4-4. Ablation table&lt;/h2&gt;
+
+&lt;p&gt;    다음은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;self attention&lt;/code&gt;에 대한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ablation table&lt;/code&gt;입니다. 그냥 concat을 해주는 것보다 frame간 attention을 구해주는 것이 더 좋은 performance를 보이는 것을 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;https://github.com/On-JungWoan/paper-review/assets/84084372/ca9cd285-807e-4ead-935b-5d8a7bdde3ca&quot; style=&quot;border: solid black 1px&quot; /&gt;&lt;/p&gt;</content><author><name>온정완</name><email>slalfpdl16@naver.com</email></author><category term="DL_paper" /><category term="DL" /><category term="computer_vision" /><summary type="html">VIBE: Video Inference for Human Body Pose and Shape Estimation</summary></entry></feed>
