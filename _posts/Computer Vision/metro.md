@@ -98,3 +98,30 @@ but backbone에서 FC layer를 거치지 않았기 때문에 encoder로 들어�
 반면, original Transformer Encoder는 constant한 dimension을 가짐.
 따라서 Encoder layer를 여러개 쌓고 각 layer를 통과할 때 마다 linear layer를 거치게 함으로써 차원을 줄여나감.
 fig2와 같이 점점 줄여나가서 결국 3 dimension에 맞춤. -> FC Layer와 비슷한 역할을 한다고 생각하면 될듯
+
+== positional embeding 부분 내용 추가하기 ==
+
+## Masked Vertex Modeling (MVM)
+
+- Masked Language Modeling(MLM)
+  - input에 mask를 씌우고 input을 예측
+  - 이거에 관련된 예시 넣어주면 좋을 듯
+
+but 우리가 필요한 건 input에 mask를 씌우고 output 에측.
+따라서 저자는 MVM이라는 새로운 방법론을 제시.
+
+- MVM
+  - MLM과 동일하게 input에 mask를 씌움
+  - but MLM과는 다르게 input이 아니라 joint와 vertex들을 regress하도록 학습시킴
+  - mask된 쿼리에 대한 output을 predict하기 위해 모델은 다른 연관된 쿼리를 사용하는 법을 학습하게 됨.
+  - 그리고 이는 occlusion 상황과 매우 유사하기 때문에 모델이 해당 challenge를 극복하는 데 도움을 줌
+  - 결과적으로 MVM은, transformer가 관련성이 있는 vertex혹은 joint끼리 attention연산을 할 수 있도록 도와줌.
+  - 이 때, attention 연산은 위에서 언급한 바와 같이 거리나 mesh topology에 관계없이 이루어지며, 이는 model이 더 나은 performance를 갖도록 합니다.
+
+## Traininig
+
+loss 설명
+
+## Implementation Details
+
+upscaling 설명
