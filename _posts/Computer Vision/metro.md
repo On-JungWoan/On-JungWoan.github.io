@@ -76,3 +76,25 @@ but 복잡한 모션과 occlusion등은 여전히 challenging한 문제
 ## architecture
 
 input으로 224x224의 single 이미지를 받아, body joint와 mesh vertice를 동시에 predict합니다.
+제안된 프레임워크는 CNN과 Multi-Layer Transformer Encoder로 이루어져 있음.
+CNN : input image로부터 feature map 추출
+Multi-Layer Transformer Encoder : input으로 feature vector를 받아 joint와 vertex의 3D 좌표를 병렬적으로 출력함
+
+## Convolutional Neural Network
+
+ImageNet으로 pre-train된 모델 사용
+output feature map의 dimension은 일반적으로 사용하는 2048
+but, 특이하게 FC Layer를 거치지 않고 마지막 hidden layer에서 feature vector를 추출
+그래서 output 보면 batchx2048x7x7
+why? resolution이 높은 feature vector를 사용하는 것이 transformer의 performance를 높이는 데 도움을 줌.
+
+따라서 HRNet과 같이 feature map의 resolution이 높은 large scale CNN을 사용해서 transformer의 performance를 더 끌어올렸다고 합니다.
+이에 대한 ablation study는 뒤에서 더 자세히 다루도록 하겠습니다.
+
+## Multi-Layer Transformer Encoder with Progressive Dimensionality Reduction
+
+METRO의 최종 output은 3D 좌표이기 때문에 channel을 3으로 맞추어 줘야 함.
+but backbone에서 FC layer를 거치지 않았기 때문에 encoder로 들어오는 차원은 2048임.
+반면, original Transformer Encoder는 constant한 dimension을 가짐.
+따라서 Encoder layer를 여러개 쌓고 각 layer를 통과할 때 마다 linear layer를 거치게 함으로써 차원을 줄여나감.
+fig2와 같이 점점 줄여나가서 결국 3 dimension에 맞춤. -> FC Layer와 비슷한 역할을 한다고 생각하면 될듯
