@@ -9,7 +9,7 @@
   description: | # this will include new lines to allow paragraphs
     * <a href="https://docs.google.com/document/d/1fK2cAnHG0R7F2o_4SfEdJE6wLyNQb-a5HzPtKU9r39s/edit#heading=h.y0gmlmr409li" target="blank_">[link] Computer Vision study (Dailiy Report)</a>
     * 2023 LG 산학협력프로젝트 (Convert DN-DETR to ONNX to TF to TFLite)
-    * 현재 인턴 진행 중
+    * Continual Learning 관련 코드 구현
 
 - layout: left
   company: 유클리드소프트
