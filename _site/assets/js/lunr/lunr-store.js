@@ -1,7 +1,7 @@
 var store = [{
-        "title": "VIBE(2020) 논문 리뷰 (작성중)",
-        "excerpt":"발표자료 : 발표영상 : 논문링크 : VIBE: Video Inference for Human Body Pose and Shape Estimation Implementation : https://github.com/mkocabas/VIBE 1. Backgorund 1-1. SMPL 1-2. GAN 1-3. HMR 1-4. Temporal HMR 2. VIBE 2-0. Introduction 2-1. Architecture     VIBE의 전체적인 모델 아키텍쳐는 HMR과 크게 다르지 않습니다. 우선, 길이 T의 input video V가...","categories": ["DL_paper"],
+        "title": "Mesh Transformer(2021) 논문 리뷰",
+        "excerpt":"발표자료 : https://docs.google.com/presentation/d/1B-cKihk0mUjyKCfY2aYUlEaXZsNPtFs0/edit?usp=sharing&amp;ouid=116507288704586191771&amp;rtpof=true&amp;sd=true 발표영상 : Mesh transformer 리뷰 논문링크 : METRO: End-to-End Human Pose and Mesh Reconstruction with Transformers Implementation : https://github.com/microsoft/MeshTransformer 0. Abstract     먼저 METRO의 전반적인 내용에 대해 간략하게 소개하고 넘어가도록 하겠습니다. METRO는 single 이미지로부터 3D human pose와 mesh vertices를 reconstruction하는 method입니다. vertex-vertex, 또는 vertex-joint간의 관계를 학습하기 위해 transformer...","categories": ["DL_paper"],
         "tags": ["DL","computer_vision"],
-        "url": "/dl_paper/vibe/",
+        "url": "/dl_paper/metro/",
         "teaser": null
       }]
