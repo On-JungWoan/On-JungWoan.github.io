@@ -1,0 +1,1563 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Convert DETR-like models to TFLite - 정완이의 개발 일기장</title>
+<meta name="description" content="DETR-like models for edge device">
+
+
+  <meta name="author" content="온정완">
+  
+  <meta property="article:author" content="온정완">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정완이의 개발 일기장">
+<meta property="og:title" content="Convert DETR-like models to TFLite">
+<meta property="og:url" content="http://localhost:4000/dl_optim/ddetr_to_tflite/">
+
+
+  <meta property="og:description" content="DETR-like models for edge device">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-04-18T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2023-04-18T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl_optim/ddetr_to_tflite/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "온정완",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정완이의 개발 일기장 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<!-- google adsense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6467001070059486"
+     crossorigin="anonymous"></script>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		window.FontAwesomeKitConfig = {"asyncLoading":{"enabled":true},"autoA11y":{"enabled":true},"baseUrl":"https://ka-f.fontawesome.com","baseUrlKit":"https://kit.fontawesome.com","detectConflictsUntil":null,"iconUploads":{},"id":91177765,"license":"free","method":"css","minify":{"enabled":true},"token":"a076d05399","v4FontFaceShim":{"enabled":false},"v4shim":{"enabled":false},"v5FontFaceShim":{"enabled":false},"version":"5.15.4"};
+		!function(t){"function"==typeof define&&define.amd?define("kit-loader",t):t()}((function(){"use strict";function t(e){return(t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(e)}function e(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function n(t,e){var n=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter((function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),n.push.apply(n,o)}return n}function o(t){for(var o=1;o<arguments.length;o++){var r=null!=arguments[o]?arguments[o]:{};o%2?n(Object(r),!0).forEach((function(n){e(t,n,r[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(r)):n(Object(r)).forEach((function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(r,e))}))}return t}function r(t,e){return function(t){if(Array.isArray(t))return t}(t)||function(t,e){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(t)))return;var n=[],o=!0,r=!1,i=void 0;try{for(var c,a=t[Symbol.iterator]();!(o=(c=a.next()).done)&&(n.push(c.value),!e||n.length!==e);o=!0);}catch(t){r=!0,i=t}finally{try{o||null==a.return||a.return()}finally{if(r)throw i}}return n}(t,e)||function(t,e){if(!t)return;if("string"==typeof t)return i(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Array.from(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return i(t,e)}(t,e)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,o=new Array(e);n<e;n++)o[n]=t[n];return o}function c(t,e){var n=e&&e.addOn||"",o=e&&e.baseFilename||t.license+n,r=e&&e.minify?".min":"",i=e&&e.fileSuffix||t.method,c=e&&e.subdir||t.method;return t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/"+c+"/"+o+r+"."+i}function a(t){return t.baseUrlKit+"/"+t.token+"/"+t.id+"/kit-upload.css"}function u(t,e){var n=e||["fa"],o="."+Array.prototype.join.call(n,",."),r=t.querySelectorAll(o);Array.prototype.forEach.call(r,(function(e){var n=e.getAttribute("title");e.setAttribute("aria-hidden","true");var o=!e.nextElementSibling||!e.nextElementSibling.classList.contains("sr-only");if(n&&o){var r=t.createElement("span");r.innerHTML=n,r.classList.add("sr-only"),e.parentNode.insertBefore(r,e.nextSibling)}}))}var f,s=function(){},d="undefined"!=typeof global&&void 0!==global.process&&"function"==typeof global.process.emit,l="undefined"==typeof setImmediate?setTimeout:setImmediate,h=[];function m(){for(var t=0;t<h.length;t++)h[t][0](h[t][1]);h=[],f=!1}function p(t,e){h.push([t,e]),f||(f=!0,l(m,0))}function v(t){var e=t.owner,n=e._state,o=e._data,r=t[n],i=t.then;if("function"==typeof r){n="fulfilled";try{o=r(o)}catch(t){w(i,t)}}y(i,o)||("fulfilled"===n&&b(i,o),"rejected"===n&&w(i,o))}function y(e,n){var o;try{if(e===n)throw new TypeError("A promises callback cannot return that same promise.");if(n&&("function"==typeof n||"object"===t(n))){var r=n.then;if("function"==typeof r)return r.call(n,(function(t){o||(o=!0,n===t?g(e,t):b(e,t))}),(function(t){o||(o=!0,w(e,t))})),!0}}catch(t){return o||w(e,t),!0}return!1}function b(t,e){t!==e&&y(t,e)||g(t,e)}function g(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(S,t))}function w(t,e){"pending"===t._state&&(t._state="settled",t._data=e,p(O,t))}function A(t){t._then=t._then.forEach(v)}function S(t){t._state="fulfilled",A(t)}function O(t){t._state="rejected",A(t),!t._handled&&d&&global.process.emit("unhandledRejection",t._data,t)}function j(t){global.process.emit("rejectionHandled",t)}function E(t){if("function"!=typeof t)throw new TypeError("Promise resolver "+t+" is not a function");if(this instanceof E==!1)throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");this._then=[],function(t,e){function n(t){w(e,t)}try{t((function(t){b(e,t)}),n)}catch(t){n(t)}}(t,this)}E.prototype={constructor:E,_state:"pending",_then:null,_data:void 0,_handled:!1,then:function(t,e){var n={owner:this,then:new this.constructor(s),fulfilled:t,rejected:e};return!e&&!t||this._handled||(this._handled=!0,"rejected"===this._state&&d&&p(j,this)),"fulfilled"===this._state||"rejected"===this._state?p(v,n):this._then.push(n),n.then},catch:function(t){return this.then(null,t)}},E.all=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.all().");return new E((function(e,n){var o=[],r=0;function i(t){return r++,function(n){o[t]=n,--r||e(o)}}for(var c,a=0;a<t.length;a++)(c=t[a])&&"function"==typeof c.then?c.then(i(a),n):o[a]=c;r||e(o)}))},E.race=function(t){if(!Array.isArray(t))throw new TypeError("You must pass an array to Promise.race().");return new E((function(e,n){for(var o,r=0;r<t.length;r++)(o=t[r])&&"function"==typeof o.then?o.then(e,n):e(o)}))},E.resolve=function(e){return e&&"object"===t(e)&&e.constructor===E?e:new E((function(t){t(e)}))},E.reject=function(t){return new E((function(e,n){n(t)}))};var _="function"==typeof Promise?Promise:E;function F(t,e){var n=e.fetch,o=e.XMLHttpRequest,r=e.token,i=t;return"URLSearchParams"in window?(i=new URL(t)).searchParams.set("token",r):i=i+"?token="+encodeURIComponent(r),i=i.toString(),new _((function(t,e){if("function"==typeof n)n(i,{mode:"cors",cache:"default"}).then((function(t){if(t.ok)return t.text();throw new Error("")})).then((function(e){t(e)})).catch(e);else if("function"==typeof o){var r=new o;r.addEventListener("loadend",(function(){this.responseText?t(this.responseText):e(new Error(""))}));["abort","error","timeout"].map((function(t){r.addEventListener(t,(function(){e(new Error(""))}))})),r.open("GET",i),r.send()}else{e(new Error(""))}}))}function P(t,e,n){var o=t;return[[/(url\("?)\.\.\/\.\.\/\.\./g,function(t,n){return"".concat(n).concat(e)}],[/(url\("?)\.\.\/webfonts/g,function(t,o){return"".concat(o).concat(e,"/releases/v").concat(n,"/webfonts")}],[/(url\("?)https:\/\/kit-free([^.])*\.fontawesome\.com/g,function(t,n){return"".concat(n).concat(e)}]].forEach((function(t){var e=r(t,2),n=e[0],i=e[1];o=o.replace(n,i)})),o}function C(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:function(){},r=e.document||r,i=u.bind(u,r,["fa","fab","fas","far","fal","fad","fak"]),f=Object.keys(t.iconUploads||{}).length>0;t.autoA11y.enabled&&n(i);var s=[{id:"fa-main",addOn:void 0}];t.v4shim&&t.v4shim.enabled&&s.push({id:"fa-v4-shims",addOn:"-v4-shims"}),t.v5FontFaceShim&&t.v5FontFaceShim.enabled&&s.push({id:"fa-v5-font-face",addOn:"-v5-font-face"}),t.v4FontFaceShim&&t.v4FontFaceShim.enabled&&s.push({id:"fa-v4-font-face",addOn:"-v4-font-face"}),f&&s.push({id:"fa-kit-upload",customCss:!0});var d=s.map((function(n){return new _((function(r,i){F(n.customCss?a(t):c(t,{addOn:n.addOn,minify:t.minify.enabled}),e).then((function(i){r(U(i,o(o({},e),{},{baseUrl:t.baseUrl,version:t.version,id:n.id,contentFilter:function(t,e){return P(t,e.baseUrl,e.version)}})))})).catch(i)}))}));return _.all(d)}function U(t,e){var n=e.contentFilter||function(t,e){return t},o=document.createElement("style"),r=document.createTextNode(n(t,e));return o.appendChild(r),o.media="all",e.id&&o.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&o.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),o}function k(t,e){e.autoA11y=t.autoA11y.enabled,"pro"===t.license&&(e.autoFetchSvg=!0,e.fetchSvgFrom=t.baseUrl+"/releases/"+("latest"===t.version?"latest":"v".concat(t.version))+"/svgs",e.fetchUploadedSvgFrom=t.uploadsUrl);var n=[];return t.v4shim.enabled&&n.push(new _((function(n,r){F(c(t,{addOn:"-v4-shims",minify:t.minify.enabled}),e).then((function(t){n(I(t,o(o({},e),{},{id:"fa-v4-shims"})))})).catch(r)}))),n.push(new _((function(n,r){F(c(t,{minify:t.minify.enabled}),e).then((function(t){var r=I(t,o(o({},e),{},{id:"fa-main"}));n(function(t,e){var n=e&&void 0!==e.autoFetchSvg?e.autoFetchSvg:void 0,o=e&&void 0!==e.autoA11y?e.autoA11y:void 0;void 0!==o&&t.setAttribute("data-auto-a11y",o?"true":"false");n&&(t.setAttributeNode(document.createAttribute("data-auto-fetch-svg")),t.setAttribute("data-fetch-svg-from",e.fetchSvgFrom),t.setAttribute("data-fetch-uploaded-svg-from",e.fetchUploadedSvgFrom));return t}(r,e))})).catch(r)}))),_.all(n)}function I(t,e){var n=document.createElement("SCRIPT"),o=document.createTextNode(t);return n.appendChild(o),n.referrerPolicy="strict-origin",e.id&&n.setAttribute("id",e.id),e&&e.detectingConflicts&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n}function L(t){var e,n=[],o=document,r=o.documentElement.doScroll,i=(r?/^loaded|^c/:/^loaded|^i|^c/).test(o.readyState);i||o.addEventListener("DOMContentLoaded",e=function(){for(o.removeEventListener("DOMContentLoaded",e),i=1;e=n.shift();)e()}),i?setTimeout(t,0):n.push(t)}function T(t){"undefined"!=typeof MutationObserver&&new MutationObserver(t).observe(document,{childList:!0,subtree:!0})}try{if(window.FontAwesomeKitConfig){var x=window.FontAwesomeKitConfig,M={detectingConflicts:x.detectConflictsUntil&&new Date<=new Date(x.detectConflictsUntil),detectionIgnoreAttr:"data-fa-detection-ignore",fetch:window.fetch,token:x.token,XMLHttpRequest:window.XMLHttpRequest,document:document},D=document.currentScript,N=D?D.parentElement:document.head;(function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return"js"===t.method?k(t,e):"css"===t.method?C(t,e,(function(t){L(t),T(t)})):void 0})(x,M).then((function(t){t.map((function(t){try{N.insertBefore(t,D?D.nextSibling:null)}catch(e){N.appendChild(t)}})),M.detectingConflicts&&D&&L((function(){D.setAttributeNode(document.createAttribute(M.detectionIgnoreAttr));var t=function(t,e){var n=document.createElement("script");return e&&e.detectionIgnoreAttr&&n.setAttributeNode(document.createAttribute(e.detectionIgnoreAttr)),n.src=c(t,{baseFilename:"conflict-detection",fileSuffix:"js",subdir:"js",minify:t.minify.enabled}),n}(x,M);document.body.appendChild(t)}))})).catch((function(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}))}}catch(t){console.error("".concat("Font Awesome Kit:"," ").concat(t))}}));	
+	</script>
+</head>
+<body>
+
+
+	
+
+
+</body>
+</html>
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px">
+        </a> -->
+          정완이의 개발 일기장
+          
+        </a>
+
+
+
+        <ul class="visible-links">
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">COMPUTER VISION  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_paper">    논문 리뷰</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_study">    스터디</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/DL_optim">    모델 최적화</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                   <li class="masthead__menu-item">
+                       <a href="/TIL/">TIL</a>
+                   </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROJECTS  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">대외활동</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Internship">    2022 하반기 ICT 인턴십</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">프로젝트</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/bbeojung/bj_README/">    뻐정 : 버스정보종합시스템</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/cctv">    실시간 쓰레기 무단투기 탐지</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/canvas">    canvas 개발</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/toy_project">    Toy Project</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STUDY NOTE  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <a class="dropdown-title">PLATFORM DEV.</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/web">    Web Dev</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/Blog">    Jekyll</a>
+                                    <!-- </li> -->
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/tools">    Tools</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                              
+                                <a class="dropdown-title">ML</a>
+
+                                
+                                    <!-- <li> -->
+                                    <a class = "dropdown-item" href="/categories/ML">    Machine Learning</a>
+                                    <!-- </li> -->
+                                
+
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+               
+               
+                    <li class="dropdown ">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ETC  <i class="fa fa-caret-down fa-sm" aria-hidden="true"></i><span class="caret"></span></a>
+
+                        <ul class="dropdown-content" >
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/python">    Python</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/harmonics">    화성학</a>
+                                <!-- </li> -->
+                              
+                            
+                              
+                                <!-- <li> -->
+                                <a class = "dropdown-item" href="/categories/etc">    etc</a>
+                                <!-- </li> -->
+                              
+                            
+                        </ul>
+                    </li>
+               
+           
+       </ul>
+
+       
+
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+  <!--변수 선언부분-->
+  
+  
+  
+  <!--커스텀 변수-->
+  
+  
+  
+
+
+  <div class="page__hero--overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/empty-header.jpg');">
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Convert DETR-like models to TFLite
+
+        
+      </h1>
+      <p class="page__lead">DETR-like models for edge device
+</p>
+      
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+
+      <p>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/crk_avatar.png" alt="온정완" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">온정완</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>AI/플랫폼 개발을 공부합니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">전남대학교 학부 재학 중</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:slalfpdl16@naver.com" rel="me" class="u-email">
+            <meta itemprop="email" content="slalfpdl16@naver.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+ 
+            <br>
+ 
+            📂 <span style="">전체 글 수</style> <span style="">111</style> <span style="">개</style> 
+      </li>
+      <li>
+
+            <!--span 태그로 카테고리들을 크게 분류-->
+            <span class="nav__sub-title">Computer Vision</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_study" class="">스터디 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_optim" class="">모델 최적화 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/DL_paper" class="">논문 리뷰 (5)</a></li>
+                    
+                
+            </ul>    
+           
+
+            <span class="nav__sub-title">Study Note</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/web" class="">Web Dev (9)</a></li>
+                    
+                
+                    
+                
+            </ul>             
+            <ul>
+                
+                    
+                        <li><a href="/categories/Blog" class="">Jekyll Dev (16)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>                                        
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/ML" class="">Machine Learning (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/tools" class="">ETC Tools (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>    
+            
+            
+
+        <span class="nav__sub-title">Projects</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/bbeojung" class="">뻐정 (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul> 
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/cctv" class="">실시간 쓰레기 무단투기 탐지 (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/canvas" class="">canvas 개발 (4)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>                      
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/toy_project" class="">Toy Project (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+   
+
+
+        <span class="nav__sub-title">대외활동</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/Internship" class="">2022 하반기 ICT 인턴십 (10)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>            
+            
+
+            
+        <span class="nav__sub-title">etc</span>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/python" class="">Python 개념 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                                            
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/harmonics" class="">화성학 (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>       
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/etc" class="">etc (6)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>                     
+      </li>
+  </ul>
+</nav>
+
+
+  
+
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Convert DETR-like models to TFLite">
+    <meta itemprop="description" content="DETR-like models for edge device">
+    <meta itemprop="datePublished" content="2023-04-18T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2023-04-18T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#1-torch-to-onnx">1. Torch to ONNX</a><ul><li><a href="#1-1-onnx-open-neural-network-exchange">1-1. ONNX: Open Neural Network Exchange</a></li><li><a href="#1-2-변환-과정">1-2. 변환 과정</a></li><li><a href="#1-3-사용-버전">1-3. 사용 버전</a></li></ul></li><li><a href="#2-onnx-to-tflite">2. ONNX to TFLite</a><ul><li><a href="#2-1-변환-라이브러리--onnx2tf">2-1. 변환 라이브러리 : onnx2tf</a></li><li><a href="#2-2-모델-최적화--onnx-simplifier">2-2. 모델 최적화 : ONNX simplifier</a></li><li><a href="#2-3-연산자-변환">2-3. 연산자 변환</a></li><li><a href="#2-4-포맷-변환">2-4. 포맷 변환</a></li><li><a href="#2-5-검증">2-5. 검증</a></li></ul></li><li><a href="#3-tflite">3. TFLite</a><ul><li><a href="#3-1-deformable-detr--dn-detr">3-1. Deformable DETR &amp; DN DETR</a></li><li><a href="#3-2-inference-time">3-2. Inference time</a></li><li><a href="#3-3-input-size">3-3. Input size</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><img src="https://user-images.githubusercontent.com/84084372/232539845-4c3c2d56-4c80-4fff-8037-31ced3fedaa3.png" alt="image" /></p>
+
+<p>최근 발표된 SOTA 모델의 경우, 대부분 그 크기가 매우 크고 무거움(특히 비전분야). 이러한 pre-trained 모델들을 개발 환경에서 사용할 때는 대부분 큰 문제가 되지는 않는다. 하지만 Android나 임베디드 보드와 같은 엣지 디바이스에서는 이러한 Full-size 모델을 사용하는 데 한계가 존재함. 따라서 torch 모델을 엣지 디바이스에서 사용하기 위해서는, 이를 최적화 된 포맷으로 변환해주는 작업이 필요함. 해당 포스팅에서 사용할 torch 모델은 요즘 핫한 Transformer based의 DETR계열 모델이며, 이 모델을 엣지 디바이스에 최적화가 아주 잘 되어있는 <code class="language-plaintext highlighter-rouge">TFLite</code>로 변환하는 과정에 대해서 소개하도록 하겠음.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="1-torch-to-onnx">1. Torch to ONNX</h1>
+
+<h2 id="1-1-onnx-open-neural-network-exchange">1-1. ONNX: Open Neural Network Exchange</h2>
+
+<p>Torch를 TFLite로 변환하기 위해서 Torch를 ONNX라는 중간 포맷으로 변환하고, 변환된 ONNX를 다시 TFLite로 변환하는 과정을 거치게 됨. 여기서, ONNX란 Open Neural Network Exchange의 줄임말로써, 서로 다른 DNN 플랫폼에서 작성된 모델을 호환하여 사용할 수 있도록 도와주는 공유 플랫폼임.</p>
+
+<p><br /></p>
+
+<h2 id="1-2-변환-과정">1-2. 변환 과정</h2>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/865f0fd9-9e7c-4e89-a0c6-2bb697d18aa3" alt="image" /></p>
+
+<p>먼저, torch를 onnx로 변환하기 위해서 torch.onnx.export() 메서드를 사용함. 해당 메서드는 model과 dummy input을 인자로 받아, model에 dummy input을 흘려 보내줌. 입력된 dummy input은 모델을 타고 흐르면서 1차적으로 ONNX IR(Intermediate Representation)을 생성함. 그리고 여기서 한번 더 ONNX IR에 대해 graph optimization을 거친 뒤 최종적으로 ONNX 그래프 형태로 model을 저장하게 됨.</p>
+
+<p><br /></p>
+
+<h2 id="1-3-사용-버전">1-3. 사용 버전</h2>
+
+<p>변환 시 사용한 ONNX의 버전은 1.11.0이며, 오프셋 버전은 16을 사용함.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">ONNX version</th>
+      <th style="text-align: center">IR version</th>
+      <th style="text-align: center">Opset version ai.onnx</th>
+      <th style="text-align: center">Opset version ai.onnx.ml</th>
+      <th style="text-align: center">Opset version ai.onnx.training</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1.11.0</td>
+      <td style="text-align: center">8</td>
+      <td style="text-align: center">16</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+<br /></p>
+
+<h1 id="2-onnx-to-tflite">2. ONNX to TFLite</h1>
+
+<h2 id="2-1-변환-라이브러리--onnx2tf">2-1. 변환 라이브러리 : onnx2tf</h2>
+
+<p>변환된 ONNX 모델을 TFLite로 변환하기 위해서, ONNX와 TFLite의 데이터 포맷을 맞추어주는 작업이 필요함. 변환된 ONNX의 데이터 포맷은 NCHW 형식인 반면, TFLite에서 지원하는 데이터 포맷은 NHWC 형식임. 이러한 포맷의 차이로 인해 ONNX에서는 채널로 인식되던 차원이 TFLite에서는 H로 인식되는 등 포맷 문제가 발생할 수 있음. 따라서 레이어마다 데이터 포맷이 맞지 않는 부분이 있는지 확인하고, 맞지 않는 부분은 직접 포맷을 변경해주어야 하는 작업이 필요함. 해당 작업은 많은 시간을 필요로 하기 때문에, 이러한 포맷 차이를 해결하는 데 특화되어 있는 onnx2tf라는 변환 라이브러리를 사용.</p>
+
+<p><br /></p>
+
+<h2 id="2-2-모델-최적화--onnx-simplifier">2-2. 모델 최적화 : ONNX simplifier</h2>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/5aa034a3-3982-4728-ad0b-30896ab38ec1" alt="image" /></p>
+
+<p>onnx2tf의 모델 변환 과정은 크게 모델 최적화, 연산자 변환, 포맷 변환으로 나누어짐. 먼저 ONNX 모델이 input으로 들어오게 되면, 해당 모델을 ONNX simplifier를 사용하여 변환에 편리한 형태로 최적화해 줌. 이 때, 최적화 과정에는 불필요한 연산 제거 및 constant folding 등이 포함됨. 이를 통해 불필요한 연산자의 변환을 생략함으로써 변환 속도를 향상시키고, 변환과정에서 발생할 수 있는 오류의 발생확률을 줄일 수 있음.</p>
+
+<p><br /></p>
+
+<h2 id="2-3-연산자-변환">2-3. 연산자 변환</h2>
+
+<p>모델의 최적화가 끝나면, ONNX 연산자를 TFLite 연산자로 변경해 주는 과정을 거침. 각 ONNX 연산자마다 대응하는 TFLite 연산자를 미리 정의해두고, 모델의 모든 레이어를 순회하며 미리 정의해 둔 대응관계에 맞게 연산자를 치환함. 예를 들어, ONNX의 Add 연산자는 TFLite의 tf.add로 변환되도록 변환 관계를 정의하였다면, 해당 관계에 의해 모든 Add 연산자는 tf.add 연산자로 치환됨. 그러나 위와 같이 일대일 대응이 되는 TFLite 연산자가 존재하지 않을 경우 치환할 연산자 외에도 추가적인 변환과정을 같이 정의해야 함. 가령, 나누기 연산의 경우 ONNX에서는 지원하는 연산자이지만, TFLite에서는 지원하지 않는 연산자임. 이 경우, 나누는 수에 역수를 취해준 뒤 나눗셈 연산을 곱셈 연산으로 바꾸어주는 작업이 필요함. 최종적으로, 해당 과정은 ONNX의 나눗셈 연산과 일대일 대응되어 치환됨.</p>
+
+<p><br /></p>
+
+<h2 id="2-4-포맷-변환">2-4. 포맷 변환</h2>
+
+<p><code class="language-plaintext highlighter-rouge">2-1.</code>에서 언급한 바와 같이, ONNX(pytorch)와 TFLite의 입력 포맷이 서로 달라 연산자가 입력 차원을 오인식하는 경우가 발생할 수 있음. 이러한 차원의 불일치를 해결하기 위해 모든 연산자에 대해서 일치 여부를 확인해줘야 하지만, onnx2tf는 불일치가 일어나는 연산자를 자동으로 찾아서 출력해주는 기능을 제공함. 따라서 출력된 연산자의 입력 차원에 대해서 transpose를 통해 TFLite에 맞는 입력 포맷으로 변경해 줌.</p>
+
+<p><br /></p>
+
+<h2 id="2-5-검증">2-5. 검증</h2>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/4b1827e9-8a7b-4757-b6c5-f3b9f0e28cf8" alt="image" /></p>
+
+<p>ONNX의 모든 연산자를 TFLite 연산자로 치환한 뒤, 각 연산자에 대한 검증 과정을 수행함. 검증을 위해 모델의 입력 크기와 동일한 더미 데이터를 생성하고, 변환된 TFLite 모델과 원본 ONNX 모델에 각각 넣어줌. 이후 치환된 연산자와 기존 연산자간의 오차를 측정함. 이 때, 측정된 오차가 미리 지정한 범위 안에 포함되면 연산자의 변환이 완료되며, 그렇지 않은 경우 해당 연산자부터 변환을 다시 시작함. 오차는 np.allclose()를 사용하여 측정되며, 허용 오차의 결정식은 다음과 같음. 이 때, atol과 rtol은 사용자가 지정함.</p>
+
+\[|a-b| &lt;= ( atol + rtol * |b| )\]
+
+<p><br />
+<br /></p>
+
+<h1 id="3-tflite">3. TFLite</h1>
+
+<h2 id="3-1-deformable-detr--dn-detr">3-1. Deformable DETR &amp; DN DETR</h2>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/71d0c36d-f4ff-4a22-98ba-455e1dfcc066" alt="image" /></p>
+
+<p>본인이 TFLite로 변환에 성공한 모델에는 Deformable DETR과 DN DETR이 있음. Deformable DETR의 경우, TFLite로 변환시 발생하는 현저한 추론 속도 저하가 있음. 속도 저하의 원인은 Deformable attention 과정에서 사용되는 Grid Sample 연산자인데, 해당 연산자는 일대일 대응이 되는 TFLite의 연산자가 없음. 따라서 <code class="language-plaintext highlighter-rouge">2-3</code>에서 언급한 바와 같이 일련의 추가적인 변환과정을 거쳐야 하는데, 이 과정에서 추론 속도 저하가 발생함. 따라서 실제 inference시에는 Deformable attention을 사용하지 않는 DN-DETR을 사용하는 게 좋음.</p>
+
+<p><br /></p>
+
+<h2 id="3-2-inference-time">3-2. Inference time</h2>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/b2961f66-b99e-40f6-a6f8-73c2c18ec78d" alt="image" /></p>
+
+<p>파란색 그래프는 cpu 환경에서 측정한 이미지 한 장당 추론시간이며, 빨간색 그래프는 TFLite에서 측정한 추론시간 그래프임. x축은 각각 이미지 크기를, y축은 초단위 추론시간을 의미함. Deformable DETR(좌측 figure)의 경우 Grid sample 연산자의 영향으로 인해, TFLite로 변환 시 급격한 추론 속도의 저하를 보임. 반면 DN-DETR(우측 figure)의 경우 TFLite로 변환하여도 속도 저하가 거의 나타나지 않고 있음.</p>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/29aea33b-eb7a-435e-ac4e-925b40c5e3df" alt="image" /></p>
+
+<p>TFLite에서 이미지 한 장을 추론하는 데 Deformable DETR은 평균 28.6초가 소요되었으며, DN DETR은 평균 1.5초가 소요됨.</p>
+
+<p><br /></p>
+
+<h2 id="3-3-input-size">3-3. Input size</h2>
+
+<p><img src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/f5e11e27-e659-4dab-9113-1f4fca39bce4" alt="image" /></p>
+
+<p>파란색 막대 그래프는 TFLite에서 측정한 이미지 한 장당 추론 시간을 의미하며, 빨간색 선 그래프는 mAP를 의미함. x축은 input size를 나타내며, 좌측 y축은 추론 시간, 우측 y축은 mAP를 나타냄. 위 그래프를 통해 input size(or 추론시간)와 mAP간에는 Trade-Off 관계가 존재함을 알 수 있음. 또한, Torch와 TFLite의 mAP가 매우 작은 오차범위(1e-4) 내에서 일치하고 있는 것을 확인함. 이를 통해 변환이 성공적으로 수행되었음을 확인할 수 있음.</p>
+
+        
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item p-category" rel="tag">computer_vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl-optim" class="page__taxonomy-item p-category" rel="tag">DL_optim</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Convert+DETR-like+models+to+TFLite%20http%3A%2F%2Flocalhost%3A4000%2Fdl_optim%2Fddetr_to_tflite%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl_optim%2Fddetr_to_tflite%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl_optim%2Fddetr_to_tflite%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/dl_paper/deform_detr/" class="pagination--pager" title="Deformable DETR(2021) 논문 리뷰
+">이전</a>
+    
+    
+      <a href="/dl_paper/vibe/" class="pagination--pager" title="VIBE(2020) 논문 리뷰
+">다음</a>
+    
+  </nav>
+ -->
+
+
+
+
+  
+  	
+  	
+  	
+  	
+  	
+
+
+  <nav class="pagination">
+    
+      <a href="/dl_optim/tflite/" class="pagination--pager"><span class="prev_next">이전 글  &nbsp</span>Covert onnx(NCHW) to tflite(NHWC)</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">가장 최근 글입니다</a>
+    
+  </nav>
+
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/metro/" rel="permalink">Mesh Transformer(2021) 논문 리뷰
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> July 18 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">METRO: End-to-End Human Pose and Mesh Reconstruction with Transformers
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/vibe/" rel="permalink">VIBE(2020) 논문 리뷰
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> May 16 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">VIBE: Video Inference for Human Body Pose and Shape Estimation
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_paper/deform_detr/" rel="permalink">Deformable DETR(2021) 논문 리뷰
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 24 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Deformable DETR: Deformable Transfomers for End-to-End Object Detection
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl_optim/tflite/" rel="permalink">Covert onnx(NCHW) to tflite(NHWC)
+</a>
+            
+    </h2>
+    <!--
+
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2023-04-18">April 18, 2023</time></p>
+-->
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> March 10 2023</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">ONNX와 TFlite간의 format 문제 해결
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/on-jungwoan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+          <li><a href="https://instagram.com/dog_woan" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 온정완. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'On-JungWoan/blog_comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('label', 'blog-comment')
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+<!--  -->
+
+  
+
+
+
+
+<script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+});
+</script>
+
+  </body>
+</html>
