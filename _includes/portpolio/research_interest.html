@@ -1,0 +1,17 @@
+{% capture research_interest %}
+* 3D Pose Estimation/Mesh Reconstruction, Action Recognition and Object Detection
+{% endcapture %}
+
+<div class="container projects-container">
+  <h3>{{ site.projects_title | default: "Research Interest" }}</h3>
+
+    <hr>
+
+    <div class="row clearfix layout layout-top-middle">
+        <div class="col-xs-12 col-print-12"> 
+          {{ research_interest | strip | markdownify }}
+        </div>
+    </div>
+
+    <hr>
+</div>

@@ -1,17 +1,13 @@
 - layout: left
-  name: Award
+  name: International
   description: | # this will include new lines to allow paragraphs
+    * <a href="https://drive.google.com/file/d/1BZa2I6DesKmp2m7tVDuoE1RNLZs4te6T/view?usp=sharing" target="blank_">3rd place at 2023 ICCV hand challenge (Consistent Motion Reconstruction)</a>
+
+- layout: left
+  name: Domestic
+  description: | # this will include new lines to allow paragraphs
+    * 디지털 신기술을 활용한 지역 문제해결 아이디어 공모전 최우수상, 광주정보문화산업진흥원
     * [ABC Internship] ICT 학점연계 프로젝트 인턴십 우수 인턴상, (주)유클리드소프트 (Dec. 2022)
     * 2022 통계학과 빅데이터 경진대회 1등, Chonnam National University, Korea (Oct. 2022)
     * 2021 통계학과 빅데이터 경진대회 3등, Chonnam National University, Korea (Oct. 2021)
     * 2021 대학혁신선도사업 학습동아리 발표회 5등(JOLY), Chonnam National University, Korea (Oct. 2021)
-
-- layout: left
-  name: Scholarship
-  description: | # this will include new lines to allow paragraphs
-    * Received KW2,050,000 from Korea Student Aid Foundation, 2018-1
-    * Received KW2,050,000 from Korea Student Aid Foundation, 2018-2
-    * Received KW2,050,500 from Chonnam National University, 2019-1
-    * Received KW2,050,500 from Chonnam National University, 2021-2
-    * Received KW1,215,000 from Chonnam National University, 2022-1
-    * Received KW1,215,500 from Chonnam National University, 2022-2

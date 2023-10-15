@@ -1,3 +1,12 @@
+{% capture fish %}
+* **Development of Driving Autosteering Algorithm and Module** through Vision par
+{% endcapture %}
+
+{% capture lg %}
+* **Conversion from pytorch model to tflite** for edge device
+* Development of **Object Detection** algorithm
+{% endcapture %}
+
 {% capture prj_description %}
 * Real-time obj detection을 통한 정류장 인원 파악
 * TensorRT/CUDA STREAM를 이용한 SSD Net 최적화 (Inference Time 24배 개선)
@@ -11,6 +20,29 @@
   <hr>
 
   <div class="row clearfix layout layout-left">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
+      <h4>해양수산부</h4>
+      <p style="padding-top:10px">Mar. 2023 - present</p>
+    </div>
+    <div class="col-xs-12 col-print-12"> 
+      <p class="quote-left">Development of Vision Recognition Module for ARTG Control</p>
+      {{ fish | strip | markdownify }} 
+    </div>
+  </div>
+
+
+  <div class="row clearfix layout layout-left">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
+      <h4>LG Electronics</h4>
+      <p style="padding-top:10px">Aug. 2022 ~ Aug. 2023</p>
+    </div>
+    <div class="col-xs-12 col-print-12"> 
+      <p class="quote-left">Expanding Data Coverage through Incremental Learning and Development Integrated Domain Recognition Systems</p>
+      {{ lg | strip | markdownify }} 
+    </div>
+  </div>
+
+  <div class="row clearfix layout layout-left">
       <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
         <h4>뻐정</h4>
         <p class="link"><a href="https://github.com/On-JungWoan/Bbeojung.kr#readme" target="_blank">https://github.com/Bbeojung</a></p>
@@ -21,7 +53,7 @@
         <p class="quote-left">Object Detection, ML을 활용한 버스 혼잡도 예측 모델 및 플랫폼 개발</p>
         {{ prj_description | strip | markdownify }} 
       </div>
-  </div>  
+  </div>
 
   <hr>
 </div>
