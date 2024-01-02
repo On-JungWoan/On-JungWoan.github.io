@@ -62,7 +62,9 @@
   {% capture date %}{{page.date | remove: '-'}}{% endcapture %}
   {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
   {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}
-
+  {% if page.overlay_image %}
+    {% capture overlay_img_path %} {{ page.overlay_image }} {% endcapture %}
+  {% endif %}
 
   <div class="page__hero--overlay" style="background-image: {{ overlay_filter }}, url('{{ overlay_img_path }}');">
     <div class="wrapper">
