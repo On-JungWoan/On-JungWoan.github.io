@@ -7,3 +7,5 @@ gem "webrick", "~> 1.7"
 gem 'wdm', '>= 0.1.0'
 gem "liquid-c"
 gem "jekyll-include-cache"
+
+gem 'liquid', '~> 4.0', '>= 4.0.4'
