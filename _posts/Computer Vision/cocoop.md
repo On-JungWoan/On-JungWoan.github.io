@@ -1,0 +1,28 @@
+---
+title:  "CoCoOp(2022) 논문 리뷰"
+excerpt: "CoCoOp: Conditional Prompt Learning for Vision-Language Models"
+
+categories:
+  - DL_paper
+tags:
+  - [DL, computer_vision]
+
+published: true
+
+toc: true
+toc_sticky: true
+ 
+date: 2024-02-19
+last_modified_at: 2024-02-19
+use_math: true
+---
+
+> 논문링크 : <a href="https://arxiv.org/pdf/2203.05557.pdf" target="blank_">CoCoOp: Conditional Prompt Learning for Vision-Language Models</a>
+
+> Implementation : <a href="https://github.com/KaiyangZhou/CoOp" target="blank_">https://github.com/KaiyangZhou/CoOp</a>
+
+*소개글*
+
+<br>
+<br>
+
