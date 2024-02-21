@@ -17,13 +17,11 @@
 
             <!--span 태그로 카테고리들을 크게 분류-->
             <span class="nav__sub-title">Computer Vision</span>
-            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->          
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
-                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
-                    {% if category[0] == "DL_study" %}
-                        <li><a href="/categories/DL_study" class="">스터디 ({{category[1].size}})</a></li>
+                    {% if category[0] == "DL_paper" %}
+                        <li><a href="/categories/DL_paper" class="">논문 리뷰 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -33,14 +31,16 @@
                         <li><a href="/categories/DL_optim" class="">모델 최적화 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </ul>                        
             <ul>
+                <!--ML 카테고리 글들을 모아둔 페이지인 /categories/ML 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
-                    {% if category[0] == "DL_paper" %}
-                        <li><a href="/categories/DL_paper" class="">논문 리뷰 ({{category[1].size}})</a></li>
+                    {% if category[0] == "DL_study" %}
+                        <li><a href="/categories/DL_study" class="">스터디 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>    
+            </ul>
            
 
             <span class="nav__sub-title">Study Note</span>
