@@ -38,3 +38,5 @@ use_math: true
 <br>
 
 # 2. Introduction
+
+&nbsp;&nbsp;&nbsp;&nbsp;최근 image captioning, VQA, action recognition 등의 다양한 분야에서, VLM이 상당한 두각을 나타내고 있습니다. 하지만 VLM의 눈부신 성장과는 대조적으로, VLM이 고질적으로 겪고있는 문제가 있습니다. 그것은 바로 SOTA VLM들의 spatial 정보에 대한 이해 부족입니다. 가령, 3D space상의 다양한 object들의 spatial한 관계라던지, 해당 object의 position에 대한 이해를 필요로 하는 task에서는 VLM이 상당히 약한 모습을 보이고 있습니다. 이러한 spatial information을 이해하는 능력은 그 자체로도 매우 쓸모있을 뿐만 아니라, robotics나 AR등의 downstream task에서도 유용하게 사용될 수 있습니다. 따라서 이러한 limitation을 해결하는 것이 VLM에 있어서 가장 중요한 도전과제라고 할 수 있습니다.
