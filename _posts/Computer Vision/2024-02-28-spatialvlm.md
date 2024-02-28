@@ -130,13 +130,13 @@ use_math: true
 <br>
 <br>
 
-## 4. Experiments
+## 3. Experiments
 
 &nbsp;&nbsp;&nbsp;&nbsp;Experiments에서는 선행 연구대비 Spatial reasnoning capability 비교, 다양한 학습 전략에 따른 performance 변화, robotics등의 downtream transfer에 관한 실험들에 대해 소개하고 있습니다. 분량의 문제로 인해 해당 실험에 대해서는 따로 포스팅하지 않도록 하겠습니다. 관심 있으신 분들은 페이퍼를 참고해주세요!
 
 <br>
 <br>
 
-## 5. Conclusion
+## 4. Conclusion
 
 &nbsp;&nbsp;&nbsp;&nbsp;본 페이퍼의 저자들은 VLM에 있어서 가장 challenging한 부분 중 하나였던 `spatial reasoning`과 관련된 연구를 진행하였으며, 이를 해결하기 위해 3D spatial reasoning VQA data를 자동으로 생성하는 모델을 구현하였습니다. 또한, 유한한 템플릿을 사용하여 train query들을 구축하였지만, `Chain-of-Thought Spatial Reasoning`을 통해 복잡한 문제도 해결할 수 있음을 보여주었습니다. 마지막으로, SpatialVLM은 reward annotator로서 `robotics task`에도 유용하게 활용될 수 있음을 증명하였습니다(Experiments 참고).
