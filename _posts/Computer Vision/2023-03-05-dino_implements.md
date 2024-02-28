@@ -1,5 +1,5 @@
 ---
-title:  "Implementation of DINO(2022)"
+title:  "[CVPR 2022] Implementation of DINO"
 excerpt: "DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection"
 
 categories:

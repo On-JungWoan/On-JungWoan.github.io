@@ -1,5 +1,5 @@
 ---
-title:  "Deformable DETR(2021) 논문 리뷰"
+title:  "[ICLR 2021] Deformable DETR 논문 리뷰"
 excerpt: "Deformable DETR: Deformable Transfomers for End-to-End Object Detection"
 
 categories:

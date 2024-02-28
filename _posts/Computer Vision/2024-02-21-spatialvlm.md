@@ -1,5 +1,5 @@
 ---
-title:  "[private] SpatialVLM(2024) 논문 리뷰"
+title:  "[CVPR 2024] SpatialVLM 논문 리뷰"
 excerpt: "Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities"
 
 categories:
@@ -19,7 +19,7 @@ use_math: true
 
 > 논문링크 : <a href="https://arxiv.org/pdf/2401.12168.pdf" target="blank_">Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities</a>
 
-> project page : <a href="https://spatial-vlm.github.io/" target="blank_">https://spatial-vlm.github.io/</a>
+> Implementation : <a href="https://github.com/remyxai/VQASynth" target="blank_">https://github.com/remyxai/VQASynth</a>
 
 오늘 소개드릴 페이퍼는 `Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities`입니다. 구글 딥마인드에서 2024년 1월에 publish하였으며, CVPR 2024에 accept 되었습니다.
 
@@ -30,9 +30,9 @@ use_math: true
 
 <p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/717fffd8-0c13-4b1f-b09b-40299272112a" style="border: solid black 1px"></p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;VQA와 robotics 분야에 있어서 spatial relationship에 대해 이해하는 것은 상당히 중요합니다. CLIP등으로 대표되는 VLM이 최근 VQA 벤치마크에서 주목할만한 성능을 보였으나, 여전히 3D space에 대한 이해능력은 많이 뒤떨어지는 실정입니다. 위 figure에서 언급된 바와 같이, 모델은 input image에서 baseball player와 black man 사이의 거리를 인지하지 못합니다. 저자는 이러한 한계의 원인이 3D spatial knowledge의 부족에 있다고 하였으며, 이러한 문제를 인터넷에서 수집된 데이터만을 사용하여 해결하려는 것이 문제라고 밝히고 있습니다.
+&nbsp;&nbsp;&nbsp;&nbsp;VQA와 robotics 분야에 있어서 spatial relationship에 대해 이해하는 것은 상당히 중요합니다. CLIP등으로 대표되는 VLM이 최근 VQA 벤치마크에서 주목할만한 성능을 보였으나, 여전히 3D space에 대한 이해능력은 많이 뒤떨어지는 실정입니다. 위 figure에서 언급된 바와 같이, 모델은 input image에서 baseball player와 black man 사이의 거리를 인지하지 못합니다. 이러한 spatial information을 이해하는 능력은 그 자체로도 매우 쓸모있을 뿐만 아니라, robotics나 AR등의 downstream task에서도 유용하게 사용될 수 있습니다. 따라서 이러한 limitation을 해결하는 것이 VLM에 있어서 가장 중요한 도전과제라고 할 수 있습니다.
 
-&nbsp;&nbsp;&nbsp;&nbsp;해당 연구에서는, 이러한 문제를 해결하기 위해 3D spatial VQA 데이터를 automatic하게 generation하는 framework를 개발하였으며, 그 결과 20억개의 VQA example을 1000만개의 real-world image로 scale up하는 데 성공했다고 합니다. 이러한 데이터셋을 사용하여 VLM을 훈련함으로써, spatial VQA에 대한 질적/양적인 성능을 상당히 끌어올릴 수 있었으며, spatial reasoning과 robotics 분야로의 새로운 downstream applications을 가능케하였다고 합니다.
+&nbsp;&nbsp;&nbsp;&nbsp;저자는 이러한 한계의 원인이 3D spatial knowledge의 부족에 있다고 하였으며, 이러한 문제를 인터넷에서 수집된 데이터만을 사용하여 해결하려는 것이 문제라고 밝히고 있습니다. 따라서 저자는, 이러한 문제를 해결하기 위해 `3D spatial VQA 데이터를 automatic하게 generation`하는 framework를 개발하였으며, 1000만개의 real-world image로부터 20억개의 VQA example을 생성하였다고 합니다. 이러한 데이터셋을 사용하여 VLM을 훈련함으로써, spatial VQA에 대한 질적/양적인 성능을 상당히 끌어올릴 수 있었으며, spatial reasoning과 robotics 분야로의 새로운 downstream applications을 가능케하였다고 합니다.
 
 <br>
 <br>
@@ -50,7 +50,20 @@ use_math: true
 
 <p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/5b9c1b36-d838-45ae-9c5f-a5ec4b6d6e88" style="border: solid black 1px"></p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;우선, 저자들은 최근 VLM의 공간 추론능력에 대한 한계점이 모델의 구조 때문이 아니라, spatial reasoning에 대한 학습 데이터가 부족했기 때문일 거라고 추측하고 있습니다. 따라서, 이러한 문제점을 해결하기 위해 spatial reasoning에 대한 질의를 포함하고 있는 VQA data를 생성하는 것부터가 해당 연구의 첫 걸음이라고 할 수 있습니다. 해당 연구에서는 이를 위해 VQA 데이터를 automatic하게 generate하는 pipeline을 구현했다고 소개하고 있습니다. 이에 대한 내용이 위 figure에 간략히 표현되어 있습니다. 이제부터는 figure의 각 단계에 대해 조금 더 자세히 설명드려보도록 하겠습니다.
+&nbsp;&nbsp;&nbsp;&nbsp;우선, 저자들은 최근 VLM의 공간 추론능력에 대한 한계점이 모델의 구조 때문이 아니라, spatial reasoning에 대한 학습 데이터가 부족했기 때문일 거라고 추측하고 있습니다. 따라서, spatial reasoning에 대한 질의를 포함하고 있는 VQA data를 생성하는 것이 해당 연구에 있어서 가장 중요한 부분입니다. 이에 대한 전체적인 과정이 위 figure에 간략히 표현되어 있습니다. 이해를 돕기 위해, 먼저 전체적인 절차에 대하여 간략히 설명드린 후 세부 절차에 대해 다시 소개하도록 하겠습니다.
+
+1. 이미지 필터링
+2. 2D context extraction
+   1. Question
+      1. Region proposal & Captioning
+      2. Ambiguity Resolution
+   2. Answer
+      1. Depth Estimation
+      2. Coordinate Canonicalization
+3. Q&A Synthesis
+
+
+이제부터는 figure의 각 단계에 대해 조금 더 자세히 설명드려보도록 하겠습니다.
 
 <br>
 
@@ -66,18 +79,10 @@ use_math: true
 
 - **(b) Object-centric Contexts Extraction from 2D Images**
 
-<p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/1a2e07ba-9a73-4154-b050-86f4992cbb0c" style="border: solid black 1px"></p>
-
-&nbsp;&nbsp;&nbsp;&nbsp;이후에는 오브젝트와 관련된 정보를 얻기위해 다양한 작업을 수행합니다. 해당 과정에는 Region Captioning, Depth Estimation, Segmentation 등의 작업이 포함되며, 결과적으로 2D image로부터 object-centric의 context를 얻게됩니다.
-
-&nbsp;&nbsp;&nbsp;&nbsp;그리고 camera calibration에 관한 내용이 Appendix에 언급되어 있습니다. 여기서 특이한 점은, 카메라 파라미터를 사용하지 않고 projection을 진행한다는 점입니다. 이를 위해, 작은 segmentation model을 학습시켜서 floor나 table top등을 찾아내고, 찾아낸 평면에 대해 camera origin을 projection함으로써 point cloud들을 world coordinate에 projection시킨다고 합니다. 이에 대한 내용이 위 pseudo-code에 자세히 나와 있습니다.
 
 
-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;다음으로는, Question에 쓰일 text를 만들기 위해 Region Captioning을 수행합니다. 이를 위해, 먼저 Region Proposal Network(RPN)을 사용하여 bounding box를 찾아내고, Non-Maximum Suppression(NMS)를 통해 하나의 object에 대해 여러개의 bounding box가 detection되지 않도록 합니다. 그 이후 Image, BBox, Caption Length를 [FlexCap(Anonymous, 2024)](https://openreview.net/pdf?id=7Phicg0WAg)의 input으로 넣어 BBox에 대한 Caption을 생성해냅니다. 여기서, FlexCap은 ICLR2024에 제출된 페이퍼이며, input bbox에 대한 caption을 length만큼의 word를 사용하여 표현해줍니다. SpatialVLM은 Length로 1~6사이의 값을 사용했다고 합니다. 해당 caption은 추후 question template에 사용됩니다.
 
-- **(c) Lifting 2D Contexts to 3D Contexts**
-
-&nbsp;&nbsp;&nbsp;&nbsp;기존 object detection이나 bounding box positioning을 사용하여 얻어진 VQA dataset은 2D(and pixel-level)의 reasoning 수준에 머물러 있습니다. 그 이유는 depth, spatial information이 포함된 context가 부족하기 떄문입니다. 따라서 저자들은 이러한 문제점을 해결하기 위해, 우선 2D pixel을 metric-scale의 3D point cloud로 lift 해주었습니다(by depth estimation). 그 이후에는, 위에서 잠깐 언급한 바와 같이, segmentation model을 사용하여 point cloud들을 camera coordinates에서 world coordinate로 projection해주었다고 합니다.
 
 <br>
 
@@ -86,11 +91,11 @@ use_math: true
 <p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/02aff9a2-f8a3-4a5c-afcf-4bee64cfb420" style="border: solid black 1px"></p>
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;종종 하나의 이미지 안에, 비슷한 카테고리를 가지는 object가 여러개 있을 수 있는데, 이 경우 모델이 하나의 caption에 대해 여러개의 object를 참조하게 되는 ambiguity가 발생할 수 있다고 합니다. 이를 해결하기 위해, SpatialVLM의 저자들은 다음과 같이 2개의 implementation을 고려하였습니다.
+&nbsp;&nbsp;&nbsp;&nbsp;종종 하나의 이미지 안에 비슷한 카테고리를 가지는 object가 여러개 있을 수 있는데, 이 경우 비슷한 caption이 여러개 생성되므로 추후 Question 생성 시 ambiguity를 유발할 수 있다고 합니다(가령, "cake"라는 caption이 한 이미지 안에 여러개 있다면, 해당 caption이 여러개의 object를 가리키게 됨). 이를 해결하기 위해, 저자들은 다음과 같이 2개의 approach에 대해 고려하였습니다.
 
   1. 일반적인 object detector의 사용 지양
      - 이러한 detector를 사용할 경우, 단순한 카테고리(ex. cake)만을 produce하는 경향이 있다고 합니다.
-     - 따라서 저자들은 FlexCap이라는 object-centric captioning approach를 detector로 채택하였습니다.
+     - 이것이 바로 FlexCap을 Captioning Model로 채택한 이유입니다(caption이 1~6 사이의 random한 length 가짐).
   2. 추가적인 post-processing algorithm 구현
      - 이외에도 Ambiguity를 해결하기 위해 추가적인 augment, remove과정을 거칩니다.
      - 이를 위해, CLIP을 사용하여 similarity를 계산하고, 이 similarity가 특정 threshold 이상이면 유사한 caption으로 판단합니다.
@@ -100,33 +105,37 @@ use_math: true
 
 <br>
 
-### 3.2. Large-Scale Spatial Reasoning VQA Dataset
+- **(c) Lifting 2D Contexts to 3D Contexts**
 
-<p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/77d189af-adcb-4420-b303-e2e93829a7e7" style="border: solid black 1px"></p>
+&nbsp;&nbsp;&nbsp;&nbsp;기존 object detection이나 bounding box positioning을 사용하여 얻어진 VQA dataset은 2D(and pixel-level)의 reasoning 수준에 머물러 있습니다. 그 이유는 depth, spatial information이 포함된 context가 부족하기 떄문입니다. 따라서 저자들은 이러한 문제점을 해결하기 위해, 우선 2D pixel을 metric-scale의 3D point cloud로 lift 해주었습니다.
 
-&nbsp;&nbsp;&nbsp;&nbsp;지금까지 일련의 과정을 모두 끝마친 뒤, 본격적으로 VLM에 간단한 공간 추론 능력을 학습시키기 위해 데이터셋을 구축해야 합니다. 이를 위해 저자는 spatial-reasoning QA pair를 갖는 데이터셋을 생성하였으며, 각 pair는 2개 이하의 object에 대한 정보를 포함합니다. 이에 대한 전체적인 개요를 확인하고 싶으신 분은, [#3.1.](#31-spatial-grounding-from-2d-images)의 figure에서 (e) 부분을 참고하시면 됩니다.
+&nbsp;&nbsp;&nbsp;&nbsp;이를 위해, 먼저 Depth Estimation을 진행해줍니다. Depth Estimation에는 SOTA 모델인 ZoeDepth를 사용하였으며, 이를 통해 2D image를 3D point cloud로 lift합니다. 또한, DBSCAN이라는 클러스터링 알고리즘을 사용하여 outlier들을 제거하였다고 합니다.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Answer의 경우는 해당 페이퍼의 저자가 개발한 적절한 function을 통해 생성되며, input으로는 3D bounding box와 point cloud를 받습니다. Question의 경우는 다음과 같이 2개의 카테고리로 나누어집니다.
+&nbsp;&nbsp;&nbsp;&nbsp;이후에는 point cloud를 camera coordinate에서 world coordinate으로 transform해줍니다. 이를 위해 작은 segmentation model을 학습시켜서 floor나 table top등의 horizontal surface를 찾아내고, 이를 z축으로 설정한 뒤 camera의 original z-axis를 새로운 x축으로 설정함으로써 coordinate canonicalization을 진행한다고 합니다. 만약 이미지에서 horizontal surface가 감지되지 않는 경우에는, elevation과 같이 canonicalization에 대한 의존성이 높은 question을 사용하지 않았다고 합니다. 자세한 내용은 아래 pseudo code를 참고해주세요.
 
-- **Qualitative questions**
-  - 아래 예시와 같이, spatial relation에 대한 판단을 요구하는 질의입니다.
-  - "의자가 오븐 앞에 위치해 있어?", "접시가 냅킨 오른쪽에 있어 왼쪽에 있어?"
-
-- **Quantitative questions**
-  - 아래 예시와 같이, 구체적인 수치를 요구하는 질의입니다.
-  - "cake모양의 집과 보라색 옷을 입은 여자 사이의 거리를 측정해 줘"
-
-&nbsp;&nbsp;&nbsp;&nbsp;최종적으로 저자는 약 천만개의 image와 20억개의 spatial reasoning QA pair를 포함하는 거대한 데이터셋을 구축할 수 있었으며, 이를 통해 모델이 다양한 description을 학습할 수 있게 되었다고 합니다.
+<p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/1a2e07ba-9a73-4154-b050-86f4992cbb0c" style="border: solid black 1px"></p>
 
 <br>
 
-### 3.3. Learning Spatial Reasoning
+- **(e) Large-Scale Spatial Reasoning VQA Dataset**
+
+<p align="center"><img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/77d189af-adcb-4420-b303-e2e93829a7e7" style="border: solid black 1px"></p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;이제 Q&A를 생성하기 위한 모든 준비과정이 끝이 났습니다. Question은 (d) 과정을 거친 caption으로부터 생성하며, 이에 대한 Answer는 (c)의 point cloud로부터 얻습니다.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Question의 경우, 2개 이하의 object에 대한 정보를 포함하며, 크게 Quanlitative question과 Quantitative questions으로 나누어집니다. Qualitative questions은 “Given two objects A and B, which is more towards the left?”와 같이 spatial relation에 대한 판단을 요구하는 질문입니다. Quantitative questions은 “how much to the left is object A compared to object B?”와 같이 구체적인 수치를 요구하는 질문입니다. Answer의 경우는, 앞서 뽑아낸 point cloud와 3D bounding box를 저자가 개발한 function에 input으로 넣어줌으로써 생성된다고 합니다.
+
+&nbsp;&nbsp;&nbsp;&nbsp;저자는 총 38종류의 qualitative와 quantitative question을 디자인 하였으며, 각각 20개의 question template과 10개의 answer template을 사용한다고 합니다. 이외에도 인간의 반올림을 모방한 human-aligned rounding mechanism등 다양한 추가 기법들을 적용하였는데, 해당 내용에 대해서는 appendix에 자세히 설명이 되어있습니다. 이를 통해 최종적으로 저자는 약 천만개의 image와 20억개의 spatial reasoning QA pair를 포함하는 거대한 데이터셋을 구축할 수 있었으며, 이를 통해 모델이 다양한 description을 학습할 수 있게 되었다고 합니다.
+
+<br>
+
+### 3.2. Learning Spatial Reasoning
 
 - **Train**
 
 &nbsp;&nbsp;&nbsp;&nbsp;이제 지금까지 생성한 데이터셋을 모델에 학습시킬 차례입니다. 학습에 사용될 아키텍쳐로는 PaLM-E를 채택하였으며, 학습 과정또한 동일하게 진행하였다고 합니다. Input으로는 image $I$와 spatial task에 대한 쿼리 $Q$를 받으며, 이에 대한 output으로는 text string 형태의 answer $A$를 출력합니다.
 
-&nbsp;&nbsp;&nbsp;&nbsp;PaLM-E와 거의 유사한 학습 과정을 거치지만, 차이점이 몇가지 존재합니다. 우선, backbone을 기존 PaLM에서 PaLM 2-S로 수정했으며, 학습에는 PaLM-E 데이터셋과 저자들의 데이터셋을 적절히 섞어서 사용했다고 합니다. 그리고 결정적으로 SpatialVLM만의 가장 중요한 차별점은, 바로 spatial reasoning question에 대한 답변을 할 수 있다는 것 입니다.
+&nbsp;&nbsp;&nbsp;&nbsp;PaLM-E와 거의 유사한 학습 과정을 거치지만, 차이점이 몇가지 존재합니다. 우선, backbone을 기존 PaLM에서 PaLM 2-S로 수정했으며, 학습에는 PaLM-E 데이터셋과 저자들의 데이터셋을 적절히 섞어서 사용했다고 합니다. 그리고 결정적으로 SpatialVLM만의 가장 중요한 차별점은, 바로 `spatial reasoning question에 대한 답변`을 할 수 있다는 것 입니다.
 
 <br>
 
@@ -143,8 +152,11 @@ use_math: true
 
 ## 4. Experiments
 
-<img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/908093f2-ad08-4162-866a-2df074b03090">
+&nbsp;&nbsp;&nbsp;&nbsp;Experiments에서는 선행 연구대비 Spatial reasnoning capability 비교, 다양한 학습 전략에 따른 performance 변화, robotics등의 downtream transfer에 관한 실험들에 대해 소개하고 있습니다. 분량의 문제로 인해 해당 실험에 대해서는 따로 포스팅하지 않도록 하겠습니다. 관심 있으신 분들은 페이퍼를 참고해주세요!
 
-<img width="100%" src="https://github.com/On-JungWoan/On-jungWoan/assets/84084372/461109f2-859e-4b9a-ac4e-009ad19059b4">
+<br>
+<br>
 
-기존 선행연구들 대비 SpatialVLM이 높은 마진으로 더 좋은 spatial reasoning performance를 보이는 것을 확인할 수 있습니다.
+## 5. Conclusion
+
+&nbsp;&nbsp;&nbsp;&nbsp;본 페이퍼의 저자들은 VLM에 있어서 가장 challenging한 부분 중 하나였던 spatial reasoning과 관련된 연구를 진행하였으며, 이를 해결하기 위해 3D spatial reasoning VQA data를 자동으로 생성하는 모델을 구현하였습니다. 또한, 유한한 템플릿을 사용하여 train query들을 구축하였지만, Chain-of-Thought Spatial Reasoning을 통해 복잡한 문제도 해결할 수 있음을 보여주었습니다. 마지막으로, SpatialVLM은 reward annotator로서 robotics task에도 유용하게 활용될 수 있음을 증명하였습니다(Experiments 참고).
