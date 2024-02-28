@@ -21,7 +21,7 @@ use_math: true
 
 > Implementation : <a href="https://github.com/remyxai/VQASynth" target="blank_">https://github.com/remyxai/VQASynth</a>
 
-오늘 소개드릴 페이퍼는 `Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities`입니다. 구글 딥마인드에서 2024년 1월에 publish하였으며, CVPR 2024에 accept 되었습니다.
+오늘 소개드릴 페이퍼는 `Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities`입니다. 구글 딥마인드에서 2024년 1월에 publish하였으며, CVPR 2024 accepted paper입니다.
 
 <br>
 <br>
