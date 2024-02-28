@@ -31,6 +31,11 @@ use_math: true
 
 > Implementation : <a href="{{ github_link }}" target="blank_">{{ github_link }}</a>
 
+오늘 소개드릴 논문은 `Deformable DETR: Deformable Transfomers for End-to-End Object Detection`입니다. ICLR 2021 accepted paper입니다.
+
+<br>
+<br>
+
 # 1. Backgorund
 
 Deformable DETR에 대해 소개해드리기에 앞서, 먼저 선행 연구에 대해 소개하도록 하겠습니다.
