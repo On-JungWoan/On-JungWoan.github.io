@@ -9,7 +9,7 @@
   description: | # this will include new lines to allow paragraphs
     * Research about 3D Hand pose estimation / Transformer based object detection
     * Industry-Academia Collaboration Research with LG Electronics (Convert DN-DETR to ONNX to TF to TFLite)
-    * <a href="https://docs.google.com/document/d/1fK2cAnHG0R7F2o_4SfEdJE6wLyNQb-a5HzPtKU9r39s/edit#heading=h.y0gmlmr409li" target="blank_">[link] Computer Vision study (Dailiy Report)</a>
+    * Computer Vision study (Dailiy Report) <a href="https://docs.google.com/document/d/1fK2cAnHG0R7F2o_4SfEdJE6wLyNQb-a5HzPtKU9r39s/edit#heading=h.y0gmlmr409li" target="blank_">[link]</a>
 
 - layout: left
   company: Euclidsoft

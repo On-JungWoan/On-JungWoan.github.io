@@ -1,7 +1,9 @@
 - layout: left
   name: International
   description: | # this will include new lines to allow paragraphs
-    * <a href="https://drive.google.com/file/d/1BZa2I6DesKmp2m7tVDuoE1RNLZs4te6T/view?usp=sharing" target="blank_">3rd place at 2023 ICCV hand challenge (Consistent Motion Reconstruction)</a>
+    * 3rd place at 2023 ICCV hand challenge (Consistent Motion Reconstruction)&nbsp;
+    <a href="https://github.com/On-JungWoan/UVHand" target="blank_">[github]</a>
+    <a href="https://drive.google.com/file/d/1BZa2I6DesKmp2m7tVDuoE1RNLZs4te6T/view?usp=sharing" target="blank_">[pdf]</a>
 
 - layout: left
   name: Domestic
