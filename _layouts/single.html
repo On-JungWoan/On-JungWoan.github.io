@@ -54,12 +54,12 @@ layout: default
           </aside>
         {% endif %}
         {{ content }}
-        {% if page.til %}
+        <!-- {% if page.til %}
           {% capture date %}{{page.date | remove: '-'}}{% endcapture %}
           {% capture month %}{{ date | slice: 4, 2 }}{% endcapture %}
           {% capture month_day %}{{ date | slice: 4, 4 }}{% endcapture %}        
           <br><br><div align='center'><a href="https://on-jungwoan.github.io/til/TIL-{{month}}/#{{month_day}}">본문으로 돌아가기</a></div>
-        {% endif %}
+        {% endif %} -->
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
