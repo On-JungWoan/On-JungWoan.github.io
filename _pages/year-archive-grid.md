@@ -1,5 +1,5 @@
 ---
-title: "Posts by Year"
+title: "Posts"
 permalink: /blog/
 layout: posts
 entries_layout: grid
