@@ -30,7 +30,7 @@ use_math: true
 
 &nbsp;&nbsp;&nbsp;&nbsp;Human motion을 generation 하는 것은 AR/VR 분야에서 중요한 역할을 합니다. 하지만, 당시 발표된 논문들은 dance와 같은 high dynamic motion, 나풀거리는 옷 등에 대해 제대로 된 generation을 하지 못했다고 합니다. 따라서 해당 페이퍼의 저자들은 이러한 당시 문제점들을 해결하기 위해 `이전 10 프레임에 대한 모션 정보를 사용`했다고 합니다.
 
-&nbsp;&nbsp;&nbsp;&nbsp;이전 프레임의 모션 정보가 선행 연구의 문제점을 해결할 수 있었던 이유는 다음과 같습니다. 우선, 옷의 움직임은 사람의 모션에 의해 크게 영향을 받습니다. 따라서 옷의 움직임을 생성할 때, motion 정보를 condition으로 주게 되면 generate performance에 크게 도움을 준다고 합니다. 또한, motion 정보는 pose를 refine 하는데에도 크게 도움을 준다고 합니다. 자세한 내용은 다음 섹션에서 설명드리도록 하겠습니다.
+&nbsp;&nbsp;&nbsp;&nbsp;이전 프레임의 모션 정보가 선행 연구의 문제점을 해결할 수 있었던 이유는 다음과 같습니다. 우선, 옷의 움직임은 사람의 모션에 의해 크게 영향을 받습니다. 따라서 옷의 움직임을 생성할 때, motion 정보를 condition으로 주게 되면 generate performance에 크게 도움을 준다고 합니다. 또한, motion 정보를 통해 pose를 refine함으로써 jittering등의 현상을 완화하였다고 합니다. 자세한 내용은 다음 섹션에서 설명드리도록 하겠습니다.
 
 <br>
 <br>
@@ -41,11 +41,11 @@ use_math: true
 
 <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/490c06b5-d665-445a-8184-3582fe740f1f"></p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;전체적인 method는 위와 같습니다. Input으로는 Human body dense UV map과 sketon을 받으며, StyleGAN을 사용하여 이에 해당하는 human motion을 생성합니다. 해당 페이퍼의 key contribution은 다음과 같습니다.
+&nbsp;&nbsp;&nbsp;&nbsp;전체적인 method는 위와 같습니다. Input으로는 Human body `dense UV map`과 `skeleton`을 받으며, `StyleGAN`을 사용하여 이에 해당하는 human motion을 생성합니다. 해당 페이퍼의 key contribution은 다음과 같습니다.
 
 1. video 속 actor가 나풀거리는 옷을 입고 있을 경우 해당 outfit은 motion의 영향을 크게 받음.
     - 나풀거리는 옷의 움직임을 정확하게 생성하는 것은 dance generation에 있어서 challenging task.
-    - 따라서 **motion signature를 AdaIN operator의 input**으로 넣어주면 generate performance에 크게 도움을 줄 수 있음
+    - 따라서 **이전 프레임의 motion 정보를 AdaIN operator의 input**으로 넣어주면 generate performance에 크게 도움을 줄 수 있음
         - 옷의 움직임이 motion의 영향을 크게 받기 때문.
         - AdaIN이란? style transfer에 사용되는 전통적인 operator.
 2. pose estimator는 single image를 기반으로 학습되었기 때문에 self-occlusion 및 복잡한 pose에서의 incorrect estimation 문제가 있으며, jittering이 심하게 나타날 수 있음.
@@ -119,19 +119,21 @@ $$
 
 - **Temporal coherent refinement**
 
-  &nbsp;&nbsp;&nbsp;&nbsp;앞서 설명드렸듯이, 이전 프레임의 모션 정보 $M_i$는 pose feature $P_i$를 refine하는 데 사용됩니다. 이를 위해 motion feature를 모든 spatial chanel에 더해준 뒤, 해당 matrix를 refine network $E_{Refine}$의 input으로 넣어 refined pose $\tilde{\mathcal{P}_i}$를 계산합니다. 수식적으로는 다음과 같이 표현할 수 있습니다.
+  &nbsp;&nbsp;&nbsp;&nbsp;앞서 설명드렸듯이, 이전 프레임의 모션 정보 $M_i$는 pose feature $P_i$를 refine하는 데 사용됩니다. 이를 위해 motion feature를 모든 spatial chanel에 더해준 뒤, 해당 matrix를 refine network $E_{Refine}$의 input으로 넣어 refined pose $\tilde{\mathcal{P}_i}$를 계산합니다. 수식으로는 다음과 같이 표현됩니다.
 
   - **step1) Reshape motion feature**
 
-    (2048) → (2048, 1, 1) → (2048, $W_s$, $H_s$)
+    <div align="center">
+      (2048) → (2048, 1, 1) → (2048, $W_s$, $H_s$)
+    </div>
 
   - **step2) Concat**
 
-    <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/c5920358-658a-4d02-964d-34359a38c357"></p>
+    <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/c5920358-658a-4d02-964d-34359a38c357" width="40%"></p>
 
   - **step3) Refine**
 
-    <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/c5920358-658a-4d02-964d-34359a38c357"></p>
+    <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/c5920358-658a-4d02-964d-34359a38c357" width="40%"></p>
     
 <br>
 
@@ -145,9 +147,9 @@ $$
 
 <br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;다음은 지금까지의 모든 과정을 수식으로 표현한 것입니다. Pose signature와 Motion signature가 각각의 encoder로 들어가서 feature를 뽑는 데 사용되고, 해당 feature는 서로 concat되어 refine network의 input으로 다시 들어가게 됩니다. 그리고 refine된 pose feature는 다시 Motion Signature와 함께 GAN의 input으로 들어가 이미지를 생성하게 됩니다.
+&nbsp;&nbsp;&nbsp;&nbsp;다음은 지금까지의 모든 과정을 수식으로 표현한 것입니다. Pose signature와 Motion signature가 각각의 encoder로 들어가서 feature를 뽑는 데 사용되고, 해당 feature는 서로 concat되어 refine network의 input으로 다시 들어가게 됩니다. 그리고 `refine된 pose feature는 다시 Motion Signature와 함께 GAN의 input으로 들어가 이미지를 생성`하게 됩니다.
 
-<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/bb05fe90-2c53-48dc-923e-b533f63dce38"></p>
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/bb05fe90-2c53-48dc-923e-b533f63dce38" width="60%"></p>
 
 <br>
 
@@ -155,31 +157,31 @@ $$
 
 &nbsp;&nbsp;&nbsp;&nbsp;Loss는 크게 L1 reconstruction loss, perceptual loss, Adversarial loss로 나누어져 있습니다. 각 Loss가 의미하는 바는 다음과 같습니다.
 
-<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/d5c1fb33-7955-447e-87d0-d8dd2471ab13"></p>
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/d5c1fb33-7955-447e-87d0-d8dd2471ab13" width="40%"></p>
 
 <br>
 
 - **L1 reconstruction loss**
 
-  <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/4630c6f7-3e4b-4821-a858-8716f5a768a6"></p>
-
   생성된 이미지와 GT 이미지간의 L1 loss
+
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/4630c6f7-3e4b-4821-a858-8716f5a768a6" width="25%"></p>
 
 <br>
 
 - **VGG-based perceptual loss**
 
-  <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/7da35182-a1e6-46c3-9173-d30c8f677475"></p>
-
   ImageNet으로 pre-trained된 VGG의 k번째 layer를 사용하여 perceptual loss를 계산
+
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/7da35182-a1e6-46c3-9173-d30c8f677475" width="60%"></p>
 
 <br>
 
 - **Adversarial Loss**
 
-  <p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/7816c1c1-509b-4715-a129-e1fa335b5140"></p>
-
   GAN에서 사용하는 adv. loss와 동일
+
+<p align="center"><img src="https://github.com/On-JungWoan/paper-review/assets/84084372/7816c1c1-509b-4715-a129-e1fa335b5140" width="75%"></p>
 
 <br>
 <br>
