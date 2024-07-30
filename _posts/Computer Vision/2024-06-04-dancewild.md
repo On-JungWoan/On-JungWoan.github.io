@@ -21,7 +21,7 @@ use_math: true
 
 > Project Page : <a href="https://geometry.cs.ucl.ac.uk/projects/2021/danceinwild/" target="blank_">https://geometry.cs.ucl.ac.uk/projects/2021/danceinwild/</a>
 
-오늘 소개드릴 페이퍼는 CVPR 2024에 accept된 `Dance In the Wild: Monocular Human Animation with Neural Dynamic Appearance Synthesis`입니다.
+오늘 소개드릴 페이퍼는 3DV 2021에 accept된 `Dance In the Wild: Monocular Human Animation with Neural Dynamic Appearance Synthesis`입니다.
 
 <br>
 <br>
