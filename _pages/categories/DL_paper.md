@@ -1,6 +1,6 @@
 ---
 layout: category
-title: "논문 리뷰"
+title: "Paper Review"
 type: grid
 permalink: categories/DL_paper
 author_profile: true

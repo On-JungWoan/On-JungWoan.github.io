@@ -21,14 +21,14 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "DL_paper" %}
-                        <li><a href="/categories/DL_paper" class="">논문 리뷰 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/DL_paper" class="">Paper Review ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "DL_optim" %}
-                        <li><a href="/categories/DL_optim" class="">모델 최적화 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/DL_optim" class="">Model Optimization ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>                        
@@ -37,7 +37,7 @@
                 <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
                     {% if category[0] == "DL_study" %}
-                        <li><a href="/categories/DL_study" class="">스터디 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/DL_study" class="">Study ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

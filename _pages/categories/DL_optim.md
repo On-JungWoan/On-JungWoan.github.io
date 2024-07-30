@@ -1,6 +1,6 @@
 ---
 layout: category
-title: "모델 최적화"
+title: "Model Optimization"
 type: grid
 permalink: categories/DL_optim
 author_profile: true
