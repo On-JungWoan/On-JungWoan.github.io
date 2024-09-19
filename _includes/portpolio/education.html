@@ -16,10 +16,28 @@
   * GPA : 4.00 / 4.3
 {% endcapture %}  
 
+{% capture m_p_uni_major %}
+* Artificial Intelligence Graduate School (Sep. 2024 ~ )
+
+  * Advisor: [Seungryul Baek](https://sites.google.com/site/bsrvision00/)
+{% endcapture %}  
+
 <div class="container education-container">  
   <h3>{{ site.education_title | default: "Education" }}</h3>
 
   <hr>
+
+  <div class="row clearfix layout layout-left">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
+      <!-- <div class="unist-h4">UNIST</div> -->
+      <h4>UNIST</h4>
+      <h4>{{ target.company }}</h4>
+      <div class="link">M.S./Ph.D.</div>
+    </div>
+    <div class="col-xs-12 col-print-12"> 
+      {{ m_p_uni_major | strip | markdownify }}
+    </div>
+  </div>
 
   <div class="row clearfix layout layout-left">
       <div class="col-xs-12 col-sm-4 col-md-3 col-print-12 details">
