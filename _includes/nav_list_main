@@ -121,6 +121,13 @@
         <span class="nav__sub-title">etc</span>       
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "daily" %}
+                        <li><a href="/categories/daily" class="">일상 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "python" %}
                         <li><a href="/categories/python" class="">Python 개념 ({{category[1].size}})</a></li>
                     {% endif %}
