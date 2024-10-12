@@ -1,17 +1,25 @@
 - layout: left
   name: International
   description: | # this will include new lines to allow paragraphs
-    * 1st place at 2024 ECCV hand challenge (Bimanual category-agnostic interaction reconstruction)
-    * 3rd place at 2023 ICCV hand challenge (Consistent Motion Reconstruction)&nbsp;
+    * 1st place at 2024 ECCV hand challenge (Bimanual category-agnostic interaction reconstruction), ECCV, 2024.&nbsp;
+    <a href="https://arxiv.org/abs/2409.19215" target="blank_">[pdf]</a>
+    * 3rd place at 2023 ICCV hand challenge (Consistent Motion Reconstruction), ICCV, 2023.&nbsp;
     <a href="https://github.com/On-JungWoan/UVHand" target="blank_">[github]</a>
     <a href="https://drive.google.com/file/d/1BZa2I6DesKmp2m7tVDuoE1RNLZs4te6T/view?usp=sharing" target="blank_">[pdf]</a>
 
 - layout: left
   name: Domestic
   description: | # this will include new lines to allow paragraphs
-    * 2023학년도 제5회 자연과학대학 학술제 학술분야 학장상, 전남대학교 자연과학대학 (Nov. 2023)
-    * 디지털 신기술을 활용한 지역 문제해결 아이디어 공모전 최우수상, 광주정보문화산업진흥원 (Sep. 2023)
-    * [ABC Internship] ICT 학점연계 프로젝트 인턴십 우수 인턴상, (주)유클리드소프트 (Dec. 2022)
-    * 2022 통계학과 빅데이터 경진대회 1등, Chonnam National University, Korea (Oct. 2022)
-    * 2021 통계학과 빅데이터 경진대회 3등, Chonnam National University, Korea (Oct. 2021)
-    * 2021 대학혁신선도사업 학습동아리 발표회 5등(JOLY), Chonnam National University, Korea (Oct. 2021)
+    * Best undergraduate paper award, Chonnam National University, 2023.
+    * 2nd prize at AI idea contest, gwangju information & culture industry promotion agency (GICON), 2023.
+    * Outstanding intern award, ICT Academic Project, Euclidsoft Co., Ltd., 2022.
+    * 1st prize at Bigdata competition, Chonnam National University, 2022.
+    * 3rd prize at Bigdata competition, Chonnam National University, 2021.
+    * 5th Place at University innovation leadership project presentation, Chonnam National University, 2021.
+
+# * 2023학년도 제5회 자연과학대학 학술제 학술분야 학장상, 전남대학교 자연과학대학 (Nov. 2023)
+# * 디지털 신기술을 활용한 지역 문제해결 아이디어 공모전 최우수상, 광주정보문화산업진흥원 (Sep. 2023)
+# * [ABC Internship] ICT 학점연계 프로젝트 인턴십 우수 인턴상, (주)유클리드소프트 (Dec. 2022)
+# * 2022 통계학과 빅데이터 경진대회 1등, Chonnam National University, Korea (Oct. 2022)
+# * 2021 통계학과 빅데이터 경진대회 3등, Chonnam National University, Korea (Oct. 2021)
+# * 2021 대학혁신선도사업 학습동아리 발표회 5등(JOLY), Chonnam National University, Korea (Oct. 2021)
