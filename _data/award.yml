@@ -1,9 +1,10 @@
 - layout: left
   name: International
   description: | # this will include new lines to allow paragraphs
-    * 1st place at 2024 ECCV hand challenge (Bimanual category-agnostic interaction reconstruction), ECCV, 2024.&nbsp;
+    * **1st place at 2024 ECCV hand challenge** - ARCTIC, ECCV, 2024.&nbsp;
     <a href="https://arxiv.org/abs/2409.19215" target="blank_">[pdf]</a>
-    * 3rd place at 2023 ICCV hand challenge (Consistent Motion Reconstruction), ICCV, 2023.&nbsp;
+    <a href="/assets/eccv_award.pdf" target="blank_">[award]</a>
+    * **3rd place at 2023 ICCV hand challenge** (Consistent Motion Reconstruction), ICCV, 2023.&nbsp;
     <a href="https://github.com/On-JungWoan/UVHand" target="blank_">[github]</a>
     <a href="https://drive.google.com/file/d/1BZa2I6DesKmp2m7tVDuoE1RNLZs4te6T/view?usp=sharing" target="blank_">[pdf]</a>
 
