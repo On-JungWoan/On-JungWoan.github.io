@@ -104,10 +104,89 @@ use_math: true
 
 ![Image](https://github.com/user-attachments/assets/a88e2981-4e87-4c89-b44a-4a2e13b192e2)
 
-&nbsp;&nbsp;&nbsp;&nbsp;다음으로, camera intrinsic parameter를 찾는 과정입니다. intrinsic parameter는 크게 principal point (x,y)와 focal length (f)로 이루어져 있습니다(보통 2D shear는 고려 x). principal point는 pinhole camera에서 optical center에 대한 2D 좌표값이며, focal length는 optical center에서 image plane까지의 거리를 나타냅니다.
+&nbsp;&nbsp;&nbsp;&nbsp;다음으로, camera intrinsic parameter를 찾는 과정입니다. intrinsic parameter는 크게 principal point (x,y)와 focal length (f)로 이루어져 있습니다(보통 2D shear는 고려 x). principal point는 pinhole camera에서 optical center에 대한 2D 좌표값이며, focal length는 optical center에서 image plane까지의 거리를 나타냅니다. 보통 camera intirinsic을 찾는 과정에서 principal point는 image center에 고정해두기 때문에, focal length만 찾아주면 모든 intrinsic parameter를 recovering할 수 있게 됩니다.
 
 <br>
+
+![Image](https://github.com/user-attachments/assets/4ebb43e9-bd44-4a47-93a1-e3d0c62f97a9)
+
+&nbsp;&nbsp;&nbsp;&nbsp;focal length를 찾는 과정은 위 figure에 잘 나타나 있습니다. 먼저, camera coordinate에 있는 3D point($X_C, Y_C, Z_C$)의 좌표값들을 전부 depth값($Z_C$)로 나누어주게 되면, 카메라로부터의 거리가 1인 normalized image plane상에 point를 projection($u, v$) 시킬 수 있습니다. 이후 projected point에 f값을 곱해주면, 카메라로부터의 거리가 focal length만큼 떨어져있는 image plane상에 point를 projection($x, y$) 시킬 수 있게 됩니다. 이후, focal length값을 적절히 늘리거나 줄이면서 피사체가 2D image상에 정확히 align되도록 optimize합니다.
+
 <br>
+
+![Image](https://github.com/user-attachments/assets/56229e94-24b7-4907-8f62-fd4fba223cae)
+
+&nbsp;&nbsp;&nbsp;&nbsp;해당 내용을 수식으로 나타내면 위와 같이 표현할 수 있습니다. 각 point의 x, y coord값(${X}^{1,1}\_{i,j,0}, {X}^{1,1}\_{i,j,1}$)은 z coord값 ${X}^{1,1}\_{i,j,2}$로 나누어진 뒤, focal length $f\_1$를 곱하여 image plane상에 point를 project됩니다. 이 때, projected point가 gt image pixel값($i^{\prime}, j^{\prime}$)과 같아지도록 focal length를 optimize하면, pcd로부터 camera intrinsic parameter를 recovering할 수 있게됩니다.
+
 <br>
+
+![Image](https://github.com/user-attachments/assets/c4b755a7-56ce-4044-90ea-053ff1b140d0)
+
+![Image](https://github.com/user-attachments/assets/f9009c14-2bf7-4632-b7b0-70532460696b)
+
+&nbsp;&nbsp;&nbsp;&nbsp;이 떄, camera intrinsic에 다음과 같은 특수한 연산을 진행하는 이유는, camera plane과 iamge plane의 center가 다르기 때문입니다다.
+
+<br>
+
+- Downstream Applications: Global alignment
+
+![Image](https://github.com/user-attachments/assets/b64786ac-1a0f-4d1d-8b56-a8e579e63863)
+
+&nbsp;&nbsp;&nbsp;&nbsp;하지만, DUSt3R는 2장의 이미지를 처리하는 데 특화되어있기 때문에, 3장 이상의 이미지 pair가 input으로 들어오게 되면 이들을 alignment 시키기위한 특수한 process를 거쳐야합니다.
+
+<br>
+
+![Image](https://github.com/user-attachments/assets/0cbd2dcc-5328-472c-87e6-58bba29f68cf)
+
+&nbsp;&nbsp;&nbsp;&nbsp;이를 위해, 저자는 input image pair를 그래프 형태로 표현하고, 각 노드 사이의 visual concept이 일정 부분 이상 겹치게 되면, 두 노드에 대한 edge관계를 정의해주었습니다. 최종적으로는 위와 같은 그래프가 정의될 것 입니다.
+
+<br>
+
+![Image](https://github.com/user-attachments/assets/b95e7de3-394b-47b1-a074-2391eed19ecd)
+
+&nbsp;&nbsp;&nbsp;&nbsp;그래프가 정의되면, 그래프 내의 모든 edge들에 대해 다음과 같은 optimization process를 수행해주게 됩니다. 사실 이 부분이 처음에 수식만 봐서는 잘 와닿지 않을 수 있는데, 결국 이 수식으로 구하고자 하는 것은, 여러 카메라에 대한 공통된 좌표계입니다. 다시 말해, 여러 카메라에서 관찰된 동일한 장면의 3D pcd들을 공통의 좌표계에 align시키고, 해당 좌표계에 일관되게 align되는 pcd와 camera pose를 찾는 과정이라고 이해할 수 있습니다. (바로 아래 gif에 이 과정이 잘 나타나 있습니다.)
 
 ![Image](https://github.com/user-attachments/assets/92fac98c-ae1f-4991-8c11-a87b80d2c197)
+
+<br>
+
+![Image](https://github.com/user-attachments/assets/c0c44e06-6d26-4c56-b566-66fc74b268f1)
+
+&nbsp;&nbsp;&nbsp;&nbsp;다시 수식으로 돌아와서, 먼저 가장 간단한 case에 대해 생각해보도록 하겠습니다. 1번 노드로부터 뽑은 point $X^1$과 2번 노드로부터 뽑은 point $X^2$가 있다고 가정해보도록 하겠습니다.
+
+<br>
+
+![Image](https://github.com/user-attachments/assets/83d1f36b-734e-4d2f-a455-e7bdcec54c7d)
+
+&nbsp;&nbsp;&nbsp;&nbsp;이 두 포인트를 하나의 matrix로 projection 시킬 수 있고, 그 때의 $\chi\_i$는 위 figure와 같이 optimize될 것입니다.
+
+<br>
+
+![Image](https://github.com/user-attachments/assets/ea2402b4-79a0-4699-a801-673ec4d84522)
+
+&nbsp;&nbsp;&nbsp;&nbsp;그리고 이러한 과정을 계속해서 반복하다보면, $\chi\_i \approx PX^1 \approx PX^2$를 만족하는 projection matrix를 찾을 수 있게 될 것입니다. 그리고 이 projection matrix는, 곧 해당 노드에 대한 camera extrinsic을 의미하며, 여기서 찾은 $\chi\_i$는 global pcd가 되는 것입니다.
+
+<br>
+
+![Image](https://github.com/user-attachments/assets/41caf744-d1bc-4471-9d5b-70f68a720de3)
+
+&nbsp;&nbsp;&nbsp;&nbsp;앞서 언급한 모든 과정을, 정의된 모든 edge에 대해 반복해주게 되면 각 노드에 대한 camera pose와 global point cloud를 찾을 수 있게 됩니다.
+
+> 이 부분은 저도 코드를 직접 확인해보지는 않고 수식만 보고 이해한 내용이라 잘못된 부분이 있을 수 있습니다. 혹시 잘못된 부분이 있다면 지적해주시면 감사하겠습니다.
+
+<br>
+
+### **1-3) Grounding Image Matching in 3D with MASt3R (arXiv, 2024)**
+
+![Image](https://github.com/user-attachments/assets/759d6bf1-9da9-4030-a59e-59ba1d839395)
+
+&nbsp;&nbsp;&nbsp;&nbsp;하지만, 앞서 언급했던 DUSt3R는 view의 개수가 많아질 경우 optim 시간이 exponential하게 늘어난다는 문제점이 있습니다. 따라서 DUSt3R의 후속 연구로, MASt3R라는 method가 2024년 새롭게 publish되었습니다. MASt3R는 DUSt3R의 이러한 속도 문제를 해결하였으며, 고해상도로 많은 이미지수를 커버 가능하다고 합니다. 본 포스팅에서는 자세히 다루지는 않도록 하겠습니다.
+
+<br>
+<br>
+
+## 2. Method
+
+&nbsp;&nbsp;&nbsp;&nbsp;서론이 정말 길었던 것 같은데,
+
+InstantSplat은 SfM 대신 MASt3R를 off-the-shelf initializer로 사용해주었습니다.
