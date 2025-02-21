@@ -1,5 +1,5 @@
 ---
-title:  "[Arxiv] InstantSplat 리뷰"
+title:  "[Arxiv 2024] InstantSplat 리뷰"
 excerpt: "InstantSplat: Sparse-view SfM-free Gaussian Splatting in Seconds (arXiv, 2024)"
 
 categories:
@@ -21,7 +21,7 @@ use_math: true
 
 **[Keyword]** 3DGS
 
-**[Journal]** Arxiv
+**[Journal]** Arxiv, 2024
 
 **[arXiv]** <a href="https://arxiv.org/abs/2403.20309" target="blank_">https://arxiv.org/abs/2403.20309</a>
 

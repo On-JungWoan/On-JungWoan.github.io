@@ -1,5 +1,5 @@
 ---
-title:  "[Arxiv] Inter-pose 요약"
+title:  "[Arxiv 2024] Inter-pose 요약"
 excerpt: "Can Generative Video Models Help Pose Estimation? (Inter-pose)"
 
 categories:
@@ -21,7 +21,7 @@ use_math: true
 
 **[Keyword]** Camera pose estimation, Generation
 
-**[Journal]** Arxiv
+**[Journal]** Arxiv, 2024
 
 **[arXiv]** <a href="https://arxiv.org/abs/2412.16155" target="blank_">https://arxiv.org/abs/2412.16155</a>
 
