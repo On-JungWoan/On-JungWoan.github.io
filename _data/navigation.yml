@@ -1,7 +1,10 @@
 # main links
 main:
-  - title: "CV"    
-    url: /assets/cv.pdf
+  - title: "About me"
+    url: /about_me
+
+  # - title: "CV"    
+  #   url: /assets/cv.pdf
 
   - title: "Blog"    
     url: /
