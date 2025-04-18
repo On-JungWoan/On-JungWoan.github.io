@@ -171,9 +171,8 @@ layout: default
 
 <style>
 .ul-papers {
+  padding-left: 0;
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .ul-papers li {
@@ -181,6 +180,7 @@ layout: default
   flex-direction: row;
   gap: 16px;
   margin-bottom: 24px;
+  max-width: 100%;
   align-items: flex-start;
 }
 
@@ -189,79 +189,86 @@ layout: default
   min-width: 0;
   word-break: break-word;
 }
+
+.ul-papers hr {
+  margin: 4px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
 </style>
 
 
 <section id="papers" class="home-section wg-papers   " style="padding: 20px 0 20px 0;" >
   <div class="container">
     <div class="row">
-      <div class="col-lg-18">
+      <div class="col-lg-12">
         <h1>Publications</h1>
 
+        <ul class="ul-papers">
+          <!-- * Full publication list (including domestic publications) is available in my <a href="resources/cv.pdf">CV</a>. -->
 
-        <div class="row">
-          <ul class="ul-papers">
-            <!-- * Full publication list (including domestic publications) is available in my <a href="resources/cv.pdf">CV</a>. -->
+          <li>
+            <div class="img">
+              <img src="/assets/paper/BIGS.png" class="img-responsive" alt="">
+            </div>
+            <div class="description">
+              <p class="title">BIGS: Bimanual Category-agnostic Interaction Reconstruction from Monocular Videos via 3D Gaussian Splatting</p>
+              <hr>
+              <p class="authors"><b>Jeongwan On</b>, Kyeonghwan Gwak, Gunyoung Kang, Junuk Cha, Soohyun Hwang, Hyein Hwang, Seungryul Baek<br/></p>
+              <p class="venue">CVPR 2025<br></p>
+              <p class="resources">
+                <a href="https://arxiv.org/abs/2504.09097" target="_blank" rel="noopener">[Paper]</a>
+                <a href="https://github.com/On-JungWoan/BIGS" target="_blank" rel="noopener">[Code]</a>
+              </p>
+            </div>
+          </li>
 
-            <li>
-              <div class="img">
-                <img src="/assets/paper/BIGS.png" class="img-responsive" alt="">
-              </div>
-              <div class="description">
-                <p class="title">BIGS: Bimanual Category-agnostic Interaction Reconstruction from Monocular Videos via 3D Gaussian Splatting</p>
-                <p class="authors"><b>Jeongwan On</b>, Kyeonghwan Gwak, Gunyoung Kang, Junuk Cha, Soohyun Hwang, Hyein Hwang, Seungryul Baek<br/></p>
-                <p class="venue">CVPR 2025<br></p>
-                <p class="resources">
-                  <a href="https://arxiv.org/abs/2504.09097" target="_blank" rel="noopener">[Paper]</a>
-                  <a href="https://github.com/On-JungWoan/BIGS" target="_blank" rel="noopener">[Code]</a>
-                </p>
-              </div>
-            </li>
+          <li>
+            <div class="img">
+              <img src="/assets/paper/1st.png" class="img-responsive" alt="">
+            </div>
+            <div class="description">
+              <p class="title">1st Place Solution to the 8th HANDS Workshop Challenge - ARCTIC Track: 3DGS-based Bimanual Category-agnostic Interaction Reconstruction</p>
+              <hr>
+              <p class="authors"><b>Jeongwan On</b>, Kyeonghwan Gwak, Gunyoung Kang, Hyein Hwang, Soohyun Hwang, Junuk Cha, Jaewook Han, Seungryul Baek.<br/></p>
+              <p class="venue">ECCVW 2024 (Oral presentation)<br></p>
+              <p class="resources">
+                <a href="https://arxiv.org/abs/2409.19215" target="_blank" rel="noopener">[Paper]</a>
+              </p>
+            </div>
+          </li>
 
-            <li>
-              <div class="img">
-                <img src="/assets/paper/1st.png" class="img-responsive" alt="">
-              </div>
-              <div class="description">
-                <p class="title">1st Place Solution to the 8th HANDS Workshop Challenge - ARCTIC Track: 3DGS-based Bimanual Category-agnostic Interaction Reconstruction</p>
-                <p class="authors"><b>Jeongwan On</b>, Kyeonghwan Gwak, Gunyoung Kang, Hyein Hwang, Soohyun Hwang, Junuk Cha, Jaewook Han, Seungryul Baek.<br/></p>
-                <p class="venue">ECCVW 2024 (Oral presentation)<br></p>
-                <p class="resources">
-                  <a href="https://arxiv.org/abs/2409.19215" target="_blank" rel="noopener">[Paper]</a>
-                </p>
-              </div>
-            </li>
+          <li>
+            <div class="img">
+              <img src="/assets/paper/benchmark.png" class="img-responsive" alt="">
+            </div>
+            <div class="description">
+              <p class="title">Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects</p>
+              <hr>
+              <p class="authors">Zicong Fan, Takehiko Ohkawa, Linlin Yang, Nie Lin, Zhishan Zhou, Shihao Zhou, Jiajun Liang, Zhong Gao, Xuanyang Zhang, Xue Zhang, Fei Li, Liu Zheng, Feng Lu, Karim Abou Zeid, Bastian Leibe, <b>Jeongwan On</b>, Seungryul Baek, Aditya Prakash, Saurabh Gupta, Kun He, Yoichi Sato, Otmar Hilliges, Hyung Jin Chang, Angela Yao.<br/></p>
+              <p class="venue">ECCV 2024<br></p>
+              <p class="resources">
+                <a href="https://arxiv.org/abs/2403.16428" target="_blank" rel="noopener">[Paper]</a>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            <div class="img">
+              <img src="/assets/paper/class.png" class="img-responsive" alt="">
+            </div>
+            <div class="description">
+              <p class="title">Class-Wise Buffer Management for Incremental Object Detection: An Effective Buffer Training Strategy</p>
+              <hr>
+              <p class="authors">Junsu Kim, Sumin Hong, Chanwoo Kim, Jihyeon Kim, Yihalem Yimolal Tiruneh, <b>Jeongwan On</b>, Jihyun Song, Sunhwa Choi, Seungryul Baek<br/></p>
+              <p class="venue">ICASSP 2024<br></p>
+              <p class="resources">
+                <a href="https://arxiv.org/abs/2312.09139" target="_blank" rel="noopener">[Paper]</a>
+              </p>
+            </div>
+          </li>            
 
-            <li>
-              <div class="img">
-                <img src="/assets/paper/benchmark.png" class="img-responsive" alt="">
-              </div>
-              <div class="description">
-                <p class="title">Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects</p>
-                <p class="authors">Zicong Fan, Takehiko Ohkawa, Linlin Yang, Nie Lin, Zhishan Zhou, Shihao Zhou, Jiajun Liang, Zhong Gao, Xuanyang Zhang, Xue Zhang, Fei Li, Liu Zheng, Feng Lu, Karim Abou Zeid, Bastian Leibe, <b>Jeongwan On</b>, Seungryul Baek, Aditya Prakash, Saurabh Gupta, Kun He, Yoichi Sato, Otmar Hilliges, Hyung Jin Chang, Angela Yao.<br/></p>
-                <p class="venue">ECCV 2024<br></p>
-                <p class="resources">
-                  <a href="https://arxiv.org/abs/2403.16428" target="_blank" rel="noopener">[Paper]</a>
-                </p>
-              </div>
-            </li>
-            
-            <li>
-              <div class="img">
-                <img src="/assets/paper/class.png" class="img-responsive" alt="">
-              </div>
-              <div class="description">
-                <p class="title">Class-Wise Buffer Management for Incremental Object Detection: An Effective Buffer Training Strategy</p>
-                <p class="authors">Junsu Kim, Sumin Hong, Chanwoo Kim, Jihyeon Kim, Yihalem Yimolal Tiruneh, <b>Jeongwan On</b>, Jihyun Song, Sunhwa Choi, Seungryul Baek<br/></p>
-                <p class="venue">ICASSP 2024<br></p>
-                <p class="resources">
-                  <a href="https://arxiv.org/abs/2312.09139" target="_blank" rel="noopener">[Paper]</a>
-                </p>
-              </div>
-            </li>            
-
-          </ul>
-        </div>
+        </ul>
       
 
       </div>
