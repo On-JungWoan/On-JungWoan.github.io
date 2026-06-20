@@ -1,0 +1,250 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,left=1.35cm,right=1.35cm,top=1.15cm,bottom=1.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,urlcolor=linkcolor]{hyperref}
+
+
+\definecolor{mycolor}{HTML}{880808}
+\definecolor{accent}{HTML}{1F5C8A}
+\definecolor{strongcolor}{HTML}{1F2A3D}
+\definecolor{linkcolor}{HTML}{0B6FA4}
+\definecolor{tagcolor}{HTML}{1A0000}
+\definecolor{muted}{HTML}{5F6B7A}
+\definecolor{rulegray}{HTML}{D7DEE8}
+
+\setmainfont{Times New Roman}
+\IfFontExistsTF{Malgun Gothic}{\setCJKmainfont{Malgun Gothic}}{\setCJKmainfont{Batang}}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=*,nosep}
+\renewcommand{\arraystretch}{1.08}
+\newcolumntype{D}{>{\raggedright\arraybackslash}p{2.8cm}}
+\newcolumntype{P}{>{\raggedright\arraybackslash}p{2.8cm}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newlength{\datecolwidth}
+\setlength{\datecolwidth}{2.8cm}
+\newlength{\pubcolwidth}
+\setlength{\pubcolwidth}{2.8cm}
+\newlength{\rowcolgap}
+\setlength{\rowcolgap}{12pt}
+\newlength{\headerheight}
+\setlength{\headerheight}{2.45cm}
+\newlength{\contacttopskip}
+\setlength{\contacttopskip}{0.9cm}
+
+\newlength{\entrymargin}
+\setlength{\entrymargin}{12pt}
+
+\newcommand{\name}{Jeongwan On}
+\newcommand{\namekr}{온정완}
+\newcommand{\degree}{Combined MS/PhD Student}
+\newcommand{\course}{Artificial Intelligence Graduate School (AIGS)}
+\newcommand{\univ}{UNIST, Ulsan, Korea}
+\newcommand{\phone}{10-9882-3782}
+\newcommand{\emaila}{jeongwan.on@unist.ac.kr}
+\newcommand{\github}{https://github.com/On-JungWoan}
+\newcommand{\homepage}{https://on-jungwoan.github.io/}
+\newcommand{\link}[2]{\href{#1}{\textcolor{linkcolor}{#2}}}
+\newcommand{\cvstrong}[1]{\textbf{\textcolor{strongcolor}{#1}}}
+\newcommand{\cvmuted}[1]{\textcolor{muted}{#1}}
+\newcommand{\strongcustom}[1]{\textbf{\textcolor{mycolor}{#1}}}
+\newcommand{\me}{\strongcustom{Jeongwan On}}
+\newcommand{\daterange}[2]{#1 --\par #2}
+
+\newcommand{\PaperCvprBigs}{https://arxiv.org/abs/2504.09097}
+\newcommand{\PaperEccvChallengeReport}{https://arxiv.org/abs/2409.19215}
+\newcommand{\PaperEccvChallengeBenchmark}{https://arxiv.org/abs/2403.16428}
+\newcommand{\AwardEccvHandChallenge}{https://on-jungwoan.github.io/assets/eccv_award.pdf}
+\newcommand{\AwardIccvHandChallenge}{https://on-jungwoan.github.io/assets/ICCV_award.png}
+\newcommand{\CodeCvprBigs}{https://github.com/On-JungWoan/BIGS}
+\newcommand{\CodeIccvHandChallenge}{https://github.com/On-JungWoan/UVHand}
+
+\newcommand{\cvsection}[1]{%
+  \vspace{20pt}
+  {\large\bfseries\textcolor{accent}{#1}}\par
+  \vspace{3pt}{\color{rulegray}\hrule}\vspace{5pt}
+}
+
+\newcommand{\topcell}[1]{%
+  \begin{minipage}[t]{\linewidth}
+    \vspace{0pt}#1
+  \end{minipage}
+}
+\newcommand{\cvrow}[3]{%
+  \noindent
+  \begin{minipage}[t]{#1}
+    \vspace{0pt}#2
+  \end{minipage}%
+  \hspace{\rowcolgap}%
+  \begin{minipage}[t]{\dimexpr\textwidth-#1-\rowcolgap\relax}
+    \vspace{0pt}#3
+  \end{minipage}\par
+}
+
+\newcommand{\entry}[5]{%
+  \cvrow{\datecolwidth}
+    {\textcolor{muted}{#1}}
+    {
+        \textbf{#2}\hfill{\small\textcolor{muted}{#3}}\par
+        \cvmuted{#4}\par\cvmuted{#5}}\vspace{\entrymargin
+    }
+}
+
+\newcommand{\compactentry}[3]{%
+  \cvrow{\datecolwidth}
+    {\textcolor{muted}{#1}}
+    {\cvstrong{#2}\hfill{\small\textcolor{muted}{#3}}}\vspace{\entrymargin}
+}
+
+\newcommand{\pubitem}[5]{%
+  \cvrow{\pubcolwidth}
+    {\textbf{#1}\par{\small\textcolor{muted}{#2}}}
+    {\cvstrong{#3}\par
+    {\small #4}\par
+    {\small\textcolor{muted}{#5}}}\vspace{\entrymargin}\vspace{1pt}
+}
+
+\newcommand{\awarditem}[5]{%
+  \cvrow{\datecolwidth}
+    {\textcolor{muted}{#1}}
+    {\textbf{#2}\hfill{\small\cvmuted{#3}}\par
+      {\small\cvmuted{#4}}\par
+      {\small\textcolor{muted}{#5}}}\vspace{\entrymargin}
+}
+
+\begin{document}
+
+\begin{tabularx}{\textwidth}{@{}p{2.65cm}@{\hspace{0.28cm}}Y>{\raggedleft\arraybackslash}p{4.85cm}@{}}
+  \begin{minipage}[t][\headerheight][t]{2.65cm}
+    \vspace{0pt}
+    \includegraphics[height=\headerheight,clip]{images/profile_img.png}
+  \end{minipage} &
+  \begin{minipage}[t][\headerheight][s]{\linewidth}
+    \vspace{0pt}
+    {\huge\bfseries \name} {\large\textcolor{muted}{(\,\namekr\,)}}\par
+    \vfill
+    \textit{\degree}\par
+    \course\par
+    \univ
+  \end{minipage} &
+  \begin{minipage}[t][\headerheight][t]{\linewidth}
+    \vspace*{\contacttopskip}
+    \hfill{\small
+    \begin{tabular}{@{}r@{\hspace{0.45em}}r@{}}
+      Phone: & +82) \phone\\
+      Email: & \href{mailto:\emaila}{\emaila}\\
+      GitHub: & \link{\github}{GitHub Profile}\\
+      Homepage: & \link{\homepage}{Homepage}
+    \end{tabular}}
+  \end{minipage}
+\end{tabularx}
+\vspace{10pt}
+
+\cvsection{Research Interest}
+3D pose estimation, 3D human/hand mesh reconstruction.
+\vspace{\entrymargin}
+
+\cvsection{Education}
+\entry{\daterange{2024 Sep}{Present}}
+  {Ulsan National Institute of Science and Technology (UNIST)}
+  {Ulsan, Korea}
+  {\textit{\degree}, \course}{Advisor: Seungryul Baek}
+
+\entry{\daterange{2018 Mar}{2024 Feb}}
+  {Chonnam National University}
+  {Gwangju, Korea}
+  {B.S. in Statistics}{Advisor: Myunghwan Na}
+
+\cvsection{International Publications}
+\pubitem{ECCV}{2026}
+  {Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots}
+  {\me, \cvmuted{Muhammad Salman Ali, Muneeb A. Khan, Sunwoo Park, Inwoong Moon, Hyung Jin Chang, Jaekwang Kim, Seong Jong Ha, Seungryul Baek.}}
+  {European Conference on Computer Vision (\strongcustom{ECCV}), Malm\"o, Sweden, 2026. (Accepted)}
+
+\pubitem{CVPR}{2025}
+  {BIGS: Bimanual Category-agnostic Interaction Reconstruction from Monocular Videos via 3D Gaussian Splatting}
+  {\me, \cvmuted{Kyeonghwan Gwak, Gunyoung Kang, Junuk Cha, Soohyun Hwang, Hyein Hwang, Seungryul Baek.}}
+  {IEEE/CVF Conference on Computer Vision and Pattern Recognition (\strongcustom{CVPR}), Nashville, TN, USA, 2025.
+   \link{\PaperCvprBigs}{[pdf]} \link{\CodeCvprBigs}{[code]}}
+
+\pubitem{ECCVW}{2024}
+  {1st Place Solution to the 8th HANDS Workshop Challenge - ARCTIC Track: 3DGS-based Bimanual Category-agnostic Interaction Reconstruction}
+  {\me, \cvmuted{Kyeonghwan Gwak, Gunyoung Kang, Hyein Hwang, Soohyun Hwang, Junuk Cha, Jaewook Han, Seungryul Baek.}}
+  {Technical Report of European Conference on Computer Vision Workshop (\strongcustom{ECCVW}) on HANDS, Milan, Italy, 2024. (\strongcustom{Oral presentation})
+   \link{\PaperEccvChallengeReport}{[pdf]}}
+
+\pubitem{ECCV}{2024}
+  {Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects}
+  {\cvmuted{Zicong Fan, Takehiko Ohkawa, Linlin Yang, Nie Lin, Zhishan Zhou, Shihao Zhou, Jiajun Liang, Zhong Gao, Xuanyang Zhang, Xue Zhang, Fei Li, Liu Zheng, Feng Lu, Karim Abou Zeid, Bastian Leibe,} \me, \cvmuted{Seungryul Baek, Aditya Prakash, Saurabh Gupta, Kun He, Yoichi Sato, Otmar Hilliges, Hyung Jin Chang, Angela Yao.}}
+  {European Conference on Computer Vision (\strongcustom{ECCV}), Milan, Italy, 2024.
+   \link{\PaperEccvChallengeBenchmark}{[pdf]}}
+
+\pubitem{ICASSP}{2024}
+  {Class-Wise Buffer Management for Incremental Object Detection: An Effective Buffer Training Strategy}
+  {\cvmuted{Junsu Kim, Sumin Hong, Chanwoo Kim, Jihyeon Kim, Yihalem Yimolal Tiruneh,} \me, \cvmuted{Jihyun Song, Sunhwa Choi, Seungryul Baek}}
+  {IEEE International Conference on Acoustics, Speech, and Signal Processing (\strongcustom{ICASSP}), Seoul, South Korea, 2024.}
+
+\cvsection{Selected Awards}
+\awarditem{2024 Sep}
+  {1st place at 2024 ECCV hand challenge}
+  {ECCV 2024, Italy}
+  {ARCTIC Track: Bimanual category-agnostic interaction reconstruction.}
+  {\link{\AwardEccvHandChallenge}{[certificate]}}
+
+\awarditem{2023 Oct}
+  {3rd place at 2023 ICCV hand challenge}
+  {ICCV 2023, France}
+  {ARCTIC Track: Consistent Motion Reconstruction.}
+  {\link{\AwardIccvHandChallenge}{[certificate]} \link{\CodeIccvHandChallenge}{[code]}}
+
+\cvsection{Work Experience}
+\entry{\daterange{2023 Mar}{2024 Aug}}
+  {UNIST Vision and Learning Lab (UVLL)}
+  {Ulsan, Korea}
+  {Researcher / Research Intern}{3D reconstruction, hand pose estimation, and transformer-based object detection}
+
+\entry{\daterange{2022 Sep}{2022 Dec}}
+  {Euclidsoft Co., Ltd.}
+  {Daejeon, Korea}
+  {Development Team Intern}{Model optimization with TensorRT and CUDA Stream; object detection}
+
+\cvsection{Other Honors}
+\compactentry{2024 Dec}
+  {2nd Prize at UNIST AI Challenger Program (AICP)}
+  {UNIST}
+
+\compactentry{2023 Nov}
+  {Best Undergraduate Paper Award}
+  {Chonnam National University}
+
+\compactentry{2023 Sep}
+  {2nd Prize at AI Idea Contest}
+  {Gwangju Information \& Culture Industry Promotion Agency (GICON)}
+
+\compactentry{2022 Dec}
+  {Outstanding Intern Award}
+  {Euclidsoft Co., Ltd.}
+
+\compactentry{2022 Oct}
+  {1st Prize at Bigdata Competition}
+  {Chonnam National University}
+
+\compactentry{2021 Oct}
+  {3rd Prize at Bigdata Competition}
+  {Chonnam National University}
+
+\vfill
+\begin{flushright}
+  {\textbf{\textcolor{muted}{Last updated: Jun. 20, 2026}}}
+\end{flushright}
+
+\end{document}
