@@ -3,6 +3,7 @@ import shutil
 import subprocess
 import sys
 
+# conda activate cv 먼저 해야 함!!
 
 ROOT = Path(__file__).resolve().parent
 TEX = "cv.tex"
