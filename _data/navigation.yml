@@ -3,8 +3,11 @@ main:
   - title: "About me"
     url: /
 
-  # - title: "CV"    
-  #   url: /assets/cv.pdf
+  # - title: "News"
+  #   url: /#news
+
+  - title: "CV"    
+    url: /assets/cv.pdf
 
   - title: "Blog"    
     url: /blog
