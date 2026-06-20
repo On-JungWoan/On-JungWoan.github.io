@@ -599,6 +599,172 @@ layout: default
       line-height: 1.5;
     }
 
+    .award-featured-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .award-list,
+    .minor-award-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .award-item {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 14px 16px;
+      border: 1px solid #dfe6ee;
+      border-left: 4px solid #7ba6c9;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(30, 45, 62, 0.04);
+    }
+
+    .award-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      min-height: 34px;
+      padding: 5px 6px;
+      border: 1px solid #c7dcec;
+      border-radius: 8px;
+      background: #edf5fb;
+      color: #2b587f;
+      font-size: 0.82rem;
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .award-title {
+      margin: 0;
+      color: #182433;
+      font-weight: 800;
+      line-height: 1.4;
+      overflow-wrap: break-word;
+    }
+
+    .award-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .award-title a:hover {
+      color: #2b64a0;
+      text-decoration: underline;
+    }
+
+    .award-detail,
+    .award-meta {
+      margin: 4px 0 0;
+      color: #526072;
+      line-height: 1.5;
+    }
+
+    .award-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .award-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 0;
+    }
+
+    .award-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid #d9e3ef;
+      border-radius: 6px;
+      background: #f8fafc;
+      color: #2b587f;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .award-actions a:hover {
+      border-color: #93b6d8;
+      background: #eef5fb;
+      color: #2b64a0;
+      text-decoration: none;
+    }
+
+    .award-item.featured-award {
+      grid-template-columns: 64px minmax(0, 1fr);
+      padding: 18px;
+      border-left-width: 6px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+      box-shadow: 0 10px 26px rgba(30, 45, 62, 0.07);
+    }
+
+    .featured-award .award-mark {
+      width: 54px;
+      min-height: 46px;
+      font-size: 1rem;
+    }
+
+    .featured-award .award-title {
+      font-size: 1.05rem;
+    }
+
+    .minor-awards {
+      padding-top: 2px;
+    }
+
+    .minor-awards h3 {
+      margin: 0 0 10px;
+      color: #526072;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .minor-award-list {
+      gap: 0;
+      border-top: 1px solid #e7edf3;
+    }
+
+    .minor-award-list li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid #e7edf3;
+      color: #3f4b59;
+      line-height: 1.45;
+    }
+
+    .minor-award-list strong {
+      color: #182433;
+      font-weight: 800;
+    }
+
+    .minor-award-list .year {
+      color: #697789;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
     .experience-list {
       display: grid;
       gap: 0px;
@@ -707,6 +873,30 @@ layout: default
     
       .news-list li {
         gap: 6px;
+      }
+
+      .award-featured-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .award-item {
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .award-mark {
+        width: 38px;
+        font-size: 0.76rem;
+      }
+
+      .minor-award-list li {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      .minor-award-list .year {
+        white-space: normal;
       }
     }
     
@@ -865,16 +1055,44 @@ layout: default
       <!-- <p>Selected recognitions from research challenges, academic programs, and competitions.</p> -->
     </div>
 
-    <ul class="clean-list">
-      <li><b><a href="https://on-jungwoan.github.io/assets/eccv_award.pdf" target="_blank" rel="noopener">1st place at 2024 ECCV hand challenge</a></b>, Bimanual category-agnostic interaction reconstruction, ECCV, 2024.</li>
-      <li><b><a href="https://on-jungwoan.github.io/assets/ICCV_award.png" target="_blank" rel="noopener">3rd place at 2023 ICCV hand challenge</a></b>, Consistent Motion Reconstruction, ICCV, 2023. <a href="https://github.com/On-JungWoan/UVHand" target="_blank" rel="noopener">[Code]</a></li>
-      <li>2nd Prize at UNIST AI Challenger Program (AICP), UNIST, 2024.</li>
-      <li>Best Undergraduate Paper Award, Chonnam National University, 2023.</li>
-      <li>2nd prize at AI idea contest, gwangju information & culture industry promotion agency (GICON), 2023.</li>
-      <li>Outstanding Intern Award, ICT Academic Project, Euclidsoft Co., Ltd., 2022.</li>
-      <li>1st prize at Bigdata competition, Chonnam National University, 2022.</li>
-      <li>3rd prize at Bigdata competition, Chonnam National University, 2021.</li>
-    </ul>
+    <div class="award-featured-grid">
+      <article class="award-item featured-award">
+        <span class="award-mark">1st</span>
+        <div class="award-body">
+          <p class="award-title">2024 ECCV HANDS Workshop Challenge</p>
+          <p class="award-detail">Bimanual category-agnostic interaction reconstruction.</p>
+          <p class="award-meta"><span class="meta-badge meta-badge-conference">ECCV 2024</span></p>
+          <p class="award-actions">
+            <a href="https://on-jungwoan.github.io/assets/eccv_award.pdf" target="_blank" rel="noopener"><i class="far fa-file-alt"></i> Award</a>
+            <a href="https://github.com/On-JungWoan/BIGS" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+          </p>
+        </div>
+      </article>
+      <article class="award-item featured-award">
+        <span class="award-mark">3rd</span>
+        <div class="award-body">
+          <p class="award-title">2023 ICCV HANDS Workshop Challenge</p>
+          <p class="award-detail">Consistent Motion Reconstruction.</p>
+          <p class="award-meta"><span class="meta-badge meta-badge-conference">ICCV 2023</span></p>
+          <p class="award-actions">
+            <a href="https://on-jungwoan.github.io/assets/ICCV_award.png" target="_blank" rel="noopener"><i class="far fa-file-alt"></i> Award</a>
+            <a href="https://github.com/On-JungWoan/UVHand" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div class="minor-awards">
+      <h3>Other Honors</h3>
+      <ul class="minor-award-list">
+        <li><span><strong>2nd Prize</strong>, UNIST AI Challenger Program (AICP), UNIST</span><span class="year">2024</span></li>
+        <li><span><strong>Best Undergraduate Paper Award</strong>, Chonnam National University</span><span class="year">2023</span></li>
+        <li><span><strong>2nd Prize</strong>, AI Idea Contest, Gwangju Information &amp; Culture Industry Promotion Agency (GICON)</span><span class="year">2023</span></li>
+        <li><span><strong>Outstanding Intern Award</strong>, ICT Academic Project, Euclidsoft Co., Ltd.</span><span class="year">2022</span></li>
+        <li><span><strong>1st Prize</strong>, Bigdata Competition, Chonnam National University</span><span class="year">2022</span></li>
+        <li><span><strong>3rd Prize</strong>, Bigdata Competition, Chonnam National University</span><span class="year">2021</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
