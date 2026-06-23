@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi-THuMBS</title>
+  <meta name="description" content="Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots. ECCV 2026.">
+  <meta property="og:title" content="Multi-THuMBS">
+  <meta property="og:description" content="Multi-person Tracking of 3D Human Meshes Beyond Video Shots.">
+  <meta property="og:image" content="/assets/paper/Multi_THuMBS.png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --paper: #f7f8fb;
+      --text: #151922;
+      --muted: #5d6675;
+      --rule: #dfe5ee;
+      --accent: #266399;
+      --accent-dark: #173c5e;
+      --button: #f2f5f9;
+      --button-hover: #e8f0f8;
+      --shadow: 0 18px 44px rgba(25, 34, 52, 0.1);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(223, 229, 238, 0.9);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1080px, calc(100% - 32px));
+      min-height: 56px;
+      margin: 0 auto;
+      gap: 18px;
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: var(--button);
+      color: var(--accent-dark);
+      font-size: 0.94rem;
+      font-weight: 800;
+    }
+
+    .home-link:hover {
+      background: var(--button-hover);
+      text-decoration: none;
+    }
+
+    .research-menu {
+      position: relative;
+    }
+
+    .research-menu summary {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: var(--button);
+      color: var(--accent-dark);
+      font-size: 0.94rem;
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .research-menu summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .research-menu summary::after {
+      content: "v";
+      margin-left: 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .research-menu[open] summary,
+    .research-menu summary:hover {
+      background: var(--button-hover);
+    }
+
+    .research-list {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      width: 280px;
+      padding: 8px;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .research-list a {
+      display: block;
+      padding: 10px 11px;
+      border-radius: 6px;
+      color: var(--text);
+      font-weight: 750;
+    }
+
+    .research-list a:hover {
+      background: var(--button-hover);
+      text-decoration: none;
+    }
+
+    .research-list span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+
+    main {
+      width: min(1060px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 54px 0 54px;
+      text-align: center;
+    }
+
+    .paper-title {
+      max-width: 1040px;
+      margin: 0 auto 20px;
+      color: #101827;
+      font-size: clamp(1rem, 5vw, 2.7rem);
+      line-height: 1.04;
+      letter-spacing: 0;
+      font-weight: 850;
+    }
+
+    .author-list {
+      max-width: 960px;
+      margin: 0 auto 10px;
+      color: #2a3443;
+      font-size: clamp(1rem, 1.5vw, 1.3rem);
+      line-height: 1.85;
+    }
+
+    .author-list a {
+      color: var(--accent);
+      border-bottom: 1px solid rgba(38, 99, 153, 0.28);
+    }
+
+    .author-list a:hover {
+      border-bottom-color: var(--accent);
+      text-decoration: none;
+    }
+
+    sup {
+      color: var(--muted);
+      font-size: 0.68em;
+      font-weight: 700;
+    }
+
+    .affiliations {
+      max-width: 860px;
+      margin: 0 auto 12px;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    .venue {
+      margin: 12px 0 22px;
+      color: var(--accent-dark);
+      font-size: clamp(1.08rem, 1.6vw, 1.28rem);
+      font-weight: 850;
+    }
+
+    .resource-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+    }
+
+    .resource {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 112px;
+      min-height: 40px;
+      padding: 8px 16px;
+      border: 1px solid #cfd9e5;
+      border-radius: 7px;
+      background: var(--button);
+      color: var(--accent-dark);
+      font-size: 0.95rem;
+      font-weight: 850;
+    }
+
+    .resource.disabled {
+      color: #7a8492;
+      cursor: default;
+    }
+
+    .resource:not(.disabled):hover {
+      background: var(--button-hover);
+      text-decoration: none;
+    }
+
+    .teaser {
+      max-width: 100%;
+      margin: 34px auto 44px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .teaser img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .teaser figcaption {
+      padding: 13px 18px 15px;
+      color: var(--muted);
+      font-size: 0.96rem;
+      text-align: center;
+    }
+
+    section {
+      width: 100vw;
+      margin: 0 calc(50% - 50vw);
+      padding: 34px 0 54px;
+    }
+
+    section:nth-of-type(even) {
+      background: #ffffff;
+    }
+
+    section:nth-of-type(odd) {
+      background: var(--paper);
+    }
+
+    section > .section-title,
+    section > .body-copy,
+    section > .method-grid,
+    section > .placeholder,
+    section > .feasibility,
+    section > pre,
+    section > .ack {
+      width: min(930px, calc(100% - 32px));
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      color: #101827;
+      font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+      line-height: 1.2;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .body-copy {
+      margin: 0;
+      color: #273344;
+      font-size: 1.05rem;
+      text-align: left;
+    }
+
+    .body-copy + .body-copy {
+      margin-top: 14px;
+    }
+
+    #abstract .body-copy,
+    #method .body-copy {
+      width: min(1024px, calc(100% - 74px));
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.15rem;
+      line-height: 1.68;
+    }
+
+    .step-token {
+      display: inline-block;
+      margin: 0 0.08em;
+      color: var(--accent-dark);
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .placeholder {
+      display: grid;
+      place-items: center;
+      min-height: 230px;
+      padding: 28px;
+      border: 1px dashed #b9c7d8;
+      border-radius: var(--radius);
+      background: var(--paper);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .placeholder strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--accent-dark);
+      font-size: 1.08rem;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .method-copy {
+      padding: 22px;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .method-copy p {
+      margin: 0;
+      color: #273344;
+    }
+
+    .method-copy p + p {
+      margin-top: 13px;
+    }
+
+    .method-figure {
+      width: min(820px, calc(100% - 32px));
+      margin: 24px auto 0;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .method-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .method-figure figcaption {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 12px 16px 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .feasibility {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .feasibility-card {
+      min-height: 126px;
+      padding: 16px;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .feasibility-card h3 {
+      margin: 0 0 7px;
+      color: var(--accent-dark);
+      font-size: 1rem;
+    }
+
+    .feasibility-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .table-placeholder {
+      min-height: 260px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      border-radius: var(--radius);
+      background: #111827;
+      color: #edf4ff;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .ack {
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer {
+      width: min(1060px, calc(100% - 32px));
+      margin: 48px auto 0;
+      padding: 26px 0 42px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        width: min(100% - 22px, 1080px);
+      }
+
+      main {
+        width: min(100% - 22px, 1060px);
+      }
+
+      .hero {
+        padding-top: 38px;
+      }
+
+      .paper-title {
+        font-size: clamp(1rem, 6vw, 2.5rem);
+      }
+
+      .method-grid,
+      .feasibility {
+        grid-template-columns: 1fr;
+      }
+
+      .research-list {
+        right: 0;
+        width: min(280px, calc(100vw - 28px));
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="Project navigation">
+    <div class="topbar-inner">
+      <a class="home-link" href="/">Home</a>
+      <details class="research-menu">
+        <summary>More Research</summary>
+        <div class="research-list">
+          <a href="/projects/multi-thumbs/">
+            Multi-THuMBS (ECCV, 2026)
+            <!-- <span>ECCV 2026 - 3D human mesh tracking</span> -->
+          </a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <h1 class="paper-title">Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots</h1>
+      <p class="author-list">
+        <a href="https://on-jungwoan.github.io/">Jeongwan On</a><sup>1</sup>,
+        <a href="https://salmanali96.github.io/">Muhammad Salman Ali</a><sup>1</sup>,
+        <a href="https://muneebkhan46.github.io/">Muneeb A. Khan</a><sup>1</sup>,
+        <a href="https://github.com/psw1023">Sunwoo Park</a><sup>1</sup>,
+        <a href="https://sites.google.com/view/inwoongmoon">Inwoong Moon</a><sup>1</sup>,
+        <a href="https://cvlab-uob.github.io/">Hyung Jin Chang</a><sup>2</sup>,
+        Jaekwang Kim<sup>3</sup>,
+        Seong Jong Ha<sup>3</sup>,
+        <a href="https://sites.google.com/site/bsrvision00/">Seungryul Baek</a><sup>1</sup>
+      </p>
+      <p class="affiliations">
+        <sup>1</sup>UNIST Vision and Learning Lab, UNIST &nbsp;&nbsp;
+        <sup>2</sup>University of Birmingham &nbsp;&nbsp;
+        <sup>3</sup>CJ Corporation
+      </p>
+      <p class="venue">ECCV 2026 (accepted)</p>
+      <div class="resource-row" aria-label="Project resources">
+        <span class="resource disabled">Paper coming soon</span>
+        <span class="resource disabled">Code coming soon</span>
+        <span class="resource disabled">Video coming soon</span>
+      </div>
+    </header>
+
+    <!-- <figure class="teaser">
+      <img src="/projects/multi-thumbs/assets/teaser.png">
+      <figcaption>
+        Multi-THuMBS tracks identity-consistent 3D human mesh trajectories across video shot boundaries.
+      </figcaption>
+    </figure> -->
+
+    <section id="abstract">
+      <h2 class="section-title">Abstract</h2>
+      <p class="body-copy">
+        <span class="step-token">TLDR;</span> Multi-THuMBS tackles multi-person 3D human mesh tracking in real-world videos with frequent shot changes. Existing methods often lose identity consistency when the camera view changes abruptly, especially when multiple people interact, overlap, or leave the frame. Our approach reconstructs boundary frames in a shared 3D space, registers human meshes across shots, and preserves per-person identity and motion consistency for temporally coherent 3D trajectories.
+      </p>
+      <!-- <p class="body-copy">
+        This section is intentionally text-first, following the compact academic project-page style used by VGGT.
+      </p> -->
+    </section>
+
+    <section id="method">
+      <h2 class="section-title">Method</h2>
+      <p class="body-copy">
+        Given a video split by a shot boundary, Multi-THuMBS first estimates human meshes and camera poses for all frames. It then builds a <b>(A) shared 3D space</b> from the boundary frames, <b>(B) aligns</b> meshes across shots, <b>(C) propagates</b> camera and mesh trajectories, <b>(D) links identities</b> using spatial, pose, and appearance cues, and applies <b>(E) temporal smoothing</b>.
+      </p>
+      <figure class="method-figure">
+        <img src="/projects/multi-thumbs/assets/method.png" alt="Overview of the Multi-THuMBS method pipeline.">
+        <figcaption>
+          Overview of the Multi-THuMBS pipeline for shared-space alignment, identity linking, and trajectory smoothing.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section id="visualization">
+      <h2 class="section-title">Qualitative Visualization</h2>
+      <div class="placeholder">
+        <div>
+          <strong>Interactive mesh demo placeholder</strong>
+          This area can later host an interactive viewer for Multi-THuMBS mesh outputs.
+        </div>
+      </div>
+      <div class="feasibility">
+        <article class="feasibility-card">
+          <h3>Preferred path</h3>
+          <p>Export short mesh sequences as GLB/PLY and render them with Three.js or model-viewer.</p>
+        </article>
+        <article class="feasibility-card">
+          <h3>Performance check</h3>
+          <p>Keep demo assets small enough for GitHub Pages; use decimated meshes and compressed textures if needed.</p>
+        </article>
+        <article class="feasibility-card">
+          <h3>Fallback</h3>
+          <p>Use an MP4/GIF preview first, then upgrade to interactive playback after asset size and controls are stable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="quantitative-results">
+      <h2 class="section-title">Quantitative Results</h2>
+      <div class="placeholder table-placeholder">
+        <div>
+          <strong>Results table placeholder</strong>
+          Replace this block with an image of the final quantitative results table.
+        </div>
+      </div>
+    </section>
+
+    <section id="bibtex">
+      <h2 class="section-title">BibTeX</h2>
+      <pre><code>Coming soon!</code></pre>
+      <!-- <pre><code>@inproceedings{on2026multithumbs,
+        title     = {Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots},
+        author    = {On, Jeongwan and Ali, Muhammad Salman and Khan, Muneeb A. and Park, Sunwoo and Moon, Inwoong and Chang, Hyung Jin and Kim, Jaekwang and Ha, Seong Jong and Baek, Seungryul},
+        booktitle = {European Conference on Computer Vision (ECCV)},
+        year      = {2026}
+      }</code></pre> -->
+    </section>
+
+    <section id="acknowledgements">
+      <h2 class="section-title">Acknowledgements</h2>
+      <p class="ack">This work is supported by NRF grants (No. RS-2025-00521013 20%, No. RS-2025-02216916 10%) and IITP grants (No. RS-2020-II201336 Artificial intelligence graduate school program(UNIST) 10%; No. RS-2025-25442824 AI Star Fellowship Program(UNIST) 10%), funded by the Korean government (MSIT). This work is supported by CJ Corporation 50%.</p>
+    </section>
+  </main>
+
+  <footer>
+    Page layout follows common academic project-page conventions, inspired by VGGT and Nerfies-style navigation.
+  </footer>
+</body>
+</html>
