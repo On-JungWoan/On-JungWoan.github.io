@@ -424,6 +424,7 @@ layout: default
     }
     
     ul.ul-papers li.paper-item {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -580,21 +581,50 @@ layout: default
     }
 
     .meta-badge-presentation {
-      border: 1px solid #e6d4a8;
-      background: #fbf6e8;
-      color: #7a5b1d;
-    }
-
-    .meta-badge-report {
-      border: 1px solid #d9d6ec;
-      background: #f4f2fb;
-      color: #584d8c;
+      border: 1px solid #f0a15d;
+      background: #fff2e5;
+      color: #9a4a0d;
     }
 
     .meta-badge-muted {
       border: 1px solid #e2e7ed;
       background: #f5f7f9;
       color: #778392;
+    }
+
+    .paper-corner-tag {
+      position: absolute;
+      top: -12px;
+      left: 18px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      padding: 4px 10px 4px 8px;
+      border: 1px solid #cfd7ef;
+      border-radius: 6px;
+      background: #f5f7ff;
+      box-shadow: 0 5px 14px rgba(69, 80, 134, 0.12);
+      color: #465086;
+      font-weight: 800;
+      font-size: 0.74rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .paper-corner-tag::before {
+      content: "";
+      width: 4px;
+      height: 16px;
+      border-radius: 999px;
+      background: #6b78b8;
+    }
+
+    .paper-corner-tag i {
+      color: #5f6ca8;
+      font-size: 0.78rem;
     }
     
     .resources {
@@ -982,7 +1012,7 @@ layout: default
                 <p class="title">Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots</p>
                 <hr>
                 <p class="authors"><b>Jeongwan On</b>, Muhammad Salman Ali, Muneeb A. Khan, Sunwoo Park, Inwoong Moon, Hyung Jin Chang, Jaekwang Kim, Seong Jong Ha, Seungryul Baek.<br/></p>
-                <p class="venue"><span class="meta-badge meta-badge-conference">ECCV 2026</span><span class="meta-badge meta-badge-status">Accepted</span></p>
+                <p class="venue"><span class="meta-badge meta-badge-conference">ECCV 2026</span></p>
                 <p class="resources"><a href="/projects/multi-thumbs/" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Project</a><span class="meta-badge meta-badge-muted">Paper coming soon</span></p>
               </div>
             </div>
@@ -1006,7 +1036,8 @@ layout: default
             </div>
           </li>
 
-          <li class="paper-item">
+          <li class="paper-item technical-report-paper">
+            <span class="paper-corner-tag"><i class="far fa-file-alt" aria-hidden="true"></i> Technical Report</span>
             <div class="paper-content">
               <div class="paper-media">
                 <img src="/assets/paper/1st.png" class="img-responsive" alt="">
@@ -1015,7 +1046,7 @@ layout: default
                 <p class="title">1st Place Solution to the 8th HANDS Workshop Challenge - ARCTIC Track: 3DGS-based Bimanual Category-agnostic Interaction Reconstruction</p>
                 <hr>
                 <p class="authors"><b>Jeongwan On</b>, Kyeonghwan Gwak, Gunyoung Kang, Hyein Hwang, Soohyun Hwang, Junuk Cha, Jaewook Han, Seungryul Baek.<br/></p>
-                <p class="venue"><span class="meta-badge meta-badge-conference">ECCVW 2024</span><span class="meta-badge meta-badge-report">Technical report</span><span class="meta-badge meta-badge-presentation">Oral presentation</span></p>
+                <p class="venue"><span class="meta-badge meta-badge-conference">ECCVW 2024</span><span class="meta-badge meta-badge-presentation">Oral presentation</span></p>
                 <p class="resources">
                   <a href="https://arxiv.org/abs/2409.19215" target="_blank" rel="noopener"><i class="far fa-file-alt"></i> Paper</a>
                 </p>
