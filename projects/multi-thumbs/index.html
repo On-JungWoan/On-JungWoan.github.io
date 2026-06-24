@@ -201,7 +201,7 @@
       max-width: 860px;
       margin: 0 auto 12px;
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: clamp(0.78rem, 1.5vw, 0.98rem);
       line-height: 1.6;
     }
 
@@ -297,7 +297,7 @@
     .section-title {
       margin: 0 0 14px;
       color: #101827;
-      font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+      font-size: clamp(1rem, 2vw, 1.7rem);
       line-height: 1.2;
       font-weight: 850;
       text-align: center;
@@ -306,22 +306,25 @@
     .body-copy {
       margin: 0;
       color: #273344;
-      font-size: 1.05rem;
+      font-size: clamp(1rem, 1vw, 1rem);
       text-align: left;
+      width: min(1024px, calc(100% - 74px));
+      margin-left: auto;
+      margin-right: auto;      
     }
 
     .body-copy + .body-copy {
       margin-top: 14px;
     }
 
-    #abstract .body-copy,
+    /* #abstract .body-copy,
     #method .body-copy {
       width: min(1024px, calc(100% - 74px));
       margin-left: auto;
       margin-right: auto;
-      font-size: 1.15rem;
+      font-size: 1rem;
       line-height: 1.68;
-    }
+    } */
 
     .step-token {
       display: inline-block;
@@ -392,7 +395,7 @@
     .method-figure figcaption {
       max-width: 760px;
       margin: 0 auto;
-      padding: 12px 16px 14px;
+      padding: 12px 16px;
       color: var(--muted);
       font-size: 0.92rem;
       line-height: 1.5;
@@ -472,6 +475,10 @@
       .paper-title {
         font-size: clamp(1rem, 6vw, 2.5rem);
       }
+
+      .section-title {
+        font-size: clamp(1rem, 6vw, 2.5rem);
+      }      
 
       .method-grid,
       .feasibility {
@@ -553,7 +560,7 @@
       <figure class="method-figure">
         <img src="/projects/multi-thumbs/assets/method.png" alt="Overview of the Multi-THuMBS method pipeline.">
         <figcaption>
-          Overview of the Multi-THuMBS pipeline for shared-space alignment, identity linking, and trajectory smoothing.
+          Overview of the Multi-THuMBS pipeline for <b style="text-decoration : underline;">(A-C) shared-space alignment</b>, <b style="text-decoration : underline;">(D) identity linking</b>, and <b style="text-decoration : underline;">(E) trajectory smoothing</b>.
         </figcaption>
       </figure>
     </section>
@@ -566,7 +573,7 @@
           This area can later host an interactive viewer for Multi-THuMBS mesh outputs.
         </div>
       </div>
-      <div class="feasibility">
+      <!-- <div class="feasibility">
         <article class="feasibility-card">
           <h3>Preferred path</h3>
           <p>Export short mesh sequences as GLB/PLY and render them with Three.js or model-viewer.</p>
@@ -579,17 +586,17 @@
           <h3>Fallback</h3>
           <p>Use an MP4/GIF preview first, then upgrade to interactive playback after asset size and controls are stable.</p>
         </article>
-      </div>
+      </div> -->
     </section>
 
     <section id="quantitative-results">
       <h2 class="section-title">Quantitative Results</h2>
-      <div class="placeholder table-placeholder">
-        <div>
-          <strong>Results table placeholder</strong>
-          Replace this block with an image of the final quantitative results table.
-        </div>
-      </div>
+      <figure class="method-figure">
+        <img src="/projects/multi-thumbs/assets/quan_res.png">
+        <figcaption>
+          Quantitative comparison with state-ofthe-art methods on EgoHumans, EgoBody, and Harmony4D. 
+        </figcaption>
+      </figure>
     </section>
 
     <section id="bibtex">
@@ -605,7 +612,7 @@
 
     <section id="acknowledgements">
       <h2 class="section-title">Acknowledgements</h2>
-      <p class="ack">This work is supported by NRF grants (No. RS-2025-00521013 20%, No. RS-2025-02216916 10%) and IITP grants (No. RS-2020-II201336 Artificial intelligence graduate school program(UNIST) 10%; No. RS-2025-25442824 AI Star Fellowship Program(UNIST) 10%), funded by the Korean government (MSIT). This work is supported by CJ Corporation 50%.</p>
+      <p class="body-copy">This work is supported by NRF grants (No. RS-2025-00521013 20%, No. RS-2025-02216916 10%) and IITP grants (No. RS-2020-II201336 Artificial intelligence graduate school program(UNIST) 10%; No. RS-2025-25442824 AI Star Fellowship Program(UNIST) 10%), funded by the Korean government (MSIT). This work is supported by CJ Corporation 50%.</p>
     </section>
   </main>
 
