@@ -392,6 +392,7 @@
     section > .section-title,
     section > .body-copy,
     section > .method-grid,
+    section > .demo-shell,
     section > .placeholder,
     section > .feasibility,
     section > pre,
@@ -429,11 +430,15 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-top: 0.18em;
-      color: #506178;
-      font-size: 0.78rem;
+      margin: 0 0 8px;
+      padding: 4px 10px;
+      border: 1px solid rgba(38, 99, 153, 0.14);
+      border-radius: 999px;
+      background: #eef4fa;
+      color: var(--accent-dark);
+      font-size: 0.74rem;
       font-weight: 900;
-      line-height: 1.4;
+      line-height: 1.2;
       white-space: nowrap;
     }
 
@@ -450,15 +455,13 @@
     .abstract-text {
       display: block;
       min-width: 0;
+      text-align: left;
     }
 
     #abstract .body-copy {
-      display: grid;
-      grid-template-columns: 92px minmax(0, 1fr);
-      column-gap: 18px;
-      align-items: start;
+      display: block;
       box-sizing: border-box;
-      padding-top: 14px;
+      padding-top: 18px;
       border-top: 1px solid #e4ebf3;
       line-height: 1.72;
     }
@@ -559,6 +562,158 @@
       margin-bottom: 7px;
       color: var(--accent-dark);
       font-size: 1.08rem;
+    }
+
+    .demo-stage {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #0d1420;
+      box-shadow: var(--shadow);
+      aspect-ratio: 16 / 9;
+    }
+
+    .demo-stage-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      color: #b7c2d0;
+      text-align: center;
+    }
+
+    .demo-stage-placeholder strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #edf4ff;
+      font-size: 1.02rem;
+    }
+
+    .demo-frame {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #0d1420;
+    }
+
+    .demo-stage-caption {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      z-index: 2;
+      max-width: calc(100% - 28px);
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 6px;
+      background: rgba(13, 20, 32, 0.76);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 850;
+      line-height: 1.2;
+      backdrop-filter: blur(8px);
+    }
+
+    .demo-picker {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .demo-arrow {
+      flex: none;
+      width: 38px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: var(--button);
+      color: var(--accent-dark);
+      font-size: 1.65rem;
+      font-weight: 850;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .demo-arrow:hover {
+      background: var(--button-hover);
+    }
+
+    .demo-thumb-row {
+      display: flex;
+      flex: 1;
+      gap: 10px;
+      justify-content: center;
+      min-width: 0;
+      overflow-x: auto;
+      padding: 2px 2px 8px;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+    }
+
+    .demo-thumb {
+      flex: 0 0 150px;
+      padding: 8px;
+      border: 1px solid #d6e0eb;
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: #1f2933;
+      cursor: pointer;
+      opacity: 0.68;
+      text-align: left;
+      transition: border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .demo-thumb:hover,
+    .demo-thumb.is-active {
+      opacity: 1;
+    }
+
+    .demo-thumb.is-active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(38, 99, 153, 0.12);
+    }
+
+    .demo-thumb-media {
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 6px;
+      background: #e9eef5;
+    }
+
+    .demo-thumb-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .demo-thumb-placeholder {
+      color: #718096;
+      font-size: 0.72rem;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .demo-thumb-label {
+      display: block;
+      margin-top: 7px;
+      overflow: hidden;
+      color: #1f2933;
+      font-size: 0.9rem;
+      font-weight: 850;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
     }
 
     .method-grid {
@@ -714,12 +869,32 @@
       }
 
       #abstract .body-copy {
-        grid-template-columns: 1fr;
-        row-gap: 6px;
+        padding-top: 16px;
       }
 
       .abstract-tag {
-        margin-top: 0;
+        margin-bottom: 7px;
+      }
+
+      .demo-picker {
+        gap: 7px;
+      }
+
+      .demo-arrow {
+        width: 32px;
+        font-size: 1.35rem;
+      }
+
+      .demo-thumb {
+        flex-basis: clamp(66px, 22vw, 124px);
+        padding: 7px;
+      }
+
+      .demo-stage-caption {
+        left: 10px;
+        bottom: 10px;
+        max-width: calc(100% - 20px);
+        font-size: 0.82rem;
       }
 
       .method-grid,
@@ -799,10 +974,46 @@
 
     <section id="visualization">
       <h2 class="section-title">Interactive Results</h2>
-      <div class="placeholder">
-        <div>
-          <strong>Interactive mesh demo placeholder</strong>
-          This area can later host an interactive viewer for Multi-THuMBS mesh outputs.
+      <div class="demo-shell">
+        <div class="demo-stage" data-demo-stage>
+          <div class="demo-stage-placeholder">
+            <div>
+              <strong>Interactive viewer</strong>
+              Add the Viser client and recording files for each sample.
+            </div>
+          </div>
+
+          <iframe class="demo-frame" data-demo-frame title="Interactive Multi-THuMBS result"></iframe>
+
+          <div class="demo-stage-caption" data-demo-label>Sample 01</div>
+        </div>
+
+        <div class="demo-picker" aria-label="Interactive result samples">
+          <button class="demo-arrow" type="button" data-demo-prev aria-label="Previous sample">&#8249;</button>
+          <div class="demo-thumb-row" data-demo-thumbs>
+            <button class="demo-thumb is-active" type="button" data-demo-name="Sample 01" data-demo-src="/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/sample_01.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0">
+              <span class="demo-thumb-media">
+                <span class="demo-thumb-placeholder">Thumbnail</span>
+                <img class="demo-thumb-img" src="/projects/multi-thumbs/assets/demo/sample_01_thumb.jpg" alt="Sample 01 input video thumbnail">
+              </span>
+              <span class="demo-thumb-label">Sample 01</span>
+            </button>
+            <button class="demo-thumb" type="button" data-demo-name="Sample 02" data-demo-src="/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/sample_02.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0">
+              <span class="demo-thumb-media">
+                <span class="demo-thumb-placeholder">Thumbnail</span>
+                <img class="demo-thumb-img" src="/projects/multi-thumbs/assets/demo/sample_02_thumb.jpg" alt="Sample 02 input video thumbnail">
+              </span>
+              <span class="demo-thumb-label">Sample 02</span>
+            </button>
+            <button class="demo-thumb" type="button" data-demo-name="Sample 03" data-demo-src="/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/sample_03.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0">
+              <span class="demo-thumb-media">
+                <span class="demo-thumb-placeholder">Thumbnail</span>
+                <img class="demo-thumb-img" src="/projects/multi-thumbs/assets/demo/sample_03_thumb.jpg" alt="Sample 03 input video thumbnail">
+              </span>
+              <span class="demo-thumb-label">Sample 03</span>
+            </button>
+          </div>
+          <button class="demo-arrow" type="button" data-demo-next aria-label="Next sample">&#8250;</button>
         </div>
       </div>
     </section>
@@ -816,17 +1027,21 @@
         </figcaption> -->
       </figure>
       <p class="body-copy">
+        <span class="abstract-text">
+          Tracking multi-person 3D human meshes from in-the-wild videos is challenging due to complex interactions, frequent occlusions, and severe truncation in unconstrained environments. While recent approaches have improved robustness against these issues, they largely overlook the critical challenge prevalent in real-world footage: frequent shot changes. Abrupt viewpoint transitions can break identity tracking and temporal trajectory consistency, and existing shot-aware mesh tracking methods remain largely limited to single-person scenarios. To address this gap, Multi-THuMBS reconstructs the boundary frames around each shot change in a shared 3D space using a 3D scene prior, then registers human meshes in that space to preserve per-person identity and motion consistency across shots. Experiments show improvements in 3D mesh recovery, camera pose estimation, and identity tracking over prior methods, yielding temporally coherent multi-person reconstructions across shot boundaries.</span>
+      </p>      
+      <!-- <p class="body-copy">
         <span class="abstract-tag">Problem</span>
-        <span class="abstract-text">Tracking multi-person 3D human meshes from in-the-wild videos is a highly challenging problem due to complex interactions, frequent occlusions, and severe truncation inherent in unconstrained environments. While recent approaches have improved robustness against these issues, they largely overlook the critical challenge prevalent in real-world footage: frequent shot changes. These abrupt transitions in camera viewpoints often cause existing methods to lose track of human identities and fail in reconstructing temporally coherent trajectories. Although several recent works have explored 3D human mesh tracking under shot changes, they are still limited to single-person scenarios, making them inadequate for real-world videos where multiple people interact and appear simultaneously.</span>
+        <span class="abstract-text"><strong>Problem.</strong> multi-person 3D human meshes in in-the-wild videos remains difficult under interactions, occlusions, truncation, and frequent shot changes. Abrupt viewpoint transitions often break identity tracking and temporal consistency, while prior shot-aware mesh tracking is largely limited to single-person settings.</span>
       </p>
       <p class="body-copy">
         <span class="abstract-tag">Method</span>
-        <span class="abstract-text">To address this limitation, we propose <strong>Multi-THuMBS</strong> (<strong>Multi</strong>-person <strong>T</strong>racking of 3D <strong>Hu</strong>man <strong>M</strong>eshes <strong>B</strong>eyond Video <strong>S</strong>hots) that leverages a state-of-the-art 3D scene prior to reconstruct the two boundary frames in a single shared 3D space. Human meshes are then registered within the shared 3D space, maintaining per-person identity and motion consistency across shot changes.</span>
+        <span class="abstract-text"><strong>Method.</strong> Multi-THuMBS reconstructs the two boundary frames around a shot change in a shared 3D space using a 3D scene prior. Registering human meshes in this space enables identity-consistent alignment and motion continuity across shots.</span>
       </p>
       <p class="body-copy">
         <span class="abstract-tag">Results</span>
-        <span class="abstract-text">Extensive experiments demonstrate that our approach yields significant improvements in 3D human mesh recovery, camera pose estimation, and identity tracking, thereby ensuring high-fidelity motion reconstruction with consistent identity preservation across shots compared to previous state-of-the-art methods.</span>
-      </p>
+        <span class="abstract-text"><strong>Results.</strong> Experiments show consistent gains in 3D mesh recovery, camera pose estimation, and identity tracking over prior methods, producing temporally coherent multi-person reconstructions across shot boundaries.</span>
+      </p> -->
       <!-- <p class="body-copy">
         This section is intentionally text-first, following the compact academic project-page style used by VGGT.
       </p> -->
@@ -876,5 +1091,70 @@
   <footer>
     Page layout follows common academic project-page conventions, inspired by VGGT and Nerfies-style navigation.
   </footer>
+  <script>
+    (() => {
+      const stage = document.querySelector("[data-demo-stage]");
+      const label = document.querySelector("[data-demo-label]");
+      const thumbRow = document.querySelector("[data-demo-thumbs]");
+      const prevButton = document.querySelector("[data-demo-prev]");
+      const nextButton = document.querySelector("[data-demo-next]");
+      const frame = document.querySelector("[data-demo-frame]");
+
+      if (!stage || !label || !thumbRow || !prevButton || !nextButton || !frame) {
+        return;
+      }
+
+      const thumbs = Array.from(thumbRow.querySelectorAll(".demo-thumb"));
+      let activeIndex = 0;
+
+      const selectDemo = (index) => {
+        activeIndex = (index + thumbs.length) % thumbs.length;
+        const activeThumb = thumbs[activeIndex];
+        const src = activeThumb.dataset.demoSrc;
+
+        thumbs.forEach((thumb) => {
+          const isActive = thumb === activeThumb;
+          thumb.classList.toggle("is-active", isActive);
+          thumb.setAttribute("aria-pressed", String(isActive));
+        });
+
+        if (src && frame.getAttribute("src") !== src) {
+          frame.setAttribute("src", src);
+        }
+
+        label.textContent = activeThumb.dataset.demoName || activeThumb.textContent.trim();
+        activeThumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      };
+
+      document.querySelectorAll(".demo-thumb-img").forEach((img) => {
+        const hideMissingImage = () => {
+          if (img.naturalWidth === 0) {
+            img.hidden = true;
+          }
+        };
+
+        img.addEventListener("error", () => {
+          img.hidden = true;
+        });
+        img.addEventListener("load", () => {
+          img.hidden = false;
+        });
+
+        if (img.complete) {
+          hideMissingImage();
+        }
+      });
+
+      thumbs.forEach((thumb, index) => {
+        thumb.setAttribute("aria-pressed", String(index === activeIndex));
+        thumb.addEventListener("click", () => selectDemo(index));
+      });
+
+      prevButton.addEventListener("click", () => selectDemo(activeIndex - 1));
+      nextButton.addEventListener("click", () => selectDemo(activeIndex + 1));
+
+      selectDemo(0);
+    })();
+  </script>
 </body>
 </html>
