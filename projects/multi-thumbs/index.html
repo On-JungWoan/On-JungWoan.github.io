@@ -8,6 +8,8 @@
   <meta property="og:title" content="Multi-THuMBS">
   <meta property="og:description" content="Multi-person Tracking of 3D Human Meshes Beyond Video Shots.">
   <meta property="og:image" content="/assets/paper/Multi_THuMBS.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     :root {
       --bg: #ffffff;
@@ -173,6 +175,23 @@
       font-weight: 850;
     }
 
+    .title-emoji {
+      display: inline-block;
+      margin-right: 0.16em;
+      font-size: 0.88em;
+      vertical-align: 0.03em;
+    }
+
+    .title-acronym {
+      font-weight: 900;
+    }
+
+    .paper-title strong,
+    .abstract-text strong {
+      color: inherit;
+      font-weight: 900;
+    }
+
     .author-list {
       max-width: 960px;
       margin: 0 auto 10px;
@@ -224,15 +243,27 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       min-width: 112px;
       min-height: 40px;
       padding: 8px 16px;
       border: 1px solid #cfd9e5;
       border-radius: 7px;
       background: var(--button);
-      color: var(--accent-dark);
+      color: #1f2933;
       font-size: 0.95rem;
       font-weight: 850;
+    }
+
+    .resource-icon {
+      flex: none;
+      color: currentColor;
+      font-size: 1.08rem;
+      line-height: 1;
+    }
+
+    .resource-icon.ai {
+      font-size: 1.16rem;
     }
 
     .resource.disabled {
@@ -243,6 +274,67 @@
     .resource:not(.disabled):hover {
       background: var(--button-hover);
       text-decoration: none;
+    }
+
+    .tldr {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: min(930px, calc(100% - 32px));
+      margin: -14px auto 42px;
+      padding: 18px 22px;
+      border: 1px solid #d6e2ee;
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #ffffff 0%, #f6f9fd 100%);
+      box-shadow: var(--shadow);
+      color: #273344;
+      font-size: clamp(1rem, 1.25vw, 1.08rem);
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    .tldr-text,
+    .body-copy,
+    .method-copy p,
+    .teaser figcaption,
+    .method-figure figcaption,
+    .abstract-figure figcaption,
+    .feasibility-card p {
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphenate-character: "-";
+    }
+
+    .tldr-text,
+    .body-copy,
+    .method-copy p {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .tldr-badge {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      background: #1f2933;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .tldr strong {
+      color: var(--accent-dark);
+      font-weight: 850;
     }
 
     .teaser {
@@ -307,14 +399,62 @@
       margin: 0;
       color: #273344;
       font-size: clamp(1rem, 1vw, 1rem);
-      text-align: left;
+      text-align: justify;
+      text-justify: inter-word;
       width: min(1024px, calc(100% - 74px));
       margin-left: auto;
-      margin-right: auto;      
+      margin-right: auto;
     }
 
     .body-copy + .body-copy {
       margin-top: 14px;
+    }
+
+    .abstract-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 0.18em;
+      color: #506178;
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .abstract-tag::before {
+      content: "";
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(38, 99, 153, 0.12);
+    }
+
+    .abstract-text {
+      display: block;
+      min-width: 0;
+    }
+
+    #abstract .body-copy {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      column-gap: 18px;
+      align-items: start;
+      box-sizing: border-box;
+      padding-top: 14px;
+      border-top: 1px solid #e4ebf3;
+      line-height: 1.72;
+    }
+
+    #abstract .body-copy:first-of-type {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    #abstract .body-copy + .body-copy {
+      margin-top: 18px;
     }
 
     /* #abstract .body-copy,
@@ -332,6 +472,59 @@
       color: var(--accent-dark);
       font-weight: 850;
       white-space: nowrap;
+    }
+
+    .pipeline-step {
+      --step-color: var(--accent-dark);
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.24em;
+      margin: 0 0.08em;
+      color: #273344;
+      font-weight: 850;
+      text-decoration-line: underline;
+      text-decoration-color: var(--step-color);
+      text-decoration-color: color-mix(in srgb, var(--step-color) 68%, transparent);
+      text-decoration-thickness: 0.12em;
+      text-decoration-skip-ink: none;
+      text-underline-offset: 0.16em;
+      white-space: nowrap;
+    }
+
+    .pipeline-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.22em;
+      height: 1.22em;
+      border-radius: 999px;
+      background: var(--step-color);
+      color: #ffffff;
+      font-size: 0.76em;
+      font-weight: 900;
+      line-height: 1;
+      vertical-align: 0.08em;
+      box-shadow: 0 0 0 0.12em rgba(255, 255, 255, 0.96);
+    }
+
+    .step-a {
+      --step-color: #16b82e;
+    }
+
+    .step-b {
+      --step-color: #1f75b8;
+    }
+
+    .step-c {
+      --step-color: #6f2dbd;
+    }
+
+    .step-d {
+      --step-color: #e7792b;
+    }
+
+    .step-e {
+      --step-color: #b59a00;
     }
 
     .placeholder {
@@ -400,6 +593,22 @@
       font-size: 0.92rem;
       line-height: 1.5;
       text-align: center;
+    }
+
+    .abstract-figure {
+      width: min(850px, calc(100% - 34px));
+      margin: 0 auto 24px;
+      overflow: hidden;
+      /* border: 1px solid var(--rule);
+      border-radius: var(--radius); */
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .abstract-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
     .feasibility {
@@ -472,13 +681,31 @@
         padding-top: 38px;
       }
 
+      .tldr {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        width: min(100% - 22px, 930px);
+        margin: -10px auto 30px;
+        padding: 16px;
+      }
+
       .paper-title {
         font-size: clamp(1rem, 6vw, 2.5rem);
       }
 
       .section-title {
         font-size: clamp(1rem, 6vw, 2.5rem);
-      }      
+      }
+
+      #abstract .body-copy {
+        grid-template-columns: 1fr;
+        row-gap: 6px;
+      }
+
+      .abstract-tag {
+        margin-top: 0;
+      }
 
       .method-grid,
       .feasibility {
@@ -510,7 +737,10 @@
 
   <main>
     <header class="hero">
-      <h1 class="paper-title">Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots</h1>
+      <h1 class="paper-title">
+        <span class="title-emoji" aria-hidden="true">👍</span><strong class="title-acronym">Multi-THuMBS</strong>:
+        <strong>Multi</strong>-person <strong>T</strong>racking of 3D <strong>Hu</strong>man <strong>M</strong>eshes <strong>B</strong>eyond Video <strong>S</strong>hots
+      </h1>
       <p class="author-list">
         <a href="https://on-jungwoan.github.io/">Jeongwan On</a><sup>1</sup>,
         <a href="https://salmanali96.github.io/">Muhammad Salman Ali</a><sup>1</sup>,
@@ -529,11 +759,21 @@
       </p>
       <p class="venue">ECCV 2026 (accepted)</p>
       <div class="resource-row" aria-label="Project resources">
-        <span class="resource disabled">Paper coming soon</span>
-        <span class="resource disabled">Code coming soon</span>
-        <span class="resource disabled">Video coming soon</span>
+        <a class="resource" href="https://arxiv.org/abs/2607.01626" target="_blank" rel="noopener noreferrer">
+          <i class="ai ai-arxiv resource-icon" aria-hidden="true"></i>
+          <span>arXiv</span>
+        </a>
+        <a class="resource" href="https://youtu.be/-aZ3LOE8LUM" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-youtube resource-icon" aria-hidden="true"></i>
+          <span>Video</span>
+        </a>
       </div>
     </header>
+
+    <div class="tldr">
+      <span class="tldr-badge">TL;DR</span>
+      <span class="tldr-text"><strong>Multi-THuMBS</strong> preserves identity-consistent multi-person 3D human mesh tracks across abrupt shot changes by aligning boundary frames in a shared 3D space.</span>
+    </div>
 
     <!-- <figure class="teaser">
       <img src="/projects/multi-thumbs/assets/teaser.png">
@@ -542,10 +782,35 @@
       </figcaption>
     </figure> -->
 
+    <section id="visualization">
+      <h2 class="section-title">Interactive Results</h2>
+      <div class="placeholder">
+        <div>
+          <strong>Interactive mesh demo placeholder</strong>
+          This area can later host an interactive viewer for Multi-THuMBS mesh outputs.
+        </div>
+      </div>
+    </section>
+
     <section id="abstract">
       <h2 class="section-title">Abstract</h2>
+      <figure class="abstract-figure">
+        <img src="/projects/multi-thumbs/assets/teaser_v1.png">
+        <!-- <figcaption>
+          Overview of the Multi-THuMBS pipeline for <b style="text-decoration : underline;">(A-C) shared-space alignment</b>, <b style="text-decoration : underline;">(D) identity linking</b>, and <b style="text-decoration : underline;">(E) trajectory smoothing</b>.
+        </figcaption> -->
+      </figure>
       <p class="body-copy">
-        <span class="step-token">TLDR;</span> Multi-THuMBS tackles multi-person 3D human mesh tracking in real-world videos with frequent shot changes. Existing methods often lose identity consistency when the camera view changes abruptly, especially when multiple people interact, overlap, or leave the frame. Our approach reconstructs boundary frames in a shared 3D space, registers human meshes across shots, and preserves per-person identity and motion consistency for temporally coherent 3D trajectories.
+        <span class="abstract-tag">Problem</span>
+        <span class="abstract-text">Tracking multi-person 3D human meshes from in-the-wild videos is a highly challenging problem due to complex interactions, frequent occlusions, and severe truncation inherent in unconstrained environments. While recent approaches have improved robustness against these issues, they largely overlook the critical challenge prevalent in real-world footage: frequent shot changes. These abrupt transitions in camera viewpoints often cause existing methods to lose track of human identities and fail in reconstructing temporally coherent trajectories. Although several recent works have explored 3D human mesh tracking under shot changes, they are still limited to single-person scenarios, making them inadequate for real-world videos where multiple people interact and appear simultaneously.</span>
+      </p>
+      <p class="body-copy">
+        <span class="abstract-tag">Method</span>
+        <span class="abstract-text">To address this limitation, we propose <strong>Multi-THuMBS</strong> (<strong>Multi</strong>-person <strong>T</strong>racking of 3D <strong>Hu</strong>man <strong>M</strong>eshes <strong>B</strong>eyond Video <strong>S</strong>hots) that leverages a state-of-the-art 3D scene prior to reconstruct the two boundary frames in a single shared 3D space. Human meshes are then registered within the shared 3D space, maintaining per-person identity and motion consistency across shot changes.</span>
+      </p>
+      <p class="body-copy">
+        <span class="abstract-tag">Results</span>
+        <span class="abstract-text">Extensive experiments demonstrate that our approach yields significant improvements in 3D human mesh recovery, camera pose estimation, and identity tracking, thereby ensuring high-fidelity motion reconstruction with consistent identity preservation across shots compared to previous state-of-the-art methods.</span>
       </p>
       <!-- <p class="body-copy">
         This section is intentionally text-first, following the compact academic project-page style used by VGGT.
@@ -553,51 +818,33 @@
     </section>
 
     <section id="method">
-      <h2 class="section-title">Method</h2>
+      <h2 class="section-title">Overview</h2>
       <p class="body-copy">
-        Given a video split by a shot boundary, Multi-THuMBS first estimates human meshes and camera poses for all frames. It then builds a <b>(A) shared 3D space</b> from the boundary frames, <b>(B) aligns</b> meshes across shots, <b>(C) propagates</b> camera and mesh trajectories, <b>(D) links identities</b> using spatial, pose, and appearance cues, and applies <b>(E) temporal smoothing</b>.
+        Given a video split by a shot boundary, Multi-THuMBS first estimates human meshes and camera poses for all frames. It then builds a <span class="pipeline-step step-a"><span class="pipeline-letter">A</span> shared 3D space</span> from the boundary frames, <span class="pipeline-step step-b"><span class="pipeline-letter">B</span> aligns</span> meshes across shots, <span class="pipeline-step step-c"><span class="pipeline-letter">C</span> propagates</span> camera and mesh trajectories, <span class="pipeline-step step-d"><span class="pipeline-letter">D</span> links identities</span> using spatial, pose, and appearance cues, and applies <span class="pipeline-step step-e"><span class="pipeline-letter">E</span> temporal smoothing</span>.
       </p>
       <figure class="method-figure">
         <img src="/projects/multi-thumbs/assets/method.png" alt="Overview of the Multi-THuMBS method pipeline.">
-        <figcaption>
+        <!-- <figcaption>
           Overview of the Multi-THuMBS pipeline for <b style="text-decoration : underline;">(A-C) shared-space alignment</b>, <b style="text-decoration : underline;">(D) identity linking</b>, and <b style="text-decoration : underline;">(E) trajectory smoothing</b>.
-        </figcaption>
+        </figcaption> -->
       </figure>
     </section>
 
-    <section id="visualization">
-      <h2 class="section-title">Qualitative Visualization</h2>
-      <div class="placeholder">
-        <div>
-          <strong>Interactive mesh demo placeholder</strong>
-          This area can later host an interactive viewer for Multi-THuMBS mesh outputs.
-        </div>
-      </div>
-      <!-- <div class="feasibility">
-        <article class="feasibility-card">
-          <h3>Preferred path</h3>
-          <p>Export short mesh sequences as GLB/PLY and render them with Three.js or model-viewer.</p>
-        </article>
-        <article class="feasibility-card">
-          <h3>Performance check</h3>
-          <p>Keep demo assets small enough for GitHub Pages; use decimated meshes and compressed textures if needed.</p>
-        </article>
-        <article class="feasibility-card">
-          <h3>Fallback</h3>
-          <p>Use an MP4/GIF preview first, then upgrade to interactive playback after asset size and controls are stable.</p>
-        </article>
-      </div> -->
-    </section>
-
-    <section id="quantitative-results">
+    <!-- <section id="quantitative-results">
       <h2 class="section-title">Quantitative Results</h2>
       <figure class="method-figure">
         <img src="/projects/multi-thumbs/assets/quan_res.png">
         <figcaption>
-          Quantitative comparison with state-ofthe-art methods on EgoHumans, EgoBody, and Harmony4D. 
+          Quantitative comparison with state-ofthe-art methods on EgoHumans, EgoBody, and Harmony4D.
         </figcaption>
       </figure>
+    </section> -->
+
+    <section id="acknowledgements">
+      <h2 class="section-title">Acknowledgements</h2>
+      <p class="body-copy">This work is supported by NRF grants (No. RS-2025-00521013 20%, No. RS-2025-02216916 10%) and IITP grants (No. RS-2020-II201336 Artificial intelligence graduate school program(UNIST) 10%; No. RS-2025-25442824 AI Star Fellowship Program(UNIST) 10%), funded by the Korean government (MSIT). This work is supported by CJ Corporation 50%.</p>
     </section>
+
 
     <section id="bibtex">
       <h2 class="section-title">BibTeX</h2>
@@ -608,11 +855,6 @@
         booktitle = {European Conference on Computer Vision (ECCV)},
         year      = {2026}
       }</code></pre> -->
-    </section>
-
-    <section id="acknowledgements">
-      <h2 class="section-title">Acknowledgements</h2>
-      <p class="body-copy">This work is supported by NRF grants (No. RS-2025-00521013 20%, No. RS-2025-02216916 10%) and IITP grants (No. RS-2020-II201336 Artificial intelligence graduate school program(UNIST) 10%; No. RS-2025-25442824 AI Star Fellowship Program(UNIST) 10%), funded by the Korean government (MSIT). This work is supported by CJ Corporation 50%.</p>
     </section>
   </main>
 
