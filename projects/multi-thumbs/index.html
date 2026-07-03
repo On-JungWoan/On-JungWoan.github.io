@@ -691,12 +691,34 @@
     .demo-thumb-img {
       position: absolute;
       inset: 0;
+      z-index: 1;
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
+    .demo-thumb-video {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .demo-thumb.is-previewing .demo-thumb-video {
+      opacity: 1;
+    }
+
+    .demo-thumb.is-previewing .demo-thumb-img {
+      opacity: 0;
+    }
+
     .demo-thumb-placeholder {
+      position: relative;
+      z-index: 0;
       color: #718096;
       font-size: 0.72rem;
       font-weight: 850;
@@ -990,29 +1012,7 @@
 
         <div class="demo-picker" aria-label="Interactive result samples">
           <button class="demo-arrow" type="button" data-demo-prev aria-label="Previous sample">&#8249;</button>
-          <div class="demo-thumb-row" data-demo-thumbs>
-            <button class="demo-thumb is-active" type="button" data-demo-name="Sample 01" data-demo-src="/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/sample_01.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0">
-              <span class="demo-thumb-media">
-                <span class="demo-thumb-placeholder">Thumbnail</span>
-                <img class="demo-thumb-img" src="/projects/multi-thumbs/assets/demo/sample_01_thumb.jpg" alt="Sample 01 input video thumbnail">
-              </span>
-              <span class="demo-thumb-label">Sample 01</span>
-            </button>
-            <button class="demo-thumb" type="button" data-demo-name="Sample 02" data-demo-src="/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/sample_02.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0">
-              <span class="demo-thumb-media">
-                <span class="demo-thumb-placeholder">Thumbnail</span>
-                <img class="demo-thumb-img" src="/projects/multi-thumbs/assets/demo/sample_02_thumb.jpg" alt="Sample 02 input video thumbnail">
-              </span>
-              <span class="demo-thumb-label">Sample 02</span>
-            </button>
-            <button class="demo-thumb" type="button" data-demo-name="Sample 03" data-demo-src="/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/sample_03.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0">
-              <span class="demo-thumb-media">
-                <span class="demo-thumb-placeholder">Thumbnail</span>
-                <img class="demo-thumb-img" src="/projects/multi-thumbs/assets/demo/sample_03_thumb.jpg" alt="Sample 03 input video thumbnail">
-              </span>
-              <span class="demo-thumb-label">Sample 03</span>
-            </button>
-          </div>
+          <div class="demo-thumb-row" data-demo-thumbs></div>
           <button class="demo-arrow" type="button" data-demo-next aria-label="Next sample">&#8250;</button>
         </div>
       </div>
@@ -1099,15 +1099,85 @@
       const prevButton = document.querySelector("[data-demo-prev]");
       const nextButton = document.querySelector("[data-demo-next]");
       const frame = document.querySelector("[data-demo-frame]");
+      const manifestPath = "/projects/multi-thumbs/assets/demo/manifest.json";
 
       if (!stage || !label || !thumbRow || !prevButton || !nextButton || !frame) {
         return;
       }
 
-      const thumbs = Array.from(thumbRow.querySelectorAll(".demo-thumb"));
+      let thumbs = Array.from(thumbRow.querySelectorAll(".demo-thumb"));
       let activeIndex = 0;
 
+      const createThumb = (sample, index) => {
+        const button = document.createElement("button");
+        button.className = `demo-thumb${index === 0 ? " is-active" : ""}`;
+        button.type = "button";
+        button.dataset.demoName = sample.name;
+        button.dataset.demoSrc = sample.viewer;
+
+        const media = document.createElement("span");
+        media.className = "demo-thumb-media";
+
+        const placeholder = document.createElement("span");
+        placeholder.className = "demo-thumb-placeholder";
+        placeholder.textContent = "Thumbnail";
+        media.appendChild(placeholder);
+
+        const img = document.createElement("img");
+        img.className = "demo-thumb-img";
+        img.src = sample.thumb;
+        img.alt = `${sample.name} input video thumbnail`;
+        media.appendChild(img);
+
+        if (sample.video) {
+          const video = document.createElement("video");
+          video.className = "demo-thumb-video";
+          video.src = sample.video;
+          video.muted = true;
+          video.loop = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          video.setAttribute("muted", "");
+          video.setAttribute("playsinline", "");
+          video.preload = "auto";
+          video.poster = sample.thumb;
+          media.appendChild(video);
+        }
+
+        const text = document.createElement("span");
+        text.className = "demo-thumb-label";
+        text.textContent = sample.name;
+
+        button.append(media, text);
+        return button;
+      };
+
+      const syncThumbMedia = (activeThumb) => {
+        const resetVideo = (video) => {
+          video.pause();
+          try {
+            video.currentTime = 0;
+          } catch (_) {}
+        };
+
+        thumbs.forEach((thumb) => {
+          const isActive = thumb === activeThumb;
+          const video = thumb.querySelector(".demo-thumb-video");
+
+          thumb.classList.toggle("is-previewing", Boolean(isActive && video));
+          if (!video) return;
+
+          if (isActive) {
+            video.currentTime = 0;
+            video.play().catch(() => {});
+          } else {
+            resetVideo(video);
+          }
+        });
+      };
+
       const selectDemo = (index) => {
+        if (thumbs.length === 0) return;
         activeIndex = (index + thumbs.length) % thumbs.length;
         const activeThumb = thumbs[activeIndex];
         const src = activeThumb.dataset.demoSrc;
@@ -1123,37 +1193,89 @@
         }
 
         label.textContent = activeThumb.dataset.demoName || activeThumb.textContent.trim();
+        syncThumbMedia(activeThumb);
         activeThumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
       };
 
-      document.querySelectorAll(".demo-thumb-img").forEach((img) => {
-        const hideMissingImage = () => {
-          if (img.naturalWidth === 0) {
+      const bindMissingImageHandlers = () => {
+        document.querySelectorAll(".demo-thumb-img").forEach((img) => {
+          const hideMissingImage = () => {
+            if (img.naturalWidth === 0) {
+              img.dataset.missing = "true";
+              img.hidden = true;
+            }
+          };
+
+          img.addEventListener("error", () => {
+            img.dataset.missing = "true";
             img.hidden = true;
+          });
+          img.addEventListener("load", () => {
+            img.dataset.missing = "false";
+            img.hidden = false;
+          });
+
+          if (img.complete) {
+            hideMissingImage();
           }
-        };
-
-        img.addEventListener("error", () => {
-          img.hidden = true;
         });
-        img.addEventListener("load", () => {
-          img.hidden = false;
-        });
+      };
 
-        if (img.complete) {
-          hideMissingImage();
+      const bindThumbs = () => {
+        thumbs.forEach((thumb, index) => {
+          thumb.setAttribute("aria-pressed", String(index === activeIndex));
+          thumb.addEventListener("click", () => selectDemo(index));
+          thumb.addEventListener("mouseenter", () => {
+            const video = thumb.querySelector(".demo-thumb-video");
+            if (!video) return;
+            thumb.classList.add("is-previewing");
+            video.play().catch(() => {});
+          });
+          thumb.addEventListener("mouseleave", () => {
+            if (thumb.classList.contains("is-active")) return;
+            const video = thumb.querySelector(".demo-thumb-video");
+            if (!video) return;
+            video.pause();
+            try {
+              video.currentTime = 0;
+            } catch (_) {}
+            thumb.classList.remove("is-previewing");
+          });
+        });
+      };
+
+      const loadManifest = async () => {
+        try {
+          const res = await fetch(manifestPath, { cache: "no-cache" });
+          if (!res.ok) return false;
+          const samples = await res.json();
+          if (!Array.isArray(samples) || samples.length === 0) return false;
+
+          thumbRow.replaceChildren(...samples.map(createThumb));
+          thumbs = Array.from(thumbRow.querySelectorAll(".demo-thumb"));
+          activeIndex = 0;
+          return true;
+        } catch (_) {
+          return false;
         }
-      });
-
-      thumbs.forEach((thumb, index) => {
-        thumb.setAttribute("aria-pressed", String(index === activeIndex));
-        thumb.addEventListener("click", () => selectDemo(index));
-      });
+      };
 
       prevButton.addEventListener("click", () => selectDemo(activeIndex - 1));
       nextButton.addEventListener("click", () => selectDemo(activeIndex + 1));
 
-      selectDemo(0);
+      loadManifest().then((loaded) => {
+        bindMissingImageHandlers();
+        if (loaded) {
+          bindThumbs();
+          selectDemo(0);
+        } else {
+          thumbs.forEach((thumb) => {
+            thumb.disabled = true;
+            thumb.classList.remove("is-active");
+          });
+          label.textContent = "Export a .viser sample first";
+        }
+      });
     })();
   </script>
 </body>

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "egohumans",
+    "viewer": "/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/egohumans/result.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0&fixedDpr=1",
+    "thumb": "/projects/multi-thumbs/assets/demo/egohumans/thumb.jpg",
+    "video": "/projects/multi-thumbs/assets/demo/egohumans/input.mp4"
+  },
+  {
+    "name": "har4d",
+    "viewer": "/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/har4d/result.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0&fixedDpr=1",
+    "thumb": "/projects/multi-thumbs/assets/demo/har4d/thumb.jpg",
+    "video": "/projects/multi-thumbs/assets/demo/har4d/input.mp4"
+  },
+  {
+    "name": "egobody",
+    "viewer": "/projects/multi-thumbs/viewer/viser-client/?playbackPath=/projects/multi-thumbs/assets/demo/egobody/result.viser&initialCameraPosition=0.0,-3.0,1.2&initialCameraLookAt=0.0,0.0,0.0&initialCameraUp=0.0,0.0,1.0&fixedDpr=1",
+    "thumb": "/projects/multi-thumbs/assets/demo/egobody/thumb.jpg",
+    "video": "/projects/multi-thumbs/assets/demo/egobody/input.mp4"
+  }
+]
