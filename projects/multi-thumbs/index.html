@@ -1107,6 +1107,9 @@
 
       let thumbs = Array.from(thumbRow.querySelectorAll(".demo-thumb"));
       let activeIndex = 0;
+      let frameLoadTimer = 0;
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      const syncSeekThreshold = isIOS ? 0.08 : 0.04;
 
       const getPlaybackPath = (viewerSrc) => {
         try {
@@ -1141,7 +1144,7 @@
         if (Number.isFinite(video.duration) && video.duration > 0) {
           target = Math.min(video.duration - 0.001, Math.max(0, target));
         }
-        if (Math.abs(video.currentTime - target) > 0.04) {
+        if (Math.abs(video.currentTime - target) > syncSeekThreshold) {
           try {
             video.currentTime = target;
           } catch (_) {}
@@ -1222,7 +1225,11 @@
         });
 
         if (src && frame.getAttribute("src") !== src) {
-          frame.setAttribute("src", src);
+          clearTimeout(frameLoadTimer);
+          frame.setAttribute("src", "about:blank");
+          frameLoadTimer = window.setTimeout(() => {
+            frame.setAttribute("src", src);
+          }, 50);
         }
 
         label.textContent = activeThumb.dataset.demoName || activeThumb.textContent.trim();
