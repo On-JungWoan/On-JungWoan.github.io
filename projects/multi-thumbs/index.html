@@ -1098,7 +1098,7 @@
       const thumbRow = document.querySelector("[data-demo-thumbs]");
       const prevButton = document.querySelector("[data-demo-prev]");
       const nextButton = document.querySelector("[data-demo-next]");
-      const frame = document.querySelector("[data-demo-frame]");
+      let frame = document.querySelector("[data-demo-frame]");
       const manifestPath = "/projects/multi-thumbs/assets/demo/manifest.json";
 
       if (!stage || !label || !thumbRow || !prevButton || !nextButton || !frame) {
@@ -1109,7 +1109,17 @@
       let activeIndex = 0;
       let frameLoadTimer = 0;
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      const syncSeekThreshold = isIOS ? 0.08 : 0.04;
+      const isMobile = isIOS || /Android|Mobile|Mobi/i.test(navigator.userAgent) || window.matchMedia?.("(hover: none), (pointer: coarse)").matches;
+      const syncSeekThreshold = isMobile ? 0.08 : 0.04;
+      const frameLoadDelay = isMobile ? 450 : 50;
+
+      const createDemoFrame = () => {
+        const nextFrame = document.createElement("iframe");
+        nextFrame.className = "demo-frame";
+        nextFrame.dataset.demoFrame = "";
+        nextFrame.title = "Interactive Multi-THuMBS result";
+        return nextFrame;
+      };
 
       const getPlaybackPath = (viewerSrc) => {
         try {
@@ -1155,6 +1165,26 @@
         } else if (video.paused) {
           video.play().catch(() => {});
         }
+      };
+
+      const loadFrame = (src) => {
+        if (!src || frame.getAttribute("src") === src) return;
+
+        clearTimeout(frameLoadTimer);
+        if (isMobile) {
+          const oldFrame = frame;
+          const nextFrame = createDemoFrame();
+          oldFrame.setAttribute("src", "about:blank");
+          stage.insertBefore(nextFrame, label);
+          oldFrame.remove();
+          frame = nextFrame;
+        } else {
+          frame.setAttribute("src", "about:blank");
+        }
+
+        frameLoadTimer = window.setTimeout(() => {
+          frame.setAttribute("src", src);
+        }, frameLoadDelay);
       };
 
       const createThumb = (sample, index) => {
@@ -1224,13 +1254,7 @@
           thumb.setAttribute("aria-pressed", String(isActive));
         });
 
-        if (src && frame.getAttribute("src") !== src) {
-          clearTimeout(frameLoadTimer);
-          frame.setAttribute("src", "about:blank");
-          frameLoadTimer = window.setTimeout(() => {
-            frame.setAttribute("src", src);
-          }, 50);
-        }
+        loadFrame(src);
 
         label.textContent = activeThumb.dataset.demoName || activeThumb.textContent.trim();
         syncThumbMedia(activeThumb);
@@ -1302,7 +1326,7 @@
       prevButton.addEventListener("click", () => selectDemo(activeIndex - 1));
       nextButton.addEventListener("click", () => selectDemo(activeIndex + 1));
       window.addEventListener("message", (event) => {
-        if (event.source !== frame.contentWindow) return;
+        if (event.source !== frame?.contentWindow) return;
         const data = event.data;
         if (!data || data.type !== "multi-thumbs-viser-playback") return;
         syncVideoToViser(data);
