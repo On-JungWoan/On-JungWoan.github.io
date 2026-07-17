@@ -1,0 +1,4 @@
+interface:
+  display_name: "개발 블로그 리팩터링"
+  short_description: "레거시 Jekyll 블로그를 안전하게 점진 리팩터링"
+  default_prompt: "이 Jekyll 개발 블로그의 동작을 유지하며 구조를 점진적으로 개선하려면 $refactor-development-blog를 사용해 주세요."
