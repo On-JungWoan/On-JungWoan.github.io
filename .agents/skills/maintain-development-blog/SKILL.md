@@ -34,7 +34,7 @@ description: 이 저장소의 Jekyll 개발 블로그에서 새 글을 작성하
 ## 4. 결과를 확인한다
 
 1. 변경한 링크, 이미지 경로, Liquid 표현식, frontmatter를 다시 확인한다.
-2. `bundle exec jekyll build`를 실행한다.
+2. `bundle exec jekyll build`를 실행한다. (기존 post가 많아서 build에 시간이 오래 걸릴수도 있으니, --limit_posts 1 option을 활용한다.)
 3. 화면 변경이면 가능한 환경에서 데스크톱과 모바일 미리보기를 확인한다.
 4. `git diff --check`와 `git status --short`로 요청 밖의 변경이 없는지 확인한다.
 
