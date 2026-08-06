@@ -10,7 +10,26 @@
   var mapError = document.querySelector(".map-error");
   var dayTabs = Array.from(document.querySelectorAll(".day-tab"));
   var daySections = Array.from(document.querySelectorAll("[data-day-section]"));
+  var liveEvents = data && Array.isArray(data.liveEvents) ? data.liveEvents : [];
+  var walletItems = data && Array.isArray(data.walletItems) ? data.walletItems : [];
+  var walletDialog = document.getElementById("travel-wallet");
+  var walletOpenButton = document.querySelector(".wallet-open");
+  var walletCloseButton = document.querySelector(".wallet-close");
+  var walletItemsElement = document.getElementById("wallet-items");
+  var walletStatus = document.getElementById("wallet-status");
+  var liveDay = document.getElementById("live-day");
+  var liveKicker = document.getElementById("live-kicker");
+  var liveTitle = document.getElementById("live-title");
+  var liveDestination = document.getElementById("live-destination");
+  var liveCountdownLabel = document.getElementById("live-countdown-label");
+  var liveCountdown = document.getElementById("live-countdown");
+  var liveDirections = document.getElementById("live-directions");
+  var liveStatus = document.getElementById("live-status");
   var selectedDay = "all";
+  var manualDaySelection = false;
+  var lastLiveEventId = "";
+  var lastWalletOpener;
+  var liveTimer;
   var map;
   var routeLayers = new Map();
   var markerLayers = new Map();
@@ -250,6 +269,9 @@
 
   function selectDay(dayValue, options) {
     var settings = options || {};
+    if (settings.userInitiated) {
+      manualDaySelection = true;
+    }
     selectedDay = String(dayValue);
     activeStopIds = [];
 
@@ -364,13 +386,13 @@
   function initializeControls() {
     dayTabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
-        selectDay(tab.dataset.day);
+        selectDay(tab.dataset.day, { userInitiated: true });
       });
     });
 
     document.querySelectorAll("[data-day-select]").forEach(function (button) {
       button.addEventListener("click", function () {
-        selectDay(button.dataset.daySelect, { scrollToAtlas: true });
+        selectDay(button.dataset.daySelect, { scrollToAtlas: true, userInitiated: true });
       });
     });
 
@@ -437,25 +459,179 @@
     }
   }
 
-  function dateInTimezone(timezone) {
+  function setMapLinkLabel(link, label) {
+    link.textContent = label + " ";
+    var arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+    link.appendChild(arrow);
+  }
+
+  function createDirectionsUrl(directions) {
+    if (!directions) {
+      return "";
+    }
+
+    var origin = getStop(directions.origin);
+    var destination = getStop(directions.destination);
+    if (!origin || !destination) {
+      return "";
+    }
+
+    var params = new URLSearchParams();
+    params.set("api", "1");
+    params.set("origin", origin.query);
+    params.set("destination", destination.query);
+    params.set("travelmode", directions.mode || "driving");
+    params.set("dir_action", "navigate");
+    return "https://www.google.com/maps/dir/?" + params.toString();
+  }
+
+  function initializeDirections() {
+    document.querySelectorAll(".timeline-card .external-map").forEach(function (link) {
+      setMapLinkLabel(link, "장소 보기");
+    });
+
+    liveEvents.forEach(function (tripEvent) {
+      var card = document.querySelector("[data-event-id=\"" + tripEvent.id + "\"]");
+      var link = card && card.querySelector(".external-map");
+      var directionsUrl = createDirectionsUrl(tripEvent.directions);
+      if (!link || !directionsUrl) {
+        return;
+      }
+
+      link.href = directionsUrl;
+      link.classList.add("is-directions");
+      link.setAttribute("aria-label", tripEvent.destination + " 길찾기 시작");
+      setMapLinkLabel(link, "길찾기 시작");
+    });
+  }
+
+  function dateInTimezone(timezone, dateValue) {
     var parts = new Intl.DateTimeFormat("en", {
       timeZone: timezone,
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-    }).formatToParts(new Date());
+    }).formatToParts(dateValue || new Date());
     var values = {};
     parts.forEach(function (part) { values[part.type] = part.value; });
     return values.year + "-" + values.month + "-" + values.day;
   }
 
-  function updateTripStatus() {
-    var statusElement = document.getElementById("trip-status");
-    if (!statusElement) {
+  function tripDayFromDate(dateString) {
+    var date = new Date(dateString + "T00:00:00Z");
+    var start = new Date(data.trip.start + "T00:00:00Z");
+    var day = Math.floor((date - start) / (24 * 60 * 60 * 1000)) + 1;
+    return day >= 1 && day <= data.days.length ? day : 0;
+  }
+
+  function calendarDaysBetween(fromDate, toDate) {
+    var from = new Date(fromDate + "T00:00:00Z");
+    var to = new Date(toDate + "T00:00:00Z");
+    return Math.max(0, Math.round((to - from) / (24 * 60 * 60 * 1000)));
+  }
+
+  function formatCountdown(milliseconds) {
+    var minutes = Math.max(0, Math.ceil(milliseconds / (60 * 1000)));
+    if (minutes < 1) {
+      return "곧 출발";
+    }
+    if (minutes < 60) {
+      return minutes + "분";
+    }
+
+    var hours = Math.floor(minutes / 60);
+    var remainingMinutes = minutes % 60;
+    return hours + "시간" + (remainingMinutes ? " " + remainingMinutes + "분" : "");
+  }
+
+  function getEventStart(tripEvent) {
+    var start = new Date(tripEvent.start).getTime();
+    var departure = tripEvent.departAt ? new Date(tripEvent.departAt).getTime() : start;
+    return Math.min(start, departure);
+  }
+
+  function findActiveEvent(nowTime) {
+    var active;
+    liveEvents.forEach(function (tripEvent) {
+      if (nowTime >= getEventStart(tripEvent) && nowTime < new Date(tripEvent.end).getTime()) {
+        active = tripEvent;
+      }
+    });
+    return active;
+  }
+
+  function findNextDeparture(nowTime) {
+    return liveEvents.find(function (tripEvent) {
+      return tripEvent.departAt && new Date(tripEvent.departAt).getTime() > nowTime;
+    });
+  }
+
+  function updateTimelineStates(nowTime, activeEvent, nextEvent) {
+    liveEvents.forEach(function (tripEvent) {
+      var card = document.querySelector("[data-event-id=\"" + tripEvent.id + "\"]");
+      if (!card) {
+        return;
+      }
+
+      card.classList.remove("is-past", "is-current", "is-next");
+      if (nowTime >= new Date(tripEvent.end).getTime()) {
+        card.classList.add("is-past");
+      }
+      if (activeEvent && activeEvent.id === tripEvent.id) {
+        card.classList.add("is-current");
+      }
+      if (nextEvent && nextEvent.id === tripEvent.id) {
+        card.classList.add("is-next");
+      }
+    });
+  }
+
+  function setLiveDirections(tripEvent) {
+    if (!liveDirections) {
       return;
     }
 
-    var today = dateInTimezone(data.trip.timezone);
+    var directionsUrl = tripEvent && createDirectionsUrl(tripEvent.directions);
+    if (!directionsUrl) {
+      liveDirections.hidden = true;
+      liveDirections.removeAttribute("href");
+      return;
+    }
+
+    liveDirections.href = directionsUrl;
+    liveDirections.hidden = false;
+    liveDirections.setAttribute("aria-label", tripEvent.destination + " 길찾기 시작");
+  }
+
+  function renderLiveBar(settings) {
+    if (!liveDay || !liveTitle || !liveDestination || !liveCountdown) {
+      return;
+    }
+
+    liveDay.textContent = settings.day;
+    liveKicker.textContent = settings.kicker;
+    liveTitle.textContent = settings.title;
+    liveDestination.textContent = settings.destination;
+    liveCountdownLabel.textContent = settings.countdownLabel;
+    liveCountdown.textContent = settings.countdown;
+    setLiveDirections(settings.event);
+
+    if (liveStatus && settings.announcementKey !== lastLiveEventId) {
+      liveStatus.textContent = settings.announcement;
+      lastLiveEventId = settings.announcementKey;
+    }
+  }
+
+  function updateTripStatus(nowValue) {
+    var statusElement = document.getElementById("trip-status");
+    if (!statusElement || !data) {
+      return;
+    }
+
+    var now = nowValue || new Date();
+    var today = dateInTimezone(data.trip.timezone, now);
     var todayDate = new Date(today + "T00:00:00Z");
     var startDate = new Date(data.trip.start + "T00:00:00Z");
     var endDate = new Date(data.trip.end + "T00:00:00Z");
@@ -466,10 +642,224 @@
     } else if (todayDate <= endDate) {
       var tripDay = Math.floor((todayDate - startDate) / dayMilliseconds) + 1;
       statusElement.textContent = "여행 중 · DAY " + tripDay;
-      window.setTimeout(function () { selectDay(String(tripDay)); }, 0);
     } else {
       statusElement.textContent = "JOURNEY COMPLETE";
     }
+  }
+
+  function updateJourneyNow(nowValue) {
+    if (!data || !liveEvents.length) {
+      return;
+    }
+
+    var now = nowValue || new Date();
+    var nowTime = now.getTime();
+    var today = dateInTimezone(data.trip.timezone, now);
+    var tripDay = tripDayFromDate(today);
+    var firstEvent = liveEvents[0];
+    var lastEvent = liveEvents[liveEvents.length - 1];
+    var activeEvent = findActiveEvent(nowTime);
+    var nextEvent = findNextDeparture(nowTime);
+
+    updateTripStatus(now);
+    updateTimelineStates(nowTime, activeEvent, nextEvent);
+
+    if (tripDay && !manualDaySelection && selectedDay !== String(tripDay)) {
+      selectDay(String(tripDay));
+    }
+
+    if (today < data.trip.start) {
+      var daysUntilDeparture = calendarDaysBetween(today, data.trip.start);
+      renderLiveBar({
+        day: "PRE-TRIP",
+        kicker: "FIRST DEPARTURE",
+        title: firstEvent.title,
+        destination: "목적지 · " + firstEvent.destination,
+        countdownLabel: "여행까지",
+        countdown: "D-" + daysUntilDeparture,
+        event: firstEvent,
+        announcementKey: "before-" + firstEvent.id,
+        announcement: "여행까지 D-" + daysUntilDeparture + ". 첫 일정은 " + firstEvent.title + "입니다.",
+      });
+      return;
+    }
+
+    if (nowTime >= new Date(lastEvent.end).getTime()) {
+      renderLiveBar({
+        day: "COMPLETE",
+        kicker: "JOURNEY ARCHIVE",
+        title: "모든 여행 일정을 마쳤습니다.",
+        destination: "후쿠오카 · 벳푸 · 아소 · 다카치호",
+        countdownLabel: "여행 상태",
+        countdown: "완료",
+        event: null,
+        announcementKey: "complete",
+        announcement: "모든 여행 일정을 마쳤습니다.",
+      });
+      return;
+    }
+
+    if (nextEvent) {
+      renderLiveBar({
+        day: tripDay ? "DAY " + String(tripDay).padStart(2, "0") : "JOURNEY",
+        kicker: activeEvent ? "NEXT DEPARTURE" : "UP NEXT",
+        title: nextEvent.title,
+        destination: "목적지 · " + nextEvent.destination,
+        countdownLabel: "출발까지",
+        countdown: formatCountdown(new Date(nextEvent.departAt).getTime() - nowTime),
+        event: nextEvent,
+        announcementKey: "next-" + nextEvent.id,
+        announcement: "다음 일정은 " + nextEvent.title + ", 목적지는 " + nextEvent.destination + "입니다.",
+      });
+      return;
+    }
+
+    renderLiveBar({
+      day: tripDay ? "DAY " + String(tripDay).padStart(2, "0") : "JOURNEY",
+      kicker: "NOW",
+      title: activeEvent ? activeEvent.title : "오늘 일정을 마쳤습니다.",
+      destination: activeEvent ? "목적지 · " + activeEvent.destination : "다음 날 일정을 확인하세요.",
+      countdownLabel: "여행 상태",
+      countdown: activeEvent ? "이동 중" : "완료",
+      event: null,
+      announcementKey: activeEvent ? "active-" + activeEvent.id : "day-complete-" + tripDay,
+      announcement: activeEvent ? activeEvent.title + " 일정이 진행 중입니다." : "오늘 일정을 마쳤습니다.",
+    });
+  }
+
+  function renderWallet() {
+    if (!walletItemsElement) {
+      return;
+    }
+
+    walletItemsElement.innerHTML = walletItems.map(function (item, itemIndex) {
+      var fields = item.fields.map(function (field) {
+        var hasValue = String(field.value || "").trim().length > 0;
+        var href = String(field.href || "").trim();
+        var hasSafeLink = hasValue && /^(https?:\/\/|\/(?!\/))/i.test(href);
+        var value = hasValue ? escapeHtml(field.value) : "<span class=\"wallet-empty\">미입력</span>";
+        if (hasSafeLink) {
+          value = "<a class=\"wallet-field-link\" href=\"" + escapeHtml(href) + "\" target=\"_blank\" rel=\"noreferrer\">" + escapeHtml(field.linkLabel || field.value) + "</a>";
+        }
+        var copyButton = "";
+        if (field.copyable) {
+          copyButton = "<button type=\"button\" class=\"wallet-copy\" data-copy-value=\"" + escapeHtml(field.value || "") + "\" data-copy-label=\"" + escapeHtml(field.label) + "\"" + (hasValue ? "" : " disabled") + ">복사</button>";
+        }
+        return "<div class=\"wallet-field\"><dt>" + escapeHtml(field.label) + "</dt><dd><span class=\"wallet-value\">" + value + "</span>" + copyButton + "</dd></div>";
+      }).join("");
+
+      return "<details class=\"wallet-ticket wallet-ticket-" + escapeHtml(item.type) + "\"" + (itemIndex === 0 ? " open" : "") + ">" +
+        "<summary><span><small>" + escapeHtml(item.kicker) + "</small><strong>" + escapeHtml(item.title) + "</strong><span>" + escapeHtml(item.summary) + "</span></span><i aria-hidden=\"true\">+</i></summary>" +
+        "<dl class=\"wallet-fields\">" + fields + "</dl></details>";
+    }).join("");
+  }
+
+  function fallbackCopy(value) {
+    return new Promise(function (resolve, reject) {
+      var textarea = document.createElement("textarea");
+      textarea.value = value;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      textarea.style.pointerEvents = "none";
+      document.body.appendChild(textarea);
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+
+      try {
+        if (!document.execCommand("copy")) {
+          throw new Error("Copy command failed");
+        }
+        resolve();
+      } catch (error) {
+        reject(error);
+      } finally {
+        textarea.remove();
+      }
+    });
+  }
+
+  function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(value).catch(function () {
+        return fallbackCopy(value);
+      });
+    }
+    return fallbackCopy(value);
+  }
+
+  function closeWallet() {
+    if (!walletDialog || !walletDialog.open) {
+      return;
+    }
+    if (typeof walletDialog.close === "function") {
+      walletDialog.close();
+    } else {
+      walletDialog.removeAttribute("open");
+      document.body.classList.remove("wallet-open");
+    }
+  }
+
+  function openWallet() {
+    if (!walletDialog || walletDialog.open) {
+      return;
+    }
+    if (mapShell && mapShell.classList.contains("is-expanded")) {
+      setMapExpanded(false);
+    }
+    lastWalletOpener = document.activeElement;
+    document.body.classList.add("wallet-open");
+    if (typeof walletDialog.showModal === "function") {
+      walletDialog.showModal();
+    } else {
+      walletDialog.setAttribute("open", "");
+      walletCloseButton.focus();
+    }
+  }
+
+  function initializeWallet() {
+    if (!walletDialog || !walletOpenButton) {
+      return;
+    }
+
+    renderWallet();
+    walletOpenButton.addEventListener("click", openWallet);
+    walletCloseButton.addEventListener("click", closeWallet);
+    walletDialog.addEventListener("click", function (event) {
+      if (event.target === walletDialog) {
+        closeWallet();
+      }
+
+      var copyButton = event.target.closest && event.target.closest(".wallet-copy");
+      if (!copyButton || copyButton.disabled) {
+        return;
+      }
+
+      var originalLabel = copyButton.textContent;
+      copyText(copyButton.dataset.copyValue).then(function () {
+        copyButton.textContent = "완료";
+        walletStatus.textContent = copyButton.dataset.copyLabel + "을 클립보드에 복사했습니다.";
+        window.setTimeout(function () { copyButton.textContent = originalLabel; }, 1600);
+      }).catch(function () {
+        walletStatus.textContent = "복사하지 못했습니다. 값을 길게 눌러 복사해 주세요.";
+      });
+    });
+    walletDialog.addEventListener("close", function () {
+      document.body.classList.remove("wallet-open");
+      if (!document.body.classList.contains("trip-locked") && lastWalletOpener && typeof lastWalletOpener.focus === "function") {
+        lastWalletOpener.focus();
+      }
+    });
+  }
+
+  function initializeTodayMode() {
+    updateJourneyNow();
+    liveTimer = window.setInterval(updateJourneyNow, 60 * 1000);
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") {
+        updateJourneyNow();
+      }
+    });
   }
 
   function initializeReveal() {
@@ -501,13 +891,16 @@
     appInitialized = true;
     initializeControls();
     initializeChecklist();
-    updateTripStatus();
+    initializeDirections();
+    initializeWallet();
+    initializeTodayMode();
     initializeReveal();
     initializeMap();
   }
 
   document.addEventListener("trip:unlocked", initializeTripApp);
   document.addEventListener("trip:locked", function () {
+    closeWallet();
     if (mapShell && mapShell.classList.contains("is-expanded")) {
       setMapExpanded(false);
     }
