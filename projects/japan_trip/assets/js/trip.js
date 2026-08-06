@@ -491,9 +491,29 @@
     revealElements.forEach(function (element) { observer.observe(element); });
   }
 
-  initializeControls();
-  initializeChecklist();
-  updateTripStatus();
-  initializeReveal();
-  initializeMap();
+  var appInitialized = false;
+
+  function initializeTripApp() {
+    if (appInitialized) {
+      return;
+    }
+
+    appInitialized = true;
+    initializeControls();
+    initializeChecklist();
+    updateTripStatus();
+    initializeReveal();
+    initializeMap();
+  }
+
+  document.addEventListener("trip:unlocked", initializeTripApp);
+  document.addEventListener("trip:locked", function () {
+    if (mapShell && mapShell.classList.contains("is-expanded")) {
+      setMapExpanded(false);
+    }
+  });
+
+  if (!document.body.classList.contains("trip-locked")) {
+    initializeTripApp();
+  }
 }());

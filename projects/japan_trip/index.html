@@ -14,11 +14,73 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="assets/css/trip.css">
 </head>
-<body>
-  <a class="skip-link" href="#main">여행 일정으로 바로 가기</a>
+<body class="trip-locked">
+  <script>
+    try {
+      if (window.sessionStorage.getItem("japan-trip-access-v1") === "granted") {
+        document.body.classList.remove("trip-locked");
+      }
+    } catch (error) {
+      // The access form handles browsers where session storage is unavailable.
+    }
+  </script>
+
+  <a class="skip-link" href="#main" data-private-content>여행 일정으로 바로 가기</a>
   <div class="paper-grain" aria-hidden="true"></div>
 
-  <header class="topbar">
+  <div class="access-gate" id="access-gate" role="dialog" aria-modal="true" aria-labelledby="access-title" aria-describedby="access-description">
+    <div class="access-stage">
+      <div class="access-nav">
+        <a href="/" aria-label="개발 블로그 홈으로 이동"><span aria-hidden="true">←</span> ON JUNGWOAN</a>
+        <span>PRIVATE JOURNEY · 2026</span>
+      </div>
+
+      <div class="access-grid">
+        <div class="access-copy">
+          <div class="access-route" aria-hidden="true">
+            <span>BUSAN</span><i></i><span>KYUSHU</span>
+          </div>
+          <p class="eyebrow">Invitation only · Journey atlas</p>
+          <h2 id="access-title">여행의<br><em>다음 장.</em></h2>
+          <p>후쿠오카에서 다카치호까지,<br>비밀번호를 입력하면 여정이 열립니다.</p>
+        </div>
+
+        <section class="access-ticket">
+          <div class="access-ticket-top">
+            <span>PRIVATE / 0817</span>
+            <span>6 DIGIT ACCESS</span>
+          </div>
+          <div class="access-destination" aria-hidden="true">
+            <strong>FUK</strong>
+            <span class="access-lock-mark">鍵</span>
+            <strong>OIT</strong>
+          </div>
+
+          <form class="access-form" id="access-form" novalidate>
+            <label for="trip-password">ACCESS CODE</label>
+            <div class="access-field">
+              <input id="trip-password" name="password" type="password" inputmode="numeric" autocomplete="current-password" minlength="6" maxlength="6" pattern="[0-9]{6}" aria-describedby="access-description access-message" placeholder="••••••" required>
+              <button type="button" class="password-toggle" aria-pressed="false" aria-label="비밀번호 표시">보기</button>
+            </div>
+            <button type="submit" class="access-submit"><span>여행 일정 열기</span><span aria-hidden="true">→</span></button>
+            <p id="access-message" class="access-message" aria-live="polite">6자리 비밀번호를 입력하세요.</p>
+          </form>
+
+          <p class="access-description" id="access-description">인증 상태는 현재 브라우저 탭에서만 유지됩니다.</p>
+          <noscript><p class="access-noscript">일정을 열려면 JavaScript를 활성화해 주세요.</p></noscript>
+          <div class="access-barcode" aria-hidden="true"></div>
+        </section>
+      </div>
+
+      <div class="access-footer" aria-hidden="true">
+        <span>FUKUOKA · BEPPU · ASO · TAKACHIHO</span>
+        <span>2026.08.17—20</span>
+      </div>
+      <div class="access-stamp" aria-hidden="true"><span>限定</span><small>PRIVATE</small></div>
+    </div>
+  </div>
+
+  <header class="topbar" data-private-content>
     <a class="home-link" href="/" aria-label="개발 블로그 홈으로 이동">
       <span aria-hidden="true">←</span>
       <span>On JungWoan</span>
@@ -27,10 +89,11 @@
       <span>FUKUOKA · BEPPU</span>
       <span class="topbar-divider" aria-hidden="true"></span>
       <span>2026.08.17—20</span>
+      <button type="button" class="relock-button" aria-label="여행 일정 다시 잠그기">잠금</button>
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" data-private-content>
     <section class="hero" aria-labelledby="trip-title">
       <div class="hero-route" aria-hidden="true">
         <span>BUSAN</span>
@@ -507,18 +570,19 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" data-private-content>
     <div>
       <p class="footer-mark">旅</p>
       <p><strong>Fukuoka · Beppu · Aso · Takachiho</strong><br>2026 summer journey atlas</p>
     </div>
     <div class="footer-links">
-      <a href="plan.md">원본 여행 계획</a>
+      <button type="button" class="relock-button">다시 잠그기</button>
       <a href="#main">맨 위로 ↑</a>
     </div>
   </footer>
 
   <div class="sr-only" id="map-status" aria-live="polite"></div>
+  <script src="assets/js/trip-access.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="assets/js/trip-data.js"></script>
   <script src="assets/js/trip.js"></script>

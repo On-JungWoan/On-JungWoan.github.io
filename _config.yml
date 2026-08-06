@@ -161,6 +161,7 @@ include:
 exclude:
   - AGENTS.md
   - .agents
+  - projects/japan_trip/plan.md
   - "*.sublime-project"
   - "*.sublime-workspace"
   - vendor
