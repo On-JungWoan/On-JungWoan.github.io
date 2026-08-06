@@ -1,3 +1,10 @@
+---
+layout: null
+---
+{% assign asset_version = site.github.build_revision %}
+{% unless asset_version %}
+  {% assign asset_version = site.time | date: "%s" %}
+{% endunless %}
 <!doctype html>
 <html lang="ko">
 <head>
@@ -12,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&amp;family=Noto+Sans+KR:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="assets/css/trip.css">
+  <link rel="stylesheet" href="assets/css/trip.css?v={{ asset_version }}">
 </head>
 <body class="trip-locked">
   <script>
@@ -582,9 +589,9 @@
   </footer>
 
   <div class="sr-only" id="map-status" aria-live="polite"></div>
-  <script src="assets/js/trip-access.js"></script>
+  <script src="assets/js/trip-access.js?v={{ asset_version }}"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="assets/js/trip-data.js"></script>
-  <script src="assets/js/trip.js"></script>
+  <script src="assets/js/trip-data.js?v={{ asset_version }}"></script>
+  <script src="assets/js/trip.js?v={{ asset_version }}"></script>
 </body>
 </html>
