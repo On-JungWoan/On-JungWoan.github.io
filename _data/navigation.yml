@@ -12,6 +12,11 @@ main:
   - title: "Blog"    
     url: /blog
 
+  - title: "Travel"
+    sublinks:
+      - title: "2026 Japan · Kyushu"
+        url: /projects/japan_trip/
+
   - title: "Search"    
     url: /search/    
 

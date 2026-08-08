@@ -28,9 +28,7 @@
 
 ## 검증
 
-- 일반 변경: `bundle exec jekyll build`
-- JavaScript 소스 변경: `npm run build:js` 후 Jekyll 빌드
-- 화면 변경: 가능하면 로컬 미리보기에서 데스크톱과 모바일 폭을 확인한다.
-- 마무리: `git diff --check`와 `git status --short`로 불필요한 변경 및 생성 파일 포함 여부를 확인한다.
+- 가능하면 로컬 미리보기에서 데스크톱과 모바일 폭을 확인한다.
+- `git diff --check`와 `git status --short`로 불필요한 변경 및 생성 파일 포함 여부를 확인한다.
 
 검증을 실행하지 못했거나 기존 오류가 있으면 결과에 그 이유를 명시한다.
