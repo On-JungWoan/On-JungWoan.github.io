@@ -1,0 +1,60 @@
+{% for day in include.trip_data.days %}
+  <section class="day-section" data-day-section="{{ day.id }}" aria-labelledby="day-{{ day.id }}-title" style="--day-color:{{ day.color }}">
+    <header class="day-header">
+      <div class="day-badge"><span>DAY</span><strong>0{{ day.id }}</strong></div>
+      <div>
+        <p>{{ day.date }} · {{ day.weekday }}</p>
+        <h2 id="day-{{ day.id }}-title">{{ day.headerTitle }}</h2>
+        <span>{{ day.subtitle }}</span>
+      </div>
+    </header>
+
+    <div class="timeline">
+      {% for event in day.events %}
+        <article class="timeline-card{% if event.compact %} compact{% endif %}{% if event.optional %} optional{% endif %} reveal" data-event-id="{{ event.id }}"{% if event.stopIds %} data-stop-ids="{{ event.stopIds | join: ' ' }}"{% endif %}>
+          <time datetime="{{ event.start }}">{{ event.timeLabel }}{% if event.timeSuffix %}<small>{{ event.timeSuffix }}</small>{% endif %}</time>
+          <div class="timeline-card-body">
+            {% if event.stopIds %}
+              <div class="card-title-row">
+                <div><span class="stop-type{% if event.typeClass %} {{ event.typeClass }}{% endif %}">{{ event.typeLabel }}</span><h3>{{ event.cardTitle | default: event.title }}</h3></div>
+                <button type="button" class="map-focus" data-stop-ids="{{ event.stopIds | join: ' ' }}">위치<span class="sr-only">: {{ event.mapLabel | default: event.cardTitle | default: event.title }}</span></button>
+              </div>
+            {% else %}
+              <span class="stop-type{% if event.typeClass %} {{ event.typeClass }}{% endif %}">{{ event.typeLabel }}</span>
+              <h3>{{ event.cardTitle | default: event.title }}</h3>
+            {% endif %}
+
+            {% if event.tags %}
+              <ul class="stop-tags">
+                {% for tag in event.tags %}<li>{{ tag }}</li>{% endfor %}
+              </ul>
+            {% endif %}
+
+            {% if event.descriptionHtml %}
+              <p>{{ event.descriptionHtml }}</p>
+            {% elsif event.description %}
+              <p>{{ event.description }}</p>
+            {% endif %}
+
+            {% if event.mapLink and event.stopIds %}
+              {% assign primary_stop_id = event.stopIds | first %}
+              {% assign primary_stop = include.trip_data.stops | where: "id", primary_stop_id | first %}
+              {% if primary_stop %}
+                <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query={{ primary_stop.query | url_encode }}" target="_blank" rel="noreferrer">장소 보기 <span aria-hidden="true">↗</span></a>
+              {% endif %}
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if day.rule %}
+      <aside class="rule-card reveal" aria-labelledby="day-{{ day.id }}-rules">
+        <span class="rule-label">{{ day.rule.label }}</span>
+        <h3 id="day-{{ day.id }}-rules">{{ day.rule.title }}</h3>
+        <ol>{% for item in day.rule.items %}<li>{{ item }}</li>{% endfor %}</ol>
+        {% if day.rule.note %}<p>{{ day.rule.note }}</p>{% endif %}
+      </aside>
+    {% endif %}
+  </section>
+{% endfor %}

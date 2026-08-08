@@ -1,6 +1,7 @@
 ---
 layout: null
 ---
+{% assign trip_data = site.data.japan_trip %}
 {% assign asset_version = site.github.build_revision %}
 {% unless asset_version %}
   {% assign asset_version = site.time | date: "%s" %}
@@ -184,34 +185,15 @@ layout: null
       </div>
 
       <div class="overview-grid">
-        <button class="overview-day reveal" type="button" data-day-select="1" style="--day-color:#d85d42">
-          <span class="overview-number">01</span>
-          <span class="overview-date">MON · 08.17</span>
-          <strong>후쿠오카 근교</strong>
-          <span class="overview-route">공항 → 난조인 → 다자이후</span>
-          <span class="overview-stay">HOTEL NINESTATES HAKATA</span>
-        </button>
-        <button class="overview-day reveal" type="button" data-day-select="2" style="--day-color:#247b78">
-          <span class="overview-number">02</span>
-          <span class="overview-date">TUE · 08.18</span>
-          <strong>벳푸 핵심 관광</strong>
-          <span class="overview-route">사파리 → 지옥 → 우미타마고</span>
-          <span class="overview-stay">Guest House Sakichi</span>
-        </button>
-        <button class="overview-day reveal" type="button" data-day-select="3" style="--day-color:#a56a1d">
-          <span class="overview-number">03</span>
-          <span class="overview-date">WED · 08.19</span>
-          <strong>아소·다카치호</strong>
-          <span class="overview-route">아소산 → 협곡 → 하라지리</span>
-          <span class="overview-stay">Guest House Sakichi</span>
-        </button>
-        <button class="overview-day reveal" type="button" data-day-select="4" style="--day-color:#526c96">
-          <span class="overview-number">04</span>
-          <span class="overview-date">THU · 08.20</span>
-          <strong>후쿠오카·귀국</strong>
-          <span class="overview-route">벳푸 → 후쿠오카공항 → 부산</span>
-          <span class="overview-stay">렌터카 13:00 반납</span>
-        </button>
+        {% for day in trip_data.days %}
+          <button class="overview-day reveal" type="button" data-day-select="{{ day.id }}" style="--day-color:{{ day.color }}">
+            <span class="overview-number">0{{ day.id }}</span>
+            <span class="overview-date">{{ day.dateLabel }}</span>
+            <strong>{{ day.title }}</strong>
+            <span class="overview-route">{{ day.overviewRoute }}</span>
+            <span class="overview-stay">{{ day.overviewStay }}</span>
+          </button>
+        {% endfor %}
       </div>
     </section>
 
@@ -224,22 +206,15 @@ layout: null
         <p>지도 핀과 일정의 ‘위치’ 버튼이 서로 연결되어 있습니다.</p>
       </div>
 
-      <nav class="day-tabs" aria-label="날짜별 일정 필터">
+      <nav class="day-tabs" aria-label="날짜별 일정 필터" style="--day-tab-count:{{ trip_data.days.size | plus: 1 }}">
         <button type="button" class="day-tab is-active" data-day="all" aria-pressed="true">
           <span>전체</span><small>Route</small>
         </button>
-        <button type="button" class="day-tab" data-day="1" aria-pressed="false">
-          <span>Day 1</span><small>8.17</small>
-        </button>
-        <button type="button" class="day-tab" data-day="2" aria-pressed="false">
-          <span>Day 2</span><small>8.18</small>
-        </button>
-        <button type="button" class="day-tab" data-day="3" aria-pressed="false">
-          <span>Day 3</span><small>8.19</small>
-        </button>
-        <button type="button" class="day-tab" data-day="4" aria-pressed="false">
-          <span>Day 4</span><small>8.20</small>
-        </button>
+        {% for day in trip_data.days %}
+          <button type="button" class="day-tab" data-day="{{ day.id }}" aria-pressed="false">
+            <span>Day {{ day.id }}</span><small>{{ day.shortLabel }}</small>
+          </button>
+        {% endfor %}
       </nav>
 
       <div class="atlas-layout">
@@ -259,10 +234,7 @@ layout: null
               <div class="map-loading">지도를 불러오는 중입니다.</div>
             </div>
             <div class="map-legend" aria-label="날짜별 경로 색상">
-              <span><i style="--legend:#d85d42"></i>Day 1</span>
-              <span><i style="--legend:#247b78"></i>Day 2</span>
-              <span><i style="--legend:#a56a1d"></i>Day 3</span>
-              <span><i style="--legend:#526c96"></i>Day 4</span>
+              {% for day in trip_data.days %}<span><i style="--legend:{{ day.color }}"></i>Day {{ day.id }}</span>{% endfor %}
               <span><i class="optional-dot"></i>선택 일정</span>
             </div>
             <p class="map-note">경로는 일정 파악용입니다. 실제 주행 전 Google 지도의 최신 길 안내를 확인하세요.</p>
@@ -273,318 +245,7 @@ layout: null
         </aside>
 
         <div class="schedule-column" id="schedule">
-          <section class="day-section" data-day-section="1" aria-labelledby="day-1-title" style="--day-color:#d85d42">
-            <header class="day-header">
-              <div class="day-badge"><span>DAY</span><strong>01</strong></div>
-              <div>
-                <p>2026.08.17 · MONDAY</p>
-                <h2 id="day-1-title">후쿠오카 근교</h2>
-                <span>대중교통 · 도보</span>
-              </div>
-            </header>
-
-            <div class="timeline">
-              <article class="timeline-card compact reveal" data-event-id="d1-flight-out">
-                <time datetime="2026-08-17T08:55">08:55</time>
-                <div class="timeline-card-body">
-                  <span class="stop-type">Flight</span>
-                  <h3>부산 출발</h3>
-                  <p>후쿠오카행 비행기 탑승</p>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d1-airport" data-stop-ids="fukuoka-airport">
-                <time datetime="2026-08-17T09:55">09:55<small>전후</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Arrival</span><h3>후쿠오카공항 도착</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="fukuoka-airport">위치<span class="sr-only">: 후쿠오카공항</span></button>
-                  </div>
-                  <p>11:00 전후 입국 수속 완료 목표</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%A6%8F%E5%B2%A1%E7%A9%BA%E6%B8%AF+%E5%9B%BD%E9%9A%9B%E7%B7%9A%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d1-hakata" data-stop-ids="hakata-station">
-                <time datetime="2026-08-17T11:30">11:30</time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Transit</span><h3>하카타역 이동·짐 보관</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="hakata-station">위치<span class="sr-only">: 하카타역</span></button>
-                  </div>
-                  <p>캐리어는 공항 또는 하카타역 코인로커 이용</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8D%9A%E5%A4%9A%E9%A7%85" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d1-nanzoin" data-stop-ids="nanzoin">
-                <time datetime="2026-08-17T12:00">12:00<small>—15:00</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Temple</span><h3>난조인</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="nanzoin">위치<span class="sr-only">: 난조인</span></button>
-                  </div>
-                  <p>하카타에서 이동 후 와불상과 경내 관람</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8D%97%E8%94%B5%E9%99%A2+%E7%A6%8F%E5%B2%A1" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d1-dazaifu" data-stop-ids="dazaifu">
-                <time datetime="2026-08-17T15:00">15:00<small>—18:30</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Shrine</span><h3>다자이후 텐만구</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="dazaifu">위치<span class="sr-only">: 다자이후 텐만구</span></button>
-                  </div>
-                  <p>15:00 이동 시작 · 16:30부터 텐만구와 참배로 산책</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%AA%E5%AE%B0%E5%BA%9C%E5%A4%A9%E6%BA%80%E5%AE%AE" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d1-ninestates" data-stop-ids="ninestates">
-                <time datetime="2026-08-17T19:30">19:30<small>전후</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Stay</span><h3>HOTEL NINESTATES HAKATA</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="ninestates">위치<span class="sr-only">: HOTEL NINESTATES HAKATA</span></button>
-                  </div>
-                  <p>호텔 체크인 후 저녁 식사</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=HOTEL+NINESTATES+HAKATA" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <section class="day-section" data-day-section="2" aria-labelledby="day-2-title" style="--day-color:#247b78">
-            <header class="day-header">
-              <div class="day-badge"><span>DAY</span><strong>02</strong></div>
-              <div>
-                <p>2026.08.18 · TUESDAY</p>
-                <h2 id="day-2-title">벳푸 핵심 관광</h2>
-                <span>렌터카 · 약 177 km</span>
-              </div>
-            </header>
-
-            <div class="timeline">
-              <article class="timeline-card reveal" data-event-id="d2-rental" data-stop-ids="fukuoka-airport">
-                <time datetime="2026-08-18T09:00">09:00<small>—09:30</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Rental car</span><h3>후쿠오카공항 렌터카 픽업</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="fukuoka-airport">위치<span class="sr-only">: 후쿠오카공항</span></button>
-                  </div>
-                  <p>차량 확인 후 아프리칸 사파리로 출발</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%A6%8F%E5%B2%A1%E7%A9%BA%E6%B8%AF" target="_blank" rel="noreferrer">장소 보기 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d2-safari" data-stop-ids="african-safari">
-                <time datetime="2026-08-18T11:30">11:30<small>—12:50</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Safari</span><h3>아프리칸 사파리</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="african-safari">위치<span class="sr-only">: 아프리칸 사파리</span></button>
-                  </div>
-                  <p><strong>마이카 사파리 30~40분</strong> · 전체 체류는 13시 이전 종료</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%9D%E5%B7%9E%E8%87%AA%E7%84%B6%E5%8B%95%E7%89%A9%E5%85%AC%E5%9C%92+%E3%82%A2%E3%83%95%E3%83%AA%E3%82%AB%E3%83%B3%E3%82%B5%E3%83%95%E3%82%A1%E3%83%AA" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d2-umi-jigoku" data-stop-ids="umi-jigoku">
-                <time datetime="2026-08-18T13:30">13:30<small>—14:00</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type priority">Priority</span><h3>바다지옥</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="umi-jigoku">위치<span class="sr-only">: 바다지옥</span></button>
-                  </div>
-                  <p>지옥 한 곳만 방문할 경우 이곳을 우선</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B5%B7%E5%9C%B0%E7%8D%84+%E5%88%A5%E5%BA%9C" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card optional reveal" data-event-id="d2-kamado-jigoku" data-stop-ids="kamado-jigoku">
-                <time datetime="2026-08-18T14:05">14:05<small>—14:35</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type optional-label">Optional</span><h3>가마솥지옥</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="kamado-jigoku">위치<span class="sr-only">: 가마솥지옥</span></button>
-                  </div>
-                  <p>일정이 30분 이상 지연되면 가장 먼저 제외</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%8B%E3%81%BE%E3%81%A9%E5%9C%B0%E7%8D%84+%E5%88%A5%E5%BA%9C" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d2-umitamago" data-stop-ids="umitamago">
-                <time datetime="2026-08-18T15:15">15:15<small>—17:50</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Aquarium</span><h3>우미타마고 수족관</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="umitamago">위치<span class="sr-only">: 우미타마고 수족관</span></button>
-                  </div>
-                  <p>14:35 출발 · 공연 시간표는 출발 전 다시 확인</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%A7%E5%88%86%E3%83%9E%E3%83%AA%E3%83%BC%E3%83%B3%E3%83%91%E3%83%AC%E3%82%B9%E6%B0%B4%E6%97%8F%E9%A4%A8+%E3%81%86%E3%81%BF%E3%81%9F%E3%81%BE%E3%81%94" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card compact reveal" data-event-id="d2-dinner">
-                <time datetime="2026-08-18T18:00">18:00<small>—19:30</small></time>
-                <div class="timeline-card-body"><span class="stop-type">Dinner</span><h3>저녁 식사</h3><p>벳푸 시내에서 식사</p></div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d2-hyotan" data-stop-ids="hyotan-onsen">
-                <time datetime="2026-08-18T20:00">20:00<small>—22:00</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Onsen</span><h3>효탄온천</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="hyotan-onsen">위치<span class="sr-only">: 효탄온천</span></button>
-                  </div>
-                  <p>늦게까지 운영하므로 마감이 빠른 관광지를 먼저 방문</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%B2%E3%82%87%E3%81%86%E3%81%9F%E3%82%93%E6%B8%A9%E6%B3%89+%E5%88%A5%E5%BA%9C" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d2-sakichi" data-stop-ids="sakichi">
-                <time datetime="2026-08-18T22:30">22:30<small>전후</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Stay</span><h3>Guest House Sakichi</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="sakichi">위치<span class="sr-only">: Guest House Sakichi</span></button>
-                  </div>
-                  <p>숙소 체크인 · 2박</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=Guest+House+SAKICHI+%E5%88%A5%E5%BA%9C" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-            </div>
-
-            <aside class="rule-card reveal" aria-labelledby="day-2-rules">
-              <span class="rule-label">IF DELAYED</span>
-              <h3 id="day-2-rules">30분 이상 늦어질 때</h3>
-              <ol><li>가마솥지옥 제외</li><li>바다지옥만 방문</li><li>우미타마고 입장 시간 확보</li></ol>
-              <p>벳푸 로프웨이와 유케무리 전망대는 이번 일정에서 제외.</p>
-            </aside>
-          </section>
-
-          <section class="day-section" data-day-section="3" aria-labelledby="day-3-title" style="--day-color:#a56a1d">
-            <header class="day-header">
-              <div class="day-badge"><span>DAY</span><strong>03</strong></div>
-              <div>
-                <p>2026.08.19 · WEDNESDAY</p>
-                <h2 id="day-3-title">아소·다카치호 드라이브</h2>
-                <span>렌터카 · 약 272 km</span>
-              </div>
-            </header>
-
-            <div class="timeline">
-              <article class="timeline-card reveal" data-event-id="d3-depart" data-stop-ids="sakichi">
-                <time datetime="2026-08-19T06:30">06:30<small>—07:00</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Start</span><h3>벳푸 숙소 출발</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="sakichi">위치<span class="sr-only">: Guest House Sakichi</span></button>
-                  </div>
-                  <p>긴 산길 이동을 위해 일찍 출발</p>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d3-aso" data-stop-ids="kusasenri nakadake">
-                <time datetime="2026-08-19T09:00">09:00<small>—11:30</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Volcano</span><h3>아소산 일대</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="kusasenri nakadake">위치<span class="sr-only">: 구사센리와 나카다케 화구</span></button>
-                  </div>
-                  <ul class="stop-tags"><li>구사센리</li><li>나카다케 화구</li><li>이동 중 전망 포인트</li></ul>
-                  <p>화구 출입 통제는 출발 전 반드시 확인</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E8%8D%89%E5%8D%83%E9%87%8C%E3%83%B6%E6%B5%9C" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d3-takachiho" data-stop-ids="takachiho-gorge takachiho-shrine amanoiwato-shrine">
-                <time datetime="2026-08-19T12:30">12:30<small>—15:30</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Gorge</span><h3>다카치호</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="takachiho-gorge takachiho-shrine amanoiwato-shrine">위치<span class="sr-only">: 다카치호 관광지</span></button>
-                  </div>
-                  <ul class="stop-tags"><li>협곡 산책</li><li>마나이 폭포 전망대</li><li>신사 한 곳 선택</li></ul>
-                  <p>협곡 보트는 운영하지 않으므로 산책 중심 · 점심 포함</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E9%AB%98%E5%8D%83%E7%A9%82%E5%B3%A1" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card optional reveal" data-event-id="d3-harajiri" data-stop-ids="harajiri-falls">
-                <time datetime="2026-08-19T17:00">17:00<small>—17:40</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type optional-label">Optional</span><h3>하라지리 폭포</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="harajiri-falls">위치<span class="sr-only">: 하라지리 폭포</span></button>
-                  </div>
-                  <p>15:30 다카치호 출발 · 시간이 부족하면 제외</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8E%9F%E5%B0%BB%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d3-return" data-stop-ids="sakichi">
-                <time datetime="2026-08-19T17:40">17:40<small>—19:00</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Return</span><h3>벳푸 숙소 복귀</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="sakichi">위치<span class="sr-only">: Guest House Sakichi</span></button>
-                  </div>
-                  <p>Guest House Sakichi 두 번째 밤</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=Guest+House+SAKICHI+%E5%88%A5%E5%BA%9C" target="_blank" rel="noreferrer">장소 보기 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-            </div>
-
-            <aside class="rule-card reveal" aria-labelledby="day-3-rules">
-              <span class="rule-label">CUT ORDER</span>
-              <h3 id="day-3-rules">시간이 부족할 때 제외 순서</h3>
-              <ol><li>아소산 추가 전망 포인트</li><li>다카치호 신사</li><li>하라지리 폭포</li></ol>
-            </aside>
-          </section>
-
-          <section class="day-section" data-day-section="4" aria-labelledby="day-4-title" style="--day-color:#526c96">
-            <header class="day-header">
-              <div class="day-badge"><span>DAY</span><strong>04</strong></div>
-              <div>
-                <p>2026.08.20 · THURSDAY</p>
-                <h2 id="day-4-title">후쿠오카·귀국</h2>
-                <span>렌터카 · 항공</span>
-              </div>
-            </header>
-
-            <div class="timeline">
-              <article class="timeline-card reveal" data-event-id="d4-checkout" data-stop-ids="sakichi">
-                <time datetime="2026-08-20T09:00">09:00<small>전후</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type">Check-out</span><h3>숙소 체크아웃</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="sakichi">위치<span class="sr-only">: Guest House Sakichi</span></button>
-                  </div>
-                  <p>09:30 벳푸에서 후쿠오카공항으로 출발</p>
-                </div>
-              </article>
-
-              <article class="timeline-card reveal" data-event-id="d4-airport" data-stop-ids="fukuoka-airport">
-                <time datetime="2026-08-20T11:40">11:40<small>—13:30</small></time>
-                <div class="timeline-card-body">
-                  <div class="card-title-row">
-                    <div><span class="stop-type priority">Deadline</span><h3>렌터카 반납·국제선 이동</h3></div>
-                    <button type="button" class="map-focus" data-stop-ids="fukuoka-airport">위치<span class="sr-only">: 후쿠오카공항</span></button>
-                  </div>
-                  <ul class="stop-tags"><li>12:10 주유</li><li>13:00 반납</li><li>13:30 국제선</li></ul>
-                  <p>공항 인근 도착 목표는 11:40~12:10</p>
-                  <a class="external-map" href="https://www.google.com/maps/search/?api=1&amp;query=%E7%A6%8F%E5%B2%A1%E7%A9%BA%E6%B8%AF+%E5%9B%BD%E9%9A%9B%E7%B7%9A%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB" target="_blank" rel="noreferrer">Google 지도 <span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-
-              <article class="timeline-card compact reveal" data-event-id="d4-flight-home">
-                <time datetime="2026-08-20T16:55">16:55</time>
-                <div class="timeline-card-body"><span class="stop-type">Flight</span><h3>후쿠오카 출발</h3><p>18:00 전후 부산 도착</p></div>
-              </article>
-            </div>
-          </section>
+          {% include japan_trip/schedule.html trip_data=trip_data %}
         </div>
       </div>
     </section>
@@ -595,11 +256,9 @@ layout: null
         <button type="button" class="checklist-reset">체크 초기화</button>
       </div>
       <div class="checklist-grid">
-        <label class="check-item reveal"><input type="checkbox" data-check="safari"><span class="check-box" aria-hidden="true"></span><span><strong>사파리 차량</strong><small>렌터카의 마이카 사파리 진입 가능 여부</small></span></label>
-        <label class="check-item reveal"><input type="checkbox" data-check="aso"><span class="check-box" aria-hidden="true"></span><span><strong>아소산 통제</strong><small>나카다케 화구 출입 가능 여부</small></span></label>
-        <label class="check-item reveal"><input type="checkbox" data-check="umitamago"><span class="check-box" aria-hidden="true"></span><span><strong>우미타마고</strong><small>당일 공연 시간표 확인</small></span></label>
-        <label class="check-item reveal"><input type="checkbox" data-check="weather"><span class="check-box" aria-hidden="true"></span><span><strong>날씨·산길</strong><small>태풍, 폭우와 도로 상황</small></span></label>
-        <label class="check-item reveal"><input type="checkbox" data-check="rental"><span class="check-box" aria-hidden="true"></span><span><strong>렌터카 보장</strong><small>ETC 카드와 면책·NOC 가입 여부</small></span></label>
+        {% for item in trip_data.checklist %}
+          <label class="check-item reveal"><input type="checkbox" data-check="{{ item.id }}"><span class="check-box" aria-hidden="true"></span><span><strong>{{ item.title }}</strong><small>{{ item.description }}</small></span></label>
+        {% endfor %}
       </div>
     </section>
   </main>

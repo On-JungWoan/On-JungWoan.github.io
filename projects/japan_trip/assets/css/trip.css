@@ -1171,7 +1171,7 @@ main {
   z-index: 40;
   top: var(--chrome-height);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(var(--day-tab-count, 5), 1fr);
   margin-bottom: 34px;
   border: 1px solid var(--line-strong);
   border-radius: 3px;
@@ -2533,7 +2533,7 @@ main {
   .day-tabs {
     top: var(--chrome-height);
     overflow-x: auto;
-    grid-template-columns: repeat(5, minmax(74px, 1fr));
+    grid-template-columns: repeat(var(--day-tab-count, 5), minmax(74px, 1fr));
     margin-bottom: 22px;
     scrollbar-width: none;
   }

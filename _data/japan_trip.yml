@@ -1,0 +1,876 @@
+---
+# 이 페이지의 일정·지도·예약 지갑을 관리하는 단일 원본입니다.
+# 일정 수정: days[].events / 예약 수정: walletItems / 지도 장소 수정: stops
+# 날짜와 시각은 UTC+9 오프셋을 포함한 ISO 8601 형식으로 입력하세요.
+trip:
+  start: '2026-08-17'
+  end: '2026-08-20'
+  timezone: Asia/Seoul
+days:
+- id: 1
+  shortLabel: '8.17'
+  title: 하카타 쇼핑·나카스
+  color: "#d85d42"
+  routeType: schematic
+  stops:
+  - fukuoka-airport
+  - amu-plaza-hakata
+  - yodobashi-hakata
+  - hama-sushi-chiyo
+  - ninestates
+  - donki-nakasu
+  - nakasu
+  date: 2026.08.17
+  weekday: MONDAY
+  dateLabel: MON · 08.17
+  headerTitle: 하카타 쇼핑·나카스
+  subtitle: 대중교통 · 도보
+  overviewRoute: 아뮤플라자 → 요도바시 → 하마스시 → 나카스
+  overviewStay: HOTEL NINESTATES HAKATA
+  events:
+  - id: d1-flight-out
+    day: 1
+    start: '2026-08-17T08:55:00+09:00'
+    end: '2026-08-17T09:55:00+09:00'
+    departAt: '2026-08-17T08:55:00+09:00'
+    title: 부산 출발
+    destination: 후쿠오카공항
+    timeLabel: '08:55'
+    typeLabel: Flight
+    compact: true
+    cardTitle: 부산 출발
+    description: 후쿠오카행 비행기 탑승
+  - id: d1-airport
+    day: 1
+    start: '2026-08-17T09:55:00+09:00'
+    end: '2026-08-17T11:00:00+09:00'
+    title: 후쿠오카공항 도착
+    destination: 후쿠오카공항 국제선
+    timeLabel: '09:55'
+    timeSuffix: 전후
+    typeLabel: Arrival
+    cardTitle: 후쿠오카공항 도착
+    stopIds:
+    - fukuoka-airport
+    mapLabel: 후쿠오카공항
+    mapLink: true
+    description: 11:00 전후 입국 수속 완료 목표
+  - id: d1-hakata
+    day: 1
+    start: '2026-08-17T11:30:00+09:00'
+    end: '2026-08-17T12:50:00+09:00'
+    departAt: '2026-08-17T11:00:00+09:00'
+    title: 아뮤플라자 하카타
+    destination: 아뮤플라자 하카타
+    directions:
+      origin: fukuoka-airport
+      destination: amu-plaza-hakata
+      mode: transit
+    timeLabel: '11:30'
+    timeSuffix: "—12:50"
+    typeLabel: Shopping
+    cardTitle: 아뮤플라자 하카타
+    stopIds:
+    - amu-plaza-hakata
+    mapLabel: 아뮤플라자 하카타
+    mapLink: true
+    tags:
+    - 1F LUSH
+    - 5F 몬치치
+    - 8F 가챠샵
+    description: 도착 직후 하카타역 상권에서 쇼핑 시작
+  - id: d1-yodobashi
+    day: 1
+    start: '2026-08-17T13:00:00+09:00'
+    end: '2026-08-17T15:00:00+09:00'
+    departAt: '2026-08-17T12:50:00+09:00'
+    title: 요도바시 카메라 멀티미디어 하카타
+    destination: 요도바시 카메라 멀티미디어 하카타
+    directions:
+      origin: amu-plaza-hakata
+      destination: yodobashi-hakata
+      mode: walking
+    timeLabel: '13:00'
+    timeSuffix: "—15:00"
+    typeLabel: Shopping
+    cardTitle: 요도바시 카메라 멀티미디어 하카타
+    stopIds:
+    - yodobashi-hakata
+    mapLabel: 요도바시 하카타
+    mapLink: true
+    tags:
+    - B1F 가챠샵
+    - 3F GU
+    - 4F 다이소·로피아
+    description: 층별 쇼핑 후 하마스시로 이동
+  - id: d1-hama-sushi
+    day: 1
+    start: '2026-08-17T15:30:00+09:00'
+    end: '2026-08-17T16:30:00+09:00'
+    departAt: '2026-08-17T15:00:00+09:00'
+    title: 하마스시 하카타치요점
+    destination: 하마스시 하카타치요점
+    directions:
+      origin: yodobashi-hakata
+      destination: hama-sushi-chiyo
+      mode: transit
+    timeLabel: '15:30'
+    timeSuffix: "—16:30"
+    typeLabel: Meal
+    cardTitle: 하마스시 하카타치요점
+    stopIds:
+    - hama-sushi-chiyo
+    mapLabel: 하마스시 하카타치요점
+    mapLink: true
+    description: 늦은 점심 또는 점저
+  - id: d1-ninestates
+    day: 1
+    start: '2026-08-17T17:00:00+09:00'
+    end: '2026-08-17T20:40:00+09:00'
+    departAt: '2026-08-17T16:30:00+09:00'
+    title: 호텔 체크인·휴식
+    destination: HOTEL NINESTATES HAKATA
+    directions:
+      origin: hama-sushi-chiyo
+      destination: ninestates
+      mode: walking
+    timeLabel: '17:00'
+    timeSuffix: 전후
+    typeLabel: Stay
+    cardTitle: HOTEL NINESTATES HAKATA
+    stopIds:
+    - ninestates
+    mapLabel: HOTEL NINESTATES HAKATA
+    mapLink: true
+    description: 체크인 후 휴식 및 미팅 준비
+  - id: d1-meeting
+    day: 1
+    start: '2026-08-17T21:00:00+09:00'
+    end: '2026-08-17T22:00:00+09:00'
+    departAt: '2026-08-17T21:00:00+09:00'
+    title: 미팅
+    destination: 미팅
+    timeLabel: '21:00'
+    timeSuffix: "—22:00"
+    typeLabel: Meeting
+    compact: true
+    cardTitle: 월요일 미팅
+    description: 22:00 종료 예정
+  - id: d1-donki
+    day: 1
+    start: '2026-08-17T22:15:00+09:00'
+    end: '2026-08-17T23:00:00+09:00'
+    departAt: '2026-08-17T22:00:00+09:00'
+    title: 돈키호테 나카스점
+    destination: 돈키호테 나카스점
+    directions:
+      origin: ninestates
+      destination: donki-nakasu
+      mode: walking
+    timeLabel: '22:15'
+    timeSuffix: "—23:00"
+    typeLabel: Shopping
+    cardTitle: 돈키호테 나카스점
+    stopIds:
+    - donki-nakasu
+    mapLabel: 돈키호테 나카스점
+    mapLink: true
+    description: 미팅 종료 후 야간 쇼핑
+  - id: d1-nakasu
+    day: 1
+    start: '2026-08-17T23:00:00+09:00'
+    end: '2026-08-17T23:59:00+09:00'
+    departAt: '2026-08-17T23:00:00+09:00'
+    title: 나카스 거리 산책
+    destination: 나카스
+    directions:
+      origin: donki-nakasu
+      destination: nakasu
+      mode: walking
+    timeLabel: '23:00'
+    timeSuffix: "—자정 전후"
+    typeLabel: Night walk
+    cardTitle: 나카스 거리
+    stopIds:
+    - nakasu
+    mapLabel: 나카스
+    mapLink: true
+    description: 거리 구경 후 자정 무렵 숙소 복귀
+- id: 2
+  shortLabel: '8.18'
+  title: 벳푸 핵심 관광
+  color: "#247b78"
+  routeType: geojson
+  routeFile: assets/routes/day-2.geojson
+  stops:
+  - fukuoka-airport
+  - african-safari
+  - umi-jigoku
+  - kamado-jigoku
+  - umitamago
+  - hyotan-onsen
+  - sakichi
+  date: 2026.08.18
+  weekday: TUESDAY
+  dateLabel: TUE · 08.18
+  headerTitle: 벳푸 핵심 관광
+  subtitle: 렌터카 · 약 177 km
+  overviewRoute: 사파리 → 지옥 → 우미타마고
+  overviewStay: Guest House Sakichi
+  rule:
+    label: IF DELAYED
+    title: 30분 이상 늦어질 때
+    items:
+    - 가마솥지옥 제외
+    - 바다지옥만 방문
+    - 우미타마고 입장 시간 확보
+    note: 벳푸 로프웨이와 유케무리 전망대는 이번 일정에서 제외.
+  events:
+  - id: d2-rental
+    day: 2
+    start: '2026-08-18T09:00:00+09:00'
+    end: '2026-08-18T09:30:00+09:00'
+    departAt: '2026-08-18T09:00:00+09:00'
+    title: 렌터카 픽업
+    destination: 후쿠오카공항 렌터카
+    directions:
+      origin: ninestates
+      destination: fukuoka-airport
+      mode: transit
+    timeLabel: '09:00'
+    timeSuffix: "—09:30"
+    typeLabel: Rental car
+    cardTitle: 후쿠오카공항 렌터카 픽업
+    stopIds:
+    - fukuoka-airport
+    mapLabel: 후쿠오카공항
+    mapLink: true
+    description: 차량 확인 후 아프리칸 사파리로 출발
+  - id: d2-safari
+    day: 2
+    start: '2026-08-18T11:30:00+09:00'
+    end: '2026-08-18T12:50:00+09:00'
+    departAt: '2026-08-18T09:30:00+09:00'
+    title: 마이카 사파리
+    destination: 아프리칸 사파리
+    directions:
+      origin: fukuoka-airport
+      destination: african-safari
+      mode: driving
+    timeLabel: '11:30'
+    timeSuffix: "—12:50"
+    typeLabel: Safari
+    cardTitle: 아프리칸 사파리
+    stopIds:
+    - african-safari
+    mapLabel: 아프리칸 사파리
+    mapLink: true
+    descriptionHtml: "<strong>마이카 사파리 30~40분</strong> · 전체 체류는 13시 이전 종료"
+  - id: d2-umi-jigoku
+    day: 2
+    start: '2026-08-18T13:30:00+09:00'
+    end: '2026-08-18T14:00:00+09:00'
+    departAt: '2026-08-18T12:50:00+09:00'
+    title: 바다지옥
+    destination: 바다지옥
+    directions:
+      origin: african-safari
+      destination: umi-jigoku
+      mode: driving
+    timeLabel: '13:30'
+    timeSuffix: "—14:00"
+    typeLabel: Priority
+    typeClass: priority
+    cardTitle: 바다지옥
+    stopIds:
+    - umi-jigoku
+    mapLabel: 바다지옥
+    mapLink: true
+    description: 지옥 한 곳만 방문할 경우 이곳을 우선
+  - id: d2-kamado-jigoku
+    day: 2
+    start: '2026-08-18T14:05:00+09:00'
+    end: '2026-08-18T14:35:00+09:00'
+    departAt: '2026-08-18T14:05:00+09:00'
+    title: 가마솥지옥
+    destination: 가마솥지옥
+    directions:
+      origin: umi-jigoku
+      destination: kamado-jigoku
+      mode: driving
+    timeLabel: '14:05'
+    timeSuffix: "—14:35"
+    typeLabel: Optional
+    typeClass: optional-label
+    cardTitle: 가마솥지옥
+    optional: true
+    stopIds:
+    - kamado-jigoku
+    mapLabel: 가마솥지옥
+    mapLink: true
+    description: 일정이 30분 이상 지연되면 가장 먼저 제외
+  - id: d2-umitamago
+    day: 2
+    start: '2026-08-18T15:15:00+09:00'
+    end: '2026-08-18T17:50:00+09:00'
+    departAt: '2026-08-18T14:35:00+09:00'
+    title: 우미타마고 수족관
+    destination: 우미타마고
+    directions:
+      origin: kamado-jigoku
+      destination: umitamago
+      mode: driving
+    timeLabel: '15:15'
+    timeSuffix: "—17:50"
+    typeLabel: Aquarium
+    cardTitle: 우미타마고 수족관
+    stopIds:
+    - umitamago
+    mapLabel: 우미타마고 수족관
+    mapLink: true
+    description: 14:35 출발 · 공연 시간표는 출발 전 다시 확인
+  - id: d2-dinner
+    day: 2
+    start: '2026-08-18T18:00:00+09:00'
+    end: '2026-08-18T19:30:00+09:00'
+    departAt: '2026-08-18T17:50:00+09:00'
+    title: 저녁 식사
+    destination: 벳푸 시내
+    timeLabel: '18:00'
+    timeSuffix: "—19:30"
+    typeLabel: Dinner
+    compact: true
+    cardTitle: 저녁 식사
+    description: 벳푸 시내에서 식사
+  - id: d2-hyotan
+    day: 2
+    start: '2026-08-18T20:00:00+09:00'
+    end: '2026-08-18T22:00:00+09:00'
+    departAt: '2026-08-18T19:30:00+09:00'
+    title: 효탄온천
+    destination: 효탄온천
+    directions:
+      origin: umitamago
+      destination: hyotan-onsen
+      mode: driving
+    timeLabel: '20:00'
+    timeSuffix: "—22:00"
+    typeLabel: Onsen
+    cardTitle: 효탄온천
+    stopIds:
+    - hyotan-onsen
+    mapLabel: 효탄온천
+    mapLink: true
+    description: 늦게까지 운영하므로 마감이 빠른 관광지를 먼저 방문
+  - id: d2-sakichi
+    day: 2
+    start: '2026-08-18T22:30:00+09:00'
+    end: '2026-08-18T23:59:00+09:00'
+    departAt: '2026-08-18T22:00:00+09:00'
+    title: 숙소 체크인
+    destination: Guest House Sakichi
+    directions:
+      origin: hyotan-onsen
+      destination: sakichi
+      mode: driving
+    timeLabel: '22:30'
+    timeSuffix: 전후
+    typeLabel: Stay
+    cardTitle: Guest House Sakichi
+    stopIds:
+    - sakichi
+    mapLabel: Guest House Sakichi
+    mapLink: true
+    description: 숙소 체크인 · 2박
+- id: 3
+  shortLabel: '8.19'
+  title: 아소·다카치호
+  color: "#a56a1d"
+  routeType: geojson
+  routeFile: assets/routes/day-3.geojson
+  stops:
+  - sakichi
+  - kusasenri
+  - nakadake
+  - takachiho-gorge
+  - takachiho-shrine
+  - amanoiwato-shrine
+  - harajiri-falls
+  date: 2026.08.19
+  weekday: WEDNESDAY
+  dateLabel: WED · 08.19
+  headerTitle: 아소·다카치호 드라이브
+  subtitle: 렌터카 · 약 272 km
+  overviewRoute: 아소산 → 협곡 → 하라지리
+  overviewStay: Guest House Sakichi
+  rule:
+    label: CUT ORDER
+    title: 시간이 부족할 때 제외 순서
+    items:
+    - 아소산 추가 전망 포인트
+    - 다카치호 신사
+    - 하라지리 폭포
+  events:
+  - id: d3-depart
+    day: 3
+    start: '2026-08-19T06:30:00+09:00'
+    end: '2026-08-19T07:00:00+09:00'
+    title: 벳푸 숙소 출발
+    destination: 아소산
+    timeLabel: '06:30'
+    timeSuffix: "—07:00"
+    typeLabel: Start
+    cardTitle: 벳푸 숙소 출발
+    stopIds:
+    - sakichi
+    mapLabel: Guest House Sakichi
+    description: 긴 산길 이동을 위해 일찍 출발
+  - id: d3-aso
+    day: 3
+    start: '2026-08-19T09:00:00+09:00'
+    end: '2026-08-19T11:30:00+09:00'
+    departAt: '2026-08-19T06:30:00+09:00'
+    title: 아소산 일대
+    destination: 구사센리
+    directions:
+      origin: sakichi
+      destination: kusasenri
+      mode: driving
+    timeLabel: '09:00'
+    timeSuffix: "—11:30"
+    typeLabel: Volcano
+    cardTitle: 아소산 일대
+    stopIds:
+    - kusasenri
+    - nakadake
+    mapLabel: 구사센리와 나카다케 화구
+    mapLink: true
+    tags:
+    - 구사센리
+    - 나카다케 화구
+    - 이동 중 전망 포인트
+    description: 화구 출입 통제는 출발 전 반드시 확인
+  - id: d3-takachiho
+    day: 3
+    start: '2026-08-19T12:30:00+09:00'
+    end: '2026-08-19T15:30:00+09:00'
+    departAt: '2026-08-19T11:30:00+09:00'
+    title: 다카치호 관광 및 점심
+    destination: 다카치호 협곡
+    directions:
+      origin: kusasenri
+      destination: takachiho-gorge
+      mode: driving
+    timeLabel: '12:30'
+    timeSuffix: "—15:30"
+    typeLabel: Gorge
+    cardTitle: 다카치호
+    stopIds:
+    - takachiho-gorge
+    - takachiho-shrine
+    - amanoiwato-shrine
+    mapLabel: 다카치호 관광지
+    mapLink: true
+    tags:
+    - 협곡 산책
+    - 마나이 폭포 전망대
+    - 신사 한 곳 선택
+    description: 협곡 보트는 운영하지 않으므로 산책 중심 · 점심 포함
+  - id: d3-harajiri
+    day: 3
+    start: '2026-08-19T17:00:00+09:00'
+    end: '2026-08-19T17:40:00+09:00'
+    departAt: '2026-08-19T15:30:00+09:00'
+    title: 하라지리 폭포
+    destination: 하라지리 폭포
+    directions:
+      origin: takachiho-gorge
+      destination: harajiri-falls
+      mode: driving
+    timeLabel: '17:00'
+    timeSuffix: "—17:40"
+    typeLabel: Optional
+    typeClass: optional-label
+    cardTitle: 하라지리 폭포
+    optional: true
+    stopIds:
+    - harajiri-falls
+    mapLabel: 하라지리 폭포
+    mapLink: true
+    description: 15:30 다카치호 출발 · 시간이 부족하면 제외
+  - id: d3-return
+    day: 3
+    start: '2026-08-19T17:40:00+09:00'
+    end: '2026-08-19T19:00:00+09:00'
+    departAt: '2026-08-19T17:40:00+09:00'
+    title: 벳푸 숙소 복귀
+    destination: Guest House Sakichi
+    directions:
+      origin: harajiri-falls
+      destination: sakichi
+      mode: driving
+    timeLabel: '17:40'
+    timeSuffix: "—19:00"
+    typeLabel: Return
+    cardTitle: 벳푸 숙소 복귀
+    stopIds:
+    - sakichi
+    mapLabel: Guest House Sakichi
+    mapLink: true
+    description: Guest House Sakichi 두 번째 밤
+- id: 4
+  shortLabel: '8.20'
+  title: 후쿠오카·귀국
+  color: "#526c96"
+  routeType: geojson
+  routeFile: assets/routes/day-4.geojson
+  stops:
+  - sakichi
+  - fukuoka-airport
+  date: 2026.08.20
+  weekday: THURSDAY
+  dateLabel: THU · 08.20
+  headerTitle: 후쿠오카·귀국
+  subtitle: 렌터카 · 항공
+  overviewRoute: 벳푸 → 후쿠오카공항 → 부산
+  overviewStay: 렌터카 13:00 반납
+  events:
+  - id: d4-checkout
+    day: 4
+    start: '2026-08-20T09:00:00+09:00'
+    end: '2026-08-20T09:30:00+09:00'
+    title: 체크아웃
+    destination: 후쿠오카공항
+    timeLabel: '09:00'
+    timeSuffix: 전후
+    typeLabel: Check-out
+    cardTitle: 숙소 체크아웃
+    stopIds:
+    - sakichi
+    mapLabel: Guest House Sakichi
+    description: '09:30 벳푸에서 후쿠오카공항으로 출발'
+  - id: d4-airport
+    day: 4
+    start: '2026-08-20T11:40:00+09:00'
+    end: '2026-08-20T13:30:00+09:00'
+    departAt: '2026-08-20T09:30:00+09:00'
+    title: 렌터카 반납·국제선 이동
+    destination: 후쿠오카공항
+    directions:
+      origin: sakichi
+      destination: fukuoka-airport
+      mode: driving
+    timeLabel: '11:40'
+    timeSuffix: "—13:30"
+    typeLabel: Deadline
+    typeClass: priority
+    cardTitle: 렌터카 반납·국제선 이동
+    stopIds:
+    - fukuoka-airport
+    mapLabel: 후쿠오카공항
+    mapLink: true
+    tags:
+    - 12:10 주유
+    - 13:00 반납
+    - 13:30 국제선
+    description: 공항 인근 도착 목표는 11:40~12:10
+  - id: d4-flight-home
+    day: 4
+    start: '2026-08-20T16:55:00+09:00'
+    end: '2026-08-20T18:00:00+09:00'
+    departAt: '2026-08-20T16:55:00+09:00'
+    title: 후쿠오카 출발
+    destination: 부산
+    timeLabel: '16:55'
+    typeLabel: Flight
+    compact: true
+    cardTitle: 후쿠오카 출발
+    description: 18:00 전후 부산 도착
+walletItems:
+- id: visit-japan
+  type: ticket
+  kicker: QR / 0817
+  title: Visit japan QR code
+  summary: 2026.08.17
+  fields:
+  - label: QR (정완)
+    value: "/projects/japan_trip/docs/Visit_japan_QR_Jeongwan.pdf"
+    href: "/projects/japan_trip/docs/Visit_japan_QR_Jeongwan.pdf"
+    linkLabel: QR 열기
+    copyable: false
+  - label: QR (다연)
+    value: "/projects/japan_trip/docs/Visit_japan_QR_Dayeon.pdf"
+    href: "/projects/japan_trip/docs/Visit_japan_QR_Dayeon.pdf"
+    linkLabel: QR 열기
+    copyable: false    
+- id: flight-outbound
+  type: flight
+  kicker: OUTBOUND / 0817
+  title: PUS → FUK
+  summary: 2026.08.17 · 08:55—09:55
+  fields:
+  - label: 항공사
+    value: 이스타항공
+    copyable: false
+  - label: 편명
+    value: ZE941
+    copyable: true
+  - label: 예약번호
+    value: R656GP
+    copyable: true
+- id: stay-ninestates
+  type: stay
+  kicker: STAY / NIGHT 01
+  title: HOTEL NINESTATES HAKATA
+  summary: 2026.08.17 · 1박
+  fields:
+  - label: 예약번호
+    value: '6709181441'
+    copyable: true
+  - label: PIN
+    value: '0507'
+    copyable: true
+  - label: 주소
+    value: 후쿠오카 현, 후쿠오카, Hakata-ku Taihakumachi 11-10, 일본
+    copyable: true
+- id: rental-car
+  type: rental
+  kicker: RENTAL / 0818—20
+  title: 후쿠오카공항 렌터카
+  summary: '08.18 09:00 · 08.20 13:00'
+  fields:
+  - label: 업체
+    value: 버젯렌터카
+    copyable: false
+  - label: 예약번호
+    value: '00010717491'
+    copyable: true
+  - label: 현장결제
+    value: 18,348엔
+    copyable: false
+- id: aquarium
+  type: ticket
+  kicker: TICKET / 0818
+  title: 오이타 우미타마고 아쿠아리움 입장권
+  summary: 2026.08.18
+  fields:
+  - label: 예약번호
+    value: '1400828126686033'
+    copyable: true
+  - label: E-ticket
+    value: "/projects/japan_trip/docs/aguarium_e-ticket.pdf"
+    href: "/projects/japan_trip/docs/aguarium_e-ticket.pdf"
+    linkLabel: PDF 열기
+    copyable: false
+  - label: 위치
+    value: https://maps.google.com/maps?q=33.259024,131.535529
+    href: https://maps.google.com/maps?q=33.259024,131.535529
+    linkLabel: Google 지도
+    copyable: false
+- id: stay-sakichi
+  type: stay
+  kicker: STAY / NIGHTS 02—03
+  title: Guest House Sakichi
+  summary: 2026.08.18—20 · 2박
+  fields:
+  - label: 예약번호
+    value: '6167061836'
+    copyable: true
+  - label: PIN
+    value: '8851'
+    copyable: true
+  - label: 주소
+    value: 오이타 현, 벳푸, Asami 2-4-4, 일본
+    copyable: true
+- id: flight-inbound
+  type: flight
+  kicker: INBOUND / 0820
+  title: FUK → PUS
+  summary: 2026.08.20 · 16:55—18:00
+  fields:
+  - label: 항공사
+    value: 이스타항공
+    copyable: false
+  - label: 편명
+    value: ZE944
+    copyable: true
+  - label: 예약번호
+    value: R656GP
+    copyable: true
+stops:
+- id: fukuoka-airport
+  name: 후쿠오카공항 국제선
+  lat: 33.5848221
+  lng: 130.4442945
+  days:
+  - 1
+  - 2
+  - 4
+  label: 공항
+  query: 福岡空港 国際線ターミナル
+- id: amu-plaza-hakata
+  name: 아뮤플라자 하카타
+  lat: 33.5902769
+  lng: 130.4198799
+  days:
+  - 1
+  label: 하카타 쇼핑
+  query: アミュプラザ博多
+- id: yodobashi-hakata
+  name: 요도바시 카메라 멀티미디어 하카타
+  lat: 33.5886
+  lng: 130.4223
+  days:
+  - 1
+  label: 쇼핑
+  query: ヨドバシカメラ マルチメディア博多
+- id: hama-sushi-chiyo
+  name: 하마스시 하카타치요점
+  lat: 33.6053216
+  lng: 130.4098021
+  days:
+  - 1
+  label: 점심·점저
+  query: はま寿司 博多千代店
+- id: ninestates
+  name: HOTEL NINESTATES HAKATA
+  lat: 33.603493
+  lng: 130.406708
+  days:
+  - 1
+  label: 1박
+  query: HOTEL NINESTATES HAKATA
+- id: donki-nakasu
+  name: 돈키호테 나카스점
+  lat: 33.5936772
+  lng: 130.4060551
+  days:
+  - 1
+  label: 야간 쇼핑
+  query: ドン・キホーテ 中洲店
+- id: nakasu
+  name: 나카스
+  lat: 33.59348
+  lng: 130.40562
+  days:
+  - 1
+  label: 야간 산책
+  query: 中洲 福岡
+- id: african-safari
+  name: 아프리칸 사파리
+  lat: 33.3539976
+  lng: 131.4114362
+  days:
+  - 2
+  label: 마이카 사파리
+  query: 九州自然動物公園 アフリカンサファリ
+- id: umi-jigoku
+  name: 바다지옥
+  lat: 33.31683
+  lng: 131.4687332
+  days:
+  - 2
+  label: 우선 방문
+  query: 海地獄 別府
+- id: kamado-jigoku
+  name: 가마솥지옥
+  lat: 33.3164456
+  lng: 131.4724531
+  days:
+  - 2
+  label: 지연 시 제외
+  query: かまど地獄 別府
+  optional: true
+- id: umitamago
+  name: 우미타마고 수족관
+  lat: 33.2589685
+  lng: 131.5356401
+  days:
+  - 2
+  label: 15:15 입장
+  query: 大分マリーンパレス水族館 うみたまご
+- id: hyotan-onsen
+  name: 효탄온천
+  lat: 33.3144306
+  lng: 131.4793204
+  days:
+  - 2
+  label: 늦은 운영
+  query: ひょうたん温泉 別府
+- id: sakichi
+  name: Guest House Sakichi
+  lat: 33.272907
+  lng: 131.496689
+  days:
+  - 2
+  - 3
+  - 4
+  label: 2박
+  query: Guest House SAKICHI 別府
+- id: kusasenri
+  name: 구사센리
+  lat: 32.8849747
+  lng: 131.0502492
+  days:
+  - 3
+  label: 아소산
+  query: 草千里ヶ浜
+- id: nakadake
+  name: 나카다케 화구
+  lat: 32.8841192
+  lng: 131.0847112
+  days:
+  - 3
+  label: 통제 확인
+  query: 阿蘇中岳火口
+- id: takachiho-gorge
+  name: 다카치호 협곡
+  lat: 32.7017851
+  lng: 131.300939
+  days:
+  - 3
+  label: 산책 중심
+  query: 高千穂峡
+- id: takachiho-shrine
+  name: 다카치호 신사
+  lat: 32.7066706
+  lng: 131.3018922
+  days:
+  - 3
+  label: 선택 방문
+  query: 高千穂神社
+  optional: true
+- id: amanoiwato-shrine
+  name: 아마노이와토 신사
+  lat: 32.7345037
+  lng: 131.3506899
+  days:
+  - 3
+  label: 선택 방문
+  query: 天岩戸神社 西本宮
+  optional: true
+- id: harajiri-falls
+  name: 하라지리 폭포
+  lat: 32.9643788
+  lng: 131.4511721
+  days:
+  - 3
+  label: 시간 부족 시 제외
+  query: 原尻の滝
+  optional: true
+checklist:
+- id: safari
+  title: 사파리 차량
+  description: 렌터카의 마이카 사파리 진입 가능 여부
+- id: aso
+  title: 아소산 통제
+  description: 나카다케 화구 출입 가능 여부
+- id: umitamago
+  title: 우미타마고
+  description: 당일 공연 시간표 확인
+- id: weather
+  title: 날씨·산길
+  description: 태풍, 폭우와 도로 상황
+- id: rental
+  title: 렌터카 보장
+  description: ETC 카드와 면책·NOC 가입 여부
