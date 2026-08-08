@@ -9,13 +9,14 @@ trip:
 days:
 - id: 1
   shortLabel: '8.17'
-  title: 하카타 쇼핑·나카스
+  title: 하카타 쇼핑·난조인·나카스
   color: "#d85d42"
   routeType: schematic
   stops:
   - fukuoka-airport
   - amu-plaza-hakata
   - yodobashi-hakata
+  - nanzoin
   - hama-sushi-chiyo
   - ninestates
   - donki-nakasu
@@ -23,9 +24,9 @@ days:
   date: 2026.08.17
   weekday: MONDAY
   dateLabel: MON · 08.17
-  headerTitle: 하카타 쇼핑·나카스
+  headerTitle: 하카타 쇼핑·난조인·나카스
   subtitle: 대중교통 · 도보
-  overviewRoute: 아뮤플라자 → 요도바시 → 하마스시 → 나카스
+  overviewRoute: 아뮤플라자 → 요도바시 → 난조인 → 하마스시 → 나카스
   overviewStay: HOTEL NINESTATES HAKATA
   events:
   - id: d1-flight-out
@@ -58,7 +59,7 @@ days:
   - id: d1-hakata
     day: 1
     start: '2026-08-17T11:30:00+09:00'
-    end: '2026-08-17T12:50:00+09:00'
+    end: '2026-08-17T12:35:00+09:00'
     departAt: '2026-08-17T11:00:00+09:00'
     title: 아뮤플라자 하카타
     destination: 아뮤플라자 하카타
@@ -67,7 +68,7 @@ days:
       destination: amu-plaza-hakata
       mode: transit
     timeLabel: '11:30'
-    timeSuffix: "—12:50"
+    timeSuffix: "—12:35"
     typeLabel: Shopping
     cardTitle: 아뮤플라자 하카타
     stopIds:
@@ -81,17 +82,17 @@ days:
     description: 도착 직후 하카타역 상권에서 쇼핑 시작
   - id: d1-yodobashi
     day: 1
-    start: '2026-08-17T13:00:00+09:00'
-    end: '2026-08-17T15:00:00+09:00'
-    departAt: '2026-08-17T12:50:00+09:00'
+    start: '2026-08-17T12:40:00+09:00'
+    end: '2026-08-17T13:50:00+09:00'
+    departAt: '2026-08-17T12:35:00+09:00'
     title: 요도바시 카메라 멀티미디어 하카타
     destination: 요도바시 카메라 멀티미디어 하카타
     directions:
       origin: amu-plaza-hakata
       destination: yodobashi-hakata
       mode: walking
-    timeLabel: '13:00'
-    timeSuffix: "—15:00"
+    timeLabel: '12:40'
+    timeSuffix: "—13:50"
     typeLabel: Shopping
     cardTitle: 요도바시 카메라 멀티미디어 하카타
     stopIds:
@@ -102,39 +103,59 @@ days:
     - B1F 가챠샵
     - 3F GU
     - 4F 다이소·로피아
-    description: 층별 쇼핑 후 하마스시로 이동
+    description: 층별 쇼핑 후 하카타역에서 난조인으로 이동
+  - id: d1-nanzoin
+    day: 1
+    start: '2026-08-17T14:30:00+09:00'
+    end: '2026-08-17T15:50:00+09:00'
+    departAt: '2026-08-17T13:50:00+09:00'
+    title: 난조인
+    destination: 난조인
+    directions:
+      origin: yodobashi-hakata
+      destination: nanzoin
+      mode: transit
+    timeLabel: '14:30'
+    timeSuffix: "—15:50"
+    typeLabel: Temple
+    cardTitle: 난조인
+    stopIds:
+    - nanzoin
+    mapLabel: 난조인
+    mapLink: true
+    description: 와불상과 경내 관람 · 늦어도 16:30 최종 접수 전에 입장
   - id: d1-hama-sushi
     day: 1
-    start: '2026-08-17T15:30:00+09:00'
-    end: '2026-08-17T16:30:00+09:00'
-    departAt: '2026-08-17T15:00:00+09:00'
+    start: '2026-08-17T16:40:00+09:00'
+    end: '2026-08-17T17:40:00+09:00'
+    departAt: '2026-08-17T15:50:00+09:00'
     title: 하마스시 하카타치요점
     destination: 하마스시 하카타치요점
     directions:
-      origin: yodobashi-hakata
+      origin: nanzoin
       destination: hama-sushi-chiyo
       mode: transit
-    timeLabel: '15:30'
-    timeSuffix: "—16:30"
+    timeLabel: '16:40'
+    timeSuffix: "—17:40"
     typeLabel: Meal
     cardTitle: 하마스시 하카타치요점
     stopIds:
     - hama-sushi-chiyo
     mapLabel: 하마스시 하카타치요점
     mapLink: true
-    description: 늦은 점심 또는 점저
+    description: 늦은 점심 겸 점저
   - id: d1-ninestates
     day: 1
-    start: '2026-08-17T17:00:00+09:00'
+    start: '2026-08-17T18:00:00+09:00'
     end: '2026-08-17T20:40:00+09:00'
-    departAt: '2026-08-17T16:30:00+09:00'
+    departAt: '2026-08-17T17:40:00+09:00'
     title: 호텔 체크인·휴식
     destination: HOTEL NINESTATES HAKATA
     directions:
       origin: hama-sushi-chiyo
       destination: ninestates
       mode: walking
-    timeLabel: '17:00'
+    timeLabel: '18:00'
     timeSuffix: 전후
     typeLabel: Stay
     cardTitle: HOTEL NINESTATES HAKATA
@@ -724,6 +745,14 @@ stops:
   - 1
   label: 쇼핑
   query: ヨドバシカメラ マルチメディア博多
+- id: nanzoin
+  name: 난조인
+  lat: 33.6181923
+  lng: 130.5741717
+  days:
+  - 1
+  label: 와불상
+  query: 南蔵院 福岡
 - id: hama-sushi-chiyo
   name: 하마스시 하카타치요점
   lat: 33.6053216
