@@ -221,22 +221,23 @@ days:
   shortLabel: '8.18'
   title: 벳푸 핵심 관광
   color: "#247b78"
-  routeType: geojson
-  routeFile: assets/routes/day-2.geojson
+  routeType: schematic
   stops:
   - fukuoka-airport
   - african-safari
   - umi-jigoku
   - kamado-jigoku
   - umitamago
+  - yukemuri-observatory
+  - kifune-castle
   - hyotan-onsen
   - sakichi
   date: 2026.08.18
   weekday: TUESDAY
   dateLabel: TUE · 08.18
   headerTitle: 벳푸 핵심 관광
-  subtitle: 렌터카 · 약 177 km
-  overviewRoute: 사파리 → 지옥 → 우미타마고
+  subtitle: 렌터카 · 사파리·지옥·우미타마고·야경
+  overviewRoute: 사파리 → 지옥 → 우미타마고 → 야경 → 효탄온천
   overviewStay: Guest House Sakichi
   rule:
     label: IF DELAYED
@@ -245,7 +246,8 @@ days:
     - 가마솥지옥 제외
     - 바다지옥만 방문
     - 우미타마고 입장 시간 확보
-    note: 벳푸 로프웨이와 유케무리 전망대는 이번 일정에서 제외.
+    - 저녁이 늦어지면 기후네성 외관 생략
+    note: 유케무리 전망대와 기후네성은 야경만 짧게 관람 · 효탄온천 21:00 예약 고정.
   events:
   - id: d2-rental
     day: 2
@@ -362,39 +364,79 @@ days:
     typeLabel: Dinner
     compact: true
     cardTitle: 저녁 식사
-    description: 벳푸 시내에서 식사
+    description: 벳푸 시내에서 식사 후 철륜 야경 코스로 이동
+  - id: d2-yukemuri
+    day: 2
+    start: '2026-08-18T19:50:00+09:00'
+    end: '2026-08-18T20:05:00+09:00'
+    departAt: '2026-08-18T19:30:00+09:00'
+    title: 유케무리 전망대 야경
+    destination: 유케무리 전망대
+    timeLabel: '19:50'
+    timeSuffix: "—20:05"
+    typeLabel: Night view
+    cardTitle: 유케무리 전망대
+    stopIds:
+    - yukemuri-observatory
+    mapLabel: 유케무리 전망대
+    mapLink: true
+    description: 무료 야외 전망 공간에서 철륜 온천가와 수증기 야경을 짧게 감상
+  - id: d2-kifune-night
+    day: 2
+    start: '2026-08-18T20:10:00+09:00'
+    end: '2026-08-18T20:20:00+09:00'
+    departAt: '2026-08-18T20:05:00+09:00'
+    title: 기후네성 외관·주변 야경
+    destination: 기후네성
+    directions:
+      origin: yukemuri-observatory
+      destination: kifune-castle
+      mode: driving
+    timeLabel: '20:10'
+    timeSuffix: "—20:20"
+    typeLabel: Night view
+    cardTitle: 기후네성 외관·야경
+    stopIds:
+    - kifune-castle
+    mapLabel: 기후네성
+    mapLink: true
+    description: 내부 입장 없이 외관과 주변 벳푸 야경만 짧게 관람
   - id: d2-hyotan
     day: 2
-    start: '2026-08-18T20:00:00+09:00'
-    end: '2026-08-18T22:00:00+09:00'
-    departAt: '2026-08-18T19:30:00+09:00'
+    start: '2026-08-18T21:00:00+09:00'
+    end: '2026-08-18T22:15:00+09:00'
+    departAt: '2026-08-18T20:20:00+09:00'
     title: 효탄온천
     destination: 효탄온천
     directions:
-      origin: umitamago
+      origin: kifune-castle
       destination: hyotan-onsen
       mode: driving
-    timeLabel: '20:00'
-    timeSuffix: "—22:00"
-    typeLabel: Onsen
+    timeLabel: '21:00'
+    timeSuffix: "—22:15"
+    typeLabel: Reservation
+    typeClass: priority
     cardTitle: 효탄온천
     stopIds:
     - hyotan-onsen
     mapLabel: 효탄온천
     mapLink: true
-    description: 늦게까지 운영하므로 마감이 빠른 관광지를 먼저 방문
+    tags:
+    - 21:00 예약
+    - 가족탕 75분
+    description: 기후네성에서 20:20 출발 · 주차·접수 여유를 두고 예약 시간 전에 도착
   - id: d2-sakichi
     day: 2
-    start: '2026-08-18T22:30:00+09:00'
+    start: '2026-08-18T22:45:00+09:00'
     end: '2026-08-18T23:59:00+09:00'
-    departAt: '2026-08-18T22:00:00+09:00'
+    departAt: '2026-08-18T22:15:00+09:00'
     title: 숙소 체크인
     destination: Guest House Sakichi
     directions:
       origin: hyotan-onsen
       destination: sakichi
       mode: driving
-    timeLabel: '22:30'
+    timeLabel: '22:45'
     timeSuffix: 전후
     typeLabel: Stay
     cardTitle: Guest House Sakichi
@@ -810,6 +852,22 @@ stops:
   label: 지연 시 제외
   query: かまど地獄 別府
   optional: true
+- id: yukemuri-observatory
+  name: 유케무리 전망대
+  lat: 33.315669
+  lng: 131.485325
+  days:
+  - 2
+  label: 야경·온천 수증기
+  query: 湯けむり展望台 別府
+- id: kifune-castle
+  name: 기후네성
+  lat: 33.3196602
+  lng: 131.4831814
+  days:
+  - 2
+  label: 외관·주변 야경
+  query: 貴船城 別府
 - id: umitamago
   name: 우미타마고 수족관
   lat: 33.2589685
@@ -824,7 +882,7 @@ stops:
   lng: 131.4793204
   days:
   - 2
-  label: 늦은 운영
+  label: 21:00 예약 · 75분
   query: ひょうたん温泉 別府
 - id: sakichi
   name: Guest House Sakichi
