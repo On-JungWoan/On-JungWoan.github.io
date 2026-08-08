@@ -11,7 +11,8 @@ days:
   shortLabel: '8.17'
   title: 하카타 쇼핑·난조인·나카스
   color: "#d85d42"
-  routeType: schematic
+  routeType: geojson
+  routeFile: assets/routes/day-1.geojson
   stops:
   - fukuoka-airport
   - amu-plaza-hakata
@@ -221,7 +222,8 @@ days:
   shortLabel: '8.18'
   title: 벳푸 핵심 관광
   color: "#247b78"
-  routeType: schematic
+  routeType: geojson
+  routeFile: assets/routes/day-2.geojson
   stops:
   - fukuoka-airport
   - african-safari
