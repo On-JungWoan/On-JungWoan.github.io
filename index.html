@@ -40,7 +40,7 @@ layout: default
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
-  <link rel="stylesheet" href="/assets/css/academic.css">
+  <link rel="stylesheet" href="{{ '/assets/css/academic.css' | relative_url }}">
   <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Jeongwan On">
   <link rel="manifest" href="/index.webmanifest">
   
@@ -74,7 +74,7 @@ layout: default
       <div class="container">
         <div class="profile-grid">
           <aside class="profile-card">
-            <img class="avatar avatar-circle" src="/assets/images/profile_img.png" alt="Jeongwan On">
+            <img class="avatar avatar-circle" src="{{ '/assets/images/profile_img.png' | relative_url }}" alt="Portrait of Jeongwan On">
             <div class="portrait-title">
               <h2>Jeongwan On</h2>
               <h3>Combined MS/PhD Student</h3>
@@ -84,10 +84,10 @@ layout: default
             </div>
   
             <div class="profile-links" aria-label="Profile links">
-              <a href="/assets/cv.pdf" target="_blank" rel="noopener"><i class="far fa-file-alt"></i> CV</a>
+              <a href="{{ '/assets/cv.pdf' | relative_url }}" target="_blank" rel="noopener"><i class="far fa-file-alt"></i> CV</a>
               <a href="https://www.linkedin.com/in/jeongwan-on/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
               <a href="https://github.com/On-JungWoan" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
-              <a href="/blog" target="_blank" rel="noopener"><i class="fas fa-pen"></i> Blog</a>
+              <a href="{{ '/blog/' | relative_url }}"><i class="fas fa-pen"></i> Blog</a>
             </div>
           </aside>
   
@@ -129,11 +129,25 @@ layout: default
                 <h3>Education</h3>
                 <ul class="compact-list education-list">
                   <li>
-                    <i class="fas fa-graduation-cap"></i>
+                    <img
+                      class="education-logo"
+                      src="{{ '/assets/institutions/unist-emblem.png' | relative_url }}"
+                      alt=""
+                      width="140"
+                      height="140"
+                      loading="lazy"
+                    >
                     <span><b>M.S./Ph.D.</b>, AIGS, UNIST <small>Sep. 2024 - Current</small></span>
                   </li>
                   <li>
-                    <i class="fas fa-graduation-cap"></i>
+                    <img
+                      class="education-logo"
+                      src="{{ '/assets/institutions/chonnam-national-university-symbol.svg' | relative_url }}"
+                      alt=""
+                      width="142"
+                      height="135"
+                      loading="lazy"
+                    >
                     <span><b>B.S.</b>, Statistics, Chonnam National University <small>Mar. 2018 - Feb. 2024</small></span>
                   </li>
                 </ul>
@@ -159,10 +173,10 @@ layout: default
       background: #ffffff !important;
     }
 
-    #news,
-    #papers,
+    #work,
+    #service,
     #posts {
-      background: #f8fafc !important;
+      background: #f5f7fa !important;
     }
 
     
@@ -323,7 +337,8 @@ layout: default
     .news-list,
     .ul-papers,
     .clean-list,
-    .experience-list {
+    .experience-list,
+    .service-list {
       margin: 0;
       padding-left: 0;
       list-style: none;
@@ -346,6 +361,19 @@ layout: default
     .compact-list i {
       margin-top: 3px;
       color: #6b7f96;
+    }
+
+    .education-list li {
+      grid-template-columns: 32px minmax(0, 1fr);
+      align-items: center;
+    }
+
+    .education-list .education-logo {
+      justify-self: center;
+      display: block;
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
     }
     
     .compact-list small {
@@ -809,17 +837,55 @@ layout: default
     }
 
     .experience-list {
-      display: grid;
-      gap: 0px;
+      --experience-detail-color: #697789;
+      overflow: hidden;
+      border: 1px solid #dfe6ee;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(30, 45, 62, 0.05);
     }
 
     .experience-list li {
-      padding: 16px 18px;
-      border: 1px solid #dfe6ee;
-      border-left: 4px solid #7ba6c9;
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 6px 18px rgba(30, 45, 62, 0.04);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "org period"
+        "meta period"
+        "note note";
+      column-gap: 32px;
+      padding: 22px 24px;
+      border: 0;
+      border-bottom: 1px solid #e7edf3;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .experience-list li.has-institution-logo {
+      grid-template-columns: 88px minmax(0, 1fr) auto;
+      grid-template-areas:
+        "logo org period"
+        "logo meta period"
+        "logo note note";
+      column-gap: 18px;
+    }
+
+    .experience-list .institution-logo {
+      grid-area: logo;
+      align-self: center;
+      justify-self: center;
+      display: block;
+      width: 68px;
+      height: 68px;
+      object-fit: contain;
+    }
+
+    .experience-list .institution-logo--wide {
+      width: 88px;
+    }
+
+    .experience-list li:last-child {
+      border-bottom: 0;
     }
     
     .clean-list li:first-child {
@@ -831,36 +897,123 @@ layout: default
       padding-bottom: 0;
     }
 
-    .experience-list .role {
-      display: block;
+    .experience-list .org {
+      grid-area: org;
+      margin: 0;
       color: #182433;
+      font-size: 1.08rem;
       font-weight: 800;
       line-height: 1.35;
     }
 
-    .experience-list .org {
-      display: block;
-      margin-top: 3px;
-      color: #3f4b59;
+    .experience-meta {
+      grid-area: meta;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px 8px;
+      margin: 6px 0 0;
+      color: var(--experience-detail-color);
       line-height: 1.45;
+    }
+
+    .experience-list .role {
+      color: inherit;
+      font-weight: 500;
+    }
+
+    .experience-list .meta-separator {
+      color: inherit;
+    }
+
+    .experience-list .location {
+      color: inherit;
     }
     
     .experience-list .period {
-      display: block;
-      margin-top: 6px;
-      color: #697789;
-      font-size: 0.92rem;
+      grid-area: period;
+      align-self: start;
+      margin-top: 2px;
+      color: var(--experience-detail-color);
+      font-family: "Roboto Mono", monospace;
+      font-size: 0.82rem;
+      font-weight: 500;
+      line-height: 1.5;
+      white-space: nowrap;
     }
 
     .experience-list .note {
+      grid-area: note;
+      justify-self: start;
       display: inline-block;
       margin-top: 8px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #f1f8f4;
-      color: #2f6f56;
-      font-size: 0.78rem;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--experience-detail-color);
+      font-size: 0.82rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .service-list {
+      overflow: hidden;
+      border: 1px solid #dfe6ee;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(30, 45, 62, 0.05);
+    }
+
+    .service-list li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "venue years"
+        "meta years";
+      column-gap: 32px;
+      padding: 20px 24px;
+      border-bottom: 1px solid #e7edf3;
+    }
+
+    .service-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .service-venue {
+      grid-area: venue;
+      margin: 0;
+      color: #182433;
+      font-size: 1.08rem;
       font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .service-meta {
+      grid-area: meta;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px 8px;
+      margin: 6px 0 0;
+      color: #697789;
+      line-height: 1.5;
+    }
+
+    .service-role {
+      font-weight: 600;
+    }
+
+    .service-years {
+      grid-area: years;
+      align-self: center;
+      display: inline-flex;
+      gap: 7px;
+      color: #697789;
+      font-family: "Roboto Mono", monospace;
+      font-size: 0.82rem;
+      font-weight: 500;
+      line-height: 1.5;
+      white-space: nowrap;
     }
     
     @media (max-width: 992px) {
@@ -913,6 +1066,52 @@ layout: default
       .section-header p {
         margin-top: 8px;
       }
+
+      .experience-list li {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "org"
+          "meta"
+          "period"
+          "note";
+        padding: 20px;
+      }
+
+      .experience-list li.has-institution-logo {
+        grid-template-columns: 88px minmax(0, 1fr);
+        grid-template-areas:
+          "logo org"
+          "logo meta"
+          "logo period"
+          "logo note";
+        column-gap: 16px;
+      }
+
+      .experience-list .period {
+        margin-top: 9px;
+      }
+
+      .experience-list .location {
+        flex-basis: 100%;
+      }
+
+      .experience-list .meta-separator {
+        display: none;
+      }
+
+      .service-list li {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "venue"
+          "meta"
+          "years";
+        padding: 18px 20px;
+      }
+
+      .service-years {
+        align-self: start;
+        margin-top: 9px;
+      }
     
       .news-list li {
         gap: 6px;
@@ -952,14 +1151,13 @@ layout: default
         padding: 22px 16px;
       }
     }
-</style>
 
+</style>
 
 <section id="news" class="home-section wg-blank">
   <div class="container">
     <div class="section-header">
       <h1>News</h1>
-      <!-- <p>Recent research updates and academic milestones.</p> -->
     </div>
 
     <ul class="news-list">
@@ -1002,31 +1200,80 @@ layout: default
 <section id="work" class="home-section wg-blank">
   <div class="container">
     <div class="section-header">
-      <h1>Work Experiences</h1>
-      <!-- <p>Research and development experience across computer vision and software engineering.</p> -->
+      <h1>Work Experience</h1>
     </div>
 
     <ul class="experience-list">
-      <li>
-        <span class="role">Visiting Researcher</span>
-        <span class="org">University of Oxford, Oxford, United Kingdom.</span>
-        <span class="period">Sep. 2026 - Nov. 2026</span>
+      <li class="has-institution-logo">
+        <img
+          class="institution-logo"
+          src="{{ '/assets/institutions/university-of-oxford.png' | relative_url }}"
+          alt=""
+          width="151"
+          height="153"
+          loading="lazy"
+        >
+        <h3 class="org">University of Oxford</h3>
+        <p class="experience-meta">
+          <span class="role">Visiting Researcher</span>
+          <span class="meta-separator" aria-hidden="true">·</span>
+          <span class="location">Oxford, United Kingdom</span>
+        </p>
+        <span class="period"><time datetime="2026-09">Sep. 2026</time> – <time datetime="2026-11">Nov. 2026</time></span>
         <span class="note">Host: Prof. Victor Prisacariu</span>
       </li>
-      <li>
-        <span class="role">Assistant Researcher</span>
-        <span class="org">UNIST Vision and Learning Lab (UVLL), Ulsan, South Korea.</span>
-        <span class="period">Apr. 2024 - Aug. 2024</span>
+      <li class="has-institution-logo">
+        <img
+          class="institution-logo"
+          src="{{ '/assets/institutions/unist-emblem.png' | relative_url }}"
+          alt=""
+          width="140"
+          height="140"
+          loading="lazy"
+        >
+        <h3 class="org">UNIST Vision and Learning Lab (UVLL)</h3>
+        <p class="experience-meta">
+          <span class="role">Assistant Researcher</span>
+          <span class="meta-separator" aria-hidden="true">·</span>
+          <span class="location">Ulsan, South Korea</span>
+        </p>
+        <span class="period"><time datetime="2024-04">Apr. 2024</time> – <time datetime="2024-08">Aug. 2024</time></span>
+        <span class="note">Advisor: Prof. Seungryul Baek</span>
       </li>
-      <li>
-        <span class="role">Research Intern</span>
-        <span class="org">UNIST Vision and Learning Lab (UVLL), Ulsan, South Korea.</span>
-        <span class="period">Mar. 2023 - Nov. 2023</span>
+      <li class="has-institution-logo">
+        <img
+          class="institution-logo"
+          src="{{ '/assets/institutions/unist-emblem.png' | relative_url }}"
+          alt=""
+          width="140"
+          height="140"
+          loading="lazy"
+        >
+        <h3 class="org">UNIST Vision and Learning Lab (UVLL)</h3>
+        <p class="experience-meta">
+          <span class="role">Research Intern</span>
+          <span class="meta-separator" aria-hidden="true">·</span>
+          <span class="location">Ulsan, South Korea</span>
+        </p>
+        <span class="period"><time datetime="2023-03">Mar. 2023</time> – <time datetime="2023-11">Nov. 2023</time></span>
+        <span class="note">Advisor: Prof. Seungryul Baek</span>
       </li>
-      <li>
-        <span class="role">Development Intern</span>
-        <span class="org">Euclidsoft, Daejeon, South Korea.</span>
-        <span class="period">Sep. 2022 - Dec. 2022</span>
+      <li class="has-institution-logo">
+        <img
+          class="institution-logo institution-logo--wide"
+          src="{{ '/assets/institutions/euclidsoft.png' | relative_url }}"
+          alt=""
+          width="1215"
+          height="339"
+          loading="lazy"
+        >
+        <h3 class="org">Euclidsoft</h3>
+        <p class="experience-meta">
+          <span class="role">Development Intern</span>
+          <span class="meta-separator" aria-hidden="true">·</span>
+          <span class="location">Daejeon, South Korea</span>
+        </p>
+        <span class="period"><time datetime="2022-09">Sep. 2022</time> – <time datetime="2022-12">Dec. 2022</time></span>
         <span class="note">Outstanding Intern Award</span>
       </li>
     </ul>
@@ -1037,7 +1284,6 @@ layout: default
   <div class="container">
     <div class="section-header">
       <h1>Publications</h1>
-      <!-- <p>Selected peer-reviewed work in 3D computer vision and reconstruction.</p> -->
     </div>
 
         <ul class="ul-papers">
@@ -1046,7 +1292,7 @@ layout: default
           <li class="paper-item featured-paper">
             <div class="paper-content">
               <div class="paper-media">
-                <img src="/assets/paper/Multi_THuMBS.png" class="img-responsive" alt="">
+                <img src="{{ '/assets/paper/Multi_THuMBS.png' | relative_url }}" class="img-responsive" alt="Multi-THuMBS method and tracking results" loading="lazy">
               </div>            
               <div class="description">
                 <p class="title">Multi-THuMBS: Multi-person Tracking of 3D Human Meshes Beyond Video Shots</p>
@@ -1064,7 +1310,7 @@ layout: default
           <li class="paper-item">
             <div class="paper-content">
               <div class="paper-media">
-                <img src="/assets/paper/BIGS.png" class="img-responsive" alt="">
+                <img src="{{ '/assets/paper/BIGS.png' | relative_url }}" class="img-responsive" alt="BIGS bimanual interaction reconstruction results" loading="lazy">
               </div>
               <div class="description">
                 <p class="title">BIGS: Bimanual Category-agnostic Interaction Reconstruction from Monocular Videos via 3D Gaussian Splatting</p>
@@ -1083,7 +1329,7 @@ layout: default
             <span class="paper-corner-tag"><i class="far fa-file-alt" aria-hidden="true"></i> Technical Report</span>
             <div class="paper-content">
               <div class="paper-media">
-                <img src="/assets/paper/1st.png" class="img-responsive" alt="">
+                <img src="{{ '/assets/paper/1st.png' | relative_url }}" class="img-responsive" alt="HANDS Workshop ARCTIC Track solution overview" loading="lazy">
               </div>
               <div class="description">
                 <p class="title">1st Place Solution to the 8th HANDS Workshop Challenge - ARCTIC Track: 3DGS-based Bimanual Category-agnostic Interaction Reconstruction</p>
@@ -1100,7 +1346,7 @@ layout: default
           <li class="paper-item">
             <div class="paper-content">
               <div class="paper-media">
-                <img src="/assets/paper/benchmark.png" class="img-responsive" alt="">
+                <img src="{{ '/assets/paper/benchmark.png' | relative_url }}" class="img-responsive" alt="Egocentric hand interaction pose estimation benchmark results" loading="lazy">
               </div>
               <div class="description">
                 <p class="title">Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects</p>
@@ -1117,7 +1363,7 @@ layout: default
           <li class="paper-item">
             <div class="paper-content">
               <div class="paper-media">
-                <img src="/assets/paper/class.png" class="img-responsive" alt="">
+                <img src="{{ '/assets/paper/class.png' | relative_url }}" class="img-responsive" alt="Class-wise buffer management experiment results" loading="lazy">
               </div>
               <div class="description">
                 <p class="title">Class-Wise Buffer Management for Incremental Object Detection: An Effective Buffer Training Strategy</p>
@@ -1135,11 +1381,43 @@ layout: default
   </div>
 </section>
 
+<section id="service" class="home-section wg-blank">
+  <div class="container">
+    <div class="section-header">
+      <h1>Academic Service</h1>
+    </div>
+
+    <ul class="service-list">
+      <li>
+        <h3 class="service-venue">AAAI</h3>
+        <p class="service-meta">
+          <span class="service-role">Reviewer</span>
+          <span aria-hidden="true">·</span>
+          <span>AAAI Conference on Artificial Intelligence</span>
+        </p>
+        <span class="service-years" aria-label="2026 and 2027">
+          <time datetime="2026">2026</time>
+          <span aria-hidden="true">·</span>
+          <time datetime="2027">2027</time>
+        </span>
+      </li>
+      <li>
+        <h3 class="service-venue">IROS</h3>
+        <p class="service-meta">
+          <span class="service-role">Reviewer</span>
+          <span aria-hidden="true">·</span>
+          <span>IEEE/RSJ International Conference on Intelligent Robots and Systems</span>
+        </p>
+        <span class="service-years"><time datetime="2026">2026</time></span>
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section id="awards" class="home-section wg-blank">
   <div class="container">
     <div class="section-header">
       <h1>Awards and Honors</h1>
-      <!-- <p>Selected recognitions from research challenges, academic programs, and competitions.</p> -->
     </div>
 
     <div class="award-featured-grid">
@@ -1188,7 +1466,6 @@ layout: default
   <div class="container">
     <div class="section-header">
       <h1>Recent Posts</h1>
-      <!-- <p>Recent notes from the blog archive.</p> -->
     </div>
 
     <div class="posts">
@@ -1309,27 +1586,22 @@ layout: default
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
-    <script src="/assets/js/academic.min.a8d7005002cb4a052fd6d721e83df9ba.js"></script>
+    <script src="{{ '/assets/js/academic.min.a8d7005002cb4a052fd6d721e83df9ba.js' | relative_url }}"></script>
 
 
   
   <div class="container">
     <footer class="site-footer">
-  
-
-  <p class="powered-by">
-    
-    <span class="float-right" aria-hidden="true">
-      <a href="#" class="back-to-top">
-        <span class="button_icon">
-          <i class="fas fa-chevron-up fa-2x"></i>
+      <p class="powered-by">
+        <span class="float-right" aria-hidden="true">
+          <a href="#" class="back-to-top">
+            <span class="button_icon">
+              <i class="fas fa-chevron-up fa-2x"></i>
+            </span>
+          </a>
         </span>
-      </a>
-    </span>
-    
-  </p>
-</footer>
-
+      </p>
+    </footer>
   </div>
   
 
