@@ -1,2 +1,6 @@
 _site/
-assets/images
+assets/images/*
+!assets/images/posts/
+assets/images/posts/*
+!assets/images/posts/physhandi/
+!assets/images/posts/physhandi/**
