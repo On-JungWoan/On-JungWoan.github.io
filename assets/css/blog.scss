@@ -240,7 +240,8 @@
   .blog-pagination a:hover { background: var(--blog-bg); }
   .blog-pagination a > span, .blog-pagination__empty { color: var(--blog-muted); font-size: 12px; }
   .blog-pagination strong { font-size: 13px; font-weight: 600; line-height: 1.6; overflow-wrap: anywhere; }
-  .page__comments { margin-top: 36px; }
+  /* Keep embedded comments in flow so they cannot squeeze the related-post grid. */
+  .page__comments { float: none; margin-top: 36px; }
   .page__comments-title { font-size: 16px; }
   .blog-related { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--blog-line); }
   .blog-related__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }

@@ -20,7 +20,7 @@ reading_style: journal
 <div class="diary-entry diary-entry--portrait" markdown="1">
 <div class="diary-entry__text" markdown="1">
 
-오늘은 oxford 지도 교수님을 만나기로 한 날이다. 근데 갑자기 기온이 바뀌어서 그런지 아주 지독한 감기가 걸려버렸다..
+오늘은 oxford 지도 교수님을 만나기로 한 날이다. 근데 갑자기 기온이 바뀌어서 그런지 아주 지독한 감기에 걸려버렸다..
 
 </div>
 
