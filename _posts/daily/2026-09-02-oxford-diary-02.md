@@ -6,7 +6,7 @@ categories:
 series: oxford-diary
 tags:
   - Oxford
-published: false
+published: true
 toc: true
 date: 2026-09-02
 last_modified_at: 2026-09-06
