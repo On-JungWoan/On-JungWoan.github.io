@@ -2,9 +2,10 @@
   {% assign article_series = site.data.blog_series | where: 'key', page.series | first %}
   {% assign series_entries = site.posts | where: 'series', page.series | where_exp: 'post', 'post.hidden != true' | reverse %}
   {% for entry in series_entries %}{% if entry.url == page.url %}{% assign series_position = forloop.index %}{% break %}{% endif %}{% endfor %}
-  <div class="blog-article-context">
-    <span class="blog-filter-label">{% if article_series.category == 'experiences' %}경험{% else %}프로젝트{% endif %} 시리즈 · {{ series_position }} / {{ series_entries.size }}</span>
+  <div class="blog-article-context blog-article-context--series">
+    <span class="blog-filter-label">시리즈 · {{ series_position }} / {{ series_entries.size }}</span>
     <a href="{{ article_series.url | relative_url }}">{{ article_series.label }} <span aria-hidden="true">→</span></a>
+    {% include blog/pagination.html compact=true %}
   </div>
 {% elsif page.categories contains 'papers' %}
   <nav class="blog-article-context" aria-label="관련 논문 주제">

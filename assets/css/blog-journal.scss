@@ -1,0 +1,109 @@
+---
+---
+
+/* Opt in with reading_style: journal. The standard post layout stays separate. */
+@font-face {
+  font-family: "Pretendard Journal";
+  src: url("{{ '/assets/fonts/pretendard/PretendardVariable.woff2' | relative_url }}") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+.blog-theme.blog-journal {
+  --blog-font: "Pretendard Journal", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+  --blog-paper: #fcfbf8;
+  --blog-bg: #f1f0eb;
+  --blog-ink: #252b28;
+  --blog-text: #363d38;
+  --blog-muted: #68716a;
+  --blog-line: #e1e3dc;
+  --blog-green: #45634f;
+  background: var(--blog-paper);
+  font-family: var(--blog-font);
+  font-weight: 400;
+
+  .masthead, .greedy-nav { background: var(--blog-paper); }
+  .masthead { border-color: var(--blog-line); }
+  #main.blog-reading { max-width: 1000px; margin: 0 auto; padding: 40px 48px 96px; }
+  .blog-reading__trail { max-width: 680px; margin: 0 auto 36px; font-size: 12px; }
+  .blog-article-header { max-width: 680px; margin: 0 auto; padding-bottom: 28px; }
+  .blog-article-header h1 { margin: 0 0 18px; font-size: clamp(30px, 3.7vw, 42px); font-weight: 700; line-height: 1.3; letter-spacing: -0.045em; }
+  .journal-heading-series { display: block; margin-bottom: 18px; color: var(--blog-green); font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: 0; }
+  .blog-article-header__description { margin-bottom: 24px; color: var(--blog-muted); font-size: 16px; font-weight: 400; line-height: 1.65; letter-spacing: -0.015em; }
+  .blog-article-header__meta { gap: 8px 16px; color: var(--blog-muted); font-size: 12px; }
+  .blog-article-header__meta a { font-weight: 600; }
+
+  .blog-article-context--series { gap: 8px 14px; margin-top: 28px; padding: 10px 14px 10px 20px; border: 1px solid var(--blog-line); border-radius: 10px; background: #f5f5ef; }
+  .blog-article-context--series > a { color: var(--blog-green); font-size: 13px; font-weight: 600; }
+  .blog-article-context--series .blog-filter-label { color: var(--blog-muted); font-size: 12px; }
+  .blog-series-pagination a { color: var(--blog-ink); }
+  .blog-series-pagination a:hover { background: #e7ece3; }
+  .blog-series-pagination__disabled { color: #7a837c; }
+
+  .blog-reading-grid { display: block; padding: 0; border: 0; }
+  .blog-reading-main { width: 100%; }
+  .blog-toc { position: static; max-width: 680px; margin: 0 auto 44px; }
+  .blog-toc details { border: 0; border-bottom: 1px solid var(--blog-line); background: transparent; }
+  .blog-toc summary { min-height: 44px; padding: 6px 0 14px; color: var(--blog-muted); font-size: 13px; font-weight: 500; }
+  .blog-toc .blog-disclosure__icon { font-size: 18px; }
+  .blog-toc .toc__menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 16px; max-height: 340px; margin: 0; padding: 0 0 16px; font-size: 13px; }
+  .blog-toc .toc__menu a { padding: 8px 10px; color: var(--blog-muted); font-size: 13px; }
+  .blog-toc .toc__menu a:hover, .blog-toc .toc__menu li.active > a { color: var(--blog-green); background: #e9eee5; }
+
+  .blog-prose { color: var(--blog-text); font-family: var(--blog-font); font-size: 18px; font-weight: 430; line-height: 1.9; letter-spacing: -0.018em; }
+  .blog-prose > p, .blog-prose > h2, .blog-prose > h3 { width: 100%; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .blog-prose > p { margin-bottom: 32px; }
+  .blog-prose h2 { margin-top: 80px; margin-bottom: 28px; padding: 0; border: 0; font-size: 25px; font-weight: 650; line-height: 1.5; letter-spacing: -0.03em; }
+  .blog-prose > h2:first-child { margin-top: 0; }
+  .blog-prose > h2 ~ h2 { padding-top: 28px; border-top: 1px solid var(--blog-line); }
+  /* One frame joins each media group to its original description. */
+  .blog-prose .diary-entry { display: grid; grid-template-columns: minmax(0, 1fr); align-items: stretch; gap: 0; width: 100%; max-width: 680px; margin-left: auto; margin-right: auto; border: 1px solid #dce1d8; border-radius: 9px; background: #fff; }
+  .blog-prose .diary-entry + .diary-entry { margin-top: 48px; padding-top: 0; }
+  .blog-prose .diary-entry + p { margin-top: 40px; }
+  .blog-prose .diary-entry__text { grid-row: 2; box-sizing: border-box; width: 100%; max-width: none; margin: 0; padding: 18px 24px 22px; border-top: 1px solid var(--blog-line); border-radius: 0 0 8px 8px; background: #fff; font: inherit; font-size: 17px; line-height: 1.85; }
+  .blog-prose .diary-entry__text > p { margin: 0; }
+  .blog-prose .diary-entry__text > p + p { margin-top: 1em; }
+  .blog-prose .diary-gallery { grid-row: 1; box-sizing: border-box; width: 100%; margin: 0; padding: 8px; gap: 8px; border-radius: 8px 8px 0 0; background: #eff1eb; }
+  .blog-prose .diary-gallery__row { gap: 8px; }
+  .blog-prose .diary-gallery--single, .blog-prose .diary-entry--portrait .diary-gallery { max-width: none; }
+  .blog-prose .diary-media { max-width: none; }
+  .blog-prose .diary-media img, .blog-prose .diary-media video { border-radius: 4px; background: #eff1eb; }
+  .blog-prose .diary-gallery--single .diary-media img, .blog-prose .diary-gallery--single .diary-media video { max-height: 560px; aspect-ratio: auto; object-fit: contain; }
+  .blog-prose .diary-media a:focus-visible { border-radius: 6px; outline-color: var(--blog-green); }
+  .blog-article-footer, .blog-pagination { max-width: 680px; margin-left: auto; margin-right: auto; }
+  .blog-article-footer { margin-top: 64px; }
+  .blog-pagination a, .blog-pagination__empty { border-color: var(--blog-line); background: transparent; }
+  .blog-pagination a:hover { background: #f1f2eb; }
+  .page__footer { background: #f2f2ec; }
+
+  @media (max-width: 760px) {
+    #main.blog-reading { padding: 28px 28px 72px; }
+    .blog-reading__trail { margin-bottom: 28px; }
+    .blog-article-header h1 { font-size: 34px; }
+    .blog-prose { font-size: 17px; line-height: 1.85; }
+    .blog-prose h2 { margin-top: 64px; font-size: 23px; }
+    .blog-prose .diary-entry + .diary-entry { margin-top: 48px; }
+  }
+
+  @media (max-width: 480px) {
+    #main.blog-reading { padding: 24px 22px 56px; }
+    .blog-article-header h1 { font-size: 30px; line-height: 1.35; }
+    .journal-heading-series { margin-bottom: 14px; font-size: 13px; }
+    .blog-article-header__description { font-size: 15px; }
+    .blog-article-context--series { padding: 14px 14px 6px; gap: 6px 12px; }
+    .blog-series-pagination { justify-content: space-between; width: 100%; flex-basis: 100%; margin: 0; padding-top: 4px; border-top: 1px solid var(--blog-line); }
+    .blog-series-pagination a, .blog-series-pagination__disabled { padding-left: 8px; padding-right: 8px; }
+    .blog-toc { margin-bottom: 36px; }
+    .blog-toc .toc__menu { grid-template-columns: minmax(0, 1fr); }
+    .blog-prose { letter-spacing: -0.02em; }
+    .blog-prose h2 { margin-top: 56px; margin-bottom: 24px; font-size: 22px; }
+    .blog-prose > h2 ~ h2 { padding-top: 24px; }
+    .blog-prose .diary-entry { gap: 0; }
+    .blog-prose .diary-entry + .diary-entry { margin-top: 36px; }
+    .blog-prose .diary-entry__text { padding: 16px 18px 18px; font-size: 16px; }
+    .blog-prose .diary-gallery { padding: 6px; gap: 6px; }
+    .blog-prose .diary-media { max-width: none; }
+    .blog-prose .diary-gallery--single .diary-media img, .blog-prose .diary-gallery--single .diary-media video { max-height: 460px; }
+  }
+}

@@ -1,0 +1,29 @@
+{% assign gallery_items = include.items | remove: ' ' | split: ',' %}
+{% assign gallery_catalog = site.data[page.media_catalog] %}
+{% assign diary_row_remaining = 0 %}
+<div class="diary-gallery{% if gallery_items.size == 1 %} diary-gallery--single{% endif %}">
+  {% for media_id in gallery_items %}
+    {% if diary_row_remaining == 0 %}
+      {% assign diary_items_left = gallery_items.size | minus: forloop.index0 %}
+      {% assign diary_row_remaining = 2 %}
+      {% if diary_items_left == 1 or diary_items_left == 3 %}{% assign diary_row_remaining = diary_items_left %}{% endif %}
+      <div class="diary-gallery__row">
+    {% endif %}
+    {% assign media = gallery_catalog[media_id] %}
+    {% assign diary_media_ratio = media.width | times: 1.0 | divided_by: media.height | round: 5 %}
+    <figure class="diary-media" data-media-index="{{ media_id }}" style="--media-ratio: {{ diary_media_ratio }};">
+      {% if media.type == 'video' %}
+        <video controls playsinline preload="none" poster="{{ media.poster | relative_url }}" width="{{ media.width }}" height="{{ media.height }}" aria-label="{{ media.alt | escape }}">
+          <source src="{{ media.src | relative_url }}" type="video/mp4">
+          <a href="{{ media.src | relative_url }}">영상 보기: {{ media.alt }}</a>
+        </video>
+      {% else %}
+        <a href="{{ media.src | relative_url }}" aria-label="{{ media.alt | escape }} — 크게 보기">
+          <img src="{{ media.src | relative_url }}" alt="{{ media.alt | escape }}" width="{{ media.width }}" height="{{ media.height }}" loading="lazy" decoding="async">
+        </a>
+      {% endif %}
+    </figure>
+    {% assign diary_row_remaining = diary_row_remaining | minus: 1 %}
+    {% if diary_row_remaining == 0 %}</div>{% endif %}
+  {% endfor %}
+</div>

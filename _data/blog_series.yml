@@ -28,8 +28,8 @@
   label: ICT Internship
   description: ICT 인턴십 서류와 면접 준비부터 최종 확정까지의 기록입니다.
   url: /series/ict-internship/
-- key: bison
+- key: oxford-diary
   category: experiences
-  label: BISON
-  description: 동아리 운영과 회장 인수인계에 관한 기록입니다.
-  url: /series/bison/
+  label: Oxford 일기
+  description: Oxford 생활 기록입니다.
+  url: /series/oxford-diary/

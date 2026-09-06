@@ -1,4 +1,4 @@
-<main id="main" class="blog-reading">
+<main id="main" class="blog-reading{% if page.media_catalog %} blog-reading--diary{% endif %}">
   <nav class="blog-reading__trail" aria-label="글 위치">
     <a href="{{ '/blog/' | relative_url }}"><span aria-hidden="true">←</span> 개발 일기장</a>
     {% if page.categories.first %}
@@ -11,8 +11,7 @@
   </nav>
   <article class="blog-article h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <header class="blog-article-header">
-      <p class="blog-eyebrow">{% include blog/category-label.html key=page.categories.first %}</p>
-      <h1 id="page-title" class="p-name" itemprop="headline">{{ page.title | markdownify | remove: '<p>' | remove: '</p>' }}</h1>
+      <h1 id="page-title" class="p-name" itemprop="headline">{% if page.reading_style == 'journal' and page.title contains '] ' %}{% assign article_title_prefix = page.title | split: '] ' | first | append: '] ' %}<span class="journal-heading-series">{{ article_title_prefix | remove: '[' | remove: ']' | strip | escape }}</span>{{ page.title | remove_first: article_title_prefix | markdownify | remove: '<p>' | remove: '</p>' }}{% else %}{{ page.title | markdownify | remove: '<p>' | remove: '</p>' }}{% endif %}</h1>
       {% if page.excerpt %}<p class="blog-article-header__description" itemprop="description">{{ page.excerpt | markdownify | strip_html }}</p>{% endif %}
       <div class="blog-article-header__meta">
         <a href="{{ '/' | relative_url }}">{{ site.name }}</a>
@@ -36,7 +35,7 @@
     <div class="blog-reading-grid{% unless page.toc %} blog-reading-grid--no-toc{% endunless %}">
       {% if page.toc %}
         <aside class="blog-toc">
-          <details class="blog-disclosure" open data-blog-collapse="(max-width: 1050px)">
+          <details class="blog-disclosure"{% unless page.reading_style == 'journal' %} open data-blog-collapse="(max-width: 1050px)"{% endunless %}>
             <summary>{{ page.toc_label | default: '이 글의 목차' }} <span class="blog-disclosure__icon" aria-hidden="true">+</span></summary>
             <nav class="toc" aria-label="이 글의 목차">
               {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}

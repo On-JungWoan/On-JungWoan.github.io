@@ -14,8 +14,15 @@
   {% endif %}
 {% endfor %}
 {% if blog_previous or blog_next %}
+  {% if include.compact %}
+    <nav class="blog-series-pagination" aria-label="시리즈의 이전 글과 다음 글">
+      {% if blog_previous %}<a href="{{ blog_previous.url | relative_url }}" rel="prev" aria-label="이전 글: {{ blog_previous.title | strip_html | escape }}" title="{{ blog_previous.title | strip_html | escape }}"><span aria-hidden="true">←</span> 이전 글</a>{% else %}<span class="blog-series-pagination__disabled" aria-disabled="true"><span aria-hidden="true">←</span> 이전 글</span>{% endif %}
+      {% if blog_next %}<a href="{{ blog_next.url | relative_url }}" rel="next" aria-label="다음 글: {{ blog_next.title | strip_html | escape }}" title="{{ blog_next.title | strip_html | escape }}">다음 글 <span aria-hidden="true">→</span></a>{% else %}<span class="blog-series-pagination__disabled" aria-disabled="true">다음 글 <span aria-hidden="true">→</span></span>{% endif %}
+    </nav>
+  {% else %}
   <nav class="blog-pagination" aria-label="{% if page.series %}같은 시리즈{% else %}같은 카테고리{% endif %}의 이전 글과 다음 글">
     {% if blog_previous %}<a href="{{ blog_previous.url | relative_url }}" rel="prev"><span>← 이전 글</span><strong>{{ blog_previous.title }}</strong></a>{% else %}<span class="blog-pagination__empty">첫 번째 글입니다</span>{% endif %}
     {% if blog_next %}<a href="{{ blog_next.url | relative_url }}" rel="next"><span>다음 글 →</span><strong>{{ blog_next.title }}</strong></a>{% else %}<span class="blog-pagination__empty">가장 최근 글입니다</span>{% endif %}
   </nav>
+  {% endif %}
 {% endif %}

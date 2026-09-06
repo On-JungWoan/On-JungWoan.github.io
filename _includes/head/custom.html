@@ -1,6 +1,10 @@
 <!-- start custom head snippets -->
 {% if page.blog %}
   <link rel="stylesheet" href="{{ '/assets/css/blog.css' | relative_url }}">
+  {% if page.reading_style == 'journal' %}
+    <link rel="preload" href="{{ '/assets/fonts/pretendard/PretendardVariable.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ '/assets/css/blog-journal.css' | relative_url }}">
+  {% endif %}
 {% endif %}
 
 <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6467001070059486"

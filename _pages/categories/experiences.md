@@ -2,7 +2,7 @@
 layout: blog-collection
 blog: true
 title: Experiences
-description: 인턴 지원과 동아리 활동에서 남긴 기록입니다.
+description: 제가 해온 다양한 경험과 그때의 생각들을 기록합니다.
 permalink: /categories/experiences/
 taxonomy: experiences
 ---

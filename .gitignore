@@ -4,3 +4,5 @@ assets/images/*
 assets/images/posts/*
 !assets/images/posts/physhandi/
 !assets/images/posts/physhandi/**
+!assets/images/posts/oxford-diary/
+!assets/images/posts/oxford-diary/**

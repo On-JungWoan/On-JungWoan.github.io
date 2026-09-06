@@ -14,7 +14,7 @@
     {% include head/custom.html %}
   </head>
 
-  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.blog %} blog-theme{% endif %}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
+  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.blog %} blog-theme{% if page.reading_style == 'journal' %} blog-journal{% endif %}{% endif %}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
     {% include_cached skip-links.html %}
     {% include_cached masthead.html blog=page.blog %}
 

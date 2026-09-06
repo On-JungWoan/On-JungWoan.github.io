@@ -1,0 +1,452 @@
+# Oxford diary media; keys preserve the original iCloud photo indices.
+# Web exports are resized and contain no original EXIF metadata.
+"2487":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2487.webp
+  width: 1200
+  height: 1600
+  alt: "상하이와 런던으로 가는 항공권과 여권 표지"
+"2488":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2488.webp
+  width: 1200
+  height: 1600
+  alt: "상하이행 비행기의 넉넉한 좌석 공간"
+"2489":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2489.webp
+  width: 1200
+  height: 1600
+  alt: "빈자리가 많았던 상하이행 비행기 안"
+"2500":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2500.webp
+  width: 1600
+  height: 1200
+  alt: "상하이 식당에서 먹은 고기 국수와 계란 요리"
+"2501":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2501.webp
+  width: 1200
+  height: 1600
+  alt: "상하이에서 첫 식사와 함께 주문한 꼬치"
+"2504":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2504.webp
+  width: 1600
+  height: 1200
+  alt: "상하이 지하철역 입구"
+"2505":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2505.webp
+  width: 1200
+  height: 1600
+  alt: "상하이 시내로 이동하던 지하철 안"
+"2511":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2511.webp
+  width: 1200
+  height: 1600
+  alt: "높은 건물 사이로 이어진 상하이 도심 거리"
+"2515":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2515.webp
+  width: 1200
+  height: 1600
+  alt: "붉은 첨탑과 둥근 외벽이 보이는 상하이 거리"
+"2519":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2519.webp
+  width: 1200
+  height: 1600
+  alt: "유리 지붕과 시계가 있는 상하이의 실내 거리"
+"2526":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2526.webp
+  width: 1200
+  height: 1600
+  alt: "건물 사이로 멀리 보이는 동방명주"
+"2539":
+  type: video
+  src: /assets/images/posts/oxford-diary/img-2539.mp4
+  width: 1280
+  height: 720
+  alt: "강 건너 동방명주와 상하이 고층 건물의 저녁 풍경"
+  poster: /assets/images/posts/oxford-diary/img-2539-poster.webp
+"2544":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2544.webp
+  width: 1600
+  height: 1200
+  alt: "상하이 강변에서 야경을 구경하는 사람들"
+"2548":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2548.webp
+  width: 1200
+  height: 1600
+  alt: "조명이 켜진 상하이 강변의 건물들"
+"2549":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2549.webp
+  width: 1200
+  height: 1600
+  alt: "밤에 불이 켜진 상하이의 시계탑"
+"2554":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2554.webp
+  width: 1200
+  height: 1600
+  alt: "밤하늘 아래 상하이 고층 건물과 거리"
+"2556":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2556.webp
+  width: 1200
+  height: 1600
+  alt: "붉은색 전통 건물과 간판으로 이어진 상하이의 옛 거리"
+"2571":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2571.webp
+  width: 1200
+  height: 1600
+  alt: "등과 조명이 달린 전통 건물 사이를 걷는 사람들"
+"2573":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2573.webp
+  width: 1200
+  height: 1600
+  alt: "상하이 옛 거리의 붉은 처마와 야경"
+"2576":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2576.webp
+  width: 1200
+  height: 1600
+  alt: "복잡한 처마와 조명 아래 이어지는 상점가"
+"2580":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2580.webp
+  width: 1200
+  height: 1600
+  alt: "겹겹이 이어지는 붉은 처마와 거리"
+"2581":
+  type: video
+  src: /assets/images/posts/oxford-diary/img-2581.mp4
+  width: 720
+  height: 1280
+  alt: "전통 건물 옆 연못의 푸른 조명과 안개"
+  poster: /assets/images/posts/oxford-diary/img-2581-poster.webp
+"2584":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2584.webp
+  width: 1200
+  height: 1600
+  alt: "푸른 조명 위로 보이는 상하이의 전통 건물"
+"2585":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2585.webp
+  width: 1200
+  height: 1600
+  alt: "물 위에 반사된 전통 건물의 야경"
+"2588":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2588.webp
+  width: 1200
+  height: 1600
+  alt: "조명이 켜진 옛 거리의 건물과 사람들"
+"2592":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2592.webp
+  width: 1200
+  height: 1600
+  alt: "전통 건물 사이로 보이는 상하이의 고층 빌딩"
+"2595":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2595.webp
+  width: 1200
+  height: 1600
+  alt: "밤의 상하이 옛 거리에서 올려다본 처마"
+"2599":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2599.webp
+  width: 1200
+  height: 1600
+  alt: "붉은 창문과 층층이 이어지는 전통 건물"
+"2602":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2602.webp
+  width: 1600
+  height: 1200
+  alt: "노란 조명으로 빛나는 상하이 옛 거리"
+"2615":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2615.webp
+  width: 1200
+  height: 1600
+  alt: "숙소로 돌아와 저녁으로 먹은 볶음면"
+"2616":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2616.webp
+  width: 1200
+  height: 1600
+  alt: "상하이에서 저녁으로 먹은 만두"
+"2620":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2620.webp
+  width: 1200
+  height: 1600
+  alt: "공항으로 가는 호텔 셔틀버스 창밖"
+"2622":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2622.webp
+  width: 1200
+  height: 1600
+  alt: "상하이 공항에서 비행 전에 먹은 식사"
+"2623":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2623.webp
+  width: 1200
+  height: 1600
+  alt: "상하이 공항에서 함께 주문한 튀김과 소스"
+"2629":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2629.webp
+  width: 1200
+  height: 1600
+  alt: "영국에 가까워진 항공편의 기내 지도 화면"
+"2630":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2630.webp
+  width: 1200
+  height: 1600
+  alt: "게트윅 공항에서 본 Jet2 광고"
+"2631":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2631.webp
+  width: 736
+  height: 1600
+  alt: "게트윅 공항에서 옥스포드까지의 버스 경로"
+"2633":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2633.webp
+  width: 1200
+  height: 1600
+  alt: "옥스포드에 도착해 묵은 호텔 방"
+"2635":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2635.webp
+  width: 1600
+  height: 1200
+  alt: "영국에서 첫 아침으로 먹은 커피와 샌드위치"
+"2645":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2645.webp
+  width: 1200
+  height: 1600
+  alt: "학과 건물 앞에서 받은 옥스포드 학생증"
+"2648":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2648.webp
+  width: 1600
+  height: 1200
+  alt: "옥스포드 도심의 대학 건물과 거리"
+"2649":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2649.webp
+  width: 1200
+  height: 1600
+  alt: "교차로에서 바라본 옥스포드의 오래된 건물"
+"2699":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2699.webp
+  width: 1600
+  height: 1200
+  alt: "옥스포드에서 지내는 동안 탈 자전거"
+"2656":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2656.webp
+  width: 1200
+  height: 1600
+  alt: "보들리안 도서관 주변의 석조 건물과 철문"
+"2651":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2651.webp
+  width: 1200
+  height: 1600
+  alt: "자전거 주차대 옆에서 찍은 발밑 풍경"
+"2652":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2652.webp
+  width: 1200
+  height: 1600
+  alt: "벽돌 담장 앞에 세워진 자전거"
+"2666":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2666.webp
+  width: 1200
+  height: 1600
+  alt: "도서관 주변의 둥근 석조 건물과 광장"
+"2674":
+  type: video
+  src: /assets/images/posts/oxford-diary/img-2674.mp4
+  width: 720
+  height: 1280
+  alt: "옥스포드 도서관 주변 건물과 거리를 둘러본 풍경"
+  poster: /assets/images/posts/oxford-diary/img-2674-poster.webp
+"2676":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2676.webp
+  width: 1200
+  height: 1600
+  alt: "건물 사이를 잇는 옥스포드 탄식의 다리"
+"2688":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2688.webp
+  width: 1200
+  height: 1600
+  alt: "주소와 개인 이름·서명을 가린 손글씨 숙소 계약서"
+"2702":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2702.webp
+  width: 736
+  height: 1600
+  alt: "영국에서 확인한 아이폰 위성 통신 안내 화면"
+"2707":
+  type: video
+  src: /assets/images/posts/oxford-diary/img-2707.mp4
+  width: 720
+  height: 1280
+  alt: "도서관에서 논문을 작성하던 노트북 화면"
+  poster: /assets/images/posts/oxford-diary/img-2707-poster.webp
+"2711":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2711.webp
+  width: 1200
+  height: 1600
+  alt: "연구실 첫날 감기 때문에 준비한 약"
+"2722":
+  type: video
+  src: /assets/images/posts/oxford-diary/img-2722.mp4
+  width: 720
+  height: 1280
+  alt: "연구실 앞 공원의 잔디와 나무, 맑은 하늘"
+  poster: /assets/images/posts/oxford-diary/img-2722-poster.webp
+"2723":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2723.webp
+  width: 1200
+  height: 1600
+  alt: "푸른 하늘과 나무 너머로 보이는 옥스포드 건물"
+"2726":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2726.webp
+  width: 1200
+  height: 1600
+  alt: "맑은 날 바라본 옥스포드의 붉은 벽돌 건물"
+"2734":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2734.webp
+  width: 1600
+  height: 1200
+  alt: "크라이스트 처치의 잔디와 석조 건물"
+"2737":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2737.webp
+  width: 1200
+  height: 1600
+  alt: "크라이스트 처치의 높은 탑과 건물 외관"
+"2740":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2740.webp
+  width: 1200
+  height: 1600
+  alt: "크라이스트 처치 건물 사이의 돌 아치와 창문"
+"2744":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2744.webp
+  width: 1200
+  height: 1600
+  alt: "정교한 천장 아래로 이어지는 크라이스트 처치의 계단"
+"2751":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2751.webp
+  width: 1200
+  height: 1600
+  alt: "식사 준비 중인 크라이스트 처치 식당의 긴 테이블"
+"2749":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2749.webp
+  width: 1200
+  height: 1600
+  alt: "크라이스트 처치 식당의 창문과 벽면 초상화"
+"2754":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2754.webp
+  width: 1200
+  height: 1600
+  alt: "NO PEEL 글자와 안내판이 있는 오래된 문"
+"2755":
+  type: video
+  src: /assets/images/posts/oxford-diary/img-2755.mp4
+  width: 720
+  height: 1280
+  alt: "크라이스트 처치의 석조 건물과 안뜰"
+  poster: /assets/images/posts/oxford-diary/img-2755-poster.webp
+"2759":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2759.webp
+  width: 1200
+  height: 1600
+  alt: "크라이스트 처치에 있는 전쟁 희생자 추모비"
+"2765":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2765.webp
+  width: 1200
+  height: 1600
+  alt: "성당 내부의 높은 천장과 스테인드글라스"
+"2766":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2766.webp
+  width: 1200
+  height: 1600
+  alt: "성당 안에 놓인 석조 조각과 기념물"
+"2771":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2771.webp
+  width: 1200
+  height: 1600
+  alt: "성당 중앙 통로에서 바라본 높은 천장과 제단"
+"2778":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2778.webp
+  width: 1200
+  height: 1600
+  alt: "성당 창문 너머로 보이는 안뜰"
+"2782":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2782.webp
+  width: 1200
+  height: 1600
+  alt: "크라이스트 처치 성당의 탑과 외벽"
+"2774":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2774.webp
+  width: 1200
+  height: 1600
+  alt: "성당 기둥 장식 위에 자리한 새"
+"2775":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2775.webp
+  width: 1200
+  height: 1600
+  alt: "스테인드글라스 옆 돌장식 틈에 있는 새"
+"2784":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2784.webp
+  width: 1200
+  height: 1600
+  alt: "건물 외벽에 설치된 해시계"
+"2786":
+  type: image
+  src: /assets/images/posts/oxford-diary/img-2786.webp
+  width: 1200
+  height: 1600
+  alt: "Christ Church College 도서관"

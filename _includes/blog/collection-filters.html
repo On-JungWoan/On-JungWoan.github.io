@@ -10,25 +10,36 @@
       {% endfor %}
     </div>
   </nav>
-{% elsif page.taxonomy == 'projects' or page.taxonomy == 'experiences' %}
+{% elsif page.taxonomy == 'projects' or page.taxonomy == 'experiences' or page.taxonomy == 'life' %}
   {% assign category_series = site.data.blog_series | where: 'category', page.taxonomy %}
+  {% assign visible_category_posts = site.categories[page.taxonomy] | where_exp: 'post', 'post.hidden != true' | sort: 'date' | reverse %}
+  {% assign recent_series_keys = visible_category_posts | map: 'series' | compact | uniq %}
+  {% assign recent_category_series = '' | split: ',' %}
+  {% for series_key in recent_series_keys %}
+    {% assign matching_series = category_series | where: 'key', series_key %}
+    {% assign recent_category_series = recent_category_series | concat: matching_series %}
+  {% endfor %}
+  {% comment %}Keep series without visible posts after the dated series.{% endcomment %}
+  {% assign category_series = recent_category_series | concat: category_series | uniq %}
   {% capture series_category_url %}/categories/{{ page.taxonomy }}/{% endcapture %}
   {% if page.taxonomy == 'experiences' %}
     {% assign series_kind = '경험' %}
+  {% elsif page.taxonomy == 'life' %}
+    {% assign series_kind = '일상' %}
   {% else %}
     {% assign series_kind = '프로젝트' %}
   {% endif %}
   {% if page.series %}
-    <nav class="blog-collection-filters" aria-label="{{ series_kind }} 시리즈 선택">
-      <p class="blog-filter-label">{{ series_kind }} 시리즈</p>
+    <nav class="blog-collection-filters" aria-label="시리즈 선택">
+      <p class="blog-filter-label">시리즈</p>
       <div class="blog-filter-links">
         <a href="{{ series_category_url | relative_url }}">전체 {{ series_kind }}</a>
         {% for series in category_series %}<a href="{{ series.url | relative_url }}"{% if page.series == series.key %} aria-current="page"{% endif %}>{{ series.label }}</a>{% endfor %}
       </div>
     </nav>
-  {% else %}
+  {% elsif category_series.size > 0 %}
     <section class="blog-series-index" aria-labelledby="series-index-title">
-      <div class="blog-section-heading"><h2 id="series-index-title">{{ series_kind }}별로 읽기</h2><span>{{ category_series.size }}개의 시리즈</span></div>
+      <div class="blog-section-heading"><h2 id="series-index-title">시리즈별로 읽기</h2><span>{{ category_series.size }}개의 시리즈</span></div>
       <div class="blog-series-grid">
         {% for series in category_series %}
           {% assign series_posts = site.categories[page.taxonomy] | where: 'series', series.key | where_exp: 'post', 'post.hidden != true' %}
