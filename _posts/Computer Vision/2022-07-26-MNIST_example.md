@@ -3,7 +3,7 @@ title:  "[Computer Vision] MNIST 예제 풀이"
 excerpt: "Pytorch를 사용한 MNIST 예제 학습"
 
 categories:
-  - DL_study
+  - ai-study
 tags:
   - [딥러닝, computer_vision, pytorch, CNN]
 
@@ -14,6 +14,8 @@ toc_sticky: true
  
 date: 2022-07-26
 last_modified_at: 2022-07-26
+permalink: "/dl_study/MNIST_example/"
+legacy_category: DL_study
 ---
 
 <br>

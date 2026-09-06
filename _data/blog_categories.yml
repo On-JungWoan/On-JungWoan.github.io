@@ -1,0 +1,19 @@
+# Give each post one category key. Use tags for topics and series for connected posts.
+# Existing posts keep explicit permalinks and legacy_category to preserve old links.
+- title: AI & Research
+  items:
+    - { key: papers, label: Paper Reviews, url: /categories/papers/ }
+    - { key: ai-study, label: AI Study & Experiments, url: /categories/ai-study/ }
+    - { key: model-optimization, label: Model Optimization, url: /categories/model-optimization/ }
+- title: Notes
+  items:
+    - { key: experiences, label: Experiences, url: /categories/experiences/ }
+    - { key: life, label: Life & Hobbies, url: /categories/life/ }
+- title: Development
+  items:
+    - { key: web-development, label: Web & Blog, url: /categories/web-development/ }
+    - { key: programming-tools, label: Python & Tools, url: /categories/programming-tools/ }
+    - { key: data-sql, label: Data & SQL, url: /categories/data-sql/ }
+- title: Projects
+  items:
+    - { key: projects, label: Project Logs, url: /categories/projects/ }

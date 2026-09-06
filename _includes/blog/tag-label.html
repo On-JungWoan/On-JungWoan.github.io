@@ -1,0 +1,5 @@
+{%- assign tag_label = include.key -%}
+{%- for topic in site.data.blog_topics -%}
+  {%- if topic.key == include.key -%}{%- assign tag_label = topic.label -%}{%- endif -%}
+{%- endfor -%}
+{{- tag_label -}}

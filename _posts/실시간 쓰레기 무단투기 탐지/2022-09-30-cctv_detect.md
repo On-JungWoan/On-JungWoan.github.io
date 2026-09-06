@@ -3,7 +3,7 @@ title:  "투기행위 인식률 개선"
 excerpt: "쓰레기 무단투기 탐지 프로젝트"
 
 categories:
-  - cctv
+  - projects
 tags:
   - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
 
@@ -15,6 +15,9 @@ toc_sticky: true
 date: 2022-09-30
 last_modified_at: 2022-09-30
 til: 'true'
+permalink: "/cctv/cctv_detect/"
+legacy_category: cctv
+series: cctv
 ---
 
 ## 투기 행위 검출이 잘 안됨

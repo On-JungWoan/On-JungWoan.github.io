@@ -3,7 +3,7 @@ title:  "[ICT 인턴십]인턴 서류 및 면접 준비 #2"
 excerpt: "학부 3학년 학생의 ICT 인턴십 도전기"
 
 categories:
-  - Internship
+  - experiences
 tags:
   - [인턴, ICT인턴십]
 
@@ -12,6 +12,9 @@ toc_sticky: true
  
 date: 2022-07-15
 last_modified_at: 2022-07-15
+permalink: "/internship/ICT-Internship(1)/"
+legacy_category: Internship
+series: ict-internship
 ---
 
 <br>

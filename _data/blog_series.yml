@@ -1,0 +1,35 @@
+- key: bbeojung
+  category: projects
+  label: 뻐정
+  description: 프로젝트 개선 과정과 최종 결과를 정리했습니다.
+  url: /series/bbeojung/
+- key: cctv
+  category: projects
+  label: 쓰레기 무단투기 탐지
+  description: 영상 데이터 가공부터 탐지 모델 개선과 추론 최적화까지의 기록입니다.
+  url: /series/cctv/
+- key: canvas
+  category: projects
+  label: Canvas
+  description: 개발 환경 구성, 데이터베이스 파악, Django 설계 과정을 담았습니다.
+  url: /series/canvas/
+- key: press-it
+  category: projects
+  label: Press It!
+  description: API 연동부터 백엔드와 화면 구현까지의 개발 기록입니다.
+  url: /series/press-it/
+- key: apartment-price
+  category: projects
+  label: 아파트 실거래가 예측
+  description: 머신러닝을 활용한 아파트 실거래가 예측 실습입니다.
+  url: /series/apartment-price/
+- key: ict-internship
+  category: experiences
+  label: ICT Internship
+  description: ICT 인턴십 서류와 면접 준비부터 최종 확정까지의 기록입니다.
+  url: /series/ict-internship/
+- key: bison
+  category: experiences
+  label: BISON
+  description: 동아리 운영과 회장 인수인계에 관한 기록입니다.
+  url: /series/bison/

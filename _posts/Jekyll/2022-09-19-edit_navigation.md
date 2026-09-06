@@ -3,7 +3,7 @@ title:  "[Jekyll]블로그 개선"
 excerpt: "상단 네비게이션바 수정 및 tease image 제거"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [Github, Githubio, jekyll]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-09-19
 last_modified_at: 2022-09-19
 til: 'true'
+permalink: "/blog/edit_navigation/"
+legacy_category: Blog
 ---
 
 ## 1. 상단 네비게이션 바 목록 수정

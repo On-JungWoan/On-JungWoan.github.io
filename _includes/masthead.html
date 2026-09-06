@@ -13,7 +13,7 @@
         {% comment %} {% unless logo_path == empty %}
           <a class="site-logo" href="{{ '/' | relative_url }}"><img src="{{ logo_path | relative_url }}" alt=""></a>
         {% endunless %} {% endcomment %}
-        <a class="site-title" href="{{ '/' | relative_url }}">
+        <a class="site-title{% if include.blog %} hidden{% endif %}" href="{{ '/' | relative_url }}">
           <!-- <img src="/assets/images/sitelogo.png" class="center" width="280px"> -->
           <!-- {{ site.masthead_title | default: site.title }} -->
           <!-- {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle }}</span>{% endif %} -->
@@ -53,7 +53,7 @@
                     </li>
                {% else %}
                    <li class="masthead__menu-item">
-                       <a href="{{ site.baseurl }}{{ link.url }}">{{ link.title }}</a>
+                       <a href="{{ site.baseurl }}{{ link.url }}"{% if include.blog and link.url == '/blog' %} aria-current="location"{% endif %}>{{ link.title }}</a>
                    </li>
                {% endif %}
            {% endfor %}

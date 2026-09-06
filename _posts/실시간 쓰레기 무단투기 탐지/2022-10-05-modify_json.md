@@ -3,7 +3,7 @@ title:  "PyQT에 넘겨줄 json 수정"
 excerpt: "쓰레기 무단투기 탐지 프로젝트"
 
 categories:
-  - cctv
+  - projects
 tags:
   - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
 
@@ -15,6 +15,9 @@ toc_sticky: true
 date: 2022-10-05
 last_modified_at: 2022-10-05
 til: 'true'
+permalink: "/cctv/modify_json/"
+legacy_category: cctv
+series: cctv
 ---
 
 ## 1. 기존 객체검출 Confusion Matrix 문제점

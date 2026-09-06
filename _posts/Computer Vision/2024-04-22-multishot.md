@@ -3,9 +3,12 @@ title:  "[CVPR 2022] Human Mesh Recovery from Multiple Shots 논문 리뷰"
 excerpt: "multishot: Human Mesh Recovery from Multiple Shots"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "human-motion"
+  - "3d-reconstruction"
 
 published: true
 
@@ -15,6 +18,8 @@ toc_sticky: true
 date: 2024-04-22
 last_modified_at: 2024-04-22
 use_math: true
+permalink: "/dl_paper/multishot/"
+legacy_category: DL_paper
 ---
 
 > 논문링크 : <a href="https://arxiv.org/pdf/2012.09843.pdf" target="blank_">Human Mesh Recovery from Multiple Shots</a>

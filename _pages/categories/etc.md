@@ -1,15 +1,7 @@
 ---
-title: "기타 잡다한 내용들"
-layout: archive
+layout: blog-collection
+blog: true
+title: 기타 기록
 permalink: categories/etc
-author_profile: true
-sidebar_main: true
+legacy_category: etc
 ---
-{% assign filtering = '' %}
-{% assign posts = site.categories.etc %}
-
-{% for post in posts %}
-    {% if post.title != filtering %}
-        {% include archive-single.html type=page.entries_layout %}
-    {% endif %}
-{% endfor %}

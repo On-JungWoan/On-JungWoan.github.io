@@ -3,7 +3,7 @@ title:  "[Jekyll]사이드바 카테고리 기능 추가"
 excerpt: "Github io의 사이드바 카테고리 기능 추가"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [jekyll, Github, Githubio]
 
@@ -14,6 +14,8 @@ toc_sticky: true
  
 date: 2022-07-23
 last_modified_at: 2022-07-23
+permalink: "/blog/Github-io-categories/"
+legacy_category: Blog
 ---
 
 

@@ -3,7 +3,7 @@ title:  "[Git]대용량 파일 push 방법 총정리"
 excerpt: "과정 및 관련 에러 정리"
 
 categories:
-  - tools
+  - programming-tools
 tags:
   - [git]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-10-25
 last_modified_at: 2022-10-25
 til: 'true'
+permalink: "/tools/bigfile_upload/"
+legacy_category: tools
 ---
 
 ## 1. 문제상황

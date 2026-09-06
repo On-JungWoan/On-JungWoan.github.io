@@ -3,7 +3,7 @@ title:  "[Docker]Window Docker 설치방법"
 excerpt: "windows for docker"
 
 categories:
-  - tools
+  - programming-tools
 tags:
   - [Docker]
 
@@ -13,6 +13,8 @@ toc_sticky: true
 date: 2022-10-21
 last_modified_at: 2022-10-21
 til: 'true'
+permalink: "/tools/install_docker/"
+legacy_category: tools
 ---
 
 ## 1. 환경설정

@@ -3,9 +3,13 @@ title:  "TensorRT Engine 성능 비교"
 excerpt: "쓰레기 무단투기 탐지 프로젝트"
 
 categories:
-  - cctv
+  - projects
 tags:
-  - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
+  - "딥러닝"
+  - "computer_vision"
+  - "ICT인턴십"
+  - "유클리드소프트"
+  - "TensorRT"
 
 published: true
 
@@ -15,6 +19,9 @@ toc_sticky: true
 date: 2022-10-14
 last_modified_at: 2022-10-14
 til: 'true'
+permalink: "/cctv/tensorrt_engine/"
+legacy_category: cctv
+series: cctv
 ---
 
 ## 1. Make TensorRT Engine

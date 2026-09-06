@@ -3,7 +3,7 @@ title:  "[Jekyll]개발 블로그 Google에 노출시키기"
 excerpt: "개발 블로그 google 노출"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [jekyll, Github, Githubio]
 
@@ -14,6 +14,8 @@ toc_sticky: true
  
 date: 2022-07-24
 last_modified_at: 2022-07-24
+permalink: "/blog/Github-io-google/"
+legacy_category: Blog
 ---
 
 

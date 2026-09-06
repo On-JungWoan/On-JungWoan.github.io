@@ -1,0 +1,44 @@
+{% if page.taxonomy == 'papers' %}
+  {% assign all_papers = site.categories.papers | where_exp: 'post', 'post.hidden != true' %}
+  <nav class="blog-collection-filters" aria-label="논문 주제 선택">
+    <p class="blog-filter-label">연구 주제</p>
+    <div class="blog-filter-links">
+      <a href="{{ '/categories/papers/' | relative_url }}"{% unless page.topic %} aria-current="page"{% endunless %}>전체 <span>{{ all_papers.size }}</span></a>
+      {% for topic in site.data.blog_topics %}
+        {% assign topic_posts = all_papers | where_exp: 'post', 'post.tags contains topic.key' %}
+        {% if topic_posts.size > 0 %}<a href="{{ topic.url | relative_url }}"{% if page.topic == topic.key %} aria-current="page"{% endif %}>{{ topic.label }} <span>{{ topic_posts.size }}</span></a>{% endif %}
+      {% endfor %}
+    </div>
+  </nav>
+{% elsif page.taxonomy == 'projects' or page.taxonomy == 'experiences' %}
+  {% assign category_series = site.data.blog_series | where: 'category', page.taxonomy %}
+  {% capture series_category_url %}/categories/{{ page.taxonomy }}/{% endcapture %}
+  {% if page.taxonomy == 'experiences' %}
+    {% assign series_kind = '경험' %}
+  {% else %}
+    {% assign series_kind = '프로젝트' %}
+  {% endif %}
+  {% if page.series %}
+    <nav class="blog-collection-filters" aria-label="{{ series_kind }} 시리즈 선택">
+      <p class="blog-filter-label">{{ series_kind }} 시리즈</p>
+      <div class="blog-filter-links">
+        <a href="{{ series_category_url | relative_url }}">전체 {{ series_kind }}</a>
+        {% for series in category_series %}<a href="{{ series.url | relative_url }}"{% if page.series == series.key %} aria-current="page"{% endif %}>{{ series.label }}</a>{% endfor %}
+      </div>
+    </nav>
+  {% else %}
+    <section class="blog-series-index" aria-labelledby="series-index-title">
+      <div class="blog-section-heading"><h2 id="series-index-title">{{ series_kind }}별로 읽기</h2><span>{{ category_series.size }}개의 시리즈</span></div>
+      <div class="blog-series-grid">
+        {% for series in category_series %}
+          {% assign series_posts = site.categories[page.taxonomy] | where: 'series', series.key | where_exp: 'post', 'post.hidden != true' %}
+          <a class="blog-series-card" href="{{ series.url | relative_url }}">
+            <span class="blog-series-card__count">{{ series_posts.size }}개의 글 <span aria-hidden="true">↗</span></span>
+            <h3>{{ series.label }}</h3>
+            <p>{{ series.description }}</p>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endif %}

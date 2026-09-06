@@ -1,11 +1,7 @@
 ---
-title: "canvas 개발"
-layout: archive
+layout: blog-collection
+blog: true
+title: Canvas 개발
 permalink: categories/canvas
-author_profile: true
-sidebar_main: true
+legacy_category: canvas
 ---
-
-
-{% assign posts = site.categories.canvas %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

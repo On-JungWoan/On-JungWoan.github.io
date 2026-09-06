@@ -1,11 +1,7 @@
 ---
-title: "Machine Learning"
-layout: archive
+layout: blog-collection
+blog: true
+title: Machine Learning
 permalink: categories/ML
-author_profile: true
-sidebar_main: true
+legacy_category: ML
 ---
-
-
-{% assign posts = site.categories.ML %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

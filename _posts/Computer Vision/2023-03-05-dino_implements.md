@@ -3,9 +3,11 @@ title:  "[CVPR 2022] Implementation of DINO"
 excerpt: "DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection"
 
 categories:
-  - DL_paper
+  - ai-study
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "object-detection"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2023-03-05
 last_modified_at: 2023-03-05
 use_math: false
+permalink: "/dl_paper/dino_implements/"
+legacy_category: DL_paper
 ---
 
 ## 1. Set Virtual Environment

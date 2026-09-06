@@ -1,5 +1,6 @@
 ---
-title: "Posts by Category"
+title: "Categories"
+blog: true
 layout: categories
 permalink: /categories/
 author_profile: true

@@ -3,7 +3,7 @@ title:  "user정보 DB 구조파악"
 excerpt: "canvas 개발"
 
 categories:
-  - canvas
+  - projects
 tags:
   - [postgreSQL, DataGrip, 유클리드소프트]
 
@@ -13,6 +13,9 @@ toc_sticky: true
 date: 2022-10-28
 last_modified_at: 2022-10-28  
 til: 'true'
+permalink: "/canvas/table_structure/"
+legacy_category: canvas
+series: canvas
 ---
 
 우선, DB 구조를 파악하기 위해 웹에서 스키마를 그려볼 수 있는 사이트를 사용하였다. 아래 사이트에 접속하면 무료로 DB 스키마를 그려볼 수 있다. 디자인도 깔끔하고 사용법도 쉬워서 간단하게 그려보기 좋은 것 같다.

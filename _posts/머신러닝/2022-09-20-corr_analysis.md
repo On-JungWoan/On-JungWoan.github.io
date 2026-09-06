@@ -3,7 +3,7 @@ title:  "[상관분석]치과 데이터 상관분석"
 excerpt: "논문에 활용할 상관분석 자료 만들기"
 
 categories:
-  - ML
+  - data-sql
 tags:
   - [ML, 상관분석]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-09-20
 last_modified_at: 2022-09-20
 til: true
+permalink: "/ml/corr_analysis/"
+legacy_category: ML
 ---
 
 주변 지인이 논문에 사용할 상관분석을 부탁해서 해드렸다.

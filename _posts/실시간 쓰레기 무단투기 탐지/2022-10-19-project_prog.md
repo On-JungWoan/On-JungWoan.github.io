@@ -3,7 +3,7 @@ title:  "프로젝트 진행상황"
 excerpt: "쓰레기 무단투기 탐지 프로젝트"
 
 categories:
-  - cctv
+  - projects
 tags:
   - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
 
@@ -15,6 +15,9 @@ toc_sticky: true
 date: 2022-10-19
 last_modified_at: 2022-10-19
 til: true
+permalink: "/cctv/project_prog/"
+legacy_category: cctv
+series: cctv
 ---
 
 프로젝트가 마무리 단계에 들어섰다. 

@@ -1,13 +1,7 @@
 ---
-title: "Jekyll dev"
-layout: archive
+layout: blog-collection
+blog: true
+title: Jekyll Dev
 permalink: categories/Blog
-author_profile: true
-sidebar_main: true
+legacy_category: Blog
 ---
-
-
-{% assign posts = site.categories.Blog %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
-
-{% include paginator.html %}

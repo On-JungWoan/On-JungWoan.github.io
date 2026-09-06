@@ -1,11 +1,7 @@
 ---
-layout: category
-title: "Model Optimization"
-type: grid
+layout: blog-collection
+blog: true
+title: Model Optimization
 permalink: categories/DL_optim
-author_profile: true
-sidebar_main: true
+legacy_category: DL_optim
 ---
-
-{% assign posts = site.categories.DL_optim %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

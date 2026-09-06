@@ -1,11 +1,7 @@
 ---
-title: "Python 정리"
-layout: archive
+layout: blog-collection
+blog: true
+title: Python 개념
 permalink: categories/python
-author_profile: true
-sidebar_main: true
+legacy_category: python
 ---
-
-
-{% assign posts = site.categories.python %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

@@ -1,3 +1,8 @@
+{% if page.blog %}
+  {% assign blog_heading = 'h2' %}
+  {% if page.layout == 'posts' or page.layout == 'categories' or page.layout == 'tags' %}{% assign blog_heading = 'h3' %}{% endif %}
+  {% include blog/post-row.html post=post heading=blog_heading %}
+{% else %}
 {% if post.header.teaser %}
   {% capture teaser %}{{ post.header.teaser }}{% endcapture %}
 {% else %}
@@ -31,3 +36,4 @@
     {% if post.excerpt %}<p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>{% endif %}
   </article>
 </div>
+{% endif %}

@@ -1,11 +1,7 @@
 ---
-title: "협업 Tool"
-layout: archive
+layout: blog-collection
+blog: true
+title: 개발 도구
 permalink: categories/tools
-author_profile: true
-sidebar_main: true
+legacy_category: tools
 ---
-
-
-{% assign posts = site.categories.tools %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

@@ -3,9 +3,12 @@ title:  "[3DV 2021] Dance In the Wild 논문 리뷰"
 excerpt: "Dance In the Wild: Monocular Human Animation with Neural Dynamic Appearance Synthesis"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "human-motion"
+  - "3d-reconstruction"
 
 published: true
 
@@ -15,6 +18,8 @@ toc_sticky: true
 date: 2024-06-04
 last_modified_at: 2024-06-04
 use_math: true
+permalink: "/dl_paper/dancewild/"
+legacy_category: DL_paper
 ---
 
 > 논문링크 : <a href="https://arxiv.org/pdf/2111.05916" target="blank_">Dance In the Wild: Monocular Human Animation with Neural Dynamic Appearance Synthesis</a>

@@ -1,0 +1,17 @@
+{% if page.categories.first %}
+  <p class="page__taxonomy">
+    <strong>카테고리</strong>
+    {% for group in site.data.blog_categories %}{% for category in group.items %}{% if category.key == page.categories.first %}
+      <a class="page__taxonomy-item p-category" href="{{ category.url | relative_url }}" rel="tag">{{ category.label }}</a>
+    {% endif %}{% endfor %}{% endfor %}
+  </p>
+{% endif %}
+{% if page.tags.size > 0 %}
+  <p class="page__taxonomy"><strong>태그</strong> <span itemprop="keywords">
+    {% assign article_tags = page.tags | sort_natural %}
+    {% for tag in article_tags %}
+      {% capture tag_fragment %}#{{ tag | slugify }}{% endcapture %}
+      <a class="page__taxonomy-item p-category" href="{{ '/tags/' | relative_url }}{{ tag_fragment }}" rel="tag">{% include blog/tag-label.html key=tag %}</a>
+    {% endfor %}
+  </span></p>
+{% endif %}

@@ -3,9 +3,11 @@ title:  "[arXiv preprint] Shape of Motion paper review"
 excerpt: "Shape of Motion: 4D Reconstruction from a Single Video"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "3d-reconstruction"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2024-07-29
 last_modified_at: 2024-07-29
 use_math: true
+permalink: "/dl_paper/shapeofmotion/"
+legacy_category: DL_paper
 ---
 
 **[Title]** Shape of Motion: 4D Reconstruction from a Single Video

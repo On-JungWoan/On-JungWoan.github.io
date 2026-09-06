@@ -3,7 +3,7 @@ title:  "[Github]Read Me 수정하기"
 excerpt: "Edit Read Me"
 
 categories:
-  - tools
+  - programming-tools
 tags:
   - [github, readme, markdown]
 
@@ -14,6 +14,8 @@ toc_sticky: true
  
 date: 2022-08-22
 last_modified_at: 2022-08-22
+permalink: "/tools/edit-readme/"
+legacy_category: tools
 ---
 
 ## 기존 리드미

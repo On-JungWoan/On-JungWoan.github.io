@@ -3,7 +3,7 @@ title:  "[ML]앙상블(Ensemble) 알고리즘"
 excerpt: "배깅(Bagging)과 부스팅(Boosting)을 중심적으로"
 
 categories:
-  - ML
+  - ai-study
 tags:
   - [ML, Ensemble]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-09-26
 last_modified_at: 2022-09-26
 til: 'true'
+permalink: "/ml/ML-Ensemble-Algorithm/"
+legacy_category: ML
 ---
 
 <br>

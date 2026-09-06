@@ -3,9 +3,11 @@ title:  "[Arxiv 2024] Inter-pose 요약"
 excerpt: "Can Generative Video Models Help Pose Estimation? (Inter-pose)"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "3d-reconstruction"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2025-01-10
 last_modified_at: 2025-01-10
 use_math: true
+permalink: "/dl_paper/interpose/"
+legacy_category: DL_paper
 ---
 
 **[Title]** Can Generative Video Models Help Pose Estimation?

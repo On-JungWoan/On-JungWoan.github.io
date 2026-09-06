@@ -1,0 +1,16 @@
+# These keys are ordinary post tags; a paper may belong to several topics.
+- key: hand-object-interaction
+  label: Hand–Object Interaction
+  url: /topics/hand-object-interaction/
+- key: human-motion
+  label: Human & Motion
+  url: /topics/human-motion/
+- key: 3d-reconstruction
+  label: 3D Reconstruction
+  url: /topics/3d-reconstruction/
+- key: vision-language
+  label: Vision–Language
+  url: /topics/vision-language/
+- key: object-detection
+  label: Object Detection
+  url: /topics/object-detection/

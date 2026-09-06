@@ -1,6 +1,22 @@
 ---
-layout: posts
-entries_layout: grid
-author_profile: true
-sidebar_main: true
+layout: archive
+title: 개발 일기장
+permalink: /blog/
+blog: true
+blog_home: true
+description: 논문 리뷰부터 구현 과정에서 배운 것까지, 공부하며 쌓아온 기록입니다.
 ---
+
+{% assign visible_posts = site.posts | where_exp: 'post', 'post.hidden != true' %}
+<section aria-labelledby="recent-posts-title">
+  <div class="blog-section-heading">
+    <h2 id="recent-posts-title">최근 글</h2>
+    <span>{{ visible_posts.size }}편의 기록 · 최신순</span>
+  </div>
+  <div class="blog-post-list">
+    {% for post in visible_posts limit:12 %}
+      {% include blog/post-row.html post=post heading="h3" %}
+    {% endfor %}
+  </div>
+  <a class="blog-archive-link" href="{{ '/year-archive/' | relative_url }}">전체 글 보기 <span aria-hidden="true">→</span></a>
+</section>

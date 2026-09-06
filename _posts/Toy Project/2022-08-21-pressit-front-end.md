@@ -3,7 +3,7 @@ title:  "[Press It!]메인 페이지 Front-End Developing"
 excerpt: "Press It! : 문서요약 및 자동번역 서비스"
 
 categories:
-  - toy_project
+  - projects
 tags:
   - [Bootstrap, Django, Web, FrontEnd]
 
@@ -14,6 +14,9 @@ toc_sticky: true
  
 date: 2022-08-21
 last_modified_at: 2022-08-21
+permalink: "/toy_project/pressit-front-end/"
+legacy_category: toy_project
+series: press-it
 ---
 
 ## 0. 메인 페이지 구성

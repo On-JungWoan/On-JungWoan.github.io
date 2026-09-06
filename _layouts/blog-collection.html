@@ -1,0 +1,32 @@
+---
+layout: archive
+---
+
+{% if page.legacy_category %}
+  {% assign collection_posts = site.posts | where: 'legacy_category', page.legacy_category %}
+{% else %}
+  {% assign collection_posts = site.categories[page.taxonomy] %}
+{% endif %}
+{% assign collection_posts = collection_posts | where_exp: 'post', 'post.hidden != true' %}
+{% if page.topic %}{% assign collection_posts = collection_posts | where_exp: 'post', 'post.tags contains page.topic' %}{% endif %}
+{% if page.series %}{% assign collection_posts = collection_posts | where: 'series', page.series | reverse %}{% endif %}
+
+{{ content }}
+{% if page.legacy_category %}
+  <p class="blog-collection-note"><a href="{{ '/categories/' | relative_url }}">주제별 카테고리 둘러보기 <span aria-hidden="true">→</span></a></p>
+{% else %}
+  {% include blog/collection-filters.html %}
+{% endif %}
+<section aria-labelledby="collection-posts-title">
+  <div class="blog-section-heading">
+    <h2 id="collection-posts-title">{% if page.series %}시리즈 글{% elsif page.topic %}이 주제의 논문{% else %}전체 기록{% endif %}</h2>
+    <span>{{ collection_posts.size }}개의 글{% if page.series %} · 작성 순서{% else %} · 최신순{% endif %}</span>
+  </div>
+  <div class="blog-post-list">
+    {% for post in collection_posts %}
+      {% include blog/post-row.html post=post heading="h3" %}
+    {% else %}
+      <p>아직 등록된 글이 없습니다.</p>
+    {% endfor %}
+  </div>
+</section>

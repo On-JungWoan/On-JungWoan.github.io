@@ -3,7 +3,7 @@ title:  "Activation Function, Optimizer"
 excerpt: "딥러닝 개념정리"
 
 categories:
-  - DL_study
+  - ai-study
 tags:
   - [딥러닝, ICT인턴십, computer_vision]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-10-04
 last_modified_at: 2022-10-04
 til: 'true'
+permalink: "/dl_study/activation_opt/"
+legacy_category: DL_study
 ---
 
 ## 1. 신경망 층

@@ -3,9 +3,11 @@ title:  "[Arxiv 2024] InstantSplat 리뷰"
 excerpt: "InstantSplat: Sparse-view SfM-free Gaussian Splatting in Seconds (arXiv, 2024)"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "3d-reconstruction"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2025-02-21
 last_modified_at: 2025-02-21
 use_math: true
+permalink: "/dl_paper/instantsplat/"
+legacy_category: DL_paper
 ---
 
 **[Title]** InstantSplat: Sparse-view SfM-free Gaussian Splatting in Seconds

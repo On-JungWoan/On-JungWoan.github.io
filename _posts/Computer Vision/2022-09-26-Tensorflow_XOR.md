@@ -3,7 +3,7 @@ title:  "Tensorflow로 XOR문제 해결"
 excerpt: "모두를 위한 딥러닝 강좌 시즌 1"
 
 categories:
-  - DL_study
+  - ai-study
 tags:
   - [DL, Tensorflow, ICT인턴십, 모두를 위한 딥러닝 강좌 시즌 1, computer_vision]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-09-26
 last_modified_at: 2022-09-26
 til: 'true'
+permalink: "/dl_study/Tensorflow_XOR/"
+legacy_category: DL_study
 ---
 
 ## XOR 문제?

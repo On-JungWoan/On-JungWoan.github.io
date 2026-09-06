@@ -3,7 +3,7 @@ title:  "[Jekyll]빌드 속도 최적화"
 excerpt: "다양한 방법을 사용하여 Jekyll 빌드 시간 개선"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [Githubio, jekyll, html]
 
@@ -16,6 +16,8 @@ toc_sticky: true
 date: 2022-11-23
 last_modified_at: 2022-11-23
 til: 'true'
+permalink: "/blog/optim_jekyll/"
+legacy_category: Blog
 ---
 
 {% raw %}

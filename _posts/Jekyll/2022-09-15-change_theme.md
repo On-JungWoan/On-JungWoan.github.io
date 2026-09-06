@@ -3,7 +3,7 @@ title:  "[Jekyll]블로그 테마 변경 및 커스텀"
 excerpt: "테마 커스텀"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [Github, Githubio, jekyll]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-09-15
 last_modified_at: 2022-09-15
 til: 'true'
+permalink: "/blog/change_theme/"
+legacy_category: Blog
 ---
 
 ## 테마 변경

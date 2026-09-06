@@ -3,9 +3,11 @@ title:  "[CVPR 2024] SpatialVLM 논문 리뷰"
 excerpt: "Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "vision-language"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2024-02-28
 last_modified_at: 2024-02-28
 use_math: true
+permalink: "/dl_paper/spatialvlm/"
+legacy_category: DL_paper
 ---
 
 > 논문링크 : <a href="https://arxiv.org/pdf/2401.12168.pdf" target="blank_">Spatial VLM: Endowing Vision-Language Models with Spatial Reasoning Capabilities</a>

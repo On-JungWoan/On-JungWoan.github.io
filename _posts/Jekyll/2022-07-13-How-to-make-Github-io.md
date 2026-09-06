@@ -3,7 +3,7 @@ title:  "[Jekyll]Jekyll을 사용한 개발 블로그 생성"
 excerpt: "Jekyll을 이용한 Github io 생성방법"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [jekyll, Github, Githubio]
 
@@ -12,6 +12,8 @@ toc_sticky: true
  
 date: 2022-07-13
 last_modified_at: 2022-07-13
+permalink: "/blog/How-to-make-Github-io/"
+legacy_category: Blog
 ---
 <br>
 <br>

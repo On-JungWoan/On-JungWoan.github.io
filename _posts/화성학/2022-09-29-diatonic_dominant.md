@@ -3,7 +3,7 @@ title:  "[다이아토닉]코드의 기능 / 도미넌트 모션"
 excerpt: "코드 진행 공부"
 
 categories:
-  - harmonics
+  - life
 tags:
   - [화성학]
 
@@ -12,6 +12,8 @@ toc_sticky: true
  
 date: 2022-09-29
 last_modified_at: 2022-09-29
+permalink: "/harmonics/diatonic_dominant/"
+legacy_category: harmonics
 ---
 
 ## 0. 다이어토닉의 기능

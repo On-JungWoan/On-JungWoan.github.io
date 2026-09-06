@@ -1,0 +1,12 @@
+<header class="blog-intro">
+  <p class="blog-eyebrow">Jeongwan On / {% if page.blog_home %}Blog{% elsif page.layout == 'search' %}Search{% else %}Archive{% endif %}</p>
+  <h1 id="page-title">{{ page.title }}</h1>
+  <p class="blog-intro__description">{% if page.description %}{{ page.description }}{% elsif page.layout == 'search' %}기록 속에서 필요한 내용을 찾아보세요.{% elsif page.layout == 'posts' %}지금까지의 기록을 연도별로 모았습니다.{% elsif page.layout == 'tags' %}키워드를 따라 관심 있는 글을 찾아보세요.{% else %}관심 있는 주제의 기록을 모아 읽어보세요.{% endif %}</p>
+  {% unless page.layout == 'search' %}
+    <form class="blog-search-form" role="search" action="{{ '/search/' | relative_url }}" method="get">
+      <label class="visually-hidden" for="blog-query">블로그 검색</label>
+      <input id="blog-query" name="q" type="search" placeholder="글 제목, 키워드로 검색" required>
+      <button type="submit">검색 <span aria-hidden="true">↗</span></button>
+    </form>
+  {% endunless %}
+</header>

@@ -290,11 +290,18 @@ defaults:
       type: posts
     values:
       layout: single
+      blog: true
       author_profile: true
       read_time: true
       comments: true
       share: true
       related: true
       sidebar_main: true
+
+  - scope:
+      path: "_pages/categories"
+      type: pages
+    values:
+      blog: true
 
 github: [metadata]

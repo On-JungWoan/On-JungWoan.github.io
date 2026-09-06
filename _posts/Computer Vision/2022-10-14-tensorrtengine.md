@@ -3,7 +3,7 @@ title:  "TensorRT 모델에서 engine 모듈 추출하기"
 excerpt: "pth 확장자 TensorRT 모델에서 engine부 추출"
 
 categories:
-  - DL_optim
+  - model-optimization
 tags:
   - [DL, TensorRT, pytorch, ICT인턴십, computer_vision]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-10-14
 last_modified_at: 2022-10-14
 til: 'true'
+permalink: "/dl_optim/tensorrtengine/"
+legacy_category: DL_optim
 ---
 
 

@@ -3,7 +3,7 @@ title:  "[Jekyll]상단 네비게이션 바 수정"
 excerpt: "네비바 수정"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [Github, Githubio, jekyll]
 
@@ -16,6 +16,8 @@ toc_sticky: true
 date: 2022-11-04
 last_modified_at: 2022-11-04
 til: 'true'
+permalink: "/blog/edit_navibar/"
+legacy_category: Blog
 ---
 
 ## navigation.yaml 수정

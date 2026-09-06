@@ -3,7 +3,7 @@ title:  "[Computer Vision] 작물 잎 사진으로 질병 분류하기 예제 �
 excerpt: "Pytorch를 사용한 분류문제 학습"
 
 categories:
-  - DL_study
+  - ai-study
 tags:
   - [딥러닝, computer_vision, pytorch, CNN, 전이학습]
 
@@ -14,6 +14,8 @@ toc_sticky: true
  
 date: 2022-07-28
 last_modified_at: 2022-07-30
+permalink: "/dl_study/04_Leaf_Diseases(1)/"
+legacy_category: DL_study
 ---
 
 <br>

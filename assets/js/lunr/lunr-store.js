@@ -9,6 +9,7 @@ var store = [
     {%- endif -%}
     {%- assign docs = c.docs | where_exp:'doc','doc.search != false' -%}
     {%- for doc in docs -%}
+      {%- assign search_series = site.data.blog_series | where: 'key', doc.series | first -%}
       {%- if doc.header.teaser -%}
         {%- capture teaser -%}{{ doc.header.teaser }}{%- endcapture -%}
       {%- else -%}
@@ -16,6 +17,8 @@ var store = [
       {%- endif -%}
       {
         "title": {{ doc.title | jsonify }},
+        "date": {{ doc.date | date: '%Y-%m-%d' | jsonify }},
+        "summary": {{ doc.excerpt | markdownify | strip_html | truncate: 180 | jsonify }},
         "excerpt":
           {%- if site.search_full_content == true -%}
             {{ doc.content | newline_to_br |
@@ -42,6 +45,9 @@ var store = [
           {%- endif -%}
         "categories": {{ doc.categories | jsonify }},
         "tags": {{ doc.tags | jsonify }},
+        "series": {{ doc.series | jsonify }},
+        "series_label": {{ search_series.label | jsonify }},
+        "series_url": {% if search_series %}{{ search_series.url | relative_url | jsonify }}{% else %}null{% endif %},
         "url": {{ doc.url | relative_url | jsonify }},
         "teaser": {{ teaser | relative_url | jsonify }}
       }{%- unless forloop.last and l -%},{%- endunless -%}

@@ -3,9 +3,12 @@ title:  "[ICML 2026] PhysHanDI 논문 리뷰"
 excerpt: "PhysHanDI: Physics-Based Reconstruction of Hand-Deformable Object Interactions (ICML, 2026)"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "hand-object-interaction"
+  - "3d-reconstruction"
 
 published: true
 
@@ -15,6 +18,8 @@ toc_sticky: true
 date: 2026-08-29
 last_modified_at: 2026-08-29
 use_math: true
+permalink: "/dl_paper/physhandi/"
+legacy_category: DL_paper
 ---
 
 **[Title]** PhysHanDI: Physics-Based Reconstruction of Hand-Deformable Object Interactions

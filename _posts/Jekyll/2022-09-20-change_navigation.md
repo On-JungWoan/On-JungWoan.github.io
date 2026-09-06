@@ -3,7 +3,7 @@ title:  "[Jekyll]좌측 사이드바 수정"
 excerpt: "상단 네비게이션 바 항목 수정 및 TIL 추가"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [Github, Githubio, jekyll]
 
@@ -16,6 +16,8 @@ toc_sticky: true
 date: 2022-09-20
 last_modified_at: 2022-09-20
 til: 'true'
+permalink: "/blog/change_navigation/"
+legacy_category: Blog
 ---
 
 ## 1. 홈 외의 다른 page에 사이드바 추가

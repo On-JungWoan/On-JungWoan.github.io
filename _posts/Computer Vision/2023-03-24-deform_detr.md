@@ -3,9 +3,11 @@ title:  "[ICLR 2021] Deformable DETR 논문 리뷰"
 excerpt: "Deformable DETR: Deformable Transfomers for End-to-End Object Detection"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "object-detection"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2023-03-24
 last_modified_at: 2022-03-24
 use_math: true
+permalink: "/dl_paper/deform_detr/"
+legacy_category: DL_paper
 ---
 
 {% capture paper_name %}Deformable DETR: Deformable Transformers for End-to-End Object Detection{% endcapture %}

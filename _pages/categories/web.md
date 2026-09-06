@@ -1,11 +1,7 @@
 ---
-title: "Web 관련 공부내용"
-layout: archive
+layout: blog-collection
+blog: true
+title: Web Dev
 permalink: categories/web
-author_profile: true
-sidebar_main: true
+legacy_category: web
 ---
-
-
-{% assign posts = site.categories.web %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

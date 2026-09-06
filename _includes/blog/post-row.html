@@ -1,0 +1,15 @@
+{% assign entry = include.post %}
+{% assign entry_heading = include.heading | default: 'h2' %}
+<article class="blog-post{% if entry.header.teaser %} blog-post--illustrated{% endif %}">
+  <div class="blog-post__body">
+    <div class="blog-post__meta">
+      {% if entry.categories.first %}<span class="blog-post__category">{% include blog/category-label.html key=entry.categories.first %}</span>{% endif %}
+      {% if entry.series %}{% assign entry_series = site.data.blog_series | where: 'key', entry.series | first %}<a class="blog-post__series" href="{{ entry_series.url | relative_url }}">{{ entry_series.label }}</a>{% endif %}
+      {% if entry.date %}<time datetime="{{ entry.date | date_to_xmlschema }}">{{ entry.date | date: '%Y.%m.%d' }}</time>{% endif %}
+    </div>
+    <{{ entry_heading }} class="blog-post__title"><a href="{% if entry.link %}{{ entry.link }}{% else %}{{ entry.url | relative_url }}{% endif %}">{{ entry.title | markdownify | remove: '<p>' | remove: '</p>' }}</a></{{ entry_heading }}>
+    {% if entry.excerpt %}<p class="blog-post__excerpt">{{ entry.excerpt | markdownify | strip_html | truncate: 180 }}</p>{% endif %}
+    {% if entry.link %}<a class="blog-post__permalink" href="{{ entry.url | relative_url }}">이 글의 고유 주소</a>{% endif %}
+  </div>
+  {% if entry.header.teaser %}<img class="blog-post__image" src="{{ entry.header.teaser | relative_url }}" alt="" width="144" height="96" loading="lazy">{% endif %}
+</article>

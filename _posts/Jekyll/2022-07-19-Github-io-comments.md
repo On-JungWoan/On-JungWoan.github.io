@@ -3,7 +3,7 @@ title:  "[Jekyll]utterances 댓글 추가 안될 때 해결법"
 excerpt: "utterances를 사용한 댓글 기능 추가"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [jekyll, Github, Githubio]
 
@@ -12,6 +12,8 @@ toc_sticky: true
  
 date: 2022-07-19
 last_modified_at: 2022-07-19
+permalink: "/blog/Github-io-comments/"
+legacy_category: Blog
 ---
 
 <br>

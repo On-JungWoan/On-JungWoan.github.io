@@ -1,0 +1,31 @@
+<aside class="blog-sidebar" aria-label="블로그 탐색">
+  <a class="blog-profile" href="{{ '/' | relative_url }}">
+    <img src="{{ '/assets/images/profile_img.png' | relative_url }}" alt="" width="48" height="48">
+    <span><strong>{{ site.name }}</strong><span>About me <span aria-hidden="true">↗</span></span></span>
+  </a>
+  <nav class="blog-shortcuts" aria-label="글 모아보기">
+    <a href="{{ '/blog/' | relative_url }}"{% if page.blog_home %} aria-current="page"{% endif %}>최근 글 <span aria-hidden="true">↗</span></a>
+    <a href="{{ '/year-archive/' | relative_url }}"{% if page.layout == 'posts' %} aria-current="page"{% endif %}>전체 글 <span>{{ site.posts | where_exp: 'post', 'post.hidden != true' | size }}</span></a>
+  </nav>
+  <details class="blog-categories blog-disclosure" open data-blog-collapse="(max-width: 800px)">
+    <summary>Categories <span class="blog-disclosure__icon" aria-hidden="true">+</span></summary>
+    <nav aria-label="Categories">
+      {% assign current_category_url = page.url | remove: '/' %}
+      {% for group in site.data.blog_categories %}
+        <div class="blog-category-group">
+          <p>{{ group.title }}</p>
+          <ul>
+            {% for item in group.items %}
+              {% assign category_posts = site.categories[item.key] | where_exp: 'post', 'post.hidden != true' %}
+              {% if category_posts.size > 0 %}
+                {% assign item_url = item.url | remove: '/' %}
+                <li><a href="{{ item.url | relative_url }}"{% if current_category_url == item_url %} aria-current="page"{% elsif page.taxonomy == item.key %} aria-current="location"{% endif %}><span>{{ item.label }}</span><span class="blog-category-count">{{ category_posts.size }}</span></a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+      <a class="blog-all-topics" href="{{ '/categories/' | relative_url }}">All Categories <span aria-hidden="true">→</span></a>
+    </nav>
+  </details>
+</aside>

@@ -3,9 +3,13 @@ title:  "알고리즘 흐름 / CUDA Streams"
 excerpt: "쓰레기 무단투기 탐지 프로젝트"
 
 categories:
-  - cctv
+  - projects
 tags:
-  - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
+  - "딥러닝"
+  - "computer_vision"
+  - "ICT인턴십"
+  - "유클리드소프트"
+  - "CUDA"
 
 published: true
 
@@ -15,6 +19,9 @@ toc_sticky: true
 date: 2022-09-27
 last_modified_at: 2022-09-28
 til: 'true'
+permalink: "/cctv/cctv_bounding/"
+legacy_category: cctv
+series: cctv
 ---
 
 ## 1. 객체/행위 탐지 알고리즘 흐름

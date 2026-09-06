@@ -4,6 +4,9 @@ layout: archive
 
 {{ content }}
 
+{% if page.blog %}
+  {% include blog/category-index.html %}
+{% else %}
 {% assign categories_max = 0 %}
 {% for category in site.categories %}
   {% if category[1].size > categories_max %}
@@ -41,3 +44,4 @@ layout: archive
     {% endif %}
   {% endfor %}
 {% endfor %}
+{% endif %}

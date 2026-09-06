@@ -3,7 +3,7 @@ title:  "CUDA Stream"
 excerpt: "Null Stream / Non-Null Stream"
 
 categories:
-  - DL_optim
+  - model-optimization
 tags:
   - [DL, ICT인턴십, computer_vision]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2022-10-31
 last_modified_at: 2022-10-31
 til: 'true'
+permalink: "/dl_optim/cuda_stream/"
+legacy_category: DL_optim
 ---
 
 ## 1. Stream

@@ -1,0 +1,22 @@
+<ul class="taxonomy__index">
+  {% for group in site.data.blog_categories %}{% for category in group.items %}
+    {% assign category_posts = site.categories[category.key] | where_exp: 'post', 'post.hidden != true' %}
+    <li><a href="#{{ category.key }}"><strong>{{ category.label }}</strong><span class="taxonomy__count">{{ category_posts.size }}</span></a></li>
+  {% endfor %}{% endfor %}
+</ul>
+{% for group in site.data.blog_categories %}
+  <p class="blog-eyebrow">{{ group.title }}</p>
+  {% for category in group.items %}
+    {% assign category_posts = site.categories[category.key] | where_exp: 'post', 'post.hidden != true' %}
+    <section id="{{ category.key }}" class="taxonomy__section">
+      <div class="blog-section-heading">
+        <h2 class="archive__subtitle">{{ category.label }}</h2>
+        <a href="{{ category.url | relative_url }}">{{ category_posts.size }}개 모아보기 <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="blog-post-list">
+        {% for post in category_posts %}{% include blog/post-row.html post=post heading="h3" %}{% endfor %}
+      </div>
+      <a href="#page-title" class="back-to-top">맨 위로 ↑</a>
+    </section>
+  {% endfor %}
+{% endfor %}

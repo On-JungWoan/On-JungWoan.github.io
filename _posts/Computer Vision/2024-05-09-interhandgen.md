@@ -3,9 +3,11 @@ title:  "[CVPR 2024] InterHandGen 논문 리뷰"
 excerpt: "InterHandGen: Two-Hand Interaction Generation via Cascaded Reverse Diffusion"
 
 categories:
-  - DL_paper
+  - papers
 tags:
-  - [DL, computer_vision]
+  - "DL"
+  - "computer_vision"
+  - "human-motion"
 
 published: true
 
@@ -15,6 +17,8 @@ toc_sticky: true
 date: 2024-05-09
 last_modified_at: 2024-05-09
 use_math: true
+permalink: "/dl_paper/interhandgen/"
+legacy_category: DL_paper
 ---
 
 > 논문링크 : <a href="https://jyunlee.github.io/projects/interhandgen/data/interhandgen.pdf" target="blank_">InterHandGen: Two-Hand Interaction Generation via Cascaded Reverse Diffusion</a>

@@ -1,5 +1,6 @@
 ---
-title: Search
+title: 글 검색
+blog: true
 layout: search
 permalink: /search/
 author_profile: true

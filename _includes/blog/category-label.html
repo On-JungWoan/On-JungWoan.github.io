@@ -1,0 +1,7 @@
+{%- assign category_label = include.key -%}
+{%- for group in site.data.blog_categories -%}
+  {%- for item in group.items -%}
+    {%- if item.key == include.key -%}{%- assign category_label = item.label -%}{%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{{- category_label -}}

@@ -3,7 +3,7 @@ title:  "[ML] 아파트 실거래가 예측 (1)"
 excerpt: "아파트 실거래가 예측 Toy Proejct"
 
 categories:
-  - toy_project
+  - projects
 tags:
   - [ML, ICT인턴십, orange3]
 
@@ -15,6 +15,9 @@ toc_sticky: true
 date: 2022-10-15
 last_modified_at: 2022-10-15
 til: 'true'
+permalink: "/toy_project/apartpred/"
+legacy_category: toy_project
+series: apartment-price
 ---
 
 ## 1. Make Train/Test Data

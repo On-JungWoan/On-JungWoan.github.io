@@ -3,7 +3,7 @@ title:  "[Jekyll]Jekyll 로컬에서 디버그 하는 법"
 excerpt: "개발 블로그 로컬에서 디버깅"
 
 categories:
-  - Blog
+  - web-development
 tags:
   - [Github, Githubio, jekyll]
 
@@ -16,6 +16,8 @@ toc_sticky: true
 date: 2022-10-22
 last_modified_at: 2022-10-22
 til: 'true'
+permalink: "/blog/debug_jekyll/"
+legacy_category: Blog
 ---
 
 ## 1. Git Clone

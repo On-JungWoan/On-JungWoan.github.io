@@ -3,9 +3,14 @@ title:  "TensorRT Engine Output 가공 / CUDA STREAM 수정"
 excerpt: "쓰레기 무단투기 탐지 프로젝트"
 
 categories:
-  - cctv
+  - projects
 tags:
-  - [딥러닝, computer_vision, ICT인턴십, 유클리드소프트]
+  - "딥러닝"
+  - "computer_vision"
+  - "ICT인턴십"
+  - "유클리드소프트"
+  - "TensorRT"
+  - "CUDA"
 
 published: true
 
@@ -15,6 +20,9 @@ toc_sticky: true
 date: 2022-10-17
 last_modified_at: 2022-10-17
 til: true
+permalink: "/cctv/engine_output/"
+legacy_category: cctv
+series: cctv
 ---
 
 ## 1. 진행상황

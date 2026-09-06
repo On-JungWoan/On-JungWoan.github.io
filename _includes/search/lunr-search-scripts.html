@@ -7,4 +7,8 @@
 {% endcase %}
 <script src="{{ '/assets/js/lunr/lunr.min.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/lunr/lunr-store.js' | relative_url }}"></script>
+{% if include.blog %}
+<script src="{{ '/assets/js/blog-search.js' | relative_url }}" defer></script>
+{% else %}
 <script src="{{ '/assets/js/lunr/lunr-' | append: lang | append: '.js' | relative_url }}"></script>
+{% endif %}

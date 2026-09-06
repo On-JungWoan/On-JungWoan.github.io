@@ -1,11 +1,7 @@
 ---
-title: "뻐정 : 광주광역시 버스정보 통합 플랫폼"
-layout: archive
+layout: blog-collection
+blog: true
+title: 뻐정
 permalink: categories/bbeojung
-author_profile: true
-sidebar_main: true
+legacy_category: bbeojung
 ---
-
-
-{% assign posts = site.categories.bbeojung %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

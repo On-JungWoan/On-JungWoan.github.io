@@ -1,0 +1,21 @@
+{% assign blog_previous = nil %}
+{% assign blog_next = nil %}
+{% if page.series %}
+  {% assign category_entries = site.posts | where: 'series', page.series %}
+{% else %}
+  {% assign category_entries = site.categories[page.categories.first] %}
+{% endif %}
+{% assign category_entries = category_entries | where_exp: 'post', 'post.hidden != true' %}
+{% for entry in category_entries %}
+  {% if entry.url == page.url %}
+    {% unless forloop.first %}{% assign next_index = forloop.index0 | minus: 1 %}{% assign blog_next = category_entries[next_index] %}{% endunless %}
+    {% unless forloop.last %}{% assign previous_index = forloop.index0 | plus: 1 %}{% assign blog_previous = category_entries[previous_index] %}{% endunless %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% if blog_previous or blog_next %}
+  <nav class="blog-pagination" aria-label="{% if page.series %}같은 시리즈{% else %}같은 카테고리{% endif %}의 이전 글과 다음 글">
+    {% if blog_previous %}<a href="{{ blog_previous.url | relative_url }}" rel="prev"><span>← 이전 글</span><strong>{{ blog_previous.title }}</strong></a>{% else %}<span class="blog-pagination__empty">첫 번째 글입니다</span>{% endif %}
+    {% if blog_next %}<a href="{{ blog_next.url | relative_url }}" rel="next"><span>다음 글 →</span><strong>{{ blog_next.title }}</strong></a>{% else %}<span class="blog-pagination__empty">가장 최근 글입니다</span>{% endif %}
+  </nav>
+{% endif %}

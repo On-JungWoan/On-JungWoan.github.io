@@ -3,7 +3,7 @@ title:  "[Django] 이미 존재하는 DB 연동 by inspectdb"
 excerpt: "inspectdb 소개"
 
 categories:
-  - web
+  - web-development
 tags:
   - [Django, web, backend]
 
@@ -13,6 +13,8 @@ toc_sticky: true
 date: 2022-11-09
 last_modified_at: 2022-11-09  
 til: 'true'
+permalink: "/web/inspectdb/"
+legacy_category: web
 ---
 
 ## 1. DB 불러오기

@@ -3,7 +3,7 @@ title:  "Convert DETR-like models to TFLite"
 excerpt: "DETR-like models for edge device"
 
 categories:
-  - DL_optim
+  - model-optimization
 tags:
   - [DL, computer_vision]
 
@@ -15,6 +15,8 @@ toc_sticky: true
 date: 2023-04-18
 last_modified_at: 2023-04-18
 use_math: true
+permalink: "/dl_optim/ddetr_to_tflite/"
+legacy_category: DL_optim
 ---
 
 ![image](https://user-images.githubusercontent.com/84084372/232539845-4c3c2d56-4c80-4fff-8037-31ced3fedaa3.png)

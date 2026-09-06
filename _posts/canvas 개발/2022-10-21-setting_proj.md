@@ -3,7 +3,7 @@ title:  "프로젝트 개요 정리"
 excerpt: "canvas 개발"
 
 categories:
-  - canvas
+  - projects
 tags:
   - [postgreSQL, Docker, DataGrip, 유클리드소프트]
 
@@ -13,6 +13,9 @@ toc_sticky: true
 date: 2022-10-21
 last_modified_at: 2022-10-21
 til: 'true'
+permalink: "/canvas/setting_proj/"
+legacy_category: canvas
+series: canvas
 ---
 
 ## 프로젝트 개요

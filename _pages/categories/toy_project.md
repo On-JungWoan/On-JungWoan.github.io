@@ -1,11 +1,7 @@
 ---
-title: "Toy Project 모음"
-layout: archive
+layout: blog-collection
+blog: true
+title: Toy Project
 permalink: categories/toy_project
-author_profile: true
-sidebar_main: true
+legacy_category: toy_project
 ---
-
-
-{% assign posts = site.categories.toy_project %}
-{% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

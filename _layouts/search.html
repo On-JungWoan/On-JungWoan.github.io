@@ -2,6 +2,23 @@
 layout: default
 ---
 
+{% if page.blog %}
+<main id="main" class="blog-shell">
+  {% include blog/sidebar.html %}
+  <div class="blog-archive">
+    {% include blog/intro.html %}
+    <div class="blog-search-panel" role="search">
+      <label for="search">검색어</label>
+      <input type="search" id="search" class="search-input" placeholder="글 제목, 키워드로 검색" aria-describedby="search-status" autocomplete="off">
+    </div>
+    <p id="search-status" class="blog-search-status" role="status" aria-live="polite">검색어를 입력하면 관련 글을 보여드립니다.</p>
+    <div id="results" class="blog-post-list"></div>
+    <noscript><p>검색 기능을 사용하려면 JavaScript를 켜주세요. <a href="{{ '/year-archive/' | relative_url }}">전체 글 보기</a>에서도 기록을 찾아볼 수 있습니다.</p></noscript>
+    <script type="application/json" id="blog-category-data">{{ site.data.blog_categories | jsonify }}</script>
+    <script type="application/json" id="blog-topic-data">{{ site.data.blog_topics | jsonify }}</script>
+  </div>
+</main>
+{% else %}
 {% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
   {% include page__hero.html %}
 {% endif %}
@@ -40,3 +57,4 @@ layout: default
     {%- endcase -%}
   </div>
 </div>
+{% endif %}
